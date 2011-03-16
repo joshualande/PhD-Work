@@ -20,7 +20,7 @@ args=parser.parse_args()
 class Empty(): pass
 
 args=Empty()
-args.all_sources="/nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL/data/pwnlist_v2.yaml"
+args.all_sources="pwnlist.yaml"
 args.name="PSRJ0835-4510"
 
 name=args.name
