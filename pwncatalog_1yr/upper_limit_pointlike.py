@@ -21,7 +21,7 @@ roi.fit(method='minuit')
 roi.print_summary()
 
 ul=roi.upper_limit(which=args.name)
-ts=roi.TS(which=name,quick=False)
+ts=roi.TS(which=name,quick=False,quiet=True)
 
 print "upperlimit with phase cut = %g" % ul
 

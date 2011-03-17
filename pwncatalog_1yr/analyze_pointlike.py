@@ -30,13 +30,13 @@ fit()
 
 p()
 
-ts=roi.TS(which=name,quick=False)
+ts=roi.TS(which=name,quick=False,quiet=True)
 print 'Before localizing, the TS is ',ts
 
 roi.zero_source(which=name)
 roi.plot_tsmap(filename='res_tsmap_%s.png' % name,
                fitsfile='res_tsmap_%s.fits' % name,
-               size=5,title='Residual TS for %s' % name)
+               size=5,title='TS Map of %s' % name)
 roi.unzero_source(which=name)
 
 localize_succeed=True
@@ -48,6 +48,7 @@ except Exception, err:
     print 'Moving back to starting position'
     roi.modify(which=name,skydir=pulsar_position)
 
+ts_point = roi.TS(which=name,quick=False,quiet=True)
 roi.save('fit_point_%s.dat' % name)
 
 p()
@@ -60,11 +61,16 @@ roi.modify(which=name,spatial_model=Disk())
 roi.fit_extension(which=name,bandfits=True)
 
 ts_ext=roi.TS_ext(which=name,bandfits=True)
+ts_disk = roi.TS(which=name,quick=False,quiet=True)
 
 source=roi.get_source(which=name)
 best_fit_extended=source.skydir
 
 roi.save('fit_disk_%s.dat' % name)
+
+p,p_err=source.model.statistical(absolute=True)
+flux=source.model.i_flux(100,100000,error=True)
+index=[p[1],p_err[1]]
 
 print 'ts_ext = ',ts_ext
 
@@ -87,8 +93,21 @@ print model.i_flux(100,100000,error=True)
 
 # fit in different energy ranges.
 
+results=dict(
+    pulsar_position_gal=[pulsar_position.l(),pulsar_position.b()],
+    name=name,
+    localize_succeed=localize_succeed,
+    ts_ext=ts_ext,
+    best_fit_point_gal=[best_fit_point.l(),best_fit_point.b()],
+    best_fit_extended_gal=[best_fit_extended.l(),best_fit_extended.b()],
+    flux=flux,
+    index=index,
+    ts_point=ts_point,
+    ts_disk=ts_disk
+)
 
-E_range=[[100.0,1000.0],[1000.0,10000.0],[10000.0,100000.0]]
+
+E_range=[[100,1000],[1000,10000],[10000,100000]]
 
 for emin,emax in E_range:
     roi.change_binning(fit_emin=emin,fit_emax=emax)
@@ -99,38 +118,22 @@ for emin,emax in E_range:
 
     print "Energy range : emin= %.2f \t emax= %.2f" % (emin,emax)
 
-    ts=roi.TS(which=name,quick=False)
+    results['ts_%g_%g' % (emin,emax)]=roi.TS(which=name,quick=False,quiet=True)
 
     model = roi.get_model(which=name)
     
     p,p_err=model.statistical(absolute=True)
-
-    flux,fluxerr=model.i_flux(emin,emax,error=True)
-    print flux
-
-    index,indexerr=p[1],p_err[1]
-        
-    print "index = %g +/- %g" % (index,indexerr)
+    results['flux_%g_%g' % (emin,emax)]=model.i_flux(emin,emax,error=True)
+    results['index_%g_%g' % (emin,emax)]=[p[1],p_err[1]]
 
     roi.zero_source(which=name)
-    roi.plot_tsmap(filename='res_tsmap_%s.png' % name,
-                   fitsfile='res_tsmap_%s.fits' % name,
-                   size=5,title='Residual TS for %s' % name)
+    roi.plot_tsmap(filename='res_tsmap_%g_%g_%s.png' % (emin,emax,name),
+                   fitsfile='res_tsmap_%g_%g_%s.fits' % (emin,emax,name),
+                   size=5,title='TS Map of %s %gMeV to %gMeV' % (name,emin,emax))
     roi.unzero_source(which=name)
 
-# make 'source' TS map
-
 roi.change_binning(fit_emin=100,fit_emax=100000)
-
     
-results=dict(
-    pulsar_position_gal=[pulsar_position.l(),pulsar_position.b()],
-    name=name,
-    localize_succeed=localize_succeed,
-    ts_ext=ts_ext,
-    best_fit_point_gal=[best_fit_point.l(),best_fit_point.b()],
-    best_fit_extended_gal=[best_fit_extended.l(),best_fit_extended.b()]
-)
 
 open('results_%s.yaml' % name,'w').write(
     yaml.dump(
