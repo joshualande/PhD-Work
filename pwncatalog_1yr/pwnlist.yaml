@@ -5,6 +5,8 @@
 #   5/9/2010 - Changes requested by Marianne by email:
 #       * Change phase interval for J1813 to 0.44-0.56
 #       * Include J1124-5916
+# 3/17/2011 - Change by Joshua Lande
+#       * Correct 1FGL name of PSR J1124-5916
 PSRJ0007+7303:
   catalog: 1FGL J0007.0+7303 
   dir: [1.75483, 73.0513]
@@ -384,7 +386,7 @@ PSRJ2238+5904:
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2238+5904/ExpCube_J2238+5904_emin50_emax300000_z105_0.55_0.8.fits
   phase: [0.55, 0.8]
 PSRJ1124-5916:
-  catalog: J1124.6-5916
+  catalog: 1FGL J1124.6-5916
   dir: [171.16251, -59.2719]
   ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1124-5916/PSRJ1124-5916_emin50_emax300000_z105_0.72_0.88.fits
   ft2: /u/ki/allafort/ki05/catalogs/allsky/FT2-2010Jan15.fits

@@ -8,7 +8,9 @@ from uw.like.SpatialModels import Disk
 from uw.like.Models import PowerLaw
 from skymaps import SkyDir
 
-def setup_pwn(name,pwnlist,phasing=True):
+from lande_roi import LandeROI
+
+def setup_pointlike(name,pwnlist,phasing=True):
     """Name of the source
     pwnlist Yaml file
     phasing=true : apply phase cut
@@ -48,7 +50,7 @@ def setup_pwn(name,pwnlist,phasing=True):
                                          maxROI     = 10,
                                          minROI     = 10)
 
-    roi=spectral_analysis.roi(
+    roi=LandeROI(spectral_analysis.roi(
         roi_dir=center,
         diffuse_sources=get_default_diffuse(diffdir=e("$FERMI/diffuse"),
             gfile="gll_iem_v02.fit",
@@ -56,7 +58,7 @@ def setup_pwn(name,pwnlist,phasing=True):
         catalogs = catalog,
         fit_emin = 100,
         fit_emax = 100000,
-        phase_factor = phase_factor
+        phase_factor = phase_factor)
     )
 
     print 'phase factor = ',roi.phase_factor

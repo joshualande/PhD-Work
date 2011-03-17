@@ -5,7 +5,7 @@ import os
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
-parser.add_argument("-c", "--command", required=True, choices=["analyze_pwn.py","pwn_upper_limit.py"])
+parser.add_argument("-c", "--command", required=True, choices=["analyze_pointlike.py","upper_limit_pointlike.py"])
 parser.add_argument("-o", "--outdir", required=True)
 parser.add_argument("-l", "--pwnlist", required=True, help="List of all yaml sources")
 args=parser.parse_args()

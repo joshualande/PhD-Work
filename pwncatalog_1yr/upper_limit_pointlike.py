@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from setup_pwn import setup_pwn
+from setup_pointlike import setup_pointlike
 import yaml
 
 parser = ArgumentParser()
@@ -12,7 +12,7 @@ print "----Upperlimit with phase cut----"
 name=args.name
 pwnlist=args.pwnlist
 
-roi=setup_pwn(name,pwnlist)
+roi=setup_pointlike(name,pwnlist)
 
 roi.print_summary()
 
