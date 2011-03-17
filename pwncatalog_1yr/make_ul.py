@@ -14,7 +14,11 @@ pwnlist=args.pwnlist
 
 roi=setup_pwn(name,pwnlist)
 
+roi.print_summary()
+
 roi.fit(method='minuit')
+
+roi.print_summary()
 
 ul=roi.upper_limit(which=args.name)
 ts=roi.TS(which=name,quick=False)

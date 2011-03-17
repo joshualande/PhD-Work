@@ -2,11 +2,18 @@ import yaml
 from os.path import expandvars as e
 from os.path import join
 import os
+from argparse import ArgumentParser
 
-outdir='test'
-list=e('$PWNSCRIPTS/pwnlist.yaml')
+parser = ArgumentParser()
+parser.add_argument("-c", "--command", required=True, choices=["make_ul.py","test_extension.py"])
+parser.add_argument("-o", "--outdir", required=True)
+parser.add_argument("-l", "--pwnlist", required=True, help="List of all yaml sources")
+args=parser.parse_args()
+  
+command=args.command
+outdir=args.outdir
 
-sources=yaml.load(open(list))
+sources=yaml.load(open(args.pwnlist))
 
 os.makedirs(outdir)
 
@@ -19,13 +26,13 @@ for name in sources.keys():
     folder=join(outdir,name,'v1')
     os.makedirs(folder)
 
-    file=join(folder,'submit.sh')
+    file=join(folder,'run_%s.sh' % name)
 
     temp=open(file,'w')
     temp.write("""\
-python $PWNSCRIPTS/make_ul.py \\
+python $PWNSCRIPTS/%s \\
 -n %s \\
--l %s""" % (name,list))
+-l %s""" % (command,name,args.pwnlist))
 
 
 submit_all=join(outdir,'submit_all.py')
@@ -46,7 +53,7 @@ for name in glob.iglob("*"):
         results="%s/v1/results_%s.yaml" % (name,name)
         log="%s/v1/log_%s.txt" % (name,name)
         if not exists(results) and (not exists(log) or "Results reported at" in open(log).read()):
-            string="cd %s/v1; bsub -q xxl -R 'rhel50&&linux64' -oo log_%s.txt sh $PWD/run_%s.sh; cd .." % (name,name,name)
+            string="cd %s/v1; bsub -q xxl -R 'rhel50&&linux64' -oo log_%s.txt sh $PWD/run_%s.sh; cd ../.." % (name,name,name)
             if args.n:
                 print string
             else:

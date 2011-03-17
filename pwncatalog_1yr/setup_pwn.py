@@ -39,7 +39,7 @@ def setup_pwn(name,pwnlist,phasing=True):
                          binfile  = "binned.fits")
 
     spectral_analysis = SpectralAnalysis(data_specification,
-                                         binsperdec = 4,
+                                         binsperdec = 8,
                                          emin       = 100,
                                          emax       = 100000,
                                          irf        = "P6_V3_DIFFUSE",
