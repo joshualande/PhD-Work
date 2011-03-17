@@ -91,9 +91,12 @@ if roi.TS(which=name,quick=False) > 16:
 
         ts=roi.TS(which="",quick=False)
 
-        model = roi.get_modelt(which=name)
+        model = roi.get_model(which=name)
+        
+        p,p_err=model.statistical(absolute=True)
 
         print model.i_flux(E_range[i][0],E_range[i][1])
 
-        print model.i_index(E_range[i][0],E_range[i][1])
-        
+        index,indexerr=p[1],p_err[1]
+            
+        print "index="+str(index)+"\t"+str(indexerr)
