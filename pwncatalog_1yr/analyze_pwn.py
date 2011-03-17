@@ -4,6 +4,9 @@ from uw.like.roi_tsmap import TSCalc,TSCalcPySkyFunction
 from argparse import ArgumentParser
 from skymaps import SkyImage,SkyDir
 
+from uw.like.sed_plotter import plot_sed
+    
+
 parser = ArgumentParser()
 parser.add_argument("-l", "--list", required=True, help="List of all yaml sources")
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
@@ -49,7 +52,13 @@ if roi.TS(which=name,quick=False) > 16:
 
     # save localization results
 
+    
+
+
+
     # make SED
+
+    plot_sed(roi,which=name)
 
     # save spectral values
 
@@ -96,5 +105,4 @@ if roi.TS(which=name,quick=False) > 16:
                    size=5,title='Residual TS for %s' % name)
 
     roi.unzero_source(which=name)
-            
-                                                        
+    
