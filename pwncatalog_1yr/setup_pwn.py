@@ -37,7 +37,7 @@ def setup_pwn(name,pwnlist,phasing=True):
     data_specification = DataSpecification(
                          ft1files = ft1,
                          ltcube   = ltcube,
-                         binfile  = "binned.fits")
+                         binfile  = "binned_%s.fits" % name)
 
     spectral_analysis = SpectralAnalysis(data_specification,
                                          binsperdec = 8,

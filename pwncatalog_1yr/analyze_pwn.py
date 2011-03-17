@@ -58,7 +58,9 @@ if roi.TS(which=name,quick=False) > 16:
 
     # make SED
 
-    plot_sed(roi,which=name)
+    sedfile="SED_%s.png" % name
+
+    plot_sed(roi,which=name,outdir=sedfile)
 
     # save spectral values
 
