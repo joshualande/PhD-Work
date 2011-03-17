@@ -1,7 +1,8 @@
 from setup_pwn import setup_pwn
 from uw.like.SpatialModels import Disk
-
+from uw.like.roi_tsmap import TSCalc,TSCalcPySkyFunction
 from argparse import ArgumentParser
+from skymaps import SkyImage,SkyDir
 
 parser = ArgumentParser()
 parser.add_argument("-l", "--list", required=True, help="List of all yaml sources")
@@ -54,5 +55,45 @@ if roi.TS(which=name,quick=False) > 16:
 
     # make residual TS map
 
+    source = roi.delete(which=name)
+
+    tscalc = TSCalc(roi)
+    skyfunction=TSCalcPySkyFunction(tscalc)
+
+
+    namTS="output_residual_TSMap_%s.fits"%(name)
+    outputFile=namTS
+    pixelsize=0.2
+    fov=10
+    ptype='ZEA'
+    galactic=False
+    earth=False
+
+    skyimage = SkyImage(center, outputFile, pixelsize, fov, 1, ptype, galactic, earth)
+    skyimage.fill(skyfunction.get_pyskyfun())
+    del(skyimage)
+
+
 
     # fit in different energy ranges.
+
+
+    E_range=[[100.0,1000.0],[1000.0,10000.0],[10000.0,100000.0]]
+
+    for i in range(len(E_range)-1):
+        roi.modify(fit_emin=[E_range[i][0]]*2,fit_emax=[E_range[i][2]]*2)
+
+        fit()
+
+        p()
+
+        print "Energy range : emin= %.2f \t emax= %.2f"%(E_range[i][0],E_range[i][1])
+
+        ts=roi.TS(which="",quick=False)
+
+        model = roi.get_modelt(which=name)
+
+        print model.i_flux(E_range[i][0],E_range[i][1])
+
+        print model.i_index(E_range[i][0],E_range[i][1])
+        
