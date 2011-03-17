@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 from setup_pwn import setup_pwn
+import yaml
 
 parser = ArgumentParser()
 parser.add_argument("-l", "--pwnlist", required=True, help="List of all yaml sources")
@@ -18,11 +19,13 @@ roi.fit(method='minuit')
 ul=roi.upper_limit(which=args.name)
 ts=roi.TS(which=name,quick=False)
 
-print "upperlimit with phase cut= %.2f"%(ul)
+print "upperlimit with phase cut = %g" % ul
 
-results={'ul_100_100000':ul,'TS':ts}
+results={'name':name,
+         'ul_100_100000':float(ul),
+         'TS_100_100000':float(ts)}
 
-open('results_%s.yaml' % name).write(
+open('results_%s.yaml' % name,'w').write(
     yaml.dump(
         results
     )
