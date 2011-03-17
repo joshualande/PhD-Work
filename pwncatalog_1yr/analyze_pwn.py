@@ -26,7 +26,7 @@ fit()
 
 p()
 
-roi.localize(update=True)
+roi.localize(update=True,bandfits=True)
 
 p()
 
@@ -37,9 +37,9 @@ if roi.TS(which=name,quick=False) > 16:
 
     roi.modify(which=name,spatial_model=Disk())
 
-    roi.fit_extension(which=name,use_gradient=True)
+    roi.fit_extension(which=name,bandfits=True)
 
-    ts_ext=roi.TS_ext(which=name,use_gradient=True)
+    ts_ext=roi.TS_ext(which=name,bandfits=True)
 
     print 'ts_ext = ',ts_ext
 
