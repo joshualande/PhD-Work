@@ -8,7 +8,11 @@ from uw.like.SpatialModels import Disk
 from uw.like.Models import PowerLaw
 from skymaps import SkyDir
 
-def setup_pwn(name,list):
+def setup_pwn(name,list,phasing=True):
+    """Name of the source
+    list Yaml file
+    phasing=true : apply phase cut
+    phasing=false : don't do it"""
 
     sources=yaml.load(open(list))
 
@@ -17,7 +21,11 @@ def setup_pwn(name,list):
     ft1=sources[name]['ft1']
     ltcube=sources[name]['ltcube']
 
-    phase_factor=phase[1]-phase[0] if phase[1]>phase[0] else (1-phase[1]) + (phase[0]-0)
+    if(phasing==True):
+        phase_factor=phase[1]-phase[0] if phase[1]>phase[0] else (1-phase[1]) + (phase[0]-0)
+    else :
+        phase_factor=1.0
+
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"))
     catalog_source=[i for i in catalog.get_sources(SkyDir(),180) if i.name==catalog_name][0]
