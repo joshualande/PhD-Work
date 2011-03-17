@@ -49,6 +49,8 @@ if roi.TS(which=name,quick=False) > 16:
 
     # save localization results
 
+    # make SED
+
     # save spectral values
 
     model = roi.get_model(which=name)
