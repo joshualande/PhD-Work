@@ -53,27 +53,6 @@ if roi.TS(which=name,quick=False) > 16:
 
     print model.i_flux(100,100000)
 
-    # make residual TS map
-
-    source = roi.delete(which=name)
-
-    tscalc = TSCalc(roi)
-    skyfunction=TSCalcPySkyFunction(tscalc)
-
-
-    namTS="output_residual_TSMap_%s.fits"%(name)
-    outputFile=namTS
-    pixelsize=0.2
-    fov=10
-    ptype='ZEA'
-    galactic=False
-    earth=False
-
-    skyimage = SkyImage(center, outputFile, pixelsize, fov, 1, ptype, galactic, earth)
-    skyimage.fill(skyfunction.get_pyskyfun())
-    del(skyimage)
-
-
 
     # fit in different energy ranges.
 
@@ -100,3 +79,26 @@ if roi.TS(which=name,quick=False) > 16:
         index,indexerr=p[1],p_err[1]
             
         print "index="+str(index)+"\t"+str(indexerr)
+
+    # make residual TS map
+
+    source = roi.delete(which=name)
+    roi.modify(fit_emin=100,fit_emax=1000)
+            
+    tscalc = TSCalc(roi)
+    skyfunction=TSCalcPySkyFunction(tscalc)
+    
+    
+    namTS="output_residual_TSMap_%s.fits"%(name)
+    outputFile=namTS
+    pixelsize=0.2
+    fov=10
+    ptype='ZEA'
+    galactic=False
+    earth=False
+    
+    skyimage = SkyImage(center, outputFile, pixelsize, fov, 1, ptype, galactic, earth)
+    skyimage.fill(skyfunction.get_pyskyfun())
+    del(skyimage)
+    
+                                                        
