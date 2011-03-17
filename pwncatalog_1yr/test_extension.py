@@ -47,11 +47,13 @@ if roi.TS(which=name,quick=False) > 16:
 
     p()
 
-    # get spectral values
+    # save localization results
+
+    # save spectral values
 
     model = roi.get_model(which=name)
 
-    print model.i_flux(100,100000)
+    print model.i_flux(100,100000,error=True)
 
 
     # fit in different energy ranges.
@@ -59,14 +61,14 @@ if roi.TS(which=name,quick=False) > 16:
 
     E_range=[[100.0,1000.0],[1000.0,10000.0],[10000.0,100000.0]]
 
-    for i in range(len(E_range)-1):
-        roi.modify(fit_emin=[E_range[i][0]]*2,fit_emax=[E_range[i][2]]*2)
+    for emin,emax in E_range:
+        roi.change_binning(fit_emin=emin,fit_emax=emax)
 
         fit()
 
         p()
 
-        print "Energy range : emin= %.2f \t emax= %.2f"%(E_range[i][0],E_range[i][1])
+        print "Energy range : emin= %.2f \t emax= %.2f" % (emin,emax)
 
         ts=roi.TS(which="",quick=False)
 
@@ -74,31 +76,23 @@ if roi.TS(which=name,quick=False) > 16:
         
         p,p_err=model.statistical(absolute=True)
 
-        print model.i_flux(E_range[i][0],E_range[i][1])
+        flux,fluxerr=model.i_flux(emin,emax,error=True)
+        print flux
 
         index,indexerr=p[1],p_err[1]
             
-        print "index="+str(index)+"\t"+str(indexerr)
+        print "index = %g +/- %g" % (index,indexerr)
 
-    # make residual TS map
+    # make 'source' TS map
 
-    source = roi.delete(which=name)
-    roi.modify(fit_emin=100,fit_emax=1000)
+    roi.change_binning(fit_emin=100,fit_emax=100000)
+
+    roi.zero_source(which=name)
+
+    roi.plot_tsmap(filename='res_tsmap_%s.png' % name,
+                   fitsfile='res_tsmap_%s.fits' % name,
+                   size=5,title='Residual TS for %s' % name)
+
+    roi.unzero_source(which=name)
             
-    tscalc = TSCalc(roi)
-    skyfunction=TSCalcPySkyFunction(tscalc)
-    
-    
-    namTS="output_residual_TSMap_%s.fits"%(name)
-    outputFile=namTS
-    pixelsize=0.2
-    fov=10
-    ptype='ZEA'
-    galactic=False
-    earth=False
-    
-    skyimage = SkyImage(center, outputFile, pixelsize, fov, 1, ptype, galactic, earth)
-    skyimage.fill(skyfunction.get_pyskyfun())
-    del(skyimage)
-    
                                                         

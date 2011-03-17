@@ -18,13 +18,14 @@ def setup_pwn(name,pwnlist,phasing=True):
 
     catalog_name=sources[name]['catalog']
     phase=sources[name]['phase']
-    ft1=sources[name]['ft1']
     ltcube=sources[name]['ltcube']
 
-    if(phasing==True):
+    if phasing==True:
         phase_factor=phase[1]-phase[0] if phase[1]>phase[0] else (1-phase[1]) + (phase[0]-0)
+        ft1=sources[name]['ft1']
     else :
         phase_factor=1.0
+        raise Exception("Unable to phase data")
 
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"))
@@ -57,6 +58,8 @@ def setup_pwn(name,pwnlist,phasing=True):
         fit_emax = 100000,
         phase_factor = phase_factor
     )
+
+    print 'phase factor = ',roi.phase_factor
 
     roi.del_source(catalog_name)
 
