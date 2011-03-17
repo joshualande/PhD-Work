@@ -25,9 +25,11 @@ ts=roi.TS(which=name,quick=False)
 
 print "upperlimit with phase cut = %g" % ul
 
-results={'name':name,
-         'ul_100_100000':float(ul),
-         'TS_100_100000':float(ts)}
+results=dict(
+    name=name,
+    ul_100_100000=ul,
+    TS_100_100000=ts
+)
 
 open('results_%s.yaml' % name,'w').write(
     yaml.dump(

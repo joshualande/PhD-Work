@@ -26,7 +26,27 @@ fit()
 
 p()
 
-roi.localize(update=True,bandfits=True)
+ts=roi.TS(which=name,quick=False)
+print 'Before localizing, the TS is ',ts
+
+"""
+roi.zero_source(which=name)
+
+roi.plot_tsmap(filename='res_tsmap_%s.png' % name,
+               fitsfile='res_tsmap_%s.fits' % name,
+               size=5,title='Residual TS for %s' % name)
+
+roi.unzero_source(which=name)
+"""
+
+localize_succeed=True
+try:
+    roi.localize(update=True,bandfits=True)
+except Exception, err:
+    print 'error localizing: %s' % (str(err))
+    localize_succeed=True
+
+roi.save('fit_point_%s.dat' % name)
 
 p()
 
@@ -40,6 +60,8 @@ if roi.TS(which=name,quick=False) > 16:
     roi.fit_extension(which=name,bandfits=True)
 
     ts_ext=roi.TS_ext(which=name,bandfits=True)
+
+    roi.save('fit_disk_%s.dat' % name)
 
     print 'ts_ext = ',ts_ext
 
@@ -83,7 +105,7 @@ if roi.TS(which=name,quick=False) > 16:
 
         print "Energy range : emin= %.2f \t emax= %.2f" % (emin,emax)
 
-        ts=roi.TS(which="",quick=False)
+        ts=roi.TS(which=name,quick=False)
 
         model = roi.get_model(which=name)
         
@@ -100,11 +122,14 @@ if roi.TS(which=name,quick=False) > 16:
 
     roi.change_binning(fit_emin=100,fit_emax=100000)
 
-    roi.zero_source(which=name)
-
-    roi.plot_tsmap(filename='res_tsmap_%s.png' % name,
-                   fitsfile='res_tsmap_%s.fits' % name,
-                   size=5,title='Residual TS for %s' % name)
-
-    roi.unzero_source(which=name)
     
+results=dict(
+    name=name,
+    localize_succeed=localize_succeed,
+)
+
+open('results_%s.yaml' % name,'w').write(
+    yaml.dump(
+        results
+    )
+)
