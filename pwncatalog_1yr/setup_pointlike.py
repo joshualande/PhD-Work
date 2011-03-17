@@ -23,14 +23,14 @@ def setup_pointlike(name,pwnlist,phasing=True):
     ltcube=sources[name]['ltcube']
 
     if phasing==True:
-        phase_factor=phase[1]-phase[0] if phase[1]>phase[0] else (1-phase[1]) + (phase[0]-0)
+        phase_factor=phase[1]-phase[0] if phase[1]>phase[0] else (1-phase[0]) + (phase[1]-0)
         ft1=sources[name]['ft1']
     else :
         phase_factor=1.0
         raise Exception("Unable to phase data")
 
 
-    catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"))
+    catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"),free_radius=5)
     catalog_source=[i for i in catalog.get_sources(SkyDir(),180) if i.name==catalog_name][0]
 
     center=catalog_source.skydir
@@ -58,10 +58,9 @@ def setup_pointlike(name,pwnlist,phasing=True):
         catalogs = catalog,
         fit_emin = 100,
         fit_emax = 100000,
+        catalog_include_radius = 20,
         phase_factor = phase_factor)
     )
-
-    print 'phase factor = ',roi.phase_factor
 
     roi.del_source(catalog_name)
 

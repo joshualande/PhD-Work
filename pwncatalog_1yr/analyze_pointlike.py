@@ -17,7 +17,6 @@ name=args.name
 
 roi=setup_pointlike(name,args.list)
 
-p=lambda: roi.print_summary(title='')
 
 # First, calculate upper limit
 
@@ -28,7 +27,7 @@ pulsar_position=source.skydir
     
 fit()
 
-p()
+roi.print_summary()
 
 ts=roi.TS(which=name,quick=False,quiet=True)
 print 'Before localizing, the TS is ',ts
@@ -51,7 +50,7 @@ except Exception, err:
 ts_point = roi.TS(which=name,quick=False,quiet=True)
 roi.save('fit_point_%s.dat' % name)
 
-p()
+roi.print_summary()
 
 source=roi.get_source(which=name)
 best_fit_point=source.skydir
@@ -79,8 +78,7 @@ if ts_ext<16:
 
 fit()
 
-p()
-
+roi.print_summary()
 
 plot_sed(roi,which=name,outdir="SED_%s.png" % name)
 
@@ -103,7 +101,8 @@ results=dict(
     flux=flux,
     index=index,
     ts_point=ts_point,
-    ts_disk=ts_disk
+    ts_disk=ts_disk,
+    phase_factor=roi.phase_factor
 )
 
 
@@ -114,7 +113,7 @@ for emin,emax in E_range:
 
     fit()
 
-    p()
+    roi.print_summary()
 
     print "Energy range : emin= %.2f \t emax= %.2f" % (emin,emax)
 
