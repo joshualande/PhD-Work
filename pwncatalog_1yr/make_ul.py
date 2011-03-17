@@ -8,7 +8,7 @@ args=parser.parse_args()
 
 roi=setup_pwn(args.name,args.list)
 
-roi.fit()
+roi.fit(method='minuit')
 
-ul=roi.upper_limit(which='args.name')
+ul=roi.upper_limit(which=args.name)
 print ul
