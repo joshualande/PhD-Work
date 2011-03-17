@@ -8,13 +8,13 @@ from uw.like.SpatialModels import Disk
 from uw.like.Models import PowerLaw
 from skymaps import SkyDir
 
-def setup_pwn(name,list,phasing=True):
+def setup_pwn(name,pwnlist,phasing=True):
     """Name of the source
-    list Yaml file
+    pwnlist Yaml file
     phasing=true : apply phase cut
     phasing=false : don't do it"""
 
-    sources=yaml.load(open(list))
+    sources=yaml.load(open(pwnlist))
 
     catalog_name=sources[name]['catalog']
     phase=sources[name]['phase']
