@@ -33,10 +33,14 @@ ts=roi.TS(which=name,quick=False,quiet=True)
 print 'Before localizing, the TS is ',ts
 
 roi.zero_source(which=name)
-roi.plot_tsmap(filename='res_tsmap_%s.png' % name,
-               fitsfile='res_tsmap_%s.fits' % name,
+roi.plot_tsmap(filename='src_tsmap_%s.png' % name,
+               fitsfile='src_tsmap_%s.fits' % name,
                size=5,title='TS Map of %s' % name)
 roi.unzero_source(which=name)
+
+roi.plot_tsmap(filename='res_tsmap_%s.png' % name,
+               fitsfile='res_tsmap_%s.fits' % name,
+               size=5,title='Residual TS Map of %s' % name)
 
 localize_succeed=True
 try:
@@ -68,8 +72,8 @@ best_fit_extended=source.skydir
 roi.save('fit_disk_%s.dat' % name)
 
 p,p_err=source.model.statistical(absolute=True)
-flux=source.model.i_flux(100,100000,error=True)
-index=[p[1],p_err[1]]
+flux,flux_err=source.model.i_flux(100,100000,error=True)
+index,index_err=p[1],p_err[1]
 
 print 'ts_ext = ',ts_ext
 
@@ -92,17 +96,17 @@ print model.i_flux(100,100000,error=True)
 # fit in different energy ranges.
 
 results=dict(
-    pulsar_position_gal=[pulsar_position.l(),pulsar_position.b()],
+    pulsar_position_gal=[float(pulsar_position.l()),float(pulsar_position.b())],
     name=name,
     localize_succeed=localize_succeed,
-    ts_ext=ts_ext,
-    best_fit_point_gal=[best_fit_point.l(),best_fit_point.b()],
-    best_fit_extended_gal=[best_fit_extended.l(),best_fit_extended.b()],
-    flux=flux,
-    index=index,
-    ts_point=ts_point,
-    ts_disk=ts_disk,
-    phase_factor=roi.phase_factor
+    ts_ext=float(ts_ext),
+    best_fit_point_gal=[float(best_fit_point.l()),float(best_fit_point.b())],
+    best_fit_extended_gal=[float(best_fit_extended.l()),float(best_fit_extended.b())],
+    flux=[float(flux),float(flux_err)],
+    index=[float(index),float(index_err)],
+    TS_point=float(ts_point),
+    TS_disk=float(ts_disk),
+    phase_factor=float(roi.phase_factor)
 )
 
 
@@ -117,19 +121,24 @@ for emin,emax in E_range:
 
     print "Energy range : emin= %.2f \t emax= %.2f" % (emin,emax)
 
-    results['ts_%g_%g' % (emin,emax)]=roi.TS(which=name,quick=False,quiet=True)
+    results['ts_%g_%g' % (emin,emax)]=float(roi.TS(which=name,quick=False,quiet=True))
 
     model = roi.get_model(which=name)
     
     p,p_err=model.statistical(absolute=True)
-    results['flux_%g_%g' % (emin,emax)]=model.i_flux(emin,emax,error=True)
-    results['index_%g_%g' % (emin,emax)]=[p[1],p_err[1]]
+    flux,flux_err=model.i_flux(emin,emax,error=True)
+    results['flux_%g_%g' % (emin,emax)]=[float(flux),float(flux_err)]
+    results['index_%g_%g' % (emin,emax)]=[float(p[1]),float(p_err[1])]
 
     roi.zero_source(which=name)
-    roi.plot_tsmap(filename='res_tsmap_%g_%g_%s.png' % (emin,emax,name),
-                   fitsfile='res_tsmap_%g_%g_%s.fits' % (emin,emax,name),
+    roi.plot_tsmap(filename='src_tsmap_%g_%g_%s.png' % (emin,emax,name),
+                   fitsfile='src_tsmap_%g_%g_%s.fits' % (emin,emax,name),
                    size=5,title='TS Map of %s %gMeV to %gMeV' % (name,emin,emax))
     roi.unzero_source(which=name)
+
+    roi.plot_tsmap(filename='res_tsmap_%g_%g_%s.png' % (emin,emax,name),
+                   fitsfile='res_tsmap_%g_%g_%s.fits' % (emin,emax,name),
+                   size=5,title='Residual TS Map of %s %gMeV to %gMeV' % (name,emin,emax))
 
 roi.change_binning(fit_emin=100,fit_emax=100000)
     

@@ -67,12 +67,13 @@ def setup_pointlike(name,pwnlist,phasing=True):
     # make residual TS map
 
     # add in PWN Candidate
-    roi.add_source(
-        PointSource(
+    source=PointSource(
             name=name,
-            model=PowerLaw(),
+            model=PowerLaw(p=[1,2]),
             skydir=catalog_source.skydir
         )
-    )
+    source.model.set_flux(1e-7,emin=100,emax=100000)
+
+    roi.add_source(source)
 
     return roi

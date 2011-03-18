@@ -7,48 +7,52 @@ parser.add_argument("-l", "--pwnlist", required=True, help="List of all yaml sou
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 args=parser.parse_args()
 
-print "----Upperlimit with phase cut----"
+fit=lambda: roi.fit(method='minuit')
 
 name=args.name
 pwnlist=args.pwnlist
 
 roi=setup_pointlike(name,pwnlist)
 
+model=roi.get_model(which=name)
+model.setp(1,2)
+model.freeze(1)
+roi.modify(which=name,model=model)
+
 roi.print_summary()
 
-roi.fit(method='minuit')
+fit()
 
 roi.print_summary()
 
 ul=roi.upper_limit(which=args.name)
 ts=roi.TS(which=name,quick=False,quiet=True)
 
-print "upperlimit with phase cut = %g" % ul
 
 results=dict(
     name=name,
-    ul_100_100000=ul,
-    TS_100_100000=ts
+    upper_limit=float(ul),
+    TS=float(ts)
 )
+
+print "upperlimit = %g" % ul
+
+E_range=[[100,1000],[1000,10000],[10000,100000]]
+
+for emin,emax in E_range:
+    roi.change_binning(fit_emin=emin,fit_emax=emax)
+    fit()
+
+    ul=roi.upper_limit(which=args.name)
+    ts=roi.TS(which=name,quick=False,quiet=True)
+
+    results['upper_limit_%g_%g' % (emin,emax)] = float(ul)
+    results['TS_%g_%g' % (emin,emax)] = float(ts)
+
+roi.change_binning(fit_emin=100,fit_emax=100000)
 
 open('results_%s.yaml' % name,'w').write(
     yaml.dump(
         results
     )
 )
-
-#print "Upperlimit without phase cut----"
-
-#roi=setup_pwn(args.name,args.list,phasing=False)
-
-#roi.fit
-
-#ul2=roi.upperlimit(which='args.name')
-
-#print "upperlimit without phasecut=%.2f"%(ul2)
-
-#a=[ul,ul2]
-
-#uplim=min(a)
-
-#print "Upperlimit = %.2f"%(uplim)
