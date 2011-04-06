@@ -1,0 +1,37 @@
+
+\documentclass[12pt]{article}
+
+\title{Search for Spatially Extended Sources Using Two Years of Flight
+Data}
+
+
+\begin{document}
+
+\abstract{
+We present a new method for analyzing spatially 
+extended sources with the Fermi Large Area
+Telescope (LAT), the primary science instrument
+on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.
+We provide a series of Monte Carlo studies
+that were done to validate this tool.
+We then apply this tool to test all sources in
+the 2FGL Two Year Catalog\cite{2FGL} for extension
+and report on the discovery of new extended sources.
+}
+
+\section{Introduction}
+
+\section{Analysis Method}
+
+\section{Validation}
+
+
+\section{Extension search method}
+
+\section{Results}
+
+\section{Interpretation}
+
+
+\end{document}
+
