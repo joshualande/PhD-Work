@@ -27,6 +27,13 @@ pulsar_position=source.skydir
     
 fit()
 
+ts_at_pulsar = roi.TS(which=name,quick=False,quiet=True)
+p,p_err=source.model.statistical(absolute=True)
+flux_at_pulsar,flux_at_pulsar_err=source.model.i_flux(100,100000,error=True)
+index_at_pulsar,index_at_pulsar_err=p[1],p_err[1]
+
+roi.save('fit_at_pulsar_point_%s.dat' % name)
+
 roi.print_summary()
 
 ts=roi.TS(which=name,quick=False,quiet=True)
@@ -35,12 +42,12 @@ print 'Before localizing, the TS is ',ts
 roi.zero_source(which=name)
 roi.plot_tsmap(filename='src_tsmap_%s.png' % name,
                fitsfile='src_tsmap_%s.fits' % name,
-               size=5,title='TS Map of %s' % name)
+               size=8,title='TS Map of %s' % name)
 roi.unzero_source(which=name)
 
 roi.plot_tsmap(filename='res_tsmap_%s.png' % name,
                fitsfile='res_tsmap_%s.fits' % name,
-               size=5,title='Residual TS Map of %s' % name)
+               size=8,title='Residual TS Map of %s' % name)
 
 localize_succeed=True
 try:
@@ -106,7 +113,10 @@ results=dict(
     index=[float(index),float(index_err)],
     TS_point=float(ts_point),
     TS_disk=float(ts_disk),
-    phase_factor=float(roi.phase_factor)
+    phase_factor=float(roi.phase_factor),
+    ts_at_pulsar=float(ts_at_pulsar),
+    flux_at_pulsar=[float(flux_at_pulsar),float(flux_at_pulsar_err)],
+    index_at_pulsar=[float(index_at_pulsar),float(index_at_pulsar_err)]
 )
 
 
@@ -133,12 +143,12 @@ for emin,emax in E_range:
     roi.zero_source(which=name)
     roi.plot_tsmap(filename='src_tsmap_%g_%g_%s.png' % (emin,emax,name),
                    fitsfile='src_tsmap_%g_%g_%s.fits' % (emin,emax,name),
-                   size=5,title='TS Map of %s %gMeV to %gMeV' % (name,emin,emax))
+                   size=8,title='TS Map of %s %gMeV to %gMeV' % (name,emin,emax))
     roi.unzero_source(which=name)
 
     roi.plot_tsmap(filename='res_tsmap_%g_%g_%s.png' % (emin,emax,name),
                    fitsfile='res_tsmap_%g_%g_%s.fits' % (emin,emax,name),
-                   size=5,title='Residual TS Map of %s %gMeV to %gMeV' % (name,emin,emax))
+                   size=8,title='Residual TS Map of %s %gMeV to %gMeV' % (name,emin,emax))
 
 roi.change_binning(fit_emin=100,fit_emax=100000)
     

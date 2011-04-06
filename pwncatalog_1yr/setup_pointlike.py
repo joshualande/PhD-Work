@@ -21,6 +21,7 @@ def setup_pointlike(name,pwnlist,phasing=True):
     catalog_name=sources[name]['catalog']
     phase=sources[name]['phase']
     ltcube=sources[name]['ltcube']
+    pulsar_position=SkyDir(*sources[name]['dir'])
 
     if phasing==True:
         phase_factor=phase[1]-phase[0] if phase[1]>phase[0] else (1-phase[0]) + (phase[1]-0)
@@ -70,7 +71,7 @@ def setup_pointlike(name,pwnlist,phasing=True):
     source=PointSource(
             name=name,
             model=PowerLaw(p=[1,2]),
-            skydir=catalog_source.skydir
+            skydir=pulsar_position
         )
     source.model.set_flux(1e-7,emin=100,emax=100000)
 

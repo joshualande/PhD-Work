@@ -49,6 +49,7 @@ for emin,emax in E_range:
     results['upper_limit_%g_%g' % (emin,emax)] = float(ul)
     results['TS_%g_%g' % (emin,emax)] = float(ts)
 
+    print "upperlimit (%g to %g) = %g" % (emin,emax,ul)
 roi.change_binning(fit_emin=100,fit_emax=100000)
 
 open('results_%s.yaml' % name,'w').write(

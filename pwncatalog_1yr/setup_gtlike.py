@@ -86,7 +86,6 @@ def setup_gtlike(name,roi):
                   outfile=srcmap_file,
                   irfs=irfs)
 
-
     print 'Running pyLikelihood'
     obs=BinnedObs(srcmap_file,expcube_file,bexpmap_file,irfs)
 
