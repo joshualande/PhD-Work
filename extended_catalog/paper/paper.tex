@@ -1,0 +1,159 @@
+
+\documentclass[12pt]{article}
+
+\title{Search for Spatially Extended Sources Using Two Years of Flight
+Data}
+
+
+\usepackage{amsmath}
+
+
+\begin{document}
+
+\maketitle
+
+\abstract{
+We present a new method for analyzing spatially 
+extended sources with the Fermi Large Area
+Telescope (LAT), the primary science instrument
+on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.
+We provide a series of Monte Carlo studies
+that were done to validate this tool.
+We then apply this tool to test all sources in
+the 2FGL Two Year Catalog for extension
+and report on the discovery of new extended sources.\cite{2FGL}
+}
+
+\section{Introduction}
+
+% * Resolving spatially extended Fermi sources is important for 
+%    * studying supernova remnants, 
+%    * pulsar wind nebulae, 
+%    * galaxies,  
+%    * potentially dark matter or new physics.
+% * We searched all 2FGL catalog sources
+% * Systematic test for a certain kind of (~ small) regularly shaped extended 
+
+
+\section{Analysis Method}
+
+
+%   * Difficulty of studying spatially extended sources
+%   * Pointlike, great features
+%   * modifying it to fit spatially extended sources.
+%      * semi-analytic convolution formula
+%   * importance of fitting position + extension + spectrum simultaneously to apply statistical significance
+%   * Monte Carlo Validation
+%
+
+Performing morphological studies of sources in the GeV energy range using
+the Fermi LAT is challenging primarily because of the significantly energy
+dependent point spread function and because of systematic errors in the
+galactic diffuse emission. The Fermi PSF varies from over $XXXXX^\circ$
+at 100MeV to $XXXXX^\circ$ at 100GeV and so the higher energy photons are
+significantly more important for studying the shape of sources. One could
+ideally look just at the highest energy photons, but the trade off is that
+for typical sources many more source events are expected at low energy.
+For this reason, it is especially important to use as much of the data
+as possible.
+
+The second primary difficult in studying spatially extended sources is
+systematic uncertainties in the diffuse emission. Systematic errors are
+notoriously difficult and will be discussed more later, but the important
+point to make here is that one of the most important diagnostic tools for
+studying systematic errors is being able to iterate the analysis while
+varying different parameters such as what goes into the diffuse model.
+
+A new analysis tool has been developed to address these unique
+requirements for studying spatially extended sources with the Fermi
+LAT. The overall approach for this analysis is to perform a maximum
+likelihood analysis where the Poisson likelihood for observing the
+measured counts is computed given an assumed sky model. The parameters
+of the sky model are then fit by maximizing the log of the likelihood.
+To study the extension of a source, one can assume a particular shape
+for an extended source (e.g. a disk or Gaussian), and fit the spatial
+parameters of that source.
+
+In principle, the entire task can be done using the standard science
+tools package {\em gtlike}\cite{Science-Tools-gtlike}. But {\em gtlike} is
+only able to fit the spectral parameters of the source, so the extension
+fitting would have to be done as an external loop. Typically, the run time
+for a binned source analysis using {\em gtlike} is several hours so this loop
+would be especially time consuming. In principle, parallel computing could
+ease this burdon, but parallel fitting algorithms are rather untested
+and complex. Furthermore, the machinery required to do something like
+this would necessarily be rather complex. What has typically been done by
+the Fermi team to study extended sources is to fix the assumed position
+of the extended source, either by our knowledge of a source from other
+wavelenghts, or by fitting it as a point source. Then, a profile of the
+likelihood as a function of extension is developed using {\em gtlike}
+and the maximum of this profile. This approach is not optimal because it
+needs not be the case that the best fit position of a point source would
+be the same as the best fit position of an extended source. Furthermore,
+by not fully maximizing the likelihood, this method is not as significant to
+extension, especially of faint sources. And finally, since this approach
+is so computationally intensive, no large scale Monte Carlo effort has been
+launched to validate the method.
+
+Instead, an alternate approach was developed for performing
+a morphological analysis. An alternate maximum likelihood fitting
+package called {\em pointlike} has been developed by the Fermi
+collaboration and we have expanded its functionality to fully support
+analyzing spatially extended sources. {\em pointlike} is most thoroughly
+described in Matthew Kerr's Ph.D Thesis\cite{Matthew_kerr_phd_thesis}
+but the important aspects will be summarized below. What differentiates
+{\em pointlike} most significantly from {\em gtlike} is its emphasis
+on speed by introducing approximations into the calculation of the
+likelihood function while at the same time trying to reduce any
+numerical errors that may be introduced.  Like binned {\em gtlike},
+{\em pointlike} bins the sky both in position and energy.  Unlike {\em
+gtlike}, pointlike relies on the {\em healpix} representation of spatial
+bins\cite{healpix_paper} and scales the size of each spatial bin to be
+smaller than the point spread function. This is convenient because it no
+significant information is lost due to binning at all energies and it is
+always a good approximation that the model predicted counts are uniform
+across a spatial bin. Furthermore, {\em pointlike} uses a sparse matrix
+representation of the spatial bins where only the bins with counts in
+them are looped over. The only downside to this is that the integral of
+the model predicted counts must be independently calculated.  Effectivly,
+{\em pointlike} efficiently interpolates from a totally binned analysis
+at low energy (where the resolution is poor and there are many counts)
+to an unbinned analysis at high energy (where the resolution is very good
+but there are few counts). This approach provides significant savings
+in time without introducing large numerical error.
+
+
+% PseudoHypothesis
+
+\section{Validation}
+
+One can define a parameter $\text{TS}_\text{ext}$ as twice the increase
+in log likelihood going from fitting a source with a point hypothesis to fitting
+it as an extended hypothesis. So $\text{TS}_\text{ext}=2\times(LL_\text{ext}-LL_\text{ps})$.
+In going from fitting a point source to fitting a simple extended source such as
+a disk, one degree of freedom, the source width, is added. According to
+Wilk's Theorem, the distribution of $\text{TS}_\text{ext}$ for no signal (a true
+point source) should follow a $\chi^2$ distribution with one degree of freedom\cite{Wilks_Theorem}.
+On the other hand, since the null hypothesis exists on the edge of parameter space,
+and so so Wilk's Theorem does not hold\cite{Warnings about Wilk's Thorem}.
+One might expect the actual distribution to be a half $\chi^2$ distribution with a delta
+function at 0. This was the distribution found to be true for source finding of
+gamma ray sources.\cite{Mattox_et_All_Paper}. A Monte Carlo study has been performed to
+show how well we can believe the statistical significance.
+
+
+
+
+
+\section{Extension search method}
+
+% * Plots we make ...
+
+
+\section{Results}
+
+\section{Interpretation}
+
+
+\end{document}
+
