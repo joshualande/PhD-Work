@@ -1,5 +1,6 @@
 
 \documentclass[12pt]{article}
+\usepackage{fullpage}
 
 \title{Search for Spatially Extended Sources Using Two Years of Flight
 Data}
@@ -13,15 +14,13 @@ Data}
 \maketitle
 
 \abstract{
-We present a new method for analyzing spatially 
-extended sources with the Fermi Large Area
-Telescope (LAT), the primary science instrument
-on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.
-We provide a series of Monte Carlo studies
-that were done to validate this tool.
-We then apply this tool to test all sources in
-the 2FGL Two Year Catalog for extension
-and report on the discovery of new extended sources.\cite{2FGL}
+We present a new method for analyzing spatially extended sources with
+the Fermi Large Area Telescope (LAT), the primary science instrument
+on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.  We provide a
+series of Monte Carlo studies that were done to validate this tool.
+We then apply this tool to test all sources in the 2FGL Two Year Catalog
+for extension.\cite{2FGL} We then report on the discovery of XXX new
+extended sources.
 }
 
 \section{Introduction}
@@ -33,6 +32,16 @@ and report on the discovery of new extended sources.\cite{2FGL}
 %    * potentially dark matter or new physics.
 % * We searched all 2FGL catalog sources
 % * Systematic test for a certain kind of (~ small) regularly shaped extended 
+
+
+The Large Area Telescope (LAT) on the Fermi Gamma-Ray Space Telescope
+has been surveying the Gamma-ray sky since August 2008. The LAT has been
+been essential in studying a variety of astrophysical sources including
+Active Galactic Nuclie, Pulsars, Supernova Remnants. 
+One of the important data productes 
+
+Using 11 months of data, the LAT produced the best-resolved survey of the sky
+in the 100 MeV to 100 GeV energy range\cite{2FGL Paper}. The
 
 
 \section{Analysis Method}
@@ -48,7 +57,7 @@ and report on the discovery of new extended sources.\cite{2FGL}
 
 Performing morphological studies of sources in the GeV energy range using
 the Fermi LAT is challenging primarily because of the significantly energy
-dependent point spread function and because of systematic errors in the
+dependent point spread function (PSF) and because of systematic errors in the
 galactic diffuse emission. The Fermi PSF varies from over $XXXXX^\circ$
 at 100MeV to $XXXXX^\circ$ at 100GeV and so the higher energy photons are
 significantly more important for studying the shape of sources. One could
@@ -109,48 +118,130 @@ numerical errors that may be introduced.  Like binned {\em gtlike},
 {\em pointlike} bins the sky both in position and energy.  Unlike {\em
 gtlike}, pointlike relies on the {\em healpix} representation of spatial
 bins\cite{healpix_paper} and scales the size of each spatial bin to be
-smaller than the point spread function. This is convenient because it no
+smaller than the PSF. This is convenient because it no
 significant information is lost due to binning at all energies and it is
 always a good approximation that the model predicted counts are uniform
 across a spatial bin. Furthermore, {\em pointlike} uses a sparse matrix
-representation of the spatial bins where only the bins with counts in
-them are looped over. The only downside to this is that the integral of
-the model predicted counts must be independently calculated.  Effectivly,
+representation of the spatial bins where only the bins with counts in them
+are looped over. The only downside to this is that the integral of the
+model predicted counts must be independently calculated.  Effectively,
 {\em pointlike} efficiently interpolates from a totally binned analysis
 at low energy (where the resolution is poor and there are many counts)
-to an unbinned analysis at high energy (where the resolution is very good
-but there are few counts). This approach provides significant savings
-in time without introducing large numerical error.
+to an unbinned analysis at high energy (where the resolution is very
+good but there are few counts). This approach provides a significant
+savings in time while introducing only small numerical error.
 
+We have modified {\em pointlike} to support fitting spatially extended
+sources.  To do this, we introduced a new class of diffuse sources where
+the spatial and spectral information completely decouple and where
+the spatial shape is parameters by simple objects (Disks, Gaussian).
+The code consistently convolves the extended source shape with the point
+spread function (as a function of energy) and integrates the spectrum over energy
+to computed model predicted counts.
 
-% PseudoHypothesis
+Finally, {\em pointlike} allows the spatial parameters of an extended
+source to be simulataneoulsy fit. {\em pointlike} uses the Minuit fitting
+library to perform the maximum likelihood maximization of the position
+and extension of an extended source\cite{Minuit reference}.  At each
+step in the fit of the shape, the spectral parameters of the entire sky
+model are reoptimized. To avoid projection effects, what is directly
+fit is not the longitude and latitude of the source but instead
+the displacement in a rotated reference frame. The covariance matrix is
+then computed and inverted to estimate the statistical errors on the
+position and extension.
 
-\section{Validation}
+{\em pointlike} optimizes the analysis of extended sources in two ways.
+First, for extended sources which are radially symmetric, the convolution
+of the source shape with our parameterization of the PSF can be performed
+semi-analytically. Generally, at a given energy the observed 
+photon distribution is
+\begin{equation}
+  \text{PDF}(\vec r) = \int  \text{PSF}(|\vec r - \vec r'|)I_\text{src}(\vec r') d A' 
+\end{equation}
+where $I_\text{src}$ is the extended soruce shape and the PSF is parameterized by
+\begin{equation}
+  \text{PSF}(\vec r) = 
+  \frac{1}{2\pi\sigma^2}
+  \left(1-\frac{1}{\gamma}\right)
+  \left(1+\frac{u}{\gamma}\right)^{-\gamma}
+\end{equation}
+Here, $\sigma$ and $\gamma$ are parameterize the $PSF$.
+If the extended source is radially symmetric, then
+$I_\text{src} (\vec r') = I_\text{src} (r')$ and the angular part of the
+integral can be done analytically, leaving a simpler one dimensional
+integral:
+\begin{equation}
+  \text{PDF}(u)= \int_0^\infty dv
+  I_\text{src}(v) 
+  \left(\frac{\gamma-1}{\gamma}\right)
+  \left( \frac{\gamma}{\gamma + u + v}\right)^\gamma
+  ~_2F_1 \left(\gamma/2,\frac{1+\gamma}{2},1,\frac{4uv}{(\gamma+u+v)^2}\right)
+\end{equation}
+Not only is this convolution formula faster, but it has the advantage
+that it more accurately reduces to the actual PSF shape as the source's
+size decreases.  Decreasing the numerical difference between a small extended
+source and the PSF is important when searching for smaller extended sources
+and when determining the statistical significance of a detection.
+
+There is one final approximation which speeds up the convolution.
+Generally, the PSF is a function of the angle $\theta$ of the incident
+event measured relative to the normal to the LAT. To avoid repeatedly
+convolving the source shape with the PSF at a series of $\theta$ angles,
+an effective PSF is fit to the weighted sum of the PSF times the exposure
+at different $\theta$ angles.  Since the source convolution has to be
+done at each fit iteration, these optimization were essential for making
+this tool fast enough for the following analysis. Typically, the entire
+process of fitting the extension and estimating the errors for a source
+would run on the order of an hour.
+
+\section{Monte Carlo Validation}
 
 One can define a parameter $\text{TS}_\text{ext}$ as twice the increase
 in log likelihood going from fitting a source with a point hypothesis to fitting
 it as an extended hypothesis. So $\text{TS}_\text{ext}=2\times(LL_\text{ext}-LL_\text{ps})$.
+Note that Wilk's Theorem only holds when the likelihood is maximized simultaneoulsy
+fitting all of the parameters of model. It is for this reason why {\em pointlike}
+goes through such great effort to simultaneously fit the position and extension of
+a source.
 In going from fitting a point source to fitting a simple extended source such as
 a disk, one degree of freedom, the source width, is added. According to
 Wilk's Theorem, the distribution of $\text{TS}_\text{ext}$ for no signal (a true
 point source) should follow a $\chi^2$ distribution with one degree of freedom\cite{Wilks_Theorem}.
 On the other hand, since the null hypothesis exists on the edge of parameter space,
-and so so Wilk's Theorem does not hold\cite{Warnings about Wilk's Thorem}.
+and so so Wilk's Theorem does not hold\cite{Warnings about Wilk's Theorem Paper}.
 One might expect the actual distribution to be a half $\chi^2$ distribution with a delta
 function at 0. This was the distribution found to be true for source finding of
 gamma ray sources.\cite{Mattox_et_All_Paper}. A Monte Carlo study has been performed to
 show how well we can believe the statistical significance.
 
+One issue that we found when testing this analysis method is that
+despite our best efforts, there was always a small discrepancy between
+the likelihood value when fitting the source as a point source and when
+fitting it as an extended source with a small extension.  This is to be
+expected due to numerical innacuracies introduced by the convolution.
+For most cases, this error is insignificant. It would not significanlty
+bias any of the fit values or errors. But it would bias the distribution
+of $\text{TS}_\text{ext}$ in the null hypothesis. To correct for this,
+instead of computing the likelihood in the null hypothesis by fitting
+a point source, a new source model was introduced which is an extended
+source with its extension fixed to a very small value. $LL_\text{ps}$
+is then calculated by refitting this source using the same extended
+source fitting code. It was only after introducing this change that we
+were able to get broad agreement between simulations and Wilk's theorem.
 
 
-
+\includegraphics{k
 
 \section{Extension search method}
 
 % * Plots we make ...
 
 
-\section{Results}
+\section{Test of 1LAC Sources}
+
+\section{Validation of Known Extended Sources}
+
+\section{New Extended Sources}
 
 \section{Interpretation}
 
