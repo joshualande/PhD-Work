@@ -1,6 +1,7 @@
 
 \documentclass[12pt]{article}
 \usepackage{fullpage}
+\usepackage{graphicx}
 
 \title{Search for Spatially Extended Sources Using Two Years of Flight
 Data}
@@ -196,23 +197,59 @@ would run on the order of an hour.
 
 \section{Monte Carlo Validation}
 
-One can define a parameter $\text{TS}_\text{ext}$ as twice the increase
-in log likelihood going from fitting a source with a point hypothesis to fitting
-it as an extended hypothesis. So $\text{TS}_\text{ext}=2\times(LL_\text{ext}-LL_\text{ps})$.
-Note that Wilk's Theorem only holds when the likelihood is maximized simultaneoulsy
-fitting all of the parameters of model. It is for this reason why {\em pointlike}
-goes through such great effort to simultaneously fit the position and extension of
-a source.
+To calculate the statistical significance of the extension of a source,
+one can define a parameter $\text{TS}_\text{ext}$ as twice the increase
+in log likelihood between fitting a source with a
+spatially extended hypothesis and a point hypothesis. 
+So $\text{TS}_\text{ext}=2\times(LL_\text{ext}-LL_\text{ps})$.
+
 In going from fitting a point source to fitting a simple extended source such as
-a disk, one degree of freedom, the source width, is added. According to
-Wilk's Theorem, the distribution of $\text{TS}_\text{ext}$ for no signal (a true
+a disk, the source's width is the only degree of freedom added to the model. According to
+Wilk's Theorem, the distribution of $\text{TS}_\text{ext}$ for no signal (when there is a true
 point source) should follow a $\chi^2$ distribution with one degree of freedom\cite{Wilks_Theorem}.
-On the other hand, since the null hypothesis exists on the edge of parameter space,
-and so so Wilk's Theorem does not hold\cite{Warnings about Wilk's Theorem Paper}.
-One might expect the actual distribution to be a half $\chi^2$ distribution with a delta
-function at 0. This was the distribution found to be true for source finding of
-gamma ray sources.\cite{Mattox_et_All_Paper}. A Monte Carlo study has been performed to
-show how well we can believe the statistical significance.
+Wilk's Theorem only holds when the likelihood is maximized simultaneoulsy
+fitting all of the parameters of model. It is for this reason why {\em pointlike}
+goes through such great effort to simultaneously fit the position, extension,
+and spectral paramters of a source.
+
+On the other hand, since the null hypothesis rests on the edge of
+parameter space, when the extension is fixed to 0, Wilk's Theorem does
+not formally hold\cite{Warnings about Wilk's Theorem Paper}.  One might
+expect the actual distribution to be a half $\chi^2_1$ distribution with
+one degree of freedom plus half of a delta function at 0:
+\begin{equation}
+  P(\text{TS})=\tfrac{1}{2}(\chi^2_1(\text{TS})+\delta(\text{TS})).
+\end{equation}
+The false detection probability can be estimated by integrating this function 
+from an observed test statistic value to infinity. It is for this
+particular distribution that the often quoted result holds that
+$\sqrt{TS}$ is a measure of the number of $\sigma$ of the detection.
+
+The half $\chi^2_1$ distribution was found by a monte carlo study
+to hold for the special case of source finding of EGRET sources using the
+maximum likelihood technique.  They were comparing the hypothesis of a
+source to the hypothesis of just a background\cite{Mattox_et_All_Paper}.
+Their argument for why this null hypothesis distribution was reasonable
+was that half of the time, statistical underfluctuations would cause
+there to be fewer fewer photons then expected where the sources is being
+tested. Since the maximim likelihood machinery cannot fit negative
+sources (which would lead to negative model predicted for which the
+poisson likelihood is undefined), half of the tests would not have the
+likelihood improved by adding a source to the model and $\text{TS}=0$.
+It is for the case that the null distribution has 
+
+It seems plausable that a similar situation could happen for when 
+testing a source for extension. Half of the time, statistical flucutations
+might make the observed counts narrower thant the point spread function
+and the likelhood would not improve by fitting the source with an extended
+hypothesis. We tested this hypothesis using a dedicated monte carlo study.
+
+\begin{figure}
+\includegraphics{mc_plots/ts_ext_emin_1000.pdf}
+% this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/ts_ext/v3/plot.py
+% using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/ts_ext/v3_emin_1000/merged.hdf5
+\caption{Lalla}
+\end{figure}
 
 One issue that we found when testing this analysis method is that
 despite our best efforts, there was always a small discrepancy between
@@ -229,8 +266,8 @@ is then calculated by refitting this source using the same extended
 source fitting code. It was only after introducing this change that we
 were able to get broad agreement between simulations and Wilk's theorem.
 
+\section{Extended Source Sensitivity}
 
-\includegraphics{k
 
 \section{Extension search method}
 
