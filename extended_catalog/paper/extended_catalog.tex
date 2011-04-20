@@ -1,20 +1,24 @@
+\documentclass{emulateapj}
 
-\documentclass[12pt]{article}
 \usepackage{fullpage}
 \usepackage{graphicx}
 
-\title{Search for Spatially Extended Sources Using Two Years of Flight
-Data}
-
+\shorttitle{Search for Extended LAT Sources}
 
 \usepackage{amsmath}
 
-
 \begin{document}
 
-\maketitle
+\title{Search for Spatially Extended Fermi-LAT Sources Using Two Years of Flight
+Data}
 
-\abstract{
+\author{
+J.~Lande\altaffilmark{3}, 
+\altaffiltext{3}{W. W. Hansen Experimental Physics Laboratory, Kavli Institute for Particle Astrophysics and Cosmology, Department of Physics and SLAC National Accelerator Laboratory, Stanford University, Stanford, CA 94305, USA}
+}
+
+
+\begin{abstract}
 We present a new method for analyzing spatially extended sources with
 the Fermi Large Area Telescope (LAT), the primary science instrument
 on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.  We provide a
@@ -22,7 +26,7 @@ series of Monte Carlo studies that were done to validate this tool.
 We then apply this tool to test all sources in the 2FGL Two Year Catalog
 for extension.\cite{2FGL} We then report on the discovery of XXX new
 extended sources.
-}
+\end{abstract}
 
 \section{Introduction}
 
@@ -34,6 +38,33 @@ extended sources.
 % * We searched all 2FGL catalog sources
 % * Systematic test for a certain kind of (~ small) regularly shaped extended 
 
+The Large Area Telescope (LAT) is a pair conversion telescope on the
+Fermi Gamma-Ray Space Telescope that has been surveying the gamma ray
+sky since June 2008.  Fermi is particuarly well suited for surveying
+the entire Gamma-ray sky since it has a broad energy coverage (20MeV
+and 300GeV), a wide field of view (~2.4 sr) and large effective area
+($\approx 8000 \text{cm}^2$ at > 1GeV).
+
+The LAT has been essential in understanding a variety of astrophysical
+sources including Active Galactic Nuclei, Pulsars, and Supernova Remnants.
+Many of the astrophysical sources seen by the Fermi LAT, espeically
+galactic Supernova Remnants and Pulsar Wind Nebulae, can be resolved at
+other wavelengths and could potentially be resolved by the LAT.
+
+Resolving spatially extended GeV sources is important for studying a
+variety of science topics. The most important use of spatial morphology
+is in source identification. Many of the sources found in GeV sources
+
+Nevertheless, morphological studies of sources in the GeV energy range using
+the Fermi LAT is challenging primarily because of the significantly energy
+dependent PSF and because of systematic errors in the
+galactic diffuse emission. The Fermi PSF varies from over $XXXXX^\circ$
+at 100MeV to $XXXXX^\circ$ at 100GeV and so the higher energy photons are
+
+studying supernova remnants, 
+pulsar wind nebulae, 
+ * galaxies,  
+ * potentially dark matter or new physics.
 
 The Large Area Telescope (LAT) on the Fermi Gamma-Ray Space Telescope
 has been surveying the Gamma-ray sky since August 2008. The LAT has been
@@ -58,7 +89,7 @@ in the 100 MeV to 100 GeV energy range\cite{2FGL Paper}. The
 
 Performing morphological studies of sources in the GeV energy range using
 the Fermi LAT is challenging primarily because of the significantly energy
-dependent point spread function (PSF) and because of systematic errors in the
+dependent PSF and because of systematic errors in the
 galactic diffuse emission. The Fermi PSF varies from over $XXXXX^\circ$
 at 100MeV to $XXXXX^\circ$ at 100GeV and so the higher energy photons are
 significantly more important for studying the shape of sources. One could
@@ -171,13 +202,13 @@ If the extended source is radially symmetric, then
 $I_\text{src} (\vec r') = I_\text{src} (r')$ and the angular part of the
 integral can be done analytically, leaving a simpler one dimensional
 integral:
-\begin{equation}
+\begin{multline}
   \text{PDF}(u)= \int_0^\infty dv
   I_\text{src}(v) 
   \left(\frac{\gamma-1}{\gamma}\right)
-  \left( \frac{\gamma}{\gamma + u + v}\right)^\gamma
-  ~_2F_1 \left(\gamma/2,\frac{1+\gamma}{2},1,\frac{4uv}{(\gamma+u+v)^2}\right)
-\end{equation}
+  \left( \frac{\gamma}{\gamma + u + v}\right)^\gamma \\
+  \times ~_2F_1 \left(\gamma/2,\frac{1+\gamma}{2},1,\frac{4uv}{(\gamma+u+v)^2}\right)
+\end{multline}
 Not only is this convolution formula faster, but it has the advantage
 that it more accurately reduces to the actual PSF shape as the source's
 size decreases.  Decreasing the numerical difference between a small extended
@@ -195,8 +226,6 @@ this tool fast enough for the following analysis. Typically, the entire
 process of fitting the extension and estimating the errors for a source
 would run on the order of an hour.
 
-\section{Monte Carlo Validation}
-
 To calculate the statistical significance of the extension of a source,
 one can define a parameter $\text{TS}_\text{ext}$ as twice the increase
 in log likelihood between fitting a source with a
@@ -206,7 +235,7 @@ So $\text{TS}_\text{ext}=2\times(LL_\text{ext}-LL_\text{ps})$.
 In going from fitting a point source to fitting a simple extended source such as
 a disk, the source's width is the only degree of freedom added to the model. According to
 Wilk's Theorem, the distribution of $\text{TS}_\text{ext}$ for no signal (when there is a true
-point source) should follow a $\chi^2$ distribution with one degree of freedom\cite{Wilks_Theorem}.
+point source) should follow a $\chi^2_1$ distribution with one degree of freedom\cite{Wilks_Theorem}.
 Wilk's Theorem only holds when the likelihood is maximized simultaneoulsy
 fitting all of the parameters of model. It is for this reason why {\em pointlike}
 goes through such great effort to simultaneously fit the position, extension,
@@ -238,18 +267,12 @@ poisson likelihood is undefined), half of the tests would not have the
 likelihood improved by adding a source to the model and $\text{TS}=0$.
 It is for the case that the null distribution has 
 
-It seems plausable that a similar situation could happen for when 
-testing a source for extension. Half of the time, statistical flucutations
-might make the observed counts narrower thant the point spread function
-and the likelhood would not improve by fitting the source with an extended
-hypothesis. We tested this hypothesis using a dedicated monte carlo study.
-
-\begin{figure}
-\includegraphics{mc_plots/ts_ext_emin_1000.pdf}
-% this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/ts_ext/v3/plot.py
-% using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/ts_ext/v3_emin_1000/merged.hdf5
-\caption{Lalla}
-\end{figure}
+It seems plausable that a similar situation could happen for when testing
+a source for extension. Half of the time, statistical flucutations might
+make the observed counts narrower thant the point spread function and
+the likelhood would not improve by fitting the source with an extended
+hypothesis. We tested this hypothesis below using a dedicated monte
+carlo study.
 
 One issue that we found when testing this analysis method is that
 despite our best efforts, there was always a small discrepancy between
@@ -266,7 +289,101 @@ is then calculated by refitting this source using the same extended
 source fitting code. It was only after introducing this change that we
 were able to get broad agreement between simulations and Wilk's theorem.
 
+\section{Monte Carlo Validation}
+
+We performed a dedicated monte carlo study to validate pointlike for
+studying spatially extended sources and also to demonstrate that we can
+use $\text{TS}_\text{ext}$ as a test of the statistical significance
+of a source's extension.  The monte carlo study involved simulating point
+sources of varying spectral models on top of a simulated background. The
+simulated point source was then fit using pointlike as both an extended
+source and a point source and $\text{TS}_\text{ext}$ was calculated.
+
+Fermi LAT data was simulated using the publically avaliabable Science
+Tools package {\em gtobssim}\cite{GTOBSSIM_CITATION}. The sources were
+simulated with a powerlaw spectral model with 6 Were given 6 $>100\text{MeV}$
+fluxes ranging from $3\times 10^{-9} ph/cm^2/s$ to $10^{-6} ph/cm^2/s$.
+The sources were then simulated with spectral index ($\gamma$) values of
+1.5, 2, 2.5, and 3.  These values were picked to probe a representative
+range measurable values.  For particular spectral indices, only the
+fluxes which would create a statistically significant source detection
+($\text{TS}>25$) where selected, since we are only interested in
+testing for extension sources with a significant extent. The sources were
+simulated on top of an isotropic powerlaw background with a Sreekumar-like
+spectrum ($>\text{100MeV}$ flux of 1.5e-5 and spectral index 2.1).\cite{Sreekumar
+et al. ApJ 494 pag 523 1998}
+
+The monte carlo simulation was perforormed over a one year time interval using
+a default rocking profile and an assumed livetime fraction of 0.8.
+The reconstruction was perfromed with events from an energy range of
+1GeV to 100GeV using 4 energy bins per decade and using the Pass 7 Version 6
+source IRFs to be consistent with the following analysis.
+
+For most of the spectral models, over 10,000 statistically independent simulations were performed.
+For fainter sources, some of the simulated sources, statistical flucatuations
+caused the source to be not significant and they were excluded from the following analysis.
+Table~\ref{ts_ext_num_sims} shows the parametesr used in the simualtion,
+the number of simulations perfromed, and the average test statistic value.
+
+\begin{table}
+  \begin{centering}
+\begin{tabular}{ | r | r | r | r | }
+\hline
+$\gamma$ & flux ($ph/cm^2/s$) & $N_\text{sims}$ & $<\text{TS}>$ \\
+\hline
+  1.5 &          $10^{-6}$ &           11405 &  90861 \\
+      &  $3\times 10^{-7}$ &           11490 &  21922 \\
+      &          $10^{-7}$ &           11101 &   5765 \\
+      &  $3\times 10^{-8}$ &           10269 &   1262 \\
+      &          $10^{-8}$ &            9941 &    306 \\
+      &  $3\times 10^{-9}$ &           10427 &     61 \\
+\hline
+    2 &          $10^{-6}$ &           11632 &  22025 \\
+      &  $3\times 10^{-7}$ &           11622 &   4886 \\
+      &           $1^{-7}$ &           11115 &   1159 \\
+      &  $3\times 10^{-8}$ &           10503 &    222 \\
+      &           $1^{-8}$ &            9893 &     50 \\
+\hline
+  2.5 &          $10^{-6}$ &           11522 &   4722 \\
+      &  $3\times 10^{-7}$ &           11445 &    948 \\
+      &           $1^{-7}$ &           10966 &    202 \\
+      &  $3\times 10^{-8}$ &            8227 &     41 \\
+\hline                                                
+    3 &          $10^{-6}$ &           11264 &    949 \\
+      &  $3\times 10^{-7}$ &           10986 &    172 \\
+      &           $1^{-7}$ &            7855 &     40 \\
+\hline
+\end{tabular}
+\caption{List of the spectral models used to the monte carlo simulation of
+{\em pointlike}.$N_\text{sims}$ is the number of monte carlo simluations
+which produce a significant source detection.The final column is the
+average test statistic that was found during the monte carlo fit of
+the source. Only simluations which were deemed significant ($\text{TS}>25$)
+were kept.}
+\label{ts_ext_num_sims}
+  \end{centering}
+\end{table}
+
+The results of the monte carlo simulation are shown in
+figure~\ref{ts_ext}.  The cumulative density function (CDF) is plotted
+against $\text{TS}_\text{ext}$ For reference, the CDF for $\chi^2_1/2$,
+suggested by Wilk's Theorem, is also plotted for comparison. Overall,
+there is good agreement between Wilk's theorem, although the agreement
+is not perfect.  Possible reasons for departure from Wilk's theorem may
+include pointlike ignoring energy dispersion, which would generally change
+the shape as a function of energy, numerical innacuracies in evaluating
+the convolution algorithm, or possibly problems with the fitting algorithm
+getting stuck in false minimum. It is important to emphasize that if
+our emperical curve lies to the left of the curve we assume to estimate
+significance, we would underestimate the statistical significance of
+our result. Since this is the case for most of our simluations, we are
+reasonable confident that $\sqrt{\text{TS}_\text{ext}}$ can be safely
+used as a measure of the statistical significance of a source's extension.
+
 \section{Extended Source Sensitivity}
+
+We use another monte carlo study to determine the Fermi LAT's sensitivity to
+spatially extended sources.
 
 
 \section{Extension search method}
@@ -282,6 +399,101 @@ were able to get broad agreement between simulations and Wilk's theorem.
 
 \section{Interpretation}
 
+\begin{figure}
+  \begin{center}
+    \includegraphics{mc_plots/ts_ext_emin_1000.pdf}
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/ts_ext/v3/plot.py
+    % using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/ts_ext/v3_emin_1000/merged.hdf5
+    \end{center}
+    \caption{Lalla}\label{ts_ext}
+  \end{figure}
 
-\end{document}
+\begin{figure}
+  \begin{center}
+    \includegraphics{mc_plots/sensitivity.pdf}
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/sensitivity/v8/merged_plot.py
+    % using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/sensitivity/v7/merged.hdf5 (>1GeV)
+    % using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/sensitivity/v8/merged.hdf5 (>100MeV)
+    \end{center}
+    \caption{Lalla}\label{sensitivity_ext}
+  \end{figure}
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1628.6-2419c}
+    \end{center}
+    % this plot came from 
+    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_1000_v1/1FGL_J1628.6-2419c/v2/source_1FGL_J1628.6-2419c.pdf
+    \caption{Lalla}
+  \end{figure}
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1554.0-5345c}
+    \end{center}
+    % this plot came from 
+    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_1000_v1/1FGL_J1554.0-5345c/v2/source_1FGL_J1554.0-5345c.pdf
+    \caption{Lalla}
+  \end{figure}
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J0823.3-4248}
+    \end{center}
+    % this plot came from 
+    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_1000_v1/1FGL_J0823.3-4248/v2/source_1FGL_J0823.3-4248.pdf
+    \caption{Lalla}
+  \end{figure}
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J2020.0+4049}
+    \end{center}
+    % this plot came from 
+    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/1FGL_J2020.0+4049/v2/source_1FGL_J2020.0+4049.pdf
+    \caption{Lalla}
+  \end{figure}
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_MRFH0254}
+    \end{center}
+    % this plot came from 
+    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/MRFH0254/v2/source_MRFH0254.pdf
+    \caption{Lalla}
+  \end{figure}
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1837.5-0659c}
+    \end{center}
+    % this plot came from 
+    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/1FGL_J1837.5-0659c/v2/source_1FGL_J1837.5-0659c.pdf
+    \caption{1FGL J1837.5-0659c}
+  \end{figure}
+
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1636.4-4737c}
+    \end{center}
+    % this plot came from 
+    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/1FGL_J1636.4-4737c/v2/source_1FGL_J1636.4-4737c.pdf
+    \caption{1FGL J1636.4-4737c}
+  \end{figure}
+
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1613.6-5100c}
+    \end{center}
+    % this plot came from 
+    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/1FGL_J1613.6-5100c/v2/source_1FGL_J1613.6-5100c.pdf
+    \caption{Lalla}
+  \end{figure}
+
+
+
+
+  \end{document}
 
