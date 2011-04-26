@@ -382,18 +382,41 @@ used as a measure of the statistical significance of a source's extension.
 
 \section{Extended Source Sensitivity}
 
-We use another monte carlo study to determine the Fermi LAT's sensitivity to
-spatially extended sources.
+We performed another monte carlo study to determine the Fermi LAT's
+sensitivity to spatially extended sources. The sensitivity to extension
+is defined as the flux at which $\text{TS}_\text{ext}$ for a source is on
+average equal to 25 (for a given spectral model). We emphasize that this
+is not the sensitivity to detect a source, but instead the sensitivity
+to detecting a source as being extended.  One would expect that we would
+become very insensitive to detecting the extension of very small sources
+that look just like the PSF. Similarly, we would be very insensitive to
+very large sources which would get lost in the background. Furtheremore,
+one expects our sensitivity to be greater for harder sources since our
+angular resolution improves with energy.
 
+To calculate the LAT's sensitivity to spatially extended sources,
+we simulated sources with a disk morphology on top of a powerlaw
+Sreekumar-like spectrum.\cite{Sreekumar et al. ApJ 494 pag 523 1998}.
+We calculated the sensitivity for sources of a spectral index $\gamma$
+of 1.5, 2, 2.5, and 3 and for sources of 20 extensions varying
+from $0.1^\circ$ to $2.0^\circ$ To calculate the sensitivity, we
+found a flux for which $\text{TS}_\text{ext}<25$ and a flux for which
+$\text{TS}_\text{ext}>25$ and then multiple simulations
+of fluxes in the range were run. A line was fit to the 
+flux vs $\text{TS}_\text{ext}$ data to determine the average
+flux for which $\text{TS}_\text{ext}=25$.
+
+The resulting Fermi sensitivity to extension is shown in figure~\ref{sensitivity_ext}.
 
 \section{Extension search method}
 
-% * Plots we make ...
 
 
-\section{Test of 1LAC Sources}
+
 
 \section{Validation of Known Extended Sources}
+
+\section{Test of 1LAC Sources}
 
 \section{New Extended Sources}
 
