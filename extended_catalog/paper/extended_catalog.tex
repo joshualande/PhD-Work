@@ -3,15 +3,18 @@
 \usepackage{rotating}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{xspace}
 
-\newcommand{\mev}{\text{MeV}}
-\newcommand{\gev}{\text{GeV}}
-\newcommand{\sr}{\text{sr}}
-\newcommand{\cm}{\text{cm}}
-\newcommand{\tsext}{\ensuremath{\text{TS}_\text{ext}}}
-\newcommand{\ts}{\text{TS}}
-\newcommand{\pointlike}{{\em pointlike}}
-\newcommand{\gtlike}{{\em gtlike}}
+\newcommand{\mev}{\text{MeV}\xspace}
+\newcommand{\gev}{\text{GeV}\xspace}
+\newcommand{\sr}{\text{sr}\xspace}
+\newcommand{\s}{\text{s}\xspace}
+\newcommand{\ph}{\text{ph}\xspace}
+\newcommand{\cm}{\text{cm}\xspace}
+\newcommand{\tsext}{\ensuremath{\text{TS}_\text{ext}}\xspace}
+\newcommand{\ts}{\text{TS}\xspace}
+\newcommand{\pointlike}{{\em pointlike}\xspace}
+\newcommand{\gtlike}{{\em gtlike}\xspace}
 
 \shorttitle{Search for Extended LAT Sources}
 
@@ -264,7 +267,7 @@ not formally hold\cite{Warnings about Wilk's Theorem Paper}.  One might
 expect the actual distribution to be a half $\chi^2_1$ distribution with
 one degree of freedom plus half of a delta function at 0:
 \begin{equation}
-  P(\ts)=\tfrac{1}{2}(\chi^2_1(\text{TS})+\delta(\text{TS})).
+  P(\ts)=\tfrac{1}{2}(\chi^2_1(\ts)+\delta(\ts)).
 \end{equation}
 The false detection probability can be estimated by integrating this function 
 from an observed test statistic value to infinity. It is for this
@@ -306,7 +309,7 @@ is then calculated by refitting this source using the same extended
 source fitting code. It was only after introducing this change that we
 were able to get broad agreement between simulations and Wilk's theorem.
 
-\section{Monte Carlo Validation}
+\section{Monte Carlo Validation}\label{monte_carlo_validation}
 
 We performed a dedicated monte carlo study to validate \pointlike for
 studying spatially extended sources and also to demonstrate that we can
@@ -319,8 +322,8 @@ source and a point source and $\tsext$ was calculated.
 Fermi LAT data was simulated using the publically avaliabable Science
 Tools package {\em gtobssim}\cite{GTOBSSIM_CITATION}. The sources were
 simulated with a powerlaw spectral model with 6 Were given 6 $>100\mev$
-fluxes ranging from $3\times 10^{-9} \text{ph}/\text{cm}^2/\text{s}$ to 
-$10^{-6} \text{ph}/\text{cm}^2/\text{s}$.
+fluxes ranging from $3\times 10^{-9} \ph/\cm^2/s$ to 
+$10^{-6} \ph/\cm^2/s$.
 The sources were then simulated with spectral index ($\gamma$) values of
 1.5, 2, 2.5, and 3.  These values were picked to probe a representative
 range measurable values.  For particular spectral indices, only the
@@ -335,7 +338,7 @@ The monte carlo simulation was perforormed over a one year time interval using
 a default rocking profile and an assumed livetime fraction of 0.8.
 The reconstruction was perfromed with events from an energy range of
 $1\gev$ to $100\gev$ using 4 energy bins per decade and using the Pass 7 Version 6
-source IRFs to be consistent with the following analysis.
+source instrument response function (IRFs) to be consistent with the following analysis.
 
 For most of the spectral models, over 10,000 statistically independent simulations were performed.
 For fainter sources, some of the simulated sources, statistical flucatuations
@@ -389,7 +392,8 @@ where $\tsext<25$ and $\tsext>25$ and simulated 10 points with
 a log uniform distribution in this range and performed an extension
 test for each of these fluxes. Since the measured signifciance is
 a statistical which will vary from realization to realization,
-we then repeated this procedure >15 times for each realization.
+we then repeated this procedure $>15$ times for each spectral
+and spatial model.
 By fitting a line to the flux vs $\tsext$ data, we were able to
 estimage the flux at which $\tsext=25$.
 
@@ -514,7 +518,7 @@ We used a square ROI $10^\circ$ in diamater, the same 4 degrees
 per decade, and $0.125^\circ$ energy binning.
 The \gtlike analysis provided a second estimate of the spectral
 paramters of the extended source as well as a second calculation of
-$\text{TS}_\text{disk}$, $\text{TS}_\text{point}$, and 
+$\ts_\text{disk}$, $\ts_\text{point}$, and 
 $\tsext$. We only looked for extended sources which 
 both \pointlike and \gtlike considered significantly extended.
 
@@ -576,7 +580,82 @@ the difficultly with which
 
 \section{Test of 1LAC Sources}
 
-A furthere test we did to validate our analysis was to test all of the 
+To validate our method and assess systematic issues with our
+analysis, we used \pointlike to test known active galaxies (AGN) for extension.
+\gev emission from AGN is believed to comes from the
+core of supermassive blackholes. Since this happens in a very small region
+in the core of very distant galaxies,
+
+AGN are not expected to be spatially resolvable and therefore
+provide a good calibration source to demonstrate the efficacy of our
+tool. Nevertheless, it would be very interesting if AGN could be
+spatially resolved AGN and there are theories that predict
+this\cite{pair_halo_paper, http://adsabs.harvard.edu/doi/10.1086/187222}.
+
+Following the Fermi-LAT one year catalog, the Fermi collaboration
+published a list of the Fermi catalog sources that had a high probability
+association with AGN. The first year catalog had 709 AGN associated with
+671 distinct 1FGL sources at high latitude ($|b|>10^\circ$).  For our
+study, we are looking to assess systematics with extension fitting so
+it is important to avoid any possible issues with AGN associations.
+For that reason, we select only the 599 AGN which make it into the
+``clean'' AGN sample. An AGN association is only considered ``clean''
+if it has a high probability of association $P\ge 80\%$, if it is the
+only AGN associated with the 1FGL source, and if there are no flags
+on the source which shed doubt on the source\cite{1FGL}. These last two
+conditions are especially important for our analysis. One might expect
+source confusion between two AGN look like a spatially extended source.
+Testing only unflagged sources is also important because it removes
+any catalog sources coincident with structures in the diffuse emission.
+It is possible that these flagged catalog sources which are really poorly
+modeled diffuse emission might also look extended.
+
+Of the 599 ``clean'' AGN, we select 556 of these 1FGL sources which
+we uniquely associate with a 2 year catalog source. And we furthermore
+restrict our select to 515 of these AGN for which we fit $\ts>25$ using
+\pointlike.  Our intention here is not to find the largest sample of
+AGN and this will be the scope of a follow up AGN association paper. Our
+purpose is simply to find a good sample of AGN which can be used to
+test the systematics of our tool.
+
+Using the same extension fitting procedure as described above, we test
+these 515 AGN for extension. A histogram of the fit \tsext values is
+shown in figure~\ref{agn_ts_ext}. Overlaid on the plot is again
+a $\chi^2/2$ distribution suggested by Wilk's Theorem.
+This plot shows a worse agreement with the theoretical distribution
+then was found by our monte carlo study in figure~\ref{ts_ext_mc}. 
+
+Several possible systematics could cause this discrepancy. The first
+is that in our analysis we fit each source with a powerlaw index.
+AGN tend to have curved spectral and fitting with a wrong spectral
+model might effect the value of \tsext. Nevertheless, since we use only
+events with $E>1\gev$, this would effect is not expected to be large.
+Another possible source for the discrepancy is that pointlike performs a
+likelihood analysis without modeling the energy dispersion of our source.
+But energy dispersion is expected to be more significant at low
+energy and furthermore if this was a signifciant effect the same results
+would have showed up with the monte carlo simultions which included the
+effects of energy dispersion. 
+
+The third possible effect causing this discrepancy is an
+imperfect modeling of the PSF of the LAT.  Before launch,
+the LAT PSF was determined using a Monte Carlo simulation of
+the detector.  After launch, a discrepancy was found using flight
+data above a few \gev in the PSF measured using very bright AGN.
+This result was presented in conference and a publication is in preparation.
+Subsequently, the PSF was fit empirically to these bright AGN and
+this empirical parameterization is used in the Pass 7 Version 6 IRFs.\cite{
+https://confluence.slac.stanford.edu/download/attachments/102860834/FermiSymp2011_CAPSF_v5_ROTH.pptx
+}. But our current parameterization is not perfect. There are 
+especially lingering issues because there is not good enough statistics
+at high energy to validate the PSF as a function of the incident $\theta$
+angle of a photon. It is likely that these issues could cause this 
+systematic in the fit value of \tsext for point sources. We should
+furtheremore note that since the PSF was 
+
+
+with only 2 AGN having $\tsext>10$ and the maximum having $\tsext=13.7$
+
 
 \section{New Extended Sources}
 
@@ -589,7 +668,7 @@ A furthere test we did to validate our analysis was to test all of the
   \begin{centering}
 \begin{tabular}{ | r | r | r | r | }
 \hline
-$\gamma$ & flux ($\text{ph}/\text{cm}^2/\text{s}$) & $N_\text{sims}$ & $<\text{TS}>$ \\
+$\gamma$ & flux ($\ph/\cm^2/\s$) & $N_\text{sims}$ & $<\ts>$ \\
 \hline
   1.5 &          $10^{-6}$ &           11405 &  90861 \\
       &  $3\times 10^{-7}$ &           11490 &  21922 \\
@@ -614,12 +693,22 @@ $\gamma$ & flux ($\text{ph}/\text{cm}^2/\text{s}$) & $N_\text{sims}$ & $<\text{T
       &          $10^{-7}$ &            7855 &     40 \\
 \hline
 \end{tabular}
-\caption{List of the spectral models used in the monte carlo simulation of
-\pointlike. $N_\text{sims}$ is the number of monte carlo simluations
-which produce a significant source detection.The final column is the
-average test statistic that was found during the monte carlo fit of
-the source. Only simluations which were deemed significant ($\text{TS}>25$)
-were kept.}
+\caption{
+This table presents a list of the spectral models (flux and spectral index)
+used in the monte carlo study of 
+\pointlike described in section~\ref{monte_carlo_validation}.
+For each spectral model, the number of statistically indepdent simulations
+and the average test statistic found for that given spectral model
+($<\ts>$) is tabulated. 
+The important feature to see in this table is that the monte carlo simulation
+probes most of the sources parameters that could be detected by the LAT.
+The simulation probles a wide range of spectral indices (from index 1.5 to 3) and
+a wide range of the fluxes (varying
+from a close to $5\sigma$ source detection to a $>10\sigma$ source detection).
+Only simluations which produced statistically
+significant detections ($\ts>25$) were kept. 
+What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^2/\s$.
+}
 \label{ts_ext_num_sims}
   \end{centering}
 \end{table}
@@ -633,7 +722,30 @@ were kept.}
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/ts_ext/v3/plot.py
     % using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/ts_ext/v3_emin_1000/merged.hdf5
     \end{center}
-    \caption{Lalla}\label{ts_ext_mc}
+    \caption{
+    The results of the monte carlo simulation described in section
+    \ref{monte_carlo_validation} testing the null distribution of
+    the likelihood ratio test for extension.  The $x$ axis of this
+    plot is \tsext and the $y$ axis is the cumulative density for
+    \tsext that was found by testing simulated point sources of
+    various spectral models for extension. The four plots represent
+    different spectral indices (for $\gamma$ of 1, 2, 2.5, and 3).
+    And the different colors lines represent different fluxes chosen
+    to span a representative range of Overlayed on the plot in dashed
+    red is the cumulative density function of $\chi^2(\ts)/2$ which is
+    suggested by Wilk's theorem as the theoretical distribution these
+    curves should should follow.  Overall, it should be noted that there
+    is a surprisingly good agreement between the monte carlo study and
+    the theoeretical distribution. And for most spectral parameters, the
+    Monte Carlo curve lies to the left of the theoretical curve, which
+    would imply that using Wilk's Theorem as the null distribution would
+    conservativly underestimate the signifcance of a source detection. In
+    the rest of the paper, we use this theoretical curve to estimate
+    the significance of our source detections.  What is quoted is the
+    $>100\mev$ integral flux in measured in units of $\ph/\cm^2/\s$.
+    For each spectral model, more information about the simulations is
+    summarized in table~\ref{ts_ext_num_sims}.
+    }\label{ts_ext_mc}
   \end{figure}
 
 \clearpage
@@ -729,7 +841,7 @@ were kept.}
 \begin{sidewaystable}
     \begin{centering}
       \begin{tabular}{rrrrrrrrrrr}
-        Name           &    GLON &    GLAT & $\sigma(^\circ)$ &      TS & $\text{TS}_\text{ext}$ & Major & Minor &   Ang & Flux ($10^{-9}$) &         Index \\
+        Name           &    GLON &    GLAT & $\sigma(^\circ)$ &     \ts & $\tsext$ & Major & Minor &   Ang & Flux ($10^{-9}$) &         Index \\
         \hline
         \multicolumn{11}{l}{$E > 1\gev$} \\
         \hline
@@ -750,7 +862,7 @@ were kept.}
       \caption{The fit results for the known extended sources that
       were found by our analysis. The top results were found using
       an energy range between $1\gev$ and $100\gev$.
-      The quoted flux is in units of $10^{-9}\text{ph}/\text{cm}^2/\text{s}$ and 
+      The quoted flux is in units of $10^{-9}\ph/\cm^2/\s$ and 
       is the flux in the fit energy range.
       The lower analysis was done using events between
       $10\gev$ and $100\gev$ and the quoted flux
@@ -772,7 +884,7 @@ were kept.}
 \begin{sidewaystable}
     \begin{centering}
       \begin{tabular}{rrrrrrrrrrr}
-        Name           &    GLON &    GLAT & $\sigma(^\circ)$ &      TS & $\text{TS}_\text{ext}$ & Major & Minor & Ang & Flux ($10^{-9}$) & Index \\
+        Name           &    GLON &    GLAT & $\sigma(^\circ)$ &      TS & $\tsext$ & Major & Minor & Ang & Flux ($10^{-9}$) & Index \\
         \hline
         \multicolumn{11}{l}{$E > 1\gev$} \\
         \hline
