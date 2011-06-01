@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{xspace}
 
+% some units
 \newcommand{\mev}{\text{MeV}\xspace}
 \newcommand{\gev}{\text{GeV}\xspace}
 \newcommand{\sr}{\text{sr}\xspace}
@@ -12,9 +13,15 @@
 \newcommand{\ph}{\text{ph}\xspace}
 \newcommand{\cm}{\text{cm}\xspace}
 \newcommand{\tsext}{\ensuremath{\text{TS}_\text{ext}}\xspace}
+\newcommand{\tsinc}{\ensuremath{\text{TS}_\text{inc}}\xspace}
 \newcommand{\ts}{\text{TS}\xspace}
+
+\renewcommand{\deg}{\ensuremath{^\circ}\xspace}
+
+% the program names
 \newcommand{\pointlike}{{\em pointlike}\xspace}
 \newcommand{\gtlike}{{\em gtlike}\xspace}
+\newcommand{\gtobssim}{{\em gtobssim}\xspace}
 
 \shorttitle{Search for Extended LAT Sources}
 
@@ -37,7 +44,7 @@ series of Monte Carlo studies that were done to validate this tool.
 We then calculate the Fermi LAT's sensitivity to spatially exnteded
 sources.
 We then apply this tool to test all sources in the 2FGL Two Year Catalog
-for extension.\cite{2FGL} We then report on the discovery of XXX new
+for extension.\cite{2FGL} We then report on the discovery of XXXXXXXXXXXXXX new
 extended sources.
 \end{abstract}
 
@@ -76,8 +83,8 @@ is in source identification. Many of the sources found in $\gev$ sources
 Nevertheless, morphological studies of sources in the $\gev$ energy range using
 the Fermi LAT is challenging primarily because of the significantly energy
 dependent PSF and because of systematic errors in the
-galactic diffuse emission. The Fermi PSF varies from over $XXXXX^\circ$
-at $100\mev$ to $XXXXX^\circ$ at $100\gev$ and so the higher energy photons are
+galactic diffuse emission. The Fermi PSF varies from over $XXXXXXXXXXXXXXX\deg$
+at $100\mev$ to $XXXXXXXXXXXXXXXX\deg$ at $100\gev$ and so the higher energy photons are
 
 The Large Area Telescope (LAT) on the Fermi Gamma-Ray Space Telescope
 has been surveying the Gamma-ray sky since August 2008. The LAT has been
@@ -103,8 +110,8 @@ in the $100\mev$ to $100\gev$ energy range\cite{2FGL Paper}. The
 Performing morphological studies of sources in the $\gev$ energy range using
 the Fermi LAT is challenging primarily because of the significantly energy
 dependent PSF and because of systematic errors in the
-galactic diffuse emission. The Fermi PSF varies from over $XXXXX^\circ$
-at $100\mev$ to $XXXXX^\circ$ at $100\gev$ and so the higher energy photons are
+galactic diffuse emission. The Fermi PSF varies from over $XXXXXXXXXXXXXXXX\deg$
+at $100\mev$ to $XXXXXXXXXXXXXXXX\deg$ at $100\gev$ and so the higher energy photons are
 significantly more important for studying the shape of sources. One could
 ideally look just at the highest energy photons, but the trade off is that
 for typical sources many more source events are expected at low energy.
@@ -117,6 +124,8 @@ notoriously difficult and will be discussed more later, but the important
 point to make here is that one of the most important diagnostic tools for
 studying systematic errors is being able to iterate the analysis while
 varying different parameters such as what goes into the diffuse model.
+
+\subsection{\pointlike}
 
 A new analysis tool has been developed to address these unique
 requirements for studying spatially extended sources with the Fermi
@@ -181,6 +190,12 @@ at low energy (where the resolution is poor and there are many counts)
 to an unbinned analysis at high energy (where the resolution is very
 good but there are few counts). This approach provides a significant
 savings in time while introducing only small numerical error.
+
+% XXXXXXXXXXXX describe how \pointlike calculates extension errors and how localization errors are calculated.
+
+% XXXXXXXXXXXX note about how \pointlike is written in python = more flexible
+
+\subsection{Extension Fitting}
 
 We have modified \pointlike to support fitting spatially extended
 sources.  To do this, we introduced a new class of diffuse sources where
@@ -249,7 +264,10 @@ To calculate the statistical significance of the extension of a source,
 one can define a parameter $\tsext$ as twice the increase
 in log likelihood between fitting a source with a
 spatially extended hypothesis and a point hypothesis. 
-So $\tsext=2\times(LL_\text{ext}-LL_\text{ps})$.
+So 
+\begin{equation}
+  \tsext=2\times(LL_\text{ext}-LL_\text{ps}).
+\end{equation}
 
 In going from fitting a point source to fitting a simple extended source such as
 a disk, the source's width is the only degree of freedom added to the model. According to
@@ -309,7 +327,72 @@ is then calculated by refitting this source using the same extended
 source fitting code. It was only after introducing this change that we
 were able to get broad agreement between simulations and Wilk's theorem.
 
+
+% XXXXXXXXXXXXXXXXXXX NOTE ABOUT gtlike crosscheck
+
+\subsection{Dual Localization}
+
+There is a degeneracy in the signal expected from spatially extended
+sources and multiple point sources.  To assess the possibility of source
+confusion, we developed a function in pointlike for simulatenously fitting
+two point sources so that the likelihood fitting two point sources
+could be compared to the likelihood fitting one extended source.
+
+The algorithm works by first dividing the selected point source into
+two separate sources. Then, the position of the two sources 
+are fit simultanously. To avoid projection effects, the fit is
+done in a coordiante system rotated to the celestial equator.
+In this rotated coordiante system, space can be well approximated
+as being flat and we are interested in fitting the 
+rotated coordiante $(x_1',y_1')$ and $(x_2',y_2')$
+We decided not to directly fit the positions of the two sources 
+but instead the fit sum and difference of the rotated coordiantes
+$S_x=(x_2'+x_1')/2$, $S_x=(y_2'+y_1')/2$, $D_x=(x_2'-x_1')/2$, and $D_y=(y_2'-y_1')/2$.
+We believe that fitting the average of position and the difference
+independently would cause less degeneracy in the fit and help the fitter
+find the best position.
+
+For a particular value of $S_x$, $S_y$, $D_x$, and $D_y$, the Poisson
+likelihood is computed by converting the sum and difference coordaintes
+into the rotated coordiantes, unrotating the coordiantes, moving the
+two sources in the \pointlike to the new positions, and performing a new
+spectral analysis at the modified position.  The function then maximizes
+The Poission likelihood $L(S_x,S_y,D_x,D_y)$ as a function of the sum
+and difference of the rotated coordaintes using the Minuit to fit the
+sum and differenc coordiantes\cite{Minuit reference}.
+
+After the minimization converges, we can define the 
+parameter $\tsext$ as twice the 
+increase
+in log likelihood between fitting the region with
+two point sources and fitting the region with one point source
+\begin{equation}
+  \tsext=2\times(LL_\text{ext}-LL_\text{ps}).
+\end{equation}
+Generally, \tsinc can also
+
+
+% XXXXXXXXXXXXXXX \tsinc vs \tsext NOT A CALIBRATED TEST
+% but still suggestive in the cases \tsinc \ll \tsext and
+% \tsinc \gg \tsext.
+
+
+Because of \pointlike's computational efficiency, this algorithm
+runs in a reasonable amount of time.
+
+After
+% XXXXXXXXXXXXXXXXXXX NOTE ABOUT gtlike crosscheck
+
+\subsection{Comparing Source Sizes}
+
+Description of comparing r68, sigma for disk, gaussian, etc.
+why the plots don't look correct.
+
 \section{Monte Carlo Validation}\label{monte_carlo_validation}
+
+% XXXXXXXXXXXXXXXX better description of how TSext is always > 0
+% but wilk's thorem says that it won't be must better if the source
+% is a point source
 
 We performed a dedicated monte carlo study to validate \pointlike for
 studying spatially extended sources and also to demonstrate that we can
@@ -320,7 +403,7 @@ simulated point source was then fit using \pointlike as both an extended
 source and a point source and $\tsext$ was calculated.
 
 Fermi LAT data was simulated using the publically avaliabable Science
-Tools package {\em gtobssim}\cite{GTOBSSIM_CITATION}. The sources were
+Tools package \gtobssim\cite{GTOBSSIM_CITATION}. The sources were
 simulated with a powerlaw spectral model with 6 Were given 6 $>100\mev$
 fluxes ranging from $3\times 10^{-9} \ph/\cm^2/s$ to 
 $10^{-6} \ph/\cm^2/s$.
@@ -346,17 +429,20 @@ caused the source to be not significant and they were excluded from the followin
 Table~\ref{ts_ext_num_sims} shows the parametesr used in the simualtion,
 the number of simulations perfromed, and the average test statistic value.
 
-
 The results of the monte carlo simulation are shown in
 figure~\ref{ts_ext_mc}.  The cumulative density function (CDF) is plotted
 against $\tsext$ For reference, the CDF for $\chi^2_1/2$,
 suggested by Wilk's Theorem, is also plotted for comparison. Overall,
-there is good agreement between Wilk's theorem, although the agreement
-is not perfect.  Possible reasons for departure from Wilk's theorem may
-include \pointlike ignoring energy dispersion, which would generally change
-the shape as a function of energy, numerical innacuracies in evaluating
-the convolution algorithm, or possibly problems with the fitting algorithm
-getting stuck in false minimum. It is important to emphasize that if
+there is good agreement between Wilk's theorem, although the agreement is
+not perfect.  It should be noted that the discrepancy seems to be worst
+for bright sources which seems to imply that numerical errors in the
+way \pointlike models the PSF and performs the convolution become more
+apparent for sufficiently bright sources.  Other possible reasons for
+departure from Wilk's theorem might include \pointlike ignoring energy
+dispersion. Energy dispersion will change the shape as a function of
+energy. \pointlike may also run into possibly problems with the fitting
+algorithm getting stuck in false minimum. It is important to emphasize
+that if
 our emperical curve lies to the left of the curve we assume to estimate
 significance, we would underestimate the statistical significance of
 our result. Since this is the case for most of our simluations, we are
@@ -400,8 +486,8 @@ estimage the flux at which $\tsext=25$.
 Our first result is the extension sensitivity for sources of varying
 spectral indices. The result is shown in figure~\ref{index_sensitivity}.
 We computed the sensitivty for sources with a spectral index of 1.5,
-2, 2.5, and 3 and for sources of 20 extensions varying from $0.1^\circ$
-to $2.0^\circ$. The $y$ axis is the $100\mev$ to $100\gev$ flux of the
+2, 2.5, and 3 and for sources of 20 extensions varying from $0.1\deg$
+to $2.0\deg$. The $y$ axis is the $100\mev$ to $100\gev$ flux of the
 source and the $x$ axis is the monte carlo extension. The curves then
 represent the division in this extension and flux space where one gets
 on average $\tsext=25$.
@@ -412,7 +498,7 @@ same sensitivity but only using events from from $1\gev$ to $100\gev$.
 This results shows that our extension sensitivity is
 significantly better for harder sources where there are more high
 energy events. Furthermore, our sensitivity is best for sources with an
-extension around $0.5^\circ$.  our sensitivity gets significantly worse
+extension around $0.5\deg$.  our sensitivity gets significantly worse
 for very small sources and gets slightly worse for very large sources.
 
 Futheremore, we note that except for the hardest or largest sources,
@@ -459,12 +545,12 @@ diffuse, isotropic diffuse, and earth limb emission model. The spectrum
 of the galactic and isotropic diffuse models were refit during the
 analysis. The earth limb emission was fixed to predicted value.
 
-For each source, we used a circular $10^\circ$ region of interest centered
+For each source, we used a circular $10\deg$ region of interest centered
 on our source. We performed a fully binned analysis.  The spatial bin
 size was scaled with energy as was described above and we uniformly
 binned in log energy, using 4 binned per logarithmic decade of of energy.
-We included all background catalog sources within $15^\circ$ of the source
-of interest and refit the spectral parameters of sources within $2^\circ$
+We included all background catalog sources within $15\deg$ of the source
+of interest and refit the spectral parameters of sources within $2\deg$
 of our source.
 
 As was shown, we gain very little in sensitivity using events with energy
@@ -514,8 +600,8 @@ and performed several followup analyses to substantiate our analysis.
 First, we took the spatial and spectral model found using \pointlike
 and performed a crosscheck by refitting the spectral parameters using 
 \gtlike.
-We used a square ROI $10^\circ$ in diamater, the same 4 degrees
-per decade, and $0.125^\circ$ energy binning.
+We used a square ROI $10\deg$ in diamater, the same 4 degrees
+per decade, and $0.125\deg$ energy binning.
 The \gtlike analysis provided a second estimate of the spectral
 paramters of the extended source as well as a second calculation of
 $\ts_\text{disk}$, $\ts_\text{point}$, and 
@@ -595,7 +681,7 @@ this\cite{pair_halo_paper, http://adsabs.harvard.edu/doi/10.1086/187222}.
 Following the Fermi-LAT one year catalog, the Fermi collaboration
 published a list of the Fermi catalog sources that had a high probability
 association with AGN. The first year catalog had 709 AGN associated with
-671 distinct 1FGL sources at high latitude ($|b|>10^\circ$).  For our
+671 distinct 1FGL sources at high latitude ($|b|>10\deg$).  For our
 study, we are looking to assess systematics with extension fitting so
 it is important to avoid any possible issues with AGN associations.
 For that reason, we select only the 599 AGN which make it into the
@@ -618,12 +704,25 @@ AGN and this will be the scope of a follow up AGN association paper. Our
 purpose is simply to find a good sample of AGN which can be used to
 test the systematics of our tool.
 
-Using the same extension fitting procedure as described above, we test
-these 515 AGN for extension. A histogram of the fit \tsext values is
-shown in figure~\ref{agn_ts_ext}. Overlaid on the plot is again
-a $\chi^2/2$ distribution suggested by Wilk's Theorem.
-This plot shows a worse agreement with the theoretical distribution
-then was found by our monte carlo study in figure~\ref{ts_ext_mc}. 
+Using the same extension fitting procedure as described above, we
+test these 515 AGN for extension. A histogram of the fit \tsext values
+is shown in figure~\ref{agn_ts_ext}. Overlaid on the plot is again a
+$\chi^2/2$ distribution suggested by Wilk's Theorem.  This plot shows
+a worse agreement with the theoretical distribution then was found
+by our monte carlo study in figure~\ref{ts_ext_mc}.  But overall, the
+distribution is good. No AGN get fit with a particularly significant
+value of $\tsext$. Almost all of the AGN get fit with $\tsext<1$ and
+there are very few AGN fit with large values of \tsext.  There where
+only 2 AGN having $\tsext>10$.  The maximum fit $\tsext=13.7$ whereas the
+maximum value expected theoeritcally for the $\chi^2/2$ distribution is
+8.3. This result therefore shows that there is some systematic on our
+analysis but that we understand it and that it will not significantly
+cast into doubt our subsequent results.
+% 8.3 number gotten from mathematica:
+% PDF[ChiSquareDistribution[1], x]
+% N[Solve[(1/2)*
+%     Integrate[1/(E^(x/2)*(Sqrt[2*Pi]*Sqrt[x])), {x, TS, Infinity}] &=&  
+%        1/515, TS]]
 
 Several possible systematics could cause this discrepancy. The first
 is that in our analysis we fit each source with a powerlaw index.
@@ -637,30 +736,89 @@ energy and furthermore if this was a signifciant effect the same results
 would have showed up with the monte carlo simultions which included the
 effects of energy dispersion. 
 
-The third possible effect causing this discrepancy is an
-imperfect modeling of the PSF of the LAT.  Before launch,
-the LAT PSF was determined using a Monte Carlo simulation of
-the detector.  After launch, a discrepancy was found using flight
-data above a few \gev in the PSF measured using very bright AGN.
-This result was presented in conference and a publication is in preparation.
-Subsequently, the PSF was fit empirically to these bright AGN and
-this empirical parameterization is used in the Pass 7 Version 6 IRFs.\cite{
+Another possible systematic may be due to remaning issues with our
+background model. Due to chance coincidence, a catalog source might
+lie very close to nearby source. If the two sources were near enough,
+they would be unresolvable by the catalog and the catalog would simply
+fit them both together.  This could easily lead to an anomolously high
+value of \tsext for a paritcular point source. Issues could also arise
+from farther away but fainter sources which did not make the catalog's
+significance cut, but nonetheless would pull the fitter away from the
+point hyoptehsis.  Finally, it is possible that there are lingering
+residuals in the diffuse emission in parts of the high latitude sky
+which would cause the fitter to prefer a slightly extneded hypotehsis
+that could fill in parts of the unmodeled diffuse emission.
+
+The final possible effect causing this discrepancy is an imperfect
+modeling of the PSF of the LAT.  Before launch, the LAT PSF
+was determined using a Monte Carlo simulation of the detector.
+After launch, a discrepancy was found using flight data above a
+few \gev in the PSF measured using very bright AGN.  This result
+was presented in conference and a publication is in preparation.
+Subsequently, the PSF was fit empirically to these bright AGN and this
+empirical parameterization is used in the Pass 7 Version 6 IRFs.\cite{
 https://confluence.slac.stanford.edu/download/attachments/102860834/FermiSymp2011_CAPSF_v5_ROTH.pptx
-}. But our current parameterization is not perfect. There are 
-especially lingering issues because there is not good enough statistics
-at high energy to validate the PSF as a function of the incident $\theta$
-angle of a photon. It is likely that these issues could cause this 
-systematic in the fit value of \tsext for point sources. We should
-furtheremore note that since the PSF was 
+}. But our current parameterization is not perfect. There are especially
+lingering issues due to lackign the statistics at high energy to
+validate the PSF as a function of the incident $\theta$ angle of a
+photon. Since the distribution of $\theta$ angles for observing any
+sources is different, the PSF for every source should be different.
+It is likely that these issues could cause this systematic in the fit
+value of \tsext for AGN.
 
+We should furtheremore note that since the PSF was found empirically in
+the first place by fitting the shape of brigh AGN, finding that the AGN we
+test are not significantly extended is not surprising.  We hope to note
+that because of the difficulties in validating the PSF, we are strictly
+searching for sources that are significantly extended when compared to
+bright AGN measured by the LAT. Trying to look for the extension of these
+AGN, or more realistically trying to put an upper limit on thier size,
+would require its own dedicated analysis.
 
-with only 2 AGN having $\tsext>10$ and the maximum having $\tsext=13.7$
 
 
 \section{New Extended Sources}
 
-\section{Interpretation}
+\begin{itemize}
+  \item Results summarized in table~\ref{new_ext_srcs}.
+  \item Add extra stuff to this section, $\tsinc$.
+  \item Disribe what had to be done to modify regionregion.
+    What sources had to be deleted (or moved).
+%  \item XXXXXXXXXXXXXXXXXXXXXXXXXX Say that errors are just statistical (or have a descritpion of errors).
 
+\end{itemize}
+
+\subsection{1FGL J1628.6-2419c}
+
+The two year catalog source P72Y2516 was found at ($l,b)=(353.09\deg, 16.79\deg)$
+with a best fit extension of $0.40\pm0.05$ and an extension significance of
+$\tsext=26.3$.
+
+In the ophiucus region=most likely a molecular cloud
+
+\subsection{1FGL J1554.0-5345c}
+Unidentified source likely diffuse emission
+
+\subsection{1FGL J0823.3-4248}
+Coincident with Puppis A SNR
+
+\subsection{1FGL J1613.6-5100c}
+Near HESS Source XXXXXXXXXXXXXX
+
+\subsection{1FGL J1632.9-4802c}
+Near HESS Source XXXXXXXXXXXXXX
+
+\subsection{1FGL J2020.0+4049}
+Gamam Cygni SNR. Upcomming publication.
+
+\subsection{1FGL J1837.5-0659c}
+Near HESS source HESS J1837. Upcomming publication???
+
+\subsection{P72Y1287}
+
+Vela Jr. Upcomming publication.
+
+\section{Conclusion}
 
 \appendix
 
@@ -670,44 +828,43 @@ with only 2 AGN having $\tsext>10$ and the maximum having $\tsext=13.7$
 \hline
 $\gamma$ & flux ($\ph/\cm^2/\s$) & $N_\text{sims}$ & $<\ts>$ \\
 \hline
-  1.5 &          $10^{-6}$ &           11405 &  90861 \\
-      &  $3\times 10^{-7}$ &           11490 &  21922 \\
-      &          $10^{-7}$ &           11101 &   5765 \\
-      &  $3\times 10^{-8}$ &           10269 &   1262 \\
-      &          $10^{-8}$ &            9941 &    306 \\
-      &  $3\times 10^{-9}$ &           10427 &     61 \\
+  1.5 &          $10^{-6}$ &           31952 &  92862 \\
+      &  $3\times 10^{-7}$ &           31962 &  22169 \\
+      &          $10^{-7}$ &           31977 &   5806 \\
+      &  $3\times 10^{-8}$ &           31991 &   1270 \\
+      &          $10^{-8}$ &           31940 &    301 \\
+      &  $3\times 10^{-9}$ &           30324 &     62 \\
 \hline
-    2 &          $10^{-6}$ &           11632 &  22025 \\
-      &  $3\times 10^{-7}$ &           11622 &   4886 \\
-      &          $10^{-7}$ &           11115 &   1159 \\
-      &  $3\times 10^{-8}$ &           10503 &    222 \\
-      &          $10^{-8}$ &            9893 &     50 \\
+    2 &          $10^{-6}$ &           31872 &  22067 \\
+      &  $3\times 10^{-7}$ &           31890 &   4898 \\
+      &          $10^{-7}$ &           31858 &   1097 \\
+      &  $3\times 10^{-8}$ &           31632 &    236 \\
+      &          $10^{-8}$ &           27491 &    103 \\
 \hline
-  2.5 &          $10^{-6}$ &           11522 &   4722 \\
-      &  $3\times 10^{-7}$ &           11445 &    948 \\
-      &          $10^{-7}$ &           10966 &    202 \\
-      &  $3\times 10^{-8}$ &            8227 &     41 \\
+  2.5 &          $10^{-6}$ &           31822 &   4706 \\
+      &  $3\times 10^{-7}$ &           31822 &    889 \\
+      &          $10^{-7}$ &           31169 &    176 \\
+      &  $3\times 10^{-8}$ &           21591 &     41 \\
 \hline                                                
-    3 &          $10^{-6}$ &           11264 &    949 \\
-      &  $3\times 10^{-7}$ &           10986 &    172 \\
-      &          $10^{-7}$ &            7855 &     40 \\
+    3 &          $10^{-6}$ &           31763 &    929 \\
+      &  $3\times 10^{-7}$ &           31665 &    161 \\
+      &          $10^{-7}$ &           19271 &     40 \\
 \hline
 \end{tabular}
 \caption{
-This table presents a list of the spectral models (flux and spectral index)
-used in the monte carlo study of 
-\pointlike described in section~\ref{monte_carlo_validation}.
-For each spectral model, the number of statistically indepdent simulations
-and the average test statistic found for that given spectral model
-($<\ts>$) is tabulated. 
-The important feature to see in this table is that the monte carlo simulation
-probes most of the sources parameters that could be detected by the LAT.
-The simulation probles a wide range of spectral indices (from index 1.5 to 3) and
-a wide range of the fluxes (varying
-from a close to $5\sigma$ source detection to a $>10\sigma$ source detection).
-Only simluations which produced statistically
-significant detections ($\ts>25$) were kept. 
-What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^2/\s$.
+This table presents a list of the spectral models (flux and spectral
+index) used in the monte carlo study of \pointlike described in
+section~\ref{monte_carlo_validation}.  For each spectral model, the
+number of statistically indepdent simulations and the average test
+statistic found for that given spectral model ($<\ts>$) is tabulated.
+The important feature to see in this table is that the monte carlo
+simulation probes most of the sources parameters that could be detected
+by the LAT.  The simulation probles a wide range of spectral indices
+(from spectral index $\gamma$ of 1.5 to 3) and a wide range of the fluxes
+(varying from a close to $5\sigma$ source detection to a $>10\sigma$
+source detection).  Only simluations which produced statistically
+significant detections ($\ts>25$) were kept.  What is quoted is the
+$>100\mev$ integral flux measured in units of $\ph/\cm^2/\s$.
 }
 \label{ts_ext_num_sims}
   \end{centering}
@@ -802,7 +959,8 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
   \begin{center}
     \includegraphics{ic443_plots/ic443_ts_ext_vs_energy.pdf}
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/ts_ext_vs_energy/v1/ts_ext_vs_energy.py
-    \caption{\tsext vs log(energy)}
+    \caption{A plot of \tsext vs log(energy)
+    for the SNR IC443, which has a typical spectral model.}
     \label{counts_slice}
   \end{center}
 \end{figure}
@@ -832,7 +990,7 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
   \begin{center}
     \includegraphics{ic443_plots/ic443_smoothed_counts.pdf}
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/smoothed_counts_ic443/v1
-    \caption{Smoothed counts}
+    \caption{Smoothed counts. Galactic and isotoropic as well as earth albedo background were subtracted.}
     \label{smoothed_counts}
   \end{center}
 \end{figure}
@@ -841,7 +999,7 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
 \begin{sidewaystable}
     \begin{centering}
       \begin{tabular}{rrrrrrrrrrr}
-        Name           &    GLON &    GLAT & $\sigma(^\circ)$ &     \ts & $\tsext$ & Major & Minor &   Ang & Flux ($10^{-9}$) &         Index \\
+        Name           &    GLON &    GLAT & $\sigma(\deg)$ &     \ts & $\tsext$ & Major & Minor &   Ang & Flux ($10^{-9}$) &         Index \\
         \hline
         \multicolumn{11}{l}{$E > 1\gev$} \\
         \hline
@@ -860,20 +1018,17 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
       \label{known_extended_sources}
       \end{tabular}
       \caption{The fit results for the known extended sources that
-      were found by our analysis. The top results were found using
-      an energy range between $1\gev$ and $100\gev$.
-      The quoted flux is in units of $10^{-9}\ph/\cm^2/\s$ and 
-      is the flux in the fit energy range.
-      The lower analysis was done using events between
-      $10\gev$ and $100\gev$ and the quoted flux
-      values are in the fit energy range. All sources were
-      fit using a disk morphology. The localiztaion and extension
-      were found using \pointlike while the TS and spectral
-      values were calculated using \gtlike.
-      The TS value was computed using 
-      the assumed disk morphology. The Centaurus A Lobes,
-      the Cygnus Loop, and Vela X were not found to be extended by
-      this too. The reasons for this are discussed in~\ref{validate_known}.
+      were found by our analysis. The top results were found using an
+      energy range between $1\gev$ and $100\gev$.  The lower analysis
+      was done using events between $10\gev$ and $100\gev$.  The quoted
+      flux is in units of $10^{-9}\ph/\cm^2/\s$ and is the flux in the
+      fit energy range (either 1\gev to 100\gev or 10\gev to 100\gev).
+      All sources were fit using a uniform disk spatial template. The
+      localiztaion and extension were found using \pointlike while the TS
+      and spectral values were calculated using \gtlike.  The TS value was
+      computed using the assumed disk morphology. The Centaurus A Lobes,
+      the Cygnus Loop, and Vela X were not found to be extended by this
+      too. The reasons for this are discussed in~\ref{validate_known}.
       }
     \end{centering}
 \end{sidewaystable}
@@ -884,35 +1039,94 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
 \begin{sidewaystable}
     \begin{centering}
       \begin{tabular}{rrrrrrrrrrr}
-        Name           &    GLON &    GLAT & $\sigma(^\circ)$ &      TS & $\tsext$ & Major & Minor & Ang & Flux ($10^{-9}$) & Index \\
+        Name               &        GLON &        GLAT  &                $\sigma$ &       TS &   $\tsext$ &  Major &  Minor &    Ang &       Flux ($10^{-9}$) &      Index \\
         \hline
         \multicolumn{11}{l}{$E > 1\gev$} \\
         \hline
-        1FGL J1628.6-2419c \\
-        1FGL J1554.0-5345c \\
-        1FGL J0823.3-4248 \\
+        1FGL J1628.6-2419c &   353.09\deg&    16.79\deg & $  0.40\deg\pm0.05\deg$ &    140.3 &       26.3 &  0.042 &  0.036 &   54.4 & $    6.3\pm0.6$ &$   2.50\pm0.14$ \\
+        1FGL J1554.0-5345c &   328.12\deg&     0.26\deg & $  0.49\deg\pm0.04\deg$ &    148.6 &       80.9 &  0.046 &  0.041 &   55.4 & $   16.3\pm1.5$ &$   2.31\pm0.11$ \\
+        1FGL J0823.3-4248  &   260.32\deg&    -3.28\deg & $  0.37\deg\pm0.03\deg$ &    306.1 &       47.8 &  0.026 &  0.023 &    4.4 & $    8.2\pm0.6$ &$   2.19\pm0.06$ \\
         \hline
         \multicolumn{11}{l}{$E > 10\gev$} \\
         \hline
-        1FGL J2020.0+4049 \\
-        1FGL J1837.5-0659c \\
-        1FGL J1632.9-4802c \\
-        1FGL J1613.6-5100c \\
+        1FGL J1613.6-5100c &   331.74\deg&    -0.58\deg & $  0.52\deg\pm0.04\deg$ &     73.3 &       39.9 &  0.071 &  0.049 &  -21.7 & $    1.3\pm0.2$ &$   1.76\pm0.25$ \\
+        1FGL J1632.9-4802c &   336.52\deg&     0.05\deg & $  0.66\deg\pm0.03\deg$ &    175.1 &       92.9 &  0.040 &  0.037 &    6.2 & $    2.9\pm0.3$ &$   2.27\pm0.17$ \\
+        1FGL J2020.0+4049  &    78.32\deg&     2.21\deg & $  0.70\deg\pm0.04\deg$ &    245.4 &      141.0 &  0.048 &  0.039 &    4.4 & $    2.1\pm0.2$ &$   2.36\pm0.18$ \\
+        1FGL J1837.5-0659c &    25.04\deg&     0.26\deg & $  0.61\deg\pm0.04\deg$ &    115.4 &       50.4 &  0.064 &  0.051 &   19.7 & $    2.2\pm0.3$ &$   2.09\pm0.20$ \\
+        P72Y1287           &   266.41\deg&    -0.75\deg & $  1.41\deg\pm0.06\deg$ &    128.8 &       99.4 &  0.097 &  0.087 &   19.3 & $    1.7\pm0.2$ &$   1.96\pm0.20$ \\
         \hline
       \label{new_ext_srcs}
       \end{tabular}
-      \caption{}
+      \caption{New extended soruce candidates}
     \end{centering}
 \end{sidewaystable}
 
+\clearpage
+\begin{sidewaystable}
+    \begin{centering}
+      \begin{tabular}{rrrrrrrrrrr}
+        Name               &        GLON &        GLAT  &                $\sigma$ &       TS &   $\tsext$ &  Major &  Minor &    Ang &       Flux ($10^{-9}$) &      Index \\
+        \hline
+        \multicolumn{11}{l}{$E > 1\gev$} \\
+        \hline
+        1FGL J1628.6-2419c &   353.09\deg&    16.79\deg & $  0.40\deg\pm0.05\deg$ &    140.3 &       26.3 &  0.042 &  0.036 &   54.4 & $    6.3\pm0.6$ &$   2.50\pm0.14$ \\
+        1FGL J1554.0-5345c &   328.12\deg&     0.26\deg & $  0.49\deg\pm0.04\deg$ &    148.6 &       80.9 &  0.046 &  0.041 &   55.4 & $   16.3\pm1.5$ &$   2.31\pm0.11$ \\
+        1FGL J0823.3-4248  &   260.32\deg&    -3.28\deg & $  0.37\deg\pm0.03\deg$ &    306.1 &       47.8 &  0.026 &  0.023 &    4.4 & $    8.2\pm0.6$ &$   2.19\pm0.06$ \\
+        \hline
+        \multicolumn{11}{l}{$E > 10\gev$} \\
+        \hline
+        1FGL J1613.6-5100c &   331.74\deg&    -0.58\deg & $  0.52\deg\pm0.04\deg$ &     73.3 &       39.9 &  0.071 &  0.049 &  -21.7 & $    1.3\pm0.2$ &$   1.76\pm0.25$ \\
+        1FGL J1632.9-4802c &   336.52\deg&     0.05\deg & $  0.66\deg\pm0.03\deg$ &    175.1 &       92.9 &  0.040 &  0.037 &    6.2 & $    2.9\pm0.3$ &$   2.27\pm0.17$ \\
+        1FGL J2020.0+4049  &    78.32\deg&     2.21\deg & $  0.70\deg\pm0.04\deg$ &    245.4 &      141.0 &  0.048 &  0.039 &    4.4 & $    2.1\pm0.2$ &$   2.36\pm0.18$ \\
+        1FGL J1837.5-0659c &    25.04\deg&     0.26\deg & $  0.61\deg\pm0.04\deg$ &    115.4 &       50.4 &  0.064 &  0.051 &   19.7 & $    2.2\pm0.3$ &$   2.09\pm0.20$ \\
+        P72Y1287           &   266.41\deg&    -0.75\deg & $  1.41\deg\pm0.06\deg$ &    128.8 &       99.4 &  0.097 &  0.087 &   19.3 & $    1.7\pm0.2$ &$   1.96\pm0.20$ \\
+        \hline
+      \label{new_ext_srcs}
+      \end{tabular}
+      \caption{New extended soruce candidates}
+    \end{centering}
+\end{sidewaystable}
+
+\clearpage
+\begin{sidewaystable}
+    \begin{centering}
+      \begin{tabular}{rrrrrrrrrr}
+        Name               & $\text{GLON}_1$ & $\text{GLAT}_1$ & $\text{GLON}_2$ & $\text{GLAT}_2$ & $\text{Flux}_1$ & $\text{Flux}_2$ & $\text{Index}_1$ & $\text{Index}_2$ & \tsinc \\
+        \hline
+        \multicolumn{6}{l}{$E > 1\gev$} \\
+        \hline
+        1FGL J1628.6-2419c &&&&& \\
+        1FGL J1554.0-5345c &&&&& \\
+        1FGL J0823.3-4248  &&&&& \\
+        \hline
+        \multicolumn{6}{l}{$E > 10\gev$} \\
+        \hline
+        1FGL J1613.6-5100c &&&&& \\
+        1FGL J1632.9-4802c &&&&& \\
+        1FGL J2020.0+4049  &&&&& \\
+        1FGL J1837.5-0659c &&&&& \\
+        P72Y1287           &&&&& \\
+        \hline
+      \label{new_ext_srcs}
+      \end{tabular}
+      \caption{Dual localization results for new extended sources.
+      \tsinc is the increase in TS compared to fitting a single point source. 
+      }
+    \end{centering}
+\end{sidewaystable}
 
   \begin{figure}
     \begin{center}
       \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1628.6-2419c}
     \end{center}
     % this plot came from 
-    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_1000_v1/1FGL_J1628.6-2419c/v2/source_1FGL_J1628.6-2419c.pdf
-    \caption{1FGL J1628.6-2419c}
+     % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1628.6-2419c/v2/run.py
+    \caption{1FGL J1628.6-2419c. In the opiucus region=most likeliy a molecular cloud.
+    P72Y2516.
+    Note that unlike other plots, that this plot has the nearby sources subtracted.
+    This was done to remove the very bright, $\ts=460$, source P72Y2510 % XXXXXXXXXXXXXXXXXXXX what is this source
+    which would be in the lower right of the image at $l,b=352.14\deg,16.34\deg$.
+    }
   \end{figure}
 
   \begin{figure}
@@ -920,8 +1134,8 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
       \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1554.0-5345c}
     \end{center}
     % this plot came from 
-    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_1000_v1/1FGL_J1554.0-5345c/v2/source_1FGL_J1554.0-5345c.pdf
-    \caption{1FGL J1554.0-5345c}
+     % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1554.0-5345c/v2/source_1FGL_J1554.0-5345c.pdf
+    \caption{1FGL J1554.0-5345c. P72Y2405. Unidentified source likely diffuse emission.}
   \end{figure}
 
   \begin{figure}
@@ -929,28 +1143,35 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
       \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J0823.3-4248}
     \end{center}
     % this plot came from 
-    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_1000_v1/1FGL_J0823.3-4248/v2/source_1FGL_J0823.3-4248.pdf
-    \caption{1FGL J0823.3-4248}
-  \end{figure}
-
-  \begin{figure}
-    \begin{center}
-      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J2020.0+4049}
-    \end{center}
-    % this plot came from 
-    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/1FGL_J2020.0+4049/v2/source_1FGL_J2020.0+4049.pdf
-    \caption{
-    1FGL J2020.0+4049
+     % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J0823.3-4248/v2/source_1FGL_J0823.3-4248.pdf
+    \caption{1FGL J0823.3-4248. P72Y1212. Coincident with Puppis A SNR.
+    P72Y1212.
+    Note that unlike most other plots, this plot has the nearby sources subtracted.
+    This was done to remove the very bright source Vela which,
+    at position $l,b=263.55\deg,-2.79\deg$ is over 3 degrees away,
+    would otherwise spill over into the top left of the image.
     }
   \end{figure}
 
   \begin{figure}
     \begin{center}
-      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_MRFH0254}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_Gamma_Cygni}
     \end{center}
     % this plot came from 
-    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/MRFH0254/v2/source_MRFH0254.pdf
-    \caption{Lalla}
+    % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Gamma_Cygni/v2/source_Gamma_Cygni.pdf
+    \caption{
+    Gamma Cygni. P72Y3281
+    }
+  \end{figure}
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_Vela_Jr}
+    \end{center}
+    % this plot came from 
+    % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Vela_Jr/v2/source_Vela_Jr.pdf
+    \caption{Vela Jr. P72Y1287. Using $E>10\gev$. Here, the image is
+      convovled with a $0.25\deg$ gaussian. }
   \end{figure}
 
   \begin{figure}
@@ -958,18 +1179,18 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
       \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1837.5-0659c}
     \end{center}
     % this plot came from 
-    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/1FGL_J1837.5-0659c/v2/source_1FGL_J1837.5-0659c.pdf
-    \caption{1FGL J1837.5-0659c}
+    % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1837.5-0659c/v2/source_1FGL_J1837.5-0659c.pdf
+    \caption{1FGL J1837.5-0659c. P72Y2974}
   \end{figure}
 
 
   \begin{figure}
     \begin{center}
-      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1636.4-4737c}
+      \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1632.9-4802c}
     \end{center}
     % this plot came from 
-    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/1FGL_J1636.4-4737c/v2/source_1FGL_J1636.4-4737c.pdf
-    \caption{1FGL J1636.4-4737c}
+    % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1632.9-4802c/v2/source_1FGL_J1632.9-4802c.pdf
+    \caption{1FGL J1632.9-4802c. P72Y2540}
   \end{figure}
 
 
@@ -978,9 +1199,9 @@ What is quoted is the $>100\mev$ integral flux in measured in units of $\ph/\cm^
       \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1613.6-5100c}
     \end{center}
     % this plot came from 
-    % /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v10/spectral_emin_10000_v1/1FGL_J1613.6-5100c/v2/source_1FGL_J1613.6-5100c.pdf
+    % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1613.6-5100c/v2/source_1FGL_J1613.6-5100c.pdf
     \caption{
-    1FGL J1613.6-5100c }
+    1FGL J1613.6-5100c . P72Y2473}
   \end{figure}
 
 
