@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{xspace}
+\usepackage{url}
 
 % some units
 \newcommand{\mev}{\text{MeV}\xspace}
@@ -58,10 +59,9 @@ the Fermi Large Area Telescope (LAT), the primary science instrument
 on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.  We provide a
 series of Monte Carlo studies that were done to validate this tool.
 We then calculate the Fermi LAT's sensitivity to spatially exnteded
-sources.
-We then apply this tool to test all sources in the 2FGL Two Year Catalog
-for extension.\cite{2FGL} We then report on the discovery of XXXXXXXXXXXXXX new
-extended sources.
+sources.  We then apply this tool to test all sources in the 2FGL Two
+Year Catalog for extension.\cite{2fgl} We then report on the discovery
+of XXXXXXXXXXXXXX new extended sources.
 \end{abstract}
 
 \section{Introduction}
@@ -89,8 +89,8 @@ these source classes can be spatially resolved when observed at other
 frequencies and could possibly be spatially resolvable by the LAT.
 
 In particular, the LAT has discovered a variety of spatially extended
-supernova remnants including IC443 and W51C (\cite{IC443,W51C}) and pulsar
-wind nebulae (\cite{MSH15-52,VelaX}). And there are other source classes
+supernova remnants including IC443 and W51C (\cite{ic443,w51c}) and pulsar
+wind nebulae (\cite{msh1552,velax}). And there are other source classes
 which could possibly be spatially resolved by the LAT including galaxy
 clusters, dark matter, and possibly new physics.
 
@@ -166,8 +166,10 @@ To study the extension of a source, one can assume a particular shape
 for an extended source (e.g. a disk or Gaussian), and fit the spatial
 parameters of that source.
 
-In principle, the entire task can be done using the standard science
-tools package \gtlike\cite{Science-Tools-gtlike}. But \gtlike is
+In principle, the entire task can be done using the 
+official maximum likelihood tool \gtlike which is 
+distributed publically by the Fermi Science Support Center\cite{fssc}. 
+But \gtlike is
 only able to fit the spectral parameters of the source, so the extension
 fitting would have to be done as an external loop. Typically, the run time
 for a binned source analysis using \gtlike is several hours so this loop
@@ -192,15 +194,15 @@ a morphological analysis. An alternate maximum likelihood fitting
 package called \pointlike has been developed by the Fermi
 collaboration and we have expanded its functionality to fully support
 analyzing spatially extended sources. \pointlike is most thoroughly
-described in Matthew Kerr's Ph.D Thesis\cite{matthew_kerr_phd_thesis}
-but the important aspects will be summarized below. What differentiates
+described in Matthew Kerr's Ph.D Thesis but the important aspects will
+be summarized below (\cite{matthew_kerr_thesis}) . What differentiates
 \pointlike most significantly from \gtlike is its emphasis
 on speed by introducing approximations into the calculation of the
 likelihood function while at the same time trying to reduce any
 numerical errors that may be introduced.  Like binned \gtlike,
 \pointlike bins the sky both in position and energy.  Unlike 
 \gtlike, \pointlike relies on the {\em healpix} representation of spatial
-bins\cite{healpix_paper} and scales the size of each spatial bin to be
+bins\cite{healpix} and scales the size of each spatial bin to be
 smaller than the PSF. This is convenient because it no
 significant information is lost due to binning at all energies and it is
 always a good approximation that the model predicted counts are uniform
@@ -302,7 +304,7 @@ Errors on fit parameters are typically calculated in one of two ways. The
 first method requires explicilty varying one paramter until the log of
 the likelihood has fallen by a value 1/2 while simulatenously optimizing
 the other fit parmaeters.  \minuit provides the {\em Simplex} function to
-calculate errors this way.\cite{minuit documentation and UP parameter}
+calculate errors this way (\cite{minuit_documentation}).
 The second method involves estimating the likelihood function as being
 a multivariate gaussian and calcluating the curvature of the log of
 the likelihood at the peak to estimate when the function will fall by
@@ -328,7 +330,7 @@ the source until the log of the likelihood has fallen by 1/2.
 Then, the extended source's position error is calculated using the
 same code employed to calculate position errors of point sources. This
 code is used to calculate the localization error of all point sources
-in the catalog\cite{2FGL paper}. It works by fitting an ellipse to the
+kn the catalog\cite{2fgl}. It works by fitting an ellipse to the
 likelihood surface near the maximum and using this fit ellipse to estimate
 an elliptical localization errors. By reporting two localization errors
 as well as a localization error angle, this method explicitly takes care
@@ -566,7 +568,7 @@ a source.
 The half $\chi^2_1$ distribution was found by a monte carlo study
 to hold for the special case of source finding of EGRET sources using the
 maximum likelihood technique.  They were comparing the hypothesis of a
-source to the hypothesis of just a background\cite{Mattox_et_All_Paper}.
+source to the hypothesis of just a background\cite{mattox_egret}.
 Their argument for why this null hypothesis distribution was reasonable
 was that half of the time, statistical underfluctuations would cause
 there to be fewer fewer photons then expected where the sources is being
@@ -609,20 +611,19 @@ sources of varying spectral models on top of a simulated background. The
 simulated point source was then fit using \pointlike as both an extended
 source and a point source and $\tsext$ was calculated.
 
-Fermi LAT data was simulated using the publically avaliabable Science
-Tools package \gtobssim\cite{GTOBSSIM_CITATION}. The sources were
-simulated with a powerlaw spectral model with 6 Were given 6 $>100\mev$
-fluxes ranging from $3\times 10^{-9} \ph/\cm^2/s$ to 
-$10^{-6} \ph/\cm^2/s$.
-The sources were then simulated with spectral index ($\gamma$) values of
-1.5, 2, 2.5, and 3.  These values were picked to probe a representative
-range measurable values.  For particular spectral indices, only the
-fluxes which would create a statistically significant source detection
-($\ts>25$) where selected, since we are only interested in
-testing for extension sources with a significant extent. The sources were
-simulated on top of an isotropic powerlaw background with a Sreekumar-like
-spectrum ($>100\mev$ flux of 1.5e-5 and spectral index 2.1).\cite{Sreekumar
-et al. ApJ 494 pag 523 1998}
+Fermi LAT data was simulated using program \gtobssim which is
+distributed publically by the Fermi Science Support Center
+(\cite{fssc}).  The sources were simulated with a powerlaw spectral
+model with 6 Were given 6 $>100\mev$ fluxes ranging from $3\times 10^{-9}
+\ph/\cm^2/s$ to $10^{-6} \ph/\cm^2/s$.  The sources were then simulated
+with spectral index ($\gamma$) values of 1.5, 2, 2.5, and 3.  These
+values were picked to probe a representative range measurable values.
+For particular spectral indices, only the fluxes which would create a
+statistically significant source detection ($\ts>25$) where selected,
+since we are only interested in testing for extension sources with a
+significant extent. The sources were simulated on top of an isotropic
+powerlaw background with a Sreekumar-like spectrum ($>100\mev$ flux
+of 1.5e-5 and spectral index 2.1) (\cite{sreekumar_isotropic}).
 
 The monte carlo simulation was perforormed over a one year time interval using
 a default rocking profile and an assumed a represntative
@@ -678,7 +679,7 @@ improves significantly with energy.
 To calculate the LAT's sensitivity to spatially extended sources,
 we simulated sources with a uniform radially symmetric
 disk morphology on top of a powerlaw Sreekumar-like isotropic
-spectrum.\cite{Sreekumar et al. ApJ 494 pag 523 1998}.  The monte carlo
+spectrum (\cite{sreekumar_isotropic}).  The monte carlo
 simulation was perforormed over a one year time interval using a default
 rocking profile and an assumed a represntative livetime fraction of 0.8.
 For a given extension and spectral index, we calculated the
@@ -739,7 +740,7 @@ consistent with the improved angular resolution at higher energy.
 
 The LAT two year catalog presented a search for all
 statistically significant sources that are detected in the $\gev$
-sky\cite{2FGL_catalog}.  The catalog group's source finding method assumes
+sky\cite{2fgl}.  The catalog group's source finding method assumes
 that the emission originated as point sources and what was presented was
 a list of all sources fit assuming a point source spatial hypothesis. 
 Published extended sources were modeled by the catalog group as 
@@ -781,7 +782,7 @@ found looking only at the high energy.  This is also beneficial in the
 galactic plane looking for possible extended sources near pulsars which
 are very bright at lower energy but cutoff before 10\gev.  This approach
 of using only events above $10\gev$ was succesfully used to detecting
-HESS J1825-137 with the Fermi LAT~\cite{HESS J1825 paper}.
+HESS J1825-137 with the Fermi LAT~\cite{fermi_hess_j1825}.
 
 For each catalog source, we modified the source to have a uniform radially
 symmetric disk spatial shape and used \pointlike to simultaneously fit
@@ -800,7 +801,7 @@ the \gev emission in the galactic plane is dominated by anisotropic
 galactic diffuse emission.  Modeling the galactic diffuse emission is
 very difficult~\ref{first_diffuse_paper}  and finding sources on top of
 this emission is notoriously difficult. This issue has been discussed
-in the Fermi catalog~\ref{1FGL,2FGL}. Furthermore, the galactic plane
+in the Fermi catalog~\ref{first_cat,2fgl}. Furthermore, the galactic plane
 is very crowded and there is a degeneracy between an extended source
 and multiple point sources. So it is often difficult to ensure you have
 a good model for the region around a source .  Finding a source with
@@ -814,6 +815,7 @@ perform many crosschecks to make sure we had a good fit to our region.
 % XXXXXXXXXXXXXXXXXXXXXXXXXXX
 % Put example of poorly fit region and how it is difficult to know what
 % is going on.
+Example Bad fit~\ref{example_bad_fit}
 
 For each of the extended source candidates where $\tsext>16$,
 we performed several additional analyses to determine whether
@@ -902,9 +904,9 @@ Cloud.~\cite{SMC & LMC Paper}.  Our tool also successfully detected the
 extension of the supernova remenants IC443, W28, W30, W44, and W51C.
 
 Using events above $10\gev$, we were able to succesffuly fit the extesion
-of HESS J1825-137\cite{HESS 1825 paper}. Our analysis of MSH 15-52 using
+of HESS J1825-137\cite{fermi_hess_j1825}. Our analysis of MSH 15-52 using
 events above $10\gev$ found an extension consistent with the publisehed
-result, but with $\tsext=11.2$.\cite{MSH 15-52 Paper}. This
+result, but with $\tsext=11.2$.\cite{msh1552}. This
 is most likely because the published analysis used events above $6\gev$.
 
 Our analysis failed to detect the extension of Vela X. Vela X can only be
@@ -938,7 +940,7 @@ AGN are not expected to be spatially resolvable and therefore
 provide a good calibration source to demonstrate the efficacy of our
 tool. Nevertheless, it would be very interesting if AGN could be
 spatially resolved AGN and there are theories that predict
-this\cite{pair_halo_paper, http://adsabs.harvard.edu/doi/10.1086/187222}.
+this\cite{pair_halo_paper}.
 
 Following the Fermi-LAT one year catalog, the Fermi collaboration
 published a list of the Fermi catalog sources that had a high probability
@@ -950,7 +952,7 @@ For that reason, we select only the 599 AGN which make it into the
 ``clean'' AGN sample. An AGN association is only considered ``clean''
 if it has a high probability of association $P\ge 80\%$, if it is the
 only AGN associated with the 1FGL source, and if there are no flags
-on the source which shed doubt on the source\cite{1FGL}. These last two
+on the source which shed doubt on the source\cite{first_cat}. These last two
 conditions are especially important for our analysis. One might expect
 source confusion between two AGN look like a spatially extended source.
 Testing only unflagged sources is also important because it removes
@@ -1223,7 +1225,7 @@ high energy sky.
     $100\mev$ and $100\gev$ while the solid lien shows simulations
     using events with energy between $1\gev$ and $100\gev$.
     The sensitivity is for a one year simulation against a Sreekumar-like
-    isotropic background\cite{Sreekumar et al. ApJ 494 pag 523 1998}.
+    isotropic background (\cite{sreekumar_isotropic}).
     This plot shows that our sensitivity is best for sources that are
     about $1\deg$ large. It also shows that for sources That are neither
     very large nor very soft, our sensitivity is not significantly
@@ -1366,10 +1368,16 @@ high energy sky.
 \end{figure}
 
 
+\clearpage
+\begin{figure}
+  \begin{center}
+    \includegraphics{source_plots/example_bad_fit.pdf}
+    % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/example_bad_fit/v2
+    \caption{Example bad Fit: P72Y3047}
+    \label{example_bad_fit}
+  \end{center}
+\end{figure}
 
-% XXXXXXXXXXXXXXXXXXXXXXX
-% example bad fit
-% P72Y3047
 
 \clearpage
 \begin{sidewaystable}
@@ -1544,9 +1552,11 @@ high energy sky.
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1628.6-2419c/v2/run.py
   \caption{1FGL J1628.6-2419c. In the opiucus region=most likeliy a molecular cloud.
   P72Y2516.
-  Note that unlike other plots, that this plot has the nearby sources subtracted.
-  This was done to remove the very bright, $\ts=460$, source P72Y2510 % XXXXXXXXXXXXXXXXXXXX what is this source
-  which would be in the lower right of the image at $l,b=352.14\deg,16.34\deg$.
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %Note that unlike other plots, that this plot has the nearby sources subtracted.
+  %This was done to remove the very bright, $\ts=460$, source P72Y2510 % XXXXXXXXXXXXXXXXXXXX what is this source
+  %which would be in the lower right of the image at $l,b=352.14\deg,16.34\deg$.
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   }\label{1FGL_J1628.6-2419c}
 \end{figure}
 
@@ -1568,10 +1578,12 @@ high energy sky.
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J0823.3-4248/v2/source_1FGL_J0823.3-4248.pdf
   \caption{1FGL J0823.3-4248. P72Y1212. Coincident with Puppis A SNR.
   P72Y1212.
-  Note that unlike most other plots, this plot has the nearby sources subtracted.
-  This was done to remove the very bright source Vela which,
-  at position $l,b=263.55\deg,-2.79\deg$ is over 3 degrees away,
-  would otherwise spill over into the top left of the image.
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %Note that unlike most other plots, this plot has the nearby sources subtracted.
+  %This was done to remove the very bright source Vela which,
+  %at position $l,b=263.55\deg,-2.79\deg$ is over 3 degrees away,
+  %would otherwise spill over into the top left of the image.
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % XXXXXXXXXXXXXXXXXXXXXXXXXXX add in contour
   }\label{1FGL_J0823.3-4248}
 \end{figure}
