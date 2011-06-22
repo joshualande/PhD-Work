@@ -2,6 +2,7 @@
 
 % TODO:
 %   Add contours to images.
+%   What other citations to add?
 
 \usepackage{rotating}
 \usepackage{amsmath}
@@ -60,7 +61,7 @@ on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.  We provide a
 series of Monte Carlo studies that were done to validate this tool.
 We then calculate the Fermi LAT's sensitivity to spatially exnteded
 sources.  We then apply this tool to test all sources in the 2FGL Two
-Year Catalog for extension.\cite{2fgl} We then report on the discovery
+Year Catalog for extension.\cite{second_cat} We then report on the discovery
 of XXXXXXXXXXXXXX new extended sources.
 \end{abstract}
 
@@ -75,11 +76,11 @@ of XXXXXXXXXXXXXX new extended sources.
 % * Systematic test for a certain kind of (~ small) regularly shaped extended 
 
 The Large Area Telescope (LAT) is a pair conversion telescope on the
-Fermi Gamma-Ray Space Telescope. It has been surveying the Gamma-ray
+Fermi Gamma-Ray Space Telescope. It has been surveying the $\gamma$-ray
 sky since June 2008.  Fermi is particularly well suited as a survey
-instrument because of its to survey the broad energy coverage ($20\mev$
-to $>300\gev$), a wide field of view ($\sim 2.4 \sr$) and large effective
-area ($\sim 8000 \cm^2$ at $>1\gev$).
+instrument because of its to survey the broad energy coverage (20 \mev
+to >300 \gev), a wide field of view ($\sim 2.4 \sr$) and large effective
+area ($\sim 8000 \cm^2$ at $>1 \gev$).
 
 Using one year of all sky monitoring, the LAT published a catalog of
 source that were significantly resolved.  Many of these sources could
@@ -105,45 +106,36 @@ reasons. Most importantly, the spatial morphology can be used to help
 identify a Fermi source. Because of the large point spread function (PSF),
 for any source there are often several counterparts which it could be
 associated with. Finding a matching morphology can uniquly identify the
-source emitting the Gamma-rays. 
+source emitting the $\gamma$-rays. 
 
-Because of the largely varying PSF of the LAT, the
-spatial and spectral model of a source do not nicely decouple and
-spatially resolving a Fermi source is also important for obtaining an
-unbiased spectral model of the source.  Furthermore, using this extension
-information is important for improved the overall model of the sky which
-is important for obtaining a better fit of nearby sources and removing
-spurious point sources which we might otherwise think we detect.
+Because of the largely varying PSF of the LAT, the spatial and spectral
+model of a source do not nicely decouple and spatially resolving a Fermi
+source is also important for obtaining an unbiased spectral model of
+the source.  Furthermore, using this extension information is important
+for improved the overall model of the sky which is important for obtaining
+a better fit of nearby sources and removing spurious point sources which
+we might otherwise think we detect.
 
-
-Nevertheless, morphological studies of sources in the $\gev$ energy range using
-the Fermi LAT is challenging because of the significantly energy
-dependent PSF and because of systematic errors in the
-galactic diffuse emission. The Fermi PSF varies from over $XXXXXXXXXXXXXXX\deg$
-at $100\mev$ to $XXXXXXXXXXXXXXXX\deg$ at $100\gev$ so the higher energy photons 
-are significantly more important for resolving a source. On the other hand, 
-we tend to run out of photons at higher energies so a detailed statistical 
-test must be used to maximize our sensitivity.
+Nevertheless, morphological studies of sources in the $\gev$ energy
+range using the Fermi LAT is challenging because of the significantly
+energy dependent PSF and because of systematic errors in the galactic
+diffuse emission. The Fermi PSF varies from over $XXXXXXXXXXXXXXX\deg$
+at 100 \mev to $XXXXXXXXXXXXXXXX\deg$ at $100 \gev$ so the higher energy
+photons are significantly more important for resolving a source. On
+the other hand, we tend to run out of photons at higher energies so a
+detailed statistical test must be used to maximize our sensitivity.
 
 \section{Analysis Method}
 
-
-%   * Difficulty of studying spatially extended sources
-%   * Pointlike, great features
-%   * modifying it to fit spatially extended sources.
-%      * semi-analytic convolution formula
-%   * importance of fitting position + extension + spectrum simultaneously to apply statistical significance
-%   * Monte Carlo Validation
-%
 
 Performing morphological studies of sources in the $\gev$ energy range using
 the Fermi LAT is challenging primarily because of the significantly energy
 dependent PSF and because of systematic errors in the
 galactic diffuse emission. The Fermi PSF varies from over $XXXXXXXXXXXXXXXX\deg$
-at $100\mev$ to $XXXXXXXXXXXXXXXX\deg$ at $100\gev$ and so the higher energy photons are
+at 100 \mev to $XXXXXXXXXXXXXXXX\deg$ at $100 \gev$ and so the higher energy photons are
 significantly more important for studying the shape of sources. One could
 ideally look at just the highest energy photons, but the trade off is that
-for typical sources many more source events are expected at low energy.
+for typical sources many more source photons are expected at low energy.
 For this reason, it is especially important to use as much of the data
 as possible.
 
@@ -208,10 +200,10 @@ significant information is lost due to binning at all energies and it is
 always a good approximation that the model predicted counts are uniform
 across a spatial bin. 
 
-\pointlike additionaly bins the Fermi Gamma-rays by their conversion
+\pointlike additionaly bins the Fermi $\gamma$-rays by their conversion
 type, which corresponds to whether the photon converted in the front or
 back part of the detector. Since the PSF is smaller for front entering
-events, one would expect binning each conversion type independently to
+photons, one would expect binning each conversion type independently to
 improve our sensitivity.
 
 Furthermore, \pointlike uses a sparse matrix representation of the spatial
@@ -330,15 +322,14 @@ the source until the log of the likelihood has fallen by 1/2.
 Then, the extended source's position error is calculated using the
 same code employed to calculate position errors of point sources. This
 code is used to calculate the localization error of all point sources
-kn the catalog\cite{2fgl}. It works by fitting an ellipse to the
+kn the catalog\cite{second_cat}. It works by fitting an ellipse to the
 likelihood surface near the maximum and using this fit ellipse to estimate
 an elliptical localization errors. By reporting two localization errors
 as well as a localization error angle, this method explicitly takes care
 of covariance between the two position coordinates.
 
-
 % Make an extension profile plot.
-% show it in figures an ddescirbeit.
+% show it in figures and describe it.
 
 \subsection{Gtlike Crosscheck}
 
@@ -433,18 +424,18 @@ or a uniform disk:
 \end{equation}
 
 Although these shapes look significantly different from eachother, the
-convolution of these spatial models of typtical sizes 
-with the PSF will produce PDFs that are very similar.
+convolution of these spatial models of typtical sizes with the PSF will
+produce PDFs that are very similar.
 
 This is demonstrated in figure~\ref{compare_disk_gauss}.  The plot shows
-(in black) the PSF that would be observed for a source of spectral index
-2. The dashed red (blue) line shows the probabability density function
-for a Gaussian (uniform disk) of width $0.5\deg$.  The solid red (blue)
-line shows the probability density function for the same Gaussian (uniform
-disk) convolved with the PSF of an index 2 source.  
+(in black) the PSF that would be observed for a source of spectral
+index 2. The dashed red (blue) line shows the probabability density
+function for a Gaussian (uniform disk) of width $0.5\deg$.  The solid
+red (blue) line shows the probability density function for the same
+Gaussian (uniform disk) convolved with the PSF of an index 2 source.
 figure~\ref{compare_disk_gauss} shows the analysis using an energy range
-of 1\gev to 100\gev whereas the right plot shows an analysis using an
-energy range from 10\gev to 100\gev.
+betewen 1 \gev and 100 \gev whereas the right plot shows an analysis using an
+energy range from 10 \gev to 100 \gev.
 
 This plot shows that significantly different extended source shapes
 look very similar after smearing with the PSF. The convolved shape of
@@ -475,7 +466,7 @@ counts maps can be misleading.  This effect can best be seen
 in figure~\ref{compare_r68} where we have simulted a
 extended source with 
 a spatial model that is a uniform disk of extension 0.5\deg,
-integral flux between 1\gev and 100\gev of $3e-8\ph/\cm^2/s$,
+integral flux between 1 \gev and 100 \gev of $3e-8\ph/\cm^2/s$,
 and a spectral index of 2. 
 
 To reduce Poisson noise, figure~\ref{compare_r68} shows a counts map of
@@ -521,6 +512,9 @@ for the different spatial models.
 
 \section{LAT Extended Source Validation}
 
+We validated \pointlike for extended source
+analysis using a series of Monte Carlo studies.
+
 \subsection{Significance of Extension}
 
 To calculate the statistical significance of the extension of a source,
@@ -565,7 +559,7 @@ is for this reason why \pointlike goes through such great effort to
 simultaneously fit the position, extension, and spectral paramters of
 a source.
 
-The half $\chi^2_1$ distribution was found by a monte carlo study
+The half $\chi^2_1$ distribution was found by a Monte Carlo study
 to hold for the special case of source finding of EGRET sources using the
 maximum likelihood technique.  They were comparing the hypothesis of a
 source to the hypothesis of just a background\cite{mattox_egret}.
@@ -603,10 +597,10 @@ were able to get broad agreement between simulations and Wilks' theorem.
 
 \subsection{Monte Carlo Validation} \label{monte_carlo_validation}
 
-We performed a dedicated monte carlo study to validate \pointlike for
+We performed a dedicated Monte Carlo study to validate \pointlike for
 studying spatially extended sources and also to demonstrate that we can
 use $\tsext$ as a test of the statistical significance
-of a source's extension.  The monte carlo study involved simulating point
+of a source's extension.  The Monte Carlo study involved simulating point
 sources of varying spectral models on top of a simulated background. The
 simulated point source was then fit using \pointlike as both an extended
 source and a point source and $\tsext$ was calculated.
@@ -614,7 +608,7 @@ source and a point source and $\tsext$ was calculated.
 Fermi LAT data was simulated using program \gtobssim which is
 distributed publically by the Fermi Science Support Center
 (\cite{fssc}).  The sources were simulated with a powerlaw spectral
-model with 6 Were given 6 $>100\mev$ fluxes ranging from $3\times 10^{-9}
+model with 6 Were given 6 $>100$ \mev fluxes ranging from $3\times 10^{-9}
 \ph/\cm^2/s$ to $10^{-6} \ph/\cm^2/s$.  The sources were then simulated
 with spectral index ($\gamma$) values of 1.5, 2, 2.5, and 3.  These
 values were picked to probe a representative range measurable values.
@@ -622,14 +616,14 @@ For particular spectral indices, only the fluxes which would create a
 statistically significant source detection ($\ts>25$) where selected,
 since we are only interested in testing for extension sources with a
 significant extent. The sources were simulated on top of an isotropic
-powerlaw background with a Sreekumar-like spectrum ($>100\mev$ flux
+powerlaw background with a Sreekumar-like spectrum ($>100$ \mev flux
 of 1.5e-5 and spectral index 2.1) (\cite{sreekumar_isotropic}).
 
-The monte carlo simulation was perforormed over a one year time interval using
+The Monte Carlo simulation was perforormed over a one year time interval using
 a default rocking profile and an assumed a represntative
 livetime fraction of 0.8.
-The reconstruction was perfromed with events from an energy range of
-$1\gev$ to $100\gev$ using 4 energy bins per decade and using the Pass 7 Version 6
+The reconstruction was performed with photons from an energy range of
+1 \gev to 100 \gev using 4 energy bins per decade and using the Pass 7 Version 6
 source instrument response function (IRFs) to be consistent with the following analysis.
 
 For most of the spectral models, over 10,000 statistically independent simulations were performed.
@@ -638,7 +632,7 @@ caused the source to be not significant and they were excluded from the followin
 Table~\ref{ts_ext_num_sims} shows the parametesr used in the simualtion,
 the number of simulations perfromed, and the average test statistic value.
 
-The results of the monte carlo simulation are shown in
+The results of the Monte Carlo simulation are shown in
 figure~\ref{ts_ext_mc}.  The cumulative density function (CDF) is plotted
 against $\tsext$ For reference, the CDF for $\chi^2_1/2$,
 suggested by Wilks' Theorem, is also plotted for comparison. Overall,
@@ -660,7 +654,7 @@ used as a measure of the statistical significance of a source's extension.
 
 \section{Extended Source Sensitivity}\label{extension_sensitivity}
 
-We performed another monte carlo study to determine the Fermi LAT's
+We performed another Monte Carlo study to determine the Fermi LAT's
 sensitivity to spatially extended sources. The sensitivity to extension
 is defined as the flux at which 
 the average value of $\tsext$ for a source is 
@@ -679,7 +673,7 @@ improves significantly with energy.
 To calculate the LAT's sensitivity to spatially extended sources,
 we simulated sources with a uniform radially symmetric
 disk morphology on top of a powerlaw Sreekumar-like isotropic
-spectrum (\cite{sreekumar_isotropic}).  The monte carlo
+spectrum (\cite{sreekumar_isotropic}).  The Monte Carlo
 simulation was perforormed over a one year time interval using a default
 rocking profile and an assumed a represntative livetime fraction of 0.8.
 For a given extension and spectral index, we calculated the
@@ -691,32 +685,33 @@ test for each of these fluxes. Since the measured signifciance is
 a statistical which will vary from realization to realization,
 we then repeated this procedure $>15$ times for each spectral
 and spatial model.
-By fitting a line to the flux vs $\tsext$ data, we were able to
+By fitting a line to the flux vs $\tsext$, we were able to
 estimage the flux at which $\tsext=25$.
 
 Our first result is the extension sensitivity for sources of varying
 spectral indices. The result is shown in figure~\ref{index_sensitivity}.
 We computed the sensitivty for sources with a spectral index of 1.5,
 2, 2.5, and 3 and for sources of 20 extensions varying from $0.1\deg$
-to $2.0\deg$. The $y$ axis is the $100\mev$ to $100\gev$ flux of the
-source and the $x$ axis is the monte carlo extension. The curves then
+to $2.0\deg$. The $y$ axis is the 100 \mev to 100 \gev flux of the
+source and the $x$ axis is the Monte Carlo extension. The curves then
 represent the division in this extension and flux space where one gets
 on average $\tsext=25$.
 The solid lines of the plot are the sensitivity computed when using
-with all events from $100\mev$ to $100\gev$. The dashed lines is the
-same sensitivity but only using events from from $1\gev$ to $100\gev$.
+with all photons with energry between 100 \mev and 100 \gev. The dashed lines is the
+same sensitivity but only using photons with energy from 1 \gev to 100 \gev.
 
 This results shows that our extension sensitivity is
 significantly better for harder sources where there are more high
-energy events. Furthermore, our sensitivity is best for sources with an
+energy photons. Furthermore, our sensitivity is best for sources with an
 extension around $0.5\deg$.  our sensitivity gets significantly worse
 for very small sources and gets slightly worse for very large sources.
 
 Futheremore, we note that except for the hardest or largest sources,
-our sensitivity is almost entirly whether or not we use events from
-$100\mev$ to $1\gev$. On the other hand, other systematic errors become
+our sensitivity is almost entirly whether or not we use photons 
+with energy from
+100 \mev to 1 \gev. On the other hand, other systematic errors become
 increasingly important at low energy so for our extension search we will
-not use the events in this energy range.
+not use the photons in this energy range.
 
 We performed a second computation to see how the LAT's extension
 sensitivity varied with increasing background, as is at lower latitude
@@ -725,8 +720,8 @@ extragalactic barground as well as 10 and 100 times the extragalactic
 background. The latter result approximatly represents the intensity of
 the galactic diffuse emission near the galactic center. The results are
 shown in figure~\ref{diff_factor_sensitivity}. Two plots are presented,
-one fitting only in the energy range between $1\gev$ and $100\gev$ and
-one fitting only in the energy range between $10\gev$ and $100\gev$. For
+one fitting only in the energy range between 1 \gev and 100 \gev and
+one fitting only in the energy range between 10 \gev and 100 \gev. For
 each plot, the $y$ axis quotes the flux in the fit energy range and the
 simulation was done only for a representivite spectral index 2 source.
 
@@ -739,8 +734,8 @@ consistent with the improved angular resolution at higher energy.
 \section{Extension search method}
 
 The LAT two year catalog presented a search for all
-statistically significant sources that are detected in the $\gev$
-sky\cite{2fgl}.  The catalog group's source finding method assumes
+statistically significant sources that are detected in the \gev
+sky\cite{second_cat}.  The catalog group's source finding method assumes
 that the emission originated as point sources and what was presented was
 a list of all sources fit assuming a point source spatial hypothesis. 
 Published extended sources were modeled by the catalog group as 
@@ -762,15 +757,15 @@ using 4 bins uniformly in each logarithm of energy.  We included all
 background catalog sources within $15\deg$ of the source of interest
 and refit the spectral parameters of sources within $2\deg$ of our source.
 
-As was shown, we gain very little in sensitivity using events with energy
-below $1\gev$. On the other hand, the large PSF at low energy makes us
+As was shown, we gain very little in sensitivity using photons with energy
+below 1 \gev. On the other hand, the large PSF at low energy makes us
 more succeptable to systmetic errors arising from source confusion due
 to multiple point soruces and succeptable to incorrect modeling of the
 galactic diffuse emission.  For that reason, we performed our search
-using events only between $1\gev$ and $100\gev$.
+using photons only between 1 \gev and 100 \gev.
 
-We also performed a search for extended sources using events only between
-10\gev and 100\gev. Even though we are testing the same sources, this
+We also performed a search for extended sources using photons only between
+10 \gev and 100 \gev. Even though we are testing the same sources, this
 approach is complimentary because there are regions in the galactic
 plane where at lower energies the diffuse emission dominates and is
 likely not perfectly modeled. On the other hand, at the highest energies
@@ -780,110 +775,141 @@ also beneficial because harder sources with nearby neighbors that are
 softer may end up being incorrectly fit at lower energies but correctly
 found looking only at the high energy.  This is also beneficial in the
 galactic plane looking for possible extended sources near pulsars which
-are very bright at lower energy but cutoff before 10\gev.  This approach
-of using only events above $10\gev$ was succesfully used to detecting
+are very bright at lower energy but cutoff before 10 \gev.  This approach
+of using only photons with energy above 10 \gev was succesfully used to detecting
 HESS J1825-137 with the Fermi LAT~\cite{fermi_hess_j1825}.
+
+For each catalog source, we modified the spectral index of the source
+to be a powerlaw. We did this for two reasons. The first is that for a
+source to be significantly extended, we would expect it to be reasonably
+hard and therefore be fit reasonably well by a powerlaw.  The seond reason
+is that since we begin our analysis at either 1 \gev or 10 \gev, we didn't
+expect there to be significant curvature over this smaller energy range.
+This method has the advantange that for the following analysis, we can
+simply quote the fit powerlaw spectral index.
+
+Finally, when analyzing our region, we automatically removed all other
+catalog sources which were within 0.5\deg. This was done because of
+a concern that truly extended sources might end up in the catalog as
+multiple point sources. These spurious nearby catalogs sources might then
+distort our fit enough that it no longer would show up as being extended.
+Nevertheless, we investiated for each of our extended candidates if
+if we seemed to be legitimatly removing real backgorund sources. And
+we employed a dual localiation procedure (described above) to test
+all of our candidates for source confusion.
 
 For each catalog source, we modified the source to have a uniform radially
 symmetric disk spatial shape and used \pointlike to simultaneously fit
-the position and extension of the source.  We then selected the sources
-for which \pointlike found $\tsext>16$ and refit their spectral parameters
-using \gtlike.
-
-% XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-% NOTE ABOUT PRUNE aridus
+the position and extension of the source.  We then selected all of the
+sources for which \pointlike found $\tsext>16$.
 
 \subsection{Additional Analysis}
 
-We expect most extended sources to be galactic sources since extragalactic
-sources are typically too far away to be resolvable. Unfortunately,
-the \gev emission in the galactic plane is dominated by anisotropic
-galactic diffuse emission.  Modeling the galactic diffuse emission is
-very difficult~\ref{first_diffuse_paper}  and finding sources on top of
-this emission is notoriously difficult. This issue has been discussed
-in the Fermi catalog~\ref{first_cat,2fgl}. Furthermore, the galactic plane
-is very crowded and there is a degeneracy between an extended source
-and multiple point sources. So it is often difficult to ensure you have
-a good model for the region around a source .  Finding a source with
-$\tsext>16$ is not sufficient for detecting an extended and we had to
-perform many crosschecks to make sure we had a good fit to our region.
+We expect most extended sources to be inside teh galactic plane
+since extragalactic sources are typically too far away to be
+resolvable. Unfortunately, the \gev emission in the galactic plane
+is dominated by anisotropic galactic diffuse emission.  Modeling the
+galactic diffuse emission and finding sources on top of this emission is
+difficult~\ref{first_diffuse_paper}. This issue has been discussed in the
+Fermi catalog~\ref{first_cat,second_cat}. Furthermore, the galactic plane is
+very crowded and so it is offent difficult to get a good model for the
+region around a catalog source.  Because of this, finding a source with
+$\tsext>16$ is not a sufficient test and we perform several crosschecks
+to ensure our overal region is well modeled.
 
-% XXXXXXXXXXXXXXXXXXXXX
-% LIST OF All extended source candidates and how many of them are clearly bad.
-% best we can do is sort through them.
 
-% XXXXXXXXXXXXXXXXXXXXXXXXXXX
-% Put example of poorly fit region and how it is difficult to know what
-% is going on.
-Example Bad fit~\ref{example_bad_fit}
-
-For each of the extended source candidates where $\tsext>16$,
-we performed several additional analyses to determine whether
-our model for the region was believable and that we could therefore
-find out source to be extended.
-We did so for all sources found either at events above 1\gev or above 10\gev
+As an example of why this issue, we describe our test of P72Y3047 for
+extension.  Figure~\ref{example_bad_fit} shows a smoothed counts map
+using photons with energy above 1 \gev. In the map, the galacitc and isotropic diffuse
+emission subtracted.  A two year catalog source P72Y3047 was found at the
+position $(l,b)=(37.79\deg,1.14\deg)$.  By looking at the smoothed map,
+we see that there appears to be overall some large scale residaul in the
+diffuse emission along the galactic plane. Furthermore, it appears that
+we don't have a great model of the nearby catalog sources. As a result,
+P72Y3047 fits to a very large extension of 1.37\deg and the result is
+statistically significant with \tsext=51.6.  By looking at the residuals,
+it is clear that this complicated region is not well fit even though
+the source's extension is statistically significant. For this reason,
+we have to perform a series of followup analysis for all of the soruces
+that are found with \tsext=16.
+% information came from
+% /nfs/slac/g/ki/ki03/lande/extended_catalog/2FGL/v15/standard_analysis/spectral_emin_1000_v1/P72Y3047/v1/results_followup_P72Y3047.yaml
 
 First, we took the spatial and spectral model found using \pointlike
-and performed a crosscheck by refitting the spectral parameters using 
-\gtlike.
-We used a square ROI $14.1\deg$ in diamater with $1/16\deg$ pixels
-and the same energy binning.
-% XXXXXXXXXXXXXX put note about how this binning was necessary for morphological analysis and how any smaller is no good.
-% using gtlike. But how pointlike handles this automatically
-The \gtlike analysis provided a second estimate of the spectral
-parameters of the extended source as well as a second calculation of
-$\ts_\text{disk}$, $\ts_\text{point}$, and 
-$\tsext$. We only looked for extended sources which 
-both \pointlike and \gtlike considered significantly extended.
+and performed a crosscheck by refitting the spectral parameters using
+\gtlike.  We used a square ROI $14.1\deg$ in diamater with $1/16\deg$
+pixels and the same energy binning. We found that $1/16\deg$ bins were
+fine enough for \gtlike to get an extension significances consistent
+with \pointlike.  Using \gtlike, we found a second measure of \tsext and
+we only considered a source to be significanlty extended if \pointlike
+and \gtlike both agreed.  For the new extended source candidates, with
+table~\ref{alt_diff_model_results} shows a comparison of their the value
+of \tsext found by \gtlike and \pointlike.  Everywhere else, the values
+from \gtlike are used.
 
-% XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-% Note about how it is helfpul to look at high energy
-% to avoid source confusion and even though a source
-% might show up above 1GeV, it might be hard to realize
-% wheter it is source confusion/diffuse emission, etc.
-% but at high energy, less diffuse emission + better PSF
-% = easier to find extended sources.
-
-% Also note about how softer other sources nearby 
-% might go away at higher energy
-
-% XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-% NOTE about pointlike TS_ext generally being larger then
-% gtlike TS_ext and why this may be (binning front/back evnets
-% seperatly, using too large an energy bin, etc).
-% 
-% This is no longer true with better binning 1/16 instead of 1/8 degree binning.
-
-Additionaly, we generated for each 
-extended source candidate residual test statistic maps. 
-The residual TS Map
-
-Large
-TS values in test 
-
-% XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-% Note about dual localization
-
-We generated a residual test statistic maps to look for
-, which is a map of the test
-statistic adding new points
-Figure~\ref{res_tsmaps} shows an example residual TS map.
+Additionaly, we generated for each extended source candidate residual
+test statistic (\ts) maps.  The residual \ts map is a map of the \ts
+value evalualted at each point by adding onto the map at that position
+a new source of spectral index 2 and finding the increase in lieklihood
+when fitting its flux. \ts maps are especially useful as looking for
+new sources or other residual featuers that are not included in the
+model. They also have the advantagous feature that the aboslute scale
+can be used to clearly look for when the residual is signifciant.
+The downside is they are biased to look for residual features
+that look like the PSF and so are not as sensitive to diffuse residual
+features. Furthermore, since by defintion \ts>0, \ts maps can only show
+positive fluctuations. Nevertheless, \ts maps were useful for
+assessing the overal quality of the fit. Figure~\ref{res_tsmap}
+shows an exmaple residual \ts map for the extended source IC443.
 
 
-% XXXXXXXXXXXXXXX add now about using powerlaw models for our source +
-% setting e0 in geometric range of energy bin.
+For each candidate, we also generated counts slices. A counts slice
+plots the sum of all counts in the longitudinal direction within 2\deg in
+the latitudinal direction.  The same plot is also shown integrating in
+the longitudinal direction.  On top of the plot is overlayed the model
+predicted counts assuming the source has a disk spatial model, assuming
+the source is a point source, and fitting just the diffuse emission in
+the region.  An example counts slice is shows for the extended source
+IC443 in figure~\ref{counts_slice}. Counts slices were especially useful
+for looking at how well the overal diffuse emisison model fits the region
+near the sources.
 
+For each candidate, we also made was a radial integral of the data. This
+plot shows the sum of all counts within a given distance from the
+source's center. The plot is binned uniformly in $\Delta \theta^2$ so
+that an isotropic background will be flat in the plot. On top of this
+plot is overlayed the model predicted counts assuming the source has a
+disk spatial model, assumgng the source is a point source, and fitting
+just the diffuse emisison in the region. An example radial integral
+is shown for the extended source IC443 in figure~\ref{radial_profile}.
+This plot is best for comparing the observed counts to the PSF.
 
-% XXXXXXXXXXXXXXXXXXXXX
-% Discussion of how 
-% counts slices are best for
-% looking at overall diffuse emission.
+Finally, for each source, we performed the dual localization method
+described in section~\ref{dual_localization_method}.  We 
+did so by replacing the source with two sources each containing
+half of the original flux and then using \pointlike to
+simulatnoulsy fit the postion and spectrum of these sources.
+We then used \gtlike to refit the spectrum of these
+sources using the best fit positions. For the
+new extended sources found, we summarize the results of
+this dual localization test and compare the values of \tsext
+to \tsinc in table~\ref{dual_localization_results}.
 
-% XXXXXXXXXXXXXX discussion of complicated regions having to simulatenously refit
-% backgorund sources. Relocalizing sources.
-% bg sources are obtained by catalog w/ > 100MeV analysis may
-% not be idea for >1GeV & >10GeV analysis. Also, may require moving b/c
-% extension will effect their extension.
+for sources that seemed promising, we performed in a case
+by case basis a refit of the region where we would move or delete
+background catalog sources until it was clear that we had obtained on
+a case by case a good overal fit of the region. This was necessary in
+many situations whrere the position of background sources in the catalog
+was not consistent and when the offet of the background sources biased
+the fit extension of our source. This was likey the case because the
+catalog positions of the backgorund sources came usign all photons above
+100 \mev and the low energy localization disagreed with the higher energy
+localization we found. This also happened in certain situations because
+the localization of a backgorund source dependend upon correctly modeling
+the extended source as being extended and so once we fit our source for
+extension, we had to relcoalizae the backgorund source.  For each source,
+we descirbe in a case by case basis any modifications which were required
+to obtain a good fit of our source and the surrounding region.
 
 \subsection{Alternate Diffuse Model Crosscheck}
 \label{alt_diff_model_description}
@@ -894,24 +920,43 @@ Figure~\ref{res_tsmaps} shows an example residual TS map.
 \label{validate_known}
 
 We validated our method by testing for extension all of the sources
-which the Fermi Collaboration had previously published on.  We applied
-no special method to test these sources but used the same pipeline which
-was used to test all other catalog sources.  The results are published
-in table~\ref{known_extended_sources}.  Using events with energies
-greater than $1\gev$, our analysis succesfully fit the extension of the
-the two galaxies the Large Magalengic Cloud and the Small Magalenic
-Cloud.~\cite{SMC & LMC Paper}.  Our tool also successfully detected the
-extension of the supernova remenants IC443, W28, W30, W44, and W51C.
+which the Fermi Collaboration had previously published on.  
+This list includes the extended sources where were modeled
+in the 2FGL catalog\cite{second_cat}.
+This list contains the Large Magelenic Cloud and the Small Magilenic Cloud
+which were first published in \cite{LMC,SMC}.
+We also included the Supernova rememants IC443, W28, W30,
+W44, W51C, and the Cygnus Loop which were 
+first published in \cite{ic443,w28,w30,w44,w51c,cygnus_loop}.
+We include the Pulsar Wind Nebulae Vela X, MSH 15-52, and 
+HESS J1825-137\cite{velax,msh1552,fermi_hess_j1825}.
+In addition to those sources included by the catalog, we include in
+this list the supernova rememnat RX J1713.7-3946 which was recently
+published (\cite{RXJ1713}).
 
-Using events above $10\gev$, we were able to succesffuly fit the extesion
-of HESS J1825-137\cite{fermi_hess_j1825}. Our analysis of MSH 15-52 using
-events above $10\gev$ found an extension consistent with the publisehed
-result, but with $\tsext=11.2$.\cite{msh1552}. This
-is most likely because the published analysis used events above $6\gev$.
+Since these sources are all included in the 2 year catalog,
+we applied no special method to test these sources but used the same
+pipeline that tested all other catalog sources for extension.  The results
+are summarized in table~\ref{known_extended_sources}.  
+%XXXXXXXXXXXXX DISCUSSION OF WHAT IS IN THE ABLE
+Using photons with
+energies greater than 1 \gev, our analysis succesfully fit the extension
+of the LMC, SMC, IC443, W28, W30, W44, and W51C.  Using photons with 
+energy above 10
+\gev, we were able to succesffuly fit the extesion of HESS J1825-137.
+
+Our analysis of MSH 15-52 using photons with energy above 10 \gev found an extension
+consistent with the publisehed result, but with $\tsext=11.2$. This is
+most likely because the published analysis used a larger energy range,
+considering all evnets above 6\gev. Looking at all photons with
+energy above 1\gev 
+is problematic because of background source confusion whereas using photons
+with energy above 10\gev does not have the statistics for a significant dection.
 
 Our analysis failed to detect the extension of Vela X. Vela X can only be
 successfully analyzed after applying a phase cut to removed the heavily
-dominant emission from the pular.
+dominant pular emission. It is beyond the scope of the paper to perform
+such specialized analysis.
 
 Our analysis also failed to detect a significant extension for the
 Centaurus A Lobes.\cite{CenA paper}. This is most likely because the
@@ -923,10 +968,13 @@ morphology is not well represented by a uniform disk. The source is
 also rather soft so the publisehd results used a larger energy range
 then our search.
 
-
 The difficulty our analysis analysis had fitting the extension of several
-of the already published extended sources should be used to emphasize
-the difficultly with which
+of the already published extended sources should be used to emphasize the
+overal difficultly in studying spatially extendee sources with the Fermi
+LAT, especially in the crowded galactic plane. For particular sources,
+it is often necessary to perform careful and specalized analysis to
+correctly find and model the sources we see. We can not claim our method
+is very complete, only that it is systematic and statistically rigorous.
 
 \section{Test of 1LAC Sources}
 
@@ -973,7 +1021,7 @@ test these 515 AGN for extension. A histogram of the fit \tsext values
 is shown in figure~\ref{agn_ts_ext}. Overlaid on the plot is again a
 $\chi^2/2$ distribution suggested by Wilks' Theorem.  This plot shows
 a worse agreement with the theoretical distribution then was found
-by our monte carlo study in figure~\ref{ts_ext_mc}.  But overall, the
+by our Monte Carlo study in figure~\ref{ts_ext_mc}.  But overall, the
 distribution is good. No AGN get fit with a particularly significant
 value of $\tsext$. Almost all of the AGN get fit with $\tsext<1$ and
 there are very few AGN fit with large values of \tsext.  There where
@@ -992,12 +1040,12 @@ Several possible systematics could cause this discrepancy. The first
 is that in our analysis we fit each source with a powerlaw index.
 AGN tend to have curved spectral and fitting with a wrong spectral
 model might effect the value of \tsext. Nevertheless, since we use only
-events with $E>1\gev$, this would effect is not expected to be large.
+photons with energy above 1 \gev, this would effect is not expected to be large.
 Another possible source for the discrepancy is that pointlike performs a
 likelihood analysis without modeling the energy dispersion of our source.
 But energy dispersion is expected to be more significant at low
 energy and furthermore if this was a signifciant effect the same results
-would have showed up with the monte carlo simultions which included the
+would have showed up with the Monte Carlo simultions which included the
 effects of energy dispersion. 
 
 Another possible systematic may be due to remaning issues with our
@@ -1045,26 +1093,49 @@ would require its own dedicated analysis.
 
 \section{New Extended Sources}
 
-\begin{itemize}
-  \item Results summarized in table~\ref{new_ext_srcs}.
-  \item Add extra stuff to this section, $\tsinc$.
-  \item Disribe what had to be done to modify regionregion.
-    What sources had to be deleted (or moved).
-%  \item XXXXXXXXXXXXXXXXXXXXXXXXXX Say that errors are just statistical (or have a descritpion of errors).
+For all extended sources, the results of our fit are summarized in
+table~\ref{new_ext_srcs}. The table includes the best fit position
+and extension of the source. It also includes the source's significance
+and significance of extension.
 
-\end{itemize}
 
 \subsection{1FGL J1628.6-2419c}
 
-The two year catalog source P72Y2516 was found at ($l,b)=(353.09\deg, 16.79\deg)$
-with a best fit extension of $0.40\pm0.05$ and an extension significance of
-$\tsext=26.3$.
+A catalog source P72Y2516 located at $(l,b)=(353.09\deg, 16.79\deg)$
+was found to be significantly extended when using photons between
+1 \gev and 100 \gev.  The best fit extension was
+$0.41\deg\pm0.05\deg$ and the extension significance was $\tsext=28.9$.
+A smoothed counts map showing this source is seen in figure
+\ref{1FGL_J1628.6-2419c}.  
 
-In the ophiucus region=most likely a molecular cloud
+This source is in a region of remarkably complicated diffuse emission.
+Even though it is 16\deg from the Galactic plane,
+the source is right on top of the core of the Ophiuchus molecular cloud,
+which contains massive star-forming regions that are very bright
+in the infrared.  The region has abundant molecular and atomic gas
+traced by CO and HI but also plenty of dark gas, the kind that
+we find only by its association with dust emission.
+% XXXXXXXXXXXXXXXXXXXXXXXX
+% Citation needed
+Embedded star-forming regions make it even more challenging to measure
+the column density of dust.
+% XXXXXXXXXXXXXXXXXXXXXXXX
+% Citation needed
+% XXXXXXXXXXXXXXXXXXXXXXXX
+% Note about spectral index being typical of difuse emission
+Although this region is significantly extended, we conclude that what we
+are seeing is most likely an inadequacy in the diffuse $\gamma$-ray emission
+
 
 \subsection{1FGL J1554.0-5345c}
+
+Using photons with energy between 1 \gev and 100 \gev
+
 Unidentified source likely diffuse emission.
 See figure \ref{1FGL_J1554.0-5345c}.
+
+To get a good fit of the source, we had to delete the nearby catalog sources P72Y2416 and P72Y2422
+
 
 \subsection{1FGL J0823.3-4248}
 Coincident with Puppis A SNR.
@@ -1105,11 +1176,11 @@ We make some conclusions about finding extended
 sources with the Fermi LAT.
 
 Many extended sources. Especially instructive to
-use events with $E>10\gev$ where we don't have
+use photons with energy above 10 \gev where we don't have
 to worry about diffuse background as much.
 
 Make some conclusion about how the LAT will eventually collect a factor
-of 5 more data! Pointlike will be necessary to improve the model of the
+of five more data! Pointlike will be necessary to improve the model of the
 high energy sky.
 
 \bibliographystyle{apj}
@@ -1149,19 +1220,19 @@ high energy sky.
     \end{tabular}
     \caption{
     This table presents a list of the spectral models (flux and spectral
-    index) used in the monte carlo study of \pointlike described in
+    index) used in the Monte Carlo study of \pointlike described in
     section~\ref{monte_carlo_validation}.  For each spectral model, the
     number of statistically indepdent simulations and the average test
     statistic found for that given spectral model ($\langle\ts\rangle$) is tabulated.
-    The important feature to see in this table is that the monte carlo
+    The important feature to see in this table is that the Monte Carlo
     simulation probes most of the sources parameters that could be detected
     by the LAT.  The simulation probles a wide range of spectral indices
     (from spectral index $\gamma$ of 1.5 to 3) and a wide range of the fluxes
     (varying from a close to $5\sigma$ source detection to a $>10\sigma$
     source detection).  Only simluations which produced statistically
     significant detections ($\ts>25$) were kept.  What is quoted is the
-    $>100\mev$ integral flux measured in units of $\ph/\cm^2/\s$.
-    More information about this monte carlo analysis is presented in
+    $>100$ \mev integral flux measured in units of $\ph/\cm^2/\s$.
+    More information about this Monte Carlo analysis is presented in
     section~\ref{monte_carlo_validation}
     }
     \label{ts_ext_num_sims}
@@ -1178,7 +1249,7 @@ high energy sky.
     % using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/ts_ext/v3_emin_1000/merged.hdf5
     \end{center}
     \caption{
-    The results of the monte carlo simulation described in section
+    The results of the Monte Carlo simulation described in section
     \ref{monte_carlo_validation} testing the null distribution of
     the likelihood ratio test for extension.  The $x$ axis of this
     plot is \tsext and the $y$ axis is the cumulative density for
@@ -1190,17 +1261,17 @@ high energy sky.
     red is the cumulative density function of $\chi^2(\ts)/2$ which is
     suggested by Wilks' theorem as the theoretical distribution these
     curves should should follow.  Overall, it should be noted that there
-    is a surprisingly good agreement between the monte carlo study and
+    is a surprisingly good agreement between the Monte Carlo study and
     the theoeretical distribution. And for most spectral parameters, the
     Monte Carlo curve lies to the left of the theoretical curve, which
     would imply that using Wilks' Theorem as the null distribution would
     conservativly underestimate the signifcance of a source detection. In
     the rest of the paper, we use this theoretical curve to estimate
     the significance of our source detections.  What is quoted is the
-    $>100\mev$ integral flux in measured in units of $\ph/\cm^2/\s$.
+    $>100$ \mev integral flux in measured in units of $\ph/\cm^2/\s$.
     For each spectral model, more information about the simulations is
     summarized in table~\ref{ts_ext_num_sims}. More
-    information about this monte carlo analysis is presented in
+    information about this Monte Carlo analysis is presented in
     section~\ref{monte_carlo_validation}
     }\label{ts_ext_mc}
   \end{figure}
@@ -1215,21 +1286,21 @@ high energy sky.
     \caption{This is the Fermi LAT's sensitivity to spatially
     extended sources. The $x$ axis is Monte Carlo extension of a
     simulated uniform disk source and the $y$ axis is the simulated
-    source's $100\mev$ to $100\gev$ photon flux. Each curve represents
+    source's 100 \mev to 100 \gev photon flux. Each curve represents
     the detection threshold for being able to spatially resolve an
     extended source (when $\langle\tsext\rangle=25$ averaged over
     multiple simulations).  
     All sources have an assumed powerlaw spectrum and the different
     colors are for sources of different simulated spectral indices.
-    The dashed line shows simulations using events with energy between 
-    $100\mev$ and $100\gev$ while the solid lien shows simulations
-    using events with energy between $1\gev$ and $100\gev$.
+    The dashed line shows simulations using photons with energy between 
+    100 \mev and 100 \gev while the solid lien shows simulations
+    using photons with energy between 1 \gev and 100 \gev.
     The sensitivity is for a one year simulation against a Sreekumar-like
     isotropic background (\cite{sreekumar_isotropic}).
     This plot shows that our sensitivity is best for sources that are
     about $1\deg$ large. It also shows that for sources That are neither
     very large nor very soft, our sensitivity is not significantly
-    improved using events between $100\mev$ and $1\gev$.  More information
+    improved using photons with energy between 100 \mev and 1 \gev.  More information
     about this plot is presented in section~\ref{extension_sensitivity}.
     }\label{index_sensitivity}
   \end{figure}
@@ -1266,17 +1337,6 @@ high energy sky.
     }\label{compare_r68}
   \end{figure}
 
-\begin{figure}
-  \begin{center}
-    \includegraphics{source_plots/agn.pdf}
-    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/agn/v2/agn.py
-    \end{center}
-    \caption{Lalla
-% XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-% Note about how TSext for AGN calculated with pointlike
-    }\label{agn_ts_ext}
-  \end{figure}
-
 
 \begin{figure}
   \begin{center}
@@ -1284,8 +1344,8 @@ high energy sky.
   % plot from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/res_tsmap_ic443/v1
 
   \caption{An example residual test statistic map generated for the
-  supernova rememnant IC443 using events between $1\gev$ and
-  $100\gev$.  The top plot is the residual TS map fitting IC443
+  supernova rememnant IC443 using photons with energy between 1 \gev and
+  100 \gev.  The top plot is the residual TS map fitting IC443
   as a point source and the bottom plot is the residual TS map fitting
   IC443 as an extended source. The crosses in the plot represent all of
   the sources fit in the region. Since there is a residual TS greater
@@ -1339,12 +1399,20 @@ high energy sky.
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/smoothed_counts_ic443/v1
     \caption{Smoothed counts. Galactic and isotoropic as well as earth albedo background were subtracted.
     % XXXXXXXXXXXXXXXXXXXXXXXXXXX 
-    % describe that this is IC443 using (front? or back? or both?) events.
+    % describe that this is IC443 using (front? or back? or both?) photons.
     }
     \label{smoothed_counts}
   \end{center}
 \end{figure}
 
+\clearpage
+\begin{figure}
+  \begin{center}
+    \includegraphics{ic443_plots/profile_ic443.pdf}
+    % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/extension_profile_ic443/v1/profile_ic443.pdf
+    \caption{Smoothed counts. Galactic and isotoropic as well as earth albedo background were subtracted.
+    % XXXXXXXXXXXXXXXXXXXXXXXXXXX 
+    % describe that this is IC443 using (front? or back? or both?) photons.
 % XXXXXXXXXXXXXXXXXXXXXXXX
 % Make IC443 extension profile
 % good for looking for
@@ -1354,14 +1422,6 @@ high energy sky.
 % double peaked or does not fall
 % at low/high energies.
 % 
-\clearpage
-\begin{figure}
-  \begin{center}
-    \includegraphics{ic443_plots/profile_ic443.pdf}
-    % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/extension_profile_ic443/v1/profile_ic443.pdf
-    \caption{Smoothed counts. Galactic and isotoropic as well as earth albedo background were subtracted.
-    % XXXXXXXXXXXXXXXXXXXXXXXXXXX 
-    % describe that this is IC443 using (front? or back? or both?) events.
     }
     \label{extension_profile}
   \end{center}
@@ -1405,10 +1465,10 @@ high energy sky.
       \end{tabular}
       \caption{The fit results for the already known extended sources that
       were found by our analysis. The top results were found using an
-      energy range between $1\gev$ and $100\gev$.  The lower analysis
-      was done using events between $10\gev$ and $100\gev$.  The quoted
+      energy range between 1 \gev and 100 \gev.  The lower analysis
+      was done using photons between 10 \gev and 100 \gev.  The quoted
       flux is in units of $10^{-9}\ph/\cm^2/\s$ and is the flux in the
-      fit energy range (either 1\gev to 100\gev or 10\gev to 100\gev).
+      fit energy range (either 1 \gev to 100 \gev or 10 \gev to 100 \gev).
       All sources were fit using a uniform disk spatial template. The
       localization and extension were found using \pointlike while the
       TS and spectral values were calculated using \gtlike.  The TS value
@@ -1425,9 +1485,20 @@ high energy sky.
     \end{centering}
 \end{sidewaystable}
 
+\clearpage
+\begin{figure}
+  \begin{center}
+    \includegraphics{source_plots/agn.pdf}
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/agn/v2/agn.py
+    \end{center}
+    \caption{Lalla
+% XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+% Note about how TSext for AGN calculated with pointlike
+    }\label{agn_ts_ext}
+  \end{figure}
+
 
 \clearpage
-
 \begin{sidewaystable}
   \begin{centering}
     \begin{tabular}{r|rrrrrrrrrr}
@@ -1451,8 +1522,8 @@ high energy sky.
       \hline
     \end{tabular}
     \caption{This table presents the new extended soruce candidates found with
-    this search. 3 new extended sources were found searching above 1\gev and
-    5 new candidates were found looking above 10\gev.
+    this search. 3 new extended sources were found searching above 1 \gev and
+    5 new candidates were found looking above 10 \gev.
     The columns in this table have the same defintion as table~\ref{known_extended_sources}.}
     \label{new_ext_srcs}
   \end{centering}
@@ -1501,7 +1572,7 @@ high energy sky.
       extended source fits the source better than two point sources.
       As in table~\ref{known_extended_sources}, flux is measured in
       units of $10^{-9}\ph/\cm^2/\s$ and is the integral flux between
-      1\gev (10\gev) and 100\gev for the sources found using events above 1\gev (10\gev).
+      1 \gev (10 \gev) and 100 \gev for the sources found using photonons above 1 \gev (10 \gev).
       }
     \end{centering}
   \end{sidewaystable}
@@ -1648,7 +1719,4 @@ high energy sky.
 \end{figure}
 
 
-
-
 \end{document}
-
