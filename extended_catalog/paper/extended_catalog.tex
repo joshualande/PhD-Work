@@ -3,6 +3,7 @@
 
 \usepackage[textwidth=0.8in,colorinlistoftodos]{todonotes}
 
+
 %#For adding line numbers:
 \usepackage{lineno}
 \linenumbers
@@ -13,6 +14,9 @@
 \usepackage{graphicx}
 \usepackage{xspace}
 \usepackage{url}
+
+% Note, hyperref has to come after other packages!
+\usepackage{hyperref}
 
 % some units
 \newcommand{\mev}{\text{MeV}\xspace}
@@ -62,10 +66,10 @@ J.~Lande\altaffilmark{3},
 We present a new method for analyzing spatially extended sources with
 the Fermi Large Area Telescope (LAT), the primary science instrument
 on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.  We provide a
-series of Monte Carlo studies that were done to validate this tool.
-We then calculate the Fermi LAT's sensitivity to spatially exnteded
-sources.  We then apply this tool to test all sources in the 2FGL Two
-Year Catalog for extension. We then report on the discovery
+series of Monte Carlo studies that validate this tool.
+We then calculate the Fermi LAT's sensitivity to spatially extended
+sources.  We then use this tool to test all sources in the two
+year source catalog for extension and report on the discovery
 of XXXXXX\todo{What number should be put
 here???} new extended sources.
 \end{abstract}
@@ -82,328 +86,307 @@ here???} new extended sources.
 
 The Large Area Telescope (LAT) is a pair conversion telescope on the
 Fermi Gamma-Ray Space Telescope. It has been surveying the $\gamma$-ray
-sky since June 2008.  Fermi is particularly well suited as a survey
-instrument because of its to survey the broad energy coverage (20 \mev
-to >300 \gev), a wide field of view ($\sim 2.4 \sr$) and large effective
+sky since June 2008.  Fermi is well suited as a survey
+instrument because of its broad energy coverage (20 \mev
+to $>300$ \gev), wide field of view ($\sim 2.4 \sr$) and large effective
 area ($\sim 8000 \cm^2$ at $>1 \gev$).
 
-Using one year of all sky monitoring, the LAT published a catalog of
-source that were significantly resolved.  Many of these sources could
-be be associated with a variety of source classes including active
-galactic nuclei, pulsars, galaxies, and supernova remenants.  Many of
-these source classes can be spatially resolved when observed at other
-frequencies and could possibly be spatially resolvable by the LAT.
+Using one year of all sky surveying data, the LAT published a catalog of
+source that were significantly detected.  Many of these were associated
+with a variety of source classes including active galactic nuclei,
+pulsars, galaxies, and supernova remnants.  Many of these classes can be
+spatially resolved when observed at other frequencies and could possibly
+be spatially resolvable in \gev by the LAT.
 
-In particular, the LAT has discovered a variety of spatially extended
-supernova remnants including IC443 and W51C (\cite{ic443,w51c}) and pulsar
-wind nebulae (\cite{msh1552,velax}). And there are other source classes
-which could possibly be spatially resolved by the LAT including galaxy
-clusters, dark matter, and possibly new physics.
+The LAT collaboration has previously reported on the discovered
+a variety of spatially extended supernova remnants (SNRs)
+IC443 and W51C, pulsar wind nebulae (PWNe) MSH 15-52 and Vela X
+(\cite{ic443,w51c,msh1552,velax}), and galaxies the Large Magellanic
+Cloud and the Small Magalenic Cloud (\cite{lmc,smc}.  There are other
+source classes which could possibly be spatially resolved by the LAT
+including galaxy clusters, dark matter, and possibly new physics.
 
 Furthermore, a variety of spatially extended but otherwise unassociated
-sources have been detected in the galacitc plane at \tev energies using
-Air Cherenkov detectors. Most prominent was a survey of the galaictc
-plane using H.E.S.S which discovered 14 spatially extended sources
-(\cite{HESS_plane_survey}).
+sources have been detected in the galactic plane at \tev energies using
+Air Cherenkov detectors. Most prominent was a survey of the galactic plane
+using the High Energy Stereoscopic System (H.E.S.S) which discovered 14
+spatially extended sources (\cite{HESS_plane_survey}).
 
-Being able to spatially resolve a fermi source is important for several
-reasons. Most importantly, the spatial morphology can be used to help
-identify a Fermi source. Because of the large point spread function (PSF),
-for any source there are often several counterparts which it could be
-associated with. Finding a matching morphology can uniquly identify the
-source emitting the $\gamma$-rays. 
+Being able to spatially resolve a LAT source is important for several
+reasons. Most importantly, the spatial morphology can be used to
+help identify the source at other wavelengths. Because of the large
+point spread function (PSF), there are often several possible source
+counterparts.  Finding a matching morphology can uniquely identify
+the source.
 
 Because of the largely varying PSF of the LAT, the spatial and spectral
-model of a source do not nicely decouple and spatially resolving a Fermi
-source is also important for obtaining an unbiased spectral model of
-the source.  Furthermore, using this extension information is important
-for improved the overall model of the sky which is important for obtaining
-a better fit of nearby sources and removing spurious point sources which
-we might otherwise think we detect.
+model of a source do not nicely decouple. Therefore, spatially resolving
+a LAT source is also important for obtaining an unbiased spectrum.
+Furthermore, correctly modeling a source's extension is important for
+improved the overall model of the sky and removing excess residuals.
+These residuals around catalog sources can lead to finding spurious nearby
+point sources. This was found to be the case with the one year catalog
+in the region surrounding the Large Magellanic Cloud (\cite{first_cat}).
 
-Nevertheless, morphological studies of sources in the \gev energy range
-using the Fermi LAT is challenging because of the significantly energy
-dependent PSF and because of systematic errors in the galactic diffuse
-emission.  The Fermi PSF is determinted at lower energies by multiple
-scatteering in the tracker The 68\% containment radius of the PSF is
-approximatly 5.1\deg at 100 \mev  when averaged over instrumetn acceptance
-and including photons which convert in either the thick or thin layers of
-the tracker.  The PSF approaches a limit given by the granularity of the
-tracker channeles and is 0.14\deg at 10 \gev (\cite{on_orbit_calibration}).
-Therefore, the higher energy photons are significantly more important for
-resolving a source but there are typically fewere of them.  So a detailed
-maximum likelihood analysis must be used to maximize our sensitivity.
 
 \section{Analysis Method}
+
+Morphological studies of sources in the \gev energy range
+using the Fermi LAT are challenging because of the significantly energy
+dependent PSF and because of systematic errors in the galactic diffuse
+emission.  The LAT's PSF is determined at lower energies by multiple
+scattering in the tracker and the 68\% containment radius of the PSF is
+approximately 5.1\deg at 100 \mev  when averaged over instrument acceptance
+and including photons which convert in either the thick or thin layers of
+the tracker. The PSF approaches a limit given by the granularity of the
+tracker channels and is 0.14\deg at 10 \gev (\cite{on_orbit_calibration}).
+Therefore, the higher energy photons are significantly more important for
+resolving a source but are limited by statistics. Therefore,
+a detailed analysis procedure mused be used to maximize our
+sensitivity.
 
 \subsection{The \pointlike Package}
 
 A new analysis tool has been developed to address the unique requirements
 for studying spatially extended sources with the Fermi LAT. The tool
-implements a maximum likelihood analysis where the Poisson likelihood
-for observing the measured counts is computed for a particular sky
-model. The parameters of the sky model are then fit by maximizing the log
-of the likelihood.  To study the extension of a source, one can assume
-a particular shape for an extended source (e.g. a disk or Gaussian),
-and fit the spatial parameters of that source.
+provides a maximum likelihood analysis where the Poisson likelihood
+for observing the measured counts is computed is maximized by fitting
+parameters of the model.  The extension of a source can be modeled by a
+geometric shape (e.g. a disk or Gaussian) and the source's position
+and extension can simultaneously fit by maximizing the likelihood.
 
-In principle, the entire task can be done using the official maximum
-likelihood tool \gtlike which is distributed publically by the Fermi
-Science Support Center\cite{fssc}.  But \gtlike is only able to fit the
-spectral parameters of the source, so the extension fitting would have
-to be done as an external loop. Typically, the run time for a binned
-source analysis using \gtlike is several hours so this loop would be
-especially time consuming. In principle, parallel computing could ease
-this burdon, but parallel fitting algorithms are rather untested and
-complex. Furthermore, the machinery required to do something like this
-would necessarily be rather complex. What has typically been done by
-the Fermi team to study extended sources is to fix the assumed position
-of the extended source, either by our knowledge of a source from other
-wavelenghts, or by fitting it as a point source. Then, a profile of the
-likelihood as a function of extension is developed using \gtlike and the
-maximum of this profile. This approach is not optimal because it needs
-not be the case that the best fit position of a point source would be
-the same as the best fit position of an extended source. Furthermore, by
-not fully maximizing the likelihood, this method is not as significant to
-extension, especially of faint sources. And finally, since this approach
-is so computationally intensive, no large scale Monte Carlo effort has
-been launched to validate the method.
+This analysis is not very feasible using the official LAT likelihood
+analysis tool \gtlike\footnote{\gtlike is distributed publicly by the
+Fermi Science Support Center\cite{fssc}} because \gtlike is only able to
+fit the spectral parameters of the source. The extension fitting would
+have to be done as an external loop outside of the code. Typically, the
+run time for a binned source analysis using \gtlike is several hours
+so this loop would be especially time consuming. What has typically
+been done to study an extended sources is to fix the position of the
+extended source and then develop a profile of the likelihood as a
+function of the extension.  This approach is not optimal because the
+position and extension of the source should be simultaneously maximized
+to find the best fit parameters.  Furthermore since this approach is
+very computationally intensive, no large scale Monte Carlo effort can
+be launched to validate it.
 
-Instead, an alternate approach was developed for performing a
-morphological analysis. An alternate maximum likelihood fitting package
-called \pointlike has been developed by the Fermi collaboration and we
-have expanded its functionality to fully support analyzing spatially
-extended sources. \pointlike is most thoroughly described in Matthew
-Kerr's Ph.D Thesis but the important aspects will be summarized below
-(\cite{matthew_kerr_thesis}) . What differentiates \pointlike most
-significantly from \gtlike is its emphasis on speed by introducing
-approximations into the calculation of the likelihood function while
-at the same time trying to reduce any numerical errors that may
-be introduced.  Like binned \gtlike, \pointlike bins the sky both in
-position and energy.  Unlike \gtlike, \pointlike relies on the {\em
-healpix} representation of spatial bins\cite{healpix} and scales the
-size of each spatial bin to be smaller than the PSF. This is convenient
-because it no significant information is lost due to binning at all
-energies and it is always a good approximation that the model predicted
-counts are uniform across a spatial bin.
+An alternate approach was developed for fitting spatially extended
+sources.  An alternate maximum likelihood fitting package called
+\pointlike has been developed by the Fermi collaboration and we have
+added to it the ability to analyze spatially extended sources. \pointlike
+is described in the one year catalog and in Matthew Kerr's Ph.D thesis
+(\cite{first_cat,matthew_kerr_thesis}).  
 
-\pointlike additionaly bins the Fermi $\gamma$-rays by their conversion
-type, which corresponds to whether the photon converted in the front or
-back part of the detector. Since the PSF is smaller for front entering
-photons, one would expect binning each conversion type independently to
-improve our sensitivity.
+What differentiates \pointlike most significantly from \gtlike is its
+emphasis on speed by introducing approximations into the calculation
+of the likelihood function.  This is done while at the same time
+trying to minimized the introduced numerical errors.  Like the binned
+version of \gtlike, \pointlike bins the sky both in position and energy.
+Unlike \gtlike, \pointlike relies on the {\em healpix} representation of
+spatial bins (\cite{healpix}). Since the PSF changes significantly with
+energy, the spatial size of each bin for a given energy is calculated
+to be smaller than than the PSF. This ensures that little information
+is lost at each energy level while minimizing the overall number of bins.
 
+\pointlike also bins $\gamma$-rays depending upon whether they
+convert in the front or back parts of the detector. Since the PSF
+is smaller for front entering photons, binning each conversion type
+independently improves the tool's sensitivity.
 Furthermore, \pointlike uses a sparse matrix representation of the spatial
-bins where only the bins with counts in them are looped over. The only
-downside to this is that the integral of the model predicted counts
-must be independently calculated.  Effectively, \pointlike efficiently
-interpolates from a totally binned analysis at low energy (where the
-resolution is poor and there are many counts) to an unbinned analysis
-at high energy (where the resolution is very good but there are few
-counts). This approach provides a significant savings in time while
-introducing only small numerical error.
+bins where only the bins with counts in them are used. \pointlike
+then independently integrates the overall model predicted counts in the region.
 
-Finally, \pointlike is written mostly in the \python programming language
-using numpy and scipy to vectorize most of the computations. This provides
-a reasonable tradeoff between computational efficiency and quickness of
-development time. And by leaving the interface to use \pointlike as a
-series of \python modules, advanced functions including extension fittion
-described in section~\ref{extesion_fitting} and the dual localization
-procedure described in section~\ref{dual_localization_method} could
-quickly be build on top of the core modules.
+The intelligent binning and sparse matrix representation of the data
+effectively interpolates between a binned analysis at low energy (where
+the resolution is poor and there are many counts) and an unbinned
+analysis at high energy (where the resolution is good but there are
+few counts). This approach provides a significant savings in time while
+introducing small numerical error.
+
+Finally, \pointlike is written mostly in the \python programming
+language and uses {\em numpy} and {\em scipy} to vectorize most of the
+calculations. This provides a reasonable trade off between computational
+efficiency and ease of development. By leaving the interface as a series
+of \python modules, advanced functions including extension fitting
+(described in section~\ref{extesion_fitting}) and a dual localization
+(described in section~\ref{dual_localization_method}) could be quickly
+added on top of the core functionality.
 
 \subsection{Extension Fitting}
 \label{extension_fitting}
 
-We have modified \pointlike to support fitting spatially extended sources.
-To do this, we introduced a new class of diffuse sources where the spatial
-and spectral information completely decouple and where the spatial shape
-is parameters by simple shapes.  The code consistently convolves the
-extended source shape with the point spread function (as a function
-of energy) and integrates the spectrum over energy to computed model
-predicted counts.
+We modified \pointlike to allow modeling the spatial extension of
+of a source. It is assumed that the spatial and spectral information
+completely decouple and that the spatial shape can be represented by a
+simple geometric function.  The code consistently convolves the extended
+source shape with the PSF (as a function of energy) when computing the
+model predicted counts in a bin.
 
-Finally, \pointlike allows the spatial parameters of an extended source
-to be simulataneoulsy fit. \pointlike uses the \minuit fitting library to
-perform the maximum likelihood maximization of the position and extension
-of an extended source (\cite{minuit_documentation}).  At each step in
-the fit of the shape, the spectral parameters of the entire sky model
-are reoptimized. To avoid projection effects, what is directly fit is
-not the longitude and latitude of the source but instead the displacement
-in a rotated reference frame.
-
-
-\pointlike optimizes the analysis of extended sources in two ways.  First,
-for extended sources which are radially symmetric, the convolution of
-the source shape with our parameterization of the PSF can be performed
-semi-analytically. Generally, at a given energy the observed photon
-distribution is
+\pointlike uses the \minuit fitting library to simultaneously maximize
+the likelihood by fitting the position and extension of an extended
+source (\cite{minuit_documentation}).  For each position and extension,
+the spectral parameters of the sky model are refit. To avoid projection
+effects, what is directly fit is not the longitude and latitude of
+the source but instead the displacement in a rotated reference frame.
+The significance of the extension of a source can be calculated from
+\tsext, which is defined as twice the increase in log likelihood between
+the extended source model at its best fit values and the
+point source model at its best fit values:
 \begin{equation}
-  \text{PDF}(\vec r) = \int  \text{PSF}(|\vec r - \vec r'|)I_\text{src}(\vec r') d A' 
+  \tsext=2\times(LL_\text{ext}-LL_\text{ps}).
 \end{equation}
-where $I_\text{src}$ is the extended soruce shape and the PSF is parameterized by
+The interpretation of \tsext in terms of a statistical significance is
+discussed in section~\ref{significance_of_extension}.
+
+The extended source code is speed up in two ways. First, the convolution
+of the spatial shape of a radially symmetric extended source with the PSF is
+done semi-analytically. The observed photon
+distribution can be written as the convolution of the source shape ($I_\text{src}$)
+with the psf
+\begin{equation}
+  \text{PDF}(\vec r) = \int  \text{PSF}(|\vec r - \vec r'|)I_\text{src}(\vec r') d A'.
+\end{equation}
+The PSF is parameterized by
 \begin{equation}
   \text{PSF}(\vec r) = 
   \frac{1}{2\pi\sigma^2}
   \left(1-\frac{1}{\gamma}\right)
-  \left(1+\frac{u}{\gamma}\right)^{-\gamma}
+  \left(1+\frac{u}{\gamma}\right)^{-\gamma},
 \end{equation}
-Here, $\sigma$ and $\gamma$ are parameterize the $PSF$.  If the extended
-source is radially symmetric, then $I_\text{src} (\vec r') = I_\text{src}
-(r')$ and the angular part of the integral can be done analytically,
-leaving a simpler one dimensional integral:
+where $\sigma$ and $\gamma$ have been found empirically as a function
+of energy.  For radially symmetric
+extended sources, the angular part of the integral can be done analytically
+leaving a easier one dimensional integral:
 \begin{equation}
   \text{PDF}(u)= \int_0^\infty dv
   I_\text{src}(v) 
   \left(\frac{\gamma-1}{\gamma}\right)
   \left( \frac{\gamma}{\gamma + u + v}\right)^\gamma 
-  \times ~_2F_1 \left(\gamma/2,\frac{1+\gamma}{2},1,\frac{4uv}{(\gamma+u+v)^2}\right)
+  \times ~_2F_1 \left(\gamma/2,\frac{1+\gamma}{2},1,\frac{4uv}{(\gamma+u+v)^2}\right).
 \end{equation}
-Not only is this convolution formula faster, but it has the advantage that
-it more accurately reduces to the actual PSF shape as the source's size
-decreases.  Decreasing the numerical difference between a small extended
-source and the PSF is important when searching for smaller extended
-sources and when determining the statistical significance of a detection.
+This convolution formula is faster and more closely reduces to the PSF
+when the source's size is very small. Decreasing this the numerical
+error is important when evaluating the statistical significance of a
+source's extension.
 
-There is one final approximation which speeds up the convolution.
-Generally, the PSF is a function of the angle $\theta$ of the incident
-event measured relative to the normal to the LAT. To avoid repeatedly
-convolving the source shape with the PSF at a series of $\theta$ angles,
-an effective PSF is fit to the weighted sum of the PSF times the exposure
-at different $\theta$ angles.  Since the source convolution has to be
-done at each fit iteration, these optimization were essential for making
-this tool fast enough for the following analysis. Typically, the entire
-process of fitting the extension and estimating the errors for a source
-would run on the order of an hour.
+The other approximation is to ignore the dependence of the PSF on the
+incident angle of a $\gamma$-ray.  Generally, the PSF is a function
+of the incident angle of a photon measured with respect to the LAT.
+To avoid multiple convolutions of the source shape with the PSF, an
+effective PSF is calculated by weighted the PSF for different incident
+angles.  Since the convolution has to be done at each iteration of the
+extension fit, these approximations were necessary to make the tool run
+in a reasonable amount of time.
+
+
 
 \subsection{Extension Errors}
+\label{extension_error}
 
 Errors on fit parameters are typically calculated in one of two
-ways. The first method requires explicilty varying one paramter until
-the log of the likelihood has fallen by a value 1/2 while simulatenously
-optimizing the other fit parmaeters.  \minuit provides the {\em Simplex}
+ways. The first method requires explicitly varying one parameter until
+the log of the likelihood has fallen by a particular value while 
+simultaneously
+optimizing the other fit parameters. The
+\minuit fitting package provides the {\em Simplex}
 function to calculate errors this way (\cite{minuit_documentation}).
 The second method involves estimating the likelihood function as being
-a multivariate gaussian and calcluating the curvature of the log of
-the likelihood at the peak to estimate when the function will fall by
-a value 1/2. \minuit provides the {\em HESSE} algorithm to calcualte
-errors this way.  The {\em HESSE} are significantly faster but make the
-approximation that the log of the likelihood is perfectly gaussian.
+a multivariate Gaussian and calculating the curvature of the log of
+the likelihood at the peak to estimate when the function will fall 
+by the same value. \minuit provides the {\em HESSE} algorithm to calculate
+errors this way.  The {\em HESSE} errors are significantly faster but 
+are only approximately true.
 
-We found that although much faster, the {\em HESSE} algorithm would
-somtimes grosely understimate the errors on the localization and extension
-of the source.  On the other hand, we found the {\em Simplex} algorithm
-was computationally very slow and would often run into convergence
-problems and fail to get reasonable errors.
+We found that the {\em HESSE} algorithm would sometimes badly
+underestimate the errors on the extension of the source.  On the other
+hand, the {\em Simplex} algorithm was prohibitively slow and would often
+fail to convergence. \pointlike's approach to calculating extension errors
+is to fixing all the spatial parameters and varying just the extension
+until the likelihood has fallen by the desired amount.  This approach
+makes the approximation that the covariance between each spatial parameter
+is small but not that the likelihood is Gaussian. This method 
+is shown schematically in figure~\ref{extension_profile} which shows
+the change in log likelihood when varying the fit extension of
+the SNR IC443.
 
-As a compromise, we employed a hybrid approach to calculate
-the localization and extension errors in \pointlike by making the
-approximation that the covariance between the extension and location of
-the source was small. On the other hand, we do not necessarily expect the
-likelihood profile to be Gaussian when varying the source's extension.
-So we calculate the error on the extension by fixing the position of the
-source and then explicitly using {\em Simplex} to vary the extension of
-the source until the log of the likelihood has fallen by 1/2.
-
-Then, the extended source's position error is calculated using the
-same code employed to calculate position errors of point sources. This
-code is used to calculate the localization error of all point sources
-kn the catalog\cite{second_cat}. It works by fitting an ellipse to the
-likelihood surface near the maximum and using this fit ellipse to estimate
-an elliptical localization errors. By reporting two localization errors
-as well as a localization error angle, this method explicitly takes care
-of covariance between the two position coordinates.
-
-\todo[inline]{Document the extension profile
-shown in figure~\ref{extension_profile}.
-Make an extension profile plot.
-show it in figures and describe it.
-}
+The localization error is then calculated by fixing the extension to the
+best fit value and fitting an ellipse to the likelihood as a function of
+the spatial parameters.  This fit can be used to calculate an elliptical
+localization error which correctly accounts for covariance between the
+two position coordinates.  This same method is used to calculate the
+localization error of all point sources in the LAT catalog
+(\cite{first_cat}).
 
 \subsection{Gtlike Crosscheck}
+\label{gtlike_crosscheck}
 
-Because of its computational speed, \pointlike is especially well
-optimized for analysis that requires many iterations. This include
-source localization, extension fitting, source finding, building test
-statistic maps, and model comparison. On the other hand, \pointlike's
-efficiency has to entail some loss of precision and so it is generally
-expected that \gtlike will produce a more precise result.  Furthermore,
-because it is the standard likelihood analysis package, \gtlike has been
-more extensively validated and is very well trusted.
+Because of its computational speed, \pointlike is important for analysis
+that require many iterations such as source localization and extension
+fitting.  On the other hand, we expect \gtlike to get a slightly
+more precise answer for fitting the spectral parameters of a source.
+Furthermore, because \gtlike is the standard likelihood analysis package,
+it has been more extensively validated for spectral analysis.
 
-For that reason, we take our best fit source model obtained by
-\pointlike with the best fit positions and extensions and refit the
-spectral parameters of the model using \gtlike.  \gtlike provides a
-second calculation of the likelihood which can then be used to obtain
-for any source a second measure of \ts and \tsext.
+For that reason, in the following analysis we took the best fit
+positions and extensions of the source model fit by \pointlike but
+refit the spectral spectral parameters of the model using \gtlike.
+\gtlike provides a second calculation of the likelihood which gives a
+second measure of \ts and \tsext.
 
-We find very good agreement between the two methods. For the new extended
-source candidates, Table \ref{alt_diff_model_results} shows a comparison
-of \ts and \tsext computed using \pointlike and \gtlike. For the rest
-of this paper, unless otherwise mentioned all \ts, \tsext, flux, and
-spectral index values were obtained using \gtlike with the localization
-results found by \pointlike.
+We found very good agreement between the two methods. For the new
+extended source candidates, table~\ref{alt_diff_model_results} shows a
+comparison of \ts and \tsext computed using \pointlike and \gtlike. For
+the rest of this paper, unless otherwise stated all \ts, \tsext, and
+fit spectral parameters were found using \gtlike with the localization
+results computed by \pointlike.
 
 \subsection{Dual Localization}
 \label{dual_localization_method}
 
-There is a degeneracy in the signal expected from spatially extended
-sources and multiple point sources.  To assess the possibility of source
-confusion, we developed a function in pointlike for simulatenously fitting
-two point sources so that the likelihood fitting two point sources
-could be compared to the likelihood fitting one extended source.
+There is a degeneracy between a spatially extended source and multiple
+point sources.  To assess the possibility of source confusion,
+we developed a function in \pointlike to simultaneously fit two point
+sources and compare the likelihood of two point sources to the likelihood
+of one extended source.
 
-The algorithm works by first dividing the selected point source into
-two separate sources. Then, the position of the two sources 
-are fit simultanously. To avoid projection effects, the fit is
-done in a coordiante system rotated to the celestial equator.
-In this rotated coordiante system, space can be well approximated
-as being flat and we are interested in fitting the 
-rotated coordiante $(x_1',y_1')$ and $(x_2',y_2')$
-We decided not to directly fit the positions of the two sources 
-but instead the fit sum and difference of the rotated coordiantes
-$S_x=(x_2'+x_1')/2$, $S_x=(y_2'+y_1')/2$, $D_x=(x_2'-x_1')/2$, and $D_y=(y_2'-y_1')/2$.
-We believe that fitting the average of position and the difference
-independently would cause less degeneracy in the fit and help the fitter
-find the best position.
+The code uses \minuit to simultaneously fit the position of the two point
+sources.  To avoid projection effects, the fit is done in a coordinate
+system rotated to the celestial equator.  Instead of directly fitting
+the rotated coordinates $x_1$ and $x_2$, we decided there would be less
+covariance by fitting instead the sum and difference of the rotated
+coordinates $S=(x_1+x_2)/2$ and $D=(x_2-x_1)/2$.  The log likelihood
+$L(S,D)$ is maximized by fitting the sum and difference of the two point
+sources.  Because of \pointlike's computational efficiency, this algorithm
+runs in a reasonable amount of time. Similar to extension described in
+section~\ref{gtlike_crosscheck}, the spectrum of can be refit using \gtlike
+at the best fit positions.
 
-For a particular value of $S_x$, $S_y$, $D_x$, and $D_y$, the Poisson
-likelihood is computed by converting the sum and difference coordinates
-into the rotated coordiantes, unrotating the coordiantes, moving the
-two sources in the \pointlike to the new positions, and performing a new
-spectral analysis at the modified position.  The function then maximizes
-The Poission likelihood $L(S_x,S_y,D_x,D_y)$ as a function of the sum
-and difference of the rotated coordaintes using the Minuit to fit the
-sum and differenc coordiantes (\cite{minuit_documentation}).
-
-After the minimization converges, we can define the parameter $\tsext$
-as twice the increase in log likelihood between fitting the region with
-two point sources and fitting the region with one point source
+We can define the parameter \tsinc as twice the increase in log likelihood
+fitting the region with two point sources compared to fitting the region
+with one point source:
 \begin{equation}
-  \tsext=2\times(LL_\text{ext}-LL_\text{ps}).
+  \tsinc=2\times(LL_\text{2pts}-LL_\text{ps}).
 \end{equation}
-Generally, \tsinc can be directly compared to \tsext to see wheter two
-point sources are prefered over one extended source. Unfortunatly,
-performing a likelihood ratio test between two unnested models
-is not a calibrated test and so there is no straightforward way
-to convert the change in likelihood into a significance~\ref{
-http://arxiv.org/abs/astro-ph/0201547 }. Nevertheless, we find this
-ratio, at least in the extreme case where $\tsinc \ll \tsext$ or
-$\tsinc\gg\tsext$ to be suggestive. For all the spatally extended
-candidates found, we computed both \tsext and \tsinc.
+A straightforward likelihood ratio test between the two point source
+model and the extended source model because the models are note nested.
 
-Because of \pointlike's computational efficiency, this algorithm
-runs in a reasonable amount of time.
+\tsinc can not be directly compared to \tsext to see whether two
+point sources are preferred over one extended source. Unfortunately,
+performing a likelihood ratio test between two models that are not nested
+(\cite{statistics_with_care}). So the comparison of \tsext with \tsinc is
+not a calibrated test.  Nevertheless, we find the extreme cases where
+$\tsinc \ll \tsext$ or $\tsinc\gg\tsext$ to be suggestive and use this
+as a test for source confusion. For the spatially extended candidates
+found, we computed both \tsext and \tsinc.  The results are presented
+in table~\ref{dual_localization_results}
 
 \subsection{Comparing Source Sizes}
 
 \todo{This Section Needs Work}
 
-When running \pointlike, we have to pick a spatial model for an extended
-source. Our spatial model is then convolved with the PSF to create the
-probability density function (PDF) that is is fit to the obersved counts.
-Possible choices for spatial models include a Two dimensional gaussian
-source (defined as a Gaussian in $x$ times a Gaussian in $y$):
+An extended source must be modeled by an assumed spatial shape and
+the convolution of that shape with the PSF is fit to the data.
+Possible choices for spatial models include a two dimensional Gaussian
 \begin{equation}
   \text{PDF}(x,y)=\tfrac{1}{2\pi\sigma^2}\exp\left(-(x^2+y^2)/2\sigma^2\right)
 \end{equation}
@@ -411,28 +394,27 @@ or a uniform disk:
 \begin{equation}
   \text{PDF}(x,y)=\tfrac{1}{\pi\sigma^2}\delta\left(\sqrt{x^2+y^2}<\sigma\right).
 \end{equation}
-
-Although these shapes look significantly different from eachother, the
-convolution of these spatial models of typtical sizes with the PSF will
+Although these shapes are significantly different from each other, the
+convolution of these spatial models of typical sizes with the PSF will
 produce PDFs that are very similar.
 
 This is demonstrated in figure~\ref{compare_disk_gauss}.  The plot shows
 (in black) the PSF that would be observed for a source of spectral
-index 2. The dashed red (blue) line shows the probabability density
+index 2. The dashed red (blue) line shows the probability density
 function for a Gaussian (uniform disk) of width $0.5\deg$.  The solid
 red (blue) line shows the probability density function for the same
 Gaussian (uniform disk) convolved with the PSF of an index 2 source.
-figure~\ref{compare_disk_gauss} shows the analysis using an energy range
-betewen 1 \gev and 100 \gev whereas the right plot shows an analysis using an
+Figure~\ref{compare_disk_gauss} shows the analysis using an energy range
+between 1 \gev and 100 \gev whereas the right plot shows an analysis using an
 energy range from 10 \gev to 100 \gev.
 
 This plot shows that significantly different extended source shapes
 look very similar after smearing with the PSF. The convolved shape of
 the disk and Gaussian admittedly do look more different when restrict
 ourselves to higher energy where the PSF is narrower, but we do not
-excpet to have much luch learning about the exact nature of the
+except to have much luck learning about the exact nature of the
 extended source shape. For that reason, in this paper we always use
-the uniform disk spatial model to emphaizie our ignorance to the true
+the uniform disk spatial model to emphasize our ignorance to the true
 shape of the extended sources we are studying.
 
 To get the convolved disk and Gaussian models looked so similar in
@@ -452,24 +434,24 @@ with the PSF.
 
 Finally, we note that comparing observed morphologies to 
 counts maps can be misleading.  This effect can best be seen
-in figure~\ref{compare_r68} where we have simulted a
+in figure~\ref{compare_r68} where we have simulated a
 extended source with 
 a spatial model that is a uniform disk of extension 0.5\deg,
 integral flux between 1 \gev and 100 \gev of $3e-8\ph/\cm^2/s$,
 and a spectral index of 2. 
 
 To reduce Poisson noise, figure~\ref{compare_r68} shows a counts map of
-this simulated source smoothed with a 0.1\deg Gaussain kernel.  Overlaied
+this simulated source smoothed with a 0.1\deg Gaussian kernel. Overlaid
 on the plot is the results of fitting this simulated source with a uniform
 disk and a Gaussian spatial model.  The solid white line represents the
 fit extension $\sigma_\text{disk}=0.496$ for the disk which was found to
-be in very good agreemen with the simulated value.  The solid black line
-represenst the fit extension $\sigma$ for the Gaussian which was found to
+be in very good agreement with the simulated value.  The solid black line
+represents the fit extension $\sigma$ for the Gaussian which was found to
 be $\sigma_\text{Gaussian}=0.2627$.  The white dashed line is the 68\%
 containment radius of the fit Disk shape and the black dashed line is
 the 68\% containment radius of the fit Gaussian shape.  Even though the
 fit $\sigma$ for the disk and uniform Gaussian are different, the fit
-68\% continment radius are very similar ($\rsixeight_\text{,disk}=0.41$
+68\% containment radius are very similar ($\rsixeight_\text{,disk}=0.41$
 whereas $\rsixeight_\text{,Gaussian}=0.40$).
 
 There are three important conclusions to take from this. The first is
@@ -493,7 +475,7 @@ is very difficult to determine directly from a counts map a reasonable
 spatial model that fits the data.  It is much better to obtain the
 spatial model by a direct fit of a spatial parameters of a selected
 model to the data.  The third conclusion we make is that when comparing
-fit extensions to those at other wavelenghts (espeically in \tev), it is
+fit extensions to those at other wavelenghts (especially in \tev), it is
 important to compare fits of consistent spatial models. If this is not
 possible, it is impotant to at least compare indirectly the $rsixeight$
 for the different spatial models.
@@ -505,17 +487,14 @@ We validated \pointlike for extended source
 analysis using a series of Monte Carlo studies.
 
 \subsection{Significance of Extension}
+\label{significance_of_extension}
 
-To calculate the statistical significance of the extension of a source,
-one can define a parameter $\tsext$ as twice the increase in log
-likelihood between fitting a source with a spatially extended hypothesis
-and a point hypothesis:
-\begin{equation}
-  \tsext=2\times(LL_\text{ext}-LL_\text{ps}).
-\end{equation}
-Of course, these are nested hypotehsis since a point sources is just an
-extended source in the limit that the extension goes to 0. So since we
-are just adding a paramter, it should always be true that $\tsext > 0$
+The value of \tsext, the increase in likelihood fitting the source
+with an extended spatial model, can be used to calculate
+the statistical significance of the source's extension.
+Since the point and extended models are nested hypothesis,
+we would always expect $\tsext>0$.
+
 We would expect that if we were really testing a point source that
 \tsext would not be very large since a point model would fit about
 as good as anytthing else. Therefore, we can consider a source to be
@@ -551,7 +530,7 @@ a source.
 The half $\chi^2_1$ distribution was found by a Monte Carlo study
 to hold for the special case of source finding of EGRET sources using the
 maximum likelihood technique.  They were comparing the hypothesis of a
-source to the hypothesis of just a background\cite{mattox_egret}.
+source to the hypothesis of just a background (\cite{mattox_egret}).
 Their argument for why this null hypothesis distribution was reasonable
 was that half of the time, statistical underfluctuations would cause
 there to be fewer fewer photons then expected where the sources is being
@@ -594,9 +573,10 @@ sources of varying spectral models on top of a simulated background. The
 simulated point source was then fit using \pointlike as both an extended
 source and a point source and $\tsext$ was calculated.
 
-Fermi LAT data was simulated using program \gtobssim which is
-distributed publically by the Fermi Science Support Center
-(\cite{fssc}).  The sources were simulated with a powerlaw spectral
+Fermi LAT data was simulated using program 
+\gtobssim\footnote{\gtobssim is distributed by and supported 
+by the Fermi Science Support Center
+(\cite{fssc}).}  The sources were simulated with a powerlaw spectral
 model with 6 Were given 6 $>100$ \mev fluxes ranging from $3\times 10^{-9}
 \ph/\cm^2/s$ to $10^{-6} \ph/\cm^2/s$.  The sources were then simulated
 with spectral index ($\gamma$) values of 1.5, 2, 2.5, and 3.  These
@@ -608,18 +588,18 @@ significant extent. The sources were simulated on top of an isotropic
 powerlaw background with a Sreekumar-like spectrum ($>100$ \mev flux
 of 1.5e-5 and spectral index 2.1) (\cite{sreekumar_isotropic}).
 
-The Monte Carlo simulation was perforormed over a one year time interval using
-a default rocking profile and an assumed a represntative
+The Monte Carlo simulation was performed over a one year time interval using
+a default rocking profile and a representative
 livetime fraction of 0.8.
 The reconstruction was performed with photons from an energy range of
 1 \gev to 100 \gev using 4 energy bins per decade and using the Pass 7 Version 6
 source instrument response function (IRFs) to be consistent with the following analysis.
 
 For most of the spectral models, over 10,000 statistically independent simulations were performed.
-For fainter sources, some of the simulated sources, statistical flucatuations
+For fainter sources, some of the simulated sources, statistical fluctuations
 caused the source to be not significant and they were excluded from the following analysis.
-Table~\ref{ts_ext_num_sims} shows the parametesr used in the simualtion,
-the number of simulations perfromed, and the average test statistic value.
+Table~\ref{ts_ext_num_sims} shows the parameters used in the simulation,
+the number of simulations performed, and the average test statistic value.
 
 The results of the Monte Carlo simulation are shown in
 figure~\ref{ts_ext_mc}.  The cumulative density function (CDF) is plotted
@@ -929,6 +909,8 @@ good agreement between the \ts using the standard and alternate diffuse
 models ($\ts_\gtlike$ and $\ts_\alt$ respectivly) and the \tsext values
 (\tsextgtlike and \tsextalt respectivly).
 
+\todo[inline]{Note about \ref{extension_profile}}
+
 
 \section{Validation of Known Extended Sources}
 \label{validate_known}
@@ -938,7 +920,7 @@ which the Fermi Collaboration had previously published on.
 This list includes the extended sources where were modeled
 in the 2FGL catalog\cite{second_cat}.
 This list contains the Large Magelenic Cloud and the Small Magilenic Cloud
-which were first published in \cite{LMC,SMC}.
+which were first published in \cite{lmc,smc}.
 We also included the Supernova rememants IC443, W28, W30,
 W44, W51C, and the Cygnus Loop which were 
 first published in \cite{ic443,w28,w30,w44,w51c,cygnus_loop}.
@@ -1393,10 +1375,10 @@ high energy sky.
     statistic found for that given spectral model ($\langle\ts\rangle$) is tabulated.
     The important feature to see in this table is that the Monte Carlo
     simulation probes most of the sources parameters that could be detected
-    by the LAT.  The simulation probles a wide range of spectral indices
+    by the LAT.  The simulation probes a wide range of spectral indices
     (from spectral index $\gamma$ of 1.5 to 3) and a wide range of the fluxes
     (varying from a close to $5\sigma$ source detection to a $>10\sigma$
-    source detection).  Only simluations which produced statistically
+    source detection).  Only simulations which produced statistically
     significant detections ($\ts>25$) were kept.  What is quoted is the
     $>100$ \mev integral flux measured in units of $\ph/\cm^2/\s$.
     More information about this Monte Carlo analysis is presented in
@@ -1416,7 +1398,7 @@ high energy sky.
     % using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/ts_ext/v3_emin_1000/merged.hdf5
     \end{center}
     \caption{
-\todo[inline]{Shorted this caption}
+\todo[inline]{Shorten this caption}
     The results of the Monte Carlo simulation described in section
     \ref{monte_carlo_validation} testing the null distribution of
     the likelihood ratio test for extension.  The $x$ axis of this
@@ -1424,9 +1406,9 @@ high energy sky.
     \tsext that was found by testing simulated point sources of
     various spectral models for extension. The four plots represent
     different spectral indices (for $\gamma$ of 1, 2, 2.5, and 3).
-    And the different colors lines represent different fluxes chosen
-    to span a representative range of Overlayed on the plot in dashed
-    red is the cumulative density function of $\chi^2(\ts)/2$ which is
+    The different colored lines represent different fluxes which were
+    chosen to span a representative range of values. The dashed
+    red line is the cumulative density function of $\chi^2(\ts)/2$ which is
     suggested by Wilks' theorem as the theoretical distribution these
     curves should should follow.  Overall, it should be noted that there
     is a surprisingly good agreement between the Monte Carlo study and
@@ -1583,12 +1565,14 @@ high energy sky.
     \includegraphics{ic443_plots/profile_ic443.pdf}
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/extension_profile_ic443/v1/profile_ic443.pdf
     \caption{
-    \todo[inline]{
-    Describe that this is IC443 using (front? or back? or both?) photons.
-    Describe that the extension profile is good for looking for how peaky
-    likelihood is and whether or not there is one unique extension maximum
-    (Often times double peaked or does not fall at low/high energies.
-    }
+    A plot of the overall change in Test Statistic when varying the
+    extension of the extended SNR IC443.  As is discussed in section
+    \ref{extension_error}, the error on the extension of a source is
+    calculated by varying the extension away from its best fit value until
+    the log likelihood has changed by an amount 1/2.  These profiles are
+    generated for all extended source candidates. They plot is useful
+    to make sure the fitter is not stuck in a local minimum and to make
+    sure the profile is reasonably parabolic.
     }
     \label{extension_profile}
   \end{center}
@@ -1737,11 +1721,11 @@ high energy sky.
       to fitting a single point source and is computed using \gtlike with
       the best fit positions taken from \pointlike.  It can be directly
       compared to \tsext, which is taken from table \ref{new_ext_srcs}.
-      For all of our candiates, $\tsext > \tsinc$ which shows that an
+      For all of our candidates, $\tsext > \tsinc$ which shows that an
       extended source fits the source better than two point sources.
       As in table~\ref{known_extended_sources}, flux is measured in
       units of $10^{-9}\ph/\cm^2/\s$ and is the integral flux between
-      1 \gev (10 \gev) and 100 \gev for the sources found using photonons above 1 \gev (10 \gev).
+      1 \gev (10 \gev) and 100 \gev for the sources found using photons above 1 \gev (10 \gev).
       }
     \end{centering}
   \end{sidewaystable}
