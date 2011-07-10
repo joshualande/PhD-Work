@@ -66,9 +66,9 @@ J.~Lande\altaffilmark{3},
 We present a new method for analyzing spatially extended sources with
 the Large Area Telescope (LAT), the primary science instrument
 on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.  We provide a
-series of Monte Carlo studies that validate this tool
+series of Monte Carlo studies to validate this tool
 and calculate the LAT's detection threshold to spatially extended
-sources.  We then use this tool to test all sources in the two
+sources.  We then apply this tool to test all sources in the two
 year source catalog for extension and report on the discovery
 of XXXXXX\todo{What number should be put
 here???} new extended sources.
@@ -80,7 +80,7 @@ The Large Area Telescope (LAT) is a pair conversion telescope on the
 Fermi Gamma-Ray Space Telescope. It has been surveying the $\gamma$-ray
 sky since June 2008.  Fermi is well suited as a survey
 instrument because of its broad energy coverage (20 \mev
-to $>300$ \gev), wide field of view ($\sim 2.4 \sr$) and large effective
+to $>300$ \gev), wide field of view ($\sim 2.4 \sr$), and large effective
 area ($\sim 8000 \cm^2$ at $>1 \gev$).
 
 Using one year of all sky surveying data, the LAT published a catalog of
@@ -91,10 +91,11 @@ spatially resolved when observed at other frequencies and could possibly
 be spatially resolvable in \gev by the LAT.
 
 The LAT collaboration has previously reported on the discovered
-a variety of spatially extended supernova remnants (SNRs)
-IC443 and W51C, pulsar wind nebulae (PWNe) MSH 15-52 and Vela X
-(\cite{ic443,w51c,msh1552,velax}), and galaxies the Large Magellanic
-Cloud and the Small Magalenic Cloud (\cite{lmc,smc}.  There are other
+a variety of spatially extended including the supernova remnants (SNRs)
+IC443 and W51C (\cite{ic443,w51c}),
+the pulsar wind nebulae (PWNe) MSH 15-52 and Vela X
+(\cite{msh1552,velax}), and the Large Magellanic
+and the Small Magalenic Cloud (\cite{lmc,smc}).  There are other
 source classes which could possibly be spatially resolved by the LAT
 including galaxy clusters, dark matter, and possibly new physics.
 
@@ -104,27 +105,21 @@ Air Cherenkov detectors. Most prominent was a survey of the galactic plane
 using the High Energy Stereoscopic System (H.E.S.S) which discovered 14
 spatially extended sources (\cite{HESS_plane_survey}).
 
-Being able to spatially resolve a LAT source is important for several
-reasons. Most importantly, the spatial morphology can be used to
-help identify the source at other wavelengths. Because of the large
-point spread function (PSF), there are often several possible source
-counterparts.  Finding a matching morphology can uniquely identify
-the source.
-
+Being able to spatially resolve the \gev emission from a source is
+important for several reasons. Because of the large point spread
+function (PSF), there are often several possible source counterparts.
+Finding a matching morphology can be used to uniquely identify the source.
 Because of the largely varying PSF of the LAT, the spatial and spectral
-model of a source do not nicely decouple. Therefore, spatially resolving
-a LAT source is also important for obtaining an unbiased spectrum.
-Furthermore, correctly modeling a source's extension is important for
-improved the overall model of the sky and removing excess residuals.
-These residuals around catalog sources can lead to finding spurious nearby
-point sources. This was found to be the case with the one year catalog
-in the region surrounding the Large Magellanic Cloud (\cite{first_cat}).
+information about a source do not nicely decouple. Therefore, a biased
+spatial model will bias the spectral model of the source and studyign
+the extension of the source can correct for htis.  Furthermore, correctly
+modeling a source's extension is important for improving the overall model
+of the sky and removing excess residuals.  These residuals manifested
+themseleves in the one year catalog as spurious point sources in the
+region region surrounding the Large Magellanic Cloud (\cite{first_cat}).
 
 
-\section{Analysis Method}
-
-\todo[inline]{Add note about how we had to delete nearby sources
-which were not hard above 10GeV for analysis to converge.}
+\section{Analysis Methods}
 
 Morphological studies of sources in the \gev energy range
 using the LAT are challenging because of the significantly energy
@@ -136,52 +131,53 @@ and including photons which convert in either the thick or thin layers of
 the tracker. The PSF approaches a limit given by the granularity of the
 tracker channels and is 0.14\deg at 10 \gev (\cite{on_orbit_calibration}).
 Therefore, the higher energy photons are significantly more important for
-resolving a source but are limited by statistics. Therefore,
-a detailed analysis procedure mused be used to maximize our
-sensitivity.
+resolving a source but are typically limited by statistics. 
+A detailed analysis procedure must be used to maximize our
+sensitivity over all energies.
 
 \subsection{The \pointlike Package}
 
 A new analysis tool has been developed to address the unique requirements
 for studying spatially extended sources with the LAT. The tool
 provides a maximum likelihood analysis where the Poisson likelihood
-for observing the measured counts is computed is maximized by fitting
+for observing the measured counts is maximized by fitting
 parameters of the model.  The extension of a source can be modeled by a
 geometric shape (e.g. a disk or Gaussian) and the source's position
-and extension can simultaneously fit by maximizing the likelihood.
+and extension can be simultaneously fit.
 
-This analysis is not very feasible using the official LAT likelihood
+This analysis is not feasible using the official LAT likelihood
 analysis tool \gtlike\footnote{\gtlike is distributed publicly by the
-Fermi Science Support Center\cite{fssc}} because \gtlike is only able to
-fit the spectral parameters of the source. The extension fitting would
-have to be done as an external loop outside of the code. Typically, the
+Fermi Science Support Center (\cite{fssc})} because \gtlike can only 
+fit the spectral parameters of the model. The extension fitting would
+have to be done as an external loop. Typically, the
 run time for a binned source analysis using \gtlike is several hours
 so this loop would be especially time consuming. What has typically
 been done to study an extended sources is to fix the position of the
-extended source and then develop a profile of the likelihood as a
-function of the extension.  This approach is not optimal because the
+source and develop a profile of the likelihood as a
+function of extension.  This approach is not optimal because the
 position and extension of the source should be simultaneously maximized
-to find the best fit parameters.  Furthermore since this approach is
-very computationally intensive, no large scale Monte Carlo effort can
-be launched to validate it.
+to find the best fit parameters and to correctly compute the statistical
+significance of the detection.  Furthermore since this approach is
+computationally intensive, no large scale Monte Carlo effort can
+be run to validate it.
 
-An alternate approach was developed for fitting spatially extended
-sources.  An alternate maximum likelihood fitting package called
-\pointlike has been developed by the Fermi collaboration and we have
+We developed an alternate approach to fit spatially extended
+sources. A separate maximum likelihood fitting package called
+\pointlike has been developed by the LAT collaboration and we have
 added to it the ability to analyze spatially extended sources. \pointlike
-is described in the one year catalog and in Matthew Kerr's Ph.D thesis
+is described in the one year catalog paper and in Matthew Kerr's Ph.D thesis
 (\cite{first_cat,matthew_kerr_thesis}).  
 
 What differentiates \pointlike most significantly from \gtlike is its
 emphasis on speed by introducing approximations into the calculation
-of the likelihood function.  This is done while at the same time
-trying to minimized the introduced numerical errors.  Like the binned
-version of \gtlike, \pointlike bins the sky both in position and energy.
-Unlike \gtlike, \pointlike relies on the {\em healpix} representation of
-spatial bins (\cite{healpix}). Since the PSF changes significantly with
-energy, the spatial size of each bin for a given energy is calculated
-to be smaller than than the PSF. This ensures that little information
-is lost at each energy level while minimizing the overall number of bins.
+of the likelihood function while trying to minimized the introduced
+numerical errors.  Like the binned version of \gtlike, \pointlike bins
+the sky in both position and energy.  Unlike \gtlike, \pointlike relies on
+the {\em healpix} representation of spatial bins (\cite{healpix}). Since
+the PSF changes significantly with energy, the spatial size of each bin
+is calculated to be smaller than than the PSF. By changing the spatial
+bin size with energy, \pointlike ensures that little information is lost
+at each energy while minimizing the required number of bins.
 
 \pointlike also bins $\gamma$-rays depending upon whether they
 convert in the front or back parts of the detector. Since the PSF
@@ -616,6 +612,9 @@ we are more sensitive if the source is harder (has more high energy
 photons).
 
 \section{Extension search method}
+
+\todo[inline]{Add note about how we had to delete nearby sources
+which were not hard above 10GeV for analysis to converge.}
 
 The LAT two year catalog presented a search for all
 statistically significant sources that are detected in the \gev
