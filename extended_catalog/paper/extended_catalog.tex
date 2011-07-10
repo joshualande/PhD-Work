@@ -3,9 +3,6 @@
 
 \usepackage[textwidth=0.8in,colorinlistoftodos]{todonotes}
 
-% TODO:
-%  how to format power-law, power-law, power law?
-
 %#For adding line numbers:
 \usepackage{lineno}
 \linenumbers
@@ -67,10 +64,10 @@ J.~Lande\altaffilmark{3},
 
 \begin{abstract}
 We present a new method for analyzing spatially extended sources with
-the Fermi Large Area Telescope (LAT), the primary science instrument
+the Large Area Telescope (LAT), the primary science instrument
 on the {\em Fermi Gamma-ray Space Telescope (Fermi)}.  We provide a
-series of Monte Carlo studies that validate this tool.
-We then calculate the Fermi LAT's sensitivity to spatially extended
+series of Monte Carlo studies that validate this tool
+and calculate the LAT's detection threshold to spatially extended
 sources.  We then use this tool to test all sources in the two
 year source catalog for extension and report on the discovery
 of XXXXXX\todo{What number should be put
@@ -125,6 +122,9 @@ in the region surrounding the Large Magellanic Cloud (\cite{first_cat}).
 
 
 \section{Analysis Method}
+
+\todo[inline]{Add note about how we had to delete nearby sources
+which were not hard above 10GeV for analysis to converge.}
 
 Morphological studies of sources in the \gev energy range
 using the LAT are challenging because of the significantly energy
@@ -551,10 +551,10 @@ of our simulations, we are reasonable confident that $\sqrt{\tsext}$
 can be safely used as a measure of the statistical significance of a
 source's extension.
 
-\section{Extended Source Sensitivity}\label{extension_sensitivity}
+\section{Extended Source Detection Threshold}\label{extension_sensitivity}
 
-We performed a second study to determine the LAT's sensitivity
-to spatially extended sources. The sensitivity to extension
+We performed a second study to determine the LAT's detection threshold
+to spatially extended sources. The detection threshold to extension
 is defined as the flux at which the average value of
 $\tsext$ is equal to $\langle\ts\rangle=25$. As was seen in
 section~\ref{monte_carlo_validation}, this corresponds to an average
@@ -565,7 +565,7 @@ we expect that the LAT would not be sensitive to sources
 much larger than the PSF since they would get lost in the
 background.
 
-To calculate the LAT's sensitivity to spatially extended sources,
+To calculate the LAT's detection threshold to spatially extended sources,
 we simulated sources with a uniform radially symmetric disk
 morphology on top of a power-law Sreekumar-like isotropic spectrum
 (\cite{sreekumar_isotropic}).  The Monte Carlo simulation was performed
@@ -577,19 +577,19 @@ for each of these fluxes. We repeated this procedure $>15$ times for each
 spectral and spatial model.  By fitting a line to the flux vs $\tsext$,
 we estimated when $\langle\tsext\rangle=25$.
 
-Figure~\ref{index_sensitivity} shows the extension sensitivity for
+Figure~\ref{index_sensitivity} shows the threshold for
 sources of different spectral indices and extensions.  We selected
 spectral indices 1.5, 2, 2.5, and 3 and 
 extensions from $\sigma=0.1\deg$ to $2.0\deg$.  The curves
 on the plot represent the division in extension and flux space where
-$\langle\tsext=25\rangle$.  The plot shows by the sensitivity using all
-photons with energy between 100 \mev and 100 \gev and the sensitivity
+$\langle\tsext=25\rangle$.  The plot shows the threshold using all
+photons with energy between 100 \mev and 100 \gev and the threshold
 using only photons with energy between 1 \gev and 100 \gev.  This results
-shows that the LAT's sensitivity to extension is better for harder sources
-with more high energy photons. The sensitivity is best for sources with
+shows that the LAT's threshold to extension is better for harder sources
+with more high energy photons. The threshold is best for sources with
 an extension around $0.5\deg$ and is worse for small and large sources.
 
-Except for the hardest and largest sources, our sensitivity is almost
+Except for the hardest and largest sources, our detection threshold is almost
 unchanged when using events between 100 \mev and 1 \gev.  This is also
 demonstrated in figure~\ref{ts_ext_vs_energy} which shows the \tsext for
 the SNR IC443 in 12 energy bins between 100 \mev and 100 \gev. For IC443,
@@ -600,16 +600,16 @@ we include only photons above 1 \gev.
 
 
 Figure~\ref{diff_factor_sensitivity} shows how the LAT's
-sensitivity varies with increasing background, typical of sources
-at lower galactic latitude. We compute the sensitivity for spectral
+detection threshold varies with increasing background, typical of sources
+at lower galactic latitude. We compute it for spectral
 index 2 sources using 10 and 100 times the
 extragalactic background. The latter result approximately represents the intensity of
 the galactic diffuse emission near the galactic center. 
-The figure shows two plots, the first showing the sensitivity looking only between 
-1 \gev and 100 \gev and the second showing the sensitivity looking only
+The figure shows two plots, the first showing the threshold looking only between 
+1 \gev and 100 \gev and the second showing the threshold looking only
 between 10 \gev and 100 \gev.
 For each plot, the $y$ axis quotes the flux in the selected energy range
-which weaken the dependence of the sensitivity on spectral index.
+which weaken the dependence of the detection threshold on spectral index.
 This shows that we are less sensitive to extended sources in
 a higher background region and that if the flux is constant,
 we are more sensitive if the source is harder (has more high energy
@@ -619,7 +619,7 @@ photons).
 
 The LAT two year catalog presented a search for all
 statistically significant sources that are detected in the \gev
-sky\cite{second_cat}.  The catalog group's source finding method assumes
+sky (\cite{second_cat}).  The catalog group's source finding method assumes
 that the emission originated as point sources and what was presented was
 a list of all sources fit assuming a point source spatial hypothesis. 
 Published extended sources were modeled by the catalog group as 
@@ -991,12 +991,12 @@ population would require a more specialized analysis.
 % Compare to final catalog gll_psc_v04.fit
 %          1FGL Name - Preliminary 2FGL - 2FGL Name
 % 1FGL J1628.6-2419c - P72Y2516         - 2FGL J1627.0-2425c
-% 1FGL J1554.0-5345c - P72Y2405         - 2FGL J1551.3-5333c
+% 1FGL J1554.0-5345c - P72Y2405         - 2FGL J1554.4-5317c
 % 1FGL J0823.3-4248  - P72Y1212         - 2FGL J0823.0-4246
 % 1FGL J1613.6-5100c - P72Y2473         - 2FGL J1615.2-5138
 % 1FGL J1632.9-4802c - P72Y2540         - 2FGL J1632.4-4753c
-% 1FGL J2020.0+4049  - P72Y3281         - 2FGL J2019.1+4040
-% 1FGL J1837.5-0659c - P72Y2974         - 2FGL J1834.7-0705c
+% 1FGL J2020.0+4049  - P72Y3281         - 2FGL J2021.5+4026
+% 1FGL J1837.5-0659c - P72Y2974         - 2FGL J1837.3-0700c
 % N/A                - P72Y1287         - 2FGL J0851.7-4635
 
 Eight new extended sources not included in the two year catalog were
@@ -1036,14 +1036,14 @@ Although this region is significantly extended, we conclude that what we
 are seeing is most likely an inadequacy in the diffuse $\gamma$-ray emission
 
 
-\subsection{2FGL J1551.3-5333c}
+\subsection{2FGL J1554.4-5317c}
 
-% 1FGL J1554.0-5345c - P72Y2405         - 2FGL J1551.3-5333c
+% 1FGL J1554.0-5345c - P72Y2405         - 2FGL J1554.4-5317c
 % Sources that had to be deleted
-%   * P72Y2416 - 2FGL J1554.4-5317c
+%   * P72Y2416 - 2FGL J1551.3-5333c
 %   * P72Y2422 - Not a 2FGL source
 
-The two year catalog source 2FGL J1551.3-5333c was found to be
+The two year catalog source 2FGL J1554.4-5317c was found to be
 extended using photons with energy between 1 \gev and 100 \gev.
 We found an extension of $0.49\deg\pm 0.04\deg$ and an extension significance of
 $\tsext=77.6$ at a position $(l,b)=(328.1387\deg,0.26\deg)$.  Figure
@@ -1051,7 +1051,8 @@ $\tsext=77.6$ at a position $(l,b)=(328.1387\deg,0.26\deg)$.  Figure
 
 It was found in the one year catalog under the name 1FGL J1554.0-5345c.
 To get a good fit of the source, we had to remove the nearby catalog
-sources 2FGL J1554.4-5317c which we believed to be suprious. By looking at
+source 2FGL J1551.3-5333c
+which we believed to be suprious. By looking at
 the counts map, we saw no differentation in the source at the location
 of the two catalog sources. We tested this region for source confusion
 by comparing the increase in log likelihood fitting the region as an
@@ -1098,7 +1099,7 @@ and give some interpretation of it.}
 
 % 1FGL J1613.6-5100c - P72Y2473         - 2FGL J1615.2-5138
 % Deleted
-%  *P72Y2490 - 2FGL J1520.6-5111c
+%  *P72Y2490 - 2FGL J1620.6-5111c
 %  *P72Y2487 - 2FGL J1619.7-5040c
 %  *P72Y2496 - 2FGL J1622.8-5006
 % Modify 
@@ -1187,40 +1188,42 @@ but not the southeastern 'possible source'.}
 
 \todo[inline]{Describe What this source is/What HESS Source it is near}
 
-\subsection{2FGL J2019.1+4040}
+\subsection{2FGL J2021.5+4026}
 
 Gamam Cygni SNR. 
 
 
-% 1FGL J2020.0+4049  - P72Y3281         - 2FGL J2019.1+4040
+% 1FGL J2020.0+4049  - P72Y3281         - 2FGL J2021.5+4026
 % Delete:
-% * P72Y3287 - 2FGL J2021.5+4026
+% * P72Y3282 - 2FGL J2019.1+4040
+% * P72Y3287 - 2FGL J2020.0+4159
 % * P72Y3262 - 2FGL J2013.8+4115c
-% * P72Y3282 - 2FGL J2020.0+4159
 % * P72Y3260 - 2FGL J2012.4+3955c
 \todo[inline]{Describe how ROI was modified}
 
 \todo[inline]{
 Describe how this source is analyzed more carefully in the paper
-``A cocoon of freshly accelerated cosmic rays detected by Fermi
-in the Cygnus superbubble''}
+\cite{A cocoon of freshly accelerated cosmic rays detected by Fermi
+in the Cygnus superbubble}
+}
 
 See figure~\ref{1FGL_J2020.0+4049}.
 
 \todo[inline]{explain upcomming publication}
 
-\subsection{2FGL J1834.7-0705c}
+\subsection{2FGL J1837.3-0700c}
 
-% 1FGL J1837.5-0659c - P72Y2974         - 2FGL J1834.7-0705c
+% 1FGL J1837.5-0659c - P72Y2986 - 2FGL J1837.3-0700c
+
 % Delete:
-% * P72Y2982 - Not a 2FGL source
-% * P72Y2986 - 2FGL J1837.3-0700c
+% * P72Y2979 - 2FGL J1835.5-0649
 % * P72Y2994 - 2FGL J1839.3-0558c
 % * P72Y2993 - 2FGL J1839.0-0539
+
 % Modify:
 % * P72Y2985 - 2FGL J1836.8-0623c - SkyDir(25.574,0.320,SkyDir.GALACTIC)
 %              (initial Position - SkyDir(,)
-% * P72Y2974 - 2FGL J1834.7-0705c - SkyDir(24.716,0.500,SkyDir.GALACTIC)
+% * P72Y2974 - 2FGL J1837.3-0700c - SkyDir(24.716,0.500,SkyDir.GALACTIC)
 %              (initial Position - SkyDir(,)
 
 
@@ -1232,7 +1235,6 @@ See figure~\ref{1FGL_J1837.5-0659c}.
 \subsection{2FGL J0851.7-4635}
 
 % (no 1FGL) - P72Y1287         - 2FGL J0851.7-4635
-
 % Delete:
 % * P72Y1291 - 2FGL J0853.5-4711
 % * P72Y1296 - 2FGL J0855.4-4625
@@ -1364,7 +1366,7 @@ high energy sky.
     \includegraphics{mc_plots/index_sensitivity.pdf}
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/sensitivity/v9/plot_vs_index.py
     \end{center}
-    \caption{This is the LAT's sensitivity to spatially
+    \caption{This is the LAT's detection threshold to spatially
     extended sources. The $x$ axis is Monte Carlo extension of a
     simulated uniform disk source and the $y$ axis is the simulated
     source's 100 \mev to 100 \gev photon flux. Each curve represents
@@ -1375,10 +1377,10 @@ high energy sky.
     The dashed line shows simulations using photons with energy between 
     100 \mev and 100 \gev while the solid lien shows simulations
     using photons with energy between 1 \gev and 100 \gev.
-    The sensitivity is for a one year simulation against a Sreekumar-like
+    The detection threshold is for a one year simulation against a Sreekumar-like
     isotropic background (\cite{sreekumar_isotropic}).
-    This plot shows that our sensitivity is best for sources that are
-    about $1\deg$ large. It also shows that for sources That are neither
+    This plot shows that our threshold is best for sources that are
+    about $1\deg$ large. It also shows that for sources that are neither
     very large nor very soft, our sensitivity is not significantly
     improved using photons with energy between 100 \mev and 1 \gev.  More information
     about this plot is presented in section~\ref{extension_sensitivity}.
@@ -1609,12 +1611,12 @@ high energy sky.
 
 
   % 1FGL J1628.6-2419c - P72Y2516         - 2FGL J1627.0-2425c
-  % 1FGL J1554.0-5345c - P72Y2405         - 2FGL J1551.3-5333c
+  % 1FGL J1554.0-5345c - P72Y2405         - 2FGL J1554.4-5317c
   % 1FGL J0823.3-4248  - P72Y1212         - 2FGL J0823.0-4246
   % 1FGL J1613.6-5100c - P72Y2473         - 2FGL J1615.2-5138
   % 1FGL J1632.9-4802c - P72Y2540         - 2FGL J1632.4-4753c
-  % 1FGL J2020.0+4049  - P72Y3281         - 2FGL J2019.1+4040
-  % 1FGL J1837.5-0659c - P72Y2974         - 2FGL J1834.7-0705c
+  % 1FGL J2020.0+4049  - P72Y3281         - 2FGL J2021.5+4026
+  % 1FGL J1837.5-0659c - P72Y2974         - 2FGL J1837.3-0700c
   % N/A                - P72Y1287         - 2FGL J0851.7-4635
 
 
@@ -1629,15 +1631,15 @@ high energy sky.
       \multicolumn{11}{c}{$E > 1\gev$} \\
       \hline
       2FGL J1627.0-2425c   &     353.08\deg &      16.80\deg & $  0.41\deg \pm   0.05\deg$ &    139.2 &       28.9 &  0.042\deg &  0.036\deg &   54.4\deg & $    6.3 \pm     0.6$ & $   2.50 \pm    0.14$ \\
-      2FGL J1551.3-5333c   &     328.13\deg &       0.26\deg & $  0.49\deg \pm   0.04\deg$ &    148.8 &       77.6 &  0.046\deg &  0.041\deg &   55.3\deg & $   16.2 \pm     1.5$ & $   2.31 \pm    0.11$ \\
+      2FGL J1554.4-5317c   &     328.13\deg &       0.26\deg & $  0.49\deg \pm   0.04\deg$ &    148.8 &       77.6 &  0.046\deg &  0.041\deg &   55.3\deg & $   16.2 \pm     1.5$ & $   2.31 \pm    0.11$ \\
       2FGL J0823.0-4246    &     260.31\deg &      -3.28\deg & $  0.37\deg \pm   0.03\deg$ &    314.6 &       49.2 &  0.026\deg &  0.023\deg &    5.0\deg & $    8.3 \pm     0.3$ & $   2.18 \pm    0.02$ \\
       \hline
       \multicolumn{11}{c}{$E > 10\gev$} \\
       \hline
       2FGL J1615.2-5138          &     331.74\deg &      -0.58\deg & $  0.52\deg \pm   0.04\deg$ &     75.3 &       45.2 &  0.071\deg &  0.049\deg &  -21.9\deg & $    1.3 \pm     0.2$ & $   1.75 \pm    0.25$ \\
       2FGL J1632.4-4753c         &     336.52\deg &       0.06\deg & $  0.65\deg \pm   0.03\deg$ &    173.0 &       95.3 &  0.041\deg &  0.037\deg &    5.3\deg & $    2.9 \pm     0.2$ & $   2.28 \pm    0.08$ \\
-      2FGL J2019.1+4040          &      78.33\deg &       2.22\deg & $  0.71\deg \pm   0.04\deg$ &    245.7 &      151.7 &  0.047\deg &  0.038\deg &    4.3\deg & $    2.1 \pm     0.2$ & $   2.36 \pm    0.18$ \\
-      2FGL J1834.7-0705c         &      25.09\deg &       0.13\deg & $  0.35\deg \pm   0.07\deg$ &     47.3 &       20.6 &  0.076\deg &  0.063\deg &   -7.7\deg & $    1.0 \pm     0.2$ & $   1.59 \pm    0.30$ \\
+      2FGL J2021.5+4026          &      78.33\deg &       2.22\deg & $  0.71\deg \pm   0.04\deg$ &    245.7 &      151.7 &  0.047\deg &  0.038\deg &    4.3\deg & $    2.1 \pm     0.2$ & $   2.36 \pm    0.18$ \\
+      2FGL J1837.3-0700c         &      25.09\deg &       0.13\deg & $  0.35\deg \pm   0.07\deg$ &     47.3 &       20.6 &  0.076\deg &  0.063\deg &   -7.7\deg & $    1.0 \pm     0.2$ & $   1.59 \pm    0.30$ \\
       2FGL J0851.7-4635          &     266.29\deg &      -1.43\deg & $  1.15\deg \pm   0.08\deg$ &    119.6 &       90.9 &  0.080\deg &  0.065\deg &   54.6\deg & $    1.3 \pm     0.2$ & $   1.76 \pm    0.18$ \\
       \hline
     \end{tabular}
@@ -1663,15 +1665,15 @@ high energy sky.
         \multicolumn{11}{c}{$E > 1\gev$} \\
         \hline
         2FGL J1627.0-2425c   &       23.8 &       28.9 &     353.04\deg &      16.96\deg & $       3.5 \pm        0.6$ & $  2.7 \pm   0.3$  &     353.14\deg &      16.50\deg & $       2.0 \pm        0.5$ & $  2.4 \pm   0.3$ \\
-        2FGL J1551.3-5333c   &       48.6 &       77.6 &     328.31\deg &       0.31\deg & $      10.0 \pm        1.2$ & $  2.7 \pm   0.2$  &     328.28\deg &      -0.06\deg & $       1.0 \pm        0.7$ & $  1.6 \pm   0.4$ \\
+        2FGL J1554.4-5317c   &       48.6 &       77.6 &     328.31\deg &       0.31\deg & $      10.0 \pm        1.2$ & $  2.7 \pm   0.2$  &     328.28\deg &      -0.06\deg & $       1.0 \pm        0.7$ & $  1.6 \pm   0.4$ \\
         2FGL J0823.0-4246    &       22.2 &       49.2 &     260.59\deg &      -3.26\deg & $       2.0 \pm        0.5$ & $  1.9 \pm   0.2$  &     260.24\deg &      -3.20\deg & $       5.3 \pm        0.6$ & $  2.4 \pm   0.1$ \\
         \hline
         \multicolumn{11}{c}{$E > 10\gev$} \\
         \hline
         2FGL J1615.2-5138    &       34.3 &       45.2 &     331.77\deg &      -0.35\deg & $       0.3 \pm        0.1$ & $  1.1 \pm   0.5$  &     331.51\deg &      -0.83\deg & $       0.4 \pm        0.1$ & $  2.1 \pm   0.5$ \\
         2FGL J1632.4-4753c   &       24.8 &       95.3 &     336.16\deg &       0.34\deg & $       0.7 \pm        0.1$ & $  2.0 \pm   0.4$  &     336.72\deg &      -0.06\deg & $       0.7 \pm        0.1$ & $  3.1 \pm   0.5$ \\
-        2FGL J2019.1+4040    &       34.5 &      151.7 &      78.08\deg &       2.53\deg & $       0.4 \pm        0.1$ & $  2.0 \pm   0.5$  &      78.45\deg &       2.54\deg & $       0.5 \pm        0.1$ & $  1.9 \pm   0.4$ \\
-        2FGL J1834.7-0705c   &       15.4 &       20.6 &      25.06\deg &       0.24\deg & $       0.3 \pm        0.1$ & $  1.1 \pm   0.6$  &      25.08\deg &      -0.05\deg & $       0.4 \pm        0.1$ & $  1.9 \pm   0.6$ \\
+        2FGL J2021.5+4026    &       34.5 &      151.7 &      78.08\deg &       2.53\deg & $       0.4 \pm        0.1$ & $  2.0 \pm   0.5$  &      78.45\deg &       2.54\deg & $       0.5 \pm        0.1$ & $  1.9 \pm   0.4$ \\
+        2FGL J1837.3-0700c   &       15.4 &       20.6 &      25.06\deg &       0.24\deg & $       0.3 \pm        0.1$ & $  1.1 \pm   0.6$  &      25.08\deg &      -0.05\deg & $       0.4 \pm        0.1$ & $  1.9 \pm   0.6$ \\
         2FGL J0851.7-4635    &       32.5 &       90.9 &     267.16\deg &      -1.60\deg & $       0.2 \pm        0.1$ & $  1.9 \pm   0.4$  &     266.43\deg &      -1.39\deg & $       0.2 \pm        0.1$ & $  1.5 \pm   0.5$ \\
         \hline
       \end{tabular}
@@ -1710,15 +1712,15 @@ high energy sky.
         \multicolumn{9}{c}{$E > 1\gev$} \\
         \hline
         2FGL J1627.0-2425c   &                155.0 &                139.2 &                103.8 &                     38.5 &                   28.9 &                 22.5 & $  0.41\deg \pm   0.05\deg$ & $  0.38\deg \pm   0.04\deg$ \\
-        2FGL J1551.3-5333c   &                108.4 &                148.8 &                138.4 &                     25.7 &                   77.6 &                 40.6 & $  0.49\deg \pm   0.04\deg$ & $  0.51\deg \pm   0.04\deg$ \\
+        2FGL J1554.4-5317c   &                108.4 &                148.8 &                138.4 &                     25.7 &                   77.6 &                 40.6 & $  0.49\deg \pm   0.04\deg$ & $  0.51\deg \pm   0.04\deg$ \\
         2FGL J0823.0-4246    &                329.5 &                314.6 &                345.6 &                     60.4 &                   49.2 &                 51.5 & $  0.37\deg \pm   0.03\deg$ & $  0.38\deg \pm   0.03\deg$ \\
         \hline
         \multicolumn{9}{c}{$E > 10\gev$} \\
         \hline
         2FGL J1615.2-5138    &                 74.7 &                 75.3 &                 88.7 &                     43.7 &                   45.2 &                 50.0 & $  0.52\deg \pm   0.04\deg$ & $  0.53\deg \pm   0.03\deg$ \\
         2FGL J1632.4-4753c   &                173.9 &                173.0 &                157.7 &                     97.9 &                   95.3 &                 93.6 & $  0.65\deg \pm   0.03\deg$ & $  0.66\deg \pm   0.03\deg$ \\
-        2FGL J2019.1+4040    &                244.9 &                245.7 &                264.3 &                    152.8 &                  151.7 &                162.9 & $  0.71\deg \pm   0.04\deg$ & $  0.71\deg \pm   0.03\deg$ \\
-        2FGL J1834.7-0705c   &                 43.4 &                 47.3 &                 39.0 &                     17.4 &                   20.6 &                 17.7 & $  0.35\deg \pm   0.07\deg$ & $  0.34\deg \pm   0.06\deg$ \\
+        2FGL J2021.5+4026    &                244.9 &                245.7 &                264.3 &                    152.8 &                  151.7 &                162.9 & $  0.71\deg \pm   0.04\deg$ & $  0.71\deg \pm   0.03\deg$ \\
+        2FGL J1837.3-0700c   &                 43.4 &                 47.3 &                 39.0 &                     17.4 &                   20.6 &                 17.7 & $  0.35\deg \pm   0.07\deg$ & $  0.34\deg \pm   0.06\deg$ \\
         2FGL J0851.7-4635    &                117.1 &                119.6 &                124.7 &                     86.1 &                   90.9 &                 95.0 & $  1.15\deg \pm   0.08\deg$ & $  1.16\deg \pm   0.08\deg$ \\
         \hline
       \end{tabular}
@@ -1812,6 +1814,8 @@ high energy sky.
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1837.5-0659c/v2/source_1FGL_J1837.5-0659c.pdf
   \caption{1FGL J1837.5-0659c. P72Y2974
   \todo[inline]{Describe this source better. Add in Contour}
+  \todo[inline]{Note about why the top right source was not found to
+  be extended b/c the scale is cut.}
   }\label{1FGL_J1837.5-0659c}
 \end{figure}
 
