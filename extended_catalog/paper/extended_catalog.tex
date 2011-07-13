@@ -179,81 +179,79 @@ is calculated to be smaller than than the PSF. By changing the spatial
 bin size with energy, \pointlike ensures that little information is lost
 at each energy while minimizing the required number of bins.
 
-\pointlike also bins $\gamma$-rays depending upon whether they
-convert in the front or back parts of the detector. Since the PSF
-is smaller for front entering photons, binning each conversion type
-independently improves the tool's sensitivity.
-Furthermore, \pointlike uses a sparse matrix representation of the spatial
-bins where only the bins with counts in them are used. \pointlike
-then independently integrates the overall model predicted counts in the region.
+\pointlike also bins $\gamma$-rays depending upon whether they convert
+in the thin or thick layers of the tracker. Since the PSF is smaller for
+front entering photons, by binning each conversion type independently,
+\pointlike improves the overall sensitivity.  Furthermore, \pointlike
+uses a sparse matrix representation of the spatial bins where only the
+bins with counts in them are used. To evaluate the likelihood, \pointlike
+then independently integrates the model predicted counts in the region.
 
-The intelligent binning and sparse matrix representation of the data
+Intelligent binning and a sparse matrix representation of the data
 effectively interpolates between a binned analysis at low energy (where
 the resolution is poor and there are many counts) and an unbinned
 analysis at high energy (where the resolution is good but there are
-few counts). This approach provides a significant savings in time while
-introducing small numerical error.
+few counts). This approach provides significant savings in time while
+introducing only small numerical error.
 
 Finally, \pointlike is written mostly in the \python programming
 language and uses {\em numpy} and {\em scipy} to vectorize most of the
 calculations. This provides a reasonable trade off between computational
 efficiency and ease of development. By leaving the interface as a series
 of \python modules, advanced functions including extension fitting
-(described in section~\ref{extesion_fitting}) and a dual localization
-(described in section~\ref{dual_localization_method}) could be quickly
-added on top of the core functionality.
+(section~\ref{extension_fitting}) and dual localization
+(section~\ref{dual_localization_method}) could be quickly
+built on top of the core functionality.
 
 \subsection{Extension Fitting}
 \label{extension_fitting}
 
-We modified \pointlike to allow modeling the spatial extension of
+We modified \pointlike to allow modeling the spatial extension 
 of a source. It is assumed that the spatial and spectral information
 completely decouple and that the spatial shape can be represented by a
 simple geometric function.  The code consistently convolves the extended
 source shape with the PSF (as a function of energy) when computing the
-model predicted counts in a bin.
+model predicted counts.
 
-\pointlike uses the \minuit fitting library to simultaneously maximize
-the likelihood by fitting the position and extension of an extended
+\pointlike uses the \minuit fitting library to maximize the likelihood
+by simultaneously fitting the position and extension of an extended
 source (\cite{minuit_documentation}).  As will be described in
-section~\ref{monte_carlo_validation}, the statistical significance
-of the detection of an extended source can only be correctly calculated
-when all of the parameters of a model are simultaneously fit
-
-
+section~\ref{monte_carlo_validation}, this simultaneous fitting
+is necessary to correctly calculating the statistical significance
+of the detection of extension.
 For each position and extension,
 the spectral parameters of the sky model are refit. To avoid projection
 effects, what is directly fit is not the longitude and latitude of
 the source but instead the displacement in a rotated reference frame.
+
 The significance of the extension of a source can be calculated from
 \tsext, which is defined as twice the increase in log likelihood between
-the extended source model at its best fit values and the
-point source model at its best fit values:
+the extended source model at its best fit values and the point source
+model at its best fit values:
 \begin{equation}
   \tsext=2\log(LL_\text{ext}/LL_\text{ps}).
 \end{equation}
-The interpretation of \tsext in terms of a statistical significance is
-discussed in section~\ref{monte_carlo_validation}.
+\pointlike calculates \tsext by fitting a source first with a spatially
+extended model and then as a point source.  The interpretation
+of \tsext in terms of a statistical significance is discussed in
+section~\ref{monte_carlo_validation}.
 
-The extended source code is speed up in two ways. First, the convolution
-of the spatial shape of a radially symmetric extended source with the PSF is
-done semi-analytically. The observed photon
-distribution can be written as the convolution of the source shape ($I_\text{src}$)
+The convolution of radially symmetric extended sources is optimized by
+using a semi-analytic calculation.  The observed photon distribution
+can be written as the convolution of the source shape ($I_\text{src}$)
 with the psf
 \begin{equation}
   \text{PDF}(\vec r) = \int  \text{PSF}(|\vec r - \vec r'|)I_\text{src}(\vec r') d A'.
 \end{equation}
-The PSF is parameterized by
+For the LAT, the PSF is parameterized as
 \begin{equation}
   \text{PSF}(\vec r) = 
   \frac{1}{2\pi\sigma^2}
   \left(1-\frac{1}{\gamma}\right)
   \left(1+\frac{u}{\gamma}\right)^{-\gamma},
 \end{equation}
-where $\sigma$ and $\gamma$ have been found empirically as a function
-of energy.  For radially symmetric
+where $\sigma$ and $\gamma$ are free parameters.  For radially symmetric
 extended sources, the angular part of the integral can be done analytically
-leaving a easier one dimensional integral:
 \begin{equation}
   \text{PDF}(u)= \int_0^\infty dv
   I_\text{src}(v) 
@@ -261,123 +259,111 @@ leaving a easier one dimensional integral:
   \left( \frac{\gamma}{\gamma + u + v}\right)^\gamma 
   \times ~_2F_1 \left(\gamma/2,\frac{1+\gamma}{2},1,\frac{4uv}{(\gamma+u+v)^2}\right).
 \end{equation}
-This convolution formula is faster and more closely reduces to the PSF
-when the source's size is very small. Decreasing this the numerical
-error is important when evaluating the statistical significance of a
-source's extension.
-
-The other approximation is to ignore the dependence of the PSF on the
-incident angle of a $\gamma$-ray.  Generally, the PSF is a function
-of the incident angle of a photon measured with respect to the LAT.
-To avoid multiple convolutions of the source shape with the PSF, an
-effective PSF is calculated by weighted the PSF for different incident
-angles.  Since the convolution has to be done at each iteration of the
-extension fit, these approximations were necessary to make the tool run
-in a reasonable amount of time.
+This convolution formula is used by \pointlike because it is faster
+and more closely reduces to the PSF when the source's size is 
+small.
 
 \subsection{Extension Errors}
 \label{extension_error}
 
 Errors on fit parameters are typically calculated in one of two
-ways. The first method requires explicitly varying one parameter
-until the log of the likelihood has fallen by a particular value while
-simultaneously optimizing the other fit parameters. The \minuit fitting
+ways. The first method requires explicitly varying a parameter
+while simultaneously optimizing the other parameters.
+until the log of the likelihood has fallen by a particular value.
+The \minuit fitting
 package provides the {\em Simplex} function to calculate errors this way
 (\cite{minuit_documentation}).  The second method involves estimating the
 likelihood function as being a multivariate Gaussian and calculating the
 curvature of the log of the likelihood at the peak to estimate when the
-function will fall by the same value. \minuit provides the {\em HESSE}
-algorithm to calculate errors this way.  The {\em HESSE} errors are
-significantly faster but are only approximately true.
+function will decrease by the desired value. \minuit provides the {\em HESSE}
+algorithm to calculate errors this way.  {\em HESSE} errors 
+can be calculated significantly faster.
 
-We found that the {\em HESSE} algorithm would sometimes badly
-underestimate the errors on the extension of the source.  On the other
+We found that the {\em HESSE} errors on the extension of a source
+were sometimes badly estimated.  On the other
 hand, the {\em Simplex} algorithm was prohibitively slow and would often
-fail to convergence. \pointlike's approach to calculating extension errors
-is to fixing all the spatial parameters and varying just the extension
-until the likelihood has fallen by the desired amount.  This approach
+fail to convergence. Our approach to calculating extension errors
+is to fix the position of the source and varying just the extension
+using the {\em Simplex} algorithm.  This approach
 makes the approximation that the covariance between each spatial parameter
 is small but not that the likelihood is Gaussian. This method 
 is shown schematically in figure~\ref{extension_profile} which shows
-the change in log likelihood when varying the fit extension of
+the change in log likelihood when varying the extension of
 the SNR IC443.
-
-The localization error is then calculated by fixing the extension to the
+The localization error separately calculated by fixing the extension to the
 best fit value and fitting an ellipse to the likelihood as a function
-of the spatial parameters.  This fit can be used to calculate an
-elliptical localization error which correctly accounts for covariance
-between the two position coordinates.  This same method is used to
-calculate the localization error of all point sources in the LAT catalog
+of the spatial parameters. This
+elliptical localization error correctly accounts for the covariance
+in the position of the source and this same me method is used to
+calculate the localization error of all point sources in the first LAT catalog
 (\cite{first_cat}).
 
 \subsection{Gtlike Crosscheck}
 \label{gtlike_crosscheck}
 
-Because of its computational speed, \pointlike is important for analysis
+\pointlike is important for LAT analysis
 that require many iterations such as source localization and extension
-fitting.  On the other hand, we expect \gtlike to get a slightly
-more precise answer for fitting the spectral parameters of a source.
+fitting.  On the other hand, we expect that the spectral paramaters
+fit by \gtlike to be slightly more precise.
 Furthermore, because \gtlike is the standard likelihood analysis package,
 it has been more extensively validated for spectral analysis.
-
 For that reason, in the following analysis we took the best fit
-positions and extensions of the source model fit by \pointlike but
-refit the spectral spectral parameters of the model using \gtlike.
-\gtlike provides a second calculation of the likelihood which gives a
-second measure of \ts and \tsext.
+position and extension found by \pointlike and
+refit the spectral spectral parameters using \gtlike.
+\gtlike also provides a second calculation of the likelihood which gives a
+second measure of \ts and \tsext. We do not consider a source to be
+significant unless there is agreement between the two methods.
 
 We found very good agreement between the two methods. For the new
-extended source candidates, table~\ref{alt_diff_model_results} shows a
-comparison of \ts and \tsext computed using \pointlike and \gtlike. For
-the rest of this paper, unless otherwise stated all \ts, \tsext, and
-fit spectral parameters were found using \gtlike with the localization
-results computed by \pointlike.
+extended source candidates, table~\ref{alt_diff_model_results} shows
+a comparison of \ts and \tsext computed using \pointlike and \gtlike.
+Unless explicitly mentioned, all \ts, \tsext, and spectral parameters
+were calculated using \gtlike using \pointlike's positions and extensions.
 
 \subsection{Dual Localization}
 \label{dual_localization_method}
 
 There is a degeneracy between a spatially extended source and multiple
 point sources.  To assess the possibility of source confusion,
-we developed a function in \pointlike to simultaneously fit two point
-sources and compare the likelihood of two point sources to the likelihood
-of one extended source.
-
-The code uses \minuit to simultaneously fit the position of the two point
-sources.  To avoid projection effects, the fit is done in a coordinate
-system rotated to the celestial equator.  Instead of directly fitting
-the rotated coordinates $x_1$ and $x_2$, we decided there would be less
-covariance by fitting instead the sum and difference of the rotated
+we developed a function in \pointlike to simultaneously fit 
+the position of two point sources.
+The code uses \minuit to fit the position of the two point
+sources.  To avoid projection effects, the fit is done in a rotated coordinate
+system.  To improve the robustness of the fit, Instead of directly fitting
+the rotated coordinates $x_1$ and $x_2$ we instead
+fit the sum and difference of the rotated
 coordinates $S=(x_1+x_2)/2$ and $D=(x_2-x_1)/2$.  The log likelihood
-$L(S,D)$ is maximized by fitting the sum and difference of the two point
+is then maximized by fitting the sum and difference of the 
 sources.  Because of \pointlike's computational efficiency, this algorithm
-runs in a reasonable amount of time. Similar to extension described in
-section~\ref{gtlike_crosscheck}, the spectrum of can be refit using \gtlike
-at the best fit positions.
+runs in a reasonable amount of time. 
 
-We can define the parameter \tsinc as twice the increase in log likelihood
-fitting the region with two point sources compared to fitting the region
-with one point source:
+We define \tsinc as twice the increase in log likelihood
+fitting the region as two point sources compared to fitting the region
+as one point source:
 \begin{equation}
   \tsinc=2\times(LL_\text{2pts}-LL_\text{ps}).
 \end{equation}
-A straightforward likelihood ratio test between the two point source
-model and the extended source model because the models are note nested.
-
-\tsinc can not be directly compared to \tsext to see which model is better
+\tsinc can not be directly compared to \tsext to see which model is 
+more significant
 because the models are not nested (\cite{statistics_with_care}). Even
 though the comparison of \tsext with \tsinc is not a calibrated test,
-we find the extreme cases where $\tsinc \ll \tsext$ or $\tsinc\gg\tsext$
-to be suggestive and use this as a test for source confusion. For the
-spatially extended candidates found, we computed both \tsext and \tsinc.
-The results are presented in table~\ref{dual_localization_results}
+we find the extreme cases $\tsinc \ll \tsext$ or $\tsinc\gg\tsext$
+to be suggestive and we only consider a source to be extended if
+$\tsext>\tsinc$.
+
+Like extended sources described in section~\ref{gtlike_crosscheck},
+the spectrum of the two point sources can be refit using \gtlike. we quote
+the spectral values obtained from \gtlike using the best fit positions
+found using \pointlike.  For the extended candidates found by our search,
+we computed both \tsext and \tsinc.  The results are presented in
+table~\ref{dual_localization_results}.
 
 \subsection{Comparing Source Sizes}
 
 \label{compare_source_size}
 
-An extended source must be modeled with a spatial shape.
-The convolution of that shape with the PSF is fit to the data.
-Possible choices for spatial models include a two dimensional Gaussian
+The spatial shape of extended soruces can e modeled
+as a two dimensional Gaussian
 \begin{equation}
   \text{PDF}(x,y)=\tfrac{1}{2\pi\sigma^2}\exp\left(-(x^2+y^2)/2\sigma^2\right)
 \end{equation}
@@ -385,80 +371,65 @@ or a uniform disk
 \begin{equation}
   \text{PDF}(x,y)=\tfrac{1}{\pi\sigma^2}\delta\left(x^2+y^2<\sigma^2\right).
 \end{equation}
-Although these shapes are significantly different, the
-convolution of them with the PSF for typical sizes look very
-similar.
+Although these shapes are significantly different, the convolution
+of them with the PSF for typical sizes look very similar.  Even
+though these shapes are significantly different, we demonstrate in
+figure~\ref{compare_disk_gauss} that the convolution of shows the
+PSF that would be observed for a power-law source of spectral index
+2, the probability density function (PDF) for a Gaussian and uniform
+disk of width $0.5\deg$, and the convolution of this PDF with the PSF.
+The figure shows the convolution for the PSF in the energy range between
+1 \gev and and 100 \gev and also in the energy range between 10 \gev and
+100 \gev.  The convolved shapesdo separate better at higher energy, but
+nevertheless this plot shows that we are not very sensitive to probing
+the exact structure of an extended source.  In this paper we always
+assume a uniform disk spatial model.
 
-This is demonstrated in figure~\ref{compare_disk_gauss}.  It shows the
-PSF that would be observed for a power-law source of spectral index two,
-the probability density function (PDF) for a Gaussian and uniform disk of width
-$0.5\deg$, and the PDF for the same Gaussian
-and uniform disk convolved with the PSF.  The figure shows the analysis
-using an energy range between 1 \gev and 100 \gev and using an energy
-range between 10 \gev and 100 \gev.  The convolved shape of the disk and
-Gaussian do separate better at higher energy where the PSF is narrower.
-This plot shows that the LAT is not very sensitive to probing different
-kinds of extended sources.  In this paper we always fit with uniform disk
-spatial models.
+To get the convolved shapes to match in figure~\ref{compare_disk_gauss},
+we had to set them to predict the same 68\% containment radius of 0.5\deg.  The
+68\% containment radius for a spatial model is the radius at which 68\%
+of the intensity is enclosed.  It can be computed by a straightforward
+integral and we find that $\rsixeight_\text{,disk}=0.82\sigma$ whereas the
+$\rsixeight_\text{,Gaussian}=1.51\sigma$.  Since $\rsixeight=0.5\deg$,
+the uniform disk has $\sigma=0.41\deg$ whereas the Gaussian has
+$\sigma=0.75\deg$.
 
-To get the convolved disk and Gaussian shapes to match in
-figure~\ref{compare_disk_gauss}, we had to set them to predict
-a 68\% containment radius of 0.5\deg.  The 68\% containment
-radius for a spatial model is the radius at which 68\% of the
-intensity is enclosed.  It can be computed by a straightforward
-integral and we find that $\rsixeight_\text{,disk}=0.82\sigma$
-whereas the $\rsixeight_\text{,Gaussian}=1.51\sigma$. Therefore, in
-figure~\ref{compare_disk_gauss} the uniform disk has
-$\sigma=0.41\deg$ whereas the Gaussian has 
-$\sigma=0.75\deg$. 
+This is important when comparing morphologies to other wavelengths
+because the quoted size can vary significantly depending on which quanity
+is reported.  This effect can be best seen in figure~\ref{compare_r68}
+which a counts map of an extended source simulated in the energy
+range from 1 \gev to 100 \gev with a uniform disk spatial model and
+$\sigma=05$. Overlaid on the plot is the fit extension assuming the
+source has a uniform disk and a Gaussian spatial model. The plot overlays
+both $\sigma$ and $\rsixeight$ and $\sigma$ is significantly larger for
+the disk spatial hypothesis compared to the Gaussian spatial model. On
+the other hand, the disk and Gaussian's 68\% containment radius are
+very similar.
 
-Overlaying fit sizes on top of counts maps can be misleading.
-This effect can best be seen in figure~\ref{compare_r68} which shows
-an extended source simulated in the energy range from 1 \gev to 100
-\gev with a uniform disk spatial model. The simulated source has a size
-$\sigma=0.5\deg$, an integral flux between 1 \gev and 100 \gev of $3\times
-10^{-8}\ph/\cm^2/\sec$, and a spectral index 2.  To reduce Poisson noise,
-the counts map in figure~\ref{compare_r68} is smoothed by a 0.1\deg
-Gaussian kernel. Overlaid on the plot is the fit extension assuming the
-source has a uniform disk and a Gaussian spatial model.  The solid white
-line represents the best fit disk extension $\sigma_\text{disk}=0.496$
-The solid black line represents the best fit extension $\sigma$ for
-the Gaussian which was found to be $\sigma_\text{Gaussian}=0.2627$.
-The white and black dashed lines are the 68\% containment radius of
-the fit Disk and Gaussian respectively.  Even though the fit $\sigma$
-for the disk and uniform Gaussian seem very different, their 68\%
-containment radius are very similar ($\rsixeight_\text{,disk}=0.41$
-and $\rsixeight_\text{,Gaussian}=0.40$).
-
-This study shows that the extension $\sigma$ for different spatial
-models can be very different even when predicting almost the same PDF.
 Since we are not very sensitive to the particular morphology of an
-extended source, there is no correct choice for which shape to plot. For
-the following analysis, we use a uniform disk as our spatial model
-and overlay the disk's edge $\sigma$.  But due to smearing of the PSF,
+extended source, there is no correct choice for which size to quote
+or which shape to overlay. For the following analysis, we quite the
+disk's edge and overlay this size.  But due to smearing of the PSF,
 $\sigma$ typically looks larger than the observed counts distribution.
-When comparing the fit extensions with other wavelengths (especially \tev
-measurements of galactic sources), it is important to compare consistent
-values. If the assumed shapes are different, it is best to indirectly
-compare $rsixeight$.
+When comparing the fit extensions with other wavelengths, it is important
+to compare consistent quantities.
 
 
 \section{LAT Extended Source Validation}
 
-We validated \pointlike for extended source analysis using a series of
-Monte Carlo studies.
 
 \subsection{Significance of Extension}
 \label{monte_carlo_validation}
 
-\tsext can be used to calculate the statistical significance of the
-source's extension.  Since the point and extended models are nested, we
-would always expect $\tsext>0$.  On the other hand, we would not expect
-the likelihood to change very much unless the source was significantly
-extended.  Since an extended source has one additional degree of freedom,
-Wilks' Theorem says that the distribution of $\tsext$ when testing
-a point source for extension should follow a $\chi^2_1$ distribution
-(\cite{wilks_theorem}).
+We validated \pointlike's extension fitting code with a Monte Carlo
+study. \tsext (defined in section~\ref{extension_fitting}) can be used to calculate the statistical significance
+of the extension of a source.  Since the point source and extended source models are
+nested, an extended source must always fit as well as a point source.  On the other hand, we would
+not expect the likelihood to change very much unless the source was
+significantly extended.  Since an extended source has one additional
+degree of freedom, Wilks' Theorem says that the distribution of $\tsext$
+when testing a point source for extension should follow a $\chi^2_1$
+distribution (\cite{wilks_theorem}).
 
 On the other hand, since the null hypothesis rests on the edge of
 parameter space when the extension is 0, Wilks' Theorem does not hold
@@ -468,33 +439,23 @@ half a delta function at 0:
 \begin{equation}
   P(\ts)=\tfrac{1}{2}(\chi^2_1(\ts)+\delta(\ts)).
 \end{equation}
-Chernoff proved that under certain assumptions, this is the distribution
-that would hold when the null hypothesis lies on the edge of parameter
+Chernoff proved that under certain assumptions this is the correct distribution
+when the null hypothesis is on the edge of parameter
 space (\cite{chernoff}).  The false detection
 probability can be estimated by integrating this function from an observed
 test statistic value to infinity. It is for this particular distribution
 that the often quoted result holds that $\sqrt{\ts}$ is a measure of
 the number of $\sigma$ of the detection (\cite{mattox_egret}).
 
-The half $\chi^2_1$ distribution was found by a Monte Carlo study to hold
-for the special case of source finding of EGRET sources using a maximum
-likelihood analysis (\cite{mattox_egret}).  For half of the tests of a
-point source, statistical fluctuations would make the observed counts look
-narrower than the point spread function leading to $\tsext=0$. So it is
-reasonable to expect that a similar half $\chi^2_1$ would be appropriate
-for extension testing. We tested this hypothesis using a dedicated Monte
+The half $\chi^2_1$ distribution was found to hold for the special case
+of source finding using EGRET (\cite{mattox_egret}). This distribution
+is also plausable when testing point sources for extension. Due to
+statistical flucuations, half of the point sources might look narrower
+than the PSF leading to $\tsext=0$. The other half of the time, we would
+get a distribution consistent with Wilk's theorem. We used a Monte Carlo
+study to demonstrat that this is the observed distribution.
+ We tested this hypothesis using a dedicated Monte
 Carlo study.
-
-Before we show the Monte Carlo simulations, we have to bring up one issue
-we found with these tests.  Despite our best efforts, there was always
-a small numerical discrepancy between the likelihood when fitting the
-source as the PSF and when fitting it as a very small extended source
-with This is due to numerical error introduced by the convolution.
-In most situations, this error would be insignificant. But it does bias the
-distribution of \tsext in the null hypothesis. To correct for this,
-instead of computing the likelihood in the null hypothesis by fitting
-the PSF, we instead fit the null hypothesis as an extended source with
-the extension fixed to be very small.
 
 The Monte Carlo study involved simulating point sources of varying
 spectral models and fitting them using \pointlike as both point
@@ -518,6 +479,17 @@ of 0.8.  The reconstruction was performed with photons from an energy
 range of 1 \gev to 100 \gev using 4 energy bins per decade and using
 the Pass 7 Version 6 source instrument response function (IRFs) to be
 consistent with the following analysis.
+
+Before we present the results of the Monte Carlo simulations, we have to
+bring up one issue we found with these tests.  Despite our best efforts,
+there was always a small numerical discrepancy between the likelihood when
+fitting the source as the PSF and when fitting it as a very small extended
+source with This is due to numerical error introduced by the convolution.
+In most situations, this error would be insignificant. But it does bias
+the distribution of \tsext in the null hypothesis. To correct for this,
+instead of computing the likelihood in the null hypothesis by fitting
+the PSF, we instead fit the null hypothesis as an extended source with
+the extension fixed to be very small.
 
 For most of the spectral models, over 10,000 statistically independent
 simulations were performed.  For fainter sources, some of the
@@ -1269,7 +1241,55 @@ high energy sky.
 
 \appendix
 
-\begin{table}
+\begin{figure}
+  \begin{center}
+    \includegraphics{mc_plots/compare_disk_gauss.pdf}
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_disk_gauss/v2/compare_disk_gauss.pdf
+    \end{center}
+    \caption{
+    This plot demonstrates that different spatial models when smoothed
+    by the PSF look very similar.  The $y$ axis is the log of the
+    intensity and the $x$ axis is $\theta^2$.  The black line is the
+    PSF that would be observed for a power-law source of spectral index
+    2. The dashed red line is the probability density of a Gaussian with
+    $\rsixeight=0.5\deg$, which is just a straight line on this plot
+    The dashed blue line is the probability density for a uniform disk
+    with $\rsixeight=0.5\deg$.  Finally, the solid red and blue lines
+    show the convolution of the Gaussian and uniform disk with the PSF.
+    The left plot shows the analysis with an energy range from 1 \gev to
+    100 \gev whereas the right plot shows the analysis with an energy
+    range from 10 \gev to 100 \gev.  This plot is discussed futher in
+    section~\ref{compare_source_size}
+    }\label{compare_disk_gauss}
+  \end{figure}
+
+  \begin{figure}
+    \begin{center}
+      \includegraphics{mc_plots/compare_r68.pdf}
+      % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_r68/v2/plot.py
+      \end{center}
+      \caption{
+      This plot shows that fitting the same source with different spatial
+      shapes can lead to very different values of $\sigma$. On the other
+      hand, the different shapes have a good agreement about the 68\%
+      containment radius \rsixeight.  It shows counts map for a simulated
+      uniform disk extended source in the energy range from 1 \gev to
+      100 \gev.  The source has a size $\sigma=0.5\deg$, an integral flux
+      between 1 \gev and 100 \gev of $3\times 10^{-8}\ph/\cm^2/\sec$, and
+      a spectral index 2.  The smoothed counts from a point source with
+      the same spectrum are shown in the bottom right inset.  This source
+      was fit with both a uniform disk and a Gaussian spatial model.
+      The white circle represents the fit size $\sigma$ modeling the
+      source with a uniform disk spatial model.  The black circle is
+      the fit $\sigma$ modeling the source with a Gaussian hypothesis.
+      The dashed white and black circles are the fit \rsixeight for the
+      disk and Gaussian hypothesis. This plot is discussed furhter in
+      section~\ref{compare_source_size}
+      }\label{compare_r68}
+    \end{figure}
+
+
+    \begin{table}
   \begin{centering}
     \begin{tabular}{ r | r | r | r }
       \hline
@@ -1300,21 +1320,20 @@ high energy sky.
       \hline
     \end{tabular}
     \caption{
-    This table presents a list of the spectral models (flux and spectral
-    index) used in the Monte Carlo study of \pointlike described in
-    section~\ref{monte_carlo_validation}.  For each spectral model, the
-    number of statistically independent simulations and the average test
-    statistic found for that given spectral model ($\langle\ts\rangle$) is tabulated.
-    The important feature in this table is that the Monte Carlo
-    simulation probes most of the sources parameters that could be detected
-    by the LAT.  The simulation probes a wide range of spectral indices
-    (from spectral index $\gamma$ of 1.5 to 3) and a wide range of the fluxes
-    (varying from a close to $5\sigma$ source detection to a $>10\sigma$
-    source detection).  Only simulations which produced statistically
-    significant detections ($\ts>25$) were kept.  What is quoted is the
-    $>100$ \mev integral flux measured in units of $\ph/\cm^2/\sec$.
-    More information about this Monte Carlo analysis is presented in
-    section~\ref{monte_carlo_validation}
+    This table presents a list of the spectral models (flux and
+    spectral index) used in the Monte Carlo study of \pointlike
+    described in section~\ref{monte_carlo_validation} and presented
+    in figure~\ref{ts_ext_mc}.  For each spectral model, the number of
+    statistically independent simulations and the average value of \ts
+    value ($\langle\ts\rangle$) is tabulated.  The Monte Carlo simulation
+    spans parameters representative of sources that could be detected
+    by the LAT.  The simulation is of spectral indices $\gamma$ of 1.5,
+    2, 2.5, and 3.  The simulation is of fluxes varying from a $5\sigma$
+    source detection to a $>10\sigma$ source detection.  Only simulations
+    which produced statistically significant detections ($\ts>25$)
+    were kept.  What is quoted is the $>100$ \mev integral flux measured
+    in units of $\ph/\cm^2/\sec$.  More information about this Monte
+    Carlo analysis is presented in section~\ref{monte_carlo_validation}.
     }
     \label{ts_ext_num_sims}
   \end{centering}
@@ -1330,31 +1349,24 @@ high energy sky.
     % using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/ts_ext/v3_emin_1000/merged.hdf5
     \end{center}
     \caption{
-    \todo[inline]{Shorten this caption}
-    The results of the Monte Carlo simulation described in section
-    \ref{monte_carlo_validation} testing the null distribution of
-    the likelihood ratio test for extension.  The $x$ axis of this
-    plot is \tsext and the $y$ axis is the cumulative density for
-    \tsext that was found by testing simulated point sources of
-    various spectral models for extension. The four plots represent
-    different spectral indices (for $\gamma$ of 1, 2, 2.5, and 3).
-    The different colored lines represent different fluxes which were
-    chosen to span a representative range of values. The dashed
-    red line is the cumulative density function of $\chi^2(\ts)/2$ which is
-    suggested by Wilks' theorem as the theoretical distribution these
-    curves should should follow.  Overall, it should be noted that there
-    is a surprisingly good agreement between the Monte Carlo study and
-    the theoeretical distribution. And for most spectral parameters, the
-    Monte Carlo curve lies to the left of the theoretical curve, which
-    would imply that using Wilks' Theorem as the null distribution would
-    conservativly underestimate the signifcance of a source detection. In
-    the rest of the paper, we use this theoretical curve to estimate
-    the significance of our source detections.  What is quoted is the
-    $>100$ \mev integral flux in measured in units of $\ph/\cm^2/\sec$.
-    For each spectral model, more information about the simulations is
-    summarized in table~\ref{ts_ext_num_sims}. More
-    information about this Monte Carlo analysis is presented in
-    section~\ref{monte_carlo_validation}.
+    The results of the Monte Carlo simulation described
+    in section \ref{monte_carlo_validation} and detailed in
+    table~\ref{ts_ext_num_sims}. The plot shows the null distribution of
+    the likelihood ratio test when fitting a point source for extension.
+    The $x$ axis is \tsext and the $y$ axis is the cumulative density
+    for \tsext of simulated point sources. The four plots represent
+    different spectral indices and the different colors represent
+    different flxues.  The dashed red line is the cumulative density
+    function of $\chi^2(\ts)/2$ which is suggested by Wilks' theorem
+    as the distribution these curves should should follow.  There is
+    a surprisingly good agreement between the Monte Carlo results and
+    the theoeretical distribution. For most spectral parameters, the
+    Monte Carlo curve lies to the left of the theoretical curve which
+    would make the theoretical distribution more conservative.  In this
+    paper, we use this theoretical curve to estimate the significance of
+    our source detections. This plot cuts off three simulations of the
+    source with flux $3\times10^{-8}\ph/\cm^2/\sec$ and spectral index
+    2.5 which had \tsext of 26.1, 28.9, and 38.1.
     }\label{ts_ext_mc}
   \end{figure}
 
@@ -1397,51 +1409,6 @@ high energy sky.
     \todo[inline]{Add Caption}
     }\label{diff_factor_sensitivity}
   \end{figure}
-
-  \begin{figure}
-    \begin{center}
-      \includegraphics{mc_plots/compare_disk_gauss.pdf}
-      % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_disk_gauss/v2/compare_disk_gauss.pdf
-    \end{center}
-    \caption{
-    This plot demonstrates that different spatial models when smoothed
-    out by the PSF look very similar.  The $y$ axis is the log of the
-    intensity and the $x$ axis is $\theta^2$.  The black line is the
-    PSF that would be observed for a power-law source of spectral index
-    two. The dashed red line is the probability density of a Gaussian
-    of width $\rsixeight=0.5\deg$. A Gaussian on this plot is just a
-    straight line.  The dashed blue line is the probability density for
-    a uniform disk of width $\rsixeight=0.5\deg$.  Finally, the solid
-    red and blue lines show the convolution of the Gaussian and uniform
-    disk respectively with the PSF.  The left plot shows the analysis
-    with an energy range from 1 \gev to 100 \gev whereas the right plot
-    shows the analysis with an energy range from 10 \gev to 100 \gev.
-    }\label{compare_disk_gauss}
-  \end{figure}
-
-  \begin{figure}
-    \begin{center}
-      \includegraphics{mc_plots/compare_r68.pdf}
-      % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_r68/v2/plot.py
-      \end{center}
-      \caption{A plot of the smoothed counts for a simulated uniform
-        disk extended source in the energy range from 1 \gev to 100 \gev.
-        The source has a size $\sigma=0.5\deg$, an integral flux between
-        1 \gev and 100 \gev of $3\times 10^{-8}\ph/\cm^2/\sec$, and
-        a spectral index 2.  The smoothed counts from a point source
-        with the same spectrum are shown in the bottom right inset.
-        This source was fit with both a uniform disk and a Gaussian
-        spatial model.  The white circle represents the fit size $\sigma$
-        fitting with the disk hypothesis.  The black circle is the fit
-        $\sigma$ fitting with the Gaussian hypothesis.  The dashed white
-        and black circles are the fit \rsixeight defined in section
-        \ref{compare_source_size} for the disk and Gaussian hypothesis
-        respectively.  This plot shows that fitting the same source with
-        different spatial shapes can lead to very different values of
-        $\sigma$. On the other hand, the different shapes have a good
-        agreement about the 68\% containment radius \rsixeight.
-      }\label{compare_r68}
-    \end{figure}
 
 
 \begin{figure}
