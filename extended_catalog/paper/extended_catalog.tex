@@ -71,7 +71,8 @@ and calculate the LAT's detection threshold to spatially extended
 sources.  We then apply this tool to test all sources in the two
 year source catalog for extension and report on the discovery
 of XXXXXX\todo{What number should be put
-here???} new extended sources.
+here. Should we report the total number of extended sources instead of the
+number of new sources???} new extended sources.
 \end{abstract}
 
 \section{Introduction}
@@ -362,7 +363,7 @@ table~\ref{dual_localization_results}.
 
 \label{compare_source_size}
 
-The spatial shape of extended soruces can e modeled
+The spatial shape of extended sources can e modeled
 as a two dimensional Gaussian
 \begin{equation}
   \text{PDF}(x,y)=\tfrac{1}{2\pi\sigma^2}\exp\left(-(x^2+y^2)/2\sigma^2\right)
@@ -458,8 +459,8 @@ null hypothesis and compares it to this distribution.
 
 We simulated point sources of varying spectral models and fit them
 them using \pointlike as both point and extended sources. The data was
-simulated using \gtobssim\footnote{The \gtobssim program is distributed
-and supported by the Fermi Science Support Center (\cite{fssc}).}
+simulated using \gtobssim\footnote{\gtobssim is distributed
+by the Fermi Science Support Center (\cite{fssc}).}
 The point sources were simulated with a power-law spectral model with
 six $>100$ \mev fluxes ranging from $3\times 10^{-9} \ph/\cm^2/\sec$ to
 $10^{-6} \ph/\cm^2/\sec$.  The point sources were simulated with spectral
@@ -658,16 +659,18 @@ region around a catalog source.  Because of this, finding a source with
 $\tsext>16$ is not a sufficient test and we perform several crosschecks
 to ensure our overall region is well modeled.
 
-
-As an example of why this issue, we describe our test of P72Y3047 for
+% 2FGL J1856.2+0450c = P72Y3047 for
+As an example of why this issue, we describe our test of 
+2FGL J1856.2+0450c for
 extension.  Figure~\ref{example_bad_fit} shows a smoothed counts map
 using photons with energy above 1 \gev. In the map, the galactic and isotropic diffuse
-emission subtracted.  A two year catalog source P72Y3047 was found at the
+emission subtracted.  A two year catalog source 
+2FGL J1856.2+0450c was found at the
 position $(l,b)=(37.79\deg,1.14\deg)$.  
 We find that there appears to be overall some large scale residual in the
 diffuse emission along the galactic plane. Furthermore, it appears that
 we don't have a great model of the nearby catalog sources. As a result,
-P72Y3047 fits to a very large extension of 1.37\deg and the result is
+2FGL J1856.2+0450c fits to a very large extension of 1.37\deg and the result is
 statistically significant with \tsext=51.6.  By looking at the residuals,
 it is clear that this complicated region is not well fit even though
 the source's extension is statistically significant. For this reason,
@@ -845,6 +848,7 @@ correctly find and model the sources we see. We can not claim our method
 is complete.
 
 \section{Test of 1LAC Sources}
+\label{test_1lac_sources}
 
 To validate our method and assess systematic issues with our analysis,
 we used \pointlike to test known active galaxies (AGN) for extension.
@@ -857,7 +861,8 @@ there are theories that predict this (\cite{pair_halo_paper}).
 
 Following the LAT's one year catalog, the LAT collaboration published
 a list of catalog sources that had a high probability association with
-AGN. The first year catalog had 709 AGN associated with 671 distinct
+AGN (\cite{first_agn_cat}).
+The first year catalog had 709 AGN associated with 671 distinct
 1FGL sources at high latitude ($|b|>10\deg$).  To avoid systematic
 problems with AGN classification, we used only the 599 AGN which made
 it into the clean AGN sample.  An AGN association is only considered
@@ -967,30 +972,44 @@ significance of extension.
 
 
 \subsection{2FGL J1627.0-2425c}
+\label{section_ophiuchus}
 
 % 1FGL J1628.6-2419c - P72Y2516         - 2FGL J1627.0-2425c
 % No modifications to background were needed
 
-The two year catalog source 2FGL J1627.0-2425c was found to be significantly
-extended when using photons between 1 \gev and 100 \gev.  The best
-fit extension was $0.41\deg\pm0.05\deg$ and the best fit position is
-$(l,b)=(353.09\deg, 16.79\deg)$ The source also appeared in the first
+The two year catalog source 2FGL J1627.0-2425c was found to be
+significantly extended when using photons between 1 \gev and 100 \gev.
+The best fit extension was $0.53\deg\pm0.06\deg$ and the best fit position
+is $(l,b)=(352.87\deg, 16.79\deg)$ The source also appeared in the first
 fermi catalog as 1FGL J1628.6-2419c.  and the extension significance
-was $\tsext=28.9$.  A smoothed counts map showing this source is seen
-in figure \ref{1FGL_J1628.6-2419c}.
+was $\tsext=21.1$.  A counts map showing this source is seen in
+figure \ref{1FGL_J1628.6-2419c}.  To test for source confusion, we also
+fit this region as two point sources. Since $\tsinc=16.6$ is smaller
+than \tsext, the emission is more likeliy to come from an extended source.
 
 This source is in a region of remarkably complicated diffuse emission.
-Even though it is 16\deg from the Galactic plane,
-the source is right on top of the core of the Ophiuchus molecular cloud,
-which contains massive star-forming regions that are very bright
-in the infrared.  The region has abundant molecular and atomic gas
-traced by CO and HI but also plenty of dark gas, the kind that
-we find only by its association with dust emission.\todo{Citation Needed}
-Embedded star-forming regions make it even more challenging to measure
-the column density of dust.\todo{Citation Needed}
-\todo[inline]{Note about spectral index being typical of difuse emission}
-Although this region is significantly extended, we conclude that what we
-are seeing is most likely an inadequacy in the diffuse $\gamma$-ray emission
+Even though it is 16\deg from the Galactic plane, the source is on top
+of the core of the Ophiuchus molecular cloud which contains massive
+star-forming regions that are very bright in the infrared.  We have
+overlaid on the plot of figure~\ref{1FGL_J1628.6-2419c} a 100 micrometer
+infared image of this region as seen by IRAS and there is good spatial
+overlap between with the \gev observed emission
+(\cite{iras_rho_ophiuci}).
+
+The region has abundant molecular and atomic gas traced by CO and HI but
+also plenty of dark gas, the kind that we find only by its association
+with dust emission. Embedded star-forming regions make it even more
+challenging to measure the column density of dust.
+Although this region is significantly extended, we conclude that what
+we are seeing is most likely an inadequacy in the diffuse $\gamma$-ray
+emission model.
+
+\todo[inline]{Can we get another citation about dark gas
+and stuff?
+Better note about spectral index being typical of difuse emission.
+Also does this description make sense? Also, is 
+citation about IRAS good?}
+
 
 
 \subsection{2FGL J1554.4-5317c}
@@ -1000,36 +1019,40 @@ are seeing is most likely an inadequacy in the diffuse $\gamma$-ray emission
 %   * P72Y2416 - 2FGL J1551.3-5333c
 %   * P72Y2422 - Not a 2FGL source
 
-The two year catalog source 2FGL J1554.4-5317c was found to be
-extended using photons with energy between 1 \gev and 100 \gev.
-We found an extension of $0.49\deg\pm 0.04\deg$ and an extension significance of
-$\tsext=77.6$ at a position $(l,b)=(328.1387\deg,0.26\deg)$.  Figure
-\ref{1FGL_J1554.0-5345c} shows a smoothed counts map of this source.
+The two year catalog source 2FGL J1554.4-5317c was found to be extended
+using photons with energy between 1 \gev and 100 \gev.  We found an
+extension of $0.52\deg\pm 0.04\deg$ and an extension significance of
+$\tsext=39.6$ at a position $(l,b)=(328.12\deg,0.26\deg)$.  Figure
+\ref{1FGL_J1554.0-5345c} shows a counts map of this source.
 
 It was found in the one year catalog under the name 1FGL J1554.0-5345c.
 To get a good fit of the source, we had to remove the nearby catalog
-source 2FGL J1551.3-5333c
-which we believed to be suprious. By looking at
+source 2FGL J1551.3-5333c which we believed to be suprious. By looking at
 the counts map, we saw no differentation in the source at the location
-of the two catalog sources. We tested this region for source confusion
+of the two catalog sources. 
+These soruce modifications are further described
+in the caption to figure~\ref{1FGL_J1554.0-5345c}.
+
+We tested this region for source confusion
 by comparing the increase in log likelihood fitting the region as an
-extended source (\tsext=77.6) to the increase in log likelihood fitting
-the region as two point sources (\tsinc=48.6).  Since the extended
-hypothesis is a has a higher likelihood, we conclude that the source is
-spatially extended More
-information about the dual localization results for this source are
-shown in table \ref{dual_localization_results}.
+extended source to the increase in log likelihood fitting the region
+as two point sources. Since $\tsinc=10.2$ is smaller than \tsext, we
+conclude that the source is spatially extended and not multiple point
+sources. More information about the dual localization results for this
+source are shown in table \ref{dual_localization_results}.
 
 There are no obvious counterparts to this source. Furthermore, this
-source is relativly soft with a spectral index 2.31 and
-very close to the galacitc plane in a region of large diffuse emission.
-We conclude that although this region is significantly extended, it most
-likely represents unmodeled diffuse emission.
-\todo[inline]{this needs more quantification/description}
-\todo[inline]{Improve note about spectral check and lack of hardness}
-
+source is relativly soft with a spectral index 2.31 and very close to
+the galacitc plane in a region of large diffuse emission.  We conclude
+that although this region is significantly extended, it most likely
+represents unmodeled diffuse emission.
+\todo[inline]{this needs more quantification/description.
+Improve the point about how since the source is soft, it
+is more consistent with diffuse emission.
+}
 
 \subsection{2FGL J0823.0-4246}
+\label{section_puppis_a}
 
 % 1FGL J0823.3-4248  - P72Y1212         - 2FGL J0823.0-4246
 % Deleted 
@@ -1038,19 +1061,26 @@ likely represents unmodeled diffuse emission.
 
 The two year catalog source 2FGL J0823.0-4246 was found to be
 extended using photons with energy between 1 \gev and 100 \gev.
-We found an extension of $0.37\deg$ and an extension
+We found an extension of $0.37\deg\pm0.03\deg$ and an extension
 significance of $\tsext=49.2$.  The source was fit to a position of
-$(l,b)=(260.31\deg,-3.28\deg)$.  Figure~\ref{1FGL_J0823.3-4248} shows
-a smoothed counts map of this source.
+$(l,b)=(260.32\deg,-3.28\deg)$.  Figure~\ref{1FGL_J0823.3-4248} shows
+a counts map of this source.
 
-This soruce is coincident with the one year catalog source named 1FGL J0823.3-4248.
-To get a good fit of the source, we had to remove the nearby catalog
-sources 2FGL J0823.4-4305 and 2FGL J0821.0-4254.  We tested the 
-region for source confusion by fitting the region instead as two point
-sources and obtained $\tsinc=22.2$ which is smaller then \tsext.
+This source is coincident with the one year catalog source named 1FGL
+J0823.3-4248.  To get a good fit of the source, we had to remove the
+nearby catalog sources 2FGL J0823.4-4305 and 2FGL J0821.0-4254 which
+are part of the extended emission.  We tested the source for spatial
+confusion by fitting it as two point sources. Because $\tsinc=22.3$ is
+smaller then \tsext, we believe that this source is spatially extended.
+These removed catalog soruces are shown in figure~\ref{1FGL_J0823.3-4248}.
 
-\todo[inline]{Describe how this source is Coincident with Puppis A SNR
-and give some interpretation of it.}
+This extended source is spatially coincident with the SNR Puppis A.
+Overlaid on figure~\ref{1FGL_J0823.3-4248} are ROSAT contours of
+Puppis A (\cite{rosat_puppis_a}). There is good agreement
+between the measured radius of $\sigma=0.37$ degrees in \gev and 
+the X-ray contours of the source.
+
+\todo[inline]{Give some additional interpretation of the Puppis A SNR.}
 
 \subsection{2FGL J1615.2-5138}
 
@@ -1064,43 +1094,45 @@ and give some interpretation of it.}
 % New source
 %  * SkyDir(332.426,-0.331,SkyDir.GALACTIC
 
-The two year catalog source 2FGL J1615.2-5138 was found to be
-extended using photons with energies between 10 \gev and 100 \gev.
-This source is coincident with the one year catalog source named 1FGL
-J1613.6-5100c.  We found an extension of $0.52\deg$ with an extension
-significance of \tsext=75.3.  The source was fit to a position of
-$(l,b)=(331.74\deg,-0.58\deg)$.  Figure~\ref{1FGL_J1613.6-5100c} shows
-a smoothed counts map of this source.
+The two year catalog source 2FGL J1615.2-5138 was found to be extended
+using photons with energies between 10 \gev and 100 \gev.  This source
+is coincident with the one year catalog source 1FGL J1613.6-5100c.
+We found an extension of $0.43\deg\pm0.04\deg$ with an extension
+significance of \tsext=45.3.  The source was fit to a position of
+$(l,b)=(331.67\deg,-0.66\deg)$.  Figure~\ref{1FGL_J1613.6-5100c} shows
+a counts map of this source.
 
- To get a good fit for the region, we had to remove from our
-model the nearby catalog sources 2FGL J1520.6-5111c, 2FGL J1619.7-5040c,
-and 2FGL J1622.8-5006. Furthermore, to get a good fit of the region
-we iterativly relocalized the source 2FGL J1615.0-5051 while fitting
-the position and extension of 2FGL J1615.2-5138.  We ended up with
-a best fit position of the nearby source 2FGL J1615.0-5051 having
-moved from $(l,b)=(332.2684,0.043)$ to $(l,b)=(332.365,0.005)$.
-In addition,we had to add a new source not in the catalog at the position
-of $(l,b)=(332.426,-0.331)$. The moved and now source are shown in
-figure~\ref{1FGL_J1613.6-5100c} are shown as the blue and XXXXXXXXXX\todo{what color} crosses
-respectivly.  The location of these sources was found by iterativly
+To get a good fit for the region, we had to remove from our model
+the nearby catalog sources 2FGL J1520.6-5111c, 2FGL J1619.7-5040c,
+and 2FGL J1622.8-5006. Furthermore, to get a good fit of the region we
+iterativly relocalized the source 2FGL J1615.0-5051 while fitting the
+position and extension of 2FGL J1615.2-5138.  We ended up with a best
+fit position of the nearby source 2FGL J1615.0-5051 having moved from
+$(l,b)=(332.2684\deg,0.043\deg)$ to $(l,b)=(332.365\deg,0.005\deg)$.  In addition,we
+had to add a new source not in the catalog at the position of
+$(l,b)=(332.426\deg,-0.331\deg)$.  The location of these sources was found by iterativly
 fitting the position of these sources as well as the extension of 2FGL
 J1615.2-5138 until a stable fit was found.  It is unclear of this new seed
 is physically a new source or if 2FGL J1615.0-5051 is spatially extended.
 2FGL J1615.0-5051 was not found to be significantly extended using two
-years of data but the fit of 2FGL J1615.2-5138 was clearly growing
-too large to obsorb residual in the direction of 
-J1615.2-5138 until we added the additional point source.
+years of data but the fit of 2FGL J1615.2-5138 was clearly growing too
+large to obsorb residual in the direction of J1615.2-5138 until we added
+the additional point source.
+These modifications are further described in the caption to 
+figure~\ref{1FGL_J1613.6-5100c}.
 
-To address the possibility of source confusion, we compared the likelihood 
-fitting 2FGL J1615.2-5138 as two point sources to one source.
-We found that \tsinc=34.3 which is smaller then \tsext so we believe
-that this is extended emission.
+
+To address the possibility of source confusion, we compared the likelihood
+fitting 2FGL J1615.2-5138 as two point sources to one source.  We found
+that \tsinc=30.1 which is smaller then \tsext so we believe that this
+is extended emission.
 
 \todo[inline]{Interpret source as being coincident with HESS JXXXX
 and what the possible emission mechanism could be.}
 
 
 \todo[inline]{Describe What this source is/What HESS Source this is near}
+\todo[inline]{Describe contours overlaied on source}
 
 \subsection{2FGL J1632.4-4753c}
 
@@ -1124,66 +1156,78 @@ and what the possible emission mechanism could be.}
 
 The two year catalog source 2FGL J1632.4-4753c was found to be extended
 using photons with energies between 10 \gev and 100 \gev.  This source
-was found to be consistent with 1FGL J1632.9-4802c.  We fit an
-extension of 0.65\deg with an extension significance of \tsext=95.3.
-The source was fit to a position of $(l,b)=(336.52\deg,0.06\deg)$.
-Figure~\ref{1FGL_J1632.9-4802c}.  shows a smoothed counts map of this
-source. The figure shows as a red star the catalog position
-of this source.
+is coincident with the one year catalog source 1FGL J1632.9-4802c.
+We fit an extension of $0.44\deg\pm0.04\deg$ with an extension
+significance of \tsext=62.2.  The source was fit to a position
+of $(l,b)=(336.52\deg,0.06\deg)$.  Figure~\ref{1FGL_J1632.9-4802c}.
+shows a counts map of this source. 
 
-To get a good fit of the region, had to remove from our model the four
-catalog sources 2FGL J1631.7-4720c, 2FGL J1630.2-4752,
-2FGL J1634.4-4743c.4-4820c. These sources all are on top
-of this extended source but there is no indication that the emission of
-these sources separates.  These sources are indicated as green stars in
-figure~\ref{1FGL_J1632.9-4802c}.  
+To get a good fit of the region, we had to remove from our model
+the four catalog sources 2FGL J1631.7-4720c, 2FGL J1630.2-4752,
+2FGL J1634.4-4743c.4-4820c. These sources all are on top of this
+extended source but there is no indication that the emission of these
+sources separates.  Finally, we relocalized the
+source 2FGL J1635.4-4717c to a better fit position $(l,b)=(337.230\deg,0.346\deg)$
+and the position of 2FGL J1636.3-4740c to the better fit position
+$(l,b)=(336.968\deg,-0.066\deg)$ to get a good overall fit of our source.
+These modifications are further described in the caption to 
+figure~\ref{1FGL_J1632.9-4802c}.
 
-In addition we removed from our region the 4 nearby catalog sources 2FGL
-J1638.0-4703c, 2FGL J1628.1-4857c, 2FGL  J1630.1-4615, 2FGL J1639.8-4921c
-because they were not significant above 10 \gev.  Finally, we had to
-relocalized the source 2FGL J1635.4-4717c to a better fit position
-$(l,b)=(337.230,0.346)$ and the position of 2FGL J1636.3-4740c to the
-better fit position $(l,b)=(336.968,-0.066)$ to get a good overall fit
-of our source.
+In addition we removed from our region four farther away two year
+catalog sources J1638.0-4703c, 2FGL J1628.1-4857c, 2FGL  J1630.1-4615,
+2FGL J1639.8-4921c because they were not significant above 10 \gev.
 
 To test for source confusion, we compared the likelihood fitting this
 region as one extended source to the likelihood fitting this region as
-two point sources. We found $\tsinc=24.8\ll\tsext$ which indicates that
+two point sources. We found $\tsinc=38.5\ll\tsext$ which indicates that
 this is extended emission and not source confusion.
 
-\todo[inline]{Describe how ROI was modified.
-Note about uncertainty about background sources. 
-We model the northwestern source separatly
-but not the southeastern 'possible source'.}
-
 \todo[inline]{Describe What this source is/What HESS Source it is near}
+\todo[inline]{Describe contours overlaid on source}
 
 \subsection{2FGL J2021.5+4026}
 
-Gamma Cygni SNR. 
-
-
 % 1FGL J2020.0+4049  - P72Y3281         - 2FGL J2021.5+4026
 % Delete:
-% * P72Y3292 - 2FGL J2022.8+3843c
 % * P72Y3282 - 2FGL J2019.1+4040
+% * P72Y3292 - 2FGL J2022.8+3843c
 % * P72Y3287 - 2FGL J2020.0+4159
 % * P72Y3262 - 2FGL J2013.8+4115c
 % * P72Y3260 - 2FGL J2012.4+3955c
 % New source
 %  * SkyDir(78.854,2.670,SkyDir.GALACTIC)
 
-\todo[inline]{Describe how ROI was modified}
+The two year catalog source 2FGL J2021.5+4026 was found to be extended
+using photons with energies between 10 \gev and 100 \gev. This source
+is coincident with the one year catalog source 1FGL J2020.0+4049. We
+fit an extension of $0.59\deg\pm0.03\deg$ with an extension
+significance of $\tsext=140.6$.  The source was fit to a position of
+$(l,b)=(78.17\deg,2.19\deg)$.  Figure~\ref{1FGL_J2020.0+4049} shows a
+counts map of this source.
+
+To get a good fit of the region, we had to remove the nearby catalog
+source 2FGL J2019.1+4040 which were part of the extended source.
+Further, we found it necessary to add an additional point source not in
+the two year catalog into our background model.  The new source is was
+localized to a position of $(l,b)=(78.854,2.670)$ and had $\ts\approx 16$
+(using \pointlike).  Although the source is not very significant, not
+including it into the background model appeared visually to significantly
+throw off the fit of the region.  In addition, we removed the four
+further away catalog sources 2FGL J2022.8+3843c, 2FGL J2020.0+4159,
+2FGL J2013.8+4115c, and 2FGL J2012.4+3955c from our region becuase they
+were not signifcant above 10\gev.  After modifying the region, we found
+that \tsinc=34.7 which is less than \tsext, so we believe that source
+source is spatially extended.  These modifications are further described
+in the caption to figure~\ref{1FGL_J2020.0+4049}.
 
 \todo[inline]{
+This source is the Gamma Cygni SNR!
+
 Describe how this source is analyzed more carefully in the paper
 \cite{A cocoon of freshly accelerated cosmic rays detected by Fermi
 in the Cygnus superbubble}
 }
-
-See figure~\ref{1FGL_J2020.0+4049}.
-
-\todo[inline]{explain upcomming publication}
+\todo[inline]{Describe contours overlaid on source}
 
 \subsection{2FGL J1837.3-0700c}
 
@@ -1191,8 +1235,8 @@ See figure~\ref{1FGL_J2020.0+4049}.
 
 % Delete:
 % * P72Y2982 - Not in 2FGL
-% * P72Y2979 - 2FGL J1835.5-0649
-% * P72Y2993 - 2FGL J1839.0-0539
+% * P72Y2979 - 2FGL J1835.5-0649 - SkyDir(25.0503,0.3894)
+% * P72Y2993 - 2FGL J1839.0-0539 - SkyDir(26.4904,0.1632)
 
 % Modify:
 % * P72Y2985 - 2FGL J1836.8-0623c - SkyDir(25.574,0.320,SkyDir.GALACTIC)
@@ -1202,11 +1246,35 @@ See figure~\ref{1FGL_J2020.0+4049}.
 % * P72Y2994 - 2FGL J1839.3-0558c - SkyDir(26.080,0.229,SkyDir.GALACTIC)
 %              (initial Position - SkyDir(26.2301,-0.0394)
 
+The two year catalog source 2FGL J1837.3-0700c was found to be extended
+using photons with energies between 10 \gev and 100 \gev. This source
+is coincident with the one year catalog source 1FGL J1837.5-0659c. We
+fit an extension of $0.35\deg\pm0.08\deg$ with an extension
+significance of $\tsext=20.9$.  The source was fit to a position of
+$(l,b)=(25.08\deg,0.13\deg)$.  Figure~\ref{1FGL_J2020.0+4049} shows a
+counts map of this source.
 
-Near HESS source HESS J1837. Upcomming publication???
-\todo[inline]{Describe how ROI was modified}
-\todo[inline]{Discuss the upcomming publication}
-See figure~\ref{1FGL_J1837.5-0659c}.
+This source is in a very complicated region. There are two very nearby
+catalog sources 2FGL J1836.8-0623c and 2FGL J1837.3-0700c which are
+about $~0.5\deg$ away from our source. To get a good fit of the region,
+we slightly relocalize these sources so that 2FGL J1836.8-0623c is at
+a postiion of $(l,b)=(25.574\deg,0.320\deg)$ and 2FGL J1837.3-0700c is
+at a position of $(l,b)=(24.716\deg,0.500\deg)$.  We also relocalized
+the source 2FGL J1839.3-0558c which is about $~1\deg$ away from our
+source to a better position of $(l,b)=(26.080\deg,0.229\deg)$ Finally,
+we had to remove the nearby catalog source 2FGL J1835.5-0649 which we
+believed to be part of our extended source. We also removed the farther
+away catalog source 2FGL J1839.0-0539 because it was not significant
+above 10 \gev.  After modifying the region, we found that \tsinc=15.4
+which is less than \tsext, so we believe that the emission from this
+soruce spatially extended.  These modifications are further described
+in the caption to figure~\ref{1FGL_J2020.0+4049}.
+
+
+\todo[inline]{
+Near HESS source HESS J1837. 
+Discuss the upcomming publication???
+Describe contours overlaied on source}
 
 \subsection{2FGL J0851.7-4635}
 
@@ -1223,12 +1291,28 @@ See figure~\ref{1FGL_J1837.5-0659c}.
 % * P72Y1310 - 2FGL J0901.7-4655 - SkyDir(267.311,-0.190,SkyDir.GALACTIC)
 %              (initial Position - SkyDir(267.79,-0.3339)
 
-\todo[inline]{Describe how ROI was modified}
+The two year catalog source 2FGL J0851.7-4635 was found to be extended
+using photons with energies between 10 \gev and 100 \gev. This source has
+no counterparts in the first year LAT catalog.  We fit an extension of
+$1.12\deg\pm0.07\deg$ with an extension significance of $\tsext=90.9$.
+The source was fit to a position of $(l,b)=(266.29\deg,-1.41\deg)$.
+Figure~\ref{Vela_Jr} shows a counts map of this source.
 
+To get a good fit of the region, we had to remove three nearby catalog
+sources 2FGL J0848.5-4535, 2FGL J0855.4-4625, and 2FGL J0853.5-4711 which
+were part of the extended source.  In addition, we had to relocalize
+the position of two nearby catalog sources to better fit their position
+at high energies.  We localized 2FGL J0854.7-4501 to a position of
+$(l,b)=(266.232\deg,0.517\deg)$ and 2FGL J0901.7-4655 to a position of
+$(l,b)=(267.311\deg,-0.190\deg)$. In addition, we removed the further
+away catalog source 2FGL J0858.0-4815 beacuse it was not significant
+above 10 \gev.  After modifying the region, we found that \tsinc=17.2
+which is less than \tsext, so we believe that this region is not source
+confusion but is instead a spatially extended source.  These modifications
+are further described in the caption to figure~\ref{Vela_Jr}.
 
-Vela Jr. Upcomming publication.
-\todo[inline]{explain that Vela Jr will be described better in upcomming publication}
-See figure~\ref{Vela_Jr}.
+\todo[inline]{explain that Vela Jr will be described better in upcoming publication}
+\todo[inline]{Describe contours overlaid on source}
 
 \section{Conclusion}
 
@@ -1384,13 +1468,13 @@ high energy sky.
     \end{center}
     \caption{
     This plot shows that our threshold to detecting the extension of
-    a soruce is best for sources with size $~0.5\deg$. It also shows
+    a source is best for sources with size $~0.5\deg$. It also shows
     that for sources neither very large nor soft, our sensitivity is
     not significantly improved using photons with energy between 100
     \mev and 1 \gev.  The $x$ axis is extension of a simulated uniform
     disk extended source and the $y$ axis is the simulated source's 100
     \mev to 100 \gev photon flux. The curves represent the detection
-    threshold to an extended source which is defiend as the flux when
+    threshold to an extended source which is defined as the flux when
     $\langle\tsext\rangle=25$ for a particular extension.  All sources
     have an assumed power-law spectrum and the different colors are
     for sources of different simulated spectral indices.  The dashed
@@ -1413,7 +1497,7 @@ high energy sky.
     \caption{
     This plot shows that we are less sensitive to extended sources in
     regions with higher background and (given the same number of photons)
-    more sensitive to harder soruces.  The plot has the same meaning as
+    more sensitive to harder sources.  The plot has the same meaning as
     in figure~\ref{index_sensitivity} and the simulations occur over
     the same time range.  These plots presents the sensitivity over
     for varying background levels and two energy ranges.  The blue dash
@@ -1423,7 +1507,7 @@ high energy sky.
     sensitivity against 100 times that isotropic background.  The latter
     factor approximately represents the intensity of the galactic
     diffuse emission near the galactic center.  The left plot presents
-    the sensitivity when usings only photons with energies between 1 \gev
+    the sensitivity when using only photons with energies between 1 \gev
     and 100 \gev while the plot on the right presents the sensitivity only
     when using photons with energies between 10 \gev and 100 \gev. Unlike
     figure~\ref{index_sensitivity}, the sensitivity was calculated only
@@ -1478,18 +1562,15 @@ high energy sky.
   \begin{center}
     \includegraphics{ic443_plots/ic443_counts_slice.pdf}
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/counts_slice_ic443/v1/ic443_counts_slice.pdf
-    \caption{
-    The upper plot is the sum of the counts binned in galactic longitudinal
-    summed within 2\deg in galactic latitude centered on the SNR
-    IC443. The lower plot shows the same image but instead integrated
+    \caption{ The upper plot is the sum of the counts binned in galactic
+    longitudinal summed within 2\deg in galactic latitude centered on the
+    SNR IC443. The lower plot shows the same image but instead integrated
     in galactic longitude.  Overlaid on the plot is the model predicted
-    counts assuming that IC443 is a point source, an extended source,
-    and that there is just the diffuse background. These counts slices
-    are especially useful for visually assessing the quality of
-    the diffuse emission model in the region surrounding an
-    extended source candidate.
-    \label{counts_slice}
-    }
+    counts assuming that IC443 is a point source, an extended source, and
+    that there is just the diffuse background.  These plots were generated
+    for all extended source candidates.  They are especially useful for
+    visually assessing the quality of the diffuse emission model in the
+    region surrounding an extended source candidate.} \label{counts_slice}
   \end{center}
 \end{figure}
 
@@ -1498,9 +1579,15 @@ high energy sky.
   \begin{center}
     \includegraphics{ic443_plots/ic443_radial_integral.pdf}
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/radial_integral_ic443/v1/ic443_radial_integral.pdf
-    \caption{The radial integral of the counts and the model predicted counts.
-    \todo[inline]{Add more text about why this is useful}
-    }
+    \caption{The sum of all counts within a given radial distance from
+    the SNR IC443's best fit position.  This plot is binned uniformly
+    in $\theta^2$ to correct for solid angle so that an isotropic
+    distribution is flat. Overlaid on the counts distribution is the
+    model predicted counts assuming the IC4343 is a point source, an
+    extended source, and that there is just the diffuse background.
+    These plots were generated for all extended source candidates.
+    These radial integral plots are useful for visually comparing the
+    observed counts to the PSF.}
     \label{radial_profile}
   \end{center}
 \end{figure}
@@ -1510,9 +1597,23 @@ high energy sky.
   \begin{center}
     \includegraphics{ic443_plots/ic443_smoothed_counts.pdf}
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/smoothed_counts_ic443/v1
-    \caption{Smoothed counts. Galactic and isotoropic as well as earth albedo background were subtracted.
-    \todo[inline]{describe that this is IC443 using (front? or back? or both?) photons.}
-    }
+    \caption{A map of the observed photons in the region around the SNR
+    IC443 with energies between 1 \gev and 100 \gev.  This plot has the
+    galactic and isotropic diffuse emission subtracted and is smoothed
+    by a $0.1\deg$ Gaussain kernel.  The overlaid box is the PSF for
+    a source of the same spectrum as IC443 normalized to have the same
+    intensity as IC443.  This PSF is smoothed by the same Gaussian kernel
+    and so represents the model of what IC443 would look like if it was
+    a point source. Since the observed counts are wider than the PSF,
+    we can see visually that IC443 is an extended source.  The black
+    cross is IC443's best fit center when fitting it with a uniform
+    disk spatial model. The
+    black crosses are all of the catalog sources in
+    the region and the white circle is the edge of the best fit
+    uniform disk which was fit to IC443 using \pointlike.  These plots
+    were generated for all extended source candidates.  They are useful
+    for assessing the overall quality of the source model and for looking
+    for nearby background sources which are not correctly modeled.}
     \label{smoothed_counts}
   \end{center}
 \end{figure}
@@ -1527,10 +1628,10 @@ high energy sky.
     extension of the extended SNR IC443.  As is discussed in section
     \ref{extension_error}, the error on the extension of a source is
     calculated by varying the extension away from its best fit value until
-    the log likelihood has changed by an amount 1/2.  These profiles are
-    generated for all extended source candidates. They plot is useful
-    to make sure the fitter is not stuck in a local minimum and to make
-    sure the profile is reasonably parabolic.
+    the log likelihood has changed by a particular amount.  These profiles are
+    generated for all extended source candidates. They are useful
+    to make sure the fitter find a global minimum and that
+    the likelihood function is not unphysically double peaked.
     }
     \label{extension_profile}
   \end{center}
@@ -1542,8 +1643,17 @@ high energy sky.
   \begin{center}
     \includegraphics{source_plots/example_bad_fit.pdf}
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/example_bad_fit/v2
-    \caption{Example bad Fit: P72Y3047
-    \todo[inline]{Describe how this is a bad fit}
+    \caption{
+    The observed 1 \gev to 100 \gev photons for the
+    two year catalog source 2FGL J1856.2+0450c. This map is smoothed by
+    a 0.1\deg Gaussian kernel and the large white circle is the edge of
+    the fit uniform disk spatial model.  2FGL J1856.2+0450c fits to an
+    extension of 1.37\deg and the result is statistically significant
+    with \tsext=51.6. On the other hand, the extension encompasses many
+    catalog sources and the emission does not look to be uniform. Instead,
+    this source is fitting large scale residual. Although the fit is 
+    statistically significant, it is not physical and we discard sources
+    that look like this.
     }
     \label{example_bad_fit}
   \end{center}
@@ -1556,7 +1666,7 @@ high energy sky.
       \begin{tabular}{r|rrrrrrrrrr}
         \hline
         \hline
-        Name                 &          \glon &          \glat &                    $\sigma$ &       TS &   $\tsext$ &      Major &      Minor &    Pos Ang &      Flux ($10^{-9}$) &                 Index \\
+        Name                 &          \glon &          \glat &                    $\sigma$ &       TS &   $\tsext$ &      Major &      Minor &        Ang &      Flux ($10^{-9}$) &                 Index \\
         \hline
         \multicolumn{11}{c}{$E > 1\gev$} \\
         \hline
@@ -1602,9 +1712,18 @@ high energy sky.
     \includegraphics{source_plots/agn.pdf}
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/agn/v2/agn.py
     \end{center}
-    \caption{
-    \todo[inline]{Add Caption.
-    Note about how \tsext for AGN calculated with pointlike}
+    \caption{The cumulative distribution of \tsext for 515 AGN associated
+    in the first LAT AGN catalog using photons with energies between 1
+    \gev and 100 \gev.  The method for selecting these AGN is described in
+    section~\ref{test_1lac_sources}.  AGN are expected to be unresolvable
+    so overlaid on this plot is a $\chi^2/2$ distribution suggested by
+    Wilk's theorem.  The motivation for this distribution to hold is
+    discussed in section~\ref{monte_carlo_validation}.  Overall, there
+    is very good agreement between this the fit values of \tsext and the
+    $\chi^2/2$ distribution.  Possible reasons for the discrepancy between
+    the distrubtions are discussed in section~\ref{test_1lac_sources}
+    but this plot demonstrates that any systematics in our extension
+    test are small compared to the signals we are looking for.
     }\label{agn_ts_ext}
   \end{figure}
 
@@ -1625,21 +1744,21 @@ high energy sky.
     \begin{tabular}{r|rrrrrrrrrr}
       \hline
       \hline
-      Name                 &          \glon &          \glat &                    $\sigma$ &       TS &   $\tsext$ &      Major &      Minor &    Pos Ang &      Flux ($10^{-9}$) &                 Index \\
+      Name                 &          \glon &          \glat &                    $\sigma$ &         TS &   $\tsext$ &      Major &      Minor &        Ang &      Flux ($10^{-9}$) &                 Index \\
       \hline
       \multicolumn{11}{c}{$E > 1\gev$} \\
       \hline
-      2FGL J1627.0-2425c   &     353.08\deg &      16.80\deg & $  0.41\deg \pm   0.05\deg$ &    139.2 &       28.9 &  0.042\deg &  0.036\deg &   54.4\deg & $    6.3 \pm     0.6$ & $   2.50 \pm    0.14$ \\
-      2FGL J1554.4-5317c   &     328.13\deg &       0.26\deg & $  0.49\deg \pm   0.04\deg$ &    148.8 &       77.6 &  0.046\deg &  0.041\deg &   55.3\deg & $   16.2 \pm     1.5$ & $   2.31 \pm    0.11$ \\
-      2FGL J0823.0-4246    &     260.31\deg &      -3.28\deg & $  0.37\deg \pm   0.03\deg$ &    314.6 &       49.2 &  0.026\deg &  0.023\deg &    5.0\deg & $    8.3 \pm     0.3$ & $   2.18 \pm    0.02$ \\
+      2FGL J1627.0-2425c   &     352.87\deg &      16.79\deg & $  0.53\deg \pm   0.06\deg$ &      131.0 &       21.1 &  0.060\deg &  0.047\deg &   39.8\deg & $    6.8 \pm     0.7$ & $   2.49 \pm    0.14$ \\
+      2FGL J1554.4-5317c   &     328.12\deg &       0.26\deg & $  0.52\deg \pm   0.04\deg$ &      149.0 &       39.6 &  0.044\deg &  0.039\deg &   55.5\deg & $   16.6 \pm     1.5$ & $   2.30 \pm    0.11$ \\
+      2FGL J0823.0-4246    &     260.32\deg &      -3.28\deg & $  0.37\deg \pm   0.03\deg$ &      314.5 &       49.2 &  0.026\deg &  0.023\deg &    5.3\deg & $    8.3 \pm     0.6$ & $   2.18 \pm    0.07$ \\
       \hline
       \multicolumn{11}{c}{$E > 10\gev$} \\
       \hline
-      2FGL J1615.2-5138          &     331.74\deg &      -0.58\deg & $  0.52\deg \pm   0.04\deg$ &     75.3 &       45.2 &  0.071\deg &  0.049\deg &  -21.9\deg & $    1.3 \pm     0.2$ & $   1.75 \pm    0.25$ \\
-      2FGL J1632.4-4753c         &     336.52\deg &       0.06\deg & $  0.65\deg \pm   0.03\deg$ &    173.0 &       95.3 &  0.041\deg &  0.037\deg &    5.3\deg & $    2.9 \pm     0.2$ & $   2.28 \pm    0.08$ \\
-      2FGL J2021.5+4026          &      78.33\deg &       2.22\deg & $  0.71\deg \pm   0.04\deg$ &    245.7 &      151.7 &  0.047\deg &  0.038\deg &    4.3\deg & $    2.1 \pm     0.2$ & $   2.36 \pm    0.18$ \\
-      2FGL J1837.3-0700c         &      25.09\deg &       0.13\deg & $  0.35\deg \pm   0.07\deg$ &     47.3 &       20.6 &  0.076\deg &  0.063\deg &   -7.7\deg & $    1.0 \pm     0.2$ & $   1.59 \pm    0.30$ \\
-      2FGL J0851.7-4635          &     266.29\deg &      -1.43\deg & $  1.15\deg \pm   0.08\deg$ &    119.6 &       90.9 &  0.080\deg &  0.065\deg &   54.6\deg & $    1.3 \pm     0.2$ & $   1.76 \pm    0.18$ \\
+      2FGL J1615.2-5138    &     331.67\deg &      -0.66\deg & $  0.43\deg \pm   0.04\deg$ &       77.6 &       45.3 &  0.058\deg &  0.047\deg &   20.4\deg & $    1.2 \pm     0.2$ & $   1.77 \pm    0.26$ \\
+      2FGL J1632.4-4753c   &     336.41\deg &       0.22\deg & $  0.44\deg \pm   0.04\deg$ &      126.4 &       62.2 &  0.042\deg &  0.036\deg &  -16.1\deg & $    1.9 \pm     0.2$ & $   2.30 \pm    0.22$ \\
+      2FGL J2021.5+4026    &      78.17\deg &       2.19\deg & $  0.59\deg \pm   0.03\deg$ &      221.2 &      140.6 &  0.044\deg &  0.030\deg &   51.1\deg & $    1.8 \pm     0.2$ & $   2.32 \pm    0.19$ \\
+      2FGL J1837.3-0700c   &      25.08\deg &       0.13\deg & $  0.35\deg \pm   0.08\deg$ &       48.0 &       20.9 &  0.075\deg &  0.064\deg &  -12.4\deg & $    1.1 \pm     0.1$ & $   1.60 \pm    0.17$ \\
+      2FGL J0851.7-4635    &     266.29\deg &      -1.41\deg & $  1.12\deg \pm   0.07\deg$ &      119.7 &       90.9 &  0.090\deg &  0.064\deg &   63.8\deg & $    1.3 \pm     0.1$ & $   1.74 \pm    0.12$ \\
       \hline
     \end{tabular}
     \caption{The 8 new source candidates found by the extended source
@@ -1660,27 +1779,27 @@ high energy sky.
       \begin{tabular}{r|rr|rrrr|rrrr}
         \hline
         \hline
-        Name                 &     \tsinc &     \tsext &      $\glon_1$ &      $\glat_1$ & $\text{Flux}_1$ ($10^{-9}$) &   $\text{Index}_1$ &      $\glon_2$ &      $\glat_2$ & $\text{Flux}_1$ ($10^{-9}$) &  $\text{Index}_2$ \\
+        Name                 &     \tsinc &     \tsext &      $\glon_1$ &      $\glat_1$ & $\text{Flux}_1$             &   $\text{Index}_1$ &      $\glon_2$ &      $\glat_2$ & $\text{Flux}_2$             &  $\text{Index}_2$ \\
         \hline
         \multicolumn{11}{c}{$E > 1\gev$} \\
         \hline
-        2FGL J1627.0-2425c   &       23.8 &       28.9 &     353.04\deg &      16.96\deg & $       3.5 \pm        0.6$ & $  2.7 \pm   0.3$  &     353.14\deg &      16.50\deg & $       2.0 \pm        0.5$ & $  2.4 \pm   0.3$ \\
-        2FGL J1554.4-5317c   &       48.6 &       77.6 &     328.31\deg &       0.31\deg & $      10.0 \pm        1.2$ & $  2.7 \pm   0.2$  &     328.28\deg &      -0.06\deg & $       1.0 \pm        0.7$ & $  1.6 \pm   0.4$ \\
-        2FGL J0823.0-4246    &       22.2 &       49.2 &     260.59\deg &      -3.26\deg & $       2.0 \pm        0.5$ & $  1.9 \pm   0.2$  &     260.24\deg &      -3.20\deg & $       5.3 \pm        0.6$ & $  2.4 \pm   0.1$ \\
+        2FGL J1627.0-2425c   &       16.6 &       21.1 &     353.00\deg &      16.97\deg & $       2.9 \pm        0.6$ & $  2.6 \pm   0.3$  &     353.26\deg &      16.67\deg & $       2.5 \pm        0.6$ & $  2.6 \pm   0.4$ \\
+        2FGL J1554.4-5317c   &       10.2 &       39.6 &     328.30\deg &       0.31\deg & $      10.1 \pm        1.2$ & $  2.7 \pm   0.2$  &     328.27\deg &      -0.07\deg & $       0.9 \pm        0.7$ & $  1.5 \pm   0.4$ \\
+        2FGL J0823.0-4246    &       22.3 &       49.2 &     260.59\deg &      -3.27\deg & $       2.0 \pm        0.5$ & $  1.9 \pm   0.2$  &     260.24\deg &      -3.20\deg & $       5.3 \pm        0.6$ & $  2.4 \pm   0.1$ \\
         \hline
         \multicolumn{11}{c}{$E > 10\gev$} \\
         \hline
-        2FGL J1615.2-5138    &       34.3 &       45.2 &     331.77\deg &      -0.35\deg & $       0.3 \pm        0.1$ & $  1.1 \pm   0.5$  &     331.51\deg &      -0.83\deg & $       0.4 \pm        0.1$ & $  2.1 \pm   0.5$ \\
-        2FGL J1632.4-4753c   &       24.8 &       95.3 &     336.16\deg &       0.34\deg & $       0.7 \pm        0.1$ & $  2.0 \pm   0.4$  &     336.72\deg &      -0.06\deg & $       0.7 \pm        0.1$ & $  3.1 \pm   0.5$ \\
-        2FGL J2021.5+4026    &       34.5 &      151.7 &      78.08\deg &       2.53\deg & $       0.4 \pm        0.1$ & $  2.0 \pm   0.5$  &      78.45\deg &       2.54\deg & $       0.5 \pm        0.1$ & $  1.9 \pm   0.4$ \\
-        2FGL J1837.3-0700c   &       15.4 &       20.6 &      25.06\deg &       0.24\deg & $       0.3 \pm        0.1$ & $  1.1 \pm   0.6$  &      25.08\deg &      -0.05\deg & $       0.4 \pm        0.1$ & $  1.9 \pm   0.6$ \\
-        2FGL J0851.7-4635    &       32.5 &       90.9 &     267.16\deg &      -1.60\deg & $       0.2 \pm        0.1$ & $  1.9 \pm   0.4$  &     266.43\deg &      -1.39\deg & $       0.2 \pm        0.1$ & $  1.5 \pm   0.5$ \\
+        2FGL J1615.2-5138    &       30.1 &       45.3 &     331.75\deg &      -0.37\deg & $       0.4 \pm        0.1$ & $  1.2 \pm   0.5$  &     331.46\deg &      -0.79\deg & $       0.4 \pm        0.1$ & $  2.0 \pm   0.5$ \\
+        2FGL J1632.4-4753c   &       38.5 &       62.2 &     336.52\deg &       0.18\deg & $       0.7 \pm        0.2$ & $  2.8 \pm   0.5$  &     336.13\deg &       0.37\deg & $       0.5 \pm        0.1$ & $  1.7 \pm   0.4$ \\
+        2FGL J2021.5+4026    &       34.7 &      140.6 &      78.08\deg &       2.53\deg & $       0.4 \pm        0.1$ & $  2.0 \pm   0.5$  &      78.43\deg &       2.55\deg & $       0.4 \pm        0.1$ & $  1.8 \pm   0.4$ \\
+        2FGL J1837.3-0700c   &       15.4 &       20.9 &      25.04\deg &       0.26\deg & $       0.3 \pm        0.1$ & $  1.2 \pm   0.6$  &      25.10\deg &      -0.05\deg & $       0.4 \pm        0.1$ & $  1.9 \pm   0.5$ \\
+        2FGL J0851.7-4635    &       17.2 &       90.9 &     266.79\deg &      -1.32\deg & $       0.2 \pm        0.1$ & $  1.8 \pm   0.5$  &     266.41\deg &      -1.38\deg & $       0.2 \pm        0.1$ & $  1.5 \pm   0.6$ \\
         \hline
       \end{tabular}
       \label{dual_localization_results}
-      \caption{For the new extended source candidates in
-      table~\ref{new_ext_srcs_table}, we describe the results
-      of the dual localization procedure described in
+      \caption{For the new extended source candidates
+      in table~\ref{new_ext_srcs_table}, we describe the
+      results of the dual localization procedure described in
       section~\ref{dual_localization_method}. Here, the extended
       source candidate is not fit as an extended source but instead
       fit as two point sources.  The dual localization is performed
@@ -1691,12 +1810,13 @@ high energy sky.
       increase in TS fitting the region as two sources compared to
       fitting compared to fitting a single point source and is computed
       using \gtlike with the best fit positions taken from \pointlike.
-      It can be directly compared to \tsext, which is taken from table~\ref{new_ext_srcs_table}.  For all of our candidates, $\tsext > \tsinc$
-      which shows that an extended source fits the source better than two
-      point sources.  As in table~\ref{known_extended_sources}, flux is
-      measured in units of $10^{-9}\ph/\cm^2/\sec$ and is the integral
-      flux between 1 \gev (10 \gev) and 100 \gev for the sources found
-      using photons above 1 \gev (10 \gev).}
+      It can be directly compared to \tsext, which is taken from
+      table~\ref{new_ext_srcs_table}.  For all of our candidates, $\tsext
+      > \tsinc$ which shows that an extended source fits the source better
+      than two point sources.  As in table~\ref{known_extended_sources},
+      flux is measured in units of $10^{-9}\ph/\cm^2/\sec$ and is the
+      integral flux between 1 \gev (10 \gev) and 100 \gev for the sources
+      found using photons above 1 \gev (10 \gev).}
     \end{centering}
   \end{sidewaystable}
 
@@ -1711,17 +1831,17 @@ high energy sky.
         \hline
         \multicolumn{9}{c}{$E > 1\gev$} \\
         \hline
-        2FGL J1627.0-2425c   &                155.0 &                139.2 &                103.8 &                     38.5 &                   28.9 &                 22.5 & $  0.41\deg \pm   0.05\deg$ & $  0.38\deg \pm   0.04\deg$ \\
-        2FGL J1554.4-5317c   &                108.4 &                148.8 &                138.4 &                     25.7 &                   77.6 &                 40.6 & $  0.49\deg \pm   0.04\deg$ & $  0.51\deg \pm   0.04\deg$ \\
-        2FGL J0823.0-4246    &                329.5 &                314.6 &                345.6 &                     60.4 &                   49.2 &                 51.5 & $  0.37\deg \pm   0.03\deg$ & $  0.38\deg \pm   0.03\deg$ \\
+        2FGL J1627.0-2425c   &                154.9 &                131.0 &                102.4 &                     32.6 &                   21.1 &                 23.3 & $  0.53\deg \pm   0.06\deg$ & $  0.39\deg \pm   0.04\deg$ \\
+        2FGL J1554.4-5317c   &                134.8 &                149.0 &                137.6 &                     39.4 &                   39.6 &                 39.8 & $  0.52\deg \pm   0.04\deg$ & $  0.55\deg \pm   0.04\deg$ \\
+        2FGL J0823.0-4246    &                347.3 &                314.5 &                343.6 &                     66.1 &                   49.2 &                 56.6 & $  0.37\deg \pm   0.03\deg$ & $  0.40\deg \pm   0.03\deg$ \\
         \hline
         \multicolumn{9}{c}{$E > 10\gev$} \\
         \hline
-        2FGL J1615.2-5138    &                 74.7 &                 75.3 &                 88.7 &                     43.7 &                   45.2 &                 50.0 & $  0.52\deg \pm   0.04\deg$ & $  0.53\deg \pm   0.03\deg$ \\
-        2FGL J1632.4-4753c   &                173.9 &                173.0 &                157.7 &                     97.9 &                   95.3 &                 93.6 & $  0.65\deg \pm   0.03\deg$ & $  0.66\deg \pm   0.03\deg$ \\
-        2FGL J2021.5+4026    &                244.9 &                245.7 &                264.3 &                    152.8 &                  151.7 &                162.9 & $  0.71\deg \pm   0.04\deg$ & $  0.71\deg \pm   0.03\deg$ \\
-        2FGL J1837.3-0700c   &                 43.4 &                 47.3 &                 39.0 &                     17.4 &                   20.6 &                 17.7 & $  0.35\deg \pm   0.07\deg$ & $  0.34\deg \pm   0.06\deg$ \\
-        2FGL J0851.7-4635    &                117.1 &                119.6 &                124.7 &                     86.1 &                   90.9 &                 95.0 & $  1.15\deg \pm   0.08\deg$ & $  1.16\deg \pm   0.08\deg$ \\
+        2FGL J1615.2-5138    &                 78.2 &                 77.6 &                 88.2 &                     46.4 &                   45.3 &                 53.7 & $  0.43\deg \pm   0.04\deg$ & $  0.53\deg \pm   0.03\deg$ \\
+        2FGL J1632.4-4753c   &                126.9 &                126.4 &                158.1 &                     64.0 &                   62.2 &                 94.1 & $  0.44\deg \pm   0.04\deg$ & $  0.67\deg \pm   0.03\deg$ \\
+        2FGL J2021.5+4026    &                236.5 &                221.2 &                265.8 &                    156.0 &                  140.6 &                162.6 & $  0.59\deg \pm   0.03\deg$ & $  0.72\deg \pm   0.03\deg$ \\
+        2FGL J1837.3-0700c   &                 45.5 &                 48.0 &                 39.2 &                     18.6 &                   20.9 &                 18.8 & $  0.35\deg \pm   0.08\deg$ & $  0.34\deg \pm   0.07\deg$ \\
+        2FGL J0851.7-4635    &                120.2 &                119.7 &                125.9 &                     90.1 &                   90.9 &                 94.7 & $  1.12\deg \pm   0.07\deg$ & $  1.16\deg \pm   0.08\deg$ \\
         \hline
       \end{tabular}
       \label{alt_diff_model_results}
@@ -1745,12 +1865,18 @@ high energy sky.
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1628.6-2419c/v2/run.py
-  \caption{1FGL J1628.6-2419c. In the opiucus region=most likeliy a molecular cloud.
-  %P72Y2516.
-  \todo[inline]{Add description of this source.
-  Note the bright nearby source
-  which would be in the lower right of the image at $l,b=352.14\deg,16.34\deg$.
-  $\ts=460$, source is P72Y2510. What is this source?}
+  \caption{
+  A diffuse subtracted 1 \gev to 100 \gev counts map of the region around
+  2FGL J1627.0-2425 smoothed by a 0.1\deg Gaussian kernel.  The red star
+  is the second LAT catalog's best fit position of 2FGL J1627.0-2425 and
+  the black cross is the background source 2FGL J1625.7-2526.  The red
+  cross and white circle represent the best position and extension of
+  2FGL J1627.0-2425 when fit assuming a uniform disk spatial model.
+  Overlaid on the plot are contours of a 100 micrometer infrared
+  image of the region as seen by IRAS (\cite{iras_rho_ophiuci}). This
+  source is in the Ophiuchus region and is most likely unaccounted for
+  diffuse emission.  More information about this source is presented
+  in section~\ref{section_ophiuchus}.
   }\label{1FGL_J1628.6-2419c}
 \end{figure}
 
@@ -1760,8 +1886,11 @@ high energy sky.
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1554.0-5345c/v2/source_1FGL_J1554.0-5345c.pdf
-  \caption{1FGL J1554.0-5345c. 
-  %P72Y2405. 
+  \caption{
+2FGL J1554.4-5317c
+1FGL J1554.0-5345c
+  %P72Y2405.
+  Using $E>1\gev$. 
   \todo[inline]{Describe this source/the fit.Unidentified source likely diffuse emission.}
   }
   \label{1FGL_J1554.0-5345c}
@@ -1773,16 +1902,52 @@ high energy sky.
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J0823.3-4248/v2/source_1FGL_J0823.3-4248.pdf
-  \caption{1FGL J0823.3-4248. P72Y1212. Coincident with Puppis A SNR.
-  %P72Y1212.
-  \todo[inline]{
-  Describe this soruce better.
-  Describe nearby source Vela.
-  At position $l,b=263.55\deg,-2.79\deg$ is over 3 degrees away,
-  Spills into the image at left.}
-  \todo[inline]{Describe this source better. Describe the Contour}
+  \caption{A diffuse subtracted 1 \gev to 100 \gev counts map of the
+  region around 2FGL J0823.0-4246. The red star is the second LAT
+  catalog's best fit position of 2FGL J0823.0-4246.  The red cross
+  and white circle are the best fit position and extension of this
+  source assuming a uniform disk spatial model.  The two green stars
+  are the positions of two nearby catalog source 2FGL J0823.4-4305 and
+  2FGL J0821.0-4254 that we removed from our region. This source is
+  spatially coincident with the Puppis A SNR. Overlaid on the figure are
+  ROSAT contours of Puppis A SNR (\cite{rosat_puppis_a}). There is good
+  agreement between the LAT and X-ray emission.  More information about
+  this source is shown in section~\ref{section_puppis_a}.  The emission
+  on the top left comes from the very bright Vela Pulsar. Even though
+  Vela is over 3 degrees away from this source at a position of
+  $l,b=263.55\deg,-2.79\deg$, it can be seen because it is so bright.
+  \todo[inline]{This figure could better explain the source}
   }\label{1FGL_J0823.3-4248}
 \end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1613.6-5100c}
+  \end{center}
+  % this plot came from 
+  % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1613.6-5100c/v2/source_1FGL_J1613.6-5100c.pdf
+  \caption{
+2FGL J1615.2-5138
+1FGL J1613.6-5100c
+%P72Y2473
+  \todo[inline]{Describe this source better. Describe the Contour}
+  }\label{1FGL_J1613.6-5100c}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1632.9-4802c}
+  \end{center}
+  % this plot came from 
+  % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1632.9-4802c/v2/source_1FGL_J1632.9-4802c.pdf
+  \caption{
+2FGL J1632.4-4753c
+1FGL J1632.9-4802c. 
+% P72Y2540
+  \todo[inline]{Describe this source better. Describe the Contour}
+  }\label{1FGL_J1632.9-4802c}
+\end{figure}
+
 
 \begin{figure}
   \begin{center}
@@ -1791,21 +1956,12 @@ high energy sky.
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Gamma_Cygni/v2/source_Gamma_Cygni.pdf
   \caption{
-  Gamma Cygni. P72Y3281
+  2FGL J2021.5+4026
+  1FGL J2020.0+4049
+  P72Y3281
+  Using $E>10\gev$. 
   \todo[inline]{Describe this source better. Describe the Contour}
   }\label{Gamma_Cygni}
-\end{figure}
-
-\begin{figure}
-  \begin{center}
-    \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_Vela_Jr}
-  \end{center}
-  % this plot came from 
-  % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Vela_Jr/v2/source_Vela_Jr.pdf
-  \caption{Vela Jr. P72Y1287. Using $E>10\gev$. 
-  \todo[inline]{Note that sourceis con with a $0.25\deg$ gaussian which is different than other plots.}
-  \todo[inline]{Describe this source better. Describe the Contour}
-  }\label{Vela_Jr}
 \end{figure}
 
 \begin{figure}
@@ -1814,7 +1970,10 @@ high energy sky.
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1837.5-0659c/v2/source_1FGL_J1837.5-0659c.pdf
-  \caption{1FGL J1837.5-0659c. P72Y2974
+  \caption{
+2FGL J1837.3-0700c
+1FGL J1837.5-0659c. 
+%P72Y2974
   \todo[inline]{Describe this source better. Describe the Contour}
   \todo[inline]{Note about why the top right source was not found to
   be extended b/c the scale is cut.}
@@ -1824,26 +1983,19 @@ high energy sky.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1632.9-4802c}
+    \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_Vela_Jr}
   \end{center}
   % this plot came from 
-  % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1632.9-4802c/v2/source_1FGL_J1632.9-4802c.pdf
-  \caption{1FGL J1632.9-4802c. P72Y2540
-  \todo[inline]{Describe this source better. Describe the Contour}
-  }\label{1FGL_J1632.9-4802c}
-\end{figure}
-
-
-\begin{figure}
-  \begin{center}
-    \includegraphics[type=pdf,ext=.pdf,read=.pdf]{source_plots/source_1FGL_J1613.6-5100c}
-  \end{center}
-  % this plot came from 
-  % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1613.6-5100c/v2/source_1FGL_J1613.6-5100c.pdf
+  % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Vela_Jr/v2/source_Vela_Jr.pdf
   \caption{
-  1FGL J1613.6-5100c . P72Y2473
+2FGL J0851.7-4635
+  Vela Jr. 
+  P72Y1287. 
+  Using $E>10\gev$. 
+  \todo[inline]{Note that source is convolved with a $0.25\deg$ gaussian
+  which is different than other plots.}
   \todo[inline]{Describe this source better. Describe the Contour}
-  }\label{1FGL_J1613.6-5100c}
+  }\label{Vela_Jr}
 \end{figure}
 
 
