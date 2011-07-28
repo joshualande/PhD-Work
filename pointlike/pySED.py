@@ -1,27 +1,44 @@
+"""
+Implements a Module to calculate SEDs.
+
+Usage:
+
+name='Vela'
+like=BinnedAnalysis(...)
+sed = SED(like,name)
+sed.save('sed_Vela.dat')
+sed.plot('sed_Vela.png') # requires matplotlib
+
+@author J. Lande <lande@slac.stanford.edu>
+
+$Header:$
+"""
+
 from os.path import join
 import math
 import numpy as np
 
 from LikelihoodState import LikelihoodState
-import IntegralUpperLimit    # This requires scipy
+import IntegralUpperLimit
 
 class SED(object):
-    """ object to make SEDs using pointlike. """
+    """ object to make SEDs using pyLikelihood. """
 
-    def __init__(self,
-                 like, # pyLike object
-                 name, # Name of the source to make an SED of
-                 verbosity=0, # Prints more stuff out
-                 freeze_background=True, # don't refit background sources when making SED
-                 #minos=False, # Compute minos errors
-                 #always_upper_limit=False, # Compute
-                 **kwargs
-                ):
-
-        self.like              = like
-        self.name              = name
-        self.verbosity         = verbosity
-        self.freeze_background = freeze_background
+    def __init__(self, like, name, verbosity=0, 
+                 freeze_background=True,
+                 always_upper_limit=False):
+        """ Parameters:
+            * like - pyLikelihood object
+            * name - source to make an SED for
+            * verbosity - how much output
+            * freeze_background - don't refit background sources.
+            * always_upper_limit - Always compute an upper limit. Default 
+                                   is only when source is not significant. """
+        self.like               = like
+        self.name               = name
+        self.verbosity          = verbosity
+        self.freeze_background  = freeze_background
+        self.always_upper_limit = always_upper_limit
 
         self.bin_edges = like.energies
         self.e_vals = like.e_vals
@@ -31,11 +48,16 @@ class SED(object):
         self.dnde_err=np.empty_like(self.e_vals)
         self.ts=np.empty_like(self.e_vals)
         self.ul=-1*np.ones_like(self.e_vals) # -1 is no UL
-        self.calculate(**kwargs)
+        self.calculate()
 
     @staticmethod
     def upper_limit(like,name,verbosity):
-        # do the integral approximatly: don't fit background parameters during fit
+        """ Abstract the way upper limits are calculated.
+            For now, use Bayesian method. Could be
+            generalized... 
+            
+            Do the integral approximatly: don't fit background 
+            parameters during fit. """
         ul_flux,results = IntegralUpperLimit.calc_int(like, name, 
                                                       freeze_all=True,
                                                       skip_global_opt=True,
@@ -44,6 +66,7 @@ class SED(object):
         return results['xlim']
 
     def calculate(self):
+        """ Compute the flux data points for each energy. """
 
         like    = self.like
         name    = self.name
@@ -59,9 +82,8 @@ class SED(object):
         
         saved_state = LikelihoodState(like)
 
-        if verbosity: print 'Freezeing all parameters'
-
         if self.freeze_background:
+            if verbosity: print 'Freezeing all parameters'
             # freeze all other sources
             for i in range(len(like.model.params)):
                 like.freeze(i)
@@ -83,6 +105,8 @@ class SED(object):
 
         like.syncSrcParams(name)
 
+        optverbosity = max(verbosity-1, 0) # see IntegralUpperLimit.py
+
         for i,(lower,upper) in enumerate(zip(self.bin_edges[:-1],self.bin_edges[1:])):
 
             if verbosity: print 'Calculating spectrum from %.0dMeV to %.0dMeV' % (lower,upper)
@@ -94,10 +118,11 @@ class SED(object):
             like.syncSrcParams(name)
 
             like.setEnergyRange(float(lower)+1, float(upper)-1)
-            like.fit(covar=True,verbosity=3 if verbosity else 0)
+
+            like.fit(covar=True,optverbosity)
             self.ts[i]=like.Ts(name,reoptimize=False)
 
-            if self.ts[i] < 9: 
+            if self.ts[i] < 9 or self.always_upper_limit: 
                 if verbosity: print 'Calculating upper limit from %.0dMeV to %.0dMeV' % (lower,upper)
                 self.ul[i] = SED.upper_limit(like,name,verbosity)
 
@@ -163,23 +188,22 @@ class SED(object):
             f.write(output)
             f.close()
 
-    def plot(self,filename):
+    def plot(self,filename,plot_spectral_fit=True):
         import pylab as P
-
-        P.set_xscale('log')
-        P.xlabel('MeV')
-        P.set_yscale('log')
-        P.ylabel('MeV')
-        P.ylabel(r'$\mathsf{Energy\ Flux\ (MeV\ cm^{-2}\ s^{-1})}$')
 
         P.plot(self.e_vals,self.e_vals**2*self.dnde)
 
-        source = like.logLike.getSource(self.name)
-        spectrum=source.spectrum()
-        elist = np.logspace(self.like.energies[0],self.like.energies[-1])
-        flist = spectrum(elist)
-        P.plot(elist,elist**2*flist)
+        if plot_spectral_fit:
+            source = like.logLike.getSource(self.name)
+            spectrum=source.spectrum()
+            elist = np.logspace(self.like.energies[0],self.like.energies[-1])
+            flist = spectrum(elist)
+            P.plot(elist,elist**2*flist)
 
-        # figure out how to plot the source fit also.
+        P.set_xscale('log')
+        P.xlabel('MeV')
+
+        P.set_yscale('log')
+        P.ylabel(r'$\mathsf{Energy\ Flux\ (MeV\ cm^{-2}\ s^{-1})}$')
 
         P.savefig(filename)
