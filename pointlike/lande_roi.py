@@ -25,8 +25,10 @@ from uw.like.pointspec import *
 from uw.like.pointspec_helpers import *
 from uw.utilities.convolution import *
 from uw.utilities.minuit import Minuit
+from uw.utilities import keyword_options
 from skymaps import *
 from os.path import *
+from roi_gtlike import *
 
 from uw.like import sed_plotter
 import pylab as P
@@ -44,7 +46,7 @@ import re
 import types
 import math
 import yaml
-from tempfile import mkdtemp,NamedTemporaryFile
+from tempfile import NamedTemporaryFile
 import collections
 from cStringIO import StringIO
 
@@ -55,12 +57,6 @@ from numpy import *
 from scipy.optimize import fmin
 
 import pyfits 
-
-# Not sure why, but I think putting this import here is important for
-# avoiding swig errors.
-from GtApp import GtApp
-from BinnedAnalysis import BinnedObs,BinnedAnalysis
-from pyLikelihood import ParameterVector
 
 from uw.like.pointspec_helpers import get_diffuse_source,FermiCatalog,PointSource,ExtendedSourceCatalog
 from uw.like.roi_diffuse import DiffuseSource
@@ -439,136 +435,15 @@ class LandeROI(ROIAnalysis):
 
         P.savefig(filename)
 
-    def gtlike_followup(self,which=None,binsz=0.0625,bigger_roi=False,proj="ZEA",
-                coordsystem=SkyDir.EQUATORIAL,
-                emin=None,emax=None,enumbins=None,
-                output_srcmdl_file=None,
-                dir='/scratch/'):
+    def gtlike_followup(self,which=None,output_srcmdl_file=None, **kwargs):
 
-        if not self.quiet: print 'Running a gtlike followup'
-
-        if emin==None or emax==None or enumbins==None:
-            emin,emax=self.bin_edges[0],self.bin_edges[-1]
-            enumbins=len(self.bin_edges)-1
-
-        # Note that this formulation makes the gtlike slightly smaller than
-        # the pointlike ROI (so the gtlike ROI is inside the pointlike ROI)
-        roi_radius=np.degrees(max(_.radius_in_rad for _ in self.bands))
-        if bigger_roi:
-            npix=int(math.ceil(2.0*roi_radius/binsz))
-        else:
-            npix=int(math.ceil(np.sqrt(2.0)*roi_radius/binsz))
-
-        cmap_file='ccube.fits'
-        srcmap_file='srcmap.fits'
-        bexpmap_file='bexpmap.fits'
-        input_srcmdl_file='srcmdl.xml'
-        optimizer="MINUIT"
-
-        pd=self.sa.pixeldata
-
-        # for now, only one ft1/ft2 file.
-        if len(pd.ft2files) > 1:
-            raise Exception("Only 1 ft2 file at a time, for now")
-
-
-        scfile=pd.ft2files[0]
-        expcube_file=pd.ltcube 
-
-        irfs=self.sa.irf
-
-        if coordsystem==SkyDir.GALACTIC:
-            x,y,coordsys_str=self.roi_dir.l(),self.roi_dir.b(),'GAL'
-        else:
-            x,y,coordsys_str=self.roi_dir.ra(),self.roi_dir.dec(),'CEL'
-
-        old_dir=os.getcwd()
-        tempdir=mkdtemp(dir=dir)
-        if not self.quiet: print 'working in tempdir',tempdir
-        os.chdir(tempdir)
-
-        # shirnk all disk sources which are smaller than 0.02 degrees.
-        # Otherwise, gtlike will crash. Anyway, no reason
-        # to have extended source smaller than the binsize.
-        shrink_list = [ source for source in self.get_sources() if \
-                       hasattr(source,'spatial_model') and \
-                       isinstance(source.spatial_model,Disk) and \
-                       source.spatial_model['sigma'] < binsz ]
-        for src in shrink_list: src.spatial_model.shrink(size=binsz)
-
-        self.toXML(input_srcmdl_file,convert_extended=True,expand_env_vars=True)
-
-        for src in shrink_list: src.spatial_model.unshrink()
-
-        if isinstance(pd.ft1files,str):
-            evfile=pd.ft1files
-        elif len(pd.ft1files) == 1:
-            evfile=pd.ft1files[0]
-        else:
-            temp=NamedTemporaryFile(dir='.',delete=False)
-            temp.write('\n'.join(pd.ft1files))
-            temp.close()
-            evfile='@%s' % temp.name
-
-        if not self.quiet: print 'Running gtselect'
-        cut_evfile="ft1_cut.fits"
-        gtselect=GtApp('gtselect','dataSubselector')
-        gtselect.run(infile=evfile,
-                     outfile=cut_evfile,
-                     ra=0, dec=0, rad=180,
-                     tmin=0, tmax=0,
-                     emin=emin, emax=emax,
-                     zmax=180)
-
-        if not self.quiet: print 'Running gtbin (ccube)'
-        gtbin=GtApp('gtbin','evtbin')
-        gtbin.run(algorithm='ccube',
-                  nxpix=npix, nypix=npix, binsz=binsz,
-                  evfile=cut_evfile,
-                  outfile=cmap_file,
-                  scfile=scfile,
-                  xref=x, yref=y, axisrot=0, proj=proj,
-                  ebinalg='LOG', emin=emin, emax=emax, enumbins=enumbins,
-                  coordsys=coordsys_str)
-
-        # https://confluence.slac.stanford.edu/display/ST/Science+Tools+Development+Notes?focusedCommentId=99484083#comment-99484083
-        # Use the default binning all sky, 1deg/pixel
-        if not self.quiet: print 'Running gtexpcube'
-        gtexpcube=GtApp('gtexpcube2')
-        gtexpcube.run(infile=expcube_file,
-                      cmap='none',
-                      ebinalg='LOG', emin=emin, emax=emax, enumbins=enumbins,
-                      outfile=bexpmap_file,
-                      irfs=irfs)
-
-        if not self.quiet: print 'Running gtsrcmaps'
-        gtsrcmaps=GtApp('gtsrcmaps','Likelihood')
-        gtsrcmaps.run(scfile=scfile,
-                      expcube=expcube_file,
-                      cmap=cmap_file,
-                      srcmdl=input_srcmdl_file,
-                      bexpmap=bexpmap_file,
-                      outfile=srcmap_file,
-                      irfs=irfs)
-
-
-        if not self.quiet: print 'Running pyLikelihood'
-        obs=BinnedObs(srcmap_file,expcube_file,bexpmap_file,irfs)
-    
-        like=BinnedAnalysis(obs,input_srcmdl_file,optimizer)
-        like.fit(covar=True)
-
-
-        src_info = self.get_gtlike_info_dict(like,which)
+        gtlike=Gtlike(self,**kwargs)
+        gtlike.fit()
 
         if output_srcmdl_file is not None:
+            gtlike.like.writeXml(output_srcmdl_file)
 
-            like.writeXml(output_srcmdl_file)
-            shutil.copy('%s/%s' % (tempdir,output_srcmdl_file),'%s/%s' % (old_dir,output_srcmdl_file))
-
-        os.chdir(old_dir)
-        if not self.quiet: print 'Removing tempdir',tempdir
-        shutil.rmtree(tempdir)
+        src_info = gtlike.get_gtlike_info_dict(which)
         return src_info
     
     def sum_tsmap(self,*args,**kwargs):
@@ -590,65 +465,6 @@ class LandeROI(ROIAnalysis):
         skyimage = SkyImage(center,filename, pixelsize,fov,1,projection, galactic, False)
         skyimage.fill(skyfun)
         del(skyimage)
-
-    def get_gtlike_info_dict(self,like,which):
-
-        src_info={}
-        src_info['logLikelihood']={'spectral':float(like.logLike.value())}
-
-        try:
-            manager,index=self.mapper(which)
-        except:
-            try:
-                # Two point sources
-                self.mapper('%s (first)' % which)
-                self.mapper('%s (second)' % which)
-
-            except:
-                # Source doesn't exist
-                return src_info
-
-            results1=self.get_gtlike_info_dict(like,'%s (first)' % which)
-            results1 = dict((k+'_first' if k!='logLikelihood' else k,v) for k,v in results1.items())
-
-            results2=self.get_gtlike_info_dict(like,'%s (second)' % which)
-            results2 = dict((k+'_second' if k!='logLikelihood' else k,v) for k,v in results2.items())
-
-            results1.update(results2)
-            return results1
-
-        source=self.get_source(which)
-        name=source.name
-        src_info['TS']={'quick':like.Ts(name,reoptimize=False),
-                       'slow':like.Ts(name,reoptimize=True)}
-
-        src_info['other_sources']={}
-        for source in self.get_sources():
-            try:
-                other_name=str(source.name)
-                emin=float(self.bin_edges[0])
-                emax=float(self.bin_edges[-1])
-                src_info['other_sources'][other_name]={}
-                src_info['other_sources'][other_name]['TS']=float(like.Ts(other_name,reoptimize=False))
-                src_info['other_sources'][other_name]['Flux']=[float(like.flux(other_name,emin=emin,emax=emax)),
-                                                               float(like.fluxError(other_name,emin=emin,emax=emax))]
-            except:
-                pass # sometimes the flux function doesn't work
-
-        if not self.quiet: print 'gtlike TS =',src_info['TS']
-
-        spectralparameters=ParameterVector()
-        like.model[name]['Spectrum'].getParams(spectralparameters)
-
-        for p in spectralparameters:
-            src_info[str(p.getName())]=[float(p.getValue()),float(p.error())]
-
-        for flux_name,emin,emax in [['Flux_100',100,100000],['Flux_1000',1000,100000],
-                ['Flux',min(self.bin_edges),max(self.bin_edges)]]:
-                          
-            src_info[flux_name]=[float(like.flux(name,emin=emin,emax=emax)),
-                              float(like.fluxError(name,emin=emin,emax=emax))]
-        return src_info
 
     def get_info_dict(self,which):
         """ Return a dictionary of everything Joshua finds
