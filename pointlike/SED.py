@@ -2,7 +2,7 @@
 Implements a Module to calculate SEDs using the pyLikelihood framework.
 
 The primary benefit to this implementation is that it requires no
-temporary files. All you need is a BinnedAnalysis/UnbinnedAnalysis and
+temporary files. All you need is a BinnedAnalysis and
 you can directly generate the SED.
 
 Usage:
@@ -17,7 +17,6 @@ sed.plot('sed_Vela.png') # requires matplotlib
 
 $Header:$
 """
-
 from os.path import join
 import math
 import numpy as np
@@ -90,7 +89,7 @@ class SED(object):
                                                       skip_global_opt=True,
                                                       cl=0.95,
                                                       verbosity=verbosity)
-        return results['xlim']
+        return results['ul_value']
 
     def _calculate(self):
         """ Compute the flux data points for each energy. """
@@ -188,7 +187,7 @@ class SED(object):
 
         # contains flux + UL if TS < 9
         sed_vals.append(['Flux', '[ph/cm^2/s/MeV]'] + \
-                        conv_science([f if ts>=9 else '>%.*e' % (precision,ul) \
+                        conv_science([f if ts>=9 else '<%.*e' % (precision,ul) \
                                   for f,ul,ts in zip(self.dnde,self.ul,self.ts)]))
 
         # contains flux error if TS > 9
@@ -210,7 +209,7 @@ class SED(object):
         sed_transpose = zip(*sed_vals)
 
         return '\n'.join([
-            ''.join(['%15s' % j for j in i]) for i in sed_transpose
+            ''.join(['%20s' % j for j in i]) for i in sed_transpose
         ])
 
     def save(self,filename,precision=5,**kwargs):
@@ -226,7 +225,7 @@ class SED(object):
             f.write(output)
             f.close()
 
-    def plot(self,filename,plot_spectral_fit=True):
+    def plot(self,filename=None,plot_spectral_fit=True):
         try:
             import pylab as P
         except:
@@ -238,7 +237,7 @@ class SED(object):
             source = self.like.logLike.getSource(self.name)
             spectrum=source.spectrum()
             elist = np.logspace(self.like.energies[0],self.like.energies[-1])
-            flist = np.asarray([spectrum(dArt(i)) for i in elist])
+            flist = np.asarray([spectrum(dArg(i)) for i in elist])
             P.plot(elist,elist**2*flist)
 
         P.set_xscale('log')
@@ -247,4 +246,4 @@ class SED(object):
         P.set_yscale('log')
         P.ylabel(r'$\mathsf{Energy\ Flux\ (MeV\ cm^{-2}\ s^{-1})}$')
 
-        P.savefig(filename)
+        if filename is not None: P.savefig(filename)
