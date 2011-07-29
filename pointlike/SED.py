@@ -25,7 +25,11 @@ from LikelihoodState import LikelihoodState
 from pyLikelihood import dArg
 
 class SED(object):
-    """ object to make SEDs using pyLikelihood. """
+    """ object to make SEDs using pyLikelihood. 
+    
+        Currently, this object only allows the SED
+        points to be the same as the binning in
+        the FT1 file. """
 
     ul_choices = ['frequentist', 'bayesian']
 
@@ -33,7 +37,8 @@ class SED(object):
                  freeze_background=True,
                  always_upper_limit=False,
                  ul_algorithm='bayesian',
-                 powerlaw_index=-2):
+                 powerlaw_index=-2,
+                 min_ts=4):
         """ Parameters:
             * like - pyLikelihood object
             * name - source to make an SED for
@@ -44,6 +49,7 @@ class SED(object):
             * ul_algorithm - choices = 'frequentist', 'bayesian' 
             * powerlaw_index - fixed spectral index to assume when
                                computing SED.
+            * min_ts - minimum ts in which to quote a SED points instead of an upper limit.
         """
         self.like               = like
         self.name               = name
@@ -52,6 +58,7 @@ class SED(object):
         self.always_upper_limit = always_upper_limit
         self.ul_algorithm       = ul_algorithm
         self.powerlaw_index     = powerlaw_index
+        self.min_ts             = min_ts
 
         if ul_algorithm not in self.ul_choices:
             raise Exception("Upper Limit Algorithm %s not in %s" % (ul_algorithm,str(self.ul_choices)))
@@ -89,7 +96,8 @@ class SED(object):
                                                       skip_global_opt=True,
                                                       cl=0.95,
                                                       verbosity=verbosity)
-        return results['ul_value']
+        prefactor=like[like.par_index(name, 'Prefactor')]
+        return results['ul_value']*prefactor.getScale()
 
     def _calculate(self):
         """ Compute the flux data points for each energy. """
@@ -121,11 +129,10 @@ class SED(object):
         like.setSpectrum(name,'PowerLaw')
 
         index=like[like.par_index(name, 'Index')]
-        prefactor=like[like.par_index(name, 'Prefactor')]
-        scale=like[like.par_index(name, 'Scale')]
-
         index.setValue(self.powerlaw_index/index.getScale())
         index.setFree(0)
+
+        prefactor=like[like.par_index(name, 'Prefactor')]
         prefactor.setScale(1e-11)
         prefactor.setBounds(1e-10,1e10)
 
@@ -138,8 +145,9 @@ class SED(object):
             if verbosity: print 'Calculating spectrum from %.0dMeV to %.0dMeV' % (lower,upper)
 
             # goot starting guess for source
-            like.syncSrcParams(name)
+            prefactor=like[like.par_index(name, 'Prefactor')]
             prefactor.setValue(1e-11/prefactor.getScale())
+            scale=like[like.par_index(name, 'Scale')]
             scale.setValue(math.sqrt(lower*upper)/scale.getScale())
             like.syncSrcParams(name)
 
@@ -148,7 +156,7 @@ class SED(object):
             like.fit(optverbosity,covar=True)
             self.ts[i]=like.Ts(name,reoptimize=False)
 
-            if self.ts[i] < 9 or self.always_upper_limit: 
+            if self.ts[i] < self.min_ts or self.always_upper_limit: 
                 if verbosity: print 'Calculating upper limit from %.0dMeV to %.0dMeV' % (lower,upper)
                 if self.ul_algorithm == 'frequentist':
                     self.ul[i] = SED.frequentist_upper_limit(like,name,verbosity,lower,upper)
@@ -185,14 +193,14 @@ class SED(object):
         sed_vals = []
         sed_vals.append(['Energy', '[MeV]'] + conv_float(self.e_vals))
 
-        # contains flux + UL if TS < 9
+        # contains flux + UL if TS < min_ts 
         sed_vals.append(['Flux', '[ph/cm^2/s/MeV]'] + \
-                        conv_science([f if ts>=9 else '<%.*e' % (precision,ul) \
+                        conv_science([f if ts>=self.min_ts else '<%.*e' % (precision,ul) \
                                   for f,ul,ts in zip(self.dnde,self.ul,self.ts)]))
 
-        # contains flux error if TS > 9
+        # contains flux error if TS > min_ts
         sed_vals.append(['Flux_Err', ''] + \
-                        conv_science([ferr if ts>9 else '' \
+                        conv_science([ferr if ts>=self.min_ts else '' \
                                   for ferr,ts in zip(self.dnde_err,self.ts)]))
 
         if not terse:
@@ -231,19 +239,44 @@ class SED(object):
         except:
             raise Exception("The plot function requires pylab.")
 
-        P.plot(self.e_vals,self.e_vals**2*self.dnde)
+        # Plot SED points
+
+        elow=self.bin_edges[:-1]
+        ehi=self.bin_edges[1:]
+
+        e=self.e_vals
+        de=[(self.e_vals-elow),
+            (ehi-self.e_vals)
+           ]
+
+        significant = self.ts>=self.min_ts
+        f=self.e_vals**2*\
+                np.where(significant,self.dnde,self.ul)
+
+        df = [
+            # lower error
+            self.e_vals**2*\
+            np.where(significant,self.dnde_err,0.4*self.ul),
+            # upper error
+            self.e_vals**2*\
+            np.where(significant,self.dnde_err,0)
+        ]
+           
+        P.errorbar(e,f, xerr=de, yerr=df, linestyle='none', 
+                   lolims=self.ts<self.min_ts)
 
         if plot_spectral_fit:
             source = self.like.logLike.getSource(self.name)
             spectrum=source.spectrum()
-            elist = np.logspace(self.like.energies[0],self.like.energies[-1])
+            elist = np.logspace(np.log10(self.like.energies[0]),
+                                np.log10(self.like.energies[-1]))
             flist = np.asarray([spectrum(dArg(i)) for i in elist])
             P.plot(elist,elist**2*flist)
 
-        P.set_xscale('log')
+        P.xscale('log')
         P.xlabel('MeV')
 
-        P.set_yscale('log')
-        P.ylabel(r'$\mathsf{Energy\ Flux\ (MeV\ cm^{-2}\ s^{-1})}$')
+        P.yscale('log')
+        P.ylabel(r'Energy Flux $(\mathrm{MeV}\ \mathrm{cm}^{-2}\ \mathrm{s}^{-1})$')
 
         if filename is not None: P.savefig(filename)
