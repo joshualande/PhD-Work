@@ -205,10 +205,10 @@ class SED(object):
 
         if not terse:
             # add into the list everything else somebody might want.
-            sed_vals.append(['Lower_Energy', '[MeV]'] + conv_float(self.bin_edges[:-1]))
-            sed_vals.append(['Upper_Energy', '[MeV]'] + conv_float(self.bin_edges[1:]))
-            sed_vals.append(['Raw_Flux', ''] + conv_science(self.dnde))
-            sed_vals.append(['Raw_Flux_Err', ''] + conv_science(self.dnde_err))
+            sed_vals.append(['Lower_Energy',   ''] + conv_float(self.bin_edges[:-1]))
+            sed_vals.append(['Upper_Energy',   ''] + conv_float(self.bin_edges[1:]))
+            sed_vals.append(['Raw_Flux',       ''] + conv_science(self.dnde))
+            sed_vals.append(['Raw_Flux_Err',   ''] + conv_science(self.dnde_err))
             sed_vals.append(['Test_Statistic', ''] + conv_float(self.ts))
             # only include when upper limit was calculated
             sed_vals.append(['Upper_Limit', ''] + \
@@ -262,7 +262,7 @@ class SED(object):
             np.where(significant,self.dnde_err,0)
         ]
            
-        P.errorbar(e,f, xerr=de, yerr=df, linestyle='none', 
+        P.errorbar(e,f, xerr=de, yerr=df, linestyle='none',  
                    lolims=self.ts<self.min_ts)
 
         if plot_spectral_fit:

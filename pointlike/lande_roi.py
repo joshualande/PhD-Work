@@ -29,6 +29,7 @@ from uw.utilities import keyword_options
 from skymaps import *
 from os.path import *
 from roi_gtlike import *
+from lande_plotting import *
 
 from uw.like import sed_plotter
 import pylab as P
