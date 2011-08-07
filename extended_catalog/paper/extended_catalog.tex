@@ -69,26 +69,28 @@ J.~Lande\altaffilmark{3},
 
 
 \begin{abstract}
-We present a new method for analyzing spatially extended sources with
+We present a new method for analyzing 
+the spatial extension of sources with
 the Large Area Telescope (LAT), the primary science instrument on the
-{\em Fermi Gamma-ray Space Telescope (Fermi)}. Measuring the extension
-of a LAT source is important for uniquely identifying it.  We provide
+{\em Fermi Gamma-ray Space Telescope (Fermi)}. 
+The source extension is an important input to correctly 
+associate LAT sources with their counterparts at other
+wavelengths. We provide
 a series of Monte Carlo studies to validate this tool and calculate
 the LAT's detection threshold to spatially extended sources.  We then
 apply this tool to test all sources in the two year source catalog for
 extension. We present on the detection of nine spatially extended sources
 in addition to the twelve spatially extended sources reported in the
-second Fermi LAT Catalog (2FGL).
+second Fermi-LAT Catalog (2FGL).
 \end{abstract}
 
 \listoftodos
 
 \section{Introduction}
 
-The Large Area Telescope (LAT) is a pair conversion telescope on the
-Fermi Gamma-Ray Space Telescope (Fermi). It has been surveying the
-$\gamma$-ray sky since June 2008.  Fermi is well suited as a survey
-instrument because of its broad energy coverage (20 \mev to $>300$
+The Large Area Telescope (LAT) is a pair conversion telescope on the Fermi
+Gamma-Ray Space Telescope (FGST). It has been surveying the $\gamma$-ray
+sky since June 2008.  Fermi has a broad energy coverage (20 \mev to $>300$
 \gev), wide field of view ($\approx 2.4 \sr$), and large effective area
 ($\approx 8000 \cm^2$ at $>1 \gev$).
 
@@ -96,85 +98,103 @@ Using two years of all sky surveying data, the LAT Collaboration
 published a catalog of 1873 \gev sources\cite{second_cat}. Many of these can
 be positionally associated with a variety of source classes including
 Active Galactic Nuclei (AGN), pulsars, galaxies, and supernova
-remnants (SNRs).  While many of these classes can be spatially
-resolved when observed at other frequencies, detection an extension at
+remnants (SNRs).  While many of the LAT sources can be
+spatially
+resolved when observed at other frequencies, detection of 
+an extension at
 \gev energies by the LAT is complicated by the rather large
-point-spread function (PSF) of the instrument (the angular resolution
+point-spread function (PSF) of the instrument. The angular resolution
 for events converting in the front part of the detector, defined as
 the 68\% containment radius for a point source, is approximately
-$3.5^{\circ}$ at 100 \mev, improving to about 0.1$^{\circ}$ at 10 \gev).
+$3.5^{\circ}$ at 100 \mev, improving to about 0.1$^{\circ}$ at 10 \gev.
 
-Several of these source classes are extended (and close) enough to
-potentially be extended. In particular supernova remnants, pulsar wind
-nebulae, molecular clouds, normal galaxies, galaxy clusters or dark
-matter satellites can (in favorable cases) be expected to be extended
-beyond the LAT's PSF. The LAT collaboration has previously reported on
+However, a number of sources positionally coincident
+with LAT sources exhibit extensiosn at other
+wavelengths which are larger or comparable to the LAT PSF.
+In particular certain SNRs, pulsar wind
+nebulae (PWNe), molecular clouds, normal galaxies, 
+galaxy clusters or dark
+matter satellites can therefore be expected
+to be observed as spatially extended sources in the LAT.
+The LAT collaboration has previously reported on
 the discovered of five spatially extended supernova remnants, IC443,
 W28, W44, W51C, and RX J1713.7-3946
 (\cite{ic443,w28,w44,w51c,rx_j1713_lat}). In addition, three extended
-pulsar wind nebulae (PWNe) were detected: MSH 15-52, Vela~X, and
+PWNe were detected: MSH 15-52, Vela~X, and
 HESS\,J1825-137 (\cite{msh1552,velax,fermi_hess_j1825}), as well as
 two close-by galaxies, the Large Magellanic and Small Magalenic Cloud
 (\cite{lmc,smc}), and finally the radio galaxy Centarus A
 (\cite{cen_a_lat}) .
 
-In addition to these \gev $\gamma$-ray detections, a variety of
-spatially extended sources have been detected in the Galactic plane at
-\tev energies using Air Cherenkov detectors. Most prominent was a
-survey of the Galactic plane using the High Energy Stereoscopic System
-(H.E.S.S) which presented 14 spatially extended sources
-(\cite{hess_plane_survey}) sources with extensions varying from
-$~0.1\deg$ to $~0.25\deg$. In fact, within our Galaxy only very few
-sources (most notably the $\gamma$-ray binaries
-LS\,5039 (\cite{HESSLS5039}), LS I+61-303 (\cite{MAGICLSI, VERITASLSI}) and
-HESS\,J0632+057 (\cite{HESS0632}) are amongst the few Galactic sources
-for which no significant extension was detected at \tev
-energies. Given these findings, it can be expected that if the source
-population at \gev energies has similar properties, that at least some
-of the Fermi-LAT sources in our Galaxy should be spatially extended at
-\gev energies.
+For each of these sources, the extension was determined based on
+dedicated analysis of the particular source or region of interest
+instead of being the outcome of a systematic search of the LAT catalog.
+For the systematic scan of all LAT catalog sources presented here, we
+therefore expect to find additional spatially extended LAT sources, in
+particular since many extended sources in the Galactic plane have been
+detected at \tev energies using Air Cherenkov detectors and \tev and
+\gev emission often originates from the same population of high-energy
+particles.  A variety of spatially extended sources have been detected
+in the Galactic plane at \tev energies. Most prominent was a survey of
+the Galactic plane using the High Energy Stereoscopic System (H.E.S.S)
+which presented 14 spatially extended sources
+ with extensions varying from
+$~0.1\deg$ to $~0.25\deg$ (\cite{hess_plane_survey}). In fact, within
+our Galaxy only very few sources (most notably the $\gamma$-ray binaries
+LS\,5039 (\cite{HESSLS5039}), LS I+61-303 (\cite{MAGICLSI, VERITASLSI})
+and HESS\,J0632+057 (\cite{HESS0632}) are amongst the few Galactic sources
+for which no significant extension was detected at \tev energies. Given
+these findings, it can be expected that if the source population at \gev
+energies has similar properties, that at least some of the Fermi-LAT
+sources in our Galaxy should be spatially resolvable at \gev energies.
 
 Being able to spatially resolve the \gev emission from a source is
 important for several reasons. Because of the large PSF and the large
 candidate source density in our Galaxy, source confusion is a severe
-problem for the Fermi-LAT. Finding a matching morphology can be used
-to uniquely identify the source.  Because of the strongly varying PSF
-of the LAT, the spatial and spectral information about a source do not
-simply decouple. Therefore, a biased spatial model will bias the
-spectral model of the source and studying the extension of the source
-can correct for this.  Furthermore, correctly modeling a source's
-extension is important for improving the model of the sky and
-removing excess residuals.  These residuals manifested themselves in
-1FGL as spurious point sources in the region region surrounding the
-Large Magellanic Cloud (\cite{first_cat}).  For this reason, we are
-motivated to take the 1873 sources that were detected in 2FGL and
-apply a search for those sources which are spatially extended.
+problem for the identification of LAT sources.  Finding a coherent
+source extension across different energy bands allows a firm association
+of a LAT source to an otherwise confused counterpart.  Because of the
+strongly varying PSF of the LAT, the spatial and spectral information
+about a source do not simply decouple. A biased spatial model will bias
+the spectral model of the source. In particular, performing a spectral
+analysis on a spatially extended source modeled as point-like will
+systematically shift the spectral index to be softer.  Furthermore,
+correctly modeling a source's extension is important for improving
+the model of the sky and removing excess residuals, for example in the
+region around surrounding the Large Magellanic Cloud (\cite{first_cat}).
+Additionally, such excess residuals potentially bias the significance
+and measured spectrum of neighboring sources in the densely populated
+Galactic plane.
 
 \section{Analysis Methods}
 
-Morphological studies of sources in the \gev energy range
-using the LAT are challenging because of the significantly 
-energy-dependent PSF and because of systematic errors in the Galactic diffuse
-emission.  The LAT's PSF is determined at lower energies by multiple
-scattering in the tracker and the 68\% containment radius of the PSF is
-approximately 5.1\deg at 100 \mev  when averaged over instrument acceptance
-and including photons which convert in either the thick or thin layers of
-the tracker. The PSF approaches a limit given by the granularity of the
-tracker channels and is 0.14\deg at 10 \gev (\cite{on_orbit_calibration}).
-Therefore, the higher energy photons are significantly more important for
-resolving a source but are typically limited by statistics. 
-A detailed analysis procedure must be used to maximize our
-sensitivity over all energies.
+Morphological studies of sources in the \gev energy range using the
+LAT are challenging because of the significantly energy-dependent PSF.
+Additional complications arise close to the Galactic plane due to
+systematic uncertainties in the Galactic diffuse emission.  The LAT's
+PSF is limited at lower energies by multiple scattering in the tracker
+and the 68\% containment radius of the PSF is approximately 5.1\deg
+at 100 \mev  when averaged over instrument acceptance and including
+photons which convert in either the thick or thin layers of the
+tracker. The PSF improves with energy and approaches a limit given
+by the granularity of the silicon strips and is 0.14\deg at 10 \gev
+(\cite{on_orbit_calibration}).  The high resolution of the higher
+energy photons in the LAT energy range however is offset by their low
+statistics. Therefore a detailed investigation has been performed in this
+work to determine the optimal energy range to measure source extension
+(see below).
 
 \subsection{The \pointlike Package}
 
 A new analysis tool has been developed to address the unique requirements
 for studying spatially extended sources with the LAT. The tool
 provides a maximum likelihood analysis where the Poisson likelihood
-for observing the measured counts is maximized by fitting
-parameters of the model.  The extension of a source can be modeled by a
-geometric shape (e.g. a disk or Gaussian) and the source's position
-and extension can be simultaneously fit.
+for observing the measured counts is maximized,
+given a parametrized spatial and spectral model of 
+the source and its surrounding region.
+The extension of a source can be modeled by a
+geometric shape (e.g. a disk or Gaussian) and the source's position,
+extension, and spectrum can be simultaneously fit.
 
 This analysis is not feasible using the official LAT likelihood
 analysis tool \gtlike\footnote{\gtlike is distributed publicly by the
