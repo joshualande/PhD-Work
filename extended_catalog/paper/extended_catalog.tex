@@ -109,7 +109,7 @@ the 68\% containment radius for a point source, is approximately
 $3.5^{\circ}$ at 100 \mev, improving to about 0.1$^{\circ}$ at 10 \gev.
 
 However, a number of sources positionally coincident
-with LAT sources exhibit extensiosn at other
+with LAT sources exhibit extension at other
 wavelengths which are larger or comparable to the LAT PSF.
 In particular certain SNRs, pulsar wind
 nebulae (PWNe), molecular clouds, normal galaxies, 
@@ -196,55 +196,34 @@ The extension of a source can be modeled by a
 geometric shape (e.g. a disk or Gaussian) and the source's position,
 extension, and spectrum can be simultaneously fit.
 
-This analysis is not feasible using the official LAT likelihood
+This analysis is not feasible using the standard LAT likelihood
 analysis tool \gtlike\footnote{\gtlike is distributed publicly by the
 Fermi Science Support Center (\cite{fssc})} because \gtlike can only 
-fit the spectral parameters of the model. The extension fitting would
-have to be done as an external loop which would typically be
-too time consuming. What has typically
-been done to study an extended sources is to fix the position of the
-source and develop a profile of the likelihood as a
-function of extension.  This approach is not optimal because the
-position and extension of the source should be simultaneously maximized
-to find the best fit parameters and to correctly compute the statistical
-significance of the detection.  Furthermore since this approach is
-computationally intensive, no large-scale Monte Carlo effort can
-be run to validate it.
+fit the spectral parameters of the model. 
 
-We developed an alternative approach to fit spatially extended
-sources. A separate maximum likelihood fitting package called
-\pointlike has been developed by the LAT collaboration and we have
-added to it the ability to analyze spatially extended sources. \pointlike
-is described in 1FGL and in Matthew Kerr's Ph.D thesis
-(\cite{first_cat,matthew_kerr_thesis}).  
+We note that \gtlike has been used in the past in several studies of
+source extension in the LAT collaboration (\cite{lmc,smc,w28,w51c}).
+Based upon a set of \gtlike maximum likelihood fits at fixed extensions,
+a profile of the likelihood as a function of the extension was calculated.
+This approach is not optimal because the position, extension, and
+spectrum of the source must be simultaneously fit to find the best fit
+parameters and to correctly compute the statistical significance of the
+detection.  Furthermore since the \gtlike likelihood profile approach
+is computationally intensive, no large-scale Monte Carlo effort can be
+run to validate it.
 
-What differentiates \pointlike most significantly from \gtlike is its
-emphasis on speed by introducing approximations into the calculation
-of the likelihood function while trying to minimized the introduced
-numerical errors.  Like the binned version of \gtlike, \pointlike bins
-the sky in both position and energy.  Unlike \gtlike, \pointlike relies on
-the {\em healpix} representation of spatial bins (\cite{healpix}). Since
-the PSF changes significantly with energy, the spatial size of each bin
-is chosen to be smaller than the PSF. By changing the spatial
-bin size with energy, \pointlike ensures that little information is lost
-at each energy while minimizing the required number of bins.
+The approach presented here is based on a second maximum likelihood
+fitting package developed in the LAT collaboration and called \pointlike
+(\cite{first_cat,matthew_kerr_thesis}).  We extended the code to allow
+a simultaneous fit of the source extension together with the position
+and the spectral parameters.
 
-\pointlike also bins $\gamma$-rays depending upon whether they convert
-in the thin or thick layers of the tracker. Since the PSF is smaller for
-photons which convert in the thin layers of the tracker,
-photons are also binned depending upon where they 
-convert in the tracker.
-Furthermore, \pointlike
-uses a sparse matrix representation of the spatial bins where only the
-bins with counts in them are used. To evaluate the likelihood, \pointlike
-then independently integrates the model predicted counts in the region.
-
-Intelligent binning and a sparse matrix representation of the data
-effectively interpolates between a binned analysis at low energy (where
-the resolution is poor and there are many counts) and an unbinned
-analysis at high energy (where the resolution is good but there are
-few counts). This approach provides significant savings in time while
-introducing only small numerical error.
+The choice to base the spatial extension fitting on \pointlike
+rather than \gtlike was made on considerations of computing time.
+The \pointlike algorithm was optimized for speed to handle
+larger numbers of sources efficiently which is important for
+our catalog scan as well as the Monte Carlo validation of our method.
+Details on the \pointlike package can be found in (\cite{matthew_kerr_thesis}).
 
 \subsection{Extension Fitting}
 \label{extension_fitting}
