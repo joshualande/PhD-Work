@@ -94,36 +94,30 @@ sky since June 2008.  Fermi has a broad energy coverage (20 \mev to $>300$
 \gev), wide field of view ($\approx 2.4 \sr$), and large effective area
 ($\approx 8000 \cm^2$ at $>1 \gev$).
 
-Using two years of all sky surveying data, the LAT Collaboration
-published a catalog of 1873 \gev sources\cite{second_cat}. Many of these can
-be positionally associated with a variety of source classes including
-Active Galactic Nuclei (AGN), pulsars, galaxies, and supernova
-remnants (SNRs).  While many of the LAT sources can be
-spatially
-resolved when observed at other frequencies, detection of 
-an extension at
-\gev energies by the LAT is complicated by the rather large
-point-spread function (PSF) of the instrument. The angular resolution
-for events converting in the front part of the detector, defined as
-the 68\% containment radius for a point source, is approximately
-$3.5^{\circ}$ at 100 \mev, improving to about 0.1$^{\circ}$ at 10 \gev.
+Using two years of all sky surveying data, the LAT Collaboration published
+a catalog of 1873 \gev sources\cite{second_cat}. Many of these can be
+positionally associated with a variety of source classes including Active
+Galactic Nuclei (AGN), pulsars, galaxies, and supernova remnants (SNRs).
+While many of the LAT sources can be spatially resolved when observed
+at other frequencies, detection of an extension at \gev energies by
+the LAT is complicated by the rather large point-spread function (PSF)
+of the instrument. The angular resolution for events converting in the
+front part of the detector, defined as the 68\% containment radius for
+a point source, is approximately $3.5^{\circ}$ at 100 \mev, improving
+to about 0.1$^{\circ}$ at 10 \gev.
 
-However, a number of sources positionally coincident
-with LAT sources exhibit extension at other
-wavelengths which are larger or comparable to the LAT PSF.
-In particular certain SNRs, pulsar wind
-nebulae (PWNe), molecular clouds, normal galaxies, 
-galaxy clusters or dark
-matter satellites can therefore be expected
-to be observed as spatially extended sources in the LAT.
-The LAT collaboration has previously reported on
-the discovered of five spatially extended supernova remnants, IC443,
-W28, W44, W51C, and RX J1713.7-3946
-(\cite{ic443,w28,w44,w51c,rx_j1713_lat}). In addition, three extended
-PWNe were detected: MSH 15-52, Vela~X, and
-HESS\,J1825-137 (\cite{msh1552,velax,fermi_hess_j1825}), as well as
-two close-by galaxies, the Large Magellanic and Small Magalenic Cloud
-(\cite{lmc,smc}), and finally the radio galaxy Centarus A
+However, a number of sources positionally coincident with LAT sources
+exhibit extension at other wavelengths which are larger or comparable to
+the LAT PSF.  In particular certain SNRs, pulsar wind nebulae (PWNe),
+molecular clouds, normal galaxies, galaxy clusters or dark matter
+satellites can therefore be expected to be observed as spatially extended
+sources in the LAT.  The LAT collaboration has previously reported on the
+discovered of five spatially extended supernova remnants, IC443, W28, W44,
+W51C, and RX J1713.7-3946 (\cite{ic443,w28,w44,w51c,rx_j1713_lat}). In
+addition, three extended PWNe were detected: MSH 15-52, Vela~X,
+and HESS\,J1825-137 (\cite{msh1552,velax,fermi_hess_j1825}), as well
+as two close-by galaxies, the Large Magellanic and Small Magalenic
+Cloud (\cite{lmc,smc}), and finally the radio galaxy Centarus A
 (\cite{cen_a_lat}) .
 
 For each of these sources, the extension was determined based on
@@ -228,41 +222,43 @@ Details on the \pointlike package can be found in (\cite{matthew_kerr_thesis}).
 \subsection{Extension Fitting}
 \label{extension_fitting}
 
-In \pointlike, it is assumed that the spatial and spectral model
-of an extended source decouple and that the spatial shape can be
-represented by a two dimensional function.  To fit the extended source,
+In \pointlike, it is assumed that the spatial and spectral
+model of an extended source are separable, i.e. that the source
+model $M(l,b,E)=S(l,b)\times X(E)$.  To fit an extended source,
 \pointlike convolves the extended source shape with the PSF (as a
-function of energy) and uses the \minuit fitting library to maximize
-the likelihood by simultaneously fitting the position and extension
-of the source (\cite{minuit_documentation}).  As will be described in
+function of energy) and uses the \minuit library to maximize the
+likelihood by simultaneously varying the position and extension of
+the source (\cite{minuit_documentation}).  As will be described in
 section~\ref{monte_carlo_validation}, simultaneously fitting the position
 and extension is necessary to correctly calculate the statistical
 significance of the detection of extension.  For each position and
-extension, the spectral parameters of the sky model are refit. To avoid
-projection effects, what is directly fit is not the longitude and latitude
-but instead the source's displacement in a rotated reference frame.
+extension, the spectral parameters of the sky model are refit.  To avoid
+projection effects, the fitted source position parameters are not the
+source's longitude and latitude but instead the source's displacement
+in a rotated reference frame.
 
-The significance of the extension of a source can be calculated from
-\tsext, which is defined as twice the increase in log likelihood (\loglikelihood)
-between
-the extended source model at its best fit values and the point source
-model at its best fit values:
+The significance of the extension of a source can be calculated
+from \tsext, which 
+is the test statistic of the likelihood ratio test of
+a model with a spatially extended source and a model
+with a point-like source and defined as
 \begin{equation}
   \tsext=2\log(\loglikelihood_\text{ext}/\loglikelihood_\text{ps}).
 \end{equation}
+where \loglikelihood is the log of the Poisson likelihood.
 \pointlike calculates \tsext by fitting a source first with a spatially
 extended model and then as a point source.  The interpretation
 of \tsext in terms of a statistical significance is discussed in
 section~\ref{monte_carlo_validation}.
 
-The convolution of radially symmetric extended sources is optimized by
-using a semi-analytic calculation.  The observed photon distribution
-can be written as the convolution of the source shape ($I_\text{src}$)
-with the PSF
+For extended sources with an assumed radially symmetric shape,
+we use a semi-analytic calculation to speed up the calculation of
+the expected photon distribution. The expected photon 
+distribution can be written as
 \begin{equation}
   \text{PDF}(\vec r) = \int  \text{PSF}(|\vec r - \vec r'|)I_\text{src}(\vec r') d A'.
 \end{equation}
-For the LAT, the PSF is parameterized by a {\em King function}
+For the LAT, the PSF can be parameterized by a {\em King function}
 \begin{equation}
   \text{PSF}(\vec r) = 
   \frac{1}{2\pi\sigma^2}
@@ -272,101 +268,92 @@ For the LAT, the PSF is parameterized by a {\em King function}
 where $\sigma$ and $\gamma$ are free parameters
 (\cite{matthew_kerr_thesis}).  For radially symmetric extended sources,
 the angular part of the integral can be done analytically
-\begin{equation}
-  \text{PDF}(u)= \int_0^\infty dv
+\begin{align}
+  \text{PDF}(u) & = \int_0^\infty \sigma^2 dv 
+  I_\text{src}(v) 
+  \int_0^{2\pi} d\phi' 
+  \text{PSF}(\sqrt{2\sigma^2(u+v-2\sqrt{uv}\cos(\phi-\phi'))})
+  \\
+  & = \int_0^\infty dv
   I_\text{src}(v) 
   \left(\frac{\gamma-1}{\gamma}\right)
   \left( \frac{\gamma}{\gamma + u + v}\right)^\gamma 
-  \times ~_2F_1 \left(\gamma/2,\frac{1+\gamma}{2},1,\frac{4uv}{(\gamma+u+v)^2}\right).
-\end{equation}
-This convolution formula is used by \pointlike because it is faster
-and more closely reduces to the PSF when the source's size is 
-small.
+  \times {}_2F_1 \left(\gamma/2,\frac{1+\gamma}{2},1,\frac{4uv}{(\gamma+u+v)^2}\right).
+\end{align}
+where $u=(r/\sigma)^2/2$, $v=(r'/\sigma)^2/2$, and ${}_2F_1$ is the
+Gaussian hypergeometric function.  This convolution formula is used by
+\pointlike, reducing the calculation of the expected photon distribution
+to a single numerical integral.
 
-There will always be a small numerical discrepancy between the PSF and
-a very small extended source due to numerical error in the convolution.
-In most situations, this error would be insignificant. But when testing
-a source for extension, this offset can significantly bias the estimate
-of the significance of the extension of a source.  To correct for this,
-when testing a source for extension we compare the likelihood fitting
-the source with an extended shape to the likelihood fitting it with its
-extension fixed to ${10^{-10}}\deg$.
+There will always be a small numerical discrepancy between the expected
+photon distribution derived from a true point source and a very small
+extended source due to numerical error in the convolution.  In most
+situations, this error would be insignificant.  But in particular for
+very bright sources, this numerical error has the potential to bias the
+test statistic for the extension test.  the source with an extended shape
+to the likelihood fitting it with its extension fixed to ${10^{-10}}\deg$.
 
-\subsection{Extension Errors}
-\label{extension_error}
+We estimate the errors on the extension
+by recalculating the likelihood for a set of extension values
+while keeping the position fixed.
 
-Errors on fit parameters are typically calculated in one of two
-ways. The first method requires explicitly varying a parameter
-while simultaneously optimizing the other parameters
-until the log of the likelihood has fallen by a particular value.
-The \minuit fitting
-package provides the {\em Simplex} function to calculate errors this way
-(\cite{minuit_documentation}).  The second method involves estimating the
-likelihood function as being a multivariate Gaussian and calculating the
-curvature of the log of the likelihood at the peak to estimate when the
-function will decrease by the desired value. \minuit provides the {\em HESSE}
-algorithm to calculate errors this way.  {\em HESSE} errors 
-can be calculated significantly faster.
+We estimate the error on the extension of a source by fixing the position
+of the source and varying the extension until the likelihood has fallen
+by $\tfrac{1}{2}$, corresponding to a $1\sigma$ error.  This method is
+shown schematically in figure~\ref{four_plots_ic443}(a) which shows the
+change in \loglikelihood when varying the extension of the SNR IC443.
+The localization error is calculated by fixing the extension and spectrum
+of the source and fitting a Gaussian to the likelihood as a function
+of position.
 
-We found that the {\em HESSE} errors on the extension of a source
-were sometimes badly estimated.  On the other hand, the {\em Simplex}
-algorithm was prohibitively slow and would often fail to convergence. Our
-approach to calculating extension errors is to fix the position of the
-source and varying just the extension using the {\em Simplex} algorithm.
-This approach makes the approximation that the covariance between each
-spatial parameter is small but not that the likelihood is Gaussian. This
-method is shown schematically in figure~\ref{four_plots_ic443}(a) which
-shows the change in \loglikelihood when varying the extension of the
-SNR IC443.  The localization error is separately calculated by fixing
-the extension and spectrum of the source and fitting a parabola to the
-likelihood as a function of position.
-
-\subsection{\gtlike Crosscheck}
+\subsection{\gtlike Analysis Validation}
 \label{gtlike_crosscheck}
 
 \pointlike is important for LAT analysis that require many iterations
 such as source localization and extension fitting.  On the other hand,
 because of the fewer approximations used in calculating the likelihood
-we expect that the spectral parameters fit by \gtlike to be slightly
+we expect the spectral parameters found with \gtlike to be slightly
 more precise.  Furthermore, because \gtlike is the standard likelihood
 analysis package, it has been more extensively validated for spectral
 analysis.  For that reason, in the following analysis  we use \pointlike
 to determinate the position and extension of a source and then determine
-the spectrum using \gtlike. Both \gtlike and \pointlike can estimate
+the spectrum using \gtlike. Both \gtlike and \pointlike can be 
+used to estimate
 the statistical significance of the extension of a source and we require
 that both methods agree to claim a detection.
 
 We found good agreement between the two methods. For the new extended
 source candidates, table~\ref{alt_diff_model_results} will shows a
-comparison of \ts and \tsext computed using \pointlike and \gtlike.
-Unless explicitly mentioned, all \ts, \tsext, and spectral parameters
-were calculated using \gtlike using \pointlike's positions and extensions.
+comparison of the test statistic \ts and \tsext computed using \pointlike
+and \gtlike.  Unless explicitly mentioned, all \ts, \tsext, and spectral
+parameters were calculated using \gtlike using \pointlike's positions
+and extensions.
 
 \subsection{Dual Localization}
 \label{dual_localization_method}
 
 There is a degeneracy between a spatially extended source and multiple
-point sources.  To assess the possibility of source confusion,
-we developed a function in \pointlike to simultaneously fit the position
-of two point sources.  To improve the robustness of the fit, the sum and
-difference of the positions of the two sources are fit in a coordinates
-rotated to the equator.  The \loglikelihood is then maximized by fitting
-the sum and difference of the positions.
+point sources that are separated by angular distances comparable or
+smaller than the size of the LAT PSF.  To assess the possibility of source
+confusion, we developed a function in \pointlike to simultaneously fit
+the position of two point sources.
 
 We define \tsinc as twice the increase in \loglikelihood fitting the
 region as two point sources compared to fitting the region as one point
-source: \begin{equation}
+source: 
+\begin{equation}
   \tsinc=2\times(\loglikelihood_\text{2pts}-\loglikelihood_\text{ps}).
-\end{equation} \tsinc can not be directly compared to \tsext to see
-which model is more significant because the models are not nested
-(\cite{statistics_with_care}). Even though the comparison of \tsext
-with \tsinc is not a calibrated test, we find the extreme cases $\tsinc
-\loglikelihood \tsext$ or $\tsinc\gg\tsext$ to be suggestive and we only
-consider a source to be extended if $\tsext>\tsinc$.
+\end{equation} 
+\tsinc can not be directly compared to \tsext to see which
+model is more significant because the models are not nested
+(\cite{statistics_with_care}). Even though the comparison of \tsext with
+\tsinc is not a calibrated test, we find the cases $\tsinc \ll \tsext$
+or $\tsinc\gg\tsext$ suggestive and we only consider a source to be
+extended if $\tsext>\tsinc$.
 
 Like extended sources described in section~\ref{gtlike_crosscheck},
 the spectrum of the two point sources can be refit using \gtlike.
-we quote the spectral values obtained from \gtlike using the best fit
+We quote the spectral values obtained from \gtlike using the best fit
 positions found using \pointlike.  For the extended candidates found
 by our search, we computed both \tsext and \tsinc.  The results will be
 presented in table~\ref{dual_localization_results}.
@@ -375,112 +362,76 @@ presented in table~\ref{dual_localization_results}.
 
 \label{compare_source_size}
 
-The spatial shape of extended sources can be modeled
-as a two dimensional Gaussian
+We tested two different models for the
+spatial shape, either a two dimensional Gaussian
 \begin{equation}\label{gauss_pdf}
-  \text{PDF}(x,y)=\tfrac{1}{2\pi\sigma^2}\exp\left(-(x^2+y^2)/2\sigma^2\right)
+  I(x,y)=\tfrac{1}{2\pi\sigma^2}\exp\left(-(x^2+y^2)/2\sigma^2\right)
 \end{equation}
 or a uniform disk
 \begin{equation}\label{disk_pdf}
-  \text{PDF}(x,y)=\tfrac{1}{\pi\sigma^2}\delta\left(x^2+y^2<\sigma^2\right).
+  I(x,y)=
+  \begin{cases}
+    \frac{1}{\pi\sigma^2} & x^2+y^2\le\sigma^2 \\
+    0                      & x^2+y^2>\sigma^2
+  \end{cases}
 \end{equation}
-Although these shapes are significantly different, the convolution of them
-with the PSF look similar.  Figure~\ref{compare_disk_gauss} demonstrates
-this by showing the PSF, PDF, and convolution of the PDF with the PSF
-for a uniform disk and Gaussian spatial model of size 0.5\deg.  This plot
-shows that we are not very sensitive to probing the exact structure of an
-extended source.  In the following we assume a uniform disk spatial model.
+Although these shapes are significantly different, the convolution
+of them with the PSF look similar.  Figure~\ref{compare_disk_gauss}
+demonstrates this by showing $I_\text{src}$, the PSF, and the PDF for
+a uniform disk and Gaussian spatial model of size 0.5\deg.\footnote{To
+allow a valid comparison between Gaussian and disk shaped morphologies,
+we define the source size for this test as the radius containing
+68\% of the intensity ($\rsixeight$).  $\rsixeight_\text{,Gaussian}=1.51\sigma$
+and $\rsixeight_\text{,disk}=0.82\sigma$ where $\sigma$
+is defined in equation~\ref{gauss_pdf} and
+equation~\ref{disk_pdf} respectively.} This plot shows that we are
+not very sensitive to probing the exact structure of an extended source.
+In the search for extended sources, we therefore use only a uniform
+disk as our spatial extension shape. We then quote the radius of the
+disk edge as the size of the source.
 
-To get the convolved shapes to match in figure~\ref{compare_disk_gauss},
-we had to set them to predict the same 68\% containment
-radius of 0.5\deg.  The 68\% containment radius for a
-spatial model is the radius at which 68\% of the intensity is
-enclosed.  It can be computed by a straightforward integral
-and we find that $\rsixeight_\text{,Gaussian}=1.51\sigma$
-whereas $\rsixeight_\text{,disk}=0.82\sigma$ where $\sigma$
-is defined in equation~\ref{disk_pdf} for the Gaussian source and
-equation~\ref{gauss_pdf} for the disk source.  Since $\rsixeight=0.5\deg$,
-the uniform disk has $\sigma=0.41\deg$ and the Gaussian has
-$\sigma=0.75\deg$.
-
-This is important when comparing morphologies to other wavelengths
-because the quoted size can vary significantly depending on which quantity
-is reported.  This effect can be best seen in figure~\ref{compare_r68}
-which a counts map of an extended source simulated in the energy
-range from 1 \gev to 100 \gev with a uniform disk spatial model with
-an extension $\sigma$ of 0.5. Overlaid on the plot is the fit extension
-assuming the source has a uniform disk and a Gaussian spatial model. The
-plot overlays both $\sigma$ and $\rsixeight$ and $\sigma$ is significantly
-larger for the disk spatial hypothesis compared to the Gaussian spatial
-model. On the other hand, the disk and Gaussian's 68\% containment radius
-are similar.
-
-Since we are not very sensitive to the particular morphology of an
-extended source, there is no correct choice for which size to quote
-or which shape to overlay. For the following analysis, we quote the
-disk's edge and overlay this size.  But due to smearing of the PSF,
-$\sigma$ typically looks larger than the observed counts distribution.
-When comparing the fit extensions with other wavelengths, it is important
-to compare consistent quantities.
-
-
-\section{LAT Extended Source Validation}
-
+\section{Validation of Analysis Method}
 
 \subsection{Significance of Extension}
 \label{monte_carlo_validation}
 
-We validated \pointlike's extension fitting code with a Monte Carlo
-study. \tsext (defined in section~\ref{extension_fitting}) can be used to calculate the statistical significance
-of the extension of a source.  Since the point source and extended source models are
-nested, an extended source must always fit as well as a point source.  On the other hand, we would
-not expect the likelihood to change very much unless the source was
-significantly extended.  Since an extended source has one additional
-degree of freedom, Wilks' Theorem predicts that the distribution of $\tsext$
-when testing a point source for extension should follow a $\chi^2_1$
-distribution (\cite{wilks_theorem}).
-
-However, since the null hypothesis rests on the edge of
-parameter space when the extension is 0, Wilks' Theorem does not hold
-(\cite{warn_wilks_theorem}).  One might expect the actual distribution
-to be a half $\chi^2_1$ distribution with one degree of freedom plus
-half a delta function at 0:
-\begin{equation}
+Mattox et al. discuss that the test statistic distribution
+for a likelihood ratio test on the existence of a source at
+a given position is \cite{mattox_egret}
+\begin{equation}\label{ts_ext_distribution}
   P(\ts)=\tfrac{1}{2}(\chi^2_1(\ts)+\delta(\ts)).
 \end{equation}
-Chernoff proved that under certain assumptions this is the correct distribution
-when the null hypothesis is on the edge of parameter
-space (\cite{chernoff}).  The false detection
-probability can be estimated by integrating this function from an observed
-test statistic value to infinity. It is for this particular distribution
-that the often quoted result holds that $\sqrt{\ts}$ is a measure of
-the number of $\sigma$ of the detection (\cite{mattox_egret}).
+The particular form of equation \ref{ts_ext_distribution} is
+due to the null hypothesis (source flux $\Phi=0$) residing
+on the edge of parameter space and the model hypothesis
+adding a single degree of freedom. It is plausible to
+expect a similar distribution of the test statistic
+in the test for source extension as the same conditions
+apply (with source flux $\Phi$ replaced by source radius $r$).
+To validate this claim, we performed a Monte Carlo
+study to calculate empirical distributions for $\tsext$ and
+compared them to equation~\ref{ts_ext_distribution}.
 
-The half $\chi^2_1$ distribution was found to hold for the special case
-of source finding using EGRET (\cite{mattox_egret}). This distribution
-is also plausible when testing point sources for extension. Due to
-statistical fluctuations, half of the point sources might look narrower
-than the PSF leading to $\tsext=0$. The other half of the time, we would
-get a distribution consistent with Wilks' theorem. We will present a
-Monte Carlo study that shows an empirical distribution of \tsext in the
-null hypothesis and compares it to this distribution.
-
-We simulated point sources of varying spectral models and fit them
-them using \pointlike as both point and extended sources. The data was
-simulated using \gtobssim\footnote{\gtobssim is distributed
+We simulated point sources of varying spectral models using
+\gtobssim\footnote{\gtobssim is distributed
 by the Fermi Science Support Center (\cite{fssc}).}
-The point sources were simulated with a power-law spectral model with
-six $>100$ \mev fluxes ranging from $3\times 10^{-9} \ph/\cm^2/\sec$ to
-$10^{-6} \ph/\cm^2/\sec$.  The point sources were simulated with spectral
-indices ($\gamma$) of 1.5, 2, 2.5, and 3.  These values were picked to
+and fit them
+them using \pointlike as both point and extended sources. 
+The point sources were simulated with a power-law spectral model 
+with integrated fluxes above 100 \mev ranging from
+$3\times 10^{-9}$ to $10^{-6} \ph/\cm^2/\sec$ in
+six discrete steps and spectral
+indices ranging from 1.5 to 3 in four discrete steps.
+These values were picked to
 to represent typical source parameters in LAT-detected sources. The point
-sources were simulated on top of an isotropic power-law background
-with a Sreekumar-like spectrum ($>100$ \mev flux of $1.5\times 10^{-5}$ and spectral
-index 2.1) (\cite{sreekumar_isotropic}).  The Monte Carlo simulation was
-performed over a one year time interval using a default rocking profile
+sources were simulated on top of an isotropic 
+background with an integrated flux above 100 \mev of $1.5\times10^{-5}$
+(\cite{sreekumar_isotropic}).  The Monte Carlo simulation was
+performed over a one year observation period
+using a default rocking profile
 and a representative livetime fraction of 0.8.  The reconstruction was
-performed with photons from an energy range of 1 \gev to 100 \gev using 4
-energy bins per decade and using the 
+performed using 1-100 \gev photons 
+and the 
 Pass 7\_V6 (P7\_V6) Source Instrument
 Response Function (IRFs).  For each point source, we used \pointlike
 to fit it as both a point and extended source and calculate \tsext and
@@ -490,64 +441,62 @@ we only kept the sources which had a significant point source detection
 
 For most of the spectral models, ~30,000 statistically independent
 simulations were performed. For the dimmer spectral models, many of the
-simulations had $\ts<25$ and were discarded.  Table~\ref{ts_ext_num_sims}
+simulations left the source undetected ($\ts<25$)
+and were discarded.  Table~\ref{ts_ext_num_sims}
 shows the different spectral models used in our study as well as the
 number of simulations.  The cumulative density of \tsext is plotted in
-figure~\ref{ts_ext_mc}. The $\chi^2_1/2$ distribution suggested by Wilks'
-Theorem is overlaid for comparison.
+figure~\ref{ts_ext_mc}. The $\chi^2_1/2$ distribution of
+equation~\ref{ts_ext_distribution} is overlaid for comparison.
 
-Our Monte Carlo study shows broad agreement between simulations and Wilks'
-theorem. Nevertheless, the agreement is not perfect.  It should be noted
-that the discrepancy seems to be worst for bright sources which seems to
-imply that numerical errors in the convolution become more apparent for
-sufficiently bright sources.  Other possible reasons for departure from
-Wilks' theorem might include \pointlike ignoring energy dispersion which
-would change the PSF's shape as a function of energy. But we emphasize
-that most of the time, our empirical curve lies to the left of the
-theoretical curve so using the theoretical distribution would lead to an
-underestimate of the statistical significance of a detection. Therefore,
-we are confident that $\sqrt{\tsext}$ can be used as a measure of the
-statistical significance of a source's extension and use it in the
-following analysis.
+Our Monte Carlo study shows broad agreement between simulations and
+equation~\ref{ts_ext_distribution}. Nevertheless, the agreement is not
+perfect.  It should be noted that the discrepancy seems to be worst for
+bright sources, a likely cause being numerical errors in the convolution
+becoming more apparent for sufficiently bright sources.  Other possible
+reasons for departure from equation~\ref{ts_ext_distribution} could
+be that \pointlike ignores energy dispersion which would change the
+PSF's shape as a function of energy. We emphasize that most of the
+time, our empirical curve lies to the left of the theoretical curve so
+using the theoretical distribution would lead to an underestimate of the
+statistical significance of a detection. Therefore, we are confident that
+$\sqrt{\tsext}$ can be used as a conservative measure of the statistical
+significance of a source's extension and use it in the following analysis.
 
 \section{Extended Source Detection Threshold}\label{extension_sensitivity}
 
-We calculated the LAT's detection threshold to spatially
-extended sources. The detection threshold to extension is
-defined as the flux at which the average value of $\tsext$ is
-$\langle\tsext\rangle=16$ corresponding to a $4\sigma$ detection (see
-section~\ref{monte_carlo_validation}).  Qualitatively, we expect the LAT
-would not be sensitive to sources much smaller than the PSF or much larger
-than the PSF.  Small sources would look too much like the PSF and larger
-sources would get lost in the background due to low surface brightness.
+We calculated the LAT's detection threshold to spatially extended
+sources. We define the detection threshold as the flux at which the value
+of $\tsext$ averaged over many statistical representations of a source
+is $\langle\tsext\rangle=16$ corresponding to a $4\sigma$ detection
+(see section~\ref{monte_carlo_validation}).
 
-To calculate the LAT's detection threshold, we simulated sources with
-a uniform radially symmetric disk spatial model on top of a power-law
-Sreekumar-like isotropic spectrum (\cite{sreekumar_isotropic}).  The Monte
-Carlo simulation was performed using the same two year time range that
-was used in 2FGL.  For each extension and spectral index, we picked a
-flux range which bracketed $\tsext=16$. We then picked ten flux points in
-this range and repeatedly simulated and then performed extension tests of
-the simulated extended source.  We calculated $\langle\tsext\rangle=16$
-by fitting a line to the flux and $\tsext$ values.
+We used the simulation setup described in
+section~\ref{monte_carlo_validation}, but instead simulated extended
+sources with a uniform radially symmetric disk spatial model and
+instead over the actual two year time interval.  For each extension and
+spectral index, we picked a flux range which bracketed $\tsext=16$. We
+then picked ten flux points in this range and repeatedly simulated
+and then performed extension tests of the simulated extended source.
+We calculated $\langle\tsext\rangle=16$ by fitting a line to the flux
+and $\tsext$ values.
 
 Figure~\ref{index_sensitivity} shows the threshold for sources of four
 spectral indices from 1.5 to 3 and extension varying from $\sigma=0.1\deg$
-to $2.0\deg$.  The LAT's threshold to extension
-is better for harder sources with more high energy photons and
-the threshold is best for sources with an extension 
-$\approx0.5\deg$ and is significantly worse for very small extended small.
-Figure~\ref{index_sensitivity} shows the threshold using photons with
-energies between 100 \mev and 100 \gev and also using only photons
-with energies between 1 \gev and 100 \gev.  Except for the hardest
-and largest sources, our detection threshold is almost unchanged when
-including photons with energies between 100 \mev and 1 \gev.  This is also
-demonstrated in figure~\ref{four_plots_ic443}(b) which shows \tsext for the
-SNR IC443 computed independently in twelve energy bins between 100 \mev and
-100 \gev. For IC443, which has a spectral index $\approx2.4$, almost the entire
-increase in \ts comes from energies above 1 \gev.  On the other hand,
-other systematic errors become increasingly important at low energy. For
-our extension search, we use only only photons with energy above 1 \gev.
+to $2.0\deg$.  The LAT's threshold to extension is better for harder
+sources with more high energy photons and the threshold is best for
+sources with an extension $\approx0.5\deg$ and is significantly worse
+for very small extended small.  Figure~\ref{index_sensitivity} shows
+the threshold using photons with energies between 100 \mev and 100 \gev
+and also using only photons with energies between 1 \gev and 100 \gev.
+Except for the hardest and largest sources, our detection threshold is
+almost unchanged when including photons with energies between 100 \mev and
+1 \gev.  This is also demonstrated in figure~\ref{four_plots_ic443}(b)
+which shows \tsext for the SNR IC443 computed independently in twelve
+energy bins between 100 \mev and 100 \gev. For IC443, which has a
+spectral index $\approx2.4$, almost the entire increase in \ts comes
+from energies above 1 \gev.  On the other hand, other systematic errors
+become increasingly important at low energy. For our extension search,
+we use only only photons with energy above 1 \gev.
 
 Figure~\ref{diff_factor_sensitivity} shows how the LAT's detection
 threshold increases with increasing background. We compute the threshold
@@ -844,8 +793,9 @@ sources may correlate with unmodeled structure in the diffuse emission.
 Of the 815 clean AGN, we select 775 of these 2FGL sources which
 are significant above 1 \gev and fit each of them for extension.
 A histogram of the \tsext values computed for these AGN is shown in
-figure~\ref{agn_ts_ext}. Overlaid on the plot is a $\chi^2/2$ distribution
-suggested by Wilks' Theorem.  The \tsext distribution for AGN shows good
+figure~\ref{agn_ts_ext}. Overlaid on the plot is the $\chi^2/2$
+distribution of equation~\ref{ts_ext_distribution}.
+The \tsext distribution for AGN shows good
 agreement with the theoretical distribution.  Two sources had $\tsext>9$.
 One was due to incorrectly pruning a nearby catalog sources and the
 other was due to a failure of convergence of the point hypothesis.
@@ -1114,25 +1064,32 @@ an underlomonous PWN $\approx1'$ in size around the pulsar
 (\cite{discovery_of_pwn_for_PSR_J1617-5055}). But the PWN is not
 assymetric towards HESS\,J1616-508 which casts doubt upon the association.
 
+\todo[inline]{
+Note about how it is difficult to explain the TeV to X-ray emission
+ratio b/c of magnetic field. Refernece in page 7 of (sukazu paper on HESS J1614-518, but
+it also refers to (Matsumoto et. al 2007 and says this requires small b/field with strong
+cutoff in eletron energy). Also some not eabout different photon fields
+being possible.}
 
+\todo[inline]{
 Note about this this paper finds other stuff: (\cite{discovery_of_pwn_for_PSR_J1617-5055}).
+}
 
-
+\todo[inline]{
 The \gev emission is suggested to be the same emission component as
 the \tev emission, but further observations of this source at other
 frequencies will likely be needed to firmly associated this source.
+}
 
 \todo[inline]{Finish interpretations of HESS\,J1616-508.}
 
 \subsection{2FGL\,J1615.2-5138}
 \label{section_2FGL_J1615.2-5138}
 
-The two year catalog source 2FGL\,J1615.2-5138 was found 
-using 10-100 \gev photons to have
-an extension of $0.42\deg\pm0.03\deg\stat\pm0.01\sys$ 
-with an extension
-significance of \tsext=48.0.  The source was fit to a position
-of $(l,b)=(331.66\deg,-0.66\deg)$.  This source is coincident
+The two year catalog source 2FGL\,J1615.2-5138 was found using 10-100 \gev
+photons to have an extension of $0.42\deg\pm0.03\deg\stat\pm0.01\sys$
+with an extension significance of \tsext=48.0.  The source was fit to a
+position of $(l,b)=(331.66\deg,-0.66\deg)$.  This source is coincident
 with the one year catalog source 1FGL\,J1614.7-5138c.  Because 2FGL
 J1615.2-5138 is close to 2FGL\,J1615.0-5051, the same model described
 in section~\ref{section_2FGL_J1615.0-5051} was used to analyze both
@@ -1144,17 +1101,44 @@ This source is spatially coincident with the extended
 \tev source HESS\,J1614-518 (\cite{hess_plane_survey}). In
 figure~\ref{1FGL_J1613.6-5100c}, contours of HESS\,J1614-518 are overlaid
 on 2FGL\,J1615.2-5138.  The H.E.S.S. experiment measured a Gaussian
-extension of $\sigma=0.23\deg\pm0.02\deg$ and $\sigma=0.15\pm0.02$ in
-the semi-major and semi-minor axis. This size corresponds to a 68\%
-containment size of $\rsixeight=0.35\deg\pm0.03\deg$ and $0.23\pm0.03$.
-This elliptical size matches the LAT size $\rsixeight=0.35\deg\pm0.03\deg$.
-Figure~\ref{hess_seds} shows that the LAT spectrum of 2FGL\,J1615.2-5138
-connects smoothly to the H.E.S.S spectrum of HESS\,J1614-518.
+extension of $\sigma=0.23\deg\pm0.02\deg$ and $\sigma=0.15\pm0.02$
+in the semi-major and semi-minor axis. This size corresponds
+to a 68\% containment size of $\rsixeight=0.35\deg\pm0.03\deg$
+and $0.23\pm0.03$.  This elliptical size matches the LAT size
+$\rsixeight=0.35\deg\pm0.03\deg$.  Figure~\ref{hess_seds} shows that
+the LAT spectrum of 2FGL\,J1615.2-5138 connects smoothly to the H.E.S.S
+spectrum of HESS\,J1614-518.  Further data collected by H.E.S.S. in 2007
+helped to resolve a double peaked structure in the H.E.S.S. data but no
+spectral variation across the source, suggesting that the emission is
+not the confusion of physically separate sources (\cite{closer_look_hess_j1614-518}).
+The source was also detected by CANGAROO-III (\cite{cangaroo_j1614-518}).
 
+This source is currently unidentifed. There are five nearby pulsars,
+but they are not luminous enough to provide the required energy output
+to power the \tev emission (\cite{closer_look_hess_j1614-518}).
 
+\todo[inline]{Swift observations}
+
+Suzaku observations of the region around HESS\,J1614-518 reveale three
+X-ray sources in the region. Suzaku source A is a hard extended source
+spatially coincident with the peak of HESS\,J1614-518. 
+
+Suzaku source B is
+in a relativly dim region in the middle of HESS\,J1614-518 and was not
+spatially resolvable. source B is spatially coincident with Pisim 22.
+
+Suzaku Source C is a foreground source.
+
+Swift observations the region and resolved six X-ray sources.\todo{citation}
+
+\todo[inline]{Emission due to SNR}
+
+\todo[inline]{Emission could be due to a PWN}
+
+\todo[inline]{Emission due to Massive Star} 
 
 \todo[inline]{Add interpretations of HESS\,J1614-518. Stefan says to
-use the Rowell et al, Suzaku observations.}
+Suzaku observations.}
 
 \subsection{2FGL\,J1632.4-4753c}
 \label{section_2FGL_J1632.4-4753c}
@@ -1243,11 +1227,11 @@ from a typical PWNe.
 
 The increased \gev and \tev size compared to the X-ray size
 has previously been observed in several aging PWNe including 
-HESS\,J1825-137 (\cite{hess_j1825_xmm_newton,hess_j1825_hess} and HESS\,J1640-465
-(\cite{hess_plane_survey,xmm_newton_hess_j_1640-466}) and can be explained
-by the electrons emitting syncrotron radiation having a shorter lifetime
-than the electrons emitting inverse Compton radiation.
-
+HESS\,J1825-137 (\cite{hess_j1825_xmm_newton,hess_j1825_hess}, HESS\,J1640-465
+(\cite{hess_plane_survey,xmm_newton_hess_j_1640-466}),
+and Vela X (\cite{vela_x_rosat,vela_x_hess}). 
+This can be explained by a different synchrotron cooling
+time for the electroncs producing X-rays and \tev gamma rays.
 Because of the spectral and spatial match between the \gev and \tev
 emission, the LAT data naturally fits into this model as being the rising
 edge of the inverse Compton component of a PWN.
@@ -1359,41 +1343,64 @@ Add interpretations paragraph.  Describe how this source will be more
 carefully analyzed in ``A cocoon of freshly accelerated cosmic rays
 detected by Fermi in the Cygnus superbubble''}
 
-\section{Conclusion}
+\section{Discussion}
 
-\todo[inline]{This conclusion needs to be written.}
+\todo[inline]{Finish the discussion.}
 
-Many extended sources. Instructive to use photons with energy
-above 10 \gev where we don't have to worry about diffuse background
-as much.
+2FGL reported on the detection of twelve spatially extended sources. Using
+two years of LAT data and a new analysis method, we present on 
+the detection of nine additional extended sources. We also reanalyze
+the spatial shape of the extended sources in 2FGL.  Finding a coherent
+source extension with different frequencies, especially at \tev energies,
+allows us to identify the LAT source. Even still, for many extended LAT
+sources the source class and emission process is still uncertain.
 
-Make some conclusion about how the LAT will eventually collect a factor
-of five more data! \pointlike will be necessary to improve the model of
-the high energy sky. Hard to do a blind analysis of LAT data.
+The position of the 21 extended LAT sources is plotted in
+figure~\ref{allsky_extended_sources}.  Most of them lie along the galactic
+plane.  This is expected because extragalactic sources are typically too
+far away to be resolvable and most Galactic sources lie along the plane.
 
-Figure~\ref{allsky_extended_sources} is an all sky map showing the
-location of all \gev extended sources. Note how most extended sources
-are in the Galactic plane.
 
-Figure~\ref{gev_vs_tev_histogram} is a histogram comparing the size of
-all extended sources seen in \gev by the LAT and in \tev by H.E.S.S..
-Note how H.E.S.S. can see smaller sources whereas the LAT can see
-bigger sources.
+Figure~\ref{compare_index_2FGL} shows a comparison of the spectral index
+of LAT detected extended sources and of all sources in 2FGL. This, and
+table~\label{known_extended_sources} and~\label{new_ext_srcs_table},
+show that the LAT observes a population of hard (index $<2$)
+extended sources above 10 \gev which connects to \tev sources.
+Figure~\ref{hess_seds} shows the LAT energy spectrum of four of the
+extended sources which were first discovered in the H.E.S.S. Galactic
+plane survey (\cite{hess_plane_survey}) and have a matching size to LAT
+extended sources.  The LAT energy spectrum connects smoothly to \tev.
+This is also true of HESS\,J1825-137 (\ref{fermi_hess_j1825}) and RX
+J1713.7-3946 (\cite{rx_j1713_lat}). We conclude that the \gev and \tev
+emission from these sources is coming from the same emission mechanism.
 
-For all extended sources seen both in \gev and \tev,
-figure~\ref{gev_vs_tev_plot} shows a comparison of their sizes.
-Note that there is pretty good agreement.
+For the LAT extended sources also seen in \tev,
+figure~\ref{gev_vs_tev_plot} shows a comparison of their sizes.  There is
+a good correlation between the \gev and \tev sizes of the sources. Even
+so, the size of PWNe are expected to vary across the \gev and \tev energy
+range and the size of HESS\,J1825-137 was seen by H.E.S.S. to vary
+between 200 \gev and 20 \tev (\cite{energy_dependent_hess_j1825}).
+HESS\,J1825-137 is significantly larger in \gev than \tev
+(\cite{fermi_hess_j1825}).  It is interesting to compare the \gev and
+\tev size of other PWN candidates, but definitively measuring this effect
+would require a more careful analysis of the LAT data using the same 
+elliptical spatial model.
 
-Note about how comparison of HESS and LAT sizes will require more accurate
-ellitpical gaussian fitting + using the same spatial model.  Interesting
-to see if there is a correlation for PWN between energy and source size!
+Figure~\ref{gev_vs_tev_histogram} compares the size of the 21 extended
+LAT sources to the 42 extended H.E.S.S. sources.  Because of the large
+field of view and all sky coverage, the LAT can more easily measure
+larger sources including the LMC and SMC.  On the other hand, the
+smaller angular resolution of Air Cherenkov detectors allows them to
+measure a population of extended sources below our sensitivity limit
+(currently at about $\approx0.2\deg$).  Fermi has a five year nominal
+livetime with a goal of ten years of operation. With increased exposure,
+the LAT will likely begin to resolving these smaller \tev sources.
 
-LAT has a planned lifetime of 5 years with (don't know how to phrase this) 
-hope to run for 10 years. Additonal data will allow us to perfrom
-more detailed morphological and spectral analysis of these sources.
-
-Improved diffuse model and better statisticsl will allow us to push
-our analysis to lower energies.
+Furthermore, our sensitivity to these extended sources will likely improve
+faster than $\sqrt{t}$ because at the highest energies, our background is
+relatively small and we are in the Poisson instead of Gaussian limit.
+Future improvements in the diffuse emission model will improve our
+sensitivity by allowing this analysis to go to lower energies.
 
 \bibliographystyle{apj}
 \bibliography{extended_catalog}
@@ -1453,31 +1460,6 @@ our analysis to lower energies.
     This plot is discussed further in section~\ref{compare_source_size}.
     }\label{compare_disk_gauss}
   \end{figure}
-
-  \begin{figure}
-    \begin{center}
-      \includegraphics{mc_plots/compare_r68.pdf}
-      % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_r68/v2/plot.py
-      \end{center}
-      \caption{
-      This plot shows that fitting the same source with different
-      spatial shapes can lead to different values of the fitted
-      extensions. On the other hand, the different shapes have a
-      good agreement about the 68\% containment radius \rsixeight.
-      It shows counts map for a simulated uniform disk extended source
-      in the energy range from 1 \gev to 100 \gev.  The source has a
-      size $\sigma=0.5\deg$, an integral flux between 1 \gev and 100
-      \gev of $3\times 10^{-8}\ph/\cm^2/\sec$, and a spectral index 2.
-      The smoothed counts from a point source with the same spectrum are
-      shown in the bottom right inset.  This source was fit with both
-      a uniform disk and a Gaussian spatial model.  The white circle
-      represents the edge of the best fit uniform disk spatial model.
-      The black circle is the fit $\sigma$ modeling the source with a
-      Gaussian hypothesis.  The dashed white and black circle are the
-      fit \rsixeight for the disk and Gaussian hypothesis. This plot is
-      discussed further in section~\ref{compare_source_size}.
-      }\label{compare_r68}
-    \end{figure}
 
 
     \begin{table}
@@ -2256,18 +2238,18 @@ our analysis to lower energies.
         \hline
         $\gamma$ &       BG &  $0.1\deg$ &  $0.2\deg$ &  $0.3\deg$ &  $0.4\deg$ &  $0.5\deg$ &  $0.6\deg$ &  $0.7\deg$ &  $0.8\deg$ &  $0.9\deg$ &    $1\deg$ &  $1.1\deg$ &  $1.2\deg$ &  $1.3\deg$ &  $1.4\deg$ &  $1.5\deg$ &  $1.6\deg$ &  $1.7\deg$ &  $1.8\deg$ &  $1.9\deg$ &    $2\deg$ \\
         \hline
-             1.5 &       x1 &      149.5 &       23.5 &       11.4 &        8.1 &        7.2 &        7.0 &        6.8 &        6.8 &        7.0 &        7.4 &        7.5 &        7.7 &        7.9 &        8.2 &        8.9 &        9.7 &        9.0 &        9.0 &        8.7 &       10.1 \\
-                 &      x10 &      145.7 &       28.9 &       18.3 &       15.1 &       15.4 &       15.0 &       16.1 &       15.8 &       16.6 &       17.6 &       18.5 &       19.9 &       21.5 &       23.6 &       25.2 &       25.2 &       21.4 &       23.0 &       23.6 &       23.8 \\
-                 &     x100 &      184.2 &       55.3 &       42.1 &       40.6 &       40.5 &       42.0 &       42.1 &       40.6 &       43.0 &       43.7 &       37.6 &       39.4 &       39.9 &       36.8 &       35.9 &       36.1 &       36.3 &       37.7 &       37.0 &       37.4 \\
-               2 &       x1 &      332.5 &       44.1 &       18.9 &       13.4 &       11.3 &       10.4 &       10.1 &       10.0 &       10.1 &       10.3 &       10.6 &       10.8 &       11.0 &       11.3 &       12.2 &       12.4 &       12.8 &       13.2 &       13.5 &       13.8 \\
-                 &      x10 &      337.9 &       55.6 &       32.4 &       27.2 &       26.4 &       25.4 &       25.6 &       26.0 &       27.8 &       28.2 &       29.2 &       29.2 &       31.1 &       30.8 &       31.5 &       32.8 &       32.1 &       34.5 &       34.8 &       36.6 \\
-                 &     x100 &      416.0 &      133.9 &       88.0 &       77.8 &       74.1 &       72.6 &       68.7 &       65.0 &       63.0 &       63.3 &       61.7 &       61.8 &       60.1 &       59.0 &       54.7 &       58.0 &       58.9 &       60.8 &       57.5 &       53.9 \\
-             2.5 &       x1 &      635.5 &       74.3 &       29.8 &       19.2 &       15.8 &       13.7 &       12.8 &       12.7 &       12.3 &       12.4 &       12.4 &       12.6 &       12.7 &       12.9 &       13.3 &       13.4 &       13.8 &       14.3 &       14.7 &       15.4 \\
-                 &      x10 &      640.0 &       97.6 &       51.7 &       39.3 &       34.6 &       33.0 &       32.7 &       32.6 &       33.0 &       33.5 &       34.6 &       35.2 &       34.7 &       36.0 &       37.3 &       37.3 &       35.7 &       36.4 &       37.5 &       38.1 \\
-                 &     x100 &      794.9 &      261.2 &      134.2 &      103.5 &       89.5 &       80.7 &       78.1 &       75.3 &       70.1 &       70.2 &       65.5 &       64.7 &       61.9 &       59.8 &       56.4 &       55.6 &       57.9 &       55.0 &       53.3 &       51.8 \\
-               3 &       x1 &      857.2 &      110.2 &       43.5 &       25.8 &       18.9 &       16.1 &       14.3 &       13.5 &       13.2 &       13.2 &       13.0 &       12.9 &       13.2 &       13.3 &       13.2 &       13.5 &       13.8 &       14.1 &       14.4 &       15.0 \\
-                 &      x10 &      931.1 &      155.1 &       70.4 &       48.3 &       40.9 &       37.3 &       35.6 &       35.0 &       35.5 &       35.8 &       36.0 &       34.9 &       35.1 &       35.1 &       37.0 &       37.7 &       35.4 &       35.8 &       36.6 &       37.8 \\
-                 &     x100 &     1119.8 &      295.6 &      180.9 &      119.4 &      101.0 &       92.0 &       86.4 &       78.5 &       73.5 &       69.9 &       66.7 &       64.9 &       63.3 &       61.2 &       57.3 &       56.7 &       56.7 &       55.0 &       50.7 &       50.4 \\
+             1.5 &       x1 &      148.3 &       23.2 &       11.2 &        8.0 &        7.1 &        6.9 &        6.8 &        6.8 &        7.0 &        7.3 &        7.5 &        7.7 &        8.0 &        8.3 &        9.1 &        9.8 &        9.0 &        9.1 &        8.8 &       10.2 \\
+                 &      x10 &      146.9 &       29.0 &       18.5 &       15.1 &       15.4 &       15.0 &       14.7 &       15.6 &       16.6 &       17.3 &       18.0 &       19.1 &       20.7 &       22.5 &       23.6 &       24.3 &       21.2 &       22.8 &       23.3 &       23.6 \\
+                 &     x100 &      184.3 &       55.1 &       43.0 &       41.0 &       40.7 &       41.7 &       40.3 &       40.8 &       43.0 &       43.6 &       38.3 &       39.5 &       40.1 &       38.5 &       36.5 &       35.8 &       36.5 &       38.1 &       36.6 &       37.1 \\
+               2 &       x1 &      327.5 &       43.1 &       18.7 &       13.3 &       11.2 &       10.4 &       10.1 &       10.1 &       10.2 &       10.4 &       10.6 &       10.9 &       11.1 &       11.5 &       12.3 &       12.6 &       13.0 &       13.4 &       13.8 &       14.2 \\
+                 &      x10 &      336.1 &       55.3 &       32.2 &       27.4 &       26.3 &       25.3 &       25.5 &       25.8 &       27.2 &       26.6 &       27.6 &       28.5 &       30.1 &       29.9 &       30.8 &       31.8 &       31.9 &       34.2 &       34.2 &       36.1 \\
+                 &     x100 &      409.6 &      128.1 &       88.6 &       76.2 &       72.7 &       71.4 &       67.8 &       65.2 &       63.6 &       63.7 &       62.0 &       63.1 &       62.4 &       61.1 &       56.0 &       58.4 &       60.1 &       62.1 &       59.5 &       55.9 \\
+             2.5 &       x1 &      622.9 &       75.0 &       29.6 &       19.0 &       15.5 &       13.6 &       12.8 &       12.7 &       12.4 &       12.5 &       12.6 &       12.9 &       12.8 &       13.1 &       13.4 &       13.7 &       14.1 &       14.6 &       15.0 &       15.7 \\
+                 &      x10 &      641.5 &       98.2 &       51.8 &       39.2 &       34.7 &       33.1 &       32.6 &       32.3 &       33.0 &       33.4 &       33.8 &       34.5 &       34.5 &       35.4 &       37.0 &       37.2 &       35.6 &       36.2 &       37.1 &       37.8 \\
+                 &     x100 &      789.7 &      260.3 &      136.9 &      102.7 &       90.1 &       80.8 &       77.2 &       74.9 &       69.1 &       70.8 &       65.8 &       64.5 &       64.3 &       62.3 &       57.1 &       57.1 &       58.8 &       57.3 &       55.6 &       54.2 \\
+               3 &       x1 &      842.0 &      109.6 &       42.9 &       25.4 &       18.7 &       15.9 &       14.3 &       13.5 &       13.3 &       13.2 &       13.1 &       13.1 &       13.4 &       13.5 &       13.5 &       13.6 &       14.1 &       14.3 &       14.7 &       15.3 \\
+                 &      x10 &      919.0 &      153.8 &       69.7 &       48.1 &       40.9 &       37.6 &       35.7 &       34.9 &       35.3 &       35.3 &       35.3 &       35.2 &       35.1 &       35.5 &       37.0 &       37.7 &       35.3 &       35.5 &       36.4 &       37.5 \\
+                 &     x100 &     1077.5 &      289.1 &      180.2 &      119.2 &      101.0 &       92.4 &       86.2 &       79.3 &       74.3 &       70.8 &       67.2 &       66.4 &       65.0 &       62.9 &       58.4 &       56.6 &       57.4 &       55.9 &       54.3 &       52.2 \\
         \hline
         \multicolumn{22}{}{} \\
         \multicolumn{22}{}{} \\
@@ -2277,18 +2259,18 @@ our analysis to lower energies.
         \hline
         $\gamma$ &       BG &  $0.1\deg$ &  $0.2\deg$ &  $0.3\deg$ &  $0.4\deg$ &  $0.5\deg$ &  $0.6\deg$ &  $0.7\deg$ &  $0.8\deg$ &  $0.9\deg$ &    $1\deg$ &  $1.1\deg$ &  $1.2\deg$ &  $1.3\deg$ &  $1.4\deg$ &  $1.5\deg$ &  $1.6\deg$ &  $1.7\deg$ &  $1.8\deg$ &  $1.9\deg$ &    $2\deg$ \\
         \hline
-             1.5 &       x1 &       43.9 &        8.2 &        4.3 &        3.2 &        2.8 &        2.6 &        2.6 &        2.6 &        2.6 &        2.6 &        2.6 &        2.7 &        2.8 &        2.8 &        3.0 &        3.0 &        3.1 &        3.3 &        3.4 &        3.5 \\
-                 &      x10 &       44.6 &        9.1 &        5.8 &        5.0 &        5.0 &        5.1 &        5.0 &        5.4 &        5.3 &        5.7 &        6.0 &        6.3 &        6.7 &        6.5 &        7.1 &        7.7 &        7.8 &        8.2 &        8.4 &        8.7 \\
-                 &     x100 &       47.2 &       13.3 &       11.4 &       10.6 &       10.6 &       10.7 &       11.9 &       12.7 &       13.2 &       13.6 &       15.3 &       16.2 &       17.4 &       18.4 &       19.3 &       20.1 &       20.8 &       21.8 &       22.6 &       24.0 \\
-               2 &       x1 &       49.1 &        8.5 &        4.4 &        3.3 &        2.8 &        2.7 &        2.7 &        2.7 &        2.7 &        2.7 &        2.7 &        2.8 &        2.9 &        3.0 &        3.1 &        3.2 &        3.2 &        3.4 &        3.5 &        3.6 \\
-                 &      x10 &       48.3 &        9.6 &        6.0 &        5.2 &        5.2 &        5.3 &        5.3 &        5.6 &        5.5 &        5.9 &        6.4 &        6.7 &        7.0 &        7.2 &        7.7 &        8.0 &        8.3 &        8.6 &        9.0 &        9.3 \\
-                 &     x100 &       51.1 &       14.8 &       11.7 &       11.4 &       11.5 &       12.0 &       13.1 &       14.0 &       14.4 &       15.2 &       16.1 &       17.1 &       18.7 &       19.7 &       20.5 &       21.9 &       22.9 &       23.7 &       24.1 &       25.2 \\
-             2.5 &       x1 &       52.1 &        9.2 &        4.6 &        3.3 &        2.9 &        2.7 &        2.7 &        2.7 &        2.7 &        2.7 &        2.7 &        2.8 &        2.9 &        2.9 &        3.0 &        3.1 &        3.2 &        3.4 &        3.4 &        3.6 \\
-                 &      x10 &       53.0 &       10.5 &        6.2 &        5.4 &        5.2 &        5.2 &        5.4 &        5.6 &        5.8 &        6.1 &        6.4 &        6.6 &        6.9 &        7.3 &        7.5 &        8.2 &        8.4 &        8.7 &        8.9 &        9.3 \\
-                 &     x100 &       55.5 &       15.9 &       12.7 &       12.0 &       11.9 &       12.3 &       13.0 &       14.4 &       14.7 &       15.2 &       16.4 &       17.2 &       19.1 &       19.6 &       20.6 &       21.9 &       23.0 &       23.4 &       24.4 &       24.9 \\
-               3 &       x1 &       54.6 &        9.5 &        4.7 &        3.4 &        2.9 &        2.7 &        2.6 &        2.5 &        2.5 &        2.6 &        2.6 &        2.7 &        2.7 &        2.9 &        2.9 &        3.0 &        3.1 &        3.2 &        3.4 &        3.4 \\
-                 &      x10 &       55.1 &       10.5 &        6.2 &        5.3 &        5.2 &        5.3 &        5.2 &        5.4 &        5.5 &        5.7 &        6.0 &        6.4 &        6.6 &        7.0 &        7.3 &        7.9 &        8.1 &        8.5 &        8.7 &        8.9 \\
-                 &     x100 &       59.8 &       16.0 &       12.7 &       11.8 &       11.6 &       12.2 &       12.7 &       14.1 &       14.2 &       14.6 &       16.0 &       16.9 &       17.9 &       19.0 &       20.1 &       20.6 &       21.6 &       22.1 &       22.7 &       23.5 \\
+             1.5 &       x1 &       44.4 &        8.1 &        4.3 &        3.2 &        2.7 &        2.6 &        2.5 &        2.5 &        2.4 &        2.4 &        2.5 &        2.6 &        2.7 &        2.7 &        2.9 &        2.9 &        3.1 &        3.2 &        3.3 &        3.4 \\
+                 &      x10 &       45.2 &        9.3 &        5.9 &        5.0 &        4.9 &        5.1 &        5.0 &        5.2 &        5.3 &        5.7 &        5.9 &        6.2 &        6.6 &        6.5 &        7.0 &        7.7 &        7.8 &        8.2 &        8.4 &        8.8 \\
+                 &     x100 &       47.2 &       13.5 &       11.5 &       10.6 &       10.6 &       10.8 &       12.0 &       12.7 &       13.3 &       13.7 &       15.2 &       16.1 &       17.2 &       18.2 &       19.1 &       19.8 &       20.7 &       21.3 &       22.1 &       23.4 \\
+               2 &       x1 &       49.6 &        8.3 &        4.4 &        3.2 &        2.8 &        2.6 &        2.6 &        2.6 &        2.6 &        2.6 &        2.7 &        2.7 &        2.8 &        2.9 &        3.0 &        3.2 &        3.2 &        3.4 &        3.5 &        3.5 \\
+                 &      x10 &       48.5 &        9.6 &        6.0 &        5.2 &        5.1 &        5.2 &        5.2 &        5.4 &        5.5 &        5.8 &        6.4 &        6.7 &        7.0 &        7.2 &        7.6 &        8.0 &        8.3 &        8.7 &        9.0 &        9.3 \\
+                 &     x100 &       51.5 &       14.8 &       11.8 &       11.5 &       11.5 &       12.0 &       13.1 &       14.0 &       14.4 &       15.3 &       16.1 &       16.8 &       18.5 &       19.3 &       20.1 &       21.3 &       22.3 &       23.1 &       23.4 &       24.5 \\
+             2.5 &       x1 &       53.0 &        9.2 &        4.5 &        3.3 &        2.8 &        2.7 &        2.6 &        2.6 &        2.6 &        2.6 &        2.7 &        2.8 &        2.7 &        2.8 &        2.9 &        3.0 &        3.2 &        3.4 &        3.5 &        3.6 \\
+                 &      x10 &       53.8 &       10.6 &        6.3 &        5.4 &        5.1 &        5.2 &        5.3 &        5.5 &        5.7 &        6.1 &        6.4 &        6.6 &        6.9 &        7.3 &        7.5 &        8.2 &        8.4 &        8.7 &        9.0 &        9.4 \\
+                 &     x100 &       56.6 &       15.8 &       12.9 &       11.9 &       11.9 &       12.4 &       13.1 &       14.3 &       14.7 &       15.2 &       16.3 &       17.0 &       18.9 &       19.3 &       20.1 &       21.2 &       22.2 &       22.7 &       23.6 &       24.1 \\
+               3 &       x1 &       55.1 &        9.3 &        4.7 &        3.3 &        2.9 &        2.6 &        2.5 &        2.5 &        2.5 &        2.5 &        2.6 &        2.6 &        2.7 &        2.8 &        2.9 &        3.0 &        3.0 &        3.2 &        3.4 &        3.4 \\
+                 &      x10 &       55.7 &       10.5 &        6.3 &        5.3 &        5.2 &        5.3 &        5.2 &        5.4 &        5.6 &        5.7 &        6.0 &        6.4 &        6.6 &        6.9 &        7.1 &        7.9 &        8.1 &        8.5 &        8.7 &        8.9 \\
+                 &     x100 &       60.1 &       16.0 &       12.8 &       11.7 &       11.7 &       12.3 &       12.7 &       14.0 &       14.1 &       14.6 &       15.8 &       16.5 &       17.6 &       18.6 &       19.5 &       19.9 &       21.0 &       21.3 &       22.0 &       22.9 \\
         \hline
       \end{tabular}
       \caption{The detection threshold to resolve a uniform disk spatially
