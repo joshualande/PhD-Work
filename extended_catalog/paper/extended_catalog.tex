@@ -619,10 +619,11 @@ sources. Only sources with $\tsext>\tsinc$ are considered as extended.
 \subsection{Additional Analysis}
 
 Based on size vs. physical distance considerations,
-we expect most extended sources to be inside our Galaxy.  Unfortunately, the \gev emission
+we expect most extended sources to be located inside our Galaxy
+adn thus to be concentrated along the Galactic plane.  Unfortunately, the \gev emission
 in the Galactic plane is dominated by extremely structured 
 diffuse emission from the interactions of cosmic rays with the
-intergalactic medium.  Finding sources on top of this emission is difficult
+interstellar medium.  Finding sources on top of this emission is difficult
 \citep{first_diffuse_paper} as has been discussed in 1FGL and 2FGL
 \citep{first_cat,second_cat}.  Furthermore, the Galactic plane is crowded
 and it is often difficult to correctly model nearby sources.  Because of this,
@@ -633,11 +634,13 @@ we perform several analysis crosschecks.
 For each candidate, we generated a map of residual \ts by adding a new
 source of spectral index 2 into the region and finding the increase in
 likelihood when fitting its flux. \ts maps are useful to look for residual
-structure in the sky mode.  Figure~\ref{res_tsmaps} shows a residual \ts
-map for the extended source IC443.  We also generated plots of the sum of
+structure in the sky model.  Figure~\ref{res_tsmaps} shows a residual \ts
+map for the extended source IC443.  The residual \ts map indicates that
+the spatially extended model for IC443 is a significantly better description
+of the observed photons.
+We also generated plots of the sum of
 all counts within a given distance of the source and compared it to the
-model predictions of a point source.  The plots were binned uniformly
-in $\Delta \theta^2$ so that an isotropic background would be flat.
+model predictions of a point source.  
 An example radial integral plot is shown for the extended source IC443
 in figure~\ref{four_plots_ic443}(c).  For each source, we also made
 Galactic and extragalactic diffuse emission subtracted smoothed counts
@@ -1729,6 +1732,22 @@ resolve these smaller \tev sources.
   \end{figure}
 
 
+\begin{figure}
+  \begin{center}
+  \includegraphics{ic443_plots/res_tsmap_ic443.pdf}
+  % plot from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/res_tsmap_ic443/v1
+
+  \caption{
+  A test statistic map generated for the region around the SNR 
+  IC443 using 1-100 \gev photons.  (a) test statistic map after
+  subtracting IC443 modeled as a point source. (b) same as (a), but
+  IC443 modeled as extended source. Crosses represent sources included
+  in the model of the region.  Such maps were generated for all extended
+  source candidates.}
+  \label{res_tsmaps}
+  \end{center}
+\end{figure}
+
 \clearpage
 \begin{figure}
   \begin{center}
@@ -1748,22 +1767,6 @@ resolve these smaller \tev sources.
     appear like this.
     }
     \label{example_bad_fit}
-  \end{center}
-\end{figure}
-
-\begin{figure}
-  \begin{center}
-  \includegraphics{ic443_plots/res_tsmap_ic443.pdf}
-  % plot from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/res_tsmap_ic443/v1
-
-  \caption{
-  A test statistic map generated for the region around the SNR 
-  IC443 using 1-100 \gev photons.  (a) test statistic map after
-  subtracting IC443 modeled as a point source. (b) same as (a), but
-  IC443 modeled as extended source. Crosses represent sources included
-  in the model of the region.  Such maps were generated for all extended
-  source candidates.}
-  \label{res_tsmaps}
   \end{center}
 \end{figure}
 
