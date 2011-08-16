@@ -643,21 +643,21 @@ all counts within a given distance of the source and compared it to the
 model predictions of a point source.  
 An example radial integral plot is shown for the extended source IC443
 in figure~\ref{four_plots_ic443}(c).  For each source, we also made
-Galactic and extragalactic diffuse emission subtracted smoothed counts
+diffuse-emission-subtracted smoothed counts
 maps. Figure~\ref{four_plots_ic443}(d) shows an example for IC443.
 
 % 2FGL J1856.2+0450c = P72Y3047 for
 We then inspected the residual \ts, smoothed counts maps, and radial
 integral distributions to identify cases in which the extension fit
-is clearly biased by large-scale residuals in the diffuse emission
+is clearly influenced by large-scale residuals in the diffuse emission
 and hence the extension measurement unreliable.  An example of such a
 case is shown in figure~\ref{example_bad_fit}. It shows a Galactic and
-isotropic diffuse emission subtracted smoothed counts map of this source
+isotropic diffuse-emission-subtracted smoothed counts map of this source
 using 1-100 \gev photons.  In this region along the Galactic plane,
 there appears to be large-scale residual in the diffuse emission. As
 a result, 2FGL\,J1856.2+0450c fit to an extension of 1.83\deg and the
-result is statistically significant with \tsext=45.4.  By looking at
-the residuals, it is clear that this complicated region is not fit well
+result is statistically significant with \tsext=45.4. However, by looking at
+the residuals it is clear that this complicated region is not fit well
 even though the source's extension is statistically significant. We do
 not report sources as extended that fail this inspection.
 % information came from
@@ -665,7 +665,7 @@ not report sources as extended that fail this inspection.
 
 For the remaining candidates, 
 we took the spatial and spectral model found using \pointlike and
-redetermined the spectral 
+re-determined the spectral 
 parameters using
 \gtlike.  We used 
 the `binned likelihood' mode of \gtlike on a $14\deg\times14\deg$
@@ -694,11 +694,12 @@ used in the creation of the 2FGL catalog that were required.
 % Alternative PSF
 
 We estimate a systematic error on the extension of a source due to
-uncertainty in our knowledge of the angular resolution of the LAT.  Before
+uncertainty in our knowledge of the LAT PSF.  Before
 launch, the LAT PSF was determined by a detector simulation which was
-verified in accelerator tests \citep{atwood_LAT_mission}.  A discrepancy
-was found in flight data above a few \gev in the PSF compared to the
-shape of bright AGN.  A publication on this issue is in preparation
+verified in accelerator tests \citep{atwood_LAT_mission}. However,
+in-flight data revealed a discrepancy
+above a few \gev in the PSF compared to the
+photon angular distribution of bright AGN.  A publication on this issue is in preparation
 \citep{lat_on_orbit_psf}.  Subsequently, the PSF was fit empirically to
 bright AGN and this empirical parameterization is the default PSF used
 in the P7\_V6 IRFs.  To account for this uncertainty in our knowledge of
@@ -708,19 +709,19 @@ using the two PSFs as a systematic error on the extension of a source.
 The same approach was used in
 \citep{ic443}.  At high energies, we believe that our parameterization
 of the PSF from bright AGN is substantially better than the Monte Carlo
-representation of the PSF so this systematic errors is conservative.
+representation of the PSF so this estimate of systematic errors is conservative.
 
 % Alternate Diffuse
 
 We estimate a second systematic error on the extension of a source
 due to uncertainty in the model of the Galactic diffuse emission by
-using an alternative diffuse model. The alternative model was based on
-the GALPROP\footnote{GALPROP is a software package for calculating the
+using an alternative diffuse model. An alternative model was based upon
+GALPROP\footnote{GALPROP is a software package for calculating the
 Galactic $\gamma$-ray emission based on a model of cosmic-ray propagation
 in the Galaxy. See \url{http://galprop.stanford.edu/} for details and
-references} model used in the LAT analysis of the isotropic diffuse
+references} and used in the LAT analysis of the isotropic diffuse
 emission \citep{isotropic_lat}.  
-The intensities of various contributions to the galactic
+The intensities of various components to the galactic
 diffuse emission are then fitted individually using a spatial
 distribution of the intensities within the ROI 
 as predicted by the model.
@@ -740,7 +741,7 @@ A similar crosscheck was used in the
 LAT Collaboration's analysis of RX J1713.7-3946 \citep{rx_j1713_lat}.
 
 It is not expected that this diffuse model is superior to the standard
-LAT model.  But adding degrees of freedom to the background model can
+LAT model that was obtained through an all-sky fit.  But adding degrees of freedom to the background model can
 remove likely spurious sources that correlate with features in the
 Galactic diffuse emission.  Therefore, this tests systematics that may
 be due to incorrect modeling of the diffuse emission in the region.
@@ -750,7 +751,7 @@ be correlated to the systematic due to uncertainty in the Galactic diffuse
 emission so the total systematic error on the extension of a source so
 we obtain the total systematic error by adding them in quadrature.
 
-\section{Analysis of Extended Sources in 2FGL}
+\section{Analysis of Extended Sources Identified in 2FGL}
 \label{validate_known}
 
 % 6 SNRs 
@@ -769,18 +770,19 @@ Using 1-100 \gev photons, our analysis significantly detected the
 extension of all six SNRs.
 % 2 galaxies
 
-Two nearby galaxies the Large Magalenic Cloud and the Small Magalenic
-Cloud were included in 2FGL \citep{lmc,smc}.  They were significantly
+Two nearby satellite galaxies of the Milky Way the Large Magalenic Cloud (LMC)
+and the Small Magalenic
+Cloud (SMC) were included in 2FGL as spatially extended sources \citep{lmc,smc}.  They were significantly
 detected using 1-100 \gev photons. Our
 fit extension is comparable to the published result, but we note that
-previous publication used a more complicated two Gaussian surface
-brightness spatial model when fitting the LMC.
+previous LAT collaboration publication on LMC used a more complicated two Gaussian surface
+brightness spatial model when fitting it (\citep{lmc}).
 
 % 3 PWN
 Three PWNe Vela X, MSH 15-52, and HESS\,J1825-137 were
-included in 2FGL \citep{velax,msh1552,fermi_hess_j1825}.  Using photons
-with energy above 10 \gev, we significantly detected the extension of
-HESS\,J1825-137.  To improve the model of this source, we removed the
+already identified in 2FGL \citep{velax,msh1552,fermi_hess_j1825}.  
+HESS\,J1825-137 was significantly detected using 10-100 \gev photons.
+To improve the model of this source, we removed the
 nearby catalog source 2FGL\,J1823.1-1338c which is part of the extended
 source.  To avoid confusion with the nearby bright pulsar PSR J1509-5850, MSH 15-52 must be
 analyzed at high energies.  Using photons with energies above 10 \gev,
@@ -789,7 +791,7 @@ size with an extension significance of \tsext=6.5.
 
 % failed to detect vela x + cen a
 Our analysis was unable to resolve Vela X which would have required first
-removing the pulsed photons from the Vela pulsar. This is beyond the
+removing the pulsed photons from the Vela pulsar which is beyond the
 scope of this paper.  Our analysis also failed to detect a significant
 extension for the Centaurus A Lobes \citep{cen_a_lat}. This is because
 the source's emission is significantly different from a uniform
@@ -809,20 +811,21 @@ list for completeness.
 To validate our method, we test LAT sources associated with AGN for
 extension.  \gev emission from AGN is believed to originate from the cores
 of kpc-scale jets of distant galaxies.  Therefore AGN are not expected
-to be spatially resolvable and provide a good calibration source to
+to be spatially resolvable by the LAT and provide a good calibration source to
 demonstrate the efficacy of our tool.  We note that mpc-scale $\gamma$-ray
 halos around AGNs have been hypothesized \citep{pair_halo_paper} which
 could be resolved by the LAT However, no such halo has been discovered
 in the LAT data so far.
 
-Following 1FGL, the LAT collaboration published a list called 1LAC
+Following 1FGL, the LAT collaboration published a list 
 of sources that
-had a high probability association with AGN \citep{first_agn_cat}.
+had a high probability association with AGN 
+called 1LAC \citep{first_agn_cat}.
 1FGL had 709 1FGL sources associated with 671 distinct AGN at high
 latitude ($|b|>10\deg$).  
-Using two years of data and 2FGL, the LAT collaboraiton
+Using two years of data and 2FGL, the LAT collaboration
 associated 1016 2FGL sources
-with AGN \citep{second_agn_cat}.
+with AGN called 2LAC \citep{second_agn_cat}.
 To avoid systematic problems with AGN classification, we
 selected 885 out of the 1016 AGN which made it into the clean AGN sub-sample.  An AGN
 association is considered clean only if it has a high probability
@@ -833,7 +836,7 @@ confusion may look like a spatially extended source and flagged catalog
 sources may correlate with unmodeled structure in the diffuse emission.
 
 Of the 885 clean AGN, we select 783 of these 2FGL sources which
-are significant above 1 \gev and fit each of them for extension.
+are significantly-detected above 1 \gev and fit each of them for extension.
 A histogram of the \tsext values computed for these AGN is
 shown in figure~\ref{agn_ts_ext}. Overlaid on the plot is the
 $\chi^2/2$ distribution of equation~\ref{ts_ext_distribution}.
@@ -1754,7 +1757,7 @@ resolve these smaller \tev sources.
     \includegraphics{source_plots/example_bad_fit.pdf}
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/example_bad_fit/v3/run.py
     \caption{
-    A Diffuse emission subtracted 1-100 \gev counts map of the region
+    A diffuse-emission-subtracted 1-100 \gev counts map of the region
     around 2FGL\,J1856.2+0450c smoothed by a 0.1\deg Gaussian kernel. The
     red cross and circle are the center and size of the best fit radially
     symmetric source with a uniform intensity profile. The result is
@@ -1953,7 +1956,7 @@ the test statistic for the two point source test.
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J0823.3-4248/v2/source_1FGL_J0823.3-4248.pdf
-  \caption{A Diffuse emission subtracted 1-100
+  \caption{A diffuse-emission-subtracted 1-100
   \gev counts map of the region around 2FGL\,J0823.0-4246 smoothed
   by a 0.1\deg Gaussian kernel.  The red star is the catalog position
   of this source.  The red cross and circle are the best fit position
@@ -1977,7 +1980,7 @@ the test statistic for the two point source test.
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1628.6-2419c/v2/run.py
   \caption{
-  A Diffuse emission subtracted 1-100 \gev counts
+  A diffuse-emission-subtracted 1-100 \gev counts
   map of (a) the region around 2FGL\,J1627.0-2425 smoothed by a 0.1\deg
   Gaussian kernel (b) also the emission from the background source 
   2FGL\,J1625.7-2526 subtracted.  The red star is the catalog's
@@ -1999,7 +2002,7 @@ the test statistic for the two point source test.
     % this plot came from
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/RX_J1713.7-3946/v6/run.py
   \end{center}
-  \caption{A Diffuse emission subtracted 1-100 \gev
+  \caption{A diffuse-emission-subtracted 1-100 \gev
   counts map of (a) the region around 2FGL\,J1712.4-3941 smoothed by
   a 0.25\deg Gaussian kernel and (b) also the emission 
   from the background sources subtracted.
@@ -2022,7 +2025,7 @@ the test statistic for the two point source test.
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Vela_Jr/v2/source_Vela_Jr.pdf
-  \caption{A Diffuse emission subtracted 10-100
+  \caption{A diffuse-emission-subtracted 10-100
   \gev counts map of the region around 2FGL\,J0851.7-4635 smoothed
   by a 0.25\deg Gaussian kernel. The red star is the catalog position of this source.  The red cross
   and circle are the best fit position and extension of the source
@@ -2047,7 +2050,7 @@ the test statistic for the two point source test.
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1613.6-5100c/v2/source_1FGL_J1613.6-5100c.pdf
   \caption{
-    A Diffuse emission subtracted 10-100
+    A diffuse-emission-subtracted 10-100
     \gev counts map of the region around 2FGL\,J1615.0-5051 (upper
     left) and 2FGL\,J1615.2-5138 (lower right) smoothed by a 0.1\deg
     Gaussian kernel.  The red stars are the catalog positions of these
@@ -2078,7 +2081,7 @@ the test statistic for the two point source test.
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1632.9-4802c/v2/source_1FGL_J1632.9-4802c.pdf
-  \caption{A Diffuse emission subtracted 10-100
+  \caption{A diffuse-emission-subtracted 10-100
   \gev counts map of the region around 2FGL\,J1632.4-4753c smoothed by
   a 0.1\deg Gaussian kernel.  This source is in a crowded region.
   The red star is the catalog position of this source.  The red
@@ -2108,7 +2111,7 @@ the test statistic for the two point source test.
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1837.5-0659c/v2/source_1FGL_J1837.5-0659c.pdf
   \caption{
-  A Diffuse emission subtracted 10-100 \gev counts map of
+  A diffuse-emission-subtracted 10-100 \gev counts map of
   (a)
   the region around 2FGL\,J1837.3-0700c smoothed by a 0.1\deg Gaussian
   kernel and (b) also the emission from the background 
