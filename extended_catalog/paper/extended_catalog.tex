@@ -1,10 +1,11 @@
 \documentclass[12pt,preprint]{aastex}
-%\documentclass[preprint]{aastex}
 
 \bibliographystyle{apj}
 
+\newif\ifcolorfigure
+%\colorfiguretrue
+\colorfigurefalse
 
-\usepackage[textwidth=0.8in,colorinlistoftodos]{todonotes}
 
 
 %#For adding line numbers:
@@ -65,6 +66,7 @@
 \newcommand{\gtobssim}{\ensuremath{\mathtt{gtobssim}}\xspace}
 \newcommand{\minuit}{\ensuremath{\mathtt{minuit}}\xspace}
 
+\usepackage{color}
 \newcommand{\hl}[1]{{\color{red}#1}}
 
 
@@ -300,7 +302,7 @@ we use a semi-analytic calculation to speed up the calculation of
 the expected photon distribution. The expected photon 
 distribution can be written as
 \begin{equation}
-  \text{PDF}(\vec r) = \int  \text{PSF}(|\vec r - \vec r'|)I_\text{src}(\vec r') r'^2 dr' d\phi'
+  \text{PDF}(\vec r) = \int  \text{PSF}(|\vec r - \vec r'|)I_\text{src}(\vec r') r' dr' d\phi'
 \end{equation}
 For the LAT, the PSF can be parameterized by a {\em King function}
 \begin{equation}
@@ -313,7 +315,7 @@ where $u=(r/\sigma)^2/2$ and $\sigma$ and $\gamma$ are free parameters
 \citep{matthew_kerr_thesis}.  For radially symmetric extended sources,
 the angular part of the integral can be evaluated analytically
 \begin{align}
-  \text{PDF}(u) & = \int_0^\infty r'^2 dr'
+  \text{PDF}(u) & = \int_0^\infty r' dr'
   I_\text{src}(v) 
   \int_0^{2\pi} d\phi' 
   \text{PSF}(\sqrt{2\sigma^2(u+v-2\sqrt{uv}\cos(\phi-\phi'))})
@@ -931,8 +933,9 @@ This extended source is spatially coincident with the middle-aged
 SNR Puppis A.  Puppis A has been studied in detail in radio
 (\cite{puppis_a_vla}, and references therein) and  X-ray 
 (\cite{rosat_puppis_a,suzaku_puppis_a}, and references therein)
-The highest resolution image of the entire source was obtained
-by \rosat and contours corresponding to this
+Mosaic \rosat observations of Puppis A produced the highest
+resolution X-ray image of the source
+and contours corresponding to this
 image are overlaid on figure~\ref{1FGL_J0823.3-4248} and match the
 inferred \gev size \citep{rosat_puppis_a}.
 Puppis A's distance was estimated at 2.2 kpc \citep{reynoso_1995,reynoso_2003}
@@ -940,7 +943,7 @@ which leads to a 1-100 \gev luminosity of $\sim 3\times 10^{34}$ ergs/\s.
 
 No molecular clouds have been observed directly ajacent to Puppis A 
 \citep{co_eastern_puppis_a}.
-This is similar to the the LAT detected SNR the Cyngus Loop \citep{cygnus_loop_lat}.
+This is similar to the LAT detected SNR the Cyngus Loop \citep{cygnus_loop_lat}.
 The luminolsity of Puppis A is also smaller than that of 
 other SNRs believed to interact with molecular clouds
 \citep{w51c,ic443,w44,w28,w49b_lat}.
@@ -1512,18 +1515,23 @@ resolve these smaller \tev sources.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{ic443_plots/four_plots_ic443.eps}
+    \ifcolorfigure
+      \includegraphics{ic443_plots/four_plots_ic443_color.eps}
+    \else
+      \includegraphics{ic443_plots/four_plots_ic443_bw.eps}
+    \fi
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/four_plots_ic443/v1/run.py
     \caption{
     Counts and test statistic profiles for the SNR IC443. (a) \ts
-    vs. extension of the source. (b) \tsext for individual energy bands. (c)
-    observed radial profile of counts in comparison to the expected profiles
-    for a point source (blue) and a spatially extended source (red) . (d)
-    smoothed count map after subtraction of the diffuse emission compared
-    to the LAT PSF (inset).  Plots (a), (c), and (d) use only 1-100 \gev photons. 
-    Plots (c) and (d)
-    use only photons which converted in the front
-    part of the detector and have an improved angular resolution.
+    vs. extension of the source. (b) \tsext for individual energy
+    bands. (c) observed radial profile of counts in comparison to the
+    expected profiles for a spatially extended source (solid and colored
+    red in the online version) and for a point source (dashed and colored
+    blue in the online version).  (d) smoothed count map after subtraction
+    of the diffuse emission compared to the LAT PSF (inset).  Plots (a),
+    (c), and (d) use only 1-100 \gev photons.  Plots (c) and (d) use
+    only photons which converted in the front part of the detector and
+    have an improved angular resolution.
     }
     \label{four_plots_ic443}
   \end{center}
@@ -1532,19 +1540,25 @@ resolve these smaller \tev sources.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{mc_plots/compare_disk_gauss.eps}
-    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_disk_gauss/v2/plot.py
+    \ifcolorfigure
+      \includegraphics{mc_plots/compare_disk_gauss_color.eps}
+    \else
+      \includegraphics{mc_plots/compare_disk_gauss_bw.eps}
+    \fi
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_disk_gauss/v3/plot.py
     \end{center}
     \caption{
-    A comparison of a Gaussian and disk like surface brightness profile
+    A comparison of a Gaussian and disk surface brightness profiles
     of extended sources before and after convolving with the PSF for two
-    energy ranges.  The black line is the PSF that would be observed
-    for a power-law source of spectral index 2. The dashed red line
-    is the brightness profile of a Gaussian with $\rsixeight=0\fdg5$.
-    The dashed blue line is the brightness profile for a uniform disk
-    with $\rsixeight=0\fdg5$.  The solid red and blue lines show the
-    convolution of the Gaussian and uniform disk brightness profiles
-    with the LAT PSF.
+    energy ranges.  The solid black line is the PSF that would be observed
+    for a power-law source of spectral index 2. The dashed line
+    and the dash-dot line are 
+    the brightness profile of a Gaussian with $\rsixeight=0\fdg5$
+    and the convolution of this profile with the LAT PSF respectivly
+    (colored red in the online version)
+    The dash-dot-dot and the dot-dot line are the brightness profile of a uniform disk
+    with $\rsixeight=0\fdg5$ and the convolution 
+    of this profile with the LAT PSF respectivly (colored blue in the online version).
     }\label{compare_disk_gauss}
   \end{figure}
 
@@ -1605,16 +1619,21 @@ resolve these smaller \tev sources.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{mc_plots/ts_ext_emin_1000.eps}
-    % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/ts_ext/v3/plot.py
-    % using data from /nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/ts_ext/v3_emin_1000/merged.hdf5
+    \ifcolorfigure
+    \includegraphics{mc_plots/ts_ext_emin_1000_color.eps}
+    \else
+    \includegraphics{mc_plots/ts_ext_emin_1000_bw.eps}
+    \fi
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/ts_ext/v4/plot.py
     \end{center}
     \caption{
     Distribution of the test statistic \tsext of a likelihood ratio
     test when fitting the extension of a point source.  The four plots
     represent simulated point sources of different spectral indices and
-    the different colors represent point sources with different 100 \mev
-    to 100 \gev integral fluxes.  The dashed red line is the cumulative
+    the different lines (colored in the online version) 
+    represent point sources with different 100 \mev
+    to 100 \gev integral fluxes.  The dashed line (colored red in online version)
+    is the cumulative
     density function of equation~\ref{ts_ext_distribution}.
     }\label{ts_ext_mc}
   \end{figure}
@@ -1623,7 +1642,11 @@ resolve these smaller \tev sources.
 
 \begin{figure}
   \begin{center}
-    \includegraphics{mc_plots/index_sensitivity.eps}
+    \ifcolorfigure
+    \includegraphics{mc_plots/index_sensitivity_color.eps}
+    \else
+    \includegraphics{mc_plots/index_sensitivity_bw.eps}
+    \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/sensitivity/v12/plot/plot_vs_index.py
     \end{center}
     \caption{
@@ -1639,7 +1662,11 @@ resolve these smaller \tev sources.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{mc_plots/all_sensitivity.eps}
+    \ifcolorfigure
+    \includegraphics{mc_plots/all_sensitivity_color.eps}
+    \else
+    \includegraphics{mc_plots/all_sensitivity_bw.eps}
+    \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/sensitivity/v12/plot/plot_all.py
     \end{center}
     \caption{the LAT detection threshold for four spectral indices and
@@ -1648,10 +1675,13 @@ resolve these smaller \tev sources.
     threshold when using 1-100 \gev photons and the right plots are
     the detection threshold when using 10-100 \gev photons.  The flux
     is integrated only in the selected energy range.  Overlaid on this
-    plot are the LAT detected extended sources placed by their nearby
-    Galactic diffuse emission and color coded by their spectral index.
-    The black point in plot (d) below the green line is MSH 15-52 which
-    was found by our analysis to have $\tsext=6.5$.  
+    plot are the LAT detected extended sources placed by the magnitude of
+    the nearby Galactic diffuse emission and the energy range they were
+    analyzed with.  The stars (colored red in the electronic version) are
+    sources with a spectral index closer to 1.5, the triangles (colored
+    blue) an index closer to 2, and the circles (colored green) an index
+    closer to 2.5 The circle in plot (d) below the sensitivity line is
+    MSH 15-52 which was found by our analysis to have $\tsext=6.5$.
     }\label{all_sensitivity} 
   \end{figure}
 
@@ -1736,20 +1766,25 @@ resolve these smaller \tev sources.
 
 \begin{figure}
   \begin{center}
-    \includegraphics{mc_plots/time_sensitivity.eps}
+    \ifcolorfigure
+      \includegraphics{mc_plots/time_sensitivity_color.eps}
+    \else
+      \includegraphics{mc_plots/time_sensitivity_bw.eps}
+    \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/sensitivity/v12/plot/plot_vs_time.py
     \end{center}
     \caption{
     \hl{
     The LAT's projected detection threshold to extension after 10 years for a power-law
     source of spectral index 2 against 10 times the isotropic background
-    in the energy range from 1-100 \gev (solid red) and 10-100 \gev
-    (dashed blue). The solid gray region is the 
-    detection threshold assuming the sensitivity improves from the 2
-    year threshold by the square root of time (top edge) and linearly with
+    in the energy range from 1 \gev to 100 \gev (solid line colored red in the electronic
+    version) and 10 \gev to 100 \gev
+    (dashed line colored blue in the electronic version). The solid gray region is the 
+    detection threshold assuming the sensitivity improves from 2 to 10
+    years by the square root of time (top edge) and linearly with
     time (bottom edge).  The lower plot shows the factor increase in
     sensitivity.  For small extended sources, our detection threshold
-    improves by a factor better than the square root of time. 
+    to the extension of a source will improve by a factor better than the square root of time. 
     }
     }\label{time_sensitivity}
   \end{figure}
@@ -1757,7 +1792,11 @@ resolve these smaller \tev sources.
 
 \begin{figure}
   \begin{center}
-  \includegraphics{ic443_plots/res_tsmap_ic443.eps}
+  \ifcolorfigure
+    \includegraphics{ic443_plots/res_tsmap_ic443_color.eps}
+    \else
+    \includegraphics{ic443_plots/res_tsmap_ic443_bw.eps}
+    \fi
   % plot from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/res_tsmap_ic443/v1
 
   \caption{
@@ -1774,20 +1813,25 @@ resolve these smaller \tev sources.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{source_plots/example_bad_fit.eps}
+    \ifcolorfigure
+    \includegraphics{source_plots/example_bad_fit_color.eps}
+    \else
+    \includegraphics{source_plots/example_bad_fit_bw.eps}
+    \fi
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/example_bad_fit/v3/run.py
     \caption{
     A diffuse-emission-subtracted 1-100 \gev counts map of the region
     around 2FGL\,J1856.2+0450c smoothed by a 0\fdg1 Gaussian kernel. The
-    red cross and circle are the center and size of the best fit radially
-    symmetric source with a uniform intensity profile. The result is
-    statistically significant, but the extension encompasses many catalog
-    sources and the emission does not look to be uniform. Instead,
-    this source is probably fitting large-scale diffuse residual
-    features. Although the fit is statistically significant, it likely
-    corresponds to residual features of inaccurately modeled diffuse
-    emission picked up by the fit.  We manually discard candidates that
-    appear like this.
+    plus and circle (colored red in the online version) represent the
+    center and size of the best fit radially symmetric source with
+    a uniform intensity profile.  The black crosses represent the
+    position of background 2FGL sources.  The result is statistically
+    significant, but the extension encompasses many catalog sources and
+    the emission does not look to be uniform. Instead, this source is
+    probably fitting large-scale diffuse residual features. Although
+    the fit is statistically significant, it likely corresponds to
+    residual features of inaccurately modeled diffuse emission picked
+    up by the fit.  We manually discard candidates that appear like this.
     }
     \label{example_bad_fit}
   \end{center}
@@ -1860,14 +1904,21 @@ not fit by our analysis but are include for completeness.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{source_plots/agn.eps}
-    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/agn/v2/agn.py
+    \ifcolorfigure
+      \includegraphics{source_plots/agn_color.eps}
+    \else
+      \includegraphics{source_plots/agn_bw.eps}
+    \fi
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/agn/v6/agn.py
     \end{center}
     \caption{The cumulative density of \tsext for 783 of the clean
-    AGN in 2LAC which are significant above 1 \gev.  AGNs are too far
+    AGN in 2LAC which are significant above 1 \gev calculted with \pointlike (the dashed line
+    colored blue in the electronic version)
+    and with \gtlike (the solid line colored red in the electronic version).  AGNs are too far
     and too small to be resolved by the LAT. Therefore, the cumulative
     density of $\tsext$ is expected to follow a $\chi^2/2$ distribution
-    (equation~\ref{ts_ext_distribution}).     
+    (equation~\ref{ts_ext_distribution}) and is the dash-dotted line (colored
+    red in the electronic version).
     }\label{agn_ts_ext}
   \end{figure}
 
@@ -2006,16 +2057,22 @@ the test statistic for the two point source test.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=eps,ext=.eps,read=.eps]{source_plots/source_1FGL_J0823.3-4248}
+    \ifcolorfigure
+      \includegraphics{source_plots/source_Puppis_A_color.eps}
+    \else
+      \includegraphics{source_plots/source_Puppis_A_bw.eps}
+    \fi
   \end{center}
   % this plot came from 
-  % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J0823.3-4248/v7/source_1FGL_J0823.3-4248.pdf
-  \caption{A diffuse-emission-subtracted 1-100
+  % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J0823.3-4248/v7/run.py
+  \caption{A diffuse-emission-subtracted 1 \gev to 100
   \gev counts map of the region around 2FGL\,J0823.0-4246 smoothed
-  by a 0\fdg1 Gaussian kernel.  The red star is the 2FGL position
-  of this source.  The red cross and circle are the best fit position
+  by a 0\fdg1 Gaussian kernel.  
+  The triangle (colored red in the online version)
+  is the 2FGL position
+  of this source.  The cross and circle (colored red) are the best fit position
   and extension of this source assuming a radially symmetric uniform
-  surface brightness.  The two green stars are the positions of the
+  surface brightness.  The two stars (colored green) are the positions of the
   sources 2FGL\,J0823.4-4305 and 2FGL\,J0821.0-4254 which were removed
   because they are part of the extended source.  The lower right inset
   is the model predicted emission from a point source with the same
@@ -2029,7 +2086,11 @@ the test statistic for the two point source test.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=eps,ext=.eps,read=.eps]{source_plots/source_1FGL_J1628.6-2419c}
+    \ifcolorfigure
+      \includegraphics{source_plots/source_Ophiuchus_color.eps}
+    \else
+      \includegraphics{source_plots/source_Ophiuchus_bw.eps}
+    \fi
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1628.6-2419c/v7/run.py
@@ -2053,7 +2114,11 @@ the test statistic for the two point source test.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=eps,ext=.eps,read=.eps]{source_plots/source_RX_J1713.7-3946}
+    \ifcolorfigure
+      \includegraphics{source_plots/source_RX_J1713.7-3946_color.eps}
+    \else
+      \includegraphics{source_plots/source_RX_J1713.7-3946_bw.eps}
+    \fi
     % this plot came from
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/RX_J1713.7-3946/v6/run.py
   \end{center}
@@ -2076,7 +2141,11 @@ the test statistic for the two point source test.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=eps,ext=.eps,read=.eps]{source_plots/source_Vela_Jr}
+    \ifcolorfigure
+      \includegraphics{source_plots/source_Vela_Jr_color.eps}
+    \else
+      \includegraphics{source_plots/source_Vela_Jr_bw.eps}
+    \fi
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Vela_Jr/v7/run.py
@@ -2100,7 +2169,11 @@ the test statistic for the two point source test.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=eps,ext=.eps,read=.eps]{source_plots/source_1FGL_J1613.6-5100c}
+    \ifcolorfigure
+      \includegraphics{source_plots/source_HESS_J1614-518_color.eps}
+    \else
+      \includegraphics{source_plots/source_HESS_J1614-518_bw.eps}
+    \fi
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1613.6-5100c/v7/run.py
@@ -2132,7 +2205,11 @@ the test statistic for the two point source test.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=eps,ext=.eps,read=.eps]{source_plots/source_1FGL_J1632.9-4802c}
+    \ifcolorfigure
+      \includegraphics{source_plots/source_HESS_J1632-478_color.eps}
+    \else
+      \includegraphics{source_plots/source_HESS_J1632-478_bw.eps}
+    \fi
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1632.9-4802c/v7/run.py
@@ -2161,7 +2238,11 @@ the test statistic for the two point source test.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=eps,ext=.eps,read=.eps]{source_plots/source_1FGL_J1837.5-0659c}
+    \ifcolorfigure
+      \includegraphics{source_plots/source_HESS_J1837-069_color.eps}
+    \else
+      \includegraphics{source_plots/source_HESS_J1837-069_bw.eps}
+    \fi
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1837.5-0659c/v7/run.py
@@ -2189,22 +2270,30 @@ the test statistic for the two point source test.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[type=eps,ext=.eps,read=.eps]{source_plots/source_Gamma_Cygni}
+    \ifcolorfigure
+      \includegraphics{source_plots/source_Gamma_Cygni_color.eps}
+    \else
+      \includegraphics{source_plots/source_Gamma_Cygni_bw.eps}
+    \fi
   \end{center}
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Gamma_Cygni/v7/run.py
-  \caption{A Diffuse subtracted 10-100 \gev counts map of the region
+  \caption{A Diffuse subtracted 10 \gev to 100 \gev counts map of the region
   around 2FGL\,J2021.5+4026 smoothed by a 0\fdg1 Gaussian kernel. The
-  red star is the 2FGL position of 2FGL J2021.5+4026.  The red cross
-  and circle are the best fit position and extension 2FGL\,J2021.5+4026
-  assuming a radially symmetric uniform surface brightness.  The green
-  cross inside the extension is 2FGL\,J2019.1+4040 which was removed
-  because it is part of the extended source.  The farther away green
-  stars represent other catalog sources which were removed because
-  they were not significant above 10 \gev.  The gray cross is the
+  triangle (colored red in the online version)
+  represents the 2FGL position of 2FGL J2021.5+4026.  The plus
+  and circle (colored red) 
+  represent the best fit position and extension 2FGL\,J2021.5+4026
+  assuming a radially symmetric uniform surface brightness.  The 
+  star (clored green) 
+  inside the extension represents the position of 
+  2FGL\,J2019.1+4040 which was removed
+  because it is part of the extended source.  The diamont
+  (colored purple) is the
   position a source not in the two year catalog which was added to the
   region. 2FGL\,J2021.5+4026 is spatially coincident with the $\gamma$
-  Cygni SNR.  The light blue contours correspond to the 408MHz image of
+  Cygni SNR.  The contours (colored light blue)
+  correspond to the 408MHz image of
   $\gamma$ Cygni observed by the Canadian Galactic Plane Survey.
   }\label{1FGL_J2020.0+4049}
 \end{figure}
@@ -2212,15 +2301,21 @@ the test statistic for the two point source test.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{summary_plots/snr_seds.eps}
+    \ifcolorfigure
+      \includegraphics{summary_plots/snr_seds_color.eps}
+    \else
+      \includegraphics{summary_plots/snr_seds_bw.eps}
+    \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/seds/v3/plot_seds/plot_snr_seds.py
     \end{center}
     \caption{
     \hl{
     The spectral energy distribution of the extended sources 
     Puppis A (2FGL\,J0823.0-4246) and $\gamma$-Cygni 
-    (2FGL\,J2021.5+4026) which are coincident with SNRs.
-    The red line is the best fit power-law spectral model.
+    (2FGL\,J2021.5+4026).
+    The lines (colored red in the online version)
+    are the best fit power-law spectral model of
+    these sources.
     The LAT spectral errors are statistical only.}
     }
     \label{snr_seds}
@@ -2229,34 +2324,46 @@ the test statistic for the two point source test.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{summary_plots/hess_seds.eps}
+    \ifcolorfigure
+      \includegraphics{summary_plots/hess_seds_color.eps}
+    \else
+      \includegraphics{summary_plots/hess_seds_bw.eps}
+    \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/seds/v3/plot_seds/plot_hess_seds.py
     \end{center}
     \caption{
     The spectral energy distribution of four the extended sources
-    associated with extended \tev sources.  The black points with circular
-    markers are the LAT data points. The red points with dashed markers
-    are H.E.S.S points of associated sources.  Plot (a) shows the \gev
-    SED of 2FGL\,J1615.0-5051 together with the \tev SED of HESS\,J1616-508.
+    associated with extended \tev sources.  The black points with
+    circular markers are the LAT data points. The points with dashed
+    markers (colored red in the electronic version) are the H.E.S.S
+    points of the associated sources.  Plot (a) shows the \gev SED of
+    2FGL\,J1615.0-5051 together with the \tev SED of HESS\,J1616-508.
     Plot (b) shows 2FGL\,J1615.2-5138 and HESS\,J1614-518 Plot (c)
     shows 2FGL\,J1632.4-4753c and HESS\,J1632-478. Plot (d) shows
     2FGL\,J1837.3-0700c and HESS\,J1837-069. The H.E.S.S. data points
-    are from \citep{hess_plane_survey} Both LAT and H.E.S.S. spectral errors are
-    statistical only.}
+    are from \citep{hess_plane_survey} Both LAT and H.E.S.S. spectral
+    errors are statistical only.}
     \label{hess_seds}
   \end{figure}
 
-\clearpage
 {\rotate
 \begin{figure}
-  \begin{center}
-    \includegraphics{summary_plots/allsky_extended_sources.eps}
-    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/allsky/v1/run.py
-    \end{center}
+  %\begin{center}
+    \ifcolorfigure
+    \includegraphics{summary_plots/allsky_extended_sources_color.eps}
+    \else
+    \includegraphics{summary_plots/allsky_extended_sources_bw.eps}
+    \fi
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/allsky/v2/run.py
+    %\end{center}
     \caption{A plot of all \gev extended sources detected by the LAT
     with two years of data.  The twelve extended sources included in
-    2FGL are the red markers and the nine additional
-    extended sources analyzed in this paper are the orange markers. 
+    2FGL are indicated by the circular markers (colored 
+    red in the online version).
+    The nine 
+    new
+    extended sources analyzed in this paper are the triangular
+    markers (colored orange in the online version). 
     }\label{allsky_extended_sources}
   \end{figure}
   }
@@ -2265,7 +2372,11 @@ the test statistic for the two point source test.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{summary_plots/gev_vs_tev_plot.eps}
+    \ifcolorfigure
+      \includegraphics{summary_plots/gev_vs_tev_plot_color.eps}
+    \else
+      \includegraphics{summary_plots/gev_vs_tev_plot_bw.eps}
+      \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_tev_gev_sizes/v3/run.py
     \end{center}
     \caption{
@@ -2296,14 +2407,21 @@ the test statistic for the two point source test.
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{summary_plots/gev_vs_tev_histogram.eps}
+    \ifcolorfigure
+      \includegraphics{summary_plots/gev_vs_tev_histogram_color.eps}
+    \else
+      \includegraphics{summary_plots/gev_vs_tev_histogram_bw.eps}
+    \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/extension_histogram/v4/extension_histogram.py
     \end{center}
     \caption{
-    A comparison of the size of detected LAT and H.E.S.S sources.
-    The extension of the 22 extended LAT sources comes from
+    The distribution of the \gev size of the 22 extended LAT 
+    sources (colored blue in the electronic version) and
+    the \tev size of the 42 extended H.E.S.S. sources
+    (colored red in the electronic version).
+    The extension of the LAT sources comes from
     table~\ref{known_extended_sources}, table~\ref{new_ext_srcs_table},
-    and the LAT extension of Vela X is taken from \citep{velax}. The
+    and from \cite{velax}. 
     The \tev extension of
     the 42 extended H.E.S.S. sources comes from the H.E.S.S. Source
     Catalog \citep{hesscat}.
@@ -2314,19 +2432,25 @@ the test statistic for the two point source test.
     (see section~\ref{compare_source_size}). Because the spatial
     morphology of RX J1713.7-3946 and Vela Jr. is poorly matched by a
     Gaussian surface brightness model, the \gev and
-    \tev extensions are assuming a uniform surface brightness.
+    \tev extensions are included assuming a uniform surface brightness.
     }\label{gev_vs_tev_histogram}
   \end{figure}
 
 \clearpage
 \begin{figure}
   \begin{center}
-    \includegraphics{summary_plots/compare_index_2FGL.eps}
+    \ifcolorfigure
+      \includegraphics{summary_plots/compare_index_2FGL_color.eps}
+    \else
+      \includegraphics{summary_plots/compare_index_2FGL_bw.eps}
+    \fi
     % plot taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_index_2fgl/v3/run.py
     \end{center}
     \caption{
-    The distribution of spectral indices of all 1873 2FGL sources in
-    red and all spatially extended sources in blue. The
+    The distribution of spectral indices of all 1873 2FGL sources 
+    (colored red in the electronic version)
+    and the spatially extended sources (colored blue in the electronic
+    version). The
     spectral indices of LAT extended sources are taken from
     table~\ref{known_extended_sources} table~\ref{new_ext_srcs_table}.
     The index of Centarus A is taken to be 2.58 from 
