@@ -16,5 +16,5 @@ extended_catalog:
 clean:
 	-rm -f $(base).aux $(base).log $(base).out \
       $(base).toc $(base).dvi $(base).bbl \
-      $(base).blg
+      $(base).blg $(base).ps
 
