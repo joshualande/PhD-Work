@@ -114,8 +114,8 @@ the {\em \fermi Gamma-ray Space Telescope} (\fermi).  Spatial extension
 is an important characteristic for correctly associating LAT sources with
 their counterparts at other wavelengths. We perform a series of Monte
 Carlo simulations to validate this tool and calculate the LAT's threshold
-for detecting the spatial extension of sources.  We then use this tool
-to test all sources in the two-year source catalog for extension. We
+for detecting the spatial extension of sources.  We then 
+test all sources in the two-year source catalog for extension. We
 report the detection of nine spatially extended sources in addition to
 the twelve spatially extended sources reported in the second \fermi-LAT
 Catalog (2FGL).
@@ -212,7 +212,9 @@ In Section~\ref{extended_source_search_method} we describe a search for
 new spatially extended LAT sources and in Section~\ref{validate_known}
 we reanalyzing the twelve previously detected extended sources
 included in 2FGL.  In Section~\ref{test_2lac_sources} we further
-validate our extension test by testing the extension of Active
+demonstrate that our detection method does not misidentify
+point sources as being extended 
+by testing the extension of Active
 galactic nucleus (AGN) believed to be unresolvable. Finally, in
 Section~\ref{new_ext_srcs_section} we present the detection of the
 extension of nine spatially extended sources that were reported in 2FGL
@@ -834,31 +836,29 @@ and extension of Vela X and the Centaurus A Lobes are taken from
 \label{test_2lac_sources}
 
 To validate our method, we test LAT sources associated with AGN for
-extension.  \gev emission from AGN is believed to originate from the cores
-of kpc-scale jets of distant galaxies.  Therefore AGN are not expected
-to be spatially resolvable by the LAT and provide a good calibration source to
-demonstrate the efficacy of our tool.  We note that mpc-scale $\gamma$-ray
-halos around AGNs have been hypothesized \citep{pair_halo_paper} which
-could be resolved by the LAT However, no such halo has been discovered
-in the LAT data so far.
+extension.  \gev emission from AGN is believed to originate from the
+cores of kiloparsec-scale jets of distant galaxies.  Therefore AGN are
+not expected to be spatially resolvable by the LAT and provide a good
+calibration source to demonstrate that our extension detection method
+does not misidentify point sources as being extended.  We note that
+megaparsec-scale $\gamma$-ray halos around AGNs have been hypothesized
+\citep{pair_halo_paper} to be resolvable by the LAT. However, no such
+halo has been discovered in the LAT data so far.
 
-Following 1FGL, the LAT Collaboration published a list 
-of sources that
-had a high probability association with AGN 
-called 1LAC \citep{first_agn_cat}.
-1FGL had 709 1FGL sources associated with 671 distinct AGN at high
-latitude ($|b|>10\deg$).  
-Using two years of data and 2FGL, the LAT Collaboration
-associated 1016 2FGL sources
-with AGN called 2LAC \citep{second_agn_cat}.
-To avoid systematic problems with AGN classification, we
-selected 885 out of the 1016 AGN which made it into the clean AGN sub-sample.  An AGN
-association is considered clean only if it has a high probability
-of association $P\ge 80\%$, if it is the only AGN associated with the
-catalog source, and if there are no flags on the source in 2FGL. These
-last two conditions are important for our analysis. Source
-confusion may look like a spatially extended source and flagged catalog
-sources may correlate with unmodeled structure in the diffuse emission.
+Following 1FGL, the LAT Collaboration published the First LAT AGN Catalog
+(1LAC), a list of sources that had a high probability association with
+AGN \citep{first_agn_cat}.  1FGL had 709 1FGL sources associated with 671
+distinct AGN at high latitude ($|b|>10\deg$).  Using two years of data
+and 2FGL, the Second LAT AGN Catalog (2LAC) associated 1016 2FGL sources
+with AGN \citep{second_agn_cat}.  To avoid systematic problems with AGN
+classification, we selected 885 out of the 1016 AGN which made it into
+the clean AGN sub-sample.  An AGN association is considered clean only
+if it has a high probability of association $P\ge 80\%$, if it is the
+only AGN associated with the catalog source, and if there are no flags
+on the source in 2FGL. These last two conditions are important for our
+analysis. Source confusion may look like a spatially extended source
+and flagged catalog sources may correlate with unmodeled structure in
+the diffuse emission.
 
 Of the 885 clean AGN, we select 783 of these 2FGL sources which
 are significantly-detected above 1 \gev and fit each of them for extension.
@@ -867,7 +867,8 @@ shown in Figure~\ref{agn_ts_ext}. Overlaid on the plot is the
 $\chi^2/2$ distribution of Equation~\ref{ts_ext_distribution}.
 The \tsext distribution for AGN shows good agreement with the
 theoretical distribution.  Two sources had $\tsext>10$.  One was due
-to incorrectly automatically removing a nearby catalog sources (see
+to the incorrect removal of a nearby catalog sources from
+the sky model (see
 Section~\ref{extended_source_search_method}) and the other was due to a
 failure of convergence of the point hypothesis.  This result demonstrates
 that we can use \tsext as a measure of the statistical significance of
@@ -877,7 +878,7 @@ We should clarify that the LAT PSF used in this study was determined
 empirically by fitting the observed shape of bright AGN (see
 Section~\ref{systematic_errors_on_extension}). Finding that the AGN we
 test are not extended is not surprising.  This validation analysis is
-not suitable to reject any hypotheses about the existence of mpc-scale
+not suitable to reject any hypotheses about the existence of megaparsec-scale
 halos around AGN.
 
 \section{New Extended Sources}
@@ -899,8 +900,8 @@ halos around AGN.
 % N/A                - P72Y1287         - 2FGL J0851.7-4635
 
 Nine extended sources not included in 2FGL were found using this search.
-Three were found in our search using 1-100 \gev photons and six were
-found in our search using 10-100 \gev photons.  The fit properties of
+Three were found in our search using 1 \gev 100 \gev photons and six were
+found in our search using 10 \gev to 100 \gev photons.  The fit properties of
 these nine sources is summarized in Table~\ref{new_ext_srcs_table}.
 This table includes for each source the best fit position, extension,
 spectrum, source significance, and significance of extension.
@@ -927,10 +928,11 @@ model and uncertainties in the angular resolution.
 %  * P72Y1210 - 2FGL J0821.0-4254
 
 The source 2FGL\,J0823.0$-$4246 was found 
-using 1-100 \gev photons to have an 
+to have an 
 extension of $0\fdg37\pm0\fdg03_\stat\pm0\fdg02_\sys$ 
 with an extension
-significance of $\tsext=46.3$.  The source was fit to a position of
+significance of $\tsext=46.3$
+using 1 \gev to 100 \gev photons.  This source was fit to a position of
 $(l,b)=(260\fdg32,-3\fdg28)$.  
 This source is coincident with the one-year
 catalog source 1FGL\,J0823.3$-$4248.
@@ -939,27 +941,24 @@ Figure~\ref{1FGL_J0823.3-4248} shows a
 counts map of this source
 and Figure~\ref{snr_seds} shows the LAT spectrum of it.
 }
-
-To get a good fit of the source, we had to remove from our background
+To get a good fit of this source, we removed from our background
 model the nearby catalog
 sources 2FGL\,J0823.4$-$4305 and 2FGL\,J0821.0$-$4254 which are part of the
-extended source.  We tested the source for source confusion by fitting
-it as two point sources. Because $\tsinc=22.1$ is smaller then \tsext,
-we conclude that this is an extended source.  These modifications are
+extended source.  These modifications are
 shown in Figure~\ref{1FGL_J0823.3-4248}.
 
-\hl{1
+\hl{
 This extended source is spatially coincident with the middle-aged
 SNR Puppis A.  Puppis A has been studied in detail in radio
 (\cite{puppis_a_vla}, and references therein) and  X-ray 
 (\cite{rosat_puppis_a,suzaku_puppis_a}, and references therein)
 Mosaic \rosat observations of Puppis A produced the highest
-resolution X-ray image of the source
+resolution X-ray image of this source
 and contours corresponding to this
 image are overlaid on Figure~\ref{1FGL_J0823.3-4248} and match the
 inferred \gev size \citep{rosat_puppis_a}.
 Puppis A's distance was estimated at 2.2 kpc \citep{reynoso_1995,reynoso_2003}
-which leads to a 1-100 \gev luminosity of $\sim 3\times 10^{34}$ ergs/\s.
+which leads to a 1 \gev to 100 \gev luminosity of $\sim 3\times 10^{34}$ ergs/\s.
 
 No molecular clouds have been observed directly adjacent to Puppis A 
 \citep{co_eastern_puppis_a}.
@@ -1019,22 +1018,21 @@ to the emission mechanism suggested for the Cygnus Loop SNR
 % 1FGL J1628.6-2419c - P72Y2516         - 2FGL J1627.0-2425c
 % No modifications to background were needed
 
-The source 2FGL\,J1627.0$-$2425c was found using 1-100 \gev photons to
+The source 2FGL\,J1627.0$-$2425c was found  to
 have an extension of $0\fdg41\pm0\fdg05_\stat\pm0\fdg02_\sys$ with
-an extension significance of $\tsext=31.1$.  The best fit position is
+an extension significance of $\tsext=31.1$
+using 1 \gev to 100 \gev photons.  The best fit position is
 $(l,b)=(353\fdg08, 16\fdg78)$.  This source is coincident with the one
 year catalog source 1FGL\,J1628.6$-$2419c.  A counts map showing this source
-is seen in Figure \ref{1FGL_J1628.6-2419c}.  To test for source confusion,
-we also fit the source instead as two point sources. Since $\tsinc=20.0$
-is smaller than \tsext, we conclude that this is an extended source.
+is seen in Figure \ref{1FGL_J1628.6-2419c}.  
 
 \hl{
 This source is in a region of remarkably complicated diffuse emission.
-Even though it is $16\deg$ from the Galactic plane, the source is on
+Even though it is $16\deg$ from the Galactic plane, this source is on
 top of the core of the Ophiuchus molecular cloud which contains massive
 star-forming regions that are bright in the infrared.  The region also has
 abundant molecular and atomic gas traced by CO and HI but also plenty of
-dark gas, the kind that we find only by its association with dust emission
+dark gas found only by its association with dust emission
 \citep{isabelle_dark_gass}. Embedded star-forming regions make it even
 more challenging to measure the column density of dust.  Infared and 
 ${}^{12}\text{CO}$ ($J=1\rightarrow 0$)
@@ -1055,10 +1053,11 @@ $\gamma$-ray model.
 %  * P72Y2680 - Not in 2FGL
 %  * P72Y2689 - Not in 2FGL
 
-The source 2FGL\,J1712.4$-$3941 was found using 1-100 \gev
+The source 2FGL\,J1712.4$-$3941 was found 
 photons to have an extension $0\fdg56\pm0\fdg04_\stat\pm0\fdg02_\sys$
-with an extension significance of $\tsext=39.6$.  This source was
-fit to a position of $(l,b)=(347\fdg25,-0\fdg54)$.  The source
+with an extension significance of $\tsext=39.6$
+using 1 \gev to 100 \gev.  This source was
+fit to a position of $(l,b)=(347\fdg25,-0\fdg54)$.  this source
 is coincident with the one-year catalog source 1FGL\,J1711.7$-$3944c.
 Figure \ref{2FGL_J1712.4-3941} shows a smoothed counts map of this source.
 
@@ -1088,10 +1087,11 @@ $(\text{RA},\text{Dec})=(257.47,-39.75)$.
 %              (initial Position - SkyDir(265.5705,-0.0099)
 
 The source 2FGL\,J0851.7$-$4635 was found 
-using 10-100 \gev photons to have an
+to have an
 extension of $1\fdg13\pm0\fdg08_\stat\pm0\fdg05_\sys$ 
 with an extension
-significance of $\tsext=87.2$.  The source was fit to a position of
+significance of $\tsext=87.2$
+using 10 \gev to 100 \gev photons.  This source was fit to a position of
 $(l,b)=(266\fdg29,-1\fdg43)$.  Figure~\ref{Vela_Jr} shows a counts
 map of this source.
 
@@ -1101,7 +1101,7 @@ Overlaid on Figure~\ref{Vela_Jr} are contours of Vela Jr. as seen in
 match well.  A detailed papers by the LAT Collaboration on Vela Jr. is
 in preparation.
 
-To get a good fit of the source, we had to remove from
+To get a good fit of this source, removed from
 our background model the nearby catalog
 sources 2FGL\,J0853.5$-$4711, 2FGL\,J0848.5$-$4535, and 2FGL\,J0855.4$-$4625
 which are part of the extended source.  In addition, we relocalized
@@ -1110,9 +1110,7 @@ $(l,b)=(266\fdg24,0\fdg49)$ to better fit its position at high energies
 in the presence of of the extended source.  In addition, we removed from
 our model the
 further away catalog sources 2FGL\,J0858.0$-$4815 and 2FGL\,J0901.7$-$4655
-because they were not significant above 10 \gev.  After modifying
-the region, we found that \tsinc=16.1 which is less than \tsext so we
-conclude that the source is extended. 
+because they were not significant above 10 \gev.  
 
 \subsection{2FGL\,J1615.0$-$5051}
 \label{section_2FGL_J1615.0-5051}
@@ -1126,9 +1124,10 @@ conclude that the source is extended.
 %  *P72Y2487 - 2FGL J1619.7-5040c
 %  *P72Y2496 - 2FGL J1622.8-5006
 
-The source 2FGL\,J1615.0$-$5051 was found using 10-100 \tev
+The source 2FGL\,J1615.0$-$5051 was found 
 photons to have an extension of $0\fdg33\pm0\fdg04_\stat\pm0\fdg01_\sys$
-with an extension significance of \tsext=16.3.  The source
+with an extension significance of \tsext=16.3
+using 10 \gev to 100 \gev.  This source
 was fit to a position of $(l,b)=(332\fdg38,-0\fdg14)$.
 This source is coincident with the one-year catalog source
 1FGL\,J1613.6$-$5100c. Figure~\ref{1FGL_J1613.6-5100c} shows a counts map
@@ -1136,22 +1135,20 @@ of this source.
 
 This source is less than $1\deg$ away from 2FGL\,J1615.2$-$5138 which is
 also spatially extended (see Section~\ref{section_2FGL_J1615.2-5138}).
-To get a good fit of both sources, we had to model both sources as
+To get a good fit of both sources, we modeled both sources as
 being spatially extended and iteratively fit the position and extension
 of each source until obtaining a global best fit.  Before doing this,
 We removed from our background model the source 2FGL\,J1614.9$-$5212 because it is
 part of 2FGL\,J1615.2$-$5138's. Furthermore, we removed from our model the nearby catalog
 sources 2FGL\,J1619.7$-$5040c and 2FGL\,J1620.6$-$5111c because they were not
 significant above 10 \gev.  These modifications are further described
-in the caption to Figure~\ref{1FGL_J1613.6-5100c}.  After modifying
-the region, we found that \tsinc=11.9 which is less than \tsext so we
-conclude that the source is extended.
+in the caption to Figure~\ref{1FGL_J1613.6-5100c}.  
 
 2FGL\,J1615.2$-$5138 is spatially coincident with the extended
 \tev source HESS\,J1616$-$508 \citep{hess_plane_survey}.  In
 Figure~\ref{1FGL_J1613.6-5100c}, contours of HESS\,J1616$-$508 are overlaid
 on 2FGL\,J1615.0$-$5051.  The H.E.S.S. experiment measured an
-extension $0.136\pm 0.008$ when fitting the source with an elliptical
+extension $0.136\pm 0.008$ when fitting this source with an elliptical
 2D Gaussian surface brightness.  This size corresponds to a 68\% containment
 radius of $\rsixeight=0\fdg21\pm0\fdg01$. This size is comparable to the LAT
 size $\rsixeight=0\fdg27\pm0\fdg03$ (see Section~\ref{compare_source_size}).
@@ -1185,16 +1182,15 @@ understand this region.
 \subsection{2FGL\,J1615.2$-$5138}
 \label{section_2FGL_J1615.2-5138}
 
-The source 2FGL\,J1615.2$-$5138 was found using 10-100 \gev
+The source 2FGL\,J1615.2$-$5138 was found 
 photons to have an extension of $0\fdg42\pm0\fdg03_\stat\pm0.01_\sys$
-with an extension significance of \tsext=48.0.  The source was fit to a
+with an extension significance of \tsext=48.0
+using 10 \gev to 100 \gev.  This source was fit to a
 position of $(l,b)=(331\fdg66,-0\fdg66)$.  This source is coincident
 with the one-year catalog source 1FGL\,J1614.7$-$5138c.  Because 2FGL
 J1615.2$-$5138 is close to 2FGL\,J1615.0$-$5051, the same model described
 in Section~\ref{section_2FGL_J1615.0-5051} was used to analyze both
 sources. Both sources can be seen in Figure~\ref{1FGL_J1613.6-5100c}.
-For 2FGL\,J1615.2$-$5138, \tsinc=37.0 which is less than \tsext so we
-conclude that the source is extended.
 
 This source is spatially coincident with the extended
 \tev source HESS\,J1614$-$518 \citep{hess_plane_survey}. In
@@ -1208,14 +1204,14 @@ $\rsixeight=0\fdg35\pm0\fdg03$.  Figure~\ref{hess_seds} shows
 that the LAT spectrum of 2FGL\,J1615.2$-$5138 connects smoothly to
 the H.E.S.S spectrum of HESS\,J1614$-$518.  Further data collected by
 H.E.S.S. in 2007 helped to resolve a double peaked structure in the
-H.E.S.S. data but no spectral variation across the source, suggesting
+H.E.S.S. data but no spectral variation across this source, suggesting
 that the emission is not the confusion of physically separate sources
 \citep{closer_look_hess_j1614-518}.  The source was also detected by
 CANGAROO-III \citep{cangaroo_j1614-518}.
 
 \hl{
 There are five nearby pulsars, but none are luminous enough to
-provide the required energy output required to power the $\tev$ 
+provide the energy output required to power the $\tev$ 
 emission \citep{closer_look_hess_j1614-518}.  HESS\,J1614$-$518
 is spatially coincident with a young open cluster Pismis 22
 \citep{hess_1614_landi_atel,closer_look_hess_j1614-518}.
@@ -1252,15 +1248,16 @@ acceleration in the stellar winds of Pisim 22 \citep{cangaroo_j1614-518}.
 %              (initial Position  - SkyDir(336.9639,-0.236)
 
 The source 2FGL\,J1632.4$-$4753c was found 
-using 10-100 \gev photons to
+to
 have an extension of $0\fdg44\pm0\fdg04_\stat\pm0\fdg03_\sys$ 
 with an extension
-significance of \tsext=64.5.  The source was fit to a position of
+significance of \tsext=64.5
+using 10 \gev to 100 \gev photons.  This source was fit to a position of
 $(l,b)=(336\fdg41,0\fdg22)$.  This source is coincident with the one
 year catalog source 1FGL\,J1632.9$-$4802c.  Figure~\ref{1FGL_J1632.9-4802c}
 shows a counts map of this source.
 
-To get a good fit of the source, we had to remove from our background model
+To get a good fit of this source, we removed from our background model
 three catalog sources 2FGL\,J1631.7$-$4720c, 2FGL\,J1630.2$-$4752,
 2FGL J1634.4$-$4743c.4-4820c that were part of the extended source..
 We then iteratively relocalized the source 2FGL\,J1635.4$-$4717c
@@ -1270,18 +1267,14 @@ $(l,b)=(336\fdg97,-0\fdg07)$ while fitting the extension of
 farther away two-year catalog sources 2FGL\,J1638.0$-$4703c, 
 2FGL\,J1628.1$-$4857c, 2FGL\,J1630.1$-$4615, 2FGL\,J1639.8$-$4921c because they
 were not significant above 10 \gev.  These modifications are shown
-in Figure~\ref{1FGL_J1632.9-4802c}.  To test for source confusion,
-we compared the likelihood fitting this region as one extended source
-to the likelihood fitting this region as two point sources. We found
-$\tsinc=40.6$ which is less than \tsext so we conclude
-that this is an extended source.
+in Figure~\ref{1FGL_J1632.9-4802c}.  
 
 This extended source is spatially coincident with the extended
 \tev source HESS\,J1632$-$478 \citep{hess_plane_survey}.
 In Figure~\ref{1FGL_J1632.9-4802c}, contours of  HESS\,J1632$-$478
 are overlaid on 2FGL\,J1635.4$-$4717c.  H.E.S.S measured a 
 extension of $\sigma=0.21\pm0.05$ and $0.06\pm0.04$ along the
-semi-major and semi-minor axes when fitting the source with an
+semi-major and semi-minor axes when fitting this source with an
 elliptical 2D Gaussian surface brightness.  This corresponds to a 68\%
 containment size $\rsixeight=0\fdg31\pm0\fdg08$ and $0\fdg09\pm0\fdg06$
 along the semi-major and semi-minor axis. This size is consistent with
@@ -1308,7 +1301,7 @@ including HESS\,J1825$-$137 \citep{hess_j1825_xmm_newton,hess_j1825_hess},
 HESS\,J1640$-$465 \citep{hess_plane_survey,xmm_newton_hess_j_1640-466},
 and Vela X \citep{vela_x_rosat,vela_x_hess}.  This can be explained by
 a different synchrotron cooling time for the electrons producing X-rays
-and \tev gamma rays.
+and \tev $\gamma$-rays.
 }
 
 \subsection{2FGL\,J1837.3$-$0700c}
@@ -1329,9 +1322,11 @@ and \tev gamma rays.
 % * P72Y2994 - 2FGL J1839.3-0558c - SkyDir(26.080,0.229,SkyDir.GALACTIC)
 %              (initial Position  - SkyDir(26.2301,-0.0394)
 
-The source 2FGL\,J1837.3$-$0700c was found with 10-100 \gev photons to
+The source 2FGL\,J1837.3$-$0700c was found 
+to
 have an extension of $0\fdg35\pm0\fdg08_\stat\pm0\fdg03_\sys$ with an
-extension significance of $\tsext=18.8$.  The source was fit to a position
+extension significance of $\tsext=18.8$
+using 10 \gev to 100 \gev photons.  This source was fit to a position
 of $(l,b)=(25\fdg08,0\fdg13)$.  This source is coincident with the one
 year catalog source 1FGL\,J1837.5$-$0659c.  Figure~\ref{1FGL_J1837.5-0659c}
 shows a counts map of this source.
@@ -1346,15 +1341,13 @@ our background model the
 nearby catalog source 2FGL\,J1835.5$-$0649 which is part of the extended
 source and also the farther away catalog source 2FGL\,J1839.0$-$0539
 because it was not significant above 10 \gev. These modifications are
-shown in Figure~\ref{1FGL_J1837.5-0659c}.  After modifying the region,
-we found that \tsinc=12.6 which is less than \tsext, so we conclude that
-the source is spatially extended.
+shown in Figure~\ref{1FGL_J1837.5-0659c}.  
 
 This source is spatially coincident with the \tev source HESS\,J1837$-$069
 \citep{hess_plane_survey}.  In Figure~\ref{1FGL_J1837.5-0659c}, contours
 of HESS\,J1837$-$069 are overlaid on 2FGL\,J1837.3$-$0700c. H.E.S.S. measured
 an extension of $\sigma=0.12\pm0.02$ and $0.05\pm0.02$
-along the semi-major and semi-minor axis when fitting the source
+along the semi-major and semi-minor axis when fitting this source
 with an elliptical 2D Gaussian surface brightness.  This corresponds
 to a 68\% containment radius of $\rsixeight=0\fdg18\pm0\fdg03$ and
 $0\fdg08\pm0\fdg03$ along the semi-major and semi-minor axis. The
@@ -1396,9 +1389,10 @@ AX\,J1837.3$-$0652.
 % New source
 %  * SkyDir(78.854,2.670,SkyDir.GALACTIC)
 
-The source 2FGL\,J2021.5+4026 was found with 10-100 \gev
-photons to have an extension of $0\fdg59\pm0\fdg03_\stat\pm0\fdg02_\sys$
-with an extension significance of $\tsext=116.4$.  The source was
+The source 2FGL\,J2021.5+4026 was found 
+to have an extension of $0\fdg59\pm0\fdg03_\stat\pm0\fdg02_\sys$
+with an extension significance of $\tsext=116.4$
+using 10 \gev to 100 \gev photons.  This source was
 fit to a position of $(l,b)=(78\fdg18,2\fdg19)$.  This source
 is coincident with the one-year catalog source 1FGL\,J2020.0+4049.
 \hl{
@@ -1406,21 +1400,18 @@ Figure~\ref{1FGL_J2020.0+4049} shows a counts map of this source.
 and Figure~\ref{snr_seds} shows that the LAT spectrum of it.
 }
 
-
-To get a good fit of the source, we had to remove from our background
+To get a good fit of this source, we removed from our background
 model the nearby catalog
 source 2FGL\,J2019.1+4040 which were part of the extended source.
 Further, we found it necessary to add an additional point source not in
 the two-year catalog into our background model.  The new source is was
 localized to a position of $(l,b)=(78\fdg85,2\fdg67)$ and had $\ts=13.5$ .
-Although the source is not very significant, not including it into the
-background model appeared visually to significantly throw off the fit
-of the region.  In addition, we removed from our model the four further away catalog
+Although this source is not very significant, not including it into the
+background model significantly biased the fit extension.
+In addition, we removed from our model the four further away catalog
 sources 2FGL\,J2022.8+3843c, 2FGL\,J2020.0+4159, 2FGL\,J2013.8+4115c,
 and 2FGL\,J2012.4+3955c from the region because they were not significant
-above 10 \gev.  After modifying the region, we found that \tsinc=24.3
-which is less than \tsext, so we believe that this source is spatially
-extended.  These modifications are further described in the caption to
+above 10 \gev.  These modifications are further described in the caption to
 Figure~\ref{1FGL_J2020.0+4049}.
 
 
@@ -1441,7 +1432,7 @@ this source in the previous LAT bright $\gamma$-ray source
 list. \cite{lat_bsl,milagro_bright_source_list}.  Veritas also detected
 an extended source VER\,J2019+407 coincident with the SNR above 200
 \gev and suggested the \tev emission could be a shock-cloud interaction
-in $\gamma$-Cygni \citep{veritas_gamma_cygni}.  Using just 10-100
+in $\gamma$-Cygni \citep{veritas_gamma_cygni}.  Using just 10 \gev to 100
 \gev photons to avoid PSR\,J2021+4026, we resolve an
 extended source whose inferred \gev size well matches the radio size of
 $\gamma$-Cygni, as can be seen in Figure~\ref{1FGL_J2020.0+4049}
@@ -1482,26 +1473,26 @@ Galactic Plane Survey \citep{canadian_galactic_plane_survey}.
 
 \section{Discussion}
 
-2FGL reported on the detection of twelve sources
-previously known as extended. Using
+2FGL reported the detection of twelve sources
+previously resolved by the LAT at \gev energies. Using
 two years of LAT data and a new analysis method, we present on 
 the detection of nine additional extended sources. We also reanalyze
 the spatial shape of the extended sources in 2FGL.  Finding a coherent
 source extension with different frequencies, especially at \tev energies,
 allows us to firmly associate the LAT source in many cases.
 
-The position of the 21 extended LAT sources are close to the Galactic
+The 21 extended LAT sources are located close to the Galactic
 plane and plotted in Figure~\ref{allsky_extended_sources}.  Most of the
 extended sources are indeed expected to be of Galactic origin as the
 distance of extragalactic sources (with exception of the local group
-Galaxies) is typically too large to resolve them in gamma rays.
+Galaxies) is typically too large to resolve them in $\gamma$-rays.
 
 
 Figure~\ref{compare_index_2FGL} shows a comparison of the spectral index
 of LAT detected extended sources and of all sources in 2FGL. This, and
 Table~\ref{known_extended_sources} and~\ref{new_ext_srcs_table},
 show that the LAT observes a population of hard (index $<2$)
-extended sources above 10 \gev which connects to \tev sources.
+extended sources at energies above 10 \gev which connects to \tev sources.
 Figure~\ref{hess_seds} shows the LAT energy spectrum of four of the
 extended sources which were first discovered in the H.E.S.S. Galactic
 plane survey \citep{hess_plane_survey} and have a matching size to LAT
@@ -1509,9 +1500,10 @@ extended sources.  The LAT energy spectrum connects smoothly to \tev.
 This is also true of HESS\,J1825$-$137 \citep{fermi_hess_j1825} and 
 RX\,J1713.7$-$3946 \citep{rx_j1713_lat}. 
 
-For the LAT extended sources also seen in \tev,
+For the LAT extended sources also seen in the \tev energy range,
 Figure~\ref{gev_vs_tev_plot} shows a comparison of their sizes.  There is
-a good correlation between the \gev and \tev sizes of the sources. Even
+a good correlation between the size of the sources in the \gev and \tev
+energy ranges. Even
 so, the size of PWNe are expected to vary across the \gev and \tev energy
 range and the size of HESS\,J1825$-$137 was seen by H.E.S.S. to vary
 between 200 \gev and 20 \tev \citep{energy_dependent_hess_j1825}.
@@ -1552,7 +1544,7 @@ resolve these smaller \tev sources.
     red in the online version) and for a point source (dashed and colored
     blue in the online version).  (d) smoothed count map after subtraction
     of the diffuse emission compared to the LAT PSF (inset).  Plots (a),
-    (c), and (d) use only 1-100 \gev photons.  Plots (c) and (d) use
+    (c), and (d) use only 1 \gev to 100 \gev photons.  Plots (c) and (d) use
     only photons which converted in the front part of the tracker and
     have an improved angular resolution.
     }
@@ -1568,7 +1560,7 @@ resolve these smaller \tev sources.
     \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_disk_gauss/v3/plot.py
     \caption{
-    A comparison of a 2D Gaussian and disk surface brightness profiles
+    A comparison of a 2D Gaussian and disk-like surface brightness profiles
     of extended sources before and after convolving with the PSF for two
     energy ranges.  The solid black line is the PSF that would be observed
     for a power-law source of spectral index 2. The dashed line
@@ -1626,14 +1618,13 @@ resolve these smaller \tev sources.
           &          $10^{-7}$ &           19271 &     40 \\
 \enddata
 
-\tablenotetext{(a)}{Integral 1-100 \mev flux.}
+\tablenotetext{(a)}{Integral 1 \gev to 100 \gev flux.}
 
 \tablecomments{
-    the spectral models used in the Monte Carlo simulations used to
-    validate of \pointlike.
-    For each model, the number of statistically independent simulations
-    and the average value of \ts is tabulated.  The models spans
-    representative spectral parameters.
+    A list of th spectral models of simulated point sources which were
+    tested for extension.  For each model, the number of statistically
+    independent simulations and the average value of \ts is also
+    tabulated.  The models spans representative spectral parameters.
 }
 \end{deluxetable}
 
@@ -1672,7 +1663,7 @@ resolve these smaller \tev sources.
     have an assumed power-law spectrum and the different colors correspond
     to different simulated spectral indices.  The solid line is the
     detection threshold using photons with energy between 100 \mev and 100
-    \gev while the dashed line is the threshold using 1-100 \gev photons.
+    \gev while the dashed line is the threshold using 1 \gev to 100 \gev photons.
     }\label{index_sensitivity}
   \end{figure}
 
@@ -1687,8 +1678,8 @@ resolve these smaller \tev sources.
     \caption{the LAT detection threshold for four spectral indices and
     three background (1x, 10x, and 100x the Sreekumar-like isotropic
     spectrum) for a two-year exposure. The left plots are the detection
-    threshold when using 1-100 \gev photons and the right plots are
-    the detection threshold when using 10-100 \gev photons.  The flux
+    threshold when using 1 \gev to 100 \gev photons and the right plots are
+    the detection threshold when using 10 \gev 100 \gev photons.  The flux
     is integrated only in the selected energy range.  Overlaid on this
     plot are the LAT detected extended sources placed by the magnitude of
     the nearby Galactic diffuse emission and the energy range they were
@@ -1771,7 +1762,7 @@ resolve these smaller \tev sources.
       and the second column is the factor that the simulated background
       was scaled by. The remaining columns are varying sizes of the source
       in degrees assuming a uniform surface brightness. The table quotes
-      integral fluxes in the analyzed energy range (1-100 \gev or 10-100
+      integral fluxes in the analyzed energy range (1 \gev to 100 \gev or 10 \gev 100
       \gev) in units of $10^{-10}\phflux$.
       }
 \end{deluxetable}
@@ -1814,7 +1805,7 @@ resolve these smaller \tev sources.
 
   \caption{
   A test statistic map generated for the region around the SNR 
-  IC443 using 1-100 \gev photons.  (a) test statistic map after
+  IC443 using 1 \gev to 100 \gev photons.  (a) test statistic map after
   subtracting IC443 modeled as a point source. (b) same as (a), but
   IC443 modeled as extended source. Crosses represent sources included
   in the model of the region.  Such maps were generated for all extended
@@ -1831,7 +1822,7 @@ resolve these smaller \tev sources.
     \fi
     % taken from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/example_bad_fit/v3/run.py
     \caption{
-    A diffuse-emission-subtracted 1-100 \gev counts map of the region
+    A diffuse-emission-subtracted 1 \gev to 100 \gev counts map of the region
     around 2FGL\,J1856.2+0450c smoothed by a 0\fdg1 2D Gaussian kernel. The
     plus and circle (colored red in the online version) represent the
     center and size of the best fit radially symmetric source with
@@ -1896,7 +1887,7 @@ HESS\,J1825$-$137    &      17.56 &      -0.46 & $  0.65 \pm   0.03 \pm   0.01 $
 \enddata
 
 \tablenotetext{(a)}{
-Integrated in the fit energy range (either 1-100 \gev or 10-100 \gev).
+Integrated in the fit energy range (either 1 \gev 100 \gev or 10 \gev 100 \gev).
 }
 
 \tablecomments{
@@ -1989,7 +1980,7 @@ not fit by our analysis but are include for completeness.
 \enddata
 
 \tablenotetext{(a)}{
-Integrated in the fit energy range (either 1-100 \gev or 10-100 \gev).
+Integrated in the fit energy range (either 1 \gev to 100 \gev or 10 \gev 100 \gev).
 }
 
 \tablecomments{
@@ -2101,7 +2092,7 @@ the test statistic for the two point source test.
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1628.6-2419c/v7/run.py
   \caption{
     \hl{
-  A diffuse-emission-subtracted 1-100 \gev counts map of (a) the region
+  A diffuse-emission-subtracted 1 \gev to 100 \gev counts map of (a) the region
   around 2FGL\,J1627.0$-$2425 smoothed by a 0\fdg1 2D Gaussian kernel (b)
   also the emission from the background source 2FGL\,J1625.7$-$2526
   subtracted.  The red star is the 2FGL position of this source.
@@ -2125,9 +2116,9 @@ the test statistic for the two point source test.
     \fi
     % this plot came from
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/RX_J1713.7-3946/v6/run.py
-  \caption{A diffuse-emission-subtracted 1-100 \gev
-  counts map of (a) the region around 2FGL\,J1712.4$-$3941 smoothed by
-  a 0\fdg25 2D Gaussian kernel and (b) also the emission 
+  \caption{A diffuse-emission-subtracted 1 \gev to 100 \gev
+  counts map of the region around 2FGL\,J1712.4$-$3941 (a) smoothed by
+  a 0\fdg25 2D Gaussian kernel and (b) with the emission 
   from the background sources subtracted.
   This source is spatially
   coincident with RX\,J1713.7$-$3946 was was recently reported by
@@ -2150,16 +2141,16 @@ the test statistic for the two point source test.
     \fi
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Vela_Jr/v7/run.py
-  \caption{A diffuse-emission-subtracted 10-100
+  \caption{A diffuse-emission-subtracted 10 \gev 100
   \gev counts map of the region around 2FGL\,J0851.7$-$4635 smoothed
   by a 0\fdg25 2D Gaussian kernel. The red star is the 2FGL position of this source.  The red cross
-  and circle are the best fit position and extension of the source
+  and circle are the best fit position and extension of this source
   assuming a radially
-  symmetric uniform surface brightness.  The inner three green stars
+  symmetric uniform surface brightness.  The three green stars
+  inside the extension circle 
   are (from left to right) 2FGL\,J0853.5$-$4711, 2FGL\,J0855.4$-$4625,
-  and 2FGL\,J0848.5$-$4535 which were removed from our background model
-  because they are part of
-  the extended source.  The farther away green stars are (from left to
+  and 2FGL\,J0848.5$-$4535 and were removed from our background model.
+  The farther away green stars are (from left to
   right) 2FGL\,J0901.7$-$4655 and 2FGL\,J0858.0$-$4815 which were removed
   from our model
   because they were not significant above 10 \gev.  The blue cross
@@ -2179,7 +2170,7 @@ the test statistic for the two point source test.
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1613.6-5100c/v7/run.py
   \caption{
-    A diffuse-emission-subtracted 10-100
+    A diffuse-emission-subtracted 10 \gev to 100
     \gev counts map of the region around 2FGL\,J1615.0$-$5051 (upper
     left) and 2FGL\,J1615.2$-$5138 (lower right) smoothed by a 0\fdg1
     2D Gaussian kernel.  The red stars are the catalog positions of these
@@ -2189,8 +2180,7 @@ the test statistic for the two point source test.
     symmetric uniform surface brightness.
     The green star inside the extension of 2FGL\,J1615.2$-$5138  is
     2FGL\,J1614.9$-$5212 which was removed from our background model
-  because it is part of the
-    extended source.  The green stars to the left are 2FGL\,J1619.7$-$5040c
+    The green stars to the left are 2FGL\,J1619.7$-$5040c
     and 2FGL\,J1620.6$-$5111c which were removed from our model because they were
     not significant above 10\gev. These are shown as green stars.
     The light blue
@@ -2213,7 +2203,7 @@ the test statistic for the two point source test.
     \fi
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1632.9-4802c/v7/run.py
-  \caption{A diffuse-emission-subtracted 10-100
+  \caption{A diffuse-emission-subtracted 10 \gev to 100
   \gev counts map of the region around 2FGL\,J1632.4$-$4753c smoothed by
   a 0\fdg1 2D Gaussian kernel.  This source is in a crowded region.
   The red star is the 2FGL position of this source.  The red
@@ -2223,8 +2213,8 @@ the test statistic for the two point source test.
   The three
   green crosses inside the extension are 2FGL\,J1631.7$-$4720c, 
   2FGL\,J1630.2$-$4752, and 2FGL\,J1634.4$-$4743c.4-4820c
-  which were removed from our background model because they are part
-  of the extended source.  The blue stars and crosses are the catalog
+  which were removed from our background model.
+  The blue stars and crosses are the catalog
   positions and the relocalized positions of (from left to right)
   2FGL\,J1635.4$-$4717c and 2FGL\,J1636.3$-$4740c.  The farther away green
   stars are other catalog sources which were removed from our model because they are
@@ -2245,10 +2235,9 @@ the test statistic for the two point source test.
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/1FGL_J1837.5-0659c/v7/run.py
   \caption{
-  A diffuse-emission-subtracted 10-100 \gev counts map of
-  (a)
-  the region around 2FGL\,J1837.3$-$0700c smoothed by a 0\fdg1 2D Gaussian
-  kernel and (b) also the emission from the background 
+  A diffuse-emission-subtracted 10 \gev to 100 \gev counts map of
+  the region around 2FGL\,J1837.3$-$0700c (a) smoothed by a 0\fdg1 2D Gaussian
+  kernel and (b) with the emission from the background 
   sources subtracted.  The red
   star is the 2FGL position of this source. The red cross and circle
   are the best fit position and extension  of 2FGL\,J1837.3$-$0700c 
@@ -2257,7 +2246,7 @@ the test statistic for the two point source test.
   catalog position and the relocalized position of (from left to right)
   2FGL\,J1839.3$-$0558c, 2FGL\,J1836.8$-$0623c, and 2FGL\,J1834.7$-$0705c.
   The green cross inside the extension is 2FGL\,J1835.5$-$0649 which
-  was removed from our background model because it is part of the extended source.  The farther
+  was removed from our background model. The farther
   away green star is 2FGL J1839.0$-$0539 which was removed from
   our model because
   it is not significant above 10 \gev.  This source is spatially
@@ -2285,8 +2274,7 @@ the test statistic for the two point source test.
   star (colored green) 
   inside the extension represents the position of 
   2FGL\,J2019.1+4040 which was removed
-from our background model 
-  because it is part of the extended source.  The diamond
+from our background model. The diamond
   (colored purple) is the
   position a source not in the two-year catalog which was added to the
   region. 2FGL\,J2021.5+4026 is spatially coincident with the $\gamma$
@@ -2326,13 +2314,13 @@ from our background model
     \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/seds/v3/plot_seds/plot_hess_seds.py
     \caption{
-    The spectral energy distribution of four the extended sources
+    The spectral energy distribution of the four extended sources
     associated with extended \tev sources.  The black points with
     circular markers are the LAT data points. The points with dashed
     markers (colored red in the electronic version) are the H.E.S.S
-    points of the associated sources.  Plot (a) shows the \gev SED of
-    2FGL\,J1615.0$-$5051 together with the \tev SED of HESS\,J1616$-$508.
-    Plot (b) shows 2FGL\,J1615.2$-$5138 and HESS\,J1614$-$518 Plot (c)
+    points of the associated sources.  Plot (a) shows the LAT SED of
+    2FGL\,J1615.0$-$5051 together with the H.E.S.S. SED of HESS\,J1616$-$508.
+    Plot (b) shows 2FGL\,J1615.2$-$5138 and HESS\,J1614$-$518. Plot (c)
     shows 2FGL\,J1632.4$-$4753c and HESS\,J1632$-$478. Plot (d) shows
     2FGL\,J1837.3$-$0700c and HESS\,J1837$-$069. The H.E.S.S. data points
     are from \citep{hess_plane_survey} Both LAT and H.E.S.S. spectral
@@ -2348,7 +2336,8 @@ from our background model
       \plotone{summary_plots/allsky_extended_sources_bw.eps}
       \fi
       % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/allsky/v2/run.py
-      \caption{A plot of all \gev extended sources detected by the LAT
+      \caption{A plot of all spatially extended sources detected by the LAT
+      in the \gev energy range
       with two years of data.  The twelve extended sources included in
       2FGL are indicated by the circular markers (colored red in the online
       version).  The nine new extended sources analyzed in this paper are
@@ -2407,7 +2396,7 @@ RX\,J1713.7$-$3946 Vela Jr., the \tev sources were fit assuming a 2D Gaussian
     Table~\ref{known_extended_sources}, Table~\ref{new_ext_srcs_table},
     and from \cite{velax}. 
     The \tev extension of
-    the 42 extended H.E.S.S. sources comes from the H.E.S.S. Source
+    the extended H.E.S.S. sources comes from the H.E.S.S. Source
     Catalog \citep{hesscat}.
 %   The \tev extension of
 %   the 42 extended H.E.S.S. sources comes from the H.E.S.S. Source
