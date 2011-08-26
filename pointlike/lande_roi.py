@@ -56,6 +56,7 @@ import numpy as np
 from numpy import *
 
 from scipy.optimize import fmin
+from matplotlib.ticker import FuncFormatter
 
 import pyfits 
 
@@ -68,9 +69,15 @@ from uw.like.roi_extended import ExtendedSource,ROIExtendedModelAnalytic
 from uw.like.SpatialModels import SpatialModel
 from uw.like.Models import Model
 
+
 from skymaps import SkyDir,SkyImage
 
+import imp
 from os.path import expandvars as e
+from os.path import join as j
+
+from uw.utilities import colormaps
+from uw.utilities.colormaps import *
 
 def select_quiet(func):
     def new(self,*args,**kwargs):
@@ -1172,14 +1179,73 @@ class MultiLocalizer():
 
         return
 
-def plot_ds9_contour(ax,contour,**kwargs):
-    """ Parse a ds9 format contour file. Kwargs goes into the plot function. """
-    lines=open(os.path.expandvars(contour)).readlines()
-    ras,decs=[],[]
-    for line in lines:
-        if line.strip() is '':
-            ax['fk5'].plot(ras,decs,'-',**kwargs)
-            ras,decs=[],[]
-        else:
-            ra,dec=line.split()
-            ras.append(float(ra)); decs.append(float(dec))
+
+
+def expand_fits(pf,factor,hdu=0):
+    """ Create a new fits file where
+        each pixel is divided into factor**2
+        more pixels all of equal value. 
+        
+        I am not an expert on Fits files and
+        I only think this code works. Also,
+        I have no idea if it would work with 3D data (?).
+        As a rule of thumb, if you use this function,
+        you should probably open the before/after
+        in ds9 and blink them for a while to convince
+        yourself the function worked.
+    """
+
+    h=pf[hdu].header
+    d=pf[hdu].data
+
+    h['CDELT1']/=factor
+    h['CDELT2']/=factor
+
+    h['NAXIS1']*=factor
+    h['NAXIS2']*=factor
+
+    h['CRPIX1']=h['CRPIX1']*factor - factor/2.0 + 0.5
+    h['CRPIX2']=h['CRPIX2']*factor - factor/2.0 + 0.5
+
+    larger=list(d.shape)
+    larger[0]*=factor
+    larger[1]*=factor
+    #larger_array = np.empty(larger,dtype=d.dtype)
+    larger_array = np.zeros(larger,dtype=d.dtype)
+    for i in range(factor):
+        for j in range(factor):
+            larger_array[i::factor,j::factor] = d
+
+    pf[hdu].data=larger_array
+
+
+def saveeps(filename):
+    """ Matplotlib's eps support seems kind of lame.
+        It seems like you get better eps figures to
+        generate pdf figures and use acroread to convert
+        them to eps figures. """
+    base,ext=os.path.splitext(filename)
+    if ext != '.eps':
+        raise Exception("filename must end in .eps")
+
+    P.savefig('%s.pdf' % base)
+    #os.system('acroread -toPostScript %s.pdf' % base)
+    #os.system('ps2epsi %s.ps %s.eps' % (base,base))
+    #os.remove('%s.pdf' % base)
+    #os.remove('%s.ps' % base)
+    os.system('pdftops -level1 -eps %s.pdf %s.eps' % (base,base))
+
+
+
+def tolist(x):
+    if isinstance(x,list):
+        return map(fix,x)
+    elif isinstance(x,dict):
+        return dict((fix(k),fix(v)) for k,v in x.keys())
+    elif isinstance(x,np.ndarray) or \
+            isinstance(x,np.number) or \
+            isinstance(x,np.str):
+        return x.tolist()
+    else:
+        return x
+

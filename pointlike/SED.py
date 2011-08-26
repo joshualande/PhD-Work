@@ -133,8 +133,9 @@ class SED(object):
         index.setFree(0)
 
         prefactor=like[like.par_index(name, 'Prefactor')]
-        prefactor.setScale(1e-11)
-        prefactor.setBounds(1e-10,1e10)
+
+        # assume a canonical dnde=1e-11 at 1GeV index 2 starting value
+        dnde = lambda e: 1e-11*(e/1e3)**-2
 
         like.syncSrcParams(name)
 
@@ -142,13 +143,20 @@ class SED(object):
 
         for i,(lower,upper) in enumerate(zip(self.bin_edges[:-1],self.bin_edges[1:])):
 
+            e = math.sqrt(lower*upper)
+
             if verbosity: print 'Calculating spectrum from %.0dMeV to %.0dMeV' % (lower,upper)
 
             # goot starting guess for source
             prefactor=like[like.par_index(name, 'Prefactor')]
-            prefactor.setValue(1e-11/prefactor.getScale())
+
+            prefactor.setScale(dnde(e))
+            prefactor.setValue(1)
+            prefactor.setBounds(1e-10,1e10)
+
             scale=like[like.par_index(name, 'Scale')]
-            scale.setValue(math.sqrt(lower*upper)/scale.getScale())
+            scale.setScale(1)
+            scale.setValue(e)
             like.syncSrcParams(name)
 
             like.setEnergyRange(float(lower)+1, float(upper)-1)
