@@ -108,42 +108,45 @@ M.-H.~Grondin\altaffilmark{53},
 
 
 \begin{abstract}
-We present a new method for quantifying the spatial extension of sources
-with the Large Area Telescope (LAT), the primary science instrument on
-the {\em \fermi Gamma-ray Space Telescope} (\fermi).  Spatial extension
-is an important characteristic for correctly associating LAT sources with
-their counterparts at other wavelengths. We perform a series of Monte
-Carlo simulations to validate this tool and calculate the LAT's threshold
-for detecting the spatial extension of sources.  We then 
-test all sources in the two-year source catalog for extension. We
-report the detection of nine spatially extended sources in addition to
-the twelve spatially extended sources reported in the second \fermi-LAT
-Catalog (2FGL).
+Spatial extension is an important characteristic for correctly
+associating LAT sources with their counterparts at other wavelengths
+and for obtaining an unbiased model of their spectra.  We present a new
+method for quantifying the spatial extension of sources with the Large
+Area Telescope (LAT), the primary science instrument on the {\em \fermi
+Gamma-ray Space Telescope} (\fermi).  We perform a series of Monte Carlo
+simulations to validate this tool and calculate the LAT's threshold for
+detecting the spatial extension of sources.  We then test all sources
+in the second \fermi-LAT catalog (2FGL) for extension. We report the
+detection of nine spatially extended sources in addition to the twelve
+spatially extended sources reported in 2FGL.
 \end{abstract}
 
 \section{Introduction}
 
 \hl{
 
-A number of astrophysical sources classes including supernova remnant
+A number of astrophysical source classes including supernova remnants
 (SNRs), pulsar wind nebulae (PWNe), molecular clouds, normal galaxies,
-galaxy clusters could be expected to spatially resolvable at \gev
-energies.  Dark matter satellites are also hypothesized to be seen
-as spatially extended at \gev energies.  The LAT Collaboration has
-previously reported on five SNRs which are spatially extended beyond
-the LAT PSF at \gev energies (IC443, W28, W44, W51C, and RX\,J1713.7$-$3946
-\citep{ic443,w28,w44,w51c,rx_j1713_lat}). In addition, three extended PWNe
-were detected as being extended: MSH\,15$-$52, Vela~X, and HESS\,J1825$-$137
-\citep{msh1552,velax,fermi_hess_j1825}. Two close-by galaxies the Large
-and Small Magalenic Clouds and one radio galaxy Centarus A were spatially
-resolved at \gev energies \citep{lmc,smc,cen_a_lat}.  Furthermore,
-a number of other sources previously detected at \gev energies are
-positionally coincident with sources that exhibit extension at other
-wavelengths and could be expected to be spatially resolvable at \gev
-energies.
+and galaxy clusters are expected to be spatially resolvable at
+\gev energies.  Dark matter satellites are also hypothesized to
+be spatially extended.  The Large Area Telescope
+(LAT) on the {\em \fermi Gamma-ray Space Telescope} (\fermi) has
+detected five SNRs which are significantly extended
+at \gev energies: IC443, W28, W44, W51C, and RX\,J1713.7$-$3946
+\citep{ic443,w28,w44,w51c,rx_j1713_lat}. In addition, three extended
+PWNe were detected as being extended: MSH\,15$-$52, Vela~X, and
+HESS\,J1825$-$137 \citep{msh1552,velax,fermi_hess_j1825}. Two
+close-by galaxies, the Large and Small Magalenic Clouds, and one
+radio galaxy, Centarus A, were spatially resolved at \gev energies
+\citep{lmc,smc,cen_a_lat}.  A number of additional sources detected
+at \gev energies are positionally coincident with sources that exhibit
+extension at other wavelengths. These sources could be expected to be spatially
+resolvable by the LAT at \gev energies.
 
-At \tev energies many sources have been recently detected as
-begin spatially extended using air Cherenkov detectors.  Most
+The current generation of air Cherenkov detectors have
+made it apparent that many sources can be spatially resolved
+at even higher energies.
+Most
 prominent was a survey of the Galactic plane using the High Energy
 Stereoscopic System (H.E.S.S) which reported 14 spatially extended
 sources with extensions varying from $\sim0\fdg1$ to $\sim0\fdg25$
@@ -151,19 +154,18 @@ sources with extensions varying from $\sim0\fdg1$ to $\sim0\fdg25$
 sources detected at \tev energies (most notably the $\gamma$-ray binaries
 LS\,5039 \citep{HESSLS5039}, LS I+61$-$303 \citep{MAGICLSI, VERITASLSI}
 HESS\,J0632+057 \citep{HESS0632}, and the Crab nebula \citep{crab_weekes})
-have no significant extension detected.  High energy $\gamma$-rays from
+have no detectable extension.  High-energy $\gamma$-rays from
 these sources are produced by the decay of $\pi^0$s produced by hadronic
 interactions with interstellar matter and by relativistic electrons
 due to Inverse Compton (IC) scattering and Bremsstrahlung radiation
 \citep{blandford_and_eichler_1987}.  It is likely that the \gev and
 \tev emission from these sources originates from the same population of
 high-energy particles and so at least some of these sources should be
-detected as extended sources at \gev energies.  Studying 
+detected at \gev energies.  Studying 
 these \tev sources at \gev energies would help to
 determine the emission mechanisms producing these high energy photons.
 
-The Large Area Telescope (LAT) is a pair conversion telescope on the
-{\em \fermi Gamma-ray Space Telescope} (\fermi) that been surveying the
+The LAT is a pair conversion telescope that been surveying the
 $\gamma$-ray sky since 2008 June.  The LAT has broad energy coverage
 (20 \mev to $>300$ \gev), wide field of view ($\sim 2.4 \sr$), and large
 effective area ($\sim 8000\ \cm^2$ at $>1 \gev$).  
@@ -178,44 +180,46 @@ point-spread function (PSF) of the LAT is comparable to the typical size
 of many of these sources.
 
 The capability to spatially resolve \gev $\gamma$-ray
-sources is important for several reasons.  First, multiple potential
-counterparts detected at other frequencies exist within the localization
-confidence region of a typical LAT source along the Galactic plane.
+sources is important for several reasons.  
 Finding a coherent source extension across different energy bands can
 help to associate a LAT source to an otherwise confused counterpart.
-Furthermore, dark matter satellite in our galaxy have been predicted to be
-detected and spatially extended at \gev energies and could be discovered
-outside the galactic plane \citep{pre_luanch_dark_matter_fermi}.  Also,
+Furthermore, some of the dark matter substructure in our Galaxy 
+is predicted to be spatially extended at \gev energies \citep{pre_luanch_dark_matter_fermi}.  
+Characterization of spatial extension could help to identify this substructure.
+Also,
 due to the strong energy dependence of the LAT PSF, the spatial and
-spectral information about a source do not simply decouple. An inaccurate
-spatial model will bias the spectral model of the source. Specifically,
+spectral character of a source do not decouple. An inaccurate
+spatial model will bias the spectral model of the source and vice versa. Specifically,
 modeling a spatially extended source as point-like will systematically
 shift a spectral analysis to softer indices. Furthermore, correctly
-modeling a source's extension is important for improving the model of
-the sky and removing excess residuals, for example in the region around
-surrounding the Large Magellanic Clouds \citep{first_cat}.  Such excess
-residuals potentially bias the significance and measured spectrum of
+modeling a source's extension is important for 
+understanding an entire region of the sky. For example,
+an incorrect model of the spatially extended LMC introduced
+significant residuals in the surrounding region \citep{first_cat,second_cat}.
+Such residuals can bias the significance and measured spectrum of
 neighboring sources in the densely populated Galactic plane.
 
 
-Each of the previously detected extended LAT sources was spatially
-resolved by a dedicated analysis of the particular source so
-we expect that a systematic scan of all LAT detected sources
+Previous analysis of
+extended LAT sources were performed as dedicated studies
+of individual sources, so we expect
+that a systematic scan of all LAT detected sources
 could uncover additional spatially extended sources.  For these
 reasons, in Section~\ref{analysis_methods_section} we present
-a new method for analyzing spatially extended LAT sources. In
-Section~\ref{monte_carlo_validation} we demonstrate that this tool
-can be used for an unbiased statistical test of the extension of
-LAT sources and in Section~\ref{extension_sensitivity} we calculate
+a new systematic method for analyzing spatially extended LAT sources. In
+Section~\ref{monte_carlo_validation} we demonstrate that this method
+can be used to test the statistical significance of
+the extension of
+a LAT sources and in Section~\ref{extension_sensitivity} we calculate
 the LAT's detection threshold to resolve the extension of a source.
 In Section~\ref{extended_source_search_method} we describe a search for
 new spatially extended LAT sources and in Section~\ref{validate_known}
-we reanalyzing the twelve previously detected extended sources
+we reanalyze the twelve previously detected extended sources
 included in 2FGL.  In Section~\ref{test_2lac_sources} we further
 demonstrate that our detection method does not misidentify
 point sources as being extended 
-by testing the extension of Active
-galactic nucleus (AGN) believed to be unresolvable. Finally, in
+by testing the extension of active
+galactic nuclei (AGN) believed to be unresolvable. Finally, in
 Section~\ref{new_ext_srcs_section} we present the detection of the
 extension of nine spatially extended sources that were reported in 2FGL
 but not previously spatially resolved.
