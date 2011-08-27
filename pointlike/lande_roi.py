@@ -111,58 +111,6 @@ def merge_dict(first,second):
     return ret
 
 
-class OldCatalog2FGL(FermiCatalog):
-    """ Quick hack to load in new 2FGL and get correct extended sources. """
-    def __init__(self,point_catalog,extended_archive,**kwargs):
- 
-        super(OldCatalog2FGL,self).__init__(point_catalog,**kwargs)
-
-        self.extended_cat = ExtendedSourceCatalog(extended_archive)
-
-        # kludge
-        if os.path.basename(point_catalog)=='24M7_uw40.fits' and \
-                os.path.basename(extended_archive) == 'Extended_archive_v06':
-            self.extended_cat.names[self.extended_cat.names=='HESS J1825-137']='HESSJ1825-137'
-
-        # This is an important sanity check to make sure that the extended
-        # archive is consistent with the catalog file.
-        if not set(self.extended_cat.names).issubset(set(self.names)):
-            difference=list(set(self.extended_cat.names).difference(set(self.names)))
-            print "Warning: Extended Sources %s found in extended catalog but not in catalog file" % difference
-
-
-    def get_sources(self,*args,**kwargs):
-        """ Returns a list with mixed point & extended sources. """
-
-        sources=super(OldCatalog2FGL,self).get_sources(*args,**kwargs)
-
-        for i,source in enumerate(sources):
-
-            if source.name in self.extended_cat.names:
-                index = np.where(self.extended_cat.names==source.name)[0][0]
-
-                sources[i] = ExtendedSource(name=source.name,
-                    model=source.model,
-                    spatial_model = self.extended_cat.spatial_models[index])
-
-        return sources
-
-    def merge_lists(self,*args,**kwargs):
-        """ Merge other sources with the catalog sources. Note that since get_sources
-            mixes the catalog point & extended sources, 
-            the return of merge_lists is also mixed but correctly prunes out extended
-            catalog sources which interfer with user sources. At the end of the function,
-            we must resort out the point & diffuse sources. """
-
-
-        point,diffuse = super(OldCatalog2FGL,self).merge_lists(*args,**kwargs)
-
-        sources = point + diffuse
-
-        point = [ i for i in sources if isinstance(i,PointSource)]
-        diffuse = [ i for i in sources if isinstance(i,DiffuseSource)]
-        return point, diffuse
-
 
 def modify_defaults(**kwargs):
     """ Function decorator which replaces the default values
@@ -254,9 +202,6 @@ class LandeROI(ROIAnalysis):
 
         return bg[0] if len(args)==1 else bg
 
-    @staticmethod 
-    def galstr(skydir):
-        return 'SkyDir(%.3f,%.3f,SkyDir.GALACTIC)' % (skydir.l(),skydir.b())
 
     def fit(self,*args,**kwargs):
         try:
@@ -808,6 +753,10 @@ class VerboseROI(LandeROI):
         super(VerboseROI,self).print_summary(*args,**kwargs)
         print '-> Total (not negative) logLikelihood = ',-self.logLikelihood(self.parameters())
         self.quiet=old_quiet
+
+    @staticmethod 
+    def galstr(skydir):
+        return 'SkyDir(%.3f,%.3f,SkyDir.GALACTIC)' % (skydir.l(),skydir.b())
 
     @select_quiet
     def localize(self,which,*args,**kwargs):

@@ -81,21 +81,19 @@ if datafiles.__dict__.has_key('cache_ft1_dir'):
     roi.cache_ft1(cachefile)
 print t
 
-roi.toRegion('results_%s_%s.reg' % (spatial,savename))
-
 # if two point sources, use first hypothesis
 which=name if spatial != 'TwoPoints' else '%s (first)' % name
 
 if (args.maps or args.all or args.pointlike) and \
         'Pseudo' not in spatial:
-    roi.plot_counts_map(filename='map_%s_%s.png' % (spatial,savename),
-                    countsfile='counts_%s_%s.fits' % (spatial,savename),
-                    modelfile='model_%s_%s.fits' % (spatial,savename))
-
-    roi.plot_significance(filename='significance_%s_%s.png' % (spatial,savename))
 
     if spatial not in ['Background']:
 
+        print t
+        roi.plot_sources(which=which,filename='sources_%s_%s.png' % (spatial,savename))
+        print t
+        roi.plot_source(which=which,filename='source_%s_%s.png' % (spatial,savename))
+        print t
         # make slice & radial integral front events only.
         roi.plot_slice(which=which,filename='slice_%s_%s_gal.png' % (spatial,savename),conv_type=0,galactic=True)
         print t
@@ -103,12 +101,15 @@ if (args.maps or args.all or args.pointlike) and \
         print t
         roi.plot_radial_integral(which=which,filename='radial_%s_%s.png' % (spatial,savename),conv_type=0)
         print t
-        roi.plot_source(which=which,filename='source_%s_%s.png' % (spatial,savename))
-        print t
-        roi.plot_sources(which=which,filename='sources_%s_%s.png' % (spatial,savename))
-        print t
         roi.plot_model(which=which,filename='model_%s_%s.png' % (spatial,savename))
-        print t
+
+    print t
+    roi.plot_counts_map(filename='map_%s_%s.png' % (spatial,savename),
+                    countsfile='counts_%s_%s.fits' % (spatial,savename),
+                    modelfile='model_%s_%s.fits' % (spatial,savename))
+
+    print t
+    roi.plot_significance(filename='significance_%s_%s.png' % (spatial,savename))
 
 if args.sed or args.all or args.pointlike:
     if spatial not in ['Background' ]:
