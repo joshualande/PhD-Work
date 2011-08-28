@@ -1,16 +1,28 @@
-base = collaboration_meeting_presentation
-extended_catalog:
-	latex $(base)
-	latex $(base)
-	dvips $(base)
-	# These commands make sure no compression is applied
-	# # http://cosmocoffee.info/viewtopic.php?p=213
-	ps2pdf -dAutoFilterColorImages=false -dColorImageFilter=/FlateEncode $(base).ps
-	rm $(base).dvi
-	rm $(base).ps
+cat = lande_cat_ext_collab_august_2011
+
+all: catalog galactic 
+
+catalog:
+	latex $(cat)
+	latex $(cat)
+	dvips $(cat)
+	ps2pdf -dAutoFilterColorImages=false -dColorImageFilter=/FlateEncode $(cat).ps
+	rm $(cat).dvi
+	rm $(cat).ps
+
+gal = lande_gal_ext_collab_august_2011
+galactic:
+	latex $(gal)
+	latex $(gal)
+	dvips $(gal)
+	ps2pdf -dAutoFilterColorImages=false -dColorImageFilter=/FlateEncode $(gal).ps
+	rm $(gal).dvi
+	rm $(gal).ps
 
 clean:
-	rm -f $(base).aux $(base).log $(base).out \
-		$(base).toc $(base).bbl \
-		$(base).blg $(base).nav $(base).snm
-
+	rm -f $(cat).aux $(cat).log $(cat).out \
+		$(cat).toc $(cat).bbl \
+		$(cat).blg $(cat).nav $(cat).snm
+	rm -f $(gal).aux $(gal).log $(gal).out \
+		$(gal).toc $(gal).bbl \
+		$(gal).blg $(gal).nav $(gal).snm
