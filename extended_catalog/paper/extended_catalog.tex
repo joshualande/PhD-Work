@@ -92,8 +92,8 @@ pulsar wind nebula
 J.~Lande\altaffilmark{2},
 S.~Funk\altaffilmark{2},
 M.~Ackermann (???),
-A.~Allafort\altaffilmark{2},
-M.-H.~Grondin\altaffilmark{53},
+%A.~Allafort\altaffilmark{2},
+%M.-H.~Grondin\altaffilmark{53},
 % Keith Bechtol
 % Marshall Roth?
 % Marianne Lemoine-Goumard
@@ -133,16 +133,19 @@ and galaxy clusters are expected to be spatially resolvable at
 \gev energies.  Dark matter satellites are also hypothesized to
 be spatially extended.  The Large Area Telescope
 (LAT) on the {\em \fermi Gamma-ray Space Telescope} (\fermi) has
-detected five SNRs which are significantly extended
-at \gev energies: IC443, W28, W44, W51C, and RX\,J1713.7$-$3946
-\citep{ic443,w28,w44,w51c,rx_j1713_lat}. In addition, three extended
+detected seven SNRs which are significantly extended
+at \gev energies: 
+W51C, W30, 
+IC443, W28, W44, RX\,J1713.7$-$3946,
+and the Cygnus Loop
+\citep{w51c,castro_and_slane_2010,ic443,w28,w44,rx_j1713_lat,cygnus_loop_lat}. In addition, three extended
 PWNe were detected as being extended: MSH\,15$-$52, Vela~X, and
 HESS\,J1825$-$137 \citep{msh1552,velax,fermi_hess_j1825}. Two
 close-by galaxies, the Large and Small Magalenic Clouds, and one
 radio galaxy, Centarus A, were spatially resolved at \gev energies
 \citep{lmc,smc,cen_a_lat}.  A number of additional sources detected
 at \gev energies are positionally coincident with sources that exhibit
-extension at other wavelengths. These sources could be expected to be spatially
+extension at other wavelengths, large enough to be spatially
 resolvable by the LAT at \gev energies.
 
 The current generation of air Cherenkov detectors have
@@ -167,7 +170,7 @@ detected at \gev energies.  Studying
 these \tev sources at \gev energies would help to
 determine the emission mechanisms producing these high energy photons.
 
-The LAT is a pair conversion telescope that been surveying the
+The LAT is a pair conversion telescope that has been surveying the
 $\gamma$-ray sky since 2008 June.  The LAT has broad energy coverage
 (20 \mev to $>300$ \gev), wide field of view ($\sim 2.4 \sr$), and large
 effective area ($\sim 8000\ \cm^2$ at $>1 \gev$).  
@@ -571,20 +574,20 @@ become increasingly important at low energy. For our extension search,
 we therefore use only photons with energies above 1 \gev.
 
 \hl{
-Figure~\ref{all_sensitivity} shows the flux threshold
-as a function of source extension for different background levels 
-($1\times$,
-$10\times$, 
-and $100\times$ the nominal background), different spectral indices, and
-two different energy bands (1 \gev to 100 \gev and 10 \gev to 100 \gev).  The detection
-threshold is higher for sources in regions of higher background.  For a
-fixed 1 \gev to 100 \gev or 10 \gev to 100 \gev flux, the LAT's detection threshold
-only weakly depends upon the spectral index.  This effect is most
-pronounced when using only photons with energies above 10 \gev.  Overlaid
-on Figure~\ref{all_sensitivity} are the LAT detected extended sources
-that will be discussed in Sections~\ref{validate_known}
-and \ref{new_ext_srcs_section}.  The extension thresholds are tabulated
-in Table~\ref{all_sensitivity_table}.
+Figure~\ref{all_sensitivity} shows the flux threshold as a function of
+source extension for different background levels ($1\times$, $10\times$,
+and $100\times$ the nominal background), different spectral indices,
+and two different energy bands (1 \gev to 100 \gev and 10 \gev to
+100 \gev).  The detection threshold is higher for sources in regions of
+higher background.  When studying sources only at energies above 1 \gev,
+the LAT's detection threshold (defined as the 1 \gev to 100 \gev flux at
+which $\langle\tsext\rangle=16$) depends less strongly on the source's
+spectral index. The index dependence of the detection threshold is
+even weaker when considering only photons with energies above 10 \gev.
+Overlaid on Figure~\ref{all_sensitivity} are the LAT detected extended
+sources that will be discussed in Sections~\ref{validate_known} and
+\ref{new_ext_srcs_section}.  The extension thresholds are tabulated in
+Table~\ref{all_sensitivity_table}.
 
 Finally, Figure~\ref{time_sensitivity} shows the LAT's projected
 detection threshold to extension after 10 years against 10 times
@@ -794,15 +797,13 @@ we obtain the total systematic error by adding them in quadrature.
 % 6 SNRs 
 
 We first present on our analysis of the twelve extended sources
-included in 2FGL.
-\citep{second_cat}.
-Six extended SNRs were included in 2FGL: IC443, W28, W30, W44, W51C, and the
-Cygnus Loop \citep{ic443,w28,w44,w51c,cygnus_loop_lat}.\footnote{A
-detailed publication by the LAT
-Collaboration about W30 is still in preparation.}
+included in 2FGL.  \citep{second_cat}.  Six extended SNRs were
+included in 2FGL: W51C, IC443, W28, W30, W44, and the Cygnus Loop
+\citep{w51c,ic443,w28,w44,cygnus_loop_lat}.\footnote{A detailed
+publication by the LAT Collaboration about W30 is still in preparation.}
 \gev emission from W30 was also studied in \cite{castro_and_slane_2010}.
-Using 1 \gev to 100 \gev photons, our analysis significantly detected the
-extension of all six SNRs.
+Using 1 \gev to 100 \gev photons, our analysis significantly detected
+the extension of all six SNRs.
 % 2 galaxies
 
 Two nearby satellite galaxies of the Milky Way the Large Magalenic Cloud (LMC)
@@ -947,7 +948,7 @@ catalog source 1FGL\,J0823.3$-$4248.
 \hl{
 Figure~\ref{1FGL_J0823.3-4248} shows a
 counts map of this source
-and Figure~\ref{snr_seds} shows the LAT spectrum of it.
+and Figure~\ref{snr_seds} shows its spectrum.
 }
 To get a good fit of this source, we removed from our background
 model the nearby catalog
@@ -956,27 +957,21 @@ extended source.  These modifications are
 shown in Figure~\ref{1FGL_J0823.3-4248}.
 
 \hl{
-This extended source is spatially coincident with the middle-aged
-SNR Puppis A.  Puppis A has been studied in detail in radio
-(\cite{puppis_a_vla}, and references therein) and  X-ray 
-(\cite{rosat_puppis_a,suzaku_puppis_a}, and references therein)
-Mosaic \rosat observations of Puppis A produced the highest
-resolution X-ray image of this source
-and contours corresponding to this
-image are overlaid on Figure~\ref{1FGL_J0823.3-4248} and match the
-inferred size at \gev energies \citep{rosat_puppis_a}.
-Puppis A's distance was estimated at 2.2 kpc \citep{reynoso_1995,reynoso_2003}
-which leads to a 1 \gev to 100 \gev luminosity of $\sim 3\times 10^{34}$ ergs/\s.
-
-No molecular clouds have been observed directly adjacent to Puppis A 
-\citep{co_eastern_puppis_a}.
-This is similar to the LAT detected SNR the Cyngus Loop \citep{cygnus_loop_lat}.
-The luminosity of Puppis A is also smaller than that of 
-other SNRs believed to interact with molecular clouds
+This extended source is spatially coincident with the
+middle-aged SNR Puppis A.  Puppis A has been studied in detail
+in radio (\cite{puppis_a_vla}, and references therein) and  X-ray
+(\cite{rosat_puppis_a,suzaku_puppis_a}, and references therein) Mosaic
+\rosat observations of Puppis A produced the highest resolution X-ray
+image of this source and contours corresponding to this image are
+overlaid on Figure~\ref{1FGL_J0823.3-4248} and match the inferred
+size at \gev energies \citep{rosat_puppis_a}.  Puppis A's distance
+was estimated at 2.2 kpc \citep{reynoso_1995,reynoso_2003} which leads
+to a 1 \gev to 100 \gev luminosity of $\sim 3\times 10^{34}$ ergs/\s.
+No molecular clouds have been observed directly adjacent to Puppis A
+\citep{co_eastern_puppis_a}.  This is similar to the LAT detected Cyngus
+Loop SNR \citep{cygnus_loop_lat}.  The luminosity of Puppis A is also
+smaller than that of other SNRs believed to interact with molecular clouds
 \citep{w51c,ic443,w44,w28,w49b_lat}.
-The \gev emission could therefore be explained by the interaction
-of accelerated particles by interstellar matter or fields, similar
-to the emission mechanism suggested for the Cygnus Loop SNR
 \citep{cygnus_loop_lat}.
 }
 
@@ -1046,8 +1041,10 @@ more challenging to measure the column density of dust.  Infared and
 ${}^{12}\text{CO}$ ($J=1\rightarrow 0$)
 contours are overlaid on Figure~\ref{1FGL_J1628.6-2419c}. There is good
 spatial correlation with the \gev emission \citep{iras_rho_ophiuci,co_rho_ophiuci}
-so this source might represent an inadequacy in the diffuse
-$\gamma$-ray model.
+so this source might 
+represent $\gamma$-ray emission from the interactions of cosmic rays with
+interstellar gas which has not been accounted for in the LAT diffuse
+emission model.
 }
 
 \subsection{2FGL\,J1712.4$-$3941}
@@ -1160,8 +1157,10 @@ extension $0.136\pm 0.008$ when fitting this source with an elliptical
 2D Gaussian surface brightness.  This size corresponds to a 68\% containment
 radius of $\rsixeight=0\fdg21\pm0\fdg01$. This size is comparable to the LAT
 size $\rsixeight=0\fdg27\pm0\fdg03$ (see Section~\ref{compare_source_size}).
-Figure~\ref{hess_seds} shows that the LAT spectrum of 2FGL\,J1615.0$-$5051
-connects smoothly to the H.E.S.S spectrum of HESS\,J1616$-$508.
+Figure~\ref{hess_seds} shows that the spectrum of 2FGL\,J1615.0$-$5051
+at \gev energies
+connects smoothly to the spectrum of HESS\,J1616$-$508 at \tev
+energies.
 
 \hl{
 HESS\,J1616$-$508 is located in the region of two SNRs, RCW103
@@ -1209,8 +1208,9 @@ in the semi-major and semi-minor axis. This size corresponds
 to a 68\% containment size of $\rsixeight=0\fdg35\pm0\fdg03$
 and $0.23\pm0.03$.  This elliptical size matches the LAT size
 $\rsixeight=0\fdg35\pm0\fdg03$.  Figure~\ref{hess_seds} shows
-that the LAT spectrum of 2FGL\,J1615.2$-$5138 connects smoothly to
-the H.E.S.S spectrum of HESS\,J1614$-$518.  Further data collected by
+that the spectrum of 2FGL\,J1615.2$-$5138 at \gev energies
+connects smoothly to
+the spectrum of HESS\,J1614$-$518 at \tev energies.  Further data collected by
 H.E.S.S. in 2007 helped to resolve a double peaked structure in the
 H.E.S.S. data but no spectral variation across this source, suggesting
 that the emission is not the confusion of physically separate sources
@@ -1287,22 +1287,23 @@ elliptical 2D Gaussian surface brightness.  This corresponds to a 68\%
 containment size $\rsixeight=0\fdg31\pm0\fdg08$ and $0\fdg09\pm0\fdg06$
 along the semi-major and semi-minor axis. This size is consistent with
 the LAT size $\rsixeight=0\fdg36\pm0\fdg04$.  Figure~\ref{hess_seds}
-shows that the LAT spectrum of 2FGL\,J1635.4$-$4717c connects smoothly to
-the H.E.S.S spectrum of HESS\,J1632$-$478.
+shows that the spectrum of 2FGL\,J1635.4$-$4717c at \gev energies
+connects smoothly to
+the spectrum of HESS\,J1632$-$478 at \tev energies.
 
 \hl{
 \cite{hess_plane_survey} argued that HESS\,J1632$-$478
 is positionally coincident with the hard X-ray source
 IGR\,J1632-4751 observed by INTEGRAL, \xmmnewton, and \asca
 \citep{Igr_J16320-4751_circ,xmm_newton_IGR_J16320-4751,asca_plane_survey},
-but this source is suspected to be an galactic X-Ray Binary so the $\gamma$-ray
+but this source is suspected to be a galactic X-Ray Binary so the $\gamma$-ray
 extension disfavors the association.  Further observations by
 \xmmnewton reveal extended emission of size $\sim32\arcsec\times15\arcsec$
 and inside point-like emission coincident with the peak
 H.E.S.S. emission \citep{hess_j1632_478_xmm_newton}.  They found
 in archival MGPS-2 data a spatially coincident extended radio source
 \citep{most_survey_galactic_plane}.  The positional match argues for a
-single synchrotron processes producing X-ray and \gev and \tev radiation,
+single synchrotron process producing X-ray and \gev and \tev radiation,
 likely due to a PWNe.  The increased size at \tev energies
 compared
 to X-ray energies has previously been observed in several aging PWNe
@@ -1362,14 +1363,16 @@ to a 68\% containment radius of $\rsixeight=0\fdg18\pm0\fdg03$ and
 $0\fdg08\pm0\fdg03$ along the semi-major and semi-minor axis. The
 size is comparable to LAT which fit a 68\% containment radius of
 $\rsixeight=0\fdg29\pm0\fdg07$.  the size difference is not significant
-(less than 2 sigma).  Figure~\ref{hess_seds} shows that the LAT spectrum
-connects smoothly to the H.E.S.S spectrum of HESS\,J1837$-$069.
+(less than 2 sigma).  Figure~\ref{hess_seds} shows that the spectrum
+of 2FGL\,J1837.3$-$0700c at \gev energies
+connects smoothly to the spectrum of HESS\,J1837$-$069
+at \tev energies.
 
 \hl{
 HESS\,J1837$-$069 is coincident
 with the hard and steady X-ray source AX\,J1838.0$-$0655
 \citep{einstein_galactic_plane_survey,hard_x-ray_asca,integral_AX_J1838.0-0655,swift_follow_up,pulsations_HESS_J1837-069,suzaku_HESS_J1837-069}.
-This source was discovery by RXTE to be a pulsar sufficiently
+This source was discovered by RXTE to be a pulsar sufficiently
 luminous to power the \tev emission.  AX\,J1838.0$-$0655 was spatially
 resolved by \chandra to be a bright point source surrounded by
 a $\sim2\arcmin$ nebula \citep{pulsations_HESS_J1837-069} and so the
@@ -1398,15 +1401,13 @@ AX\,J1837.3$-$0652.
 % New source
 %  * SkyDir(78.854,2.670,SkyDir.GALACTIC)
 
-The source 2FGL\,J2021.5+4026 was found 
-to have an extension of $0\fdg59\pm0\fdg03_\stat\pm0\fdg02_\sys$
-with an extension significance of $\tsext=116.4$
-using 10 \gev to 100 \gev photons.  This source was
-fit to a position of $(l,b)=(78\fdg18,2\fdg19)$.  This source
-is coincident with the one-year catalog source 1FGL\,J2020.0+4049.
-\hl{
-Figure~\ref{1FGL_J2020.0+4049} shows a counts map of this source.
-and Figure~\ref{snr_seds} shows that the LAT spectrum of it.
+The source 2FGL\,J2021.5+4026 was found to have an extension of
+$0\fdg59\pm0\fdg03_\stat\pm0\fdg02_\sys$ with an extension significance
+of $\tsext=116.4$ using 10 \gev to 100 \gev photons.  This source
+was fit to a position of $(l,b)=(78\fdg18,2\fdg19)$.  This source is
+coincident with the one-year catalog source 1FGL\,J2020.0+4049. \hl{
+Figure~\ref{1FGL_J2020.0+4049} shows a counts map of this source
+and Figure~\ref{snr_seds} shows its spectrum.  
 }
 
 To get a good fit of this source, we removed from our background
@@ -1429,7 +1430,8 @@ This extended sources is coincident with 2CG\,078+01 and
 3EG\,J2020+4017 detected by COS B and EGRET respectively
 \citep{second_cos_b_catalog,third_egret_catalog}.  This source is
 spatially coincident with the $\gamma$-Cygni SNR and has been speculated
-to be be the interaction of accelerated particles in the SNR interacting
+to originate from 
+the interaction of accelerated particles in the SNR interacting
 with dense molecular clouds \citep{pollock_1985,gaisser_1998}.  But this
 association was disfavored when the LAT \gev emission from this source
 was detected to be pulsed 
@@ -1486,7 +1488,8 @@ Twelve extended sources were included in 2FGL.  Using two years of
 LAT data and a new analysis method, we presented the detection of
 nine additional extended sources. We also reanalyze the spatial
 shape of the twelve extended sources in 2FGL.  The 21 extended
-LAT sources are located close to the Galactic plane and plotted in
+LAT sources are located close to the Galactic plane 
+and their localizations shown in
 Figure~\ref{allsky_extended_sources}.  Most of the extended sources are
 indeed expected to be of Galactic origin as the distance of extragalactic
 sources (with the exception of the local group Galaxies) is typically too
@@ -1510,7 +1513,8 @@ the 42 extended H.E.S.S. sources comes from the H.E.S.S. Source
 Catalog. The H.E.S.S. source catalog can be found at \url{http://www.mpi-hd.mpg.de/hfm/HESS/pages/home/sources/}.}
 Because of the large
 field of view and all-sky coverage, the LAT can more easily measure
-larger sources including the LMC and SMC.  On the other hand, the smaller
+larger sources including the LMC and SMC.  On the other hand, the 
+better
 angular resolution of Air Cherenkov detectors allows them to measure a
 population of extended sources below our sensitivity limit (currently at
 about $\sim0\fdg2$).  \fermi has a five year nominal mission lifetime with
@@ -1525,10 +1529,11 @@ of LAT detected extended sources and of all sources in 2FGL. This,
 and Table~\ref{known_extended_sources} and~\ref{new_ext_srcs_table},
 show that the LAT observes a population of hard extended sources at
 energies above 10 \gev.  Figure~\ref{hess_seds} shows that the
-\gev spectral of
-four of these sources (2FGL\,J1615.0$-$5051, 2FGL\,J1615.2$-$5138,
+spectra of four of these sources (2FGL\,J1615.0$-$5051, 2FGL\,J1615.2$-$5138,
 2FGL\,J1632.4$-$4753c, and 2FGL\,J1837.3$-$0700c)  
-connect smoothly to their \tev counterparts. This is also true of Vela
+at \gev energies
+connect smoothly to their H.E.S.S. counterparts at \tev
+energies. This is also true of Vela
 Jr., HESS\,J1825$-$137 \citep{fermi_hess_j1825}, RX\,J1713.7$-$3946
 \citep{rx_j1713_lat}.  It is likely that the \gev and \tev emission
 from these sources originates from the same population of high-energy
@@ -1536,11 +1541,10 @@ particles.
 
 Many of the \tev detected extended sources now seen at \gev energies are
 currently unidentified and further multi-wavelength follow-up observations
-will be necessary to understand these particle accelerators. But \gev
-observations of these \tev sources in many cases can help to constrain
-handronic and leptonic models of these sources and, especially if their
-spectra can be extended to lower energies, help to understand the emission
-mechanisms producing these high energy $\gamma$-rays.  
+will be necessary to understand these particle accelerators.  But the
+extension of the spectrum of these \tev sources towards lower energies
+by LAT observations can help to determine the origin and nature of the
+high-energy emission seen from these sources.
 }
 
 
@@ -2312,7 +2316,7 @@ for the two point source hypothesis test
     The lines (colored red in the online version)
     are the best fit power-law spectral model of
     these sources.
-    The LAT spectral errors are statistical only.}
+    The spectral errors are statistical only.}
     }
     \label{snr_seds}
   \end{figure}
