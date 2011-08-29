@@ -26,3 +26,4 @@ clean:
 	rm -f $(gal).aux $(gal).log $(gal).out \
 		$(gal).toc $(gal).bbl \
 		$(gal).blg $(gal).nav $(gal).snm
+	rm -rf introduction.aux
