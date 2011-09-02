@@ -235,17 +235,21 @@ class SED(object):
             can be saved out. """
         output=self.__str__(precision=precision,**kwargs)
         if hasattr(filename,'write'):
-            filename.write()
+            filename.write(output)
         else:
             f=open(filename,'w')
             f.write(output)
             f.close()
 
-    def plot(self,filename=None,plot_spectral_fit=True):
+    def plot(self,filename=None,plot_spectral_fit=True, axes=None, fignum=None, figsize=(4,4)):
         try:
             import pylab as P
         except:
-            raise Exception("The plot function requires pylab.")
+            raise Exception("SED.plot() requires pylab.")
+
+        if axes is None:
+            fig = P.figure(fignum,figsize)
+            axes = fig.add_subplot(111)
 
         # Plot SED points
 
@@ -271,7 +275,7 @@ class SED(object):
         ]
            
         P.errorbar(e,f, xerr=de, yerr=df, linestyle='none',  
-                   lolims=self.ts<self.min_ts)
+                   lolims=self.ts<self.min_ts, zorder=3)
 
         if plot_spectral_fit:
             source = self.like.logLike.getSource(self.name)
@@ -279,7 +283,7 @@ class SED(object):
             elist = np.logspace(np.log10(self.like.energies[0]),
                                 np.log10(self.like.energies[-1]))
             flist = np.asarray([spectrum(dArg(i)) for i in elist])
-            P.plot(elist,elist**2*flist)
+            P.plot(elist,elist**2*flist, zorder=2)
 
         P.xscale('log')
         P.xlabel('MeV')
