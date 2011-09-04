@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import yaml
 from os.path import expandvars as e, join as j
+import numbers
 
 from tempfile import mkdtemp
 
@@ -11,7 +12,7 @@ from uw.like.Models import PowerLaw
 from skymaps import SkyDir
 from uw.utilities import phasetools
 
-import toolkit
+import toolbag
 
 def setup_pwn(name,pwndata,phase_ranges,tempdir=None):
     """Name of the source
@@ -33,7 +34,7 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None):
        isinstance(phase_ranges[1],numbers.Real):
         phase_ranges = [phase_ranges] 
 
-    phase_factor=toolkit.phase_ranges(phase_ranges)
+    phase_factor=toolbag.phase_ranges(phase_ranges)
 
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"),free_radius=5)
@@ -43,7 +44,7 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None):
 
     if tempdir is None: tempdir=mkdtemp()
 
-    binfile=j(tempdir,'binned_phased.fits)
+    binfile=j(tempdir,'binned_phased.fits')
 
     # apply phase cut to ft1 file
     phased_ft1 = j(tempdir,'ft1_phased.fits')
@@ -51,7 +52,7 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None):
 
     # create a temporary ltcube scaled by the phase factor
     phased_ltcube=j(tempdir,'phased_ltcube.fits')
-    toolkit.phase_ltcube(ltcube,phased_ltcube, phase_ranges=phase_ranges)
+    toolbag.phase_ltcube(ltcube,phased_ltcube, phase_ranges=phase_ranges)
 
     from uw.like.pointspec import DataSpecification
     data_specification = DataSpecification(

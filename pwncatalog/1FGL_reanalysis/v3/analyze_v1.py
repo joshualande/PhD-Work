@@ -20,13 +20,13 @@ from toolbag import sourcedict,tolist
 
 parser = ArgumentParser()
 parser.add_argument("--pwndata", required=True)
-parser.add_argument("-p", "--phaselist", required=True)
+parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 args=parser.parse_args()
   
 name=args.name
 
-phase=yaml.load(open(args.phaselist))[name]['phase']
+phase=yaml.load(open(args.pwnphase))[name]['phase']
 roi=setup_pwn(name,args.pwndata,phase)
 
 

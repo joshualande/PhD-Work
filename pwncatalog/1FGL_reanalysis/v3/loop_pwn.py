@@ -11,7 +11,7 @@ args=parser.parse_args()
   
 outdir=args.outdir
 
-sources=yaml.load(open('pwnlist.yaml'))
+sources=yaml.load(open('pwndata.yaml'))
 
 if os.path.exists(outdir):
     raise Exception("outdir %s already exists" % outdir)
@@ -29,7 +29,8 @@ for name in sources.keys():
     temp.write("""\
 python %s/%s \\
 -n %s \\
--l %s/pwnlist.yaml""" % (os.getcwd(),args.command,name,os.getcwd()))
+--pwndata %s/pwndata.yaml \\
+--pwnphase %s/pwnphase.yaml """ % (os.getcwd(),args.command,name,os.getcwd(),os.getcwd()))
 
 
 submit_all=join(outdir,'submit_all.py')
