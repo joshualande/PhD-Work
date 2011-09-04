@@ -1,4 +1,5 @@
 # Notes on v1:
+#   9/4/2011 - Changing from phased to unphased ft1 files.
 #   5/9/2010 - this list was generated based from the list of PWN that Alice Allafort had created
 #       when Joshua Lande & Alice were in Bordeaux working on PWN.
 # Notes on v2:
@@ -10,8 +11,8 @@
 PSRJ0007+7303:
   catalog: 1FGL J0007.0+7303 
   dir: [1.75483, 73.0513]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0007+7303/PSRJ0007+7303_emin50_emax300000_z105_0.3_0.7.fits
-  allft1: None
+  #ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0007+7303/PSRJ0007+7303_emin50_emax300000_z105_0.3_0.7.fits
+  ft1: None
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0007+7303/ExpCube_J0007+7303_emin50_emax300000_z105_0.3_0.7.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0007+7303_binned.fits
@@ -19,8 +20,7 @@ PSRJ0007+7303:
 PSRJ0030+0451:
   catalog: 1FGL J0030.4+0451 
   dir: [7.6143, 4.86103]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0030+0451/PSRJ0030+0451_emin50_emax300000_z105_0.7_0.1.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0030+0451/PSRJ0030+0451_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0030+0451/PSRJ0030+0451_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0030+0451/ExpCube_J0030+0451_emin50_emax300000_z105_0.7_0.1.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0030+0451_binned.fits
@@ -28,8 +28,7 @@ PSRJ0030+0451:
 PSRJ0034-0534:
   catalog: 1FGL J0034.3-0534 
   dir: [8.591, -5.5768]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0034-0534/PSRJ0034-0534_emin50_emax300000_z105_0.45_0.85.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0034-0534/PSRJ0034-0534_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0034-0534/PSRJ0034-0534_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0034-0534/ExpCube_J0034-0534_emin50_emax300000_z105_0.45_0.85.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0034-0534_binned.fits
@@ -37,8 +36,7 @@ PSRJ0034-0534:
 PSRJ0205+6449:
   catalog: 1FGL J0205.6+6449 
   dir: [31.408, 64.8286]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0205+6449/PSRJ0205+6449_emin50_emax300000_z105_0.7_1.0.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0205+6449/PSRJ0205+6449_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0205+6449/PSRJ0205+6449_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0205+6449/ExpCube_J0205+6449_emin50_emax300000_z105_0.7_1.0.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0205+6449_binned.fits
@@ -46,8 +44,7 @@ PSRJ0205+6449:
 PSRJ0218+4232:
   catalog: 1FGL J0218.1+4232 
   dir: [34.5265, 42.5382]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0218+4232/PSRJ0218+4232_emin50_emax300000_z105_0.9_0.1.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0218+4232/PSRJ0218+4232_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0218+4232/PSRJ0218+4232_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0218+4232/ExpCube_J0218+4232_emin50_emax300000_z105_0.9_0.1.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0218+4232_binned.fits
@@ -55,8 +52,7 @@ PSRJ0218+4232:
 PSRJ0248+6021:
   catalog: 1FGL J0248.3+6021 
   dir: [42.0777, 60.3595]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0248+6021/PSRJ0248+6021_emin50_emax300000_z105_0.7_0.1.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0248+6021/PSRJ0248+6021_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0248+6021/PSRJ0248+6021_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0248+6021/ExpCube_J0248+6021_emin50_emax300000_z105_0.7_0.1.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0248+6021_binned.fits
@@ -64,8 +60,7 @@ PSRJ0248+6021:
 PSRJ0357+3206:
   catalog: 1FGL J0357.8+3205 
   dir: [59.4692, 32.0868]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0357+3206/PSRJ0357+3206_emin50_emax300000_z105_0.3_0.8.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0357+3206/PSRJ0357+3206_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0357+3206/PSRJ0357+3206_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0357+3206/ExpCube_J0357+3206_emin50_emax300000_z105_0.3_0.8.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0357+3206_binned.fits
@@ -73,8 +68,7 @@ PSRJ0357+3206:
 PSRJ0437-4715:
   catalog: 1FGL J0437.2-4715 
   dir: [69.3159, -47.2524]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0437-4715/PSRJ0437-4715_emin50_emax300000_z105_0.7_0.2.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0437-4715/PSRJ0437-4715_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0437-4715/PSRJ0437-4715_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0437-4715/ExpCube_J0437-4715_emin50_emax300000_z105_0.7_0.2.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0437-4715_binned.fits
@@ -82,8 +76,7 @@ PSRJ0437-4715:
 PSRJ0534+2200:
   catalog: 1FGL J0534.5+2200 
   dir: [83.6332, 22.0145]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0534+2200/PSRJ0534+2200_emin50_emax300000_z105_0.5_0.85.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0534+2200/PSRJ0534+2200_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0534+2200/PSRJ0534+2200_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0534+2200/ExpCube_J0534+2200_emin50_emax300000_z105_0.5_0.85.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0534+2200_binned.fits
@@ -91,8 +84,7 @@ PSRJ0534+2200:
 PSRJ0613-0200:
   catalog: 1FGL J0613.7-0200 
   dir: [93.4332, -2.0131]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0613-0200/PSRJ0613-0200_emin50_emax300000_z105_0.6_0.05.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0613-0200/PSRJ0613-0200_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0613-0200/PSRJ0613-0200_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0613-0200/ExpCube_J0613-0200_emin50_emax300000_z105_0.6_0.05.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0613-0200_binned.fits
@@ -100,8 +92,7 @@ PSRJ0613-0200:
 PSRJ0631+1036:
   catalog: 1FGL J0631.4+1037 
   dir: [97.8648, 10.6173]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0631+1036/PSRJ0631+1036_emin50_emax300000_z105_0.9_0.15.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0631+1036/PSRJ0631+1036_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0631+1036/PSRJ0631+1036_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0631+1036/ExpCube_J0631+1036_emin50_emax300000_z105_0.9_0.15.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0631+1036_binned.fits
@@ -109,8 +100,7 @@ PSRJ0631+1036:
 PSRJ0633+0632:
   catalog: 1FGL J0633.7+0632 
   dir: [98.4348, 6.54131]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0633+0632/PSRJ0633+0632_emin50_emax300000_z105_0.6_0.8.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0633+0632/PSRJ0633+0632_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0633+0632/PSRJ0633+0632_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0633+0632/ExpCube_J0633+0632_emin50_emax300000_z105_0.6_0.8.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0633+0632_binned.fits
@@ -118,8 +108,7 @@ PSRJ0633+0632:
 PSRJ0633+1746:
   catalog: 1FGL J0633.9+1746 
   dir: [98.4756, 17.7703]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0633+1746/PSRJ0633+1746_emin50_emax300000_z105_0.3_0.5.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0633+1746/PSRJ0633+1746_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0633+1746/PSRJ0633+1746_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0633+1746/ExpCube_J0633+1746_emin50_emax300000_z105_0.3_0.5.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0633+1746_binned.fits
@@ -127,8 +116,7 @@ PSRJ0633+1746:
 PSRJ0659+1414:
   catalog: 1FGL J0659.8+1414 
   dir: [104.951, 14.2393]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0659+1414/PSRJ0659+1414_emin50_emax300000_z105_0.45_1.0.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0659+1414/PSRJ0659+1414_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0659+1414/PSRJ0659+1414_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0659+1414/ExpCube_J0659+1414_emin50_emax300000_z105_0.45_1.0.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0659+1414_binned.fits
@@ -136,8 +124,7 @@ PSRJ0659+1414:
 PSRJ0742-2822:
   catalog: 1FGL J0742.8-2822 
   dir: [115.704, -28.379]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/0742-2822/PSR0742-2822_emin50_emax300000_z105_0.8_0.4.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/0742-2822/PSR0742-2822_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/0742-2822/PSR0742-2822_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/0742-2822/ExpCube_0742-2822_emin50_emax300000_z105_0.8_0.4.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0742-2822_binned.fits
@@ -145,8 +132,7 @@ PSRJ0742-2822:
 PSRJ0751+1807:
   catalog: 1FGL J0751.1+1807 
   dir: [117.788, 18.1274]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0751+1807/PSRJ0751+1807_emin50_emax300000_z105_0.7_0.05.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0751+1807/PSRJ0751+1807_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0751+1807/PSRJ0751+1807_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0751+1807/ExpCube_J0751+1807_emin50_emax300000_z105_0.7_0.05.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0751+1807_binned.fits
@@ -154,8 +140,7 @@ PSRJ0751+1807:
 PSRJ0835-4510:
   catalog: 1FGL J0835.3-4510 
   dir: [128.836, -45.1763]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0835-4510/PSRJ0835-4510_emin50_emax300000_z105_0.7_1.0.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0835-4510/PSRJ0835-4510_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0835-4510/PSRJ0835-4510_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J0835-4510/ExpCube_J0835-4510_emin50_emax300000_z105_0.7_1.0.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ0835-4510_binned.fits
@@ -163,8 +148,7 @@ PSRJ0835-4510:
 PSRJ1023-5746:
   catalog: 1FGL J1023.0-5746 
   dir: [155.76, -57.7693]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1023-5746/PSRJ1023-5746_emin50_emax300000_z105_0.96_0.24.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1023-5746/PSRJ1023-5746_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1023-5746/PSRJ1023-5746_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1023-5746/ExpCube_J1023-5746_emin50_emax300000_z105_0.96_0.24.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1023-5746_binned.fits
@@ -172,8 +156,7 @@ PSRJ1023-5746:
 PSRJ1028-5820:
   catalog: 1FGL J1028.4-5819 
   dir: [157.117, -58.3181]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1028-5820/PSRJ1028-5820_emin50_emax300000_z105_0.8_0.05.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1028-5820/PSRJ1028-5820_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1028-5820/PSRJ1028-5820_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1028-5820/ExpCube_J1028-5820_emin50_emax300000_z105_0.8_0.05.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1028-5820_binned.fits
@@ -181,8 +164,7 @@ PSRJ1028-5820:
 PSRJ1044-5737:
   catalog: 1FGL J1044.5-5737 
   dir: [161.137, -57.622]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1044-5737/PSRJ1044-5737_emin50_emax300000_z105_0.95_0.3.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1044-5737/PSRJ1044-5737_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1044-5737/PSRJ1044-5737_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1044-5737/ExpCube_J1044-5737_emin50_emax300000_z105_0.95_0.3.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1044-5737_binned.fits
@@ -190,8 +172,7 @@ PSRJ1044-5737:
 PSRJ1048-5832:
   catalog: 1FGL J1048.2-5832 
   dir: [162.051, -58.5349]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1048-5832/PSRJ1048-5832_emin50_emax300000_z105_0.7_0.05.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1048-5832/PSRJ1048-5832_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1048-5832/PSRJ1048-5832_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1048-5832/ExpCube_J1048-5832_emin50_emax300000_z105_0.7_0.05.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1048-5832_binned.fits
@@ -208,8 +189,7 @@ PSRJ1057-5226:
 PSRJ1413-6205:
   catalog: 1FGL J1413.4-6205 
   dir: [213.374, -62.0947]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1413-6205/PSRJ1413-6205_emin50_emax300000_z105_0.35_0.8.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1413-6205/PSRJ1413-6205_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1413-6205/PSRJ1413-6205_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1413-6205/ExpCube_J1413-6205_emin50_emax300000_z105_0.35_0.8.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1413-6205_binned.fits
@@ -217,8 +197,7 @@ PSRJ1413-6205:
 PSRJ1418-6058:
   catalog: 1FGL J1418.7-6057 
   dir: [214.682, -60.961]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1418-6058/PSRJ1418-6058_emin50_emax300000_z105_0.3_0.65.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1418-6058/PSRJ1418-6058_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1418-6058/PSRJ1418-6058_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1418-6058/ExpCube_J1418-6058_emin50_emax300000_z105_0.3_0.65.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1418-6058_binned.fits
@@ -226,8 +205,7 @@ PSRJ1418-6058:
 PSRJ1420-6048:
   catalog: 1FGL J1420.1-6048 
   dir: [215.034, -60.8046]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1420-6048/PSRJ1420-6048_emin50_emax300000_z105_0.6_0.1.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1420-6048/PSRJ1420-6048_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1420-6048/PSRJ1420-6048_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1420-6048/ExpCube_J1420-6048_emin50_emax300000_z105_0.6_0.1.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1420-6048_binned.fits
@@ -235,8 +213,7 @@ PSRJ1420-6048:
 PSRJ1429-5911:
   catalog: 1FGL J1429.9-5911 
   dir: [217.494, -59.1929]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1429-5911/PSRJ1429-5911_emin50_emax300000_z105_0.5_0.75.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1429-5911/PSRJ1429-5911_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1429-5911/PSRJ1429-5911_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1429-5911/ExpCube_J1429-5911_emin50_emax300000_z105_0.5_0.75.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1429-5911_binned.fits
@@ -244,8 +221,7 @@ PSRJ1429-5911:
 PSRJ1459-6053:
   catalog: 1FGL J1459.4-6053 
   dir: [224.875, -60.8877]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1459-6053/PSRJ1459-6053_emin50_emax300000_z105_0.2_0.65.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1459-6053/PSRJ1459-6053_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1459-6053/PSRJ1459-6053_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1459-6053/ExpCube_J1459-6053_emin50_emax300000_z105_0.2_0.65.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1459-6053_binned.fits
@@ -253,8 +229,7 @@ PSRJ1459-6053:
 PSRJ1509-5850:
   catalog: 1FGL J1509.4-5850 
   dir: [227.363, -58.8489]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1509-5850/PSRJ1509-5850_emin50_emax300000_z105_0.6_1.0.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1509-5850/PSRJ1509-5850_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1509-5850/PSRJ1509-5850_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1509-5850/ExpCube_J1509-5850_emin50_emax300000_z105_0.6_1.0.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1509-5850_binned.fits
@@ -262,8 +237,7 @@ PSRJ1509-5850:
 PSRJ1614-2230:
   catalog: 1FGL J1614.0-2230 
   dir: [243.5, -22.5]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1614-2230/PSRJ1614-2230_emin50_emax300000_z105_0.92_0.14.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1614-2230/PSRJ1614-2230_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1614-2230/PSRJ1614-2230_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1614-2230/ExpCube_J1614-2230_emin50_emax300000_z105_0.92_0.14.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1614-2230_binned.fits
@@ -271,8 +245,7 @@ PSRJ1614-2230:
 PSRJ1709-4429:
   catalog: 1FGL J1709.7-4429 
   dir: [257.428, -44.4856]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1709-4429/PSRJ1709-4429_emin50_emax300000_z105_0.65_0.1.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1709-4429/PSRJ1709-4429_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1709-4429/PSRJ1709-4429_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1709-4429/ExpCube_J1709-4429_emin50_emax300000_z105_0.65_0.1.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1709-4429_binned.fits
@@ -280,8 +253,7 @@ PSRJ1709-4429:
 PSRJ1718-3825:
   catalog: 1FGL J1718.2-3825 
   dir: [259.557, -38.4217]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1718-3825/PSRJ1718-3825_emin50_emax300000_z105_0.65_0.15.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1718-3825/PSRJ1718-3825_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1718-3825/PSRJ1718-3825_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1718-3825/ExpCube_J1718-3825_emin50_emax300000_z105_0.65_0.15.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1718-3825_binned.fits
@@ -289,8 +261,7 @@ PSRJ1718-3825:
 PSRJ1732-3131:
   catalog: 1FGL J1732.5-3131 
   dir: [263.14, -31.5225]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1732-3131/PSRJ1732-3131_emin50_emax300000_z105_0.3_0.65.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1732-3131/PSRJ1732-3131_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1732-3131/PSRJ1732-3131_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1732-3131/ExpCube_J1732-3131_emin50_emax300000_z105_0.3_0.65.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1732-3131_binned.fits
@@ -298,8 +269,7 @@ PSRJ1732-3131:
 PSRJ1741-2054:
   catalog: 1FGL J1741.8-2101 
   dir: [265.489, -20.886]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1741-2054/PSRJ1741-2054_emin50_emax300000_z105_0.7_0.2.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1741-2054/PSRJ1741-2054_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1741-2054/PSRJ1741-2054_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1741-2054/ExpCube_J1741-2054_emin50_emax300000_z105_0.7_0.2.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1741-2054_binned.fits
@@ -307,8 +277,7 @@ PSRJ1741-2054:
 PSRJ1744-1134:
   catalog: 1FGL J1744.4-1134 
   dir: [266.122, -11.5818]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1744-1134/PSRJ1744-1134_emin50_emax300000_z105_0.15_0.35.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1744-1134/PSRJ1744-1134_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1744-1134/PSRJ1744-1134_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1744-1134/ExpCube_J1744-1134_emin50_emax300000_z105_0.15_0.35.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1744-1134_binned.fits
@@ -316,8 +285,7 @@ PSRJ1744-1134:
 PSRJ1747-2958:
   catalog: 1FGL J1747.2-2958 
   dir: [266.816, -29.967]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1747-2958/PSRJ1747-2958_emin50_emax300000_z105_0.7_0.1.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1747-2958/PSRJ1747-2958_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1747-2958/PSRJ1747-2958_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1747-2958/ExpCube_J1747-2958_emin50_emax300000_z105_0.7_0.1.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1747-2958_binned.fits
@@ -325,8 +293,7 @@ PSRJ1747-2958:
 PSRJ1809-2332:
   catalog: 1FGL J1809.8-2332 
   dir: [272.459, -23.5397]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1809-2332/PSRJ1809-2332_emin50_emax300000_z105_0.85_0.25.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1809-2332/PSRJ1809-2332_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1809-2332/PSRJ1809-2332_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1809-2332/ExpCube_J1809-2332_emin50_emax300000_z105_0.85_0.25.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1809-2332_binned.fits
@@ -334,8 +301,7 @@ PSRJ1809-2332:
 PSRJ1813-1246:
   catalog: 1FGL J1813.3-1246 
   dir: [273.349, -12.7673]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1813-1246/PSRJ1813-1246_emin50_emax300000_z105_0.44_0.56.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1813-1246/PSRJ1813-1246_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1813-1246/PSRJ1813-1246_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1813-1246/ExpCube_J1813-1246_emin50_emax300000_z105_0.44_0.56.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1813-1246_binned.fits
@@ -343,8 +309,7 @@ PSRJ1813-1246:
 PSRJ1826-1256:
   catalog: 1FGL J1826.1-1256 
   dir: [276.535, -12.9434]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1826-1256/PSRJ1826-1256_emin50_emax300000_z105_0.25_0.55.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1826-1256/PSRJ1826-1256_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1826-1256/PSRJ1826-1256_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1826-1256/ExpCube_J1826-1256_emin50_emax300000_z105_0.25_0.55.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1826-1256_binned.fits
@@ -352,8 +317,7 @@ PSRJ1826-1256:
 PSRJ1833-1034:
   catalog: 1FGL J1833.5-1034 
   dir: [278.39, -10.5687]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1833-1034/PSRJ1833-1034_emin50_emax300000_z105_0.75_0.1.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1833-1034/PSRJ1833-1034_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1833-1034/PSRJ1833-1034_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1833-1034/ExpCube_J1833-1034_emin50_emax300000_z105_0.75_0.1.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1833-1034_binned.fits
@@ -361,8 +325,7 @@ PSRJ1833-1034:
 PSRJ1836+5925:
   catalog: 1FGL J1836.2+5925 
   dir: [279.057, 59.4247]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1836+5925/PSRJ1836+5925_emin50_emax300000_z105_0.76_0.88.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1836+5925/PSRJ1836+5925_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1836+5925/PSRJ1836+5925_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1836+5925/ExpCube_J1836+5925_emin50_emax300000_z105_0.76_0.88.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1836+5925_binned.fits
@@ -370,8 +333,7 @@ PSRJ1836+5925:
 PSRJ1846+0919:
   catalog: 1FGL J1846.4+0919 
   dir: [281.618, 9.32991]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1846+0919/PSRJ1846+0919_emin50_emax300000_z105_0.75_0.1.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1846+0919/PSRJ1846+0919_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1846+0919/PSRJ1846+0919_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1846+0919/ExpCube_J1846+0919_emin50_emax300000_z105_0.75_0.1.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1846+0919_binned.fits
@@ -379,8 +341,7 @@ PSRJ1846+0919:
 PSRJ1907+060:
   catalog: 1FGL J1907.9+0602 
   dir: [286.978, 6.0379]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1907+060/PSRJ1907+060_emin50_emax300000_z105_0.35_0.75.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1907+060/PSRJ1907+060_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1907+060/PSRJ1907+060_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1907+060/ExpCube_J1907+060_emin50_emax300000_z105_0.35_0.75.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1907+060_binned.fits
@@ -388,8 +349,7 @@ PSRJ1907+060:
 PSRJ1952+3252:
   catalog: 1FGL J1952.9+3252 
   dir: [298.243, 32.8779]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/1952+3252/PSR1952+3252_emin50_emax300000_z105_0.7_1.0.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/1952+3252/PSR1952+3252_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/1952+3252/PSR1952+3252_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/1952+3252/ExpCube_1952+3252_emin50_emax300000_z105_0.7_1.0.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1952+3252_binned.fits
@@ -397,8 +357,7 @@ PSRJ1952+3252:
 PSRJ1954+2836:
   catalog: 1FGL J1954.3+2836 
   dir: [298.58, 28.6016]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1954+2836/PSRJ1954+2836_emin50_emax300000_z105_0.35_0.7.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1954+2836/PSRJ1954+2836_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1954+2836/PSRJ1954+2836_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1954+2836/ExpCube_J1954+2836_emin50_emax300000_z105_0.35_0.7.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1954+2836_binned.fits
@@ -406,8 +365,7 @@ PSRJ1954+2836:
 PSRJ1957+5033:
   catalog: 1FGL J1957.6+5033 
   dir: [299.384, 50.6091]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1957+5033/PSRJ1957+5033_emin50_emax300000_z105_0.2_0.65.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1957+5033/PSRJ1957+5033_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1957+5033/PSRJ1957+5033_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1957+5033/ExpCube_J1957+5033_emin50_emax300000_z105_0.2_0.65.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1957+5033_binned.fits
@@ -415,8 +373,7 @@ PSRJ1957+5033:
 PSRJ1958+2846:
   catalog: 1FGL J1958.6+2845 
   dir: [299.668, 28.7649]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1958+2846/PSRJ1958+2846_emin50_emax300000_z105_0.25_0.6.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1958+2846/PSRJ1958+2846_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1958+2846/PSRJ1958+2846_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1958+2846/ExpCube_J1958+2846_emin50_emax300000_z105_0.25_0.6.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1958+2846_binned.fits
@@ -424,8 +381,7 @@ PSRJ1958+2846:
 PSRJ2021+3651:
   catalog: 1FGL J2021.0+3651 
   dir: [305.269, 36.8575]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2021+3651/PSRJ2021+3651_emin50_emax300000_z105_0.75_0.05.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2021+3651/PSRJ2021+3651_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2021+3651/PSRJ2021+3651_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2021+3651/ExpCube_J2021+3651_emin50_emax300000_z105_0.75_0.05.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ2021+3651_binned.fits
@@ -433,8 +389,7 @@ PSRJ2021+3651:
 PSRJ2021+4026:
   catalog: 1FGL J2021.5+4026 
   dir: [305.379, 40.447]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2021+4026/PSRJ2021+4026_emin50_emax300000_z105_0.22_0.42.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2021+4026/PSRJ2021+4026_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2021+4026/PSRJ2021+4026_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2021+4026/ExpCube_J2021+4026_emin50_emax300000_z105_0.22_0.42.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ2021+4026_binned.fits
@@ -442,8 +397,7 @@ PSRJ2021+4026:
 PSRJ2032+4127:
   catalog: 1FGL J2032.2+4127 
   dir: [308.054, 41.4567]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2032+4127/PSRJ2032+4127_emin50_emax300000_z105_0.25_0.55.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2032+4127/PSRJ2032+4127_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2032+4127/PSRJ2032+4127_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2032+4127/ExpCube_J2032+4127_emin50_emax300000_z105_0.25_0.55.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ2032+4127_binned.fits
@@ -451,8 +405,7 @@ PSRJ2032+4127:
 PSRJ2043+2740:
   catalog: 1FGL J2043.7+2740 
   dir: [310.931, 27.6822]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/2043+2740/PSR2043+2740_emin50_emax300000_z105_0.68_0.08.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/2043+2740/PSR2043+2740_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/2043+2740/PSR2043+2740_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/2043+2740/ExpCube_2043+2740_emin50_emax300000_z105_0.68_0.08.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ2043+2740_binned.fits
@@ -460,8 +413,7 @@ PSRJ2043+2740:
 PSRJ2055+2539:
   catalog: 1FGL J2055.8+2539 
   dir: [313.953, 25.6663]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2055+2539/PSRJ2055+2539_emin50_emax300000_z105_0.3_0.8.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2055+2539/PSRJ2055+2539_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2055+2539/PSRJ2055+2539_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2055+2539/ExpCube_J2055+2539_emin50_emax300000_z105_0.3_0.8.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ2055+2539_binned.fits
@@ -469,8 +421,7 @@ PSRJ2055+2539:
 PSRJ2124-3358:
   catalog: 1FGL J2124.7-3358 
   dir: [321.183, -33.9791]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2124-3358/PSRJ2124-3358_emin50_emax300000_z105_0.1_0.5.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2124-3358/PSRJ2124-3358_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2124-3358/PSRJ2124-3358_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2124-3358/ExpCube_J2124-3358_emin50_emax300000_z105_0.1_0.5.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ2124-3358_binned.fits
@@ -478,8 +429,7 @@ PSRJ2124-3358:
 PSRJ2229+6114:
   catalog: 1FGL J2229.0+6114 
   dir: [337.272, 61.2359]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2229+6114/PSRJ2229+6114_emin50_emax300000_z105_0.68_0.08.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2229+6114/PSRJ2229+6114_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2229+6114/PSRJ2229+6114_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2229+6114/ExpCube_J2229+6114_emin50_emax300000_z105_0.68_0.08.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ2229+6114_binned.fits
@@ -487,8 +437,7 @@ PSRJ2229+6114:
 PSRJ2238+5904:
   catalog: 1FGL J2238.4+5903 
   dir: [339.616, 59.0617]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2238+5904/PSRJ2238+5904_emin50_emax300000_z105_0.55_0.8.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2238+5904/PSRJ2238+5904_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2238+5904/PSRJ2238+5904_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J2238+5904/ExpCube_J2238+5904_emin50_emax300000_z105_0.55_0.8.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ2238+5904_binned.fits
@@ -496,8 +445,7 @@ PSRJ2238+5904:
 PSRJ1124-5916:
   catalog: 1FGL J1124.6-5916
   dir: [171.16251, -59.2719]
-  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1124-5916/PSRJ1124-5916_emin50_emax300000_z105_0.72_0.88.fits
-  allft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1124-5916/PSRJ1124-5916_emin50_emax300000_z105.fits
+  ft1: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1124-5916/PSRJ1124-5916_emin50_emax300000_z105.fits
   ft2: /nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits
   ltcube: /nfs/farm/g/glast/u54/lemoine/PWNCat/J1124-5916/ExpCube_J1124-5916_emin50_emax300000_z105_0.72_0.88.fits
   binfile: /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v2/data/PSRJ1124-5916_binned.fits
