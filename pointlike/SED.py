@@ -129,7 +129,7 @@ class SED(object):
         like.setSpectrum(name,'PowerLaw')
 
         index=like[like.par_index(name, 'Index')]
-        index.setValue(self.powerlaw_index/index.getScale())
+        index.setTrueValue(self.powerlaw_index)
         index.setFree(0)
 
         prefactor=like[like.par_index(name, 'Prefactor')]
@@ -172,7 +172,7 @@ class SED(object):
                     self.ul[i] = SED.bayesian_upper_limit(like,name,verbosity)
 
             prefactor=like[like.par_index(name, 'Prefactor')]
-            self.dnde[i] = prefactor.getValue()*prefactor.getScale()
+            self.dnde[i] = prefactor.getTrueValue()
             self.dnde_err[i] = prefactor.error()*prefactor.getScale()
             if verbosity:
                 print lower,upper,self.dnde[i],self.dnde_err[i],self.ts[i] ,self.ul[i]
@@ -241,15 +241,18 @@ class SED(object):
             f.write(output)
             f.close()
 
-    def plot(self,filename=None,plot_spectral_fit=True, axes=None, fignum=None, figsize=(4,4)):
+    def plot(self,filename=None,plot_spectral_fit=True, 
+             axes=None, fignum=None, figsize=(4,4)):
         try:
+            from matplotlib import rc
+            rc('text',usetex=True)
             import pylab as P
         except:
             raise Exception("SED.plot() requires pylab.")
 
         if axes is None:
             fig = P.figure(fignum,figsize)
-            axes = fig.add_subplot(111)
+            axes = fig.add_axes((0.2,0.15,0.75,0.8))
 
         # Plot SED points
 
@@ -257,38 +260,49 @@ class SED(object):
         ehi=self.bin_edges[1:]
 
         e=self.e_vals
-        de=[(self.e_vals-elow),
-            (ehi-self.e_vals)
-           ]
 
-        significant = self.ts>=self.min_ts
-        f=self.e_vals**2*\
-                np.where(significant,self.dnde,self.ul)
+        delo=self.e_vals-elow
+        dehi=ehi-self.e_vals
 
-        df = [
-            # lower error
-            self.e_vals**2*\
-            np.where(significant,self.dnde_err,0.4*self.ul),
-            # upper error
-            self.e_vals**2*\
-            np.where(significant,self.dnde_err,0)
-        ]
-           
-        P.errorbar(e,f, xerr=de, yerr=df, linestyle='none',  
-                   lolims=self.ts<self.min_ts, zorder=3)
+        significant = s = self.ts>=self.min_ts
+
+        # plot data points
+        if sum(s)>0:
+            axes.errorbar(e[s], self.e_vals[s]**2*self.dnde[s],
+                          xerr=[delo[s],dehi[s]],
+                          yerr=self.e_vals[s]**2*self.dnde_err[s], 
+                          linestyle='none',  
+                          lolims=self.ts<self.min_ts, 
+                          color='black', capsize=0)
+        
+        # and upper limits
+        if sum(~s)>0:
+            axes.errorbar(e[~s], self.e_vals[~s]**2*self.ul[~s], 
+                          xerr=[delo[~s],dehi[~s]],
+                          yerr=[ 0.4*self.e_vals[~s]**2*self.ul[~s], 0],
+                          linestyle='none',
+                          lolims=self.ts<self.min_ts, 
+                          color='black')
+
+        l,h=elow[0],ehi[-1]
+
+        low_lim=10**(np.log10(l) - 0.1*(np.log10(h)-np.log10(l)))
+        hi_lim =10**(np.log10(h) + 0.1*(np.log10(h)-np.log10(l)))
+
+        axes.set_xlim(low_lim,hi_lim)
 
         if plot_spectral_fit:
             source = self.like.logLike.getSource(self.name)
             spectrum=source.spectrum()
-            elist = np.logspace(np.log10(self.like.energies[0]),
-                                np.log10(self.like.energies[-1]))
+            elist = np.logspace(np.log10(low_lim),np.log10(hi_lim),100)
             flist = np.asarray([spectrum(dArg(i)) for i in elist])
-            P.plot(elist,elist**2*flist, zorder=2)
+            print elist, flist, elist**2*flist
+            axes.plot(elist,elist**2*flist, zorder=1, color='red')
 
-        P.xscale('log')
-        P.xlabel('MeV')
+        axes.set_xscale('log')
+        axes.set_xlabel('MeV')
 
-        P.yscale('log')
-        P.ylabel(r'Energy Flux $(\mathrm{MeV}\ \mathrm{cm}^{-2}\ \mathrm{s}^{-1})$')
+        axes.set_yscale('log')
+        axes.set_ylabel(r'Energy Flux $(\mathrm{MeV}\,\mathrm{cm}^{-2}\,\mathrm{s}^{-1})$')
 
         if filename is not None: P.savefig(filename)
