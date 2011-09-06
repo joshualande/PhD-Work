@@ -3,6 +3,7 @@ from BinnedAnalysis import BinnedAnalysis
 from pyLikelihood import ParameterVector
 
 import numpy as np
+import pyfits as pf
 
 def tolist(x):
     """ convenience function that takes in a 
@@ -40,7 +41,7 @@ def sourcedict(like_or_roi, name, extra='', emin=100, emax=100000):
         spectralparameters=ParameterVector()
         like.model[name]['Spectrum'].getParams(spectralparameters)
         for p in spectralparameters:
-            d[p.getName() + extra]=p.getValue()*p.getScale()
+            d[p.getName() + extra]=p.getTrueValue()
             d[p.getName()+'_err' + extra]=p.error()*p.getScale()
 
     elif isinstance(like_or_roi,ROIAnalysis):
