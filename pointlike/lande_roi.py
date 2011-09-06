@@ -682,6 +682,11 @@ class LandeROI(ROIAnalysis):
         if not self.quiet: print 'Plotting sources'
         return super(LandeROI,self).plot_sources(filename=filename,**kwargs)
 
+    @decorate_with(ROIAnalysis.plot_tsmap)
+    def plot_tsmap(self,filename="tsmap.png",**kwargs):
+        if not self.quiet: print 'Plotting tsmap'
+        return super(LandeROI,self).plot_tsmap(filename=filename,**kwargs)
+
     @decorate_with(ROISignificance)
     def plot_significance(self,filename="significance.png",**kwargs):
         if not self.quiet: print 'Plotting significance'
@@ -692,21 +697,10 @@ class LandeROI(ROIAnalysis):
     def TS(self,*args,**kwargs):
         return super(LandeROI,self).TS(*args,**kwargs)
 
+    @decorate_with(ROIAnalysis.plot_sed)
     @select_quiet
-    def plot_sed(self,autoscale=True,**kwargs):
-        filename = kwargs.pop('filename','sed.png')
-
-        if not kwargs.has_key('galmap'): kwargs['galmap']=False
-        ret=super(LandeROI,self).plot_sed(filename=None,**kwargs)
-
-        if autoscale:
-            ax=pylab.gca()
-            ax.set_autoscale_on(True)
-            ax.autoscale_view()
-
-        pylab.savefig(filename)
-
-        return ret
+    def plot_sed(self,filename='sed.png',galmap=False,**kwargs):
+        return super(LandeROI,self).plot_sed(filename=filename,galmap=galmap,**kwargs)
 
     @staticmethod
     def load(*args,**kwargs):
@@ -716,6 +710,9 @@ class LandeROI(ROIAnalysis):
     def save(self,filename='roi.dat',*args,**kwargs):
         super(LandeROI,self).save(filename,*args,**kwargs)
 
+    @staticmethod 
+    def galstr(skydir):
+        return 'SkyDir(%.3f,%.3f,SkyDir.GALACTIC)' % (skydir.l(),skydir.b())
 
 class VerboseROI(LandeROI):
     def __init__(self,*args,**kwargs):
@@ -754,9 +751,6 @@ class VerboseROI(LandeROI):
         print '-> Total (not negative) logLikelihood = ',-self.logLikelihood(self.parameters())
         self.quiet=old_quiet
 
-    @staticmethod 
-    def galstr(skydir):
-        return 'SkyDir(%.3f,%.3f,SkyDir.GALACTIC)' % (skydir.l(),skydir.b())
 
     @select_quiet
     def localize(self,which,*args,**kwargs):
