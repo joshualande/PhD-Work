@@ -1,24 +1,38 @@
 """
-Implements a Module to calculate SEDs using the pyLikelihood framework.
+A Module to calculate SEDs using the pyLikelihood framework.
 
 The primary benefit to this implementation is that it requires no
-temporary files and automatically saves the output in
-a nice format. All you need is a BinnedAnalysis and
-you can directly generate the SED.
+temporary files and automatically saves the output in a nice format. All
+you need is a BinnedAnalysis and you can directly generate the SED.
+
+The SED is created by modifying the source of interest to have
+a fixed spectral index and in each energy band fitting
+the flux of the source.
 
 Usage:
 
 name='Vela'
 like=BinnedAnalysis(...)
 sed = SED(like,name)
-sed.save('sed_Vela.dat') # save data points
+
+# save data points. The default file is very terse
+sed.save('sed_Vela.dat') 
+
+# to save out additional values (like TS, energy ranges):
+sed.verbosity=True
+sed.save('sed_Vela.dat')
+
 sed.plot('sed_Vela.png') # requires matplotlib
 
-# Later on the SED can be replotted from the file:
+# Later on the SED can be replotted from the saved file:
+
 import pylab
 # axes is a matplotlib object which can
 # be later modified
 axes=plot_from_file('sed_Vela.dat')
+
+# here, additional things could be done with the
+# axes object.
 pylab.savefig('sed_Vela.png')
 
 @author J. Lande <lande@slac.stanford.edu>
@@ -26,6 +40,9 @@ pylab.savefig('sed_Vela.png')
 Todo:
 * Add energy flux to file output
 * Allow saving/plotting SED in different units (eV, TeV, ergs).
+* Allow larger energy bins than those in the BinnedAnalysis
+  object.
+* Merge upper limits at either edge in energy.
 
 $Header:$
 """
@@ -38,7 +55,9 @@ import pylab as P
 import numpy as np
 
 from LikelihoodState import LikelihoodState
-from pyLikelihood import dArg, ParameterVector, FunctionFactory
+import pyLikelihood
+_funcFactory = pyLikelihood.SourceFactory_funcFactory()
+
 
 class SED(object):
     """ object to make SEDs using pyLikelihood. 
@@ -54,7 +73,9 @@ class SED(object):
                  always_upper_limit=False,
                  ul_algorithm='bayesian',
                  powerlaw_index=-2,
-                 min_ts=4):
+                 min_ts=4,
+                 energy_flux_units='MeV',
+                 energy_units='MeV'):
         """ Parameters:
             * like - pyLikelihood object
             * name - source to make an SED for
@@ -66,7 +87,8 @@ class SED(object):
             * powerlaw_index - fixed spectral index to assume when
                                computing SED.
             * min_ts - minimum ts in which to quote a SED points instead of an upper limit.
-        """
+            * energy_flux_units - desired units to quote energy flux (y axis) in.
+            * energy_units - desired units to quote energy (x axis) in. """
         self.like               = like
         self.name               = name
         self.verbosity          = verbosity
@@ -76,11 +98,18 @@ class SED(object):
         self.powerlaw_index     = powerlaw_index
         self.min_ts             = min_ts
 
+        self.energy_flux_units  = energy_flux_units
+        self.energy_units       = energy_units
+
+        if self.energy_flux_units not in [ 'eV', 'MeV', 'TeV', 'erg']:
+            raise Exception('energy_flux_units must be eV, Mev TeV, or erg')
+        if self.energy_units not in [ 'eV', 'TeV', 'erg']:
+            raise Exception('energy_units must be eV, Mev TeV, or erg')
         if ul_algorithm not in self.ul_choices:
             raise Exception("Upper Limit Algorithm %s not in %s" % (ul_algorithm,str(self.ul_choices)))
 
         self.bin_edges = like.energies
-        self.energies = like.energies
+        self.energies = like.e_vals
 
         # dN/dE in units of ph/cm^2/s/MeV
         self.dnde=np.empty_like(self.energies)
@@ -88,6 +117,9 @@ class SED(object):
         self.ts=np.empty_like(self.energies)
         self.ul=-1*np.ones_like(self.energies) # -1 is no UL
         self._calculate()
+
+    @staticmethod
+    def convert(number,original_units,final_units):
 
     @staticmethod
     def frequentist_upper_limit(like,name,verbosity,emin,emax):
@@ -250,7 +282,7 @@ class SED(object):
         """ Create a simple text representation
             of a gtlike spectrum object which
             can be saved to a file. """
-        parameters=ParameterVector()
+        parameters=pyLikelihood.ParameterVector()
         spectrum.getParams(parameters)
 
         d = dict(name = spectrum.genericName())
@@ -269,7 +301,7 @@ class SED(object):
             a spectrum that has been saved by the spectrum_to_string
             object. """
         d = eval(spectrum)
-        spectrum=FunctionFactory().create(d.pop('name'))
+        spectrum=_funcFactory.create(d.pop('name'))
         for k,v in d.items(): spectrum.getParam(k).setTrueValue(v)
         return spectrum
 
@@ -278,11 +310,7 @@ class SED(object):
         spectrum = self.like.logLike.getSource(self.name).spectrum()
 
         comments = [
-            "# SED for %s: %s" % (
-                self.name,pprint.pformat(dict(
-                    ul_algorithm=self.ul_algorithm,
-                    powerlaw_index=self.powerlaw_index,
-                    min_ts=self.min_ts))),
+            "# SED for %s" % self.name,
             '# '+ SED.spectrum_to_string(spectrum, precision=precision)
         ]
         return '\n'.join(comments)
@@ -341,12 +369,20 @@ class SED(object):
         
         # and upper limits
         if sum(~s)>0:
+            ul_kwargs = dict(linestyle='none',
+                             lolims=True, 
+                             color='black')
+
+            # plot veritical lines (with arrow)
+            axes.errorbar(e[~s], e[~s]**2*ul[~s], 
+                          yerr=[ 0.4*e[~s]**2*ul[~s], np.zeros(sum(~s))],
+                          **ul_kwargs)
+
+            # plot horizontal line (no caps)
             axes.errorbar(e[~s], e[~s]**2*ul[~s], 
                           xerr=[delo[~s],dehi[~s]],
-                          yerr=[ 0.4*e[~s]**2*ul[~s], np.zeros(sum(~s))],
-                          linestyle='none',
-                          lolims=True, 
-                          color='black')
+                          capsize=0,
+                          **ul_kwargs)
 
         l,h=np.log10(elow[0]),np.log10(ehi[-1])
 
@@ -356,16 +392,16 @@ class SED(object):
         # overlay best fit spectra.
         if plot_spectral_fit:
             elist = np.logspace(np.log10(low_lim), np.log10(hi_lim), 100)
-            flist = np.asarray([spectrum(dArg(i)) for i in elist])
+            flist = np.asarray([spectrum(pyLikelihood.dArg(i)) for i in elist])
             axes.plot(elist,elist**2*flist, zorder=1, **spectral_kwargs)
 
         axes.set_xlim(low_lim,hi_lim)
 
         axes.set_xscale('log');
-        axes.set_xlabel('MeV')
+        axes.set_xlabel('Energy (MeV)')
 
         axes.set_yscale('log')
-        axes.set_ylabel(r'Energy Flux $(\mathrm{MeV}\,\mathrm{cm}^{-2}\,\mathrm{s}^{-1})$')
+        axes.set_ylabel(r'Energy Flux (MeV cm$^{-2}$ s$^{-1}$)')
 
         return axes
 
