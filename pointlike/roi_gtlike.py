@@ -20,7 +20,7 @@ from SED import SED
 class Gtlike(object):
 
     defaults = (
-            ('binsz',                 0.0625, "bin size"),
+            ('binsz',                   1/8., "bin size"),
             ("bigger_roi",             False, "If false, enscribe gtlike ROI in pointlike ROI. If True, enscribe pointlike ROI in gtlike ROI"),
             ("proj",                   "ZEA", "Projection"),
             ("coordsystem",SkyDir.EQUATORIAL, "Coordinate system"),
