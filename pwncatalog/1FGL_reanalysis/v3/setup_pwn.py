@@ -12,9 +12,25 @@ from uw.like.Models import PowerLaw
 from skymaps import SkyDir
 from uw.utilities import phasetools
 
-import toolbag
+import pyfits
 
-def setup_pwn(name,pwndata,phase_ranges,tempdir=None):
+def get_phase_factor(phase_ranges):
+    return sum([phase[1]-phase[0] if phase[1]>phase[0] else (1-phase[0]) + (phase[1]-0)
+                      for phase in phase_ranges])
+
+def phase_ltcube(ltcube,outputfile,phase_ranges,phase_col_name='PULSE_PHASE'):
+    """ Scale ltcube """
+
+    from numpy import array
+    ltcube = pyfits.open(ltcube)
+    cb=ltcube['exposure'].data.field('cosbins')
+    cb*=get_phase_factor(phase_ranges)
+
+    ltcube.writeto(outputfile,clobber=True)
+    ltcube.close()
+
+
+def setup_pwn(name,pwndata,phase_ranges,tempdir=None, **kwargs):
     """Name of the source
     pwndata Yaml file
     
@@ -34,8 +50,7 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None):
        isinstance(phase_ranges[1],numbers.Real):
         phase_ranges = [phase_ranges] 
 
-    phase_factor=toolbag.phase_ranges(phase_ranges)
-
+    phase_factor=get_phase_factor(phase_ranges)
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"),free_radius=5)
     catalog_source=[i for i in catalog.get_sources(SkyDir(),180) if i.name==catalog_name][0]
@@ -52,7 +67,7 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None):
 
     # create a temporary ltcube scaled by the phase factor
     phased_ltcube=j(tempdir,'phased_ltcube.fits')
-    toolbag.phase_ltcube(ltcube,phased_ltcube, phase_ranges=phase_ranges)
+    phase_ltcube(ltcube,phased_ltcube, phase_ranges=phase_ranges)
 
     from uw.like.pointspec import DataSpecification
     data_specification = DataSpecification(
@@ -78,7 +93,8 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None):
         catalogs = catalog,
         fit_emin = 100,
         fit_emax = 100000,
-        phase_factor = 1) # phaseing already done to the ltcube
+        phase_factor = 1,
+        **kwargs) # phaseing already done to the ltcube
 
     # delete original pulsar
     roi.del_source(catalog_name)

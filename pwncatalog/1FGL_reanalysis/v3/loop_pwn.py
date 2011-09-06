@@ -6,12 +6,14 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-c", "--command", required=True)
+parser.add_argument("--pwndata", required=True)
+parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-o", "--outdir", required=True)
 args=parser.parse_args()
   
 outdir=args.outdir
 
-sources=yaml.load(open('pwndata.yaml'))
+sources=yaml.load(open(args.pwndata))
 
 if os.path.exists(outdir):
     raise Exception("outdir %s already exists" % outdir)
@@ -29,8 +31,9 @@ for name in sources.keys():
     temp.write("""\
 python %s/%s \\
 -n %s \\
---pwndata %s/pwndata.yaml \\
---pwnphase %s/pwnphase.yaml """ % (os.getcwd(),args.command,name,os.getcwd(),os.getcwd()))
+--pwndata %s \\
+--pwnphase %s """ % (os.getcwd(),args.command,name,
+                     args.pwndata,args.pwnphase))
 
 
 submit_all=join(outdir,'submit_all.py')

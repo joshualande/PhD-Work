@@ -15,7 +15,6 @@ from skymaps import SkyImage,SkyDir
 import yaml
 from SED import SED
 
-    
 from toolbag import sourcedict,tolist
 
 parser = ArgumentParser()
@@ -64,7 +63,7 @@ roi.plot_sed(which=name,filename='sed_pointlike_%s.pdf' % name, use_ergs=True)
 
 r['pointlike']=sourcedict(roi,name,'_at_pulsar')
 
-gtlike=Gtlike(roi,savedir='savedir')
+gtlike=Gtlike(roi)
 like=gtlike.like
 like.fit(covar=True)
 
