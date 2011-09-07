@@ -90,8 +90,6 @@ roi.unzero_source(which=name)
 
 roi.plot_sources(filename='sources_%s.pdf' % name, size=8, label_psf=False)
 
-
-sed = SED(like,name)
-sed.verbose=True
+sed = SED(like,name, verbosity=True)
 sed.save('sed_gtlike_%s.dat' % name)
 sed.plot('sed_gtlike_%s.pdf' % name) 
