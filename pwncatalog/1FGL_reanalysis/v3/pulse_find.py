@@ -97,7 +97,7 @@ def phasebinanalysis(phi_center_f):
     TS2.append(TS[0])
     dphi2=[]
     dphi2.append(dphi[0])
-    for i in range(len(TS)-1):
+    for i in range(len(TS)-2):
         TS2.append(TS[i+1])
         dphi2.append(dphi[i+1])
         errfunc2= lambda p2, dphi:TS2-model_ts_pl(p2,dphi2)
@@ -105,7 +105,7 @@ def phasebinanalysis(phi_center_f):
         error=TS[i+2]-model_ts_pl(p3,dphi[i+2])
         if error > 4:
             dphi_break_1=dphi[i+1]
-            phimin_1=(phi_center_f - bdphi/2) % 1
+            phimin_1=(phi_center_f -dphi_break_1/2) % 1
             phimax_1 = (phi_center_f + dphi_break_1/2) % 1
             print 'The best dphi is = %.2f. Range = [%.2f, %.2f]' % (dphi_break_1,phimin_1,phimax_1)
 
