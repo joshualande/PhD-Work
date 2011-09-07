@@ -15,9 +15,9 @@ name='Vela'
 like=BinnedAnalysis(...)
 sed = SED(like,name)
 
-# by default, all units are in MeV.
-# to quote flux in ergs/cm^2/s:
-sed = SED(like,name, flux_units='ergs')
+# by default, energy is quoted in MeV and
+# flux is quted in erg/cm^2/s:
+sed = SED(like,name, flux_units='erg')
 # To quote the (x-axis energy in 'GeV'):
 sed = SED(like,name, energy_units='GeV')
 
@@ -30,6 +30,13 @@ sed.verbosity=True
 sed.save('sed_Vela.dat')
 
 sed.plot('sed_Vela.png') # requires matplotlib
+
+# If you are doing something fancy with Matplotlib,
+# you can give the axes you want the data points added to.
+
+sed.plot(axes=axes)
+# do something else to the plot ...
+pylab.savefig('fancy_sed.png')
 
 # Later on the SED can be replotted from the saved file:
 
@@ -139,7 +146,7 @@ class SED(object):
                  ul_algorithm='bayesian',
                  powerlaw_index=-2,
                  min_ts=4,
-                 flux_units='MeV',
+                 flux_units='erg',
                  energy_units='MeV'):
         """ Parameters:
             * like - pyLikelihood object
@@ -166,10 +173,10 @@ class SED(object):
         self.flux_units  = flux_units
         self.energy_units       = energy_units
 
-        if self.flux_units not in [ 'eV', 'MeV', 'GeV', 'TeV', 'ergs']:
-            raise Exception('flux_units must be eV, Mev TeV, or ergs')
-        if self.energy_units not in [ 'eV', 'MeV', 'GeV', 'TeV', 'ergs']:
-            raise Exception('energy_units must be eV, Mev TeV, or ergs')
+        if self.flux_units not in [ 'eV', 'MeV', 'GeV', 'TeV', 'erg']:
+            raise Exception('flux_units must be eV, Mev TeV, or erg')
+        if self.energy_units not in [ 'eV', 'MeV', 'GeV', 'TeV', 'erg']:
+            raise Exception('energy_units must be eV, Mev TeV, or erg')
         if ul_algorithm not in self.ul_choices:
             raise Exception("Upper Limit Algorithm %s not in %s" % (ul_algorithm,str(self.ul_choices)))
 
@@ -177,7 +184,8 @@ class SED(object):
         self.bin_edges = like.energies
         self.energies = like.e_vals
 
-        # dN/dE always in units of ph/cm^2/s/MeV
+        # dN/dE, dN/dE_err and upper limits (ul)
+        # always in units of ph/cm^2/s/MeV
         self.dnde=np.empty_like(self.energies)
         self.dnde_err=np.empty_like(self.energies)
         self.ts=np.empty_like(self.energies)
@@ -293,17 +301,28 @@ class SED(object):
         like.setSpectrum(name,old_spectrum)
         saved_state.restore()
 
+    # functions for unit conversions.
+    # These functions could be cleanded up.
+    # For example: convert(energy=100,from='MeV',to='erg')
     @staticmethod
-    def convert_energy(energy, energy_units):
-        """ Converts from MeV (what pyLikelihood uses internally)
-            to the desired output. """
-        return energy*dict(eV=1e6, MeV=1, GeV=1e-3, TeV=1e-6, ergs=1.60217646e-6)[energy_units]
+    def energy_from_MeV(energy, energy_units):
+        """ Converts energy from MeV to specified output. """
+        return energy*dict(eV=1e6, MeV=1, GeV=1e-3, TeV=1e-6, erg=1.60217646e-6)[energy_units]
 
     @staticmethod
-    def convert_flux(flux, flux_units):
-        """ Converts from ph/cm^2/s/MeV (what pyLikelihood uses internally)
-            to the desired output. """
-        return flux*dict(eV=1e-6, MeV=1, GeV=1e3, TeV=1e6, ergs=6.24150974e5)[flux_units]
+    def energy_to_MeV(*args,**kwargs): 
+        """ Convert energy to MeV. """
+        return SED.flux_from_MeV(*args,**kwargs)
+
+    @staticmethod
+    def flux_from_MeV(flux, flux_units):
+        """ Converts from ph/cm^2/s/MeV to desired output. """
+        return flux*dict(eV=1e-6, MeV=1, GeV=1e3, TeV=1e6, erg=6.24150974e5)[flux_units]
+
+    @staticmethod
+    def flux_to_MeV(*args,**kwargs): 
+        """ Convert flux to MeV. """
+        return SED.energy_from_MeV(*args,**kwargs)
 
     def __str__(self,precision=1, colwidth=20, comments=[]):
         """ Pack up values into a nicely formatted string.
@@ -319,8 +338,8 @@ class SED(object):
         flux_err=[ferr if s else None for ferr,s in zip(self.dnde_err,significant)]
         ul=[u if not s else None for u,s in zip(self.ul,significant)]
 
-        cf=lambda f: SED.convert_flux(f,self.flux_units)
-        ce=lambda e: SED.convert_energy(e, self.energy_units)
+        cf=lambda f: SED.flux_from_MeV(f,self.flux_units)
+        ce=lambda e: SED.energy_from_MeV(e, self.energy_units)
 
         eu = '[%s]' % self.energy_units
         fu = '[ph/cm^2/s/%s]' % self.flux_units
@@ -398,15 +417,18 @@ class SED(object):
 
     @staticmethod 
     def _plot_data(energies, dnde, dnde_err, ul, significant,
-                   energy_units='MeV', flux_units='MeV',
+                   energy_units, flux_units,
                    axes=None, fignum=None, figsize=(4,4),
                    plot_spectral_fit=True, spectrum=None,
                    spectral_kwargs=dict(color='red'),
                   ):
         """ Plot SED points and upper limits. 
+            
+            energies must be in MeV
+            dnde, dnde_err, and ul must be in ph/cm^2/s/MeV
 
-            energy_units - energy of x axis (In units of energy_units)
-            energy_flux units - differential energy units of y axis (ph/cm^2/s/flux_units)
+            energy_units - unit to plot energy in (x axis)
+            flux_units - unit to plot flux in (y axis)
 
             spectrum: pyLikelihood spectrum object (required if plot_spectral_fit=True)
             """
@@ -431,9 +453,18 @@ class SED(object):
         delo=e-elow
         dehi=ehi-e
 
+
+        # map x values (in MeV) to desired units
+        x = lambda e: SED.energy_from_MeV(e,energy_units)
+        # map y values (in MeV*2 * ph/cm^2/s/MeV) to desired units
+        y = lambda f: SED.energy_from_MeV(f,flux_units)
+
         # plot data points
         if sum(s)>0:
-            axes.errorbar(e[s], e[s]**2*dnde[s], xerr=[delo[s],dehi[s]], yerr=e[s]**2*dnde_err[s], 
+            axes.errorbar(x(e[s]),
+                          y(e[s]**2*dnde[s]),
+                          xerr=[x(delo[s]),x(dehi[s])],
+                          yerr=y(e[s]**2*dnde_err[s]),
                           linestyle='none',  color='black', capsize=0)
         
         # and upper limits
@@ -441,11 +472,15 @@ class SED(object):
             ul_kwargs = dict(linestyle='none', lolims=True, color='black')
 
             # plot veritical lines (with arrow)
-            axes.errorbar(e[~s], e[~s]**2*ul[~s], yerr=[ 0.4*e[~s]**2*ul[~s], np.zeros(sum(~s))],
+            axes.errorbar(x(e[~s]),
+                          y(e[~s]**2*ul[~s]),
+                          yerr=[y(0.4*e[~s]**2*ul[~s]),np.zeros(sum(~s))],
                           **ul_kwargs)
 
             # plot horizontal line (no caps)
-            axes.errorbar(e[~s], e[~s]**2*ul[~s], xerr=[delo[~s],dehi[~s]],
+            axes.errorbar(x(e[~s]),
+                          y(e[~s]**2*ul[~s]),
+                          xerr=[x(delo[~s]),x(dehi[~s])],
                           capsize=0, **ul_kwargs)
 
         l,h=np.log10(elow[0]),np.log10(ehi[-1])
@@ -457,8 +492,8 @@ class SED(object):
         if plot_spectral_fit:
             elist = np.logspace(np.log10(low_lim), np.log10(hi_lim), 100)
             # remember that gtlike always returns ph/cm^2/s/MeV
-            flist = SED.convert_flux(np.asarray([spectrum(pyLikelihood.dArg(i)) for i in elist]),flux_units)
-            axes.plot(elist,elist**2*flist, zorder=1, **spectral_kwargs)
+            flist = np.asarray([spectrum(pyLikelihood.dArg(i)) for i in elist])
+            axes.plot(x(elist), y(elist**2*flist), zorder=1, **spectral_kwargs)
 
         axes.set_xlim(low_lim,hi_lim)
 
@@ -477,10 +512,8 @@ class SED(object):
         source = self.like.logLike.getSource(self.name)
         spectrum=source.spectrum()
 
-        axes = SED._plot_data(SED.convert_energy(self.energies, self.energy_units), 
-                              SED.convert_flux(self.dnde, self.flux_units),
-                              SED.convert_flux(self.dnde_err, self.flux_units),
-                              SED.convert_flux(self.ul, self.flux_units), 
+        axes = SED._plot_data(self.energies, self.dnde, 
+                              self.dnde_err, self.ul, 
                               significant,
                               energy_units = self.energy_units,
                               flux_units = self.flux_units,
@@ -489,9 +522,14 @@ class SED(object):
         if filename is not None: P.savefig(filename)
 
     @staticmethod
-    def plot_from_file(filename,precision=3,colwidth=20,**kwargs):
+    def plot_from_file(filename,precision=3,colwidth=20,
+                       energy_units='MeV', flux_units='erg',
+                       **kwargs):
         """ Plots the SED points from a file created 
-            by SED.save()."""
+            by SED.save(). Regardless of what units 
+            are saved in the log file, the units of
+            the plotted energy and flux can be modified
+            by the input parameters. """
 
         table=PrettyTable(precision=precision, colwidth=colwidth)
         data,comments=table.load(filename)
@@ -500,16 +538,21 @@ class SED(object):
         flux=next(d for d in data if d['name']=='Flux')
         flux_err=next(d for d in data if d['name']=='Flux_Err')
 
-        energy_units = energy['unit'].replace('[','').replace(']','')
+        file_energy_units = energy['unit'].replace('[','').replace(']','')
         if flux['unit'] != flux_err['unit']:
             raise Exception("Flux and Flux_Err must be the same units")
-        flux_units = flux['unit'].replace('[ph/cm^2/s/','').replace(']','')
+        file_flux_units = flux['unit'].replace('[ph/cm^2/s/','').replace(']','')
 
-        e = np.asarray(energy['data'],dtype=float)
+        # convert whatever units are in the file for energy and flux to
+        # MeV and ph/cm^2/s/MeV to injest into _plot_data
+        e = SED.energy_to_MeV(np.asarray(energy['data'],dtype=float), file_energy_units)
+
         significant = ~np.asarray(flux['ul']) if flux.has_key('ul') else np.asarray([True]*len(e))
-        dnde = np.where(significant,np.asarray(flux['data'],dtype=float),0)
-        ul = np.where(~significant,np.asarray(flux['data'],dtype=float),0)
-        dnde_err = np.asarray(flux_err['data'],dtype=float)
+
+        flux=SED.flux_to_MeV(np.asarray(flux['data'],dtype=float),file_flux_units)
+        dnde = np.where(significant,flux,0)
+        ul = np.where(~significant,flux,0)
+        dnde_err = SED.flux_to_MeV(np.asarray(flux_err['data'],dtype=float),file_flux_units)
 
         spectrum=SED.string_to_spectrum(comments[1])
 
