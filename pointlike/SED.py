@@ -15,6 +15,13 @@ name='Vela'
 like=BinnedAnalysis(...)
 sed = SED(like,name)
 
+# by default, all units are in MeV.
+# to quote flux in ergs/cm^2/s:
+sed = SED(like,name, flux_units='ergs')
+# To quote the (x-axis energy in 'GeV'):
+sed = SED(like,name, energy_units='GeV')
+
+
 # save data points. The default file is very terse
 sed.save('sed_Vela.dat') 
 
@@ -39,7 +46,6 @@ pylab.savefig('sed_Vela.png')
 
 Todo:
 * Add energy flux to file output
-* Allow saving/plotting SED in different units (eV, TeV, ergs).
 * Allow larger energy bins than those in the BinnedAnalysis
   object.
 * Merge upper limits at either edge in energy.
@@ -58,6 +64,65 @@ from LikelihoodState import LikelihoodState
 import pyLikelihood
 _funcFactory = pyLikelihood.SourceFactory_funcFactory()
 
+class PrettyTable(object):
+    """ Define a very simple file format for saving
+        SED points. """
+    def __init__(self,precision,colwidth): 
+        self.precision, self.colwidth = precision, colwidth
+
+    def fmt(self,i,fmt='s', ul=False):
+        """ Format a number to have a fixed width and precision.
+            ul = format as upper limit with a < in front of number. """
+        if i is None: return ' '*colwidth
+
+        if ul:
+            temp=('<%.*'+fmt) % (self.precision,i)
+            return '%*s' % (self.colwidth,temp)
+
+        return ('%*.*'+fmt) % \
+                (self.colwidth, self.precision if fmt!='s' else self.colwidth, i)
+
+    def dump(self,data,comments=[]):
+        """ Writes data structure of the from:
+            [ dict(name='energy', unit='[MeV]', data=[1,2,3],                          fmt='e'), 
+              dict(name='flux',   unit='[GeV]', data=[1,2,3], ul=[False, False, True], fmt='f')] . """
+        lines = ['# '+c for c in comments] # comments
+        lines.append(''.join([self.fmt(d['name']) for d in data])) #names
+        lines.append(''.join([self.fmt(d['unit']) for d in data])) # nnits
+        for i in range(len(data[0]['data'])): # data
+            lines.append(''.join([self.fmt(d['data'][i], fmt=d['fmt'],
+                                           ul=d['ul'][i] if d.has_key('ul') else False) 
+                                  for d in data]))
+
+        return '\n'.join(lines)
+
+    def load(self,filename):
+        """ Parses the saved data back into data structure. """
+        cw=self.colwidth
+
+        lines = [i.rstrip() for i in open(filename).readlines()]
+
+        data,comments = [],[]
+        for i in reversed(range(len(lines))):
+            if lines[i][0]=='#': comments.insert(0,lines.pop(i).replace('#','').strip())
+
+        for i,line in enumerate(lines):
+            if len(line) % cw !=0: raise Exception("Wrong colwidth for line %s." % i)
+
+        for i in range(len(lines[0])/cw):
+            l=cw*i; u=l+cw
+            d=dict(
+                name=lines[0][l:u].strip(),
+                unit=lines[1][l:u].strip())
+            d['data']=[line[l:u].strip() for line in lines[2:]]
+            d['data']=[i if i !='' else None for i in d['data']]
+
+            if '<' in [i[0] for i in d['data']]: d['ul']=['<' in i for i in d['data']]
+            d['data']=[i.replace('<','') for i in d['data']]
+            data.append(d)
+
+        return data,comments
+
 
 class SED(object):
     """ object to make SEDs using pyLikelihood. 
@@ -74,7 +139,7 @@ class SED(object):
                  ul_algorithm='bayesian',
                  powerlaw_index=-2,
                  min_ts=4,
-                 energy_flux_units='MeV',
+                 flux_units='MeV',
                  energy_units='MeV'):
         """ Parameters:
             * like - pyLikelihood object
@@ -87,7 +152,7 @@ class SED(object):
             * powerlaw_index - fixed spectral index to assume when
                                computing SED.
             * min_ts - minimum ts in which to quote a SED points instead of an upper limit.
-            * energy_flux_units - desired units to quote energy flux (y axis) in.
+            * flux_units - desired units to quote energy flux (y axis) in.
             * energy_units - desired units to quote energy (x axis) in. """
         self.like               = like
         self.name               = name
@@ -98,28 +163,26 @@ class SED(object):
         self.powerlaw_index     = powerlaw_index
         self.min_ts             = min_ts
 
-        self.energy_flux_units  = energy_flux_units
+        self.flux_units  = flux_units
         self.energy_units       = energy_units
 
-        if self.energy_flux_units not in [ 'eV', 'MeV', 'TeV', 'erg']:
-            raise Exception('energy_flux_units must be eV, Mev TeV, or erg')
-        if self.energy_units not in [ 'eV', 'TeV', 'erg']:
-            raise Exception('energy_units must be eV, Mev TeV, or erg')
+        if self.flux_units not in [ 'eV', 'MeV', 'GeV', 'TeV', 'ergs']:
+            raise Exception('flux_units must be eV, Mev TeV, or ergs')
+        if self.energy_units not in [ 'eV', 'MeV', 'GeV', 'TeV', 'ergs']:
+            raise Exception('energy_units must be eV, Mev TeV, or ergs')
         if ul_algorithm not in self.ul_choices:
             raise Exception("Upper Limit Algorithm %s not in %s" % (ul_algorithm,str(self.ul_choices)))
 
+        # These energies are always in MeV
         self.bin_edges = like.energies
         self.energies = like.e_vals
 
-        # dN/dE in units of ph/cm^2/s/MeV
+        # dN/dE always in units of ph/cm^2/s/MeV
         self.dnde=np.empty_like(self.energies)
         self.dnde_err=np.empty_like(self.energies)
         self.ts=np.empty_like(self.energies)
         self.ul=-1*np.ones_like(self.energies) # -1 is no UL
         self._calculate()
-
-    @staticmethod
-    def convert(number,original_units,final_units):
 
     @staticmethod
     def frequentist_upper_limit(like,name,verbosity,emin,emax):
@@ -230,7 +293,19 @@ class SED(object):
         like.setSpectrum(name,old_spectrum)
         saved_state.restore()
 
-    def __str__(self,precision=1):
+    @staticmethod
+    def convert_energy(energy, energy_units):
+        """ Converts from MeV (what pyLikelihood uses internally)
+            to the desired output. """
+        return energy*dict(eV=1e6, MeV=1, GeV=1e-3, TeV=1e-6, ergs=1.60217646e-6)[energy_units]
+
+    @staticmethod
+    def convert_flux(flux, flux_units):
+        """ Converts from ph/cm^2/s/MeV (what pyLikelihood uses internally)
+            to the desired output. """
+        return flux*dict(eV=1e-6, MeV=1, GeV=1e3, TeV=1e6, ergs=6.24150974e5)[flux_units]
+
+    def __str__(self,precision=1, colwidth=20, comments=[]):
         """ Pack up values into a nicely formatted string.
 
             If self.verbosity=False, only include energy, flux, and flux_err 
@@ -240,48 +315,43 @@ class SED(object):
             energies, and fluxes + flux errors (even when
             insignificant. """
 
-        # convert list to scientific notation
-        conv_science = lambda vals: ['%.*e' % (precision,i) \
-                                 if not isinstance(i,str) else i \
-                                 for i in vals]
-        conv_float   = lambda vals: ['%.*f' % (precision,i) for i in vals]
+        significant=self.ts>=self.min_ts
+        flux_err=[ferr if s else None for ferr,s in zip(self.dnde_err,significant)]
+        ul=[u if not s else None for u,s in zip(self.ul,significant)]
 
-        sed_vals = []
-        sed_vals.append(['Energy', '[MeV]'] + conv_float(self.energies))
+        cf=lambda f: SED.convert_flux(f,self.flux_units)
+        ce=lambda e: SED.convert_energy(e, self.energy_units)
 
-        # contains flux + UL if TS < min_ts 
-        sed_vals.append(['Flux', '[ph/cm^2/s/MeV]'] + \
-                        conv_science([f if ts>=self.min_ts else '<%.*e' % (precision,ul) \
-                                  for f,ul,ts in zip(self.dnde,self.ul,self.ts)]))
+        eu = '[%s]' % self.energy_units
+        fu = '[ph/cm^2/s/%s]' % self.flux_units
 
-        # contains flux error if TS > min_ts
-        sed_vals.append(['Flux_Err', ''] + \
-                        conv_science([ferr if ts>=self.min_ts else '' \
-                                  for ferr,ts in zip(self.dnde_err,self.ts)]))
+        data = [
+            dict(name='Energy',        unit=eu,           fmt='f', data=ce(self.energies)),
+            dict(name='Flux',          unit=fu, fmt='e',
+                 data=cf(np.where(significant, self.dnde, self.ul)), ul=~significant),
+            dict(name='Flux_Err',      unit=fu, fmt='e', data=cf(self.dnde_err))
+        ]
 
         if self.verbosity:
-            # add into the list everything else somebody might want.
-            sed_vals.append(['Lower_Energy',   ''] + conv_float(self.bin_edges[:-1]))
-            sed_vals.append(['Upper_Energy',   ''] + conv_float(self.bin_edges[1:]))
-            sed_vals.append(['Raw_Flux',       ''] + conv_science(self.dnde))
-            sed_vals.append(['Raw_Flux_Err',   ''] + conv_science(self.dnde_err))
-            sed_vals.append(['Test_Statistic', ''] + conv_float(self.ts))
-            # only include when upper limit was calculated
-            sed_vals.append(['Upper_Limit', ''] + \
-                            conv_science([u if u >= 0 else '' for u in self.ul]))
+            data += [
+                dict(name='Lower_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[:-1])),
+                dict(name='Upper_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[1:])),
+                dict(name='Raw_Flux',       unit=fu, fmt='e', data=cf(self.dnde)),
+                dict(name='Raw_Flux_Err',   unit=fu, fmt='e', data=cf(self.dnde_err)),
+                dict(name='Test_Statistic', unit='', fmt='f', data=self.ts),
+                dict(name='Upper_Limit',    unit=fu, fmt='e', data=cf(ul))
+            ]
 
-        sed_transpose = zip(*sed_vals)
-
-        return '\n'.join([
-            ''.join(['%20s' % j for j in i]) for i in sed_transpose
-        ]) + '\n' # this last newline is helpful for genfromtxt
-
+        table=PrettyTable(precision=precision, colwidth=colwidth)
+        return table.dump(data,comments=comments)
 
     @staticmethod
     def spectrum_to_string(spectrum, precision):
         """ Create a simple text representation
             of a gtlike spectrum object which
-            can be saved to a file. """
+            can be saved to a file. Always
+            create this object with the same
+            units as pyLikelihood. """
         parameters=pyLikelihood.ParameterVector()
         spectrum.getParams(parameters)
 
@@ -306,21 +376,19 @@ class SED(object):
         return spectrum
 
     def get_comments(self, precision):
-
+        """ Pack up the source name and spectrum for a nice header. """
         spectrum = self.like.logLike.getSource(self.name).spectrum()
-
-        comments = [
-            "# SED for %s" % self.name,
-            '# '+ SED.spectrum_to_string(spectrum, precision=precision)
-        ]
-        return '\n'.join(comments)
+        return [ "# SED for %s" % self.name,
+                 "# "+ SED.spectrum_to_string(spectrum, precision=precision)]
 
     def save(self,filename,precision=3,**kwargs):
         """ Save SED data points to a file.
             By default, save with 5 points of
             precision and save out everything that
             can be saved out. """
-        output=self.get_comments(precision=precision) + '\n' + self.__str__(precision=precision,**kwargs)
+        output=self.__str__(precision=precision,
+                            comments=self.get_comments(precision),
+                            **kwargs)
         if hasattr(filename,'write'):
             filename.write(output)
         else:
@@ -330,11 +398,15 @@ class SED(object):
 
     @staticmethod 
     def _plot_data(energies, dnde, dnde_err, ul, significant,
+                   energy_units='MeV', flux_units='MeV',
                    axes=None, fignum=None, figsize=(4,4),
                    plot_spectral_fit=True, spectrum=None,
                    spectral_kwargs=dict(color='red'),
                   ):
         """ Plot SED points and upper limits. 
+
+            energy_units - energy of x axis (In units of energy_units)
+            energy_flux units - differential energy units of y axis (ph/cm^2/s/flux_units)
 
             spectrum: pyLikelihood spectrum object (required if plot_spectral_fit=True)
             """
@@ -361,28 +433,20 @@ class SED(object):
 
         # plot data points
         if sum(s)>0:
-            axes.errorbar(e[s], e[s]**2*dnde[s],
-                          xerr=[delo[s],dehi[s]],
-                          yerr=e[s]**2*dnde_err[s], 
-                          linestyle='none',  
-                          color='black', capsize=0)
+            axes.errorbar(e[s], e[s]**2*dnde[s], xerr=[delo[s],dehi[s]], yerr=e[s]**2*dnde_err[s], 
+                          linestyle='none',  color='black', capsize=0)
         
         # and upper limits
         if sum(~s)>0:
-            ul_kwargs = dict(linestyle='none',
-                             lolims=True, 
-                             color='black')
+            ul_kwargs = dict(linestyle='none', lolims=True, color='black')
 
             # plot veritical lines (with arrow)
-            axes.errorbar(e[~s], e[~s]**2*ul[~s], 
-                          yerr=[ 0.4*e[~s]**2*ul[~s], np.zeros(sum(~s))],
+            axes.errorbar(e[~s], e[~s]**2*ul[~s], yerr=[ 0.4*e[~s]**2*ul[~s], np.zeros(sum(~s))],
                           **ul_kwargs)
 
             # plot horizontal line (no caps)
-            axes.errorbar(e[~s], e[~s]**2*ul[~s], 
-                          xerr=[delo[~s],dehi[~s]],
-                          capsize=0,
-                          **ul_kwargs)
+            axes.errorbar(e[~s], e[~s]**2*ul[~s], xerr=[delo[~s],dehi[~s]],
+                          capsize=0, **ul_kwargs)
 
         l,h=np.log10(elow[0]),np.log10(ehi[-1])
 
@@ -392,16 +456,17 @@ class SED(object):
         # overlay best fit spectra.
         if plot_spectral_fit:
             elist = np.logspace(np.log10(low_lim), np.log10(hi_lim), 100)
-            flist = np.asarray([spectrum(pyLikelihood.dArg(i)) for i in elist])
+            # remember that gtlike always returns ph/cm^2/s/MeV
+            flist = SED.convert_flux(np.asarray([spectrum(pyLikelihood.dArg(i)) for i in elist]),flux_units)
             axes.plot(elist,elist**2*flist, zorder=1, **spectral_kwargs)
 
         axes.set_xlim(low_lim,hi_lim)
 
         axes.set_xscale('log');
-        axes.set_xlabel('Energy (MeV)')
+        axes.set_xlabel('Energy (%s)' % energy_units)
 
         axes.set_yscale('log')
-        axes.set_ylabel(r'Energy Flux (MeV cm$^{-2}$ s$^{-1}$)')
+        axes.set_ylabel(r'Energy Flux (%s cm$^{-2}$ s$^{-1}$)' % flux_units)
 
         return axes
 
@@ -412,44 +477,47 @@ class SED(object):
         source = self.like.logLike.getSource(self.name)
         spectrum=source.spectrum()
 
-        axes = SED._plot_data(self.energies, self.dnde, self.dnde_err, self.ul, 
-                              significant, spectrum=spectrum, **kwargs)
+        axes = SED._plot_data(SED.convert_energy(self.energies, self.energy_units), 
+                              SED.convert_flux(self.dnde, self.flux_units),
+                              SED.convert_flux(self.dnde_err, self.flux_units),
+                              SED.convert_flux(self.ul, self.flux_units), 
+                              significant,
+                              energy_units = self.energy_units,
+                              flux_units = self.flux_units,
+                              spectrum=spectrum, **kwargs)
 
         if filename is not None: P.savefig(filename)
 
     @staticmethod
-    def plot_from_file(filename,**kwargs):
-        """ Plots the SED points from a file saved
-        by the SED.save function. """
+    def plot_from_file(filename,precision=3,colwidth=20,**kwargs):
+        """ Plots the SED points from a file created 
+            by SED.save()."""
 
-        r=np.genfromtxt(filename, names=True, invalid_raise=False, dtype=object, delimiter=20, autostrip=True,
-                       skip_header=2)
+        table=PrettyTable(precision=precision, colwidth=colwidth)
+        data,comments=table.load(filename)
 
-        if r['Energy'][0] != '[MeV]' or r['Flux'][0] != '[ph/cm^2/s/MeV]':
-            raise Exception("Wrong Units in File!")
+        energy=next(d for d in data if d['name']=='Energy')
+        flux=next(d for d in data if d['name']=='Flux')
+        flux_err=next(d for d in data if d['name']=='Flux_Err')
 
-        energies = r['Energy'][1:].astype(float)
+        energy_units = energy['unit'].replace('[','').replace(']','')
+        if flux['unit'] != flux_err['unit']:
+            raise Exception("Flux and Flux_Err must be the same units")
+        flux_units = flux['unit'].replace('[ph/cm^2/s/','').replace(']','')
 
-        flux_char = np.char.array(r['Flux'][1:])
+        e = np.asarray(energy['data'],dtype=float)
+        significant = ~np.asarray(flux['ul']) if flux.has_key('ul') else np.asarray([True]*len(e))
+        dnde = np.where(significant,np.asarray(flux['data'],dtype=float),0)
+        ul = np.where(~significant,np.asarray(flux['data'],dtype=float),0)
+        dnde_err = np.asarray(flux_err['data'],dtype=float)
 
-        significant = flux_char.find('<') == -1
-
-        # strip out the limits + convert to float
-        temp = flux_char.replace('<', '')
-        dnde = np.array(temp).astype(float)
-
-        temp = r['Flux_Err'][1:]
-        temp = np.where( temp != '', temp, 0)
-        dnde_err = np.array(temp).astype(float)
-
-        ul = np.where(~significant,dnde,0)
-
-        spectrum=SED.string_to_spectrum(
-            open(filename).readlines()[1].replace('#',''))
+        spectrum=SED.string_to_spectrum(comments[1])
 
         # plot the SED
-        SED._plot_data(energies, dnde, dnde_err, ul, significant, 
-                       spectrum=spectrum,
+        SED._plot_data(e, dnde, dnde_err, ul, significant, 
+                       spectrum=spectrum, 
+                       energy_units = energy_units,
+                       flux_units = flux_units,
                        **kwargs)
                              
 plot_from_file = SED.plot_from_file
