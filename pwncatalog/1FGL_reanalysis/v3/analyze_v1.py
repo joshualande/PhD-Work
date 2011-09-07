@@ -69,9 +69,9 @@ like.fit(covar=True)
 
 r['gtlike']=sourcedict(like,name,'_at_pulsar')
 
-# calculate gtlike upper limits
+# calculate gtlike upper limits ...
 
-# calculate TScutoff
+# calculate TScutoff ...
 
 roi.save('roi_%s.dat' % name)
 
@@ -92,6 +92,6 @@ roi.plot_sources(filename='sources_%s.pdf' % name, size=8, label_psf=False)
 
 
 sed = SED(like,name)
+sed.verbose=True
 sed.save('sed_gtlike_%s.dat' % name)
-sed.plot('sed_gtlike_%s.png' % name) 
-
+sed.plot('sed_gtlike_%s.pdf' % name) 
