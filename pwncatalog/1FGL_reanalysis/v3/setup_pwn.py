@@ -37,6 +37,7 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None, **kwargs):
     returns pointlike ROI.
     """
 
+
     sources=yaml.load(open(pwndata))
 
     catalog_name=sources[name]['catalog']
@@ -48,6 +49,11 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None, **kwargs):
     # in case no list was passed
     if len(phase_ranges)==2 and isinstance(phase_ranges[0],numbers.Real) and \
        isinstance(phase_ranges[1],numbers.Real):
+
+        # write in case phase wraps around.
+        if phase_ranges[0]>phase_ranges[1]:
+            phase_ranges=[[phase_ranges[0],1.0],[0.0,phase_ranges[1]]]
+
         phase_ranges = [phase_ranges] 
 
     phase_factor=get_phase_factor(phase_ranges)
