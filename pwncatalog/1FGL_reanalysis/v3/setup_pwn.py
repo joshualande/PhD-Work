@@ -57,7 +57,7 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None, **kwargs):
 
     center=catalog_source.skydir
 
-    if tempdir is None: tempdir=mkdtemp()
+    if tempdir is None: tempdir=mkdtemp(prefix='/scratch/')
 
     binfile=j(tempdir,'binned_phased.fits')
 
