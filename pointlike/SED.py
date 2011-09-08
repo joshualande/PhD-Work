@@ -79,15 +79,16 @@ class PrettyTable(object):
 
     def fmt(self,i,fmt='s', ul=False):
         """ Format a number to have a fixed width and precision.
-            ul = format as upper limit with a < in front of number. """
-        if i is None: return ' '*colwidth
+            ul = format as upper limit with a < in front of number. 
+            If input is None or nan, leave a blank in the file. """
+        print i,i is None,np.isnan(i)
+        if fmt == 's': return '%*s' % (self.colwidth,i)
+        if i is None or np.isnan(i): return ' '*self.colwidth
 
         if ul:
             temp=('<%.*'+fmt) % (self.precision,i)
             return '%*s' % (self.colwidth,temp)
-
-        return ('%*.*'+fmt) % \
-                (self.colwidth, self.precision if fmt!='s' else self.colwidth, i)
+        return ('%*.*'+fmt) % (self.colwidth, self.precision, i)
 
     def dump(self,data,comments=[]):
         """ Writes data structure of the from:
@@ -122,10 +123,11 @@ class PrettyTable(object):
                 name=lines[0][l:u].strip(),
                 unit=lines[1][l:u].strip())
             d['data']=[line[l:u].strip() for line in lines[2:]]
-            d['data']=[i if i !='' else None for i in d['data']]
 
-            if '<' in [i[0] for i in d['data']]: d['ul']=['<' in i for i in d['data']]
+            if '<' in ''.join(d['data']): d['ul']=['<' in i for i in d['data']]
             d['data']=[i.replace('<','') for i in d['data']]
+
+            d['data']=[i if i !='' else None for i in d['data']]
             data.append(d)
 
         return data,comments
@@ -335,8 +337,6 @@ class SED(object):
             insignificant. """
 
         significant=self.ts>=self.min_ts
-        flux_err=[ferr if s else None for ferr,s in zip(self.dnde_err,significant)]
-        ul=[u if not s else None for u,s in zip(self.ul,significant)]
 
         cf=lambda f: SED.flux_from_MeV(f,self.flux_units)
         ce=lambda e: SED.energy_from_MeV(e, self.energy_units)
@@ -344,11 +344,14 @@ class SED(object):
         eu = '[%s]' % self.energy_units
         fu = '[ph/cm^2/s/%s]' % self.flux_units
 
+        # note, set empty columns to nan
+
         data = [
             dict(name='Energy',        unit=eu,           fmt='f', data=ce(self.energies)),
             dict(name='Flux',          unit=fu, fmt='e',
                  data=cf(np.where(significant, self.dnde, self.ul)), ul=~significant),
-            dict(name='Flux_Err',      unit=fu, fmt='e', data=cf(self.dnde_err))
+            dict(name='Flux_Err',      unit=fu, fmt='e', 
+                 data=cf(np.where(significant,self.dnde_err,np.nan).astype(float)))
         ]
 
         if self.verbosity:
@@ -358,7 +361,8 @@ class SED(object):
                 dict(name='Raw_Flux',       unit=fu, fmt='e', data=cf(self.dnde)),
                 dict(name='Raw_Flux_Err',   unit=fu, fmt='e', data=cf(self.dnde_err)),
                 dict(name='Test_Statistic', unit='', fmt='f', data=self.ts),
-                dict(name='Upper_Limit',    unit=fu, fmt='e', data=cf(ul))
+                dict(name='Upper_Limit',    unit=fu, fmt='e', 
+                     data=cf(np.where(~significant,self.ul,np.nan).astype(float)))
             ]
 
         table=PrettyTable(precision=precision, colwidth=colwidth)
@@ -397,8 +401,8 @@ class SED(object):
     def get_comments(self, precision):
         """ Pack up the source name and spectrum for a nice header. """
         spectrum = self.like.logLike.getSource(self.name).spectrum()
-        return [ "# SED for %s" % self.name,
-                 "# "+ SED.spectrum_to_string(spectrum, precision=precision)]
+        return [ "SED for %s" % self.name,
+                 SED.spectrum_to_string(spectrum, precision=precision)]
 
     def save(self,filename,precision=3,**kwargs):
         """ Save SED data points to a file.
