@@ -8,21 +8,8 @@ import numpy as np
 from scipy.optimize import leastsq
 import pylab as P
 
-parser = ArgumentParser()
-parser.add_argument("--pwndata", required=True)
-parser.add_argument("-p", "--pwnphase", required=True)
-parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
-args=parser.parse_args()
 
-#name=args.name
-name="PSRJ0007+7303"
-
-
-phase=yaml.load(open(args.pwnphase))[name]['phase']
-# guess at center of off pulse region
-phi_center=(phase[0] + ((phase[1]-phase[0]) % 1)/2.0) % 1
-
-def compute_curve(phi_center,npts=50):
+def compute_curve(name,pwndata,phi_center,npts):
     """Function to compute the points TS vs dphi"""
     #npts=50
 
@@ -41,7 +28,7 @@ def compute_curve(phi_center,npts=50):
         else :
             phase2=phase
 
-        roi=setup_pwn(name,args.pwndata,phase2, quiet=True)
+        roi=setup_pwn(name,pwndata,phase2, quiet=True)
         print 'bin edges:',roi.bin_edges
         roi.fit(method="minuit",use_gradient=True, estimate_errors=False)
         TS[i]=roi.TS(which=name, quick=False)
@@ -56,70 +43,52 @@ def compute_curve(phi_center,npts=50):
                   f) # todo, add phimin, phimax to file
         f.close()
 
-        return TS,dphi
+        return TS,dphi,phimin,phimax
 
-def model_ts_line(p,dphi):
+def model_ts_line(pwn,dphi):
     """Model of a line"""
     # pwn = slope of pwn
-    pwn=p
     return pwn*dphi
 
-def find_dec(TS,dphi):
-    """function to find the best phase interval"""
-    p2=pwn_0
-    TS2=[]
-    TS2.append(TS[0])
-    dphi2=[]
-    error=[]
-    dphi2.append(dphi[0])
-    i=0
-    error[0]=0
-    error2=0
-    ind=0
-    while i<(len(TS)-2) and error2<9:
-        TS2.append(TS[i+1])
-        dphi2.append(dphi[i+1])
-        errfunc2= lambda p2, dphi:TS2-model_ts_pl(p2,dphi)
-        p3, success = leastsq(errfunc2,p2,args=(dphi2,))
-        error2=TS[i+2]-model_ts_line(p3,dphi[i+2])
-        error.append(error2)
-        print 'error=%.2f'%error2
-        if error2 > 9:
-            dphi_break_1=dphi[i+1]
-            phimin_1=(phi_center_f -dphi_break_1/2) % 1
-            phimax_1 = (phi_center_f + dphi_break_1/2) % 1
-            #print 'The best dphi is = %.2f. Range = [%.2f, %.2f]\t error=%.2f' % (dphi_break_1,phimin_1,phimax_1,error2)
-            ind=i
-        i+=1
-    
-    while i<range(len(dphi2)) and error[i]>4:
-        i-=1
-        ind-=1
+def find_deviation(TS,dphi):
+    """ Find the point at which TS diverges from the best
+        fit line by >=9."""
+    error=np.zeros_like(TS)
+    for i in range(2,len(TS)):
+        errfunc= lambda p2, dphi:TS2[0:i-1]-model_ts_pl(p2,dphi[0:i-1])
+        p3, success = leastsq(errfunc,p2,args=(dphi[0:i-1],))
+        error[i]=TS[i]-model_ts_line(p3,dphi[i]))
 
-    dphi_break_1=dphi[ind]
-    phimin_1=(phi_center_f -dphi_break_1/2) % 1
-    phimax_1 = (phi_center_f + dphi_break_1/2) % 1
-    print 'The best dphi is = %.2f. Range = [%.2f, %.2f]\t error=%.2f' % (dphi_break_1,phimin_1,phimax_1,error[ind])
-    
-    return dphi_break_1,phimin_1,phimax_1,error
+    first_greater = np.argwhere(error > 9)[0]
+    error_less = error[ 0:first_greater-1 ]
 
+    last_greater = np.argwhere(less > 4)[-1]
 
-def find_center(center,npts):
+    best_dphi=dphi[last_less-1],
+    best_TS=TS[last_less-1],
+    bset_error=error[last_less-1]
+
+    print 'The best dphi is = %.2f. TS=%.2f, error=%.2f' % (best_dphi,best_TS,best_error)
+    return last_greater_4
+
+def find_center(center,npts,**kwargs):
    """Loop on the center position the idea is the following : look to 1 bin in each side of the center. redefine the center as the position fo which the interval is the largest then iterate in the same sens."""
-   TS1,dphi1=compute_curve(center,npts=50)
-   dphicent,phimincent,phimaxcent,errorcent=find_dec(TS1,dphi1)
+   TS1,dphi1,phimin1,phimax1=compute_curve(center,**kwargs)
+   index1=find_deviation(TS1,dphi1)
    #center-1.0/npts
-   TS2,dphi2=compute_curve(center-1.0/npts,npts=50)
-   dphilow,phiminlow,phimaxlow,errorlow=find_dec(TS2,dphi2)
+   TS2,dphi2,phimin2,phimax2=compute_curve(center-1.0/npts,**kwargs)
+   index2=find_deviation(TS2,dphi2)
    #center+1.0/npts
-   TS3,dphi3=compute_curve(center+1.0/npts,npts=50)
-   dphihigh,phiminhigh,phimaxhigh,errorhigh=find_dec(TS3,dphi)
+   TS3,dphi3,phimin3,phimax3=compute_curve(center+1.0/npts,**kwargs)
+   index3=find_deviation(TS3,dphi)
 
    f2=open("control.txt","w")
 
-   f2.write("dphicent,phimincent,phimaxcent=%.2f\t%.2f\t%.2f\n"%(dphicent,phimincent,phimaxcent))
-   f2.write("dphilow,phiminlow,phimaxlow=%.2f\t%.2f\t%.2f\n"%(dphilow,phiminlow,phimaxlow))
-   f2.write("dphihigh,phiminhigh,phimaxhigh=%.2f\t%.2f\t%.2f\n"%(dphihigh,phiminhigh,phimaxhigh))
+   f2.write("dphicent,phimincent,phimaxcent=%.2f\t%.2f\t%.2f\n"%(dphi1[index1],phimin1[index1],phimax[index1]))
+   f2.write("dphilow,phiminlow,phimaxlow=%.2f\t%.2f\t%.2f\n"%(dphi2[index2],phimin2[index2],phimax2[index2]))
+   f2.write("dphihigh,phiminhigh,phimaxhigh=%.2f\t%.2f\t%.2f\n"%(dphi3[index3],phimin3[index3],phimax3[index3]))
+
+   """
    delta=0
    dphiloop=0
    if dphilow>=dphicent :
@@ -141,7 +110,7 @@ def find_center(center,npts):
            dphiloop=dphicent
            center+=delta
            TS4,dphi4=compute_curve(center,npts=50)
-           dphicent,phimincent,phimaxcent,errorcent=find_dec(TS4,dphi4)
+           dphicent,phimincent,phimaxcent,errorcent=find_deviation(TS4,dphi4)
            i+=1
            f2.write("dphicent,phimincent,phimaxcent,dphiloop=%.2f\t%.2f\t%.2f\t%.2f\n"%(dphicent,phimincent,phimaxcent,dphiloop))
            
@@ -151,7 +120,25 @@ def find_center(center,npts):
    f2.close()
 
    return (phimincent+dphicent/2.0)%1,dphicent,phimincent,phimaxcent
+   """
 
 
-npts=50
-cent,dphi,phimin,phimax=find_center(phi_center,npts)
+if __name__ == '__main__':
+
+    parser = ArgumentParser()
+    parser.add_argument("--pwndata", required=True)
+    parser.add_argument("-p", "--pwnphase", required=True)
+    parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
+    parser.add_argument("--localize", help="Localize phi center")
+    parser.add_argument("--npts", default=50)
+    args=parser.parse_args()
+
+    phase=yaml.load(open(args.pwnphase))[args.name]['phase']
+    # guess at center of off pulse region
+    phi_center=(phase[0] + ((phase[1]-phase[0]) % 1)/2.0) % 1
+
+    if args.localize:
+        cent,dphi,phimin,phimax=find_center(name=args.name, pwndata=args.pwndata, 
+                                            phi_center=phi_center, npts=args.npts)
+    else:
+        compute_curve(args.name,args.pwndata,phi_center,args.npts)
