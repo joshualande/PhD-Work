@@ -5,7 +5,7 @@ doing analysis. Example:
 python loop_pwn.py -c analyze_v1.py \
         --pwndata /u/gl/lande/svn/trunk/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
         --pwnphase /u/gl/lande/svn/trunk/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
-        -o /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v3/v1/
+        -o /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v3/analyze_v1/
 
 """
 import yaml
@@ -70,7 +70,7 @@ for name in glob.iglob("*"):
         run='$PWD/%s/run_%s.sh' % (name,name)
 
         is_in_queue = expandvars(run) in queue_jobs
-        if not is_in_queue or not exists(results):
+        if not is_in_queue and not exists(results):
             string="cd %s; bsub -q kipac-ibq -oo log_%s.txt sh $PWD/run_%s.sh; cd .." % (name,name,name)
             if args.n:
                 print string
