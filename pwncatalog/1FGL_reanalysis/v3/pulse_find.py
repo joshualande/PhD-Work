@@ -15,7 +15,7 @@ def compute_curve(name,pwndata,phi_center,npts):
 
 
     # don't go all the way to 0 = no photons!
-    dphi = np.linspace(0,1,npts)[1:]
+    dphi = np.linspace(0,1,npts)[1:-1]
     phimin = (phi_center - dphi/2) % 1
     phimax = (phi_center + dphi/2) % 1
 
@@ -23,12 +23,8 @@ def compute_curve(name,pwndata,phi_center,npts):
 
     for i,phase in enumerate(zip(phimin,phimax)):
         print 'phase min=%.2f, max=%.2f (%d/%d)' % (phase[0],phase[1],i+1,npts)
-        if phase[0]>phase[1]:
-            phase2=[[phase[0],1.0],[0.0,phase[1]]]
-        else :
-            phase2=phase
 
-        roi=setup_pwn(name,pwndata,phase2, quiet=True)
+        roi=setup_pwn(name,pwndata,phase, quiet=True)
         print 'bin edges:',roi.bin_edges
         roi.fit(method="minuit",use_gradient=True, estimate_errors=False)
         TS[i]=roi.TS(which=name, quick=False)
