@@ -47,16 +47,19 @@ if __name__ == '__main__':
     parser.add_argument("--pwndata", required=True)
     parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
     parser.add_argument("-p", "--pwnphase", required=True)
-    parser.add_argument("--test")
+    parser.add_argument("--test", default=False, action='store_true')
     parser.add_argument("--rad", default=4)
     args=parser.parse_args()
 
     if args.test:
-        plot_lc(ft1,name,rad=4,phase=phase)
+        ft1="/nfs/slac/g/ki/ki03/lande/fermi_data/CTA1/pwncatalog_v1/ft1_CTA1.fits"
+        name="PSRJ0007+7303"
+        plot_lc(ft1,name,rad=args.rad,off_peak=[0.5,0.75])
+    else:
 
-    name=args.name
+        name=args.name
 
-    ft1=yaml.load(open(args.pwndata))[name]['ft1']
-    phase=yaml.load(open(args.pwnphase))[name]['phase']
+        ft1=yaml.load(open(args.pwndata))[name]['ft1']
+        phase=yaml.load(open(args.pwnphase))[name]['phase']
 
-    plot_lc(ft1,name,rad=args.rad,off_peak=phase)
+        plot_lc(ft1,name,rad=args.rad,off_peak=phase)
