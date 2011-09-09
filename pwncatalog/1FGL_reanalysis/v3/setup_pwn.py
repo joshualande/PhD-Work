@@ -14,30 +14,28 @@ from uw.utilities import phasetools
 
 import pyfits
 
-def get_phase_factor(phase_ranges):
-    return sum([phase[1]-phase[0] if phase[1]>phase[0] else (1-phase[0]) + (phase[1]-0)
-                      for phase in phase_ranges])
+def get_phase_factor(phase):
+    return sum([p[1]-p[0] if p[1]>p[0] else (1-p[0]) + (p[1]-0)
+                      for p in phase])
 
-def phase_ltcube(ltcube,outputfile,phase_ranges,phase_col_name='PULSE_PHASE'):
+def phase_ltcube(ltcube,outputfile,phase,phase_col_name='PULSE_PHASE'):
     """ Scale ltcube """
 
     from numpy import array
     ltcube = pyfits.open(ltcube)
     cb=ltcube['exposure'].data.field('cosbins')
-    cb*=get_phase_factor(phase_ranges)
+    cb*=get_phase_factor(phase)
 
     ltcube.writeto(outputfile,clobber=True)
     ltcube.close()
 
 
-def setup_pwn(name,pwndata,phase_ranges,tempdir=None, **kwargs):
+def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, **kwargs):
     """Name of the source
     pwndata Yaml file
     
     returns pointlike ROI.
     """
-
-
     sources=yaml.load(open(pwndata))
 
     catalog_name=sources[name]['catalog']
@@ -47,18 +45,18 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None, **kwargs):
     ft1=sources[name]['ft1']
 
     # in case no list was passed
-    if len(phase_ranges)==2 and isinstance(phase_ranges[0],numbers.Real) and \
-       isinstance(phase_ranges[1],numbers.Real):
+    if len(phase)==2 and isinstance(phase[0],numbers.Real) and \
+       isinstance(phase[1],numbers.Real):
 
         # write in case phase wraps around.
-        if phase_ranges[0]>phase_ranges[1]:
-            phase_ranges=[[phase_ranges[0],1.0],[0.0,phase_ranges[1]]]
+        if phase[0]>phase[1]:
+            phase=[[phase[0],1.0],[0.0,phase[1]]]
+        else:
+            phase = [phase] 
 
-        phase_ranges = [phase_ranges] 
+    phase_factor=get_phase_factor(phase)
 
-    phase_factor=get_phase_factor(phase_ranges)
-
-    catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"),free_radius=5)
+    catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"),free_radius=free_radius)
     catalog_source=[i for i in catalog.get_sources(SkyDir(),180) if i.name==catalog_name][0]
 
     center=catalog_source.skydir
@@ -69,11 +67,11 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None, **kwargs):
 
     # apply phase cut to ft1 file
     phased_ft1 = j(tempdir,'ft1_phased.fits')
-    phasetools.phase_cut(ft1,phased_ft1,phaseranges=phase_ranges)
+    phasetools.phase_cut(ft1,phased_ft1,phaseranges=phase)
 
     # create a temporary ltcube scaled by the phase factor
     phased_ltcube=j(tempdir,'phased_ltcube.fits')
-    phase_ltcube(ltcube,phased_ltcube, phase_ranges=phase_ranges)
+    phase_ltcube(ltcube,phased_ltcube, phase=phase)
 
     from uw.like.pointspec import DataSpecification
     data_specification = DataSpecification(
@@ -97,22 +95,12 @@ def setup_pwn(name,pwndata,phase_ranges,tempdir=None, **kwargs):
                                             gfile="gll_iem_v02.fit",
                                             ifile="isotropic_iem_v02.txt"),
         catalogs = catalog,
-        fit_emin = 100,
-        fit_emax = 100000,
         phase_factor = 1,
         **kwargs) # phaseing already done to the ltcube
 
-    # delete original pulsar
-    roi.del_source(catalog_name)
-
-    # add in PWN Candidate
-    source=PointSource(
-            name=name,
-            model=PowerLaw(index=2),
-            skydir=pulsar_position
-        )
-    source.model.set_flux(1e-8,emin=100,emax=100000)
-
-    roi.add_source(source)
+    # keep overall flux of catalog source,
+    # but change the starting index to 2.
+    roi.modify(which=catalog_name, name=name, index=2, 
+               keep_old_flux=True)
 
     return roi

@@ -12,7 +12,7 @@ from lande_roi import mixed_linear
 def compute_curve(name,pwndata,phimin, phimax, fit_emin):
     """Function to compute the points TS vs (phi range)"""
 
-    TS=np.empty_like(phimin)
+    TS=np.zeros_like(phimin)
 
 
     print 'First, analyzing unphased data'
@@ -54,9 +54,9 @@ def compute_curve(name,pwndata,phimin, phimax, fit_emin):
         print 'phase=%s, TS=%s' % (phase,TS[i])
 
         f=open("results_%s.yaml" % name,"w")
-        yaml.dump(dict(TS=TS.tolist(), 
-                       phimin=phimin.tolist(), 
-                       phimax=phimax.tolist()),
+        yaml.dump(dict(TS=TS[0:i+1].tolist(), 
+                       phimin=phimin[0:i+1].tolist(), 
+                       phimax=phimax[0:i+1].tolist()),
                   f)
         f.close()
 
