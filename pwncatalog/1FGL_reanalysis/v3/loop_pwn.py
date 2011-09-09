@@ -3,9 +3,9 @@ A script to loop over the PWN when
 doing analysis. Example:
 
 python loop_pwn.py -c analyze_v1.py \
-        --pwndata /u/gl/lande/svn/trunk/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
-        --pwnphase /u/gl/lande/svn/trunk/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
-        -o /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v3/analyze_v1/
+        --pwndata /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
+        --pwnphase /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
+        -o /afs/slac/g/glast/users/rousseau/PWN_cat/1FGL_reanalysis/v3/analyze_v1/
 
 python loop_pwn.py -c pulse_find.py \
         --pwndata /u/gl/lande/svn/trunk/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
@@ -77,7 +77,7 @@ for name in glob.iglob("*"):
 
         is_in_queue = expandvars(run) in queue_jobs
         if not is_in_queue and not exists(results):
-            string="cd %s; bsub -q %s -oo log_%s.txt sh $PWD/run_%s.sh; cd .." % (name,queue,name,name)
+            string="cd %s; bsub -q %s -oo log_%s.txt sh $PWD/run_%s.sh; cd .." % (name,args.queue,name,name)
             if args.n:
                 print string
             else:
