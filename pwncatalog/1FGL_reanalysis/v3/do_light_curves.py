@@ -23,7 +23,7 @@ def plot_lc(ft1,name,rad,off_peak):
     P.axvline(off_peak[0], color='r')
     P.axvline(off_peak[1], color='r')
 
-    phase,counts=psrlc.get_phaseogram(emin=1e2,emax=1e5)
+    phase,counts=psrlc.get_phaseogram(emin=1e2,emax=3e5)
     P.errorbar(phase,counts, 
                yerr=np.sqrt(counts), 
                marker='o',color='k', markersize=5,
