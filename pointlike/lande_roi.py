@@ -11,6 +11,8 @@
 import numpy as np
 #np.seterr(divide='ignore', invalid='ignore', over='ignore', under='ignore')
 
+from toolbag import *
+
 # import stuff generally useful
 from uw.like.Models import *
 from uw.like.roi_analysis import *
@@ -934,20 +936,6 @@ def random_point_near(skydir,distance):
     else:
         rotated_dir=SkyDir(x,y)
         return DualLocalizer.anti_rotate_equator(rotated_dir,skydir)
-
-def mixed_linear(min,max,num):
-    """ Just like np.linspace but the numbers are mixed up
-        using the Van der Corput sequence. Handy for getting
-        a reasonable sample quickly.
-        
-        Use the http://en.wikipedia.org/wiki/Van_der_Corput_sequence
-        to mix up the numbers. """
-    from csc import util
-    x=util.sampling_sequence(min,max)
-    return np.asarray([x.next() for i in range(num)])
-
-def mixed_log(min,max,num):
-    return 10**mixed_linear(np.log10(min),np.log10(max),num)
 
 
 def hess_sed(roi,hess_points,outdir=None,**kwargs):

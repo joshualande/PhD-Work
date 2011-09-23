@@ -207,3 +207,20 @@ def plot_hess(file,ax,
 
     ax.set_xscale('log')
     ax.set_yscale('log')
+
+def fix_axesgrid(grid):
+    """ Remove the ticks which overlap with nearby axes. """
+    if grid._direction != 'row': 
+        raise Exception("Not implemented")
+
+    nrows,ncols=grid._nrows,grid._ncols
+
+    for row in range(nrows):
+        for col in range(ncols):
+            ax = grid[row*ncols + col]
+            print row,col,ax.get_xticks(),ax.get_yticks()
+            if row != 0 and col==0:
+                ax.set_yticks(ax.get_yticks()[0:-1])
+            if col != ncols-1 and row==nrows-1:
+                ax.set_xticks(ax.get_xticks()[0:-1])
+

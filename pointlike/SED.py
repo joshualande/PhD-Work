@@ -81,7 +81,6 @@ class PrettyTable(object):
         """ Format a number to have a fixed width and precision.
             ul = format as upper limit with a < in front of number. 
             If input is None or nan, leave a blank in the file. """
-        print i,i is None,np.isnan(i)
         if fmt == 's': return '%*s' % (self.colwidth,i)
         if i is None or np.isnan(i): return ' '*self.colwidth
 
