@@ -12,8 +12,8 @@
 
     # the most relevant parameters are 
     gtlike = Gtlike(roi,
-                  binsz       = 1/8.,             # spatial bins in gtliek
-                  bigger_roi  = False,            # bigger_roi=True => put pointlike circular ROI inside gtlike square ROI
+                  binsz       = 1/8.,  # spatial bins in gtliek
+                  bigger_roi  = False, # bigger_roi=True => put pointlike circular ROI inside gtlike square ROI
     )
 
     # like is a BinnedAnalysis pyLikelihood object 
