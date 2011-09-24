@@ -1,3 +1,22 @@
+"""
+    Usage:
+
+    # roi is a pointlike ROIAnalysis object
+    roi=sa.roi_from_xml(...)
+
+    from roi_gtlike import Gtlike
+
+    # like is a pyLikelihood object
+    like = Gtlike(roi) 
+
+    # like is a BinnedAnalysis pyLikelihood object
+    # the most relevant parameters are 
+    like = Gtlike(roi,
+                  binsz       = 1/8.,             # spatial bins in gtliek
+                  bigger_roi  = False,            # bigger_roi=True => put pointlike circular ROI inside gtlike square ROI
+    )
+    
+"""
 import os
 from os.path import join
 import shutil
