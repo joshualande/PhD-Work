@@ -22,9 +22,9 @@ from argparse import ArgumentParser
 parser = ArgumentParser()
 parser.add_argument("-c", "--command", required=True)
 parser.add_argument("--pwndata", required=True)
-parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-o", "--outdir", required=True)
-args=parser.parse_args()
+args,remaining_args = parser.parse_known_args()
+
   
 outdir=args.outdir
 
@@ -46,9 +46,8 @@ for name in sources.keys():
     temp.write("""\
 python %s/%s \\
 -n %s \\
---pwndata %s \\
---pwnphase %s """ % (os.getcwd(),args.command,name,
-                     args.pwndata,args.pwnphase))
+--pwndata %s %s""" % (os.getcwd(),args.command,name,
+                     args.pwndata,' '.join(remaining_args)))
 
 
 submit_all=join(outdir,'submit_all.py')
@@ -63,7 +62,7 @@ import subprocess
 
 parser=argparse.ArgumentParser()
 parser.add_argument("-n",default=False,action="store_true",help="Don't do anything")
-parser.add_argument("-q","--queue",default='xxl',action="store_true",help="Don't do anything")
+parser.add_argument("-q","--queue",default='xxl',help="Don't do anything")
 args = parser.parse_args()
 
 p=subprocess.Popen(['bjobs', '-w'],stdout=subprocess.PIPE)
