@@ -27,6 +27,7 @@ def sourcedict(like_or_roi, name, extra='', emin=100, emax=100000):
 
     from BinnedAnalysis import BinnedAnalysis
     from pyLikelihood import ParameterVector
+    from uw.like.roi_analysis import ROIAnalysis
 
     d={}
 
@@ -43,7 +44,6 @@ def sourcedict(like_or_roi, name, extra='', emin=100, emax=100000):
             d[p.getName() + extra]=p.getTrueValue()
             d[p.getName()+'_err' + extra]=p.error()*p.getScale()
 
-    from uw.like.roi_analysis import ROIAnalysis
     elif isinstance(like_or_roi,ROIAnalysis):
         roi=like_or_roi
 
