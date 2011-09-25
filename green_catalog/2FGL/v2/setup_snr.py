@@ -1,18 +1,18 @@
 #!/usr/bin/env python
-import os
+import yaml
+from os.path import expandvars as e
 
-from lande_roi import *
+from uw.like.pointspec import DataSpecification, SpectralAnalysis
+from uw.like.pointspec_helpers import get_default_diffuse
+from uw.like.roi_catalogs import Catalog2FGL
 
-from green_catalog import GreenCatalog
 from argparse import ArgumentParser
+from skymaps import SkyDir
 
-def build_snr(name, green_catalog, free_radius=5, fit_emin=1e4, fit_emax=1e5):
+def setup_snr(name, green_catalog, free_radius=5, fit_emin=1e4, fit_emax=1e5):
 
-    folder=os.path.join(os.path.expandvars('$GREENCAT'),name,'v1')
-
-    snr=yaml.load(green_cat)[name]
-    name=snr['name']
-    skydir=SkyDir(**snr['cel'])
+    snr=yaml.load(open(green_catalog))[name]
+    skydir=SkyDir(*snr['cel'])
 
     size=snr['size']
 
@@ -32,7 +32,7 @@ def build_snr(name, green_catalog, free_radius=5, fit_emin=1e4, fit_emax=1e5):
 
 
     diffuse_sources = diffuse_sources = get_default_diffuse(
-        diffdir=os.path.expandvars('$FERMI/diffuse'),
+        diffdir=e('$FERMI/diffuse'),
         gfile='ring_2year_P76_v0.fits',
         ifile='isotrop_2year_P76_source_v0.txt')
 
@@ -46,8 +46,4 @@ def build_snr(name, green_catalog, free_radius=5, fit_emin=1e4, fit_emax=1e5):
         fit_emax = fit_emax
         )
 
-    if not os.path.exists(folder):
-        os.makedirs(folder)
-
-    roi.save(os.path.join(folder,'roi_%s.dat' % name))
-
+    return roi
