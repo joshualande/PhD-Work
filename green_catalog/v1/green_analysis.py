@@ -42,32 +42,3 @@ def build_roi(name):
 
     roi.save(os.path.join(folder,'roi_%s.dat' % name))
 
-
-def build_rois():
-    names=GreenCatalog('$FERMI/catalogs/Green_cat.fits').get_names()
-
-    # then build an ROI for each of them in parallel.
-    from uw.utilities.assigntasks import AssignTasks 
-    at = AssignTasks("import build_roi",
-                     ["build_roi.build('%s')"%i for i in names])
-    at()
-
-def setup(version,name):
-    folder=os.path.join(os.path.expandvars('$GREENCAT'),name,version)
-
-    os.chdir(folder)
-    roi_name = load(os.path.join(folder,'roi_%s.dat' % name))
-
-    global roi
-    roi = load(roi_name)
-
-def takedown():
-    """ make next ROI. """
-    if not os.path.exists(folder):
-        os.makedirs(folder)
-
-    roi.save('...')
-
-def plot_region(name):
-    roi.plot_source()
-    roi.plot_sources()
