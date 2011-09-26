@@ -5,15 +5,24 @@ from os.path import expandvars as e
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
 from uw.like.pointspec_helpers import get_default_diffuse
 from uw.like.roi_catalogs import Catalog2FGL
+from uw.like.roi_extended import ExtendedSource
+from uw.like.Models import PowerLaw
+from uw.like.SpatialModels import Disk
 
 from argparse import ArgumentParser
 from skymaps import SkyDir
 
-def setup_snr(name, green_catalog, free_radius=5, fit_emin=1e4, fit_emax=1e5):
+def setup_snr(name, snrdata, **kwargs):
+    """ Creates the ROI + adds in the SNR. """
+    roi=setup_roi(name, snrdata, **kwargs)
 
-    snr=yaml.load(open(green_catalog))[name]
+    roi.add_source(get_snr(name, snrdata))
+    return roi
+
+def setup_roi(name, snrdata, free_radius=2, fit_emin=1e4, fit_emax=1e5):
+
+    snr=yaml.load(open(snrdata))[name]
     skydir=SkyDir(*snr['cel'])
-
     size=snr['size']
 
     ds=DataSpecification(
@@ -37,7 +46,8 @@ def setup_snr(name, green_catalog, free_radius=5, fit_emin=1e4, fit_emax=1e5):
         ifile='isotrop_2year_P76_source_v0.txt')
 
     catalogs = Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit',
-                           latextdir='$FERMI/extended_archives/gll_psc_v05_templates/'),
+                           latextdir='$FERMI/extended_archives/gll_psc_v05_templates/',
+                           free_radius=free_radius),
 
     roi = sa.roi(
         catalogs = catalogs,
@@ -47,3 +57,18 @@ def setup_snr(name, green_catalog, free_radius=5, fit_emin=1e4, fit_emax=1e5):
         )
 
     return roi
+
+def get_snr(name, snrdata):
+
+    snr=yaml.load(open(snrdata))[name]
+    skydir=SkyDir(*snr['cel'])
+    radius=snr['radius']
+
+    return ExtendedSource(
+        name=name,
+        model=PowerLaw(index=2),
+        spatial_model=Disk(
+            sigma=radius,
+            center=skydir
+        )
+    )

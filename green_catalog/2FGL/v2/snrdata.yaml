@@ -2,1369 +2,1643 @@ G0.0+0.0:
   cel: [266.43, -29.00]
   gal: [359.96, -0.05]
   nickname: SgrAEast
-  size: 0.05
+  radius: 0.02
+  size: 3.5x2.5
 G0.3+0.0:
   cel: [266.56, -27.37]
   gal: [1.41, 0.70]
   nickname: null
-  size: 0.18
+  radius: 0.09
+  size: 15x8
 G0.9+0.1:
   cel: [266.84, -27.85]
   gal: [1.13, 0.24]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G1.0-0.1:
   cel: [267.12, -27.85]
   gal: [1.26, 0.02]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G1.4-0.1:
   cel: [267.41, -26.23]
   gal: [2.78, 0.63]
   nickname: null
-  size: 0.17
+  radius: 0.08
+  size: '10'
 G1.9+0.3:
   cel: [267.19, -26.83]
   gal: [2.16, 0.50]
   nickname: null
-  size: 0.02
+  radius: 0.01
+  size: '1.05'
 G10.5-0.0:
   cel: [272.28, -18.22]
   gal: [11.97, 0.72]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: '6'
 G106.3+2.7:
   cel: [336.88, 60.83]
   gal: [106.27, 2.71]
   nickname: null
-  size: 0.63
+  radius: 0.32
+  size: 60x24
 G108.2-0.6:
   cel: [343.42, 58.83]
   gal: [108.19, -0.63]
   nickname: null
-  size: 1.02
+  radius: 0.51
+  size: 70x54
 G109.1-1.0:
   cel: [345.40, 58.88]
   gal: [109.14, -1.02]
   nickname: CTB109
-  size: 0.47
+  radius: 0.23
+  size: '28'
 G11.0-0.0:
   cel: [272.52, -18.58]
   gal: [11.76, 0.35]
   nickname: null
-  size: 0.17
+  radius: 0.08
+  size: 11x9
 G11.1+0.1:
   cel: [272.45, -18.80]
   gal: [11.53, 0.31]
   nickname: null
-  size: 0.18
+  radius: 0.09
+  size: 12x10
 G11.1-0.7:
   cel: [273.19, -18.37]
   gal: [12.25, -0.11]
   nickname: null
-  size: 0.15
+  radius: 0.07
+  size: 11x7
 G11.1-1.0:
   cel: [273.51, -18.23]
   gal: [12.52, -0.31]
   nickname: null
-  size: 0.24
+  radius: 0.12
+  size: 18x12
 G11.2-0.3:
   cel: [272.86, -18.58]
   gal: [11.91, 0.06]
   nickname: null
-  size: 0.07
+  radius: 0.03
+  size: '4'
 G11.4-0.1:
   cel: [272.70, -18.92]
   gal: [11.55, 0.04]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G11.8-0.2:
   cel: [273.10, -17.27]
   gal: [13.18, 0.50]
   nickname: null
-  size: 0.07
+  radius: 0.03
+  size: '4'
 G111.7-2.1:
   cel: [350.86, 58.80]
   gal: [111.73, -2.15]
   nickname: CassiopeiaA,
-  size: 0.08
+  radius: 0.04
+  size: '5'
 G113.0+0.2:
   cel: [354.15, 61.37]
   gal: [114.09, -0.21]
   nickname: null
-  size: 0.43
+  radius: 0.22
+  size: 40x17
 G114.3+0.3:
   cel: [354.25, 61.92]
   gal: [114.29, 0.30]
   nickname: null
-  size: 1.17
+  radius: 0.59
+  size: 90x55
 G116.5+1.1:
   cel: [358.42, 63.25]
   gal: [116.49, 1.10]
   nickname: null
-  size: 1.15
+  radius: 0.58
+  size: 80x60
 G116.9+0.2:
   cel: [359.79, 62.43]
   gal: [116.93, 0.17]
   nickname: CTB1
-  size: 0.57
+  radius: 0.28
+  size: '34'
 G119.5+10.2:
   cel: [1.67, 72.75]
   gal: [119.58, 10.17]
   nickname: CTA1
-  size: 1.50
+  radius: 0.75
+  size: '90'
 G12.0-0.1:
   cel: [273.05, -17.38]
   gal: [13.05, 0.49]
   nickname: null
-  size: 0.12
+  radius: 0.06
+  size: '7'
 G12.2+0.3:
   cel: [272.82, -17.83]
   gal: [12.55, 0.46]
   nickname: null
-  size: 0.09
+  radius: 0.05
+  size: 6x5
 G12.5+0.2:
   cel: [273.06, -16.08]
   gal: [14.20, 1.10]
   nickname: null
-  size: 0.09
+  radius: 0.05
+  size: 6x5
 G12.7-0.0:
   cel: [273.33, -16.10]
   gal: [14.31, 0.87]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: '6'
 G12.8-0.0:
   cel: [273.40, -16.18]
   gal: [14.27, 0.76]
   nickname: null
-  size: 0.05
+  radius: 0.03
+  size: '3'
 G120.1+1.4:
   cel: [6.33, 64.15]
   gal: [120.09, 1.42]
   nickname: Tycho,3C10,S
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G126.2+1.6:
   cel: [20.50, 64.25]
   gal: [126.25, 1.58]
   nickname: null
-  size: 1.17
+  radius: 0.58
+  size: '70'
 G127.1+0.5:
   cel: [22.08, 63.17]
   gal: [127.08, 0.59]
   nickname: R5
-  size: 0.75
+  radius: 0.38
+  size: '45'
 G13.3-1.3:
   cel: [274.83, -18.00]
   gal: [13.32, -1.30]
   nickname: null
-  size: 0.88
+  radius: 0.44
+  size: 70x40
 G13.5+0.2:
   cel: [273.56, -16.80]
   gal: [13.80, 0.34]
   nickname: null
-  size: 0.07
+  radius: 0.04
+  size: 5x4
 G130.7+3.1:
   cel: [31.42, 64.82]
   gal: [130.73, 3.07]
   nickname: 3C58,SN1181
-  size: 0.11
+  radius: 0.06
+  size: 9x5
 G132.7+1.3:
   cel: [34.42, 62.75]
   gal: [132.62, 1.51]
   nickname: HB3
-  size: 1.33
+  radius: 0.67
+  size: '80'
 G14.1-0.1:
   cel: [273.97, -15.43]
   gal: [15.19, 0.65]
   nickname: null
-  size: 0.09
+  radius: 0.05
+  size: 6x5
 G14.3+0.1:
   cel: [273.99, -15.55]
   gal: [15.09, 0.57]
   nickname: null
-  size: 0.07
+  radius: 0.04
+  size: 5x4
 G15.1-1.6:
   cel: [276.00, -15.43]
   gal: [16.11, -1.08]
   nickname: null
-  size: 0.45
+  radius: 0.22
+  size: 30x24
 G15.4+0.1:
   cel: [274.51, -14.55]
   gal: [16.21, 0.60]
   nickname: null
-  size: 0.24
+  radius: 0.12
+  size: 15x14
 G15.9+0.2:
   cel: [274.72, -14.97]
   gal: [15.94, 0.23]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: 7x5
 G156.2+5.7:
   cel: [74.67, 51.83]
   gal: [156.12, 5.66]
   nickname: null
-  size: 1.83
+  radius: 0.92
+  size: '110'
 G16.0-0.5:
   cel: [275.48, -14.77]
   gal: [16.47, -0.33]
   nickname: null
-  size: 0.20
+  radius: 0.10
+  size: 15x10
 G16.2-2.7:
   cel: [277.42, -15.87]
   gal: [16.36, -2.49]
   nickname: null
-  size: 0.28
+  radius: 0.14
+  size: '17'
 G16.4-0.5:
   cel: [275.66, -13.08]
   gal: [18.03, 0.31]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: '13'
 G16.7+0.1:
   cel: [275.23, -13.67]
   gal: [17.32, 0.40]
   nickname: null
-  size: 0.07
+  radius: 0.03
+  size: '4'
 G16.8-1.1:
   cel: [276.33, -13.23]
   gal: [18.21, -0.34]
   nickname: null
-  size: 0.45
+  radius: 0.22
+  size: 30x24
 G160.9+2.6:
   cel: [75.25, 46.67]
   gal: [160.44, 2.79]
   nickname: HB9
-  size: 2.16
+  radius: 1.08
+  size: 140x120
 G166.0+4.3:
   cel: [81.63, 42.93]
   gal: [166.12, 4.28]
   nickname: VRO42.05.01
-  size: 0.73
+  radius: 0.37
+  size: 55x35
 G17.0-0.0:
   cel: [275.49, -13.87]
   gal: [17.26, 0.09]
   nickname: null
-  size: 0.08
+  radius: 0.04
+  size: '5'
 G17.4-0.1:
   cel: [275.78, -12.23]
   gal: [18.84, 0.60]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: '6'
 G17.4-2.3:
   cel: [277.73, -13.13]
   gal: [18.93, -1.50]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G17.8-2.6:
   cel: [278.21, -13.35]
   gal: [18.95, -2.01]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G179.0+2.6:
   cel: [88.42, 31.08]
   gal: [179.05, 2.60]
   nickname: null
-  size: 1.17
+  radius: 0.58
+  size: '70'
 G18.1-0.1:
   cel: [276.14, -12.82]
   gal: [18.49, 0.02]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G18.6-0.2:
   cel: [276.48, -11.17]
   gal: [20.10, 0.50]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: '6'
 G18.8+0.3:
   cel: [275.99, -11.62]
   gal: [19.48, 0.71]
   nickname: Kes67
-  size: 0.23
+  radius: 0.11
+  size: 17x11
 G18.9-1.1:
   cel: [277.46, -11.03]
   gal: [20.67, -0.29]
   nickname: null
-  size: 0.55
+  radius: 0.28
+  size: '33'
 G180.0-1.7:
   cel: [84.75, 27.83]
   gal: [180.17, -1.82]
   nickname: S147
-  size: 3.00
+  radius: 1.50
+  size: '180'
 G182.4+4.3:
   cel: [92.04, 29.00]
   gal: [182.42, 4.30]
   nickname: null
-  size: 0.83
+  radius: 0.42
+  size: '50'
 G184.6-5.8:
   cel: [83.63, 22.02]
   gal: [184.55, -5.79]
   nickname: CrabNebula,3
-  size: 0.10
+  radius: 0.05
+  size: 7x5
 G189.1+3.0:
   cel: [94.25, 22.57]
   gal: [189.03, 2.98]
   nickname: IC443,3C157
-  size: 0.75
+  radius: 0.38
+  size: '45'
 G19.1+0.2:
   cel: [276.23, -11.88]
   gal: [19.35, 0.38]
   nickname: null
-  size: 0.45
+  radius: 0.23
+  size: '27'
 G192.8-1.1:
   cel: [92.33, 17.33]
   gal: [192.77, -1.11]
   nickname: PKS0607+17
-  size: 1.30
+  radius: 0.65
+  size: '78'
 G20.0-0.2:
   cel: [277.03, -10.42]
   gal: [21.02, 0.37]
   nickname: null
-  size: 0.17
+  radius: 0.08
+  size: '10'
 G20.4+0.1:
   cel: [276.96, -11.00]
   gal: [20.47, 0.16]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G205.5+0.5:
   cel: [99.75, 6.50]
   gal: [205.73, 0.21]
   nickname: MonocerosNeb
-  size: 3.67
+  radius: 1.83
+  size: '220'
 G206.9+2.3:
   cel: [102.17, 6.43]
   gal: [206.89, 2.32]
   nickname: PKS0646+06
-  size: 0.82
+  radius: 0.41
+  size: 60x40
 G21.0-0.4:
   cel: [277.80, -9.22]
   gal: [22.43, 0.25]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: 9x7
 G21.5-0.1:
   cel: [277.71, -9.85]
   gal: [21.83, 0.04]
   nickname: null
-  size: 0.08
+  radius: 0.04
+  size: '5'
 G21.5-0.9:
   cel: [278.39, -9.42]
   gal: [22.52, -0.35]
   nickname: null
-  size: 0.07
+  radius: 0.03
+  size: '4'
 G21.8-0.6:
   cel: [278.19, -9.87]
   gal: [22.03, -0.39]
   nickname: Kes69
-  size: 0.33
+  radius: 0.17
+  size: '20'
 G22.7-0.2:
   cel: [278.31, -8.78]
   gal: [23.05, 0.01]
   nickname: null
-  size: 0.43
+  radius: 0.22
+  size: '26'
 G23.3-0.3:
   cel: [278.69, -7.20]
   gal: [24.63, 0.41]
   nickname: W41
-  size: 0.45
+  radius: 0.23
+  size: '27'
 G23.6+0.3:
   cel: [278.26, -7.78]
   gal: [23.91, 0.51]
   nickname: null
-  size: 0.17
+  radius: 0.08
+  size: '10'
 G24.7+0.6:
   cel: [278.54, -6.92]
   gal: [24.81, 0.66]
   nickname: null
-  size: 0.35
+  radius: 0.18
+  size: 30x15
 G24.7-0.6:
   cel: [279.68, -6.47]
   gal: [25.73, -0.13]
   nickname: null
-  size: 0.25
+  radius: 0.12
+  size: '15'
 G260.4-3.4:
   cel: [125.54, -43.00]
   gal: [260.40, -3.44]
   nickname: PuppisA,MSH0
-  size: 0.91
+  radius: 0.46
+  size: 60x50
 G261.9+5.5:
   cel: [136.08, -37.30]
   gal: [260.89, 6.41]
   nickname: null
-  size: 0.58
+  radius: 0.29
+  size: 40x30
 G263.9-3.3:
   cel: [128.50, -44.17]
   gal: [262.60, -2.38]
   nickname: Vela(XYZ)
-  size: 4.25
+  radius: 2.12
+  size: '255'
 G266.2-1.2:
   cel: [133.00, -45.67]
   gal: [265.75, -0.79]
   nickname: RXJ0852.0-46
-  size: 2.00
+  radius: 1.00
+  size: '120'
 G27.4+0.0:
   cel: [280.33, -3.07]
   gal: [29.05, 0.85]
   nickname: 4C-04.71
-  size: 0.07
+  radius: 0.03
+  size: '4'
 G27.8+0.6:
   cel: [279.96, -3.60]
   gal: [28.41, 0.94]
   nickname: null
-  size: 0.65
+  radius: 0.32
+  size: 50x30
 G272.2-3.2:
   cel: [136.71, -51.88]
   gal: [272.04, -3.02]
   nickname: null
-  size: 0.25
+  radius: 0.12
+  size: '15'
 G279.0+1.1:
   cel: [149.42, -52.75]
   gal: [278.33, 1.61]
   nickname: null
-  size: 1.58
+  radius: 0.79
+  size: '95'
 G28.6-0.1:
   cel: [280.98, -2.12]
   gal: [30.19, 0.71]
   nickname: null
-  size: 0.18
+  radius: 0.09
+  size: 13x9
 G28.8+1.5:
   cel: [279.75, -1.08]
   gal: [30.55, 2.27]
   nickname: null
-  size: 1.67
+  radius: 0.83
+  size: '100'
 G284.3-1.8:
   cel: [154.56, -59.00]
   gal: [284.31, -1.78]
   nickname: MSH10-53
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G286.5-1.2:
   cel: [158.92, -58.30]
   gal: [285.87, 0.00]
   nickname: null
-  size: 0.21
+  radius: 0.10
+  size: 26x6
 G289.7-0.3:
   cel: [165.31, -59.70]
   gal: [289.44, 0.25]
   nickname: null
-  size: 0.26
+  radius: 0.13
+  size: 18x14
 G29.6+0.1:
   cel: [281.22, -1.05]
   gal: [31.25, 0.98]
   nickname: null
-  size: 0.08
+  radius: 0.04
+  size: '5'
 G29.7-0.3:
   cel: [281.60, -1.02]
   gal: [31.46, 0.65]
   nickname: Kes75
-  size: 0.05
+  radius: 0.03
+  size: '3'
 G290.1-0.8:
   cel: [165.77, -59.07]
   gal: [289.39, 0.93]
   nickname: MSH11-61A
-  size: 0.27
+  radius: 0.14
+  size: 19x14
 G291.0-0.1:
   cel: [167.98, -59.37]
   gal: [290.55, 1.09]
   nickname: (MSH11-62)
-  size: 0.23
+  radius: 0.12
+  size: 15x13
 G292.0+1.8:
   cel: [171.15, -58.73]
   gal: [291.85, 2.26]
   nickname: MSH11-54
-  size: 0.16
+  radius: 0.08
+  size: 12x8
 G292.2-0.5:
   cel: [169.83, -60.53]
   gal: [291.84, 0.34]
   nickname: null
-  size: 0.29
+  radius: 0.14
+  size: 20x15
 G293.8+0.6:
   cel: [173.75, -59.10]
   gal: [293.25, 2.33]
   nickname: null
-  size: 0.33
+  radius: 0.17
+  size: '20'
 G294.1-0.0:
   cel: [174.04, -60.37]
   gal: [293.75, 1.16]
   nickname: null
-  size: 0.67
+  radius: 0.33
+  size: '40'
 G296.1-0.5:
   cel: [177.79, -61.43]
   gal: [295.79, 0.60]
   nickname: null
-  size: 0.51
+  radius: 0.25
+  size: 37x25
 G296.5+10.0:
   cel: [182.42, -51.58]
   gal: [296.35, 10.75]
   nickname: PKS1209-51/5
-  size: 1.27
+  radius: 0.64
+  size: 90x65
 G296.8-0.3:
   cel: [179.62, -61.42]
   gal: [296.64, 0.81]
   nickname: 1156-62
-  size: 0.28
+  radius: 0.14
+  size: 20x14
 G298.5-0.3:
   cel: [183.17, -61.13]
   gal: [298.27, 1.39]
   nickname: null
-  size: 0.08
+  radius: 0.04
+  size: '5'
 G298.6-0.0:
   cel: [183.42, -61.38]
   gal: [298.43, 1.16]
   nickname: null
-  size: 0.17
+  radius: 0.09
+  size: 12x9
 G299.2-2.9:
   cel: [183.80, -64.50]
   gal: [299.05, -1.90]
   nickname: null
-  size: 0.23
+  radius: 0.12
+  size: 18x11
 G299.6-0.5:
   cel: [185.44, -62.85]
   gal: [299.55, -0.17]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: '13'
 G3.7-0.2:
   cel: [268.86, -24.17]
   gal: [5.22, 0.56]
   nickname: null
-  size: 0.21
+  radius: 0.10
+  size: 14x11
 G3.8+0.3:
   cel: [268.23, -24.53]
   gal: [4.61, 0.87]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: '18'
 G30.7+1.0:
   cel: [281.00, -0.47]
   gal: [31.67, 1.44]
   nickname: null
-  size: 0.35
+  radius: 0.17
+  size: 24x18
 G30.7-2.0:
   cel: [283.60, -1.10]
   gal: [32.29, -1.16]
   nickname: null
-  size: 0.27
+  radius: 0.13
+  size: '16'
 G301.4-1.0:
   cel: [189.48, -62.18]
   gal: [301.36, 0.65]
   nickname: null
-  size: 0.49
+  radius: 0.24
+  size: 37x23
 G302.3+0.7:
   cel: [191.48, -61.87]
   gal: [302.28, 1.00]
   nickname: null
-  size: 0.28
+  radius: 0.14
+  size: '17'
 G304.6+0.1:
   cel: [196.50, -61.30]
   gal: [304.68, 1.52]
   nickname: Kes17
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G308.1-0.7:
   cel: [204.40, -62.93]
   gal: [308.16, -0.53]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: '13'
 G308.8-0.1:
   cel: [205.62, -61.62]
   gal: [308.96, 0.66]
   nickname: null
-  size: 0.41
+  radius: 0.20
+  size: 30x20
 G309.2-0.6:
   cel: [206.63, -61.10]
   gal: [309.54, 1.06]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: 15x12
 G309.8+0.0:
   cel: [207.62, -61.92]
   gal: [309.82, 0.16]
   nickname: null
-  size: 0.36
+  radius: 0.18
+  size: 25x19
 G31.5-0.6:
   cel: [282.79, -0.48]
   gal: [32.47, -0.16]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: '18'
 G31.9+0.0:
   cel: [282.35, 0.92]
   gal: [33.52, 0.87]
   nickname: 3C391
-  size: 0.10
+  radius: 0.05
+  size: 7x5
 G310.6-0.3:
   cel: [209.50, -61.85]
   gal: [310.70, 0.01]
   nickname: Kes20B
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G310.8-0.4:
   cel: [210.00, -61.72]
   gal: [310.96, 0.08]
   nickname: Kes20A
-  size: 0.20
+  radius: 0.10
+  size: '12'
 G311.5-0.3:
   cel: [211.41, -60.03]
   gal: [312.08, 1.51]
   nickname: null
-  size: 0.08
+  radius: 0.04
+  size: '5'
 G312.4-0.4:
   cel: [213.25, -60.27]
   gal: [312.88, 1.02]
   nickname: null
-  size: 0.63
+  radius: 0.32
+  size: '38'
 G312.5-3.0:
   cel: [215.25, -63.80]
   gal: [312.62, -2.63]
   nickname: null
-  size: 0.32
+  radius: 0.16
+  size: 20x18
 G315.1+2.7:
   cel: [216.12, -56.17]
   gal: [315.67, 4.39]
   nickname: null
-  size: 2.81
+  radius: 1.41
+  size: 190x150
 G315.4-0.3:
   cel: [218.98, -59.40]
   gal: [315.88, 0.82]
   nickname: null
-  size: 0.29
+  radius: 0.15
+  size: 24x13
 G315.4-2.3:
   cel: [220.75, -61.50]
   gal: [315.83, -1.45]
   nickname: RCW86,MSH14-
-  size: 0.70
+  radius: 0.35
+  size: '42'
 G315.9-0.0:
   cel: [219.60, -59.82]
   gal: [316.01, 0.31]
   nickname: null
-  size: 0.31
+  radius: 0.16
+  size: 25x14
 G316.3-0.0:
   cel: [220.38, -60.00]
   gal: [316.29, -0.01]
   nickname: (MSH14-57)
-  size: 0.34
+  radius: 0.17
+  size: 29x14
 G317.3-0.2:
   cel: [222.42, -58.23]
   gal: [317.99, 1.14]
   nickname: null
-  size: 0.18
+  radius: 0.09
+  size: '11'
 G318.2+0.1:
   cel: [223.71, -58.93]
   gal: [318.28, 0.21]
   nickname: null
-  size: 0.62
+  radius: 0.31
+  size: 40x35
 G318.9+0.4:
   cel: [224.62, -57.52]
   gal: [319.36, 1.25]
   nickname: null
-  size: 0.34
+  radius: 0.17
+  size: 30x14
 G32.0-4.9:
   cel: [286.50, -3.00]
   gal: [31.92, -4.61]
   nickname: 3C396.1
-  size: 1.00
+  radius: 0.50
+  size: '60'
 G32.1-0.9:
   cel: [283.29, -0.87]
   gal: [32.36, -0.78]
   nickname: null
-  size: 0.67
+  radius: 0.33
+  size: '40'
 G32.4+0.1:
   cel: [282.52, 0.42]
   gal: [33.15, 0.49]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: '6'
 G32.8-0.1:
   cel: [282.85, 0.13]
   gal: [33.05, 0.07]
   nickname: Kes78
-  size: 0.28
+  radius: 0.14
+  size: '17'
 G320.4-1.2:
   cel: [228.62, -58.87]
   gal: [320.52, -0.97]
   nickname: MSH15-52,RCW
-  size: 0.58
+  radius: 0.29
+  size: '35'
 G320.6-1.6:
   cel: [229.46, -58.73]
   gal: [320.96, -1.08]
   nickname: null
-  size: 0.71
+  radius: 0.35
+  size: 60x30
 G321.9-0.3:
   cel: [230.17, -56.43]
   gal: [322.51, 0.66]
   nickname: null
-  size: 0.45
+  radius: 0.22
+  size: 31x23
 G321.9-1.1:
   cel: [230.94, -57.78]
   gal: [322.13, -0.70]
   nickname: null
-  size: 0.47
+  radius: 0.23
+  size: '28'
 G322.5-0.1:
   cel: [230.85, -56.90]
   gal: [322.57, 0.06]
   nickname: null
-  size: 0.25
+  radius: 0.12
+  size: '15'
 G323.5+0.1:
   cel: [232.18, -55.65]
   gal: [323.88, 0.69]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: '13'
 G326.3-1.8:
   cel: [238.25, -55.83]
   gal: [326.51, -1.51]
   nickname: MSH15-56
-  size: 0.63
+  radius: 0.32
+  size: '38'
 G327.1-1.1:
   cel: [238.60, -54.85]
   gal: [327.29, -0.87]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: '18'
 G327.2-0.1:
   cel: [237.73, -53.70]
   gal: [327.62, 0.34]
   nickname: null
-  size: 0.08
+  radius: 0.04
+  size: '5'
 G327.4+0.4:
   cel: [237.08, -52.18]
   gal: [328.26, 1.77]
   nickname: Kes27
-  size: 0.35
+  radius: 0.17
+  size: '21'
 G327.4+1.0:
   cel: [236.70, -52.67]
   gal: [327.78, 1.53]
   nickname: null
-  size: 0.23
+  radius: 0.12
+  size: '14'
 G327.6+14.6:
   cel: [225.71, -40.07]
   gal: [328.54, 16.18]
   nickname: SN1006,PKS14
-  size: 0.50
+  radius: 0.25
+  size: '30'
 G328.4+0.2:
   cel: [238.88, -52.72]
   gal: [328.77, 0.66]
   nickname: (MSH15-57)
-  size: 0.08
+  radius: 0.04
+  size: '5'
 G329.7+0.4:
   cel: [240.33, -51.70]
   gal: [330.11, 0.86]
   nickname: null
-  size: 0.61
+  radius: 0.30
+  size: 40x33
 G33.2-0.6:
   cel: [283.46, 0.03]
   gal: [33.24, -0.52]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: '18'
 G33.6+0.1:
   cel: [283.20, 0.68]
   gal: [33.70, 0.01]
   nickname: Kes79,4C00.7
-  size: 0.17
+  radius: 0.08
+  size: '10'
 G330.0+15.0:
   cel: [227.50, -40.00]
   gal: [329.80, 15.53]
   nickname: LupusLoop
-  size: 3.00
+  radius: 1.50
+  size: '180'
 G330.2+1.0:
   cel: [240.27, -50.43]
   gal: [330.92, 1.84]
   nickname: null
-  size: 0.18
+  radius: 0.09
+  size: '11'
 G332.0+0.2:
   cel: [243.32, -49.12]
   gal: [333.26, 1.49]
   nickname: null
-  size: 0.20
+  radius: 0.10
+  size: '12'
 G332.4+0.1:
   cel: [243.83, -49.30]
   gal: [333.38, 1.13]
   nickname: MSH16-51,Kes
-  size: 0.25
+  radius: 0.12
+  size: '15'
 G332.4-0.4:
   cel: [244.39, -50.97]
   gal: [332.47, -0.32]
   nickname: RCW103
-  size: 0.17
+  radius: 0.08
+  size: '10'
 G332.5-5.6:
   cel: [250.83, -53.50]
   gal: [333.34, -4.92]
   nickname: null
-  size: 0.58
+  radius: 0.29
+  size: '35'
 G335.2+0.1:
   cel: [246.94, -47.22]
   gal: [336.31, 1.15]
   nickname: null
-  size: 0.35
+  radius: 0.17
+  size: '21'
 G336.7+0.5:
   cel: [248.05, -46.68]
   gal: [337.22, 0.96]
   nickname: null
-  size: 0.20
+  radius: 0.10
+  size: 14x10
 G337.0-0.1:
   cel: [248.99, -46.40]
   gal: [337.87, 0.68]
   nickname: (CTB33)
-  size: 0.02
+  radius: 0.01
+  size: '1.05'
 G337.2+0.1:
   cel: [248.98, -46.67]
   gal: [337.66, 0.50]
   nickname: null
-  size: 0.04
+  radius: 0.02
+  size: 3x2
 G337.2-0.7:
   cel: [249.87, -46.15]
   gal: [338.46, 0.40]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: '6'
 G337.3+1.0:
   cel: [248.16, -45.40]
   gal: [338.21, 1.78]
   nickname: Kes40
-  size: 0.22
+  radius: 0.11
+  size: 15x12
 G337.8-0.1:
   cel: [249.75, -45.02]
   gal: [339.25, 1.21]
   nickname: Kes41
-  size: 0.12
+  radius: 0.06
+  size: 9x6
 G338.1+0.4:
   cel: [249.50, -45.60]
   gal: [338.70, 0.95]
   nickname: null
-  size: 0.25
+  radius: 0.12
+  size: '15'
 G338.3-0.0:
   cel: [250.25, -45.43]
   gal: [339.17, 0.67]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G338.5+0.1:
   cel: [250.29, -45.68]
   gal: [339.00, 0.49]
   nickname: null
-  size: 0.15
+  radius: 0.07
+  size: '9'
 G34.7-0.4:
   cel: [284.00, 1.37]
   gal: [34.67, -0.39]
   nickname: W44,3C392
-  size: 0.51
+  radius: 0.26
+  size: 35x27
 G340.4+0.4:
   cel: [251.63, -43.35]
   gal: [341.39, 1.29]
   nickname: null
-  size: 0.14
+  radius: 0.07
+  size: 10x7
 G340.6+0.3:
   cel: [251.92, -43.43]
   gal: [341.47, 1.08]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: '6'
 G341.2+0.9:
   cel: [251.90, -42.22]
   gal: [342.38, 1.88]
   nickname: null
-  size: 0.31
+  radius: 0.16
+  size: 22x16
 G341.9-0.3:
   cel: [253.75, -43.98]
   gal: [341.89, -0.30]
   nickname: null
-  size: 0.12
+  radius: 0.06
+  size: '7'
 G342.0-0.2:
   cel: [253.71, -42.12]
   gal: [343.32, 0.90]
   nickname: null
-  size: 0.17
+  radius: 0.09
+  size: 12x9
 G342.1+0.9:
   cel: [252.68, -42.93]
   gal: [342.20, 0.97]
   nickname: null
-  size: 0.16
+  radius: 0.08
+  size: 10x9
 G343.0-6.0:
   cel: [261.25, -45.50]
   gal: [343.82, -5.48]
   nickname: RCW114
-  size: 4.17
+  radius: 2.08
+  size: '250'
 G343.1-0.7:
   cel: [255.10, -42.77]
   gal: [343.45, -0.31]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: 27x21
 G343.1-2.3:
   cel: [257.00, -43.73]
   gal: [343.52, -1.99]
   nickname: null
-  size: 0.53
+  radius: 0.27
+  size: '32'
 G344.7-0.1:
   cel: [255.96, -40.30]
   gal: [345.79, 0.70]
   nickname: null
-  size: 0.17
+  radius: 0.08
+  size: '10'
 G345.7-0.2:
   cel: [256.83, -39.12]
   gal: [347.14, 0.88]
   nickname: null
-  size: 0.10
+  radius: 0.05
+  size: '6'
 G346.6-0.2:
   cel: [257.58, -39.82]
   gal: [346.92, -0.00]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G347.3-0.5:
   cel: [258.46, -38.25]
   gal: [348.59, 0.37]
   nickname: SN393
-  size: 1.00
+  radius: 0.50
+  size: 65x55
 G348.5+0.1:
   cel: [258.52, -37.47]
   gal: [349.26, 0.78]
   nickname: CTB37A
-  size: 0.25
+  radius: 0.12
+  size: '15'
 G348.5-0.0:
   cel: [258.86, -37.53]
   gal: [349.36, 0.53]
   nickname: null
-  size: 0.17
+  radius: 0.08
+  size: '10'
 G348.7+0.3:
   cel: [258.48, -37.82]
   gal: [348.95, 0.61]
   nickname: CTB37B
-  size: 0.28
+  radius: 0.14
+  size: '17'
 G349.2-0.1:
   cel: [259.31, -37.93]
   gal: [349.24, 0.01]
   nickname: null
-  size: 0.12
+  radius: 0.06
+  size: 9x6
 G349.7+0.2:
   cel: [259.50, -36.57]
   gal: [350.44, 0.68]
   nickname: null
-  size: 0.04
+  radius: 0.02
+  size: 2.5x2
 G350.0-2.0:
   cel: [261.96, -37.47]
   gal: [350.81, -1.45]
   nickname: null
-  size: 0.75
+  radius: 0.38
+  size: '45'
 G350.1-0.3:
   cel: [259.42, -36.60]
   gal: [350.38, 0.71]
   nickname: null
-  size: 0.07
+  radius: 0.03
+  size: '4'
 G351.2+0.1:
   cel: [260.61, -35.82]
   gal: [351.57, 0.37]
   nickname: null
-  size: 0.12
+  radius: 0.06
+  size: '7'
 G351.7+0.8:
   cel: [260.25, -34.55]
   gal: [352.44, 1.33]
   nickname: null
-  size: 0.26
+  radius: 0.13
+  size: 18x14
 G351.9-0.9:
   cel: [262.22, -35.73]
   gal: [352.37, -0.67]
   nickname: null
-  size: 0.17
+  radius: 0.09
+  size: 12x9
 G352.7-0.1:
   cel: [261.92, -34.88]
   gal: [352.94, 0.01]
   nickname: null
-  size: 0.12
+  radius: 0.06
+  size: 8x6
 G353.6-0.7:
   cel: [263.00, -33.27]
   gal: [354.78, 0.15]
   nickname: null
-  size: 0.50
+  radius: 0.25
+  size: '30'
 G353.9-2.0:
   cel: [264.73, -34.82]
   gal: [354.25, -1.89]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: '13'
 G354.1+0.1:
   cel: [262.62, -32.23]
   gal: [355.47, 0.99]
   nickname: null
-  size: 0.11
+  radius: 0.06
+  size: 15x3
 G354.8-0.8:
   cel: [264.00, -32.30]
   gal: [356.05, -0.03]
   nickname: null
-  size: 0.32
+  radius: 0.16
+  size: '19'
 G355.4+0.7:
   cel: [262.83, -31.57]
   gal: [356.13, 1.20]
   nickname: null
-  size: 0.42
+  radius: 0.21
+  size: '25'
 G355.6-0.0:
   cel: [263.82, -31.37]
   gal: [356.75, 0.61]
   nickname: null
-  size: 0.12
+  radius: 0.06
+  size: 8x6
 G355.9-2.5:
   cel: [266.47, -32.28]
   gal: [357.17, -1.79]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: '13'
 G356.2+4.5:
   cel: [259.75, -28.33]
   gal: [357.32, 5.22]
   nickname: null
-  size: 0.42
+  radius: 0.21
+  size: '25'
 G356.3-0.3:
   cel: [264.48, -31.73]
   gal: [356.75, -0.07]
   nickname: null
-  size: 0.15
+  radius: 0.07
+  size: 11x7
 G356.3-1.5:
   cel: [265.65, -31.13]
   gal: [357.78, -0.59]
   nickname: null
-  size: 0.29
+  radius: 0.14
+  size: 20x15
 G357.7+0.3:
   cel: [264.65, -29.27]
   gal: [358.91, 1.13]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G357.7-0.1:
   cel: [265.12, -29.03]
   gal: [359.33, 0.90]
   nickname: MSH17-39
-  size: 0.08
+  radius: 0.04
+  size: 8x3
 G358.0+3.8:
   cel: [261.50, -27.40]
   gal: [358.97, 4.47]
   nickname: null
-  size: 0.63
+  radius: 0.32
+  size: '38'
 G358.1+0.1:
   cel: [264.25, -28.02]
   gal: [359.78, 2.09]
   nickname: null
-  size: 0.33
+  radius: 0.17
+  size: '20'
 G358.5-0.9:
   cel: [266.54, -29.33]
   gal: [359.72, -0.31]
   nickname: null
-  size: 0.28
+  radius: 0.14
+  size: '17'
 G359.0-0.9:
   cel: [266.71, -29.73]
   gal: [359.46, -0.64]
   nickname: null
-  size: 0.38
+  radius: 0.19
+  size: '23'
 G359.1+0.9:
   cel: [264.90, -28.82]
   gal: [359.41, 1.18]
   nickname: null
-  size: 0.19
+  radius: 0.10
+  size: 12x11
 G359.1-0.5:
   cel: [266.38, -28.05]
   gal: [0.74, 0.48]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G36.6+2.6:
   cel: [282.20, 4.43]
   gal: [36.58, 2.60]
   nickname: null
-  size: 0.25
+  radius: 0.12
+  size: 17x13
 G36.6-0.7:
   cel: [285.15, 2.93]
   gal: [36.59, -0.69]
   nickname: null
-  size: 0.42
+  radius: 0.21
+  size: '25'
 G39.2-0.3:
   cel: [286.03, 5.47]
   gal: [39.24, -0.32]
   nickname: 3C396,HC24,N
-  size: 0.12
+  radius: 0.06
+  size: 8x6
 G39.7-2.0:
   cel: [288.08, 4.92]
   gal: [39.69, -2.39]
   nickname: W50,SS433
-  size: 1.41
+  radius: 0.71
+  size: 120x60
 G4.2-3.5:
   cel: [272.23, -26.95]
   gal: [4.30, -3.46]
   nickname: null
-  size: 0.47
+  radius: 0.23
+  size: '28'
 G4.5+6.8:
   cel: [262.68, -20.52]
   gal: [5.35, 7.34]
   nickname: Kepler,SN160
-  size: 0.05
+  radius: 0.03
+  size: '3'
 G4.8+6.2:
   cel: [263.35, -20.43]
   gal: [5.76, 6.85]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: '18'
 G40.5-0.5:
   cel: [286.79, 6.52]
   gal: [40.52, -0.51]
   nickname: null
-  size: 0.37
+  radius: 0.18
+  size: '22'
 G41.1-0.3:
   cel: [286.89, 7.13]
   gal: [41.12, -0.31]
   nickname: 3C397
-  size: 0.06
+  radius: 0.03
+  size: 4.5x2.5
 G42.8+0.6:
   cel: [286.83, 9.08]
   gal: [42.82, 0.63]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G43.3-0.2:
   cel: [287.78, 9.10]
   gal: [43.27, -0.19]
   nickname: W49B
-  size: 0.06
+  radius: 0.03
+  size: 4x3
 G43.9+1.6:
   cel: [286.46, 10.50]
   gal: [43.91, 1.61]
   nickname: null
-  size: 1.00
+  radius: 0.50
+  size: '60'
 G45.7-0.4:
   cel: [289.10, 11.15]
   gal: [45.69, -0.39]
   nickname: null
-  size: 0.37
+  radius: 0.18
+  size: '22'
 G46.8-0.3:
   cel: [289.54, 12.15]
   gal: [46.77, -0.30]
   nickname: (HC30)
-  size: 0.25
+  radius: 0.12
+  size: 17x13
 G49.2-0.7:
   cel: [290.96, 14.10]
   gal: [49.14, -0.60]
   nickname: (W51)
-  size: 0.50
+  radius: 0.25
+  size: '30'
 G5.2-2.6:
   cel: [271.88, -24.25]
   gal: [6.51, -1.87]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: '18'
 G5.4-1.2:
   cel: [270.54, -23.10]
   gal: [6.91, -0.24]
   nickname: Milne56
-  size: 0.58
+  radius: 0.29
+  size: '35'
 G5.5+0.3:
   cel: [269.27, -24.00]
   gal: [5.55, 0.32]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: 15x12
 G5.9+3.1:
   cel: [266.83, -21.73]
   gal: [6.36, 3.40]
   nickname: null
-  size: 0.33
+  radius: 0.17
+  size: '20'
 G53.6-2.2:
   cel: [294.71, 17.23]
   gal: [53.63, -2.26]
   nickname: 3C400.2,NRAO
-  size: 0.51
+  radius: 0.25
+  size: 33x28
 G54.1+0.3:
   cel: [292.63, 18.87]
   gal: [54.09, 0.26]
   nickname: null
-  size: 0.02
+  radius: 0.01
+  size: '1.05'
 G54.4-0.3:
   cel: [293.33, 18.93]
   gal: [54.47, -0.29]
   nickname: (HC40)
-  size: 0.67
+  radius: 0.33
+  size: '40'
 G55.0+0.3:
   cel: [293.00, 19.83]
   gal: [55.11, 0.42]
   nickname: null
-  size: 0.29
+  radius: 0.14
+  size: 20x15
 G55.7+3.4:
   cel: [290.33, 21.73]
   gal: [55.60, 3.51]
   nickname: null
-  size: 0.38
+  radius: 0.19
+  size: '23'
 G57.2+0.8:
   cel: [293.75, 21.95]
   gal: [57.30, 0.83]
   nickname: (4C21.53)
-  size: 0.20
+  radius: 0.10
+  size: '12'
 G59.5+0.1:
   cel: [295.64, 23.58]
   gal: [59.58, 0.12]
   nickname: null
-  size: 0.25
+  radius: 0.12
+  size: '15'
 G59.8+1.2:
   cel: [294.73, 24.32]
   gal: [59.81, 1.20]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: 20x16
 G6.1+0.5:
   cel: [269.37, -22.58]
   gal: [6.83, 0.95]
   nickname: null
-  size: 0.24
+  radius: 0.12
+  size: 18x12
 G6.1+1.2:
   cel: [268.73, -22.92]
   gal: [6.24, 1.29]
   nickname: null
-  size: 0.47
+  radius: 0.23
+  size: 30x26
 G6.4+4.0:
   cel: [266.29, -20.63]
   gal: [7.05, 4.41]
   nickname: null
-  size: 0.52
+  radius: 0.26
+  size: '31'
 G6.4-0.1:
   cel: [270.12, -22.57]
   gal: [7.19, 0.35]
   nickname: W28
-  size: 0.80
+  radius: 0.40
+  size: '48'
 G6.5-0.4:
   cel: [270.55, -22.43]
   gal: [7.50, 0.08]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: '18'
 G63.7+1.1:
   cel: [296.97, 27.75]
   gal: [63.79, 1.17]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: '8'
 G65.1+0.6:
   cel: [298.67, 28.58]
   gal: [65.27, 0.30]
   nickname: null
-  size: 1.12
+  radius: 0.56
+  size: 90x50
 G65.3+5.7:
   cel: [293.25, 31.17]
   gal: [65.18, 5.66]
   nickname: null
-  size: 4.55
+  radius: 2.27
+  size: 310x240
 G65.7+1.2:
   cel: [298.04, 29.43]
   gal: [65.72, 1.21]
   nickname: DA495
-  size: 0.37
+  radius: 0.18
+  size: '22'
 G67.7+1.8:
   cel: [298.63, 31.48]
   gal: [67.74, 1.82]
   nickname: null
-  size: 0.22
+  radius: 0.11
+  size: 15x12
 G68.6-1.2:
   cel: [302.17, 30.62]
   gal: [68.60, -1.20]
   nickname: null
-  size: 0.38
+  radius: 0.19
+  size: '23'
 G69.0+2.7:
   cel: [298.33, 32.92]
   gal: [68.84, 2.78]
   nickname: CTB80
-  size: 1.33
+  radius: 0.67
+  size: '80'
 G69.7+1.0:
   cel: [300.67, 32.72]
   gal: [69.69, 1.00]
   nickname: null
-  size: 0.25
+  radius: 0.12
+  size: 16x14
 G7.0-0.1:
   cel: [270.46, -21.10]
   gal: [8.61, 0.81]
   nickname: null
-  size: 0.25
+  radius: 0.12
+  size: '15'
 G7.2+0.2:
   cel: [270.28, -21.37]
   gal: [8.30, 0.82]
   nickname: null
-  size: 0.20
+  radius: 0.10
+  size: '12'
 G7.7-3.7:
   cel: [274.35, -23.93]
   gal: [7.87, -3.71]
   nickname: 1814-24
-  size: 0.37
+  radius: 0.18
+  size: '22'
 G73.9+0.9:
   cel: [303.56, 36.20]
   gal: [73.91, 0.88]
   nickname: null
-  size: 0.45
+  radius: 0.23
+  size: '27'
 G74.0-8.5:
   cel: [312.75, 30.67]
   gal: [73.98, -8.56]
   nickname: CygnusLoop
-  size: 3.20
+  radius: 1.60
+  size: 230x160
 G74.9+1.2:
   cel: [304.01, 37.20]
   gal: [74.94, 1.14]
   nickname: CTB87
-  size: 0.12
+  radius: 0.06
+  size: 8x6
 G76.9+1.0:
   cel: [305.58, 38.72]
   gal: [76.90, 0.97]
   nickname: null
-  size: 0.15
+  radius: 0.07
+  size: '9'
 G78.2+2.1:
   cel: [305.21, 40.43]
   gal: [78.14, 2.19]
   nickname: DR4,gammaCyg
-  size: 1.00
+  radius: 0.50
+  size: '60'
 G8.3-0.0:
   cel: [271.14, -20.18]
   gal: [9.73, 0.71]
   nickname: null
-  size: 0.07
+  radius: 0.04
+  size: 5x4
 G8.7-0.1:
   cel: [271.38, -20.57]
   gal: [9.50, 0.33]
   nickname: (W30)
-  size: 0.75
+  radius: 0.38
+  size: '45'
 G8.7-5.0:
   cel: [276.04, -22.20]
   gal: [10.14, -4.27]
   nickname: null
-  size: 0.43
+  radius: 0.22
+  size: '26'
 G8.9+0.4:
   cel: [270.99, -20.95]
   gal: [8.99, 0.45]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G82.2+5.3:
   cel: [304.75, 45.50]
   gal: [82.15, 5.32]
   nickname: W63
-  size: 1.31
+  radius: 0.65
+  size: 95x65
 G83.0-0.3:
   cel: [311.73, 42.87]
   gal: [83.00, -0.27]
   nickname: null
-  size: 0.13
+  radius: 0.07
+  size: 9x7
 G84.2-0.8:
   cel: [313.33, 43.45]
   gal: [84.20, -0.81]
   nickname: null
-  size: 0.30
+  radius: 0.15
+  size: 20x16
 G85.4+0.7:
   cel: [312.67, 45.37]
   gal: [85.37, 0.78]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G85.9-0.6:
   cel: [314.67, 44.88]
   gal: [85.91, -0.61]
   nickname: null
-  size: 0.40
+  radius: 0.20
+  size: '24'
 G89.0+4.7:
   cel: [311.25, 50.58]
   gal: [88.84, 4.79]
   nickname: HB21
-  size: 1.73
+  radius: 0.87
+  size: 120x90
 G9.7-0.0:
   cel: [271.84, -19.42]
   gal: [10.72, 0.51]
   nickname: null
-  size: 0.21
+  radius: 0.11
+  size: 15x11
 G9.8+0.6:
   cel: [271.28, -19.77]
   gal: [10.16, 0.79]
   nickname: null
-  size: 0.20
+  radius: 0.10
+  size: '12'
 G9.9-0.8:
   cel: [272.67, -19.28]
   gal: [11.21, -0.11]
   nickname: null
-  size: 0.20
+  radius: 0.10
+  size: '12'
 G93.3+6.9:
   cel: [313.10, 55.35]
   gal: [93.28, 6.91]
   nickname: DA530,4C(T)5
-  size: 0.39
+  radius: 0.19
+  size: 27x20
 G93.7-0.2:
   cel: [322.33, 50.83]
   gal: [93.75, -0.22]
   nickname: CTB104A,DA55
-  size: 1.33
+  radius: 0.67
+  size: '80'
 G94.0+1.0:
   cel: [321.21, 51.88]
   gal: [93.97, 1.03]
   nickname: 3C434.1
-  size: 0.46
+  radius: 0.23
+  size: 30x25
 G96.0+2.0:
   cel: [322.62, 53.98]
   gal: [96.04, 1.95]
   nickname: null
-  size: 0.43
+  radius: 0.22
+  size: '26'

@@ -5,7 +5,6 @@ doing analysis. Example:
 python loop_snr.py -c analyze_v1.py \
         --snrdata /u/gl/lande/svn/lande/trunk/green_catalog/2FGL/v2/snrdata.yaml \
         -o /nfs/slac/g/ki/ki03/lande/green_catalog/2FGL/v2/analyze_v1
-
 """
 import yaml
 from os.path import expandvars as e
@@ -39,7 +38,7 @@ for name in sources.keys():
     temp=open(file,'w')
     temp.write("""\
 python %s/%s \\
---snr %s \\
+--name %s \\
 --snrdata %s %s""" % (os.getcwd(),args.command,name,
                      args.snrdata,' '.join(remaining_args)))
 
