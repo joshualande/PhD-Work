@@ -63,7 +63,7 @@ queue_jobs,err=p.communicate()
 
 for name in glob.iglob("*"):
     if isdir(name):
-        results="%s/results_*_%s.yaml" % (name,name)
+        results="%s/results*%s.yaml" % (name,name)
         log="%s/log_%s.txt" % (name,name)
         run='$PWD/%s/run_%s.sh' % (name,name)
 
