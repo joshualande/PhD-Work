@@ -4,7 +4,7 @@ doing analysis. Example:
 
 python loop_snr.py -c analyze_v1.py \
         --snrdata /u/gl/lande/svn/lande/trunk/green_catalog/2FGL/v2/snrdata.yaml \
-        -o /nfs/slac/g/ki/ki03/lande/green_catalog/2FGL/v2/analyze_v1
+        -o /nfs/slac/g/ki/ki03/lande/green_catalog/2FGL/v2/analyze_v1/fits
 """
 import yaml
 from os.path import expandvars as e
