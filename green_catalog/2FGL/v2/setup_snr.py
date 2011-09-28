@@ -47,7 +47,7 @@ def setup_roi(name, snrdata, free_radius=2, fit_emin=1e4, fit_emax=1e5):
 
     catalogs = Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit',
                            latextdir='$FERMI/extended_archives/gll_psc_v05_templates/',
-                           free_radius=free_radius),
+                           free_radius=free_radius)
 
     roi = sa.roi(
         catalogs = catalogs,

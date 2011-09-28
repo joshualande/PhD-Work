@@ -43,6 +43,12 @@ for source in roi.get_sources():
     if np.degrees(source.skydir.difference(snr.skydir)) < snrsize + 0.1:
         deleted_sources.append(roi.del_source(source))
 
+for source in roi.get_sources():
+    # Freeze the spectrum (but not flux) of all other sources in the ROI.
+    if np.any(source.model.free):
+        free=np.asarray([True]+[False]*(len(source.model._p)-1))
+        roi.modify(which=source,free=free)
+
 roi.print_summary()
 
 def plot_extra_stuff(axes,header):
@@ -66,12 +72,14 @@ def plot_extra_stuff(axes,header):
 # *) make a smoothed counts map + tsmap
 
 plot_size = max(snrsize*4, 3)
-smooth=roi.plot_sources(size = plot_size, 
-                        kernel_rad=0.25, label_psf=False,
-                        colorbar_radius = max(snrsize, 1),
-                        title='Smoothed Counts %s' % name)
-plot_extra_stuff(smooth.axes, smooth.header)
-P.savefig('sources_%s.png' % name)
+
+for kernel_rad in [0.1,0.25]:
+    smooth=roi.plot_sources(size = plot_size, 
+                            kernel_rad=kernel_rad, label_psf=False,
+                            colorbar_radius = max(snrsize, 1),
+                            title='Smoothed Counts %s' % name)
+    plot_extra_stuff(smooth.axes, smooth.header)
+    P.savefig('sources_kernel_%g_%s.png' % (kernel_rad,name))
 
 tsmap=roi.plot_tsmap(size = plot_size, 
                      pixelsize = 1./8,
@@ -92,14 +100,17 @@ except Exception, ex:
     print 'ERROR spectral fitting: ', ex
 
 results['prelocalize_pointlike']=sourcedict(roi,name,emin=1e4,emax=1e5)
+roi.save('roi_prelocalize.dat')
 
 # *) Perform spatial analysis (?)
 #    if TS > 20 (or something):
 #      do some extension fitting and stuff
 
 results['postlocalize_pointlike']=sourcedict(roi,name,emin=1e4,emax=1e5)
+roi.save('roi_postlocalize.dat')
 
 roi.print_summary()
+print roi
 
 print results
 
