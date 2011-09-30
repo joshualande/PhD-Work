@@ -460,6 +460,10 @@ G260.4-3.4:
   nickname: PuppisA,MSH0
   radius: 0.46
   size: 60x50
+  contour:
+    file: ${SNRTEMPLATES}/xray/rosat_pspc2.0/G260.4-3.4.fits
+    hdu: 0
+    levels: "np.linspace(0.01,.08,3)"
 G261.9+5.5:
   cel: [136.08, -38.70]
   gal: [261.95, 5.48]
@@ -1442,6 +1446,10 @@ G6.4-0.1:
   nickname: W28
   radius: 0.40
   size: '48'
+  contour:
+    file: ${SNRTEMPLATES}/tev/hess/G6.4-0.1.fits
+    hdu: 0
+    levels: "np.linspace(30,.80,5)"
 G6.5-0.4:
   cel: [270.55, -23.57]
   gal: [6.51, -0.48]

@@ -6,7 +6,7 @@ import os
 from os.path import join,exists
 from collections import defaultdict
 
-base='/nfs/slac/g/ki/ki03/lande/green_catalog/2FGL/v2/analyze_v1/'
+base='/nfs/slac/g/ki/ki03/lande/green_catalog/2FGL/v2/analyze_v3/'
 
 snrdata=yaml.load(open('snrdata.yaml'))
 
@@ -29,7 +29,6 @@ index_t2t = []
 
 
 
-
 def t2t(lines,name): 
     """ create the HTML for a given t2t file. """
     filename = join(website,'%s.t2t' % name)
@@ -46,10 +45,10 @@ def format_table(only_significant=False):
 
     table=defaultdict(list)
 
-    format = '| %30s | %30s | %30s | %30s | %30s |' 
+    format = '| %30s | %30s | %30s | %30s | %30s | %30s |' 
 
     index_t2t.append(
-        format % ('Name','TS','Flux','Index','Nickname')
+        format % ('Name','TS','TS_ext','Flux','Index','Nickname')
         )
 
     for snr in snrs:
@@ -58,7 +57,11 @@ def format_table(only_significant=False):
 
             ts=results['postlocalize_gtlike']['ts']
             if ts < 0: ts=0
-            significant = ts>25
+
+            significant = results['status'] != 'insignificant'
+
+            table_ts_ext = '%.1f' % results['ts_ext'] if significant else ''
+            
 
             if only_significant and not significant: continue
 
@@ -79,13 +82,13 @@ def format_table(only_significant=False):
             table_index = '%.2f' % index if significant else '-'
             table_name = '[%s %s.html]' % (snr,snr)
 
-            index_t2t.append(format % (table_name,table_ts,table_flux,table_index,table_nickname))
-        else:
-            index_t2t.append(format % (snr,'','','',''))
+            index_t2t.append(format % (table_name,table_ts,table_ts_ext,table_flux,table_index,table_nickname))
+        elif not only_significant:
+            index_t2t.append(format % (snr,'','','','',''))
 
     index_t2t.append('')
             
-index_t2t.append('h1. Green Catalog E>10 GeV')
+index_t2t.append('Green Catalog E>10 GeV')
 index_t2t.append('')
 
 
@@ -106,7 +109,7 @@ t2t(index_t2t, 'index')
 
 def individiual_website(snr):
     snr_t2t = [
-        'h1. %s' % snr,
+        '%s' % snr,
         '',
         '',
     ]
@@ -114,19 +117,50 @@ def individiual_website(snr):
     if all_results.has_key(snr):
         results = all_results[snr]
         snr_t2t += [
-            'nickname = %s' % snrdata[snr]['nickname'],
-            '',
+            ' * nickname = %s' % snrdata[snr]['nickname'],
+            ' * other stuff...',
             '',
         ]
 
-    snr_t2t += [
-        '[../fits/%s/sources_kernel_0.1_%s.png]' % (snr,snr),
-        '',
-        '[../fits/%s/tsmap_%s.png]' % (snr,snr),
-        '',
-        '[../fits/%s/sources_kernel_0.25_%s.png]' % (snr,snr)
-    ]
-    t2t(snr_t2t, snr)
+        if results['status'] == 'insignificant':
+            when = 'prelocalize'
+        else:
+            when = 'postlocalize'
+
+        for when in ['postlocalize','prelocalize']:
+            snr_t2t += [
+                '',
+                '== %s ==' % when,
+                '',
+                '| [../fits/%s/sources_%s_kernel_0.1_%s.png]' % (snr,when,snr)+
+                '| [../fits/%s/tsmap_source_%s_%s.png]' % (snr,when,snr) +
+                '| [../fits/%s/source_%s_kernel_0.1_%s.png]' % (snr,when,snr)+
+                ' |',
+                '',
+            ]
+
+        file=join(base,'fits',snr,'results_%s.yaml' % snr)
+        snr_t2t += [
+            '```',
+            open(file).read(),
+            '```'
+        ]
+
+        for when in ['postlocalize','prelocalize']:
+            snr_t2t += [
+                '',
+                '== %s ==' % when,
+                '',
+                '| [../fits/%s/sources_%s_kernel_0.25_%s.png]' % (snr,when,snr)+
+                '| [../fits/%s/tsmap_residual_%s_%s.png]' % (snr,when,snr) +
+                '| [../fits/%s/source_%s_kernel_0.25_%s.png]' % (snr,when,snr)+
+                ' |',
+                '',
+            ]
+
+
+
+        t2t(snr_t2t, snr)
 
 
 for snr in snrs:

@@ -4,12 +4,14 @@
 from roi_gtlike import Gtlike
 
 
+from lande_localize import GridLocalize
 from setup_snr import setup_roi, get_snr
 from uw.like.roi_plotting import ROISmoothedSource
+from uw.like.Models import PowerLaw
+from uw.like.roi_extended import ExtendedSource
 
 from toolbag import tolist,sourcedict,powerlaw_upper_limit
 
-from uw.like.Models import PowerLaw
 import numpy as np
 import pylab as P
 import pyfits
@@ -18,15 +20,28 @@ from argparse import ArgumentParser
 import yaml
 import os
 
-def plot_extra_stuff(axes,header):
-    """ Overlay pruned 2FGL sources + the SNR extension. 
-    
-        TODO: overlay multiwavelenth contours. """
+def plot_extra_stuff(axes,header, roi):
+    """ Overlay:
+        * Deleted 2FGL sources
+        * the SNR + best fit extension. 
+        * Any avaliable SNR contours
+    """
     for source in deleted_sources:
-        axes['gal'].plot([source.skydir.l()],[source.skydir.b()], marker='*', color='blue', 
+        axes['gal'].plot([source.skydir.l()],[source.skydir.b()], marker='*', color='green', 
                          markeredgecolor='white', markersize=12)
 
-    # overlay the best fit snr
+
+    source = roi.get_source(name)
+
+    # plot the SNR in blue
+    ROISmoothedSource.overlay_source(source, axes, color='blue', zorder=10)
+
+    if isinstance(source,ExtendedSource):
+        # overlay the best fit SNR size in blue
+        ROISmoothedSource.overlay_extension(source, axes, header, extension_color='blue',
+                                            extension_zorder=10)
+
+    # overlay the green catalog SNR in red
     ROISmoothedSource.overlay_extension(get_snr(name,snrdata), axes, header, extension_color='red',
                                        extension_zorder=10)
 
@@ -38,6 +53,39 @@ def plot_extra_stuff(axes,header):
         levels = eval(contour['levels'])
         axes[hdu.header].contour(hdu.data, levels, colors='lightblue')
 
+def plots(when):
+    """ make a smoothed counts map + tsmap. 
+
+    here, plot again the region before + after background subtraction
+
+    Here, plot 'radio' size + extended source best fit spatial model
+    """
+    
+    plot_size = max(snrsize*4, 3)
+    
+    for kernel_rad in [0.1,0.25]:
+        for function,title_base,filename_base in [[roi.plot_sources,'Diffuse Subtracted','sources'],[roi.plot_source,'BG Source Subtracted','source']]:
+            smooth=function(which = name,
+                            size = plot_size, 
+                            show_extensions = True if when == 'postlocalize' else False,
+                            kernel_rad=kernel_rad, label_psf=False,
+                            colorbar_radius = max(snrsize, 1),
+                            title=r'%s %s ($\sigma_\mathrm{smooth}=%g^\circ$)' % (title_base,name,kernel_rad))
+            plot_extra_stuff(smooth.axes, smooth.header, roi)
+            P.savefig('%s_%s_kernel_%g_%s.png' % (filename_base,when,kernel_rad,name))
+
+
+    # Residual TS Map
+    tsmap=roi.plot_tsmap(size = plot_size, pixelsize = 1./8, title='Residual TS Map %s' % name)
+    plot_extra_stuff(tsmap.axes, tsmap.header, roi)
+    P.savefig('tsmap_residual_%s_%s.png' % (when,name))
+
+    # Source TS Map
+    roi.zero_source(name)
+    tsmap=roi.plot_tsmap(size = plot_size, pixelsize = 1./8, title='Source TS Map %s' % name)
+    plot_extra_stuff(tsmap.axes, tsmap.header, roi)
+    roi.unzero_source(name)
+    P.savefig('tsmap_source_%s_%s.png' % (when,name))
 
 parser = ArgumentParser()
 parser.add_argument("--snrdata", required=True)
@@ -72,28 +120,73 @@ for source in roi.get_sources():
 
 roi.print_summary()
 
+def fit():
+    try:
+        roi.fit(use_gradient=True)
+    except Exception, ex:
+        print 'ERROR spectral fitting: ', ex
+
+
+fit()
+
+
 #    Then add in the SNR as a new source.
 
 roi.add_source(snr)
 
 # *) perform spectral fit + get out the best fit values.
 
-try:
-    roi.fit(use_gradient=True)
-except Exception, ex:
-    print 'ERROR spectral fitting: ', ex
+fit()
+
+plots('prelocalize')
 
 results['prelocalize_pointlike']=sourcedict(roi,name,emin=1e4,emax=1e5)
 roi.save('roi_prelocalize.dat')
 
-# *) Perform spatial analysis (?)
-#    if TS > 20 (or something):
-#      do some extension fitting and stuff
 
-if results['prelocalize_pointlike']['ts']>9:
+gtlike=Gtlike(roi,binsz=1./8)
+like=gtlike.like
+
+# *) perform spectral fit with gtlike using original template.
+#    + get out the best fit values
+
+like.fit(covar=True)
+results['prelocalize_gtlike']=sourcedict(like,name,emin=1e4,emax=1e5)
+
+# *) Perform upper limits assuming spectral index 2
+
+# N.B., for the E>10GeV analysis we are very much in the Poisson instead
+# of Gaussian regime. The likelihood function will be VERY linear. As a result,
+# delta_log_like_limits = 50 should be much more reasonable (not quite sure
+# how to quantify this right now...)
+results['upper_limit_gtlike'] = powerlaw_upper_limit(like,name, delta_log_like_limits=50, verbosity=2)
+
+
+# Now, try morphological analysis
+
+def localize():
+    try:
+        print 'First, localize with GridLocalize (helps with convergence)'
+
+        grid=GridLocalize(roi,which=name,size=max(snrsize,0.5),pixelsize=snrsize/10)
+        skydir = grid.best_position()
+        print 'Using Grid Localize, best position is ',skydir
+
+        roi.modify(which=name, skydir=skydir)
+
+        roi.localize(which=name, update=True)
+    except Exception, ex:
+        print 'ERROR localizing: ',ex
+
+
+# *) if TS > 9, perform new morphological analysis
+
+if results['prelocalize_gtlike']['ts'] > 9:
     roi.fit_extension(which=name)
     ts_ext = roi.TS_ext(which=name)
     results['ts_ext'] = ts_ext
+
+    roi.print_summary()
 
     spatial_model = roi.get_source(name).spatial_model
     # extension fit bad if fit size is very different from true size
@@ -103,67 +196,41 @@ if results['prelocalize_pointlike']['ts']>9:
         # If tsext<16, the source is not extended, so do the
         # following analysis with SNR as a point-like source.
 
-        print 'ts_ext < 16, converting a point-like source'
-        results['type']='pointlike' # source is not spatially extended
+        print 'ts_ext < 16, converting to a point-like source'
+        results['status']='pointlike' # source is not spatially extended
 
         roi.modify(which=name,spatial_model=roi.roi_dir)
-        roi.localize(which=name)
-        roi.fit()
+        localize()
+        fit()
+
+        # here, we can test if localization failed!
 
     elif extension_is_bad:
         # extension fit failed. Most likely in a region with other sources nearby which are not
         # being fit correctly. So switch to point-like hypothesis and refit the SNR.
-        print 'Fit extension is bad -> convert back to orginal size for upper limit'
+        print 'Fit extension is bad. Presumably, something has to be done to the background model outside the script to fix this...'
 
         # convert back to orignial size
-        results['type']='source_confusion' 
+        results['status']='confused' 
 
-        roi.modify(which=name,spatial_model=roi.roi_dir)
-        roi.localize(which=name)
-        roi.fit()
+        # not quite sure what to do in this situation. For now, just keep
+        # going with the wrong spatial model
 
-        roi.modify(which=name, saptial_model=get_snr(name, snrdata).spatial_model)
     else:
-        # SNR is extended
-        results['type']='extended_source'
+        # SNR is extended, keep best fit extension
+        results['status']='extended'
 else:
     # SNR is not significant, so just calculate upper limit later.
-    results['type']='insignificant'
+    results['status']='insignificant'
 
-# here, plot again the region before + after background subtraction
-# Here, plot 'radio' size + extended source best fit spatial model
+roi.print_summary()
 
 results['postlocalize_pointlike']=sourcedict(roi,name,emin=1e4,emax=1e5)
 roi.save('roi_postlocalize.dat')
 
-roi.print_summary()
-print roi
+plots('postlocalize')
 
-print results
-
-
-# *) make a smoothed counts map + tsmap
-
-plot_size = max(snrsize*4, 3)
-
-for kernel_rad in [0.1,0.25]:
-    for function,title_base,filename_base in [[roi.plot_sources,'Diffuse Subtracted','sources'],[roi.plot_source,'BG Source Subtracted','source']]:
-        smooth=function(size = plot_size, 
-                        kernel_rad=kernel_rad, label_psf=False,
-                        colorbar_radius = max(snrsize, 1),
-                        title=r'%s ($\sigma_\mathrm{smooth}=%g^\circ$)' % (title_base,name,kernel_rad))
-        plot_extra_stuff(smooth.axes, smooth.header)
-        P.savefig('%s_kernel_%g_%s.png' % (filename_base,kernel_rad,name))
-
-tsmap=roi.plot_tsmap(size = plot_size, 
-                     pixelsize = 1./8,
-                     title='TS Map %s' % name)
-plot_extra_stuff(tsmap.axes, tsmap.header)
-P.savefig('tsmap_%s.png' % name)
-
-
-
-# *) Convert to Gtlike object
+# *) Convert to Gtlike object for final analysis
 
 gtlike=Gtlike(roi,binsz=1./8)
 like=gtlike.like
@@ -172,14 +239,6 @@ like=gtlike.like
 
 like.fit(covar=True)
 results['postlocalize_gtlike']=sourcedict(like,name,emin=1e4,emax=1e5)
-
-# *) Perform upper limits assuming spectral index 2
-
-# N.B., for the E>10GeV analysis we are very much in the Poisson instead
-# of Gaussian regime. The likelihood function will be VERY linear. As a result,
-# delta_log_like_limits = 50 should be much more reasonable (not quite sure
-# how to quantify this right now...)
-results['upper_limit_gtlike'] = powerlaw_upper_limit(like,name, delta_log_like_limits=50, verbosity=2)
 
 f=open('results_%s.yaml' % name,'w')
 yaml.dump(tolist(results),f)
