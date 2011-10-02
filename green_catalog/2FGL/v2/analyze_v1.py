@@ -20,7 +20,8 @@ from argparse import ArgumentParser
 import yaml
 import os
 
-def plot_extra_stuff(axes,header, roi):
+
+def overlay_on_plot(axes,header, roi):
     """ Overlay:
         * Deleted 2FGL sources
         * the SNR + best fit extension. 
@@ -30,10 +31,9 @@ def plot_extra_stuff(axes,header, roi):
         axes['gal'].plot([source.skydir.l()],[source.skydir.b()], marker='*', color='green', 
                          markeredgecolor='white', markersize=12)
 
-
     source = roi.get_source(name)
 
-    # plot the SNR in blue
+    # plot the best fit SNR position/center in blue
     ROISmoothedSource.overlay_source(source, axes, color='blue', zorder=10)
 
     if isinstance(source,ExtendedSource):
@@ -53,7 +53,7 @@ def plot_extra_stuff(axes,header, roi):
         levels = eval(contour['levels'])
         axes[hdu.header].contour(hdu.data, levels, colors='lightblue')
 
-def plots(when):
+def plots(hypothesis):
     """ make a smoothed counts map + tsmap. 
 
     here, plot again the region before + after background subtraction
@@ -67,49 +67,131 @@ def plots(when):
         for function,title_base,filename_base in [[roi.plot_sources,'Diffuse Subtracted','sources'],[roi.plot_source,'BG Source Subtracted','source']]:
             smooth=function(which = name,
                             size = plot_size, 
-                            show_extensions = True if when == 'postlocalize' else False,
-                            kernel_rad=kernel_rad, label_psf=False,
+                            kernel_rad=kernel_rad, 
                             colorbar_radius = max(snrsize, 1),
                             title=r'%s %s ($\sigma_\mathrm{smooth}=%g^\circ$)' % (title_base,name,kernel_rad))
-            plot_extra_stuff(smooth.axes, smooth.header, roi)
-            P.savefig('%s_%s_kernel_%g_%s.png' % (filename_base,when,kernel_rad,name))
+            overlay_on_plot(smooth.axes, smooth.header, roi)
+            P.savefig('%s_%s_kernel_%g_%s.png' % (filename_base,hypothesis,kernel_rad,name))
 
 
     # Residual TS Map
     tsmap=roi.plot_tsmap(size = plot_size, pixelsize = 1./8, title='Residual TS Map %s' % name)
-    plot_extra_stuff(tsmap.axes, tsmap.header, roi)
-    P.savefig('tsmap_residual_%s_%s.png' % (when,name))
+    overlay_on_plot(tsmap.axes, tsmap.header, roi)
+    P.savefig('tsmap_residual_%s_%s.png' % (hypothesis,name))
 
     # Source TS Map
     roi.zero_source(name)
     tsmap=roi.plot_tsmap(size = plot_size, pixelsize = 1./8, title='Source TS Map %s' % name)
-    plot_extra_stuff(tsmap.axes, tsmap.header, roi)
+    overlay_on_plot(tsmap.axes, tsmap.header, roi)
     roi.unzero_source(name)
-    P.savefig('tsmap_source_%s_%s.png' % (when,name))
+    P.savefig('tsmap_source_%s_%s.png' % (hypothesis,name))
+
+
+def gtlike_analysis(roi, upper_limit=False):
+    """ perform spectral fit with gtlike to crosscheck the point-like anlaysis. """
+
+    print '\n\nPerforming Gtlike analysis\n\n'
+
+    gtlike=Gtlike(roi,binsz=1./8)
+    like=gtlike.like
+
+    like.fit(covar=True)
+
+    results = sourcedict(like,name,emin=emin,emax=emax)
+    if upper_limit:
+        # *) Perform upper limits assuming spectral index 2
+
+        # N.B., for the E>10GeV analysis we are very much in the Poisson instead
+        # of Gaussian regime. The likelihood function will be VERY linear. As a result,
+        # delta_log_like_limits = 50 should be much more reasonable (not quite sure
+        # how to quantify this right now...)
+        results['upper_limit'] = powerlaw_upper_limit(like,name, delta_log_like_limits=50, verbosity=2)
+
+    return results
+
+def pointlike_analysis(roi, hypothesis, localize=False, fit_extension=False):
+
+    print '\n\nPerforming Pointlike analysis for %s hypothesis\n\n' % hypothesis
+
+    def fit():
+        """ Convenience function incase fit fails. """
+        try:
+            roi.fit(use_gradient=True)
+        except Exception, ex:
+            print 'ERROR spectral fitting: ', ex
+
+    print 'Initial Spectral Model for %s hypothesis:' % hypothesis
+    roi.print_summary(galactic=True)
+
+
+    if localize:
+        # Note, no preliminary spectral fit of point-like
+        # source before localization since the fit could
+        # likely fail to converge.
+        try:
+            print 'First, localize with GridLocalize (helps with convergence)'
+
+            grid=GridLocalize(roi,which=name,size=max(snrsize,0.5),pixelsize=snrsize/10)
+            skydir = grid.best_position()
+            print 'Using Grid Localize, best position is (l,b)=(%.3f,%.3f)' % (skydir.l(),skydir.b())
+
+            roi.modify(which=name, skydir=skydir)
+
+            roi.localize(which=name, update=True)
+        except Exception, ex:
+            print 'ERROR localizing: ',ex
+
+    if fit_extension:
+        fit()
+
+        roi.fit_extension(which=name)
+        ts_ext = roi.TS_ext(which=name) # can comapre to acutal point-like hypothesis
+
+    fit()
+
+    print 'Final Spectral Model for %s hypothesis:' % hypothesis
+    roi.print_summary(galactic=True)
+
+    results=sourcedict(roi,name,emin=emin,emax=emax)
+
+    if fit_extension: 
+        results['ts_ext_function'] = ts_ext
+
+    roi.save('roi_%s.dat' % hypothesis)
+
+    print 'Making Plots for %s hypothesis' % hypothesis
+    plots(hypothesis)
+
+    return results
+
 
 parser = ArgumentParser()
 parser.add_argument("--snrdata", required=True)
 parser.add_argument("--name", required=True)
+parser.add_argument("--emin", type=float, default=1e4)
+parser.add_argument("--emax", type=float, default=1e5)
+
 args=parser.parse_args()
 
 name=args.name
 snrdata=args.snrdata
+emin=args.emin
+emax=args.emax
 
 results=dict(name=name)
 
 # *) Build the ROI
-roi=setup_roi(name,snrdata)
+roi=setup_roi(name,snrdata, fit_emin=emin, fit_emax=emax)
 
 # get the SNR as an extended source object.
 
-snr = get_snr(name, snrdata)
-snrsize = snr.spatial_model['sigma']
-
+snr_radio_template = get_snr(name, snrdata)
+snrsize = snr_radio_template.spatial_model['sigma']
 
 # *) modify the ROI to remove overlaping background sources. 
 deleted_sources = []
 for source in roi.get_sources():
-    if np.degrees(source.skydir.difference(snr.skydir)) < snrsize + 0.1:
+    if np.degrees(source.skydir.difference(snr_radio_template.skydir)) < snrsize + 0.1:
         deleted_sources.append(roi.del_source(source))
 
 for source in roi.get_sources():
@@ -118,127 +200,39 @@ for source in roi.get_sources():
         free=np.asarray([True]+[False]*(len(source.model._p)-1))
         roi.modify(which=source,free=free)
 
-roi.print_summary()
 
-def fit():
-    try:
-        roi.fit(use_gradient=True)
-    except Exception, ex:
-        print 'ERROR spectral fitting: ', ex
+print '\n\nAnalyze SNR with radio template\n\n'
 
+roi.add_source(snr_radio_template)
 
-fit()
+results['radio'] = {}
+results['radio']['pointlike']=pointlike_analysis(roi,'radio')
+results['radio']['gtlike']=gtlike_analysis(roi,upper_limit=True)
 
+print '\n\nAnalyze SNR as point-like source\n\n'
 
-#    Then add in the SNR as a new source.
+# Best to start with initial spectral model, for convergence regions.
+roi.del_source(which=name)
+roi.add_source(get_snr(name, snrdata, point_like=True))
 
-roi.add_source(snr)
+results['point'] = {}
+results['point']['pointlike']=pointlike_analysis(roi,'point', localize=True)
+results['point']['gtlike']=gtlike_analysis(roi)
 
-# *) perform spectral fit + get out the best fit values.
+print '\n\nAnalyze SNR as extended source\n\n'
 
-fit()
+roi.del_source(which=name)
+roi.add_source(get_snr(name, snrdata))
 
-plots('prelocalize')
-
-results['prelocalize_pointlike']=sourcedict(roi,name,emin=1e4,emax=1e5)
-roi.save('roi_prelocalize.dat')
-
-
-gtlike=Gtlike(roi,binsz=1./8)
-like=gtlike.like
-
-# *) perform spectral fit with gtlike using original template.
-#    + get out the best fit values
-
-like.fit(covar=True)
-results['prelocalize_gtlike']=sourcedict(like,name,emin=1e4,emax=1e5)
-
-# *) Perform upper limits assuming spectral index 2
-
-# N.B., for the E>10GeV analysis we are very much in the Poisson instead
-# of Gaussian regime. The likelihood function will be VERY linear. As a result,
-# delta_log_like_limits = 50 should be much more reasonable (not quite sure
-# how to quantify this right now...)
-results['upper_limit_gtlike'] = powerlaw_upper_limit(like,name, delta_log_like_limits=50, verbosity=2)
+results['extended'] = {}
+results['extended']['pointlike']=pointlike_analysis(roi, 'extended', fit_extension=True)
+results['extended']['gtlike']=gtlike_analysis(roi)
 
 
-# Now, try morphological analysis
-
-def localize():
-    try:
-        print 'First, localize with GridLocalize (helps with convergence)'
-
-        grid=GridLocalize(roi,which=name,size=max(snrsize,0.5),pixelsize=snrsize/10)
-        skydir = grid.best_position()
-        print 'Using Grid Localize, best position is ',skydir
-
-        roi.modify(which=name, skydir=skydir)
-
-        roi.localize(which=name, update=True)
-    except Exception, ex:
-        print 'ERROR localizing: ',ex
-
-
-# *) if TS > 9, perform new morphological analysis
-
-if results['prelocalize_gtlike']['ts'] > 9:
-    roi.fit_extension(which=name)
-    ts_ext = roi.TS_ext(which=name)
-    results['ts_ext'] = ts_ext
-
-    roi.print_summary()
-
-    spatial_model = roi.get_source(name).spatial_model
-    # extension fit bad if fit size is very different from true size
-    extension_is_bad = np.abs(get_snr(name, snrdata).spatial_model['sigma'] - spatial_model['sigma'])/spatial_model.error('sigma') > 3
-
-    if ts_ext < 16:
-        # If tsext<16, the source is not extended, so do the
-        # following analysis with SNR as a point-like source.
-
-        print 'ts_ext < 16, converting to a point-like source'
-        results['status']='pointlike' # source is not spatially extended
-
-        roi.modify(which=name,spatial_model=roi.roi_dir)
-        localize()
-        fit()
-
-        # here, we can test if localization failed!
-
-    elif extension_is_bad:
-        # extension fit failed. Most likely in a region with other sources nearby which are not
-        # being fit correctly. So switch to point-like hypothesis and refit the SNR.
-        print 'Fit extension is bad. Presumably, something has to be done to the background model outside the script to fix this...'
-
-        # convert back to orignial size
-        results['status']='confused' 
-
-        # not quite sure what to do in this situation. For now, just keep
-        # going with the wrong spatial model
-
-    else:
-        # SNR is extended, keep best fit extension
-        results['status']='extended'
-else:
-    # SNR is not significant, so just calculate upper limit later.
-    results['status']='insignificant'
-
-roi.print_summary()
-
-results['postlocalize_pointlike']=sourcedict(roi,name,emin=1e4,emax=1e5)
-roi.save('roi_postlocalize.dat')
-
-plots('postlocalize')
-
-# *) Convert to Gtlike object for final analysis
-
-gtlike=Gtlike(roi,binsz=1./8)
-like=gtlike.like
-
-# *) perform spectral fit with gtlike + get out the best fit values
-
-like.fit(covar=True)
-results['postlocalize_gtlike']=sourcedict(like,name,emin=1e4,emax=1e5)
+for which in ['pointlike','gtlike']:
+    results['extended'][which]['ts_ext'] = \
+            2*(results['extended'][which]['logLikelihood'] - \
+               results['point'][which]['logLikelihood'])
 
 f=open('results_%s.yaml' % name,'w')
 yaml.dump(tolist(results),f)

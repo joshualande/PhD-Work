@@ -3,7 +3,7 @@ import yaml
 from os.path import expandvars as e
 
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
-from uw.like.pointspec_helpers import get_default_diffuse
+from uw.like.pointspec_helpers import get_default_diffuse, PointSource
 from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.roi_extended import ExtendedSource
 from uw.like.Models import PowerLaw
@@ -58,17 +58,25 @@ def setup_roi(name, snrdata, free_radius=2, fit_emin=1e4, fit_emax=1e5):
 
     return roi
 
-def get_snr(name, snrdata):
+def get_snr(name, snrdata, point_like=False):
 
     snr=yaml.load(open(snrdata))[name]
     skydir=SkyDir(*snr['cel'])
     radius=snr['radius']
+    model=PowerLaw(index=2)
 
-    return ExtendedSource(
-        name=name,
-        model=PowerLaw(index=2),
-        spatial_model=Disk(
-            sigma=radius,
-            center=skydir
-        )
-    )
+    if point_like:
+        return PointSource(
+            name=name,
+            model=model,
+            skydir=skydir
+            )
+    else:
+        return ExtendedSource(
+            name=name,
+            model=model,
+            spatial_model=Disk(
+                sigma=radius,
+                center=skydir
+                )
+            )

@@ -11,7 +11,8 @@
 import numpy as np
 #np.seterr(divide='ignore', invalid='ignore', over='ignore', under='ignore')
 
-from toolbag import *
+from . toolbag import *
+from . lande_localize import *
 
 # import stuff generally useful
 from uw.like.Models import *
@@ -30,8 +31,8 @@ from uw.utilities.minuit import Minuit
 from uw.utilities import keyword_options
 from skymaps import *
 from os.path import *
-from roi_gtlike import *
-from lande_plotting import *
+from . roi_gtlike import *
+from . lande_plotting import *
 
 from uw.like import sed_plotter
 import pylab as P
@@ -361,7 +362,6 @@ class LandeROI(ROIAnalysis):
         for name in names:
             self.localize(which=name,*args,**kwargs)
 
-
     def plot_all_seds(self,filename='all_seds.png',num_cols=4,**kwargs):
         """ Create an SED of all sources in the ROI. 
             It is important to make sure you are modeling
@@ -401,26 +401,6 @@ class LandeROI(ROIAnalysis):
         src_info = gtlike.get_gtlike_info_dict(which)
         return src_info
     
-    def sum_tsmap(self,*args,**kwargs):
-        if not self.quiet: print 'Creating sum tsmap'
-        tscalc = TSCalc(self)
-        mask = np.ones(len(self.psm.models),dtype=bool)
-        temp=TSCalcPySkyFunction(tscalc,source_mask=mask)
-        self._save_map(temp,*args,**kwargs)
-
-    def res_tsmap(self,*args,**kwargs):
-        if not self.quiet: print 'Creating residual tsmap'
-        tscalc = TSCalc(self)
-        temp=TSCalcPySkyFunction(tscalc)
-        self._save_map(temp,*args,**kwargs)
-
-    def _save_map(self,temp,center=None,filename=None,pixelsize=0.125,fov=10,projection='AIT', galactic=True):
-        skyfun=temp.get_pyskyfun()
-        center = self.roi_dir if center is None else center
-        skyimage = SkyImage(center,filename, pixelsize,fov,1,projection, galactic, False)
-        skyimage.fill(skyfun)
-        del(skyimage)
-
     def get_info_dict(self,which):
         """ Return a dictionary of everything Joshua finds
             interesting about the source. """
@@ -938,245 +918,4 @@ def random_point_near(skydir,distance):
         return DualLocalizer.anti_rotate_equator(rotated_dir,skydir)
 
 
-def hess_sed(roi,hess_points,outdir=None,**kwargs):
-
-    sed_plotter.plot_sed(roi,use_ergs=False,printout=True,galmap=False,**kwargs)
-
-    try:
-        hess_points=open(hess_points).read()
-    except:
-        pass
-
-    hess_lines=hess_points.split('\n')
-    hess_lines=[line.strip() for line in hess_lines]
-    hess_lines=[line for line in hess_lines if line != '']
-
-    if hess_lines[0].split() != ['Energy','Flux','Flux','Error_low','Flux','Error_high']:
-        raise Exception("Unable to parse hess header")
-    if hess_lines[1].split() != ['[TeV]','[/TeV','cm^2','s]']:
-        raise Exception("Unable to parse hess header")
-
-    hess_lines = hess_lines[2:]
-    energy, flux, flux_low, flux_high = map(np.asarray,zip(*[map(float,line.split()) for line in hess_lines]))
-
-    # convert energy to MeV
-    energy *= 1e6
-    # convert TeV poitns to MeV cm^-2 s^-1
-    # TeV^-1 cm^-2 s^-1 * (1TeV/1e3 MeV) * MeV**2 = MeV cm^-1 s^-1
-    flux *= 1e-6 * energy**2
-    flux_low *= 1e-6 * energy**2
-    flux_high *= 1e-6 * energy**2
-
-    print energy,flux
-
-    P.errorbar(energy, flux, yerr=[flux_low,flux_high],fmt='.',linewidth=2,color='r')
-
-    ax=P.gca()
-    ax.set_autoscale_on(True)
-    ax.autoscale_view()
-
-    if outdir is not None:
-        P.savefig(outdir)
-
-class MultiLocalizer():
-    """ Object that can simultanously fit the poistion + extension
-        of an arbitrary number of point and extended sources. """
-
-    defaults = (
-            ('use_gradient',     True, "Analytic gradient of spectral parameters when fitting."),
-            ('tolerance',        0.01, "Fit tolerance to use when fitting"),
-            ('verbose',          True, "Print more stuff during fit.")
-    )
-
-    @keyword_options.decorate(defaults)
-    def __init__(self, roi, *sources, **kwargs):
-        keyword_options.process(self, kwargs)
-
-        self.roi=roi
-
-        if len(sources)<2:
-            raise Exception("Must be passed in more than one source to localize.")
-
-        for source in sources:
-            try:
-                roi.get_source(source)
-            except:
-                raise Exception("Unrecognized source %s" % source)
-
-        self.sources = [roi.get_source(source) for source in sources]
-
-    def update_roi(self,p):
-        """ Takes in a list of paramters and updates all
-            of the sources in the ROI. """
-        for source in self.sources:
-            antirotated=DualLocalizer.anti_rotate_equator(SkyDir(p[0],p[1]),self.middle)
-
-            print source.name
-            if isinstance(source,PointSource):
-                p=p[2:]
-                self.roi.modify(which=source,skydir=antirotated)
-            else:
-                spatial_model=self.roi.get_source(which=source).spatial_model
-                nparam=len(spatial_model.p)
-                spatial_model.set_parameters(p=p[2:nparam],center=antirotated,absolute=False)
-                p=p[nparam:]
-                self.roi.modify(which=source,spatial_model=spatial_model,preserve_center=False)
-        assert(len(p)==0)
-
-    @staticmethod
-    def get_rotated_paramters(sources,middle):
-        """ Returns a list of spatial paramters for all the sources (in the rotated
-            coordiante system). """
-        p=[]
-        for source in sources:
-            rotated=DualLocalizer.rotate_equator(source.skydir,middle)
-            if isinstance(source,ExtendedSource):
-                p += [rotated.ra(),rotated.dec()] + source.spatial_model.get_parameters(absolute=False)[2:].tolist()
-            else:
-                p += [rotated.ra(),rotated.dec()]
-        return p
-
-    def fit(self,p):
-        print 'update roi'
-
-        self.update_roi(p)
-
-        print 'fit'
-
-        ll=self.roi.fit(use_gradient=self.use_gradient,estimate_errors=False)
-
-        if ll < self.ll_0:
-            prev= [source.model.get_parameters() for source in self.sources]
-            for source,p in zip(self.sources,self.init_spectral):
-                source.model.set_parameters(p)
-
-            ll_alt=self.roi.fit(use_gradient=self.use_gradient,estimate_errors=False)
-
-            if ll_alt > ll: 
-                ll=ll_alt
-            else: 
-                for source,p in zip(self.sources,prev):
-                    source.model.set_parameters(p)
-
-        if self.verbose: 
-            print_str=[]
-            for source in self.sources:
-                if isinstance(source,PointSource):
-                    print_str.append('%s: [%.3f,%.3f] f=%.1e' % \
-                            (source.name,source.skydir.l(),source.skydir.b(),
-                                DualLocalizer.print_flux(source,self.roi)))
-                else:
-                    print_str.append('%s: [%s] f=%.1e' % \
-                            (source.name,source.spatial_model.full_spatial_string(),
-                                DualLocalizer.print_flux(source,self.roi)))
-            print_str.append('logL=%.3f' % ll)
-            print_str.append('dlogL=%.3f' % (ll-self.ll_0))
-            print ', '.join(print_str)
-
-        return -ll # minimize negative log likelihood
-
-
-    def localize(self):
-
-        # Fit in a rotated coordinate system which is somewhere between all of
-        # the sources being fit.
-        self.middle = DualLocalizer.approx_mid_point(*[source.skydir for source in self.sources])
-
-
-        self.init_spectral = [source.model.get_parameters() for source in self.sources]
-
-        p0 = MultiLocalizer.get_rotated_paramters(self.sources,self.middle)
-
-        old_quiet= self.roi.quiet
-        self.roi.quiet=True
-
-        steps=reduce(operator.add,
-                [[0.1,0.1] if isinstance(source,PointSource) 
-                    else source.spatial_model.get_steps().tolist()
-                    for source in self.sources])
-
-        self.ll_0=-1*self.roi.logLikelihood(self.roi.parameters())
-
-        m = Minuit(self.fit, p0,
-                   tolerance = self.tolerance,
-                   maxcalls  = 500,
-                   printMode = True, 
-                   steps     = steps
-                   )
-
-        best_spatial,fval = m.minimize(method="SIMPLEX")
-
-        self.roi.quiet = old_quiet
-
-        return
-
-
-
-def expand_fits(pf,factor,hdu=0):
-    """ Create a new fits file where
-        each pixel is divided into factor**2
-        more pixels all of equal value. 
-        
-        I am not an expert on Fits files and
-        I only think this code works. Also,
-        I have no idea if it would work with 3D data (?).
-        As a rule of thumb, if you use this function,
-        you should probably open the before/after
-        in ds9 and blink them for a while to convince
-        yourself the function worked.
-    """
-
-    h=pf[hdu].header
-    d=pf[hdu].data
-
-    h['CDELT1']/=factor
-    h['CDELT2']/=factor
-
-    h['NAXIS1']*=factor
-    h['NAXIS2']*=factor
-
-    h['CRPIX1']=h['CRPIX1']*factor - factor/2.0 + 0.5
-    h['CRPIX2']=h['CRPIX2']*factor - factor/2.0 + 0.5
-
-    larger=list(d.shape)
-    larger[0]*=factor
-    larger[1]*=factor
-    #larger_array = np.empty(larger,dtype=d.dtype)
-    larger_array = np.zeros(larger,dtype=d.dtype)
-    for i in range(factor):
-        for j in range(factor):
-            larger_array[i::factor,j::factor] = d
-
-    pf[hdu].data=larger_array
-
-
-def saveeps(filename):
-    """ Matplotlib's eps support seems kind of lame.
-        It seems like you get better eps figures to
-        generate pdf figures and use acroread to convert
-        them to eps figures. """
-    base,ext=os.path.splitext(filename)
-    if ext != '.eps':
-        raise Exception("filename must end in .eps")
-
-    P.savefig('%s.pdf' % base)
-    #os.system('acroread -toPostScript %s.pdf' % base)
-    #os.system('ps2epsi %s.ps %s.eps' % (base,base))
-    #os.remove('%s.pdf' % base)
-    #os.remove('%s.ps' % base)
-    os.system('pdftops -level1 -eps %s.pdf %s.eps' % (base,base))
-
-
-
-def tolist(x):
-    if isinstance(x,list):
-        return map(fix,x)
-    elif isinstance(x,dict):
-        return dict((fix(k),fix(v)) for k,v in x.keys())
-    elif isinstance(x,np.ndarray) or \
-            isinstance(x,np.number) or \
-            isinstance(x,np.str):
-        return x.tolist()
-    else:
-        return x
 

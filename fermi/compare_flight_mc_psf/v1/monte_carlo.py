@@ -77,7 +77,10 @@ results_dict=[]
 
 index_mc=2
 
-for flux_mc in [ 1e-9, 3e-9, 1e-8, 3e-8, 1e-7, 3e-7, 1e-6, 3e-6 ]:
+for flux_mc in [1e-9, 3e-6,
+                3e-9, 1e-6,
+                1e-8, 3e-7,
+                3e-8, 1e-7]:
 
     source_str="%g_%g_%s" % (flux_mc,index_mc,istr)
 
@@ -200,6 +203,9 @@ for flux_mc in [ 1e-9, 3e-9, 1e-8, 3e-8, 1e-7, 3e-7, 1e-6, 3e-6 ]:
         results_dict[-1]['ts_%s' % fit_irf] = ts
         results_dict[-1]['ts_ext_%s' % fit_irf] = ts_ext
         results_dict[-1]['sigma_%s' % fit_irf] = sigma
+
+        del roi
+
 
     results_dict = toolbag.tolist(results_dict)
 
