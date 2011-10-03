@@ -15,7 +15,6 @@ from toolbag import tolist
 
 def find_offpeak(ft1,name,rad,peaks,off_peak):
     """plot light curve using pointlike script in whixh is added a line to plot the edges of the offpulse region
-    off_peak= [a,b]
     a=minimum of the edge
     b=maximum of the edge"""
     
@@ -31,9 +30,6 @@ def find_offpeak(ft1,name,rad,peaks,off_peak):
             primitives.append(lp.LCLorentzian2(p=[0.4,0.05,0.05,peak]))
         else:
             primitives.append(eval(peak))
-    #primitives = [lp.LCGaussian2(p=[0.05,0.05,0.05,peak]) for peak in peaks]
-    #primitives = [lp.LCGaussian(p=[0.05,0.05,peak]) for peak in peaks]
-    #primitives = [lp.LCGaussian(p=[0.05,0.05,peak]) for peak in peaks]
     lct = lf.LCTemplate(primitives=primitives)
 
     init_template = copy.deepcopy(lct)
@@ -50,21 +46,11 @@ def find_offpeak(ft1,name,rad,peaks,off_peak):
 
     op = OffPeak(lcf)
 
-    def wrap_axvspan(min,max,**kwargs):
-        if isinstance(min,list) and isinstance(max,list):
-            wrap_axvspan(min[0],min[1],**kwargs)
-            wrap_axvspan(max[0],max[1],**kwargs)
-        else:
-            if min > max:
-                P.axvspan(min,1,**kwargs)
-                P.axvspan(0,max,**kwargs)
-            else:
-                P.axvspan(min,max,**kwargs)
-
     for a,b in op.off_peak.tolist(dense=False):
         P.axvspan(a, b, label='lande', alpha=0.25, color='green')
 
-    wrap_axvspan(off_peak[0], off_peak[1], label='pwncat1', alpha=0.25, color='blue')
+    for a,b in off_peak.tolist(dense=False):
+        P.axvspan(a, b, label='pwncat1', alpha=0.25, color='blue')
 
     P.legend()
 
@@ -108,7 +94,9 @@ if __name__ == '__main__':
 
     name=args.name
     ft1=yaml.load(open(args.pwndata))[name]['ft1']
-    phase=yaml.load(open(args.pwnphase))[name]['phase']
+
+    phase=PhaseRange(*yaml.load(open(args.pwnphase))[name]['phase'])
+
     peaks=yaml.load(open(args.pwnpeaks))[name]['peaks']
 
     print peaks
