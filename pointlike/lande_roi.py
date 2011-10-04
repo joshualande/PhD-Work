@@ -11,8 +11,8 @@
 import numpy as np
 #np.seterr(divide='ignore', invalid='ignore', over='ignore', under='ignore')
 
-from . toolbag import *
-from . lande_localize import *
+from toolbag import *
+from lande_localize import *
 
 # import stuff generally useful
 from uw.like.Models import *
@@ -31,8 +31,8 @@ from uw.utilities.minuit import Minuit
 from uw.utilities import keyword_options
 from skymaps import *
 from os.path import *
-from . roi_gtlike import *
-from . lande_plotting import *
+from roi_gtlike import *
+from lande_plotting import *
 
 from uw.like import sed_plotter
 import pylab as P

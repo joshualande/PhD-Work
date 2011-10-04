@@ -182,8 +182,8 @@ class SED(object):
                 if np.alltrue(np.abs(e - like.energies) > 0.5):
                     raise Exception("energy %.1f in bin_edges is not commensurate with the energy binning of pyLikelihood." % e)
             
-            self.bin_edges = bin_edges
-            self.energies = np.sqrt(bin_edges[1:]*bin_edges[:-1])
+            self.bin_edges = np.asarray(bin_edges)
+            self.energies = np.sqrt(self.bin_edges[1:]*self.bin_edges[:-1])
         else:
             # These energies are always in MeV
             self.bin_edges = like.energies
