@@ -141,7 +141,9 @@ class SED(object):
 
     ul_choices = ['frequentist', 'bayesian']
 
-    def __init__(self, like, name, verbosity=0, 
+    def __init__(self, like, name, 
+                 bin_edges=None,
+                 verbosity=0, 
                  freeze_background=True,
                  always_upper_limit=False,
                  ul_algorithm='bayesian',
@@ -152,6 +154,7 @@ class SED(object):
         """ Parameters:
             * like - pyLikelihood object
             * name - source to make an SED for
+            * bin_edges - if specified, calculate the SED in these bins.
             * verbosity - how much output
             * freeze_background - don't refit background sources.
             * always_upper_limit - Always compute an upper limit. Default 
@@ -170,9 +173,22 @@ class SED(object):
         self.ul_algorithm       = ul_algorithm
         self.powerlaw_index     = powerlaw_index
         self.min_ts             = min_ts
-
-        self.flux_units  = flux_units
+        self.flux_units         = flux_units
         self.energy_units       = energy_units
+
+        if bin_edges is not None:
+
+            for e in bin_edges:
+                if np.alltrue(np.abs(e - like.energies) > 0.5):
+                    raise Exception("energy %.1f in bin_edges is not commensurate with the energy binning of pyLikelihood." % e)
+            
+            self.bin_edges = bin_edges
+            self.energies = np.sqrt(bin_edges[1:]*bin_edges[:-1])
+        else:
+            # These energies are always in MeV
+            self.bin_edges = like.energies
+            self.energies = like.e_vals
+
 
         if self.flux_units not in [ 'eV', 'MeV', 'GeV', 'TeV', 'erg']:
             raise Exception('flux_units must be eV, Mev TeV, or erg')
@@ -181,9 +197,6 @@ class SED(object):
         if ul_algorithm not in self.ul_choices:
             raise Exception("Upper Limit Algorithm %s not in %s" % (ul_algorithm,str(self.ul_choices)))
 
-        # These energies are always in MeV
-        self.bin_edges = like.energies
-        self.energies = like.e_vals
 
         # dN/dE, dN/dE_err and upper limits (ul)
         # always in units of ph/cm^2/s/MeV
