@@ -8,9 +8,10 @@ python loop_pwn.py -c analyze_v1.py \
         -o /afs/slac/g/glast/users/rousseau/PWN_cat/1FGL_reanalysis/v3/analyze_v1/
 
 python loop_pwn.py -c pulse_find.py \
-        --pwndata /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
-        --pwnphase /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
-        -o /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v3/pulse_find/
+
+        --pwndata /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
+        --pwnphase /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
+        -o /afs/slac/g/glast/users/rousseau/PWN_cat/1FGL_reanalysis/v3/analyze_v1/
 
 """
 import yaml
@@ -22,10 +23,13 @@ from argparse import ArgumentParser
 parser = ArgumentParser()
 parser.add_argument("-c", "--command", required=True)
 parser.add_argument("--pwndata", required=True)
+parser.add_argument("--pwnphase", required=True)
 parser.add_argument("-o", "--outdir", required=True)
-args,remaining_args = parser.parse_known_args()
+parser.add_argument("-emin", "--emin",  default=1.0e2, type=float)
+parser.add_argument("-emax", "--emax",  default=1.0e5, type=float)
+parser.add_argument("-model", "--model", default="None")
+args=parser.parse_args()
 
-  
 outdir=args.outdir
 
 sources=yaml.load(open(args.pwndata))
@@ -46,9 +50,12 @@ for name in sources.keys():
     temp.write("""\
 python %s/%s \\
 -n %s \\
---pwndata %s %s""" % (os.getcwd(),args.command,name,
-                     args.pwndata,' '.join(remaining_args)))
-
+--pwndata %s \\
+--pwnphase %s \\
+-emin %.2e \\
+-emax %.2e \\
+-model %s""" % (os.getcwd(),args.command,name,
+                     args.pwndata,args.pwnphase,args.emin,args.emax,args.model))
 
 submit_all=join(outdir,'submit_all.py')
 temp=open(submit_all,'w')
@@ -63,6 +70,8 @@ import subprocess
 parser=argparse.ArgumentParser()
 parser.add_argument("-n",default=False,action="store_true",help="Don't do anything")
 parser.add_argument("-q","--queue",default='xxl',help="Don't do anything")
+parser.add_argument("-emin", "--emin",  default=1.0e2, type=float)
+parser.add_argument("-emax", "--emax",  default=1.0e5, type=float)
 args = parser.parse_args()
 
 p=subprocess.Popen(['bjobs', '-w'],stdout=subprocess.PIPE)

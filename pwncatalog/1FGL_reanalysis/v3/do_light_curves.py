@@ -48,7 +48,7 @@ if __name__ == '__main__':
     parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
     parser.add_argument("-p", "--pwnphase", required=True)
     parser.add_argument("--test", default=False, action='store_true')
-    parser.add_argument("--rad", default=4)
+    parser.add_argument("--rad", default=2)
     args=parser.parse_args()
 
     if args.test:
@@ -61,5 +61,10 @@ if __name__ == '__main__':
 
         ft1=yaml.load(open(args.pwndata))[name]['ft1']
         phase=yaml.load(open(args.pwnphase))[name]['phase']
+
+        print ft1
+        print phase
+        print name
+        print args.rad
 
         plot_lc(ft1,name,rad=args.rad,off_peak=phase)

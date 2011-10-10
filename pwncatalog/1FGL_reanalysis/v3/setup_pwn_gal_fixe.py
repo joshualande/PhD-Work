@@ -11,7 +11,7 @@ from uw.like.SpatialModels import Disk
 from uw.like.Models import PowerLaw
 from skymaps import SkyDir
 from uw.utilities import phasetools
-
+from uw.like.roi_save import *
 import pyfits
 
 def get_phase_factor(phase):
@@ -30,7 +30,7 @@ def phase_ltcube(ltcube,outputfile,phase,phase_col_name='PULSE_PHASE'):
     ltcube.close()
 
 
-def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, emin=1.0e2, emax=1.0e5,maxroi=10,model=None,**kwargs):
+def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, **kwargs):
     """Name of the source
     pwndata Yaml file
     
@@ -55,9 +55,6 @@ def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, emin=1.0e2, emax=
             phase = [phase] 
 
     phase_factor=get_phase_factor(phase)
-    print "phase"
-    print phase
-    print "phase_factor=%.2f"%phase_factor
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"),free_radius=free_radius)
     catalog_source=[i for i in catalog.get_sources(SkyDir(),180) if i.name==catalog_name][0]
@@ -74,7 +71,7 @@ def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, emin=1.0e2, emax=
 
     # create a temporary ltcube scaled by the phase factor
 #    phased_ltcube=j(tempdir,'phased_ltcube.fits')
-#    phase_ltcube(ltcube,phased_ltcube, phase=phase)
+#    phase_ltcube(ltcube,phased_ltcube, phase=[0.0,1.0])
     phased_ltcube=ltcube
     from uw.like.pointspec import DataSpecification
     data_specification = DataSpecification(
@@ -89,38 +86,41 @@ def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, emin=1.0e2, emax=
                                          emax       = 100000,
                                          irf        = "P6_V3_DIFFUSE",
                                          roi_dir    = center,
-                                         maxROI     = maxroi,
-                                         minROI     = maxroi)
+                                         maxROI     = 10,
+                                         minROI     = 10)
 
-    if model == None :
-        roi=spectral_analysis.roi(
-            roi_dir=center,
-            diffuse_sources=get_default_diffuse(diffdir=e("$FERMI/diffuse"),
-                                                gfile="gll_iem_v02.fit",
-                                                ifile="isotropic_iem_v02.txt"),
-            catalogs = catalog,
-            phase_factor = get_phase_factor(phase),
-            fit_emin = [emin,emin],
-            fit_emax = [emax,emax],
-            **kwargs)
-    else :
-        roi=spectral_analysis.roi(
-            roi_dir=center,
-            xmlfile = model,
-            phase_factor = get_phase_factor(phase),
-            fit_emin = [emin,emin],
-            fit_emax = [emax,emax],
-            **kwargs)
-
-    print "---------------------Energy range--------------------"
-    
-    print "emin="+str(roi.bands[0].emin)+"\n"
-    print "emax="+str(roi.bands[len(roi.bands)-1].emax)+"\n"
-        
+    roi=spectral_analysis.roi(
+        roi_dir=center,
+        diffuse_sources=get_default_diffuse(diffdir=e("$FERMI/diffuse"),
+                                            gfile="gll_iem_v02.fit",
+                                            ifile="isotropic_iem_v02.txt"),
+        catalogs = catalog,
+        phase_factor = phase_factor,
+        **kwargs) # phaseing already done to the ltcube
+    print "phase_factor=%.2f"%phase_factor
 
     # keep overall flux of catalog source,
     # but change the starting index to 2.
     roi.modify(which=catalog_name, name=name, index=2, 
                keep_old_flux=True)
+    
+    roi.toXML(filename="essai")
+    print roi
+    roi.print_summary()
+
+    for names in roi.get_names():
+        try :
+            roi.modify(names,Norm=roi.get_model(names)[0]*roi.phase_factor)
+        except :
+            try :
+                roi.modify(names,Int_flux=roi.get_model(names)[0]*roi.phase_factor)
+            except :
+                print names
+    table=roi.get_names()
+
+    print roi.modify(which=table[len(table)-2],model=PowerLaw(p=[1.0*phase_factor,0.1]),free=[True,False])
+    print roi.modify(which=table[len(table)-1],model=PowerLaw(p=[1.0*phase_factor,0.1]),free=[True,False])
+#    print roi.modify(which='eg_v02',free=[False])
+    print roi
 
     return roi
