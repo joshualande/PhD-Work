@@ -6,22 +6,51 @@ import yaml
 import numpy as np
 import pylab as P
 
+from setup_pwn import setup_pwn
+
 from uw.pulsar import lc_plotting_func
 from uw.pulsar import lcprimitives as lp
 from uw.pulsar.lcprimitives import * # for the eval
 from uw.pulsar.lc_off_peak import OffPeak
 from uw.pulsar.phase_range import PhaseRange
 from uw.pulsar import lcfitters as lf
+from uw.like.Models import ExpCutoff
 from toolbag import tolist
 
 
-def TSdc(name):
-    pass
-    phase=yaml.load(open(args.pwnphase))[name]['phase']
-    roi=setup_pwn(name,args.pwndata,phase=PulsePhase(0,1))
+def find_TSdc(name,pwndata):
+    print 'Calculating TSdc'
+    roi=setup_pwn(name,pwndata,phase=PhaseRange(0,1))
+
+    # start with a grid search, for convergence help
+    f=roi.get_model(name).i_flux(1e2,1e5)
+
+    best_ts = -np.inf
+    for index in [.01, .5, 1,1.5,2]:
+        for cutoff in [ 3e2, 1e3, 3e3, 1e4, 3e4]:
+            m=ExpCutoff(index=index,cutoff=cutoff)
+            m.set_flux(f,1e2,1e5)
+            roi.modify(which=name, model=m, keep_old_flux=False)
+            roi.fit(use_gradient=True, estimate_errors=False)
+            ts=roi.TS(which=name)
+            print cutoff,index,ts
+            if  ts > best_ts:
+                best_ts, best_index, best_cutoff = ts, index, cutoff
+
+    roi.print_summary()
+
+    TSdc = best_ts
+
+    roi.plot_sed(which=name, filename='sed_%s.pdf' % name)
+    roi.print_summary()
 
 
-def find_offpeak(ft1,name,rad,peaks,pwncat1phase):
+    print 'TSdc=%.1f' % TSdc
+
+    return TSdc
+
+
+def find_offpeak(ft1,name,rad,peaks,pwncat1phase, TSdc):
     """plot light curve using pointlike script in whixh is added a line to plot the edges of the offpulse region
     a=minimum of the edge
     b=maximum of the edge"""
@@ -42,6 +71,8 @@ def find_offpeak(ft1,name,rad,peaks,pwncat1phase):
 
     init_template = copy.deepcopy(lct)
 
+    print 'WARNING: HERE I SHOULD BE USING A WEIGHTED LIGHT CURVE'
+
     lcf = lf.LCFitter(lct,phases)
     print lcf
     lcf.fit(quick_fit_first=True)
@@ -51,8 +82,17 @@ def find_offpeak(ft1,name,rad,peaks,pwncat1phase):
     dom = np.linspace(0,1,200)
     P.plot(dom,init_template(dom),color='green',lw=1)
 
+    #if np.any([isinstance(p, LCLorentzian) or isinstance(p, LCLorentzian2) for p in primitives]):
+    #    TScontamination = 0.1
+    #else:
+    #    TScontamination = 1
+    #contamination = 1/(np.sqrt(TSdc)*10)
+    #contamination = .01*(100/TSdc)**(1./2)
+    #contamination = .01*(100/TSdc)**(1./3)
+    #contamination = .01*(100/TSdc)**(1./4)
+    contamination = .01
 
-    op = OffPeak(lcf)
+    op = OffPeak(lcf, contamination = contamination) 
 
     for a,b in op.off_peak.tolist(dense=False):
         P.axvspan(a, b, label='lande', alpha=0.25, color='green')
@@ -71,7 +111,9 @@ def find_offpeak(ft1,name,rad,peaks,pwncat1phase):
     results=tolist(
             dict(
                 lande_phase = op.off_peak.tolist(),
-                pwncat1phase = pwncat1phase,
+                pwncat1phase = pwncat1phase.tolist(),
+                TSdc = TSdc,
+                contamitation = contamination,
                 )
             )
 
@@ -101,7 +143,9 @@ if __name__ == '__main__':
     args=parser.parse_args()
 
     name=args.name
-    ft1=yaml.load(open(args.pwndata))[name]['ft1']
+    pwndata=args.pwndata
+
+    ft1=yaml.load(open(pwndata))[name]['ft1']
 
     pwncat1phase=PhaseRange(*yaml.load(open(args.pwnphase))[name]['phase'])
 
@@ -110,4 +154,8 @@ if __name__ == '__main__':
     print peaks
     if peaks is None: parser.exit('no peaks')
 
-    find_offpeak(ft1,name,rad=args.rad,peaks=peaks,pwncat1phase=pwncat1phase)
+    TSdc = find_TSdc(name,pwndata)
+
+    peaks=yaml.load(open(args.pwnpeaks))[name]['peaks']
+
+    find_offpeak(ft1,name,rad=args.rad,peaks=peaks,pwncat1phase=pwncat1phase, TSdc=TSdc)
