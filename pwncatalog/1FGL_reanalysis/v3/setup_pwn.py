@@ -11,10 +11,12 @@ from skymaps import SkyDir
 
 from uw.like.pointspec import SpectralAnalysis
 from uw.like.pointspec_helpers import get_default_diffuse, PointSource, FermiCatalog
-from uw.like.SpatialModels import Disk
+from uw.like.SpatialModels import Gaussian
+from uw.like.roi_catalogs import Catalog2FGL
+from uw.like.roi_extended import ExtendedSource
 from uw.like.Models import PowerLaw
 from uw.utilities import phasetools
-from phase_range import PhaseRange
+from uw.pulsar.phase_range import PhaseRange
 
 def phase_ltcube(ltcube,outputfile,phase,phase_col_name='PULSE_PHASE'):
     """ Scale ltcube """
@@ -28,7 +30,32 @@ def phase_ltcube(ltcube,outputfile,phase,phase_col_name='PULSE_PHASE'):
     ltcube.close()
 
 
-def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, emin=1.0e2, emax=1.0e5,maxroi=10,model=None,**kwargs):
+def setup_pwn(name, pwndata, *args, **kwargs):
+
+    roi = setup_region(name, pwndata, *args, **kwargs)
+    # keep overall flux of catalog source,
+    # but change the starting index to 2.
+    roi.add_source(get_source(name,pwndata))
+    return roi
+
+def get_source(name,pwndata, extended=False):
+    sources=yaml.load(open(pwndata))
+    pulsar_position=SkyDir(*sources[name]['dir'])
+    model=PowerLaw(norm=1e-11, index=2)
+
+    if extended:
+        return ExtendedSource(
+            name=name,
+            model=model,
+            spatial_model=Gaussian(sigma=0.1,center=pulsar_position))
+    else:
+        return PointSource(
+            name=name,
+            model=model,
+            skydir=pulsar_position)
+
+def setup_region(name,pwndata,phase, free_radius=5, tempdir=None, maxroi=10,
+              xml=None, **kwargs):
     """Name of the source
     pwndata Yaml file
     
@@ -39,7 +66,7 @@ def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, emin=1.0e2, emax=
 
     sources=yaml.load(open(pwndata))
 
-    catalog_name=sources[name]['catalog']
+    catalog_name=sources[name]['catalog']['2fgl']
     ltcube=sources[name]['ltcube']
     pulsar_position=SkyDir(*sources[name]['dir'])
     ft2=sources[name]['ft2']
@@ -48,7 +75,7 @@ def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, emin=1.0e2, emax=
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"))
     catalog=Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
-                        latextdir='$FERMI/extended_archives/',
+                        latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
                         free_radius=free_radius)
     catalog_source=catalog.get_source(catalog_name)
 
@@ -71,49 +98,38 @@ def setup_pwn(name,pwndata,phase, free_radius=5, tempdir=None, emin=1.0e2, emax=
         phasetools.phase_cut(ft1,phased_ft1,phaseranges=phase.tolist(dense=False))
 
     from uw.like.pointspec import DataSpecification
-    data_specification = DataSpecification(
-                         ft1files = phased_ft1,
-                         ft2files = ft2,
-                         ltcube   = phased_ltcube,
-                         binfile  = binfile)
+    ds = DataSpecification(
+        ft1files = phased_ft1,
+        ft2files = ft2,
+        ltcube   = phased_ltcube,
+        binfile  = binfile)
 
-    spectral_analysis = SpectralAnalysis(data_specification,
-                                         binsperdec = 4,
-                                         emin       = 100,
-                                         emax       = 100000,
-                                         irf        = "P6_V3_DIFFUSE",
-                                         roi_dir    = center,
-                                         maxROI     = maxroi,
-                                         minROI     = maxroi)
+    sa = SpectralAnalysis(ds,
+                          binsperdec = 4,
+                          emin       = 100,
+                          emax       = 100000,
+                          irf        = "P6_V11_DIFFUSE",
+                          roi_dir    = center,
+                          maxROI     = maxroi,
+                          minROI     = maxroi)
 
-    if model == None :
-        roi=spectral_analysis.roi(
-            roi_dir=center,
+    if xml is None:
+        roi=sa.roi(
             diffuse_sources=get_default_diffuse(diffdir=e("$FERMI/diffuse"),
                                                 gfile="gll_iem_v02.fit",
                                                 ifile="isotropic_iem_v02.txt"),
             catalogs = catalog,
-            phase_factor = get_phase_factor(phase),
-            fit_emin = [emin,emin],
-            fit_emax = [emax,emax],
+            phase_factor =1,
             **kwargs)
-    else :
-        roi=spectral_analysis.roi(
-            roi_dir=center,
-            xmlfile = model,
-            phase_factor = get_phase_factor(phase),
-            fit_emin = [emin,emin],
-            fit_emax = [emax,emax],
+    else:
+        roi=sa.roi_from_xml(
+            xmlfile = xml,
+            phase_factor =1,
             **kwargs)
 
-    print "---------------------Energy range--------------------"
-    
-    print "emin="+str(roi.bands[0].emin)+"\n"
-    print "emax="+str(roi.bands[len(roi.bands)-1].emax)+"\n"
+    print 'bins ',roi.bin_edges
+
+    roi.del_source(catalog_name)
         
-
-    # keep overall flux of catalog source,
-    # but change the starting index to 2.
-    roi.modify(which=catalog_name, name=name, index=2, keep_old_flux=True)
 
     return roi

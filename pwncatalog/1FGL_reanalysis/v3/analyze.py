@@ -7,7 +7,7 @@ from roi_gtlike import Gtlike
 
 from uw.like.sed_plotter import plot_sed
 
-from setup_pwn import setup_pwn
+from setup_pwn import setup_pwn,get_source
 from uw.like.SpatialModels import Disk
 from uw.like.roi_tsmap import TSCalc,TSCalcPySkyFunction
 from argparse import ArgumentParser
@@ -15,16 +15,22 @@ from skymaps import SkyImage,SkyDir
 import yaml
 from SED import SED
 
-from toolbag import tolist,sourcedict,powerlaw_upper_limit
+from toolbag import tolist
+from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff
+from collections import defaultdict
 
 
 parser = ArgumentParser()
 parser.add_argument("--pwndata", required=True)
 parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
+parser.add_argument("--emin", default=1e2, type=float)
+parser.add_argument("--emax", default=3e5, type=float)
 args=parser.parse_args()
   
 name=args.name
+emin=args.emin
+emax=args.emax
 
 phase=yaml.load(open(args.pwnphase))[name]['phase']
 roi=setup_pwn(name,args.pwndata,phase)
@@ -57,52 +63,121 @@ def customize_roi(name,roi):
 
     # Here, could modify crab to be a BrokenPowerlaw
 
-    # Or Vela X to be an exended source
-
 customize_roi(name,roi)
 
-results=r={}
+results=r=defaultdict(lambda: defaultdict(dict))
 
-roi.print_summary()
+
+def plot(roi, hypothesis, size=5):
+    # save stuff out
+    roi.plot_tsmap(filename='residual_tsmap_%s_%s.png' % (hypothesis,name), size=size)
+
+    roi.zero_source(which=name)
+    roi.plot_tsmap(filename='source_tsmap_%s_%s.png' % (hypothesis, name), size=size)
+    roi.unzero_source(which=name)
+
+    roi.plot_source(which=name,filename='source_%s_%s.png' % (hypothesis, name), size=size, label_psf=False)
+    roi.plot_sources(which=name,filename='sources_%s_%s.png' % (hypothesis, name), size=size, label_psf=False)
+
+    roi.plot_counts_map(filename='counts_%s_%s.png' % (hypothesis, name), size=size)
+
+
+def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_extension=False, extension_ul=False, cutoff=False):
+    print 'Performing Pointlike analysis for %s' % hypothesis
+
+    print_summary = lambda: roi.print_summary(galactic=True)
+    print_summary()
+
+    def fit():
+        """ Convenience function incase fit fails. """
+        try:
+            roi.fit(use_gradient=True)
+        except Exception, ex:
+            print 'ERROR spectral fitting: ', ex
+        print_summary()
+
+
+    fit()
+
+    if localize:
+        try:
+            roi.localize(name, update=True)
+        except Exception, ex:
+            print 'ERROR localizing: ', ex
+        fit()
+
+    if fit_extension:
+        try:
+            roi.fit_extension(name)
+            roi.localize(name, update=True)
+        except Exception, ex:
+            print 'ERROR localizing: ', ex
+        fit()
+
+    p = sourcedict(roi, name)
+
+    if extension_ul:
+        print 'UNABLE To Calculate Extension Upper limit'
+
+    if upper_limit:
+        p['upper_limit'] = powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
+    if cutoff:
+        p['test_cutoff']=test_cutoff(roi,name)
+
+    roi.plot_sed(which=name,filename='sed_pointlike_%s_%s.pdf' % (hypothesis,name), use_ergs=True)
+ 
+    roi.save('roi_%s_%s.dat' % (hypothesis,name))
+
+    #plot(roi, hypothesis)
+    return p
+
+def gtlike_analysis(roi, hypothesis, upper_limit=False, cutoff=False):
+    print 'Performing Gtlike crosscheck for %s' % hypothesis
+
+    gtlike=Gtlike(roi)
+    like=gtlike.like
+    like.fit(covar=True)
+
+    r=sourcedict(like, name)
+
+    if upper_limit:
+        r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95)
     
-roi.fit(use_gradient=True)
+    if cutoff:
+        r['test_cutoff']=test_cutoff(like,name)
 
-roi.print_summary()
-roi.plot_sed(which=name,filename='sed_pointlike_%s.pdf' % name, use_ergs=True)
+    for kind, kwargs in [['4bpd',dict(bin_edges=np.logspace(2,5,13))],
+                         ['1bpd',dict(bin_edges=np.logspace(2,5,4))]]:
 
-r['pointlike']=sourcedict(roi,name,'_at_pulsar')
+        print 'Making %s SED' % kind
+        sed = SED(like, name, **kwargs)
+        sed.plot('sed_gtlike_%s_%s_%s.png' % (kind,hypothesis,name)) 
+        sed.verbosity=True
+        sed.save('sed_gtlike_%s_%s_%s.dat' % (kind,hypothesis,name))
 
-gtlike=Gtlike(roi)
-like=gtlike.like
-like.fit(covar=True)
+    return r
+    
+def save_results(): 
+    open('results_%s.yaml' % name,'w').write(
+        yaml.dump(tolist(results)))
 
-r['gtlike']=sourcedict(like,name,'_at_pulsar')
 
-# calculate gtlike upper limits ...
+do_gtlike = False
 
-# calculate TScutoff ...
+r['at_pulsar']['pointlike']=pointlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=True)
+save_results()
+if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=True)
 
-results['gtlike']['upper_limit'] = powerlaw_upper_limit(like,name, delta_log_like_limits=50, verbosity=2)
 
-roi.save('roi_%s.dat' % name)
+r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=True)
+save_results()
+if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=True)
 
-open('results_%s.yaml' % name,'w').write(
-    yaml.dump(
-        tolist(results)
-        )
-    )
+roi.del_source(name)
+roi.add_source(get_source(name,args.pwndata, extended=True))
 
-# save stuff out
-roi.plot_tsmap(filename='residual_tsmap_%s.pdf' % name, size=8)
+r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=True, fit_extension=True, extension_ul=True)
+save_results()
+if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=True)
 
-roi.zero_source(which=name)
-roi.plot_tsmap(filename='source_tsmap_%s.pdf' % name, size=8)
-roi.unzero_source(which=name)
-
-roi.plot_source(filename='source_%s.pdf' % name, size=8, label_psf=False)
-roi.plot_sources(filename='sources_%s.pdf' % name, size=8, label_psf=False)
-
-sed = SED(like,name, verbosity=True)
-sed.save('sed_gtlike_%s.dat' % name)
-
-sed.plot('sed_gtlike_%s.pdf' % name) 
+plot('prelocalize')

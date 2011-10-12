@@ -7,7 +7,10 @@ python loop_pwn.py -c analyze_v1.py \
         --pwnphase /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
         -o /afs/slac/g/glast/users/rousseau/PWN_cat/1FGL_reanalysis/v3/analyze_v1/
 
-python loop_pwn.py -c pulse_find.py \
+python loop_pwn.py -c analyze.py \
+        --pwndata /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v3/pwndata/pwndata_v1.yaml  \
+        --pwnphase /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v3/pwndata/pwnphase_v1.yaml \
+        -o /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v3/analyze_v1
 
         --pwndata /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
         --pwnphase /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
