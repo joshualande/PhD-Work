@@ -9,7 +9,7 @@ from collections import defaultdict
 
 debug=0
 
-def create_sources_list(folder,pwnphase,version="2"):
+def create_sources_list(folder,pwnphase,hypothesis):
     """Define a dict to include all the directory and values needed for each sources in a directory"""
 
     sources={}
@@ -17,7 +17,7 @@ def create_sources_list(folder,pwnphase,version="2"):
     for name2 in glob.iglob("%s/*"%folder):
         try :
             source={}
-
+            
             name=name2[len(folder)+1:len(name2)]
             if name.find('PSRJ')!=-1:
                 source['name']=name
@@ -31,7 +31,8 @@ def create_sources_list(folder,pwnphase,version="2"):
                 source['deltaphi']=PhaseRange(phase[name]['phase'][0],phase[name]['phase'][1]).phase_fraction
                 if debug ==1:
                     print "source['deltaphi']"
-                results=yaml.load(open("%s/%s/results_%s.yaml"%(folder,name,name)))
+                results1=yaml.load(open("%s/%s/results_%s.yaml"%(folder,name,name)))
+                results=results1[hypothesis]
                 if debug ==1:
                     print "results"
                 try :
@@ -158,10 +159,9 @@ def create_sources_list(folder,pwnphase,version="2"):
                 source['logfile']="%s/%s/log_%s.txt"%(folder,name,name)
                 if debug ==1:
                     print "source['logfile']"
-                if version =="2":
-                    source['gal_gtlike']=results['gal_gtlike']
-                    if debug ==1:
-                        print "source['gal_gtlike']"
+                source['gal_gtlike']=results['gal_gtlike']
+                if debug ==1:
+                    print "source['gal_gtlike']"
                 sources[name]=source
                 sourcelist.append(name)
         except :
@@ -181,7 +181,7 @@ def t2t(lines,name):
     os.system('python /afs/slac/g/glast/users/rousseau/txt2tags-2.6/txt2tags --target html %s' % filename)    
 #    os.system('python /afs/slac/g/glast/users/rousseau/txt2tags-2.6/txt2tags --target html --style color.css --css-sugar %s' % filename)
 
-def format_table(lines,sources,sourcelist,image_folder,pagename,version="2"):
+def format_table(lines,sources,sourcelist,image_folder,pagename):
     lines.append('')
 
     while pagename.find('/')!=-1:
@@ -189,25 +189,13 @@ def format_table(lines,sources,sourcelist,image_folder,pagename,version="2"):
         pagename=pagename2
     pagename+=".html"
     table=defaultdict(list)
-    if version =="2":
-        format = '| [%30s %30s] | %30s | %30s | %30s | %30s | %30s |%30s | %30s | %30s | %30s | %30s |'
-    else :
-        format = '| [%30s %30s] | %30s | %30s | %30s | %30s | %30s |%30s | %30s | %30s | %30s |'
     
     lines.append('')
-#        format % ('Name','Phase Range','TS pointlike','TS gtlike','Prefactor Pointlike','Prefactor gtlike','Gamma pointlike','Gamma gtlike','Flux pointlike','Flux gtlike')
-#        )
 
-#    format = '| [%30s %30s] | %30s  | %.2f  | %.2f | %.2e +/- %.2e | %.2e +/- %.2e | %.2e +/- %.2e  | %.2e +/- %.2e | %.2e +/- %.2e | %.2e +/- %.2e |'
     for i in range(len(sourcelist)+1) :
         if i==0:
-            if version=="2":
-                lines.append(
+            lines.append(
                    '|'+format % ('Name', pagename, 'Phase Range','TS pointlike','TS gtlike','Prefactor Pointlike','Prefactor gtlike','Gamma pointlike','Gamma gtlike','Flux pointlike','Flux gtlike','Gal_norm_gtlike')
-                    )
-            else :
-                lines.append(
-                    '|'+format % ('Name', pagename, 'Phase Range','TS pointlike','TS gtlike','Prefactor Pointlike','Prefactor gtlike','Gamma pointlike','Gamma gtlike','Flux pointlike','Flux gtlike')
                     )
         else :
             name=sourcelist[i-1]
@@ -221,21 +209,14 @@ def format_table(lines,sources,sourcelist,image_folder,pagename,version="2"):
                 phaserange+='[%.2f,%.2f]'%(sources[name]['phasemin'],sources[name]['phasemax'])
                 
             phaserange+="->%.2f"%sources[name]['deltaphi']
-            if version=="2":
-                lines.append(
-                    format % (name, "%s/%s.html"%(image_folder,name),phaserange,"%.2f"%(sources[name]['pointlike_TS']),"%.2f"%(sources[name]['gtlike_TS']),"%.2e +/- %.2e"%(sources[name]['pointlike_Prefactor'],sources[name]['pointlike_Prefactor_Error']),"%.2e +/- %.2e"%(sources[name]['gtlike_Prefactor'],sources[name]['gtlike_Prefactor_Error']),"%.2f +/- %.2f"%(sources[name]['pointlike_Index'],sources[name]['pointlike_Index_Error']),"%.2f +/- %.2f"%(sources[name]['gtlike_Index'],sources[name]['gtlike_Index_Error']),"%.2e +/- %.2e"%(sources[name]['pointlike_flux'],sources[name]['pointlike_flux_Error']),"%.2e +/- %.2e"%(sources[name]['gtlike_flux'],sources[name]['gtlike_flux_Error']),"%.2f"%sources[name]['gal_gtlike'][0]
-                              )
-                    )
-            else :
-                lines.append(
-                    format % (name, "%s/%s.html"%(image_folder,name),phaserange,"%.2f"%(sources[name]['pointlike_TS']),"%.2f"%(sources[name]['gtlike_TS']),"%.2e +/- %.2e"%(sources[name]['pointlike_Prefactor'],sources[name]['pointlike_Prefactor_Error']),"%.2e +/- %.2e"%(sources[name]['gtlike_Prefactor'],sources[name]['gtlike_Prefactor_Error']),"%.2f +/- %.2f"%(sources[name]['pointlike_Index'],sources[name]['pointlike_Index_Error']),"%.2f +/- %.2f"%(sources[name]['gtlike_Index'],sources[name]['gtlike_Index_Error']),"%.2e +/- %.2e"%(sources[name]['pointlike_flux'],sources[name]['pointlike_flux_Error']),"%.2e +/- %.2e"%(sources[name]['gtlike_flux'],sources[name]['gtlike_flux_Error'])
-                              )
-                    )
-        
+            lines.append(
+                format % (name, "%s/%s.html"%(image_folder,name),phaserange,"%.2f"%(sources[name]['pointlike_TS']),"%.2f"%(sources[name]['gtlike_TS']),"%.2e +/- %.2e"%(sources[name]['pointlike_Prefactor'],sources[name]['pointlike_Prefactor_Error']),"%.2e +/- %.2e"%(sources[name]['gtlike_Prefactor'],sources[name]['gtlike_Prefactor_Error']),"%.2f +/- %.2f"%(sources[name]['pointlike_Index'],sources[name]['pointlike_Index_Error']),"%.2f +/- %.2f"%(sources[name]['gtlike_Index'],sources[name]['gtlike_Index_Error']),"%.2e +/- %.2e"%(sources[name]['pointlike_flux'],sources[name]['pointlike_flux_Error']),"%.2e +/- %.2e"%(sources[name]['gtlike_flux'],sources[name]['gtlike_flux_Error']),"%.2f"%sources[name]['gal_gtlike'][0]
+                          )
+                )
     lines.append('')
     return lines
 
-def copy_and_create_pages(folder,sourcelist,pagename,image_folder,sources,webpage,version="2"):
+def copy_and_create_pages(folder,sourcelist,pagename,image_folder,sources,webpage):
     """creates the page with all the plots concerning one source"""
     fold=image_folder
     for name in sourcelist:
@@ -273,12 +254,12 @@ def copy_and_create_pages(folder,sourcelist,pagename,image_folder,sources,webpag
         t2t(lines,'%s/%s'%(image_folder,name))
     return fold
 
-def one_folder(folder,pagename,website,version="2"):
+def one_folder(folder,pagename,website,hypothesis='point'):
     """Action to do for one folder of tests"""
     try :
         #creating source list and page of results
         lines=['=PWN cat results %s='%pagename]
-        sources,sourcelist=create_sources_list(folder,pwnphase,version=version)
+        sources,sourcelist=create_sources_list(folder,pwnphase,hypothesis)
         sourcelist.sort()
         image_folder="%s%s_images"%(website,pagename)
         try :
@@ -286,8 +267,8 @@ def one_folder(folder,pagename,website,version="2"):
         except :
             os.system("rm -rf %s"%image_folder)
             os.system("mkdir %s"%image_folder)
-        fold=copy_and_create_pages(folder,sourcelist,pagename,image_folder,sources,website,version=version)
-        lines=format_table(lines,sources,sourcelist,fold,pagename,version=version)
+        fold=copy_and_create_pages(folder,sourcelist,pagename,image_folder,sources,website)
+        lines=format_table(lines,sources,sourcelist,fold,pagename)
         t2t(lines,pagename)
     except :
         print "No page %s created"%pagename
@@ -308,22 +289,8 @@ if __name__ == '__main__':
         line2=[]
         line2.append('')
         line2.append('= Summary of available results file for reanalysis of PWN cat 1 =')
-        for direct in glob.iglob("%swebsite_v1/*"%base):
-            print "traitement fichier %s"%direct
-            test2=0
-            try :
-                print "je ne traite pas ce dossier"
-                ftest=open(direct+'/non','r')
-                ftest.close()
-            except :
-                test2=1
-                print "je traite ce dossier"
-            if test2==1:
-                one_folder(direct,direct[len(base):len(direct)],website,version="1")
-            line2.append('[%s %s.html]'%(direct[len(base):len(direct)],direct[len(base):len(direct)]))
-            line2.append('')
-        for direct in glob.iglob("%swebsite_v2/*"%base):
-            print "traitement fichier %s"%direct
+        for direct in glob.iglob("%s/*"%base):
+            print "folder : %s"%direct
             test2=0
             try :
                 ftest=open(direct+'/non','r')
@@ -333,7 +300,9 @@ if __name__ == '__main__':
                 test2=1
                 print "je traite ce dossier"
             if test2==1:
-                one_folder(direct,direct[len(base):len(direct)],website,version="2")
+                hyp=["at_pulsar","point","ext"]
+                for hypothesis in hyp:
+                    one_folder(direct,"%s_%s"%(direct[len(base):len(direct)],hypothesis),website,hypothesis=hypothesis)
             line2.append('[%s %s.html]'%(direct[len(base):len(direct)],direct[len(base):len(direct)]))
             line2.append('')
         line2.append('Question ? Comment ? rousseau@cenbg.in2p3.fr')
