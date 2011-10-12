@@ -85,7 +85,7 @@ def create_sources_list(folder,pwnphase,hypothesis):
                 source['pointlike_flux_Error']=results['pointlike']['flux_err_at_pulsar']
                 if debug ==1:
                     print "source['pointlike_flux_Error']=results['pointlike']['flux_err_at_pulsar']"
-                source['counts_file']="%s/%s/cnts_0.25%s.png"%(folder,name,name)
+                source['counts_file']="%s/%s/counts_0.25%s.png"%(folder,name,name)
                 if debug ==1:
                     print "source['counts_file']="
                 source['input_pointlike_srcmodel']="%s/%s/srcmodel_prefit_%s.xml"%(folder,name,name)
@@ -103,8 +103,8 @@ def create_sources_list(folder,pwnphase,hypothesis):
                 source['output_gtlike_srcmodel']="%s/%s/output_model_gtlike_%s.xml" %(folder,name,name)
                 if debug ==1:
                     print "source['output_gtlike_srcmodel']"
-                txt="farith %s/%s/counts_file_0.1_%s.fits"%(folder,name,name)
-                txt+=" %s/%s/model_file_0.1_%s.fits"%(folder,name,name)
+                txt="farith %s/%s/counts_0.1_%s.fits"%(folder,name,name)
+                txt+=" %s/%s/model_0.1_%s.fits"%(folder,name,name)
                 txt+=" %s/%s/residuals_0.1_%s.fits -"%(folder,name,name)
                 try :
                     os.system("rm -rf %s/%s/residuals_0.1_%s.fits"%(folder,name,name))
@@ -115,8 +115,8 @@ def create_sources_list(folder,pwnphase,hypothesis):
                 source['residual_counts']="%s/%s/residuals_0.1_%s.fits"%(folder,name,name)
                 if debug ==1:
                     print "source['residual_counts']"
-                txt="farith %s/%s/counts_file_excess_0.1_%s.fits"%(folder,name,name)
-                txt+=" %s/%s/model_file_excess_0.1_%s.fits"%(folder,name,name)
+                txt="farith %s/%s/counts_excess_0.1_%s.fits"%(folder,name,name)
+                txt+=" %s/%s/model_excess_0.1_%s.fits"%(folder,name,name)
                 txt+=" %s/%s/excess_0.1_%s.fits -"%(folder,name,name)
                 try :
                     os.system("rm -rf %s/%s/excess_0.1_%s.fits"%(folder,name,name))
