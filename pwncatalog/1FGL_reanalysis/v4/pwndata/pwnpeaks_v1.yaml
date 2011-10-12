@@ -1,0 +1,128 @@
+# This file contains the pulsar peaks as defined in the 1st pulsar catalog.
+# This will all be done correctly by Damien in PSRCAT2
+PSRJ0007+7303:
+    peaks: [.13,.9]
+PSRJ0030+0451:
+    peaks: ["LCLorentzian2(p=[.30,.02,.02,.15])", 
+            "LCGaussian(p=[.30,.15,.35])",
+            "LCLorentzian2(p=[.30,.02,.02,.60])", ]
+PSRJ0034-0534:
+    peaks: [ "LCGaussian(p=[.25,.05,.25])",
+            .95]
+PSRJ0205+6449:
+    peaks: [.08,.58]
+PSRJ0218+4232:
+    peaks: ["LCGaussian(p=[.25,.05,.25])",
+            "LCGaussian(p=[.25,.05,.75])"]
+PSRJ0248+6021:
+    peaks: [.35]
+PSRJ0357+3206:
+    peaks: [ "LCGaussian(p=[.25,.05,0])", ]
+PSRJ0437-4715:
+    peaks: [.43]
+PSRJ0534+2200:
+    peaks: [.40, .91]
+PSRJ0613-0200:
+    peaks: ["LCLorentzian(p=[.30,.05,.40])"]
+PSRJ0631+1036:
+    peaks: ["LCGaussian(p=[.5,.2,.45])" ]
+PSRJ0633+0632:
+    peaks: [.42, .90]
+PSRJ0633+1746:
+    peaks: [.15, .65]
+PSRJ0659+1414:
+    peaks: [
+        "LCGaussian2(p=[.25,.05,.05,.15])"]
+PSRJ0742-2822:
+    peaks: ["LCLorentzian(p=[.05,.05,.60])"]
+PSRJ0751+1807:
+    peaks: [ "LCGaussian(p=[.25,.10,.50])"]
+PSRJ0835-4510:
+    peaks: ["LCLorentzian2(p=[.25,.02,.02,.15])", 
+            "LCGaussian2(p=[.40,.10,.10,.25])",
+            "LCLorentzian2(p=[.30,.02,.02,.55])", ]
+PSRJ1023-5746:
+    peaks: [.35, .80]
+PSRJ1028-5820:
+    peaks: [.19,.66]
+PSRJ1044-5737:
+    peaks: [.45, .80]
+PSRJ1048-5832:
+    peaks: [.15,.42]
+PSRJ1057-5226:
+    peaks: [.05, .75, .90]
+PSRJ1124-5916:
+    peaks: [.05, .55]
+PSRJ1413-6205:
+    peaks: [
+        "LCLorentzian(p=[.05,.05,.05])",
+        "LCLorentzian(p=[.05,.05,.20])",
+        "LCLorentzian(p=[.05,.05,.85])",
+    ]
+PSRJ1418-6058:
+    peaks: [.20, .75]
+PSRJ1420-6048:
+    peaks: ["LCGaussian(p=[.2,.05,.30])",
+            "LCGaussian(p=[.2,.05,.50])"]
+PSRJ1429-5911:
+    peaks: [.40, .90]
+PSRJ1459-6053:
+    peaks: [.10,.90]
+PSRJ1509-5850:
+    peaks: [.18,.38]
+PSRJ1614-2230:
+    peaks: [
+        "LCGaussian(p=[.2,.05,.30])",
+        .75]
+PSRJ1709-4429:
+    peaks: [0.24,0.49]
+PSRJ1718-3825:
+    peaks: [0.42]
+PSRJ1732-3131:
+    peaks: [.20, .80, .90]
+PSRJ1741-2054:
+    peaks: [.3,.48]
+PSRJ1744-1134:
+    peaks: ["LCGaussian(p=[.2,.05,.50])",
+            "LCGaussian(p=[.2,.05,.80])"]
+PSRJ1747-2958:
+    peaks: [.18, .60]
+PSRJ1809-2332:
+    peaks: [.40, .75]
+PSRJ1813-1246:
+    peaks: [.20, .75]
+PSRJ1826-1256:
+    peaks: [.1,.65]
+PSRJ1833-1034:
+    peaks: [ .20, .59]
+PSRJ1836+5925:
+    peaks: [ .10, .48]
+PSRJ1846+0919:
+    peaks: [.50, ]
+PSRJ1907+060:
+    peaks: [.20, .85]
+PSRJ1952+3252:
+    peaks: [.15, .64]
+PSRJ1954+2836:
+    peaks: [.25,.85]
+PSRJ1957+5033:
+    peaks: [.85]
+PSRJ1958+2846:
+    peaks: [ .15, .75]
+PSRJ2021+3651:
+    peaks: [ .15, .65]
+PSRJ2021+4026:
+    peaks: [ .20, .60]
+PSRJ2032+4127:
+    peaks: [ .02, .55]
+PSRJ2043+2740:
+    peaks: ["LCLorentzian(p=[.2,.05,.20])",
+            "LCLorentzian(p=[.2,.05,.60])"]
+PSRJ2055+2539:
+    peaks: [ "LCGaussian(p=[.2,.05,.10])" ]
+PSRJ2124-3358:
+    peaks: ["LCLorentzian(p=[.2,.05,.90])" ]
+PSRJ2229+6114:
+    peaks: [.50]
+PSRJ2238+5904:
+    peaks: [.45, .95]
