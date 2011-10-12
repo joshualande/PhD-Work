@@ -115,7 +115,7 @@ def setup_region(name,pwndata,phase, free_radius=5, tempdir=None, maxroi=10,
 
     if xml is None:
         roi=sa.roi(
-            diffuse_sources=get_default_diffuse(diffdir=e("$FERMI/diffuse"),
+            diffuse_sources=get_default_diffuse(diffdir="/afs/slac/g/glast/groups/diffuse/mapcubes",
                                                 gfile="gll_iem_v02.fit",
                                                 ifile="isotropic_iem_v02.txt"),
             catalogs = catalog,
