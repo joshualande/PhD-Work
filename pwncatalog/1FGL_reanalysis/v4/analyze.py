@@ -8,7 +8,7 @@ from roi_gtlike import Gtlike
 from uw.like.sed_plotter import plot_sed
 
 from setup_pwn import setup_pwn,get_source
-from uw.like.SpatialModels import Disk
+from uw.like.SpatialModels import Gaussian
 from uw.like.roi_tsmap import TSCalc,TSCalcPySkyFunction
 from argparse import ArgumentParser
 from skymaps import SkyImage,SkyDir
@@ -20,6 +20,7 @@ from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff
 from collections import defaultdict
 
 
+
 parser = ArgumentParser()
 parser.add_argument("--pwndata", required=True)
 parser.add_argument("-p", "--pwnphase", required=True)
@@ -27,6 +28,9 @@ parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 parser.add_argument("--emin", default=1e2, type=float)
 parser.add_argument("--emax", default=3e5, type=float)
 args=parser.parse_args()
+
+do_gtlike = True
+do_plots = True
   
 name=args.name
 emin=args.emin
@@ -68,35 +72,36 @@ customize_roi(name,roi)
 results=r=defaultdict(lambda: defaultdict(dict))
 
 
-def plot(roi, hypothesis, size=5):
-    # save stuff out
+def plots(roi, hypothesis, size=5):
+    print 'Making plots for hypothesis %s' % hypothesis
     roi.plot_tsmap(filename='residual_tsmap_%s_%s.png' % (hypothesis,name), size=size, pixelsize=0.1)
-    pixsize=[0.1,0.25]
-    for pixelsize in pixsize :
-        roi.plot_counts_map(filename="cnts_%.2f_%s_%s.png"%(pixelsize,hypothesis,name),
-                            countsfile="counts_file_%.2f_%s_%s.fits"%(pixelsize,hypothesis,name),
-                            modelfile="model_file_%.2f_%s_%s.fits"%(pixelsize,hypothesis,name),
+    for pixelsize in [0.1,0.25]:
+        roi.plot_counts_map(filename="counts_%.g_%s_%s.png"%(pixelsize,hypothesis,name),
+                            countsfile="counts_%.g_%s_%s.fits"%(pixelsize,hypothesis,name),
+                            modelfile="model_%.g_%s_%s.fits"%(pixelsize,hypothesis,name),
                             pixelsize=pixelsize,size=size)
     roi.zero_source(which=name)
     roi.plot_tsmap(filename='source_tsmap_%s_%s.png' % (hypothesis, name), size=size, pixelsize=0.1)
-    for pixelsize in pixsize :
-        roi.plot_counts_map(filename="cnts_excess_%.2f_%s_%s.png"%(pixelsize,hypothesis,name),
-                            countsfile="counts_file_excess_%.2f_%s_%s.fits"%(pixelsize,hypothesis,name),
-                            modelfile="model_file_excess_%.2f_%s_%s.fits"%(pixelsize,hypothesis,name),
+    for pixelsize in [0.1,0.25]:
+        roi.plot_counts_map(filename="counts_excess_%.g_%s_%s.png"%(pixelsize,hypothesis,name),
+                            countsfile="counts_excess_%.g_%s_%s.fits"%(pixelsize,hypothesis,name),
+                            modelfile="model_%.g_%s_%s.fits"%(pixelsize,hypothesis,name),
                             pixelsize=pixelsize,size=size)
     roi.unzero_source(which=name)
 
-    roi.plot_source(which=name,filename='source_%s_%s.png' % (hypothesis, name), size=size, label_psf=False)
-    roi.plot_sources(which=name,filename='sources_%s_%s.png' % (hypothesis, name), size=size, label_psf=False)
+    roi.plot_source(which=name,filename='source_%s_%s.png' % (hypothesis, name), 
+                    size=size, label_psf=False)
+    roi.plot_sources(which=name,filename='sources_%s_%s.png' % (hypothesis, name), 
+                     size=size, label_psf=False)
 
     roi.toRegion('Region_file_%s.reg'%name)
     roi.toXML(filename="srcmodel_res_%s_%s.xml"%(hypothesis, name))
     roi.plot_slice(which=name,filename="outslice_%s_%s.png"%(hypothesis, name),datafile='slice_points_%s_%s.out'%(hypothesis, name))
-    plot_all_seds(roi, filename="allsed_%s_%s.png"%(hypothesis, name))
+    #plot_all_seds(roi, filename="allsed_%s_%s.png"%(hypothesis, name))
     roi.plot_counts_spectra(filename="Spectra_%s_%s.png"%(hypothesis, name))
 
 
-def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_extension=False, extension_ul=False, cutoff=False):
+def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_extension=False, extension_upper_limit=False, cutoff=False):
     print 'Performing Pointlike analysis for %s' % hypothesis
 
     print_summary = lambda: roi.print_summary(galactic=True)
@@ -109,7 +114,6 @@ def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_e
         except Exception, ex:
             print 'ERROR spectral fitting: ', ex
         print_summary()
-
 
     fit()
 
@@ -130,8 +134,9 @@ def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_e
 
     p = sourcedict(roi, name)
 
-    if extension_ul:
-        print 'UNABLE To Calculate Extension Upper limit'
+    if extension_upper_limit:
+        print 'Calculating extension upper limit'
+        p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian())
 
     if upper_limit:
         p['upper_limit'] = powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
@@ -142,7 +147,7 @@ def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_e
  
     roi.save('roi_%s_%s.dat' % (hypothesis,name))
 
-    #plot(roi, hypothesis)
+    if do_plots: plots(roi, hypothesis)
     return p
 
 def gtlike_analysis(roi, hypothesis, upper_limit=False, cutoff=False):
@@ -175,23 +180,25 @@ def save_results():
     open('results_%s.yaml' % name,'w').write(
         yaml.dump(tolist(results)))
 
-
-do_gtlike = False
-
 r['at_pulsar']['pointlike']=pointlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=True)
 save_results()
 if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=True)
 
 
-r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=True)
+r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=True, extension_upper_limit=True)
 save_results()
 if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=True)
 
 roi.del_source(name)
 roi.add_source(get_source(name,args.pwndata, extended=True))
 
-r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=True, fit_extension=True, extension_ul=True)
+r['extended']['pointlike']=pointlike_analysis(roi, 'point', cutoff=True, fit_extension=True)
 save_results()
-if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=True)
+if do_gtlike: r['extended']['gtlike']=gtlike_analysis(roi, 'point', cutoff=True)
 
-plot('prelocalize')
+for which in ['pointlike','gtlike']:
+    results['extended'][which]['ts_ext'] = \
+            2*(results['extended'][which]['logLikelihood'] - \
+               results['point'][which]['logLikelihood'])
+
+save_results()
