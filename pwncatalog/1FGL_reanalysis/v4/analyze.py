@@ -70,16 +70,30 @@ results=r=defaultdict(lambda: defaultdict(dict))
 
 def plot(roi, hypothesis, size=5):
     # save stuff out
-    roi.plot_tsmap(filename='residual_tsmap_%s_%s.png' % (hypothesis,name), size=size)
-
+    roi.plot_tsmap(filename='residual_tsmap_%s_%s.png' % (hypothesis,name), size=size, pixelsize=0.1)
+    pixsize=[0.1,0.25]
+    for pixelsize in pixsize :
+        roi.plot_counts_map(filename="cnts_%.2f_%s_%s.png"%(pixelsize,hypothesis,name),
+                            countsfile="counts_file_%.2f_%s_%s.fits"%(pixelsize,hypothesis,name),
+                            modelfile="model_file_%.2f_%s_%s.fits"%(pixelsize,hypothesis,name),
+                            pixelsize=pixelsize,size=size)
     roi.zero_source(which=name)
-    roi.plot_tsmap(filename='source_tsmap_%s_%s.png' % (hypothesis, name), size=size)
+    roi.plot_tsmap(filename='source_tsmap_%s_%s.png' % (hypothesis, name), size=size, pixelsize=0.1)
+    for pixelsize in pixsize :
+        roi.plot_counts_map(filename="cnts_excess_%.2f_%s_%s.png"%(pixelsize,hypothesis,name),
+                            countsfile="counts_file_excess_%.2f_%s_%s.fits"%(pixelsize,hypothesis,name),
+                            modelfile="model_file_excess_%.2f_%s_%s.fits"%(pixelsize,hypothesis,name),
+                            pixelsize=pixelsize,size=size)
     roi.unzero_source(which=name)
 
     roi.plot_source(which=name,filename='source_%s_%s.png' % (hypothesis, name), size=size, label_psf=False)
     roi.plot_sources(which=name,filename='sources_%s_%s.png' % (hypothesis, name), size=size, label_psf=False)
 
-    roi.plot_counts_map(filename='counts_%s_%s.png' % (hypothesis, name), size=size)
+    roi.toRegion('Region_file_%s.reg'%name)
+    roi.toXML(filename="srcmodel_res_%s_%s.xml"%(hypothesis, name))
+    roi.plot_slice(which=name,filename="outslice_%s_%s.png"%(hypothesis, name),datafile='slice_points_%s_%s.out'%(hypothesis, name))
+    plot_all_seds(roi, filename="allsed_%s_%s.png"%(hypothesis, name))
+    roi.plot_counts_spectra(filename="Spectra_%s_%s.png"%(hypothesis, name))
 
 
 def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_extension=False, extension_ul=False, cutoff=False):
