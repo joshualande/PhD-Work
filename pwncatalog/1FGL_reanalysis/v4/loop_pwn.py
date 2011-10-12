@@ -3,18 +3,14 @@ A script to loop over the PWN when
 doing analysis. Example:
 
 python loop_pwn.py -c analyze_v1.py \
-        --pwndata /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
-        --pwnphase /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
-        -o /afs/slac/g/glast/users/rousseau/PWN_cat/1FGL_reanalysis/v3/analyze_v1/
+        --pwndata /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v4/pwndata_v1.yaml  \
+        --pwnphase /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v4/pwnphase_v1.yaml \
+        -o /afs/slac/g/glast/users/rousseau/PWN_cat/1FGL_reanalysis/v4/analyze_v1/
 
 python loop_pwn.py -c analyze.py \
-        --pwndata /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v3/pwndata/pwndata_v1.yaml  \
-        --pwnphase /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v3/pwndata/pwnphase_v1.yaml \
-        -o /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v3/analyze_v1
-
-        --pwndata /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwndata_v1.yaml  \
-        --pwnphase /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v3/pwnphase_v1.yaml \
-        -o /afs/slac/g/glast/users/rousseau/PWN_cat/1FGL_reanalysis/v3/analyze_v1/
+        --pwndata /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v4/pwndata/pwndata_v1.yaml  \
+        --pwnphase /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v4/pwndata/pwnphase_v1.yaml \
+        -o /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v4/analyze_v1
 
 """
 import yaml
@@ -26,12 +22,8 @@ from argparse import ArgumentParser
 parser = ArgumentParser()
 parser.add_argument("-c", "--command", required=True)
 parser.add_argument("--pwndata", required=True)
-parser.add_argument("--pwnphase", required=True)
 parser.add_argument("-o", "--outdir", required=True)
-parser.add_argument("-emin", "--emin",  default=1.0e2, type=float)
-parser.add_argument("-emax", "--emax",  default=1.0e5, type=float)
-parser.add_argument("-model", "--model", default="None")
-args=parser.parse_args()
+args,remaining_args = parser.parse_known_args()
 
 outdir=args.outdir
 
@@ -53,12 +45,8 @@ for name in sources.keys():
     temp.write("""\
 python %s/%s \\
 -n %s \\
---pwndata %s \\
---pwnphase %s \\
--emin %.2e \\
--emax %.2e \\
--model %s""" % (os.getcwd(),args.command,name,
-                     args.pwndata,args.pwnphase,args.emin,args.emax,args.model))
+--pwndata %s %s""" % (os.getcwd(),args.command,name,
+                  args.pwndata,' '.join(remaining_args)))
 
 submit_all=join(outdir,'submit_all.py')
 temp=open(submit_all,'w')
