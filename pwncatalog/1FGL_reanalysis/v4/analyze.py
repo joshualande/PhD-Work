@@ -27,12 +27,14 @@ parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 parser.add_argument("--emin", default=1e2, type=float)
 parser.add_argument("--emax", default=1e5, type=float)
+parser.add_argument("--no-extended", default=False, action="store_true")
 parser.add_argument("--no-gtlike", default=False, action="store_true")
 parser.add_argument("--no-plots", default=False, action="store_true")
 parser.add_argument("--no-cutoff", default=False, action="store_true")
 args=parser.parse_args()
 
-do_gtlike = not args.no_gltike
+do_extended = not args.no_extended
+do_gtlike = not args.no_gtlike
 do_plots = not args.no_plots
 do_cutoff = not args.no_cutoff
   
@@ -193,16 +195,17 @@ r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=d
 save_results()
 if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
 
-roi.del_source(name)
-roi.add_source(get_source(name,args.pwndata, extended=True))
+if do_extended:
+    roi.del_source(name)
+    roi.add_source(get_source(name,args.pwndata, extended=True))
 
-r['extended']['pointlike']=pointlike_analysis(roi, 'point', cutoff=do_cutoff, fit_extension=True)
-save_results()
-if do_gtlike: r['extended']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
+    r['extended']['pointlike']=pointlike_analysis(roi, 'point', cutoff=do_cutoff, fit_extension=True)
+    save_results()
+    if do_gtlike: r['extended']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
 
-for which in ['pointlike','gtlike']:
-    results['extended'][which]['ts_ext'] = \
-            2*(results['extended'][which]['logLikelihood'] - \
-               results['point'][which]['logLikelihood'])
+    for which in ['pointlike','gtlike']:
+        results['extended'][which]['ts_ext'] = \
+                2*(results['extended'][which]['logLikelihood'] - \
+                   results['point'][which]['logLikelihood'])
 
 save_results()
