@@ -1,6 +1,8 @@
 """ This file contains various function which I have found useful. """
 import numpy as np
 import pyfits as pf
+from uw.like.roi_analysis import ROIAnalysis
+from uw.like.roi_extended import ExtendedSource
 
 def tolist(x):
     """ convenience function that takes in a 
@@ -24,70 +26,6 @@ def tolist(x):
     else:
         return x
 
-def sourcedict(like_or_roi, name, extra='', emin=100, emax=100000):
-
-    from BinnedAnalysis import BinnedAnalysis
-    from pyLikelihood import ParameterVector
-    from uw.like.roi_analysis import ROIAnalysis
-    from uw.like.roi_extended import ExtendedSource
-
-    d={}
-
-    if isinstance(like_or_roi,BinnedAnalysis):
-        like = like_or_roi
-
-        d['ts' + extra] = like.Ts(name,reoptimize=True)
-        d['flux' + extra]=like.flux(name,emin=emin,emax=emax)
-        d['flux_err' + extra]=like.fluxError(name,emin=emin,emax=emax)
-        d['logLikelihood']=like.logLike.value()
-
-        spectralparameters=ParameterVector()
-        like.model[name]['Spectrum'].getParams(spectralparameters)
-        for p in spectralparameters:
-            d[p.getName() + extra]=p.getTrueValue()
-            d[p.getName()+'_err' + extra]=p.error()*p.getScale()
-
-    elif isinstance(like_or_roi,ROIAnalysis):
-        roi=like_or_roi
-
-        source=roi.get_source(name)
-
-        model=source.model
-
-        old_quiet = roi.quiet; roi.quiet=True
-        d['ts' + extra] = roi.TS(name,quick=False)
-        roi.quiet = old_quiet
-
-        d['logLikelihood']=-roi.logLikelihood(roi.parameters())
-
-        d['flux' + extra],d['flux_err' + extra]=model.i_flux(emin=emin,emax=emax,error=True)
-        for param in model.param_names:
-            d[param + extra]=model[param]
-            d[param + '_err' + extra]=model.error(param)
-
-        # Source position
-        d['gal'] = [source.skydir.l(),source.skydir.b()]
-        d['equ'] = [source.skydir.ra(),source.skydir.dec()]
-
-        if isinstance(source,ExtendedSource):
-            # Extended Source parameters
-            spatial_model = source.spatial_model
-            for param in spatial_model.param_names:
-                d[param + extra]=spatial_model[param]
-                d[param + '_err' + extra]=spatial_model.error(param)
-
-        # add elliptical error, if they exist.
-        # N.B. If no localization performed, this will return
-        # an empty dictionary.
-        # N.B. This method will do the wrong thing if you have recently relocalized
-        # another source. This is rarely the case.
-        d.update(roi.get_ellipse())
-
-
-    else:
-        raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-
-    return tolist(d) # convert to floats 
 
 
 def mixed_linear(min,max,num):
@@ -105,7 +43,7 @@ def mixed_log(min,max,num):
     return 10**mixed_linear(np.log10(min),np.log10(max),num)
 
 
-def powerlaw_upper_limit(like,name, powerlaw_index=-2, **kwargs):
+def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=None, **kwargs):
     """ Wrap up calculating the flux upper limit for a powerlaw
         source.  This function employes the pyLikelihood function
         IntegralUpperLimit to calculate a Bayesian upper limit.
@@ -119,8 +57,10 @@ def powerlaw_upper_limit(like,name, powerlaw_index=-2, **kwargs):
     from LikelihoodState import LikelihoodState
     import IntegralUpperLimit
 
-    emin = like.energies[0]
-    emax = like.energies[-1]
+    if emin is None and emax is None: 
+        emin = like.energies[0]
+        emax = like.energies[-1]
+
     e = np.sqrt(emin*emax)
 
     saved_state = LikelihoodState(like)
@@ -129,13 +69,13 @@ def powerlaw_upper_limit(like,name, powerlaw_index=-2, **kwargs):
     old_spectrum = source.spectrum()
 
     # assume a canonical dnde=1e-11 at 1GeV index 2 starting value
-    dnde = lambda e: 1e-11*(e/1e3)**-2
+    dnde = PowerLaw(norm=1e-11, index=2,e_scale=1e3)
 
     like.setSpectrum(name,'PowerLaw')
 
     # fix index to 0
     index=like[like.par_index(name, 'Index')]
-    index.setTrueValue(powerlaw_index)
+    index.setTrueValue(-1*powerlaw_index)
     index.setFree(0)
 
     # good starting guess for source
@@ -152,6 +92,7 @@ def powerlaw_upper_limit(like,name, powerlaw_index=-2, **kwargs):
 
     ul_scipy, results_scipy = IntegralUpperLimit.calc_int(like, name, 
                                                           freeze_all=True,
+                                                          cl=cl,
                                                           emin=emin, 
                                                           emax=emax, 
                                                           **kwargs)
@@ -159,6 +100,29 @@ def powerlaw_upper_limit(like,name, powerlaw_index=-2, **kwargs):
     like.setSpectrum(name,old_spectrum)
     saved_state.restore()
     return ul_scipy
+
+def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, **kwargs):
+    old_model = roi.get_model(name).copy()
+    roi.modify(which=name, model=PowerLaw(index=powerlaw_index))
+
+
+    if emin is None and emax is None: 
+        emin = roi.bin_edges[0]
+        emax = roi.bin_edges[-1]
+
+    ul = roi.upper_limit(which=name, confidence=cl, emin=emin, emax=emax, **kwargs)
+    roi.modify(which=name, model=old_model)
+    return ul
+
+def powerlaw_upper_limit(like_or_roi, name, powerlaw_index=2, cl=0.95, **kwargs):
+    from BinnedAnalysis import BinnedAnalysis
+    if isinstance(like_or_roi, ROIAnalysis):
+        f=gtlike_powerlaw_upper_limit
+    elif isinstance(like_or_roi, ROIAnalysis):
+        f=pointlike_powerlaw_upper_limit
+    else:
+        raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
+        return f(like_or_roi, name, powerlaw_index, cl, **kwargs)
 
 def expand_fits(pf,factor,hdu=0):
     """ Create a new fits file where
