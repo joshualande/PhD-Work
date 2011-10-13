@@ -27,10 +27,14 @@ parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 parser.add_argument("--emin", default=1e2, type=float)
 parser.add_argument("--emax", default=1e5, type=float)
+parser.add_argument("--no-gtlike", default=False, action="store_true")
+parser.add_argument("--no-plots", default=False, action="store_true")
+parser.add_argument("--no-cutoff", default=False, action="store_true")
 args=parser.parse_args()
 
-do_gtlike = True
-do_plots = True
+do_gtlike = not args.no_gltike
+do_plots = not args.no_plots
+do_cutoff = not args.no_cutoff
   
 name=args.name
 emin=args.emin
@@ -180,21 +184,21 @@ def save_results():
     open('results_%s.yaml' % name,'w').write(
         yaml.dump(tolist(results)))
 
-r['at_pulsar']['pointlike']=pointlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=True)
+r['at_pulsar']['pointlike']=pointlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=do_cutoff)
 save_results()
-if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=True)
+if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=do_cutoff)
 
 
-r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=True, extension_upper_limit=True)
+r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=do_cutoff, extension_upper_limit=True)
 save_results()
-if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=True)
+if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
 
 roi.del_source(name)
 roi.add_source(get_source(name,args.pwndata, extended=True))
 
-r['extended']['pointlike']=pointlike_analysis(roi, 'point', cutoff=True, fit_extension=True)
+r['extended']['pointlike']=pointlike_analysis(roi, 'point', cutoff=do_cutoff, fit_extension=True)
 save_results()
-if do_gtlike: r['extended']['gtlike']=gtlike_analysis(roi, 'point', cutoff=True)
+if do_gtlike: r['extended']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
 
 for which in ['pointlike','gtlike']:
     results['extended'][which]['ts_ext'] = \
