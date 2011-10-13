@@ -19,7 +19,7 @@ from toolbag import tolist
 from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff
 from collections import defaultdict
 import numpy as np
-
+np.seterr(all='ignore')
 
 parser = ArgumentParser()
 parser.add_argument("--pwndata", required=True)
@@ -121,7 +121,7 @@ def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_e
     def fit():
         """ Convenience function incase fit fails. """
         try:
-            roi.fit(use_gradient=True)
+            roi.fit(use_gradient=False)
         except Exception, ex:
             print 'ERROR spectral fitting: ', ex
         print_summary()
