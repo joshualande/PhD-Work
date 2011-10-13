@@ -123,6 +123,7 @@ def setup_region(name,pwndata,phase, free_radius=5, tempdir=None, maxroi=10,
             **kwargs)
     else:
         roi=sa.roi_from_xml(
+            roi_dir=center,
             xmlfile = xml,
             phase_factor =1,
             **kwargs)
