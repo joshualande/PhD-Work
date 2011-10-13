@@ -18,7 +18,7 @@ from SED import SED
 from toolbag import tolist
 from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff
 from collections import defaultdict
-
+import numpy as np
 
 
 parser = ArgumentParser()
