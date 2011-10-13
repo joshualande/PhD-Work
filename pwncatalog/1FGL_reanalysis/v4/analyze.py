@@ -27,17 +27,22 @@ parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 parser.add_argument("--emin", default=1e2, type=float)
 parser.add_argument("--emax", default=1e5, type=float)
+parser.add_argument("--no-point", default=False, action="store_true")
 parser.add_argument("--no-extended", default=False, action="store_true")
 parser.add_argument("--no-gtlike", default=False, action="store_true")
 parser.add_argument("--no-plots", default=False, action="store_true")
 parser.add_argument("--no-cutoff", default=False, action="store_true")
+parser.add_argument("--no-extension-upper-limit", default=False, action="store_true")
 args=parser.parse_args()
 
+do_point = not args.no_point
 do_extended = not args.no_extended
 do_gtlike = not args.no_gtlike
 do_plots = not args.no_plots
 do_cutoff = not args.no_cutoff
-  
+do_extension_upper_limit = not args.no_extension_upper_limit
+
+
 name=args.name
 emin=args.emin
 emax=args.emax
@@ -142,7 +147,7 @@ def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_e
 
     if extension_upper_limit:
         print 'Calculating extension upper limit'
-        p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian())
+        p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian(), npoints=10)
 
     if upper_limit:
         p['upper_limit'] = powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
@@ -190,10 +195,10 @@ r['at_pulsar']['pointlike']=pointlike_analysis(roi, 'at_pulsar', upper_limit=Tru
 save_results()
 if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=do_cutoff)
 
-
-r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=do_cutoff, extension_upper_limit=True)
-save_results()
-if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
+if do_point:
+    r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=do_cutoff, extension_upper_limit=do_extension_upper_limit)
+    save_results()
+    if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
 
 if do_extended:
     roi.del_source(name)
