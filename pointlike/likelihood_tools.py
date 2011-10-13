@@ -7,7 +7,7 @@ from uw.like.roi_extended import ExtendedSource
 from uw.like.Models import Model,PowerLaw,LogParabola,DefaultModelValues
 
 from toolbag import tolist
-from PointlikeState import PointlikeState
+from uw.like.roi_state import PointlikeState
 
 
 from SED import SED
