@@ -26,7 +26,7 @@ parser.add_argument("--pwndata", required=True)
 parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 parser.add_argument("--emin", default=1e2, type=float)
-parser.add_argument("--emax", default=3e5, type=float)
+parser.add_argument("--emax", default=1e5, type=float)
 args=parser.parse_args()
 
 do_gtlike = True
