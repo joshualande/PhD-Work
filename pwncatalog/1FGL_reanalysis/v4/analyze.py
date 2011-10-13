@@ -48,7 +48,12 @@ emin=args.emin
 emax=args.emax
 
 phase=yaml.load(open(args.pwnphase))[name]['phase']
-roi=setup_pwn(name,args.pwndata,phase)
+
+free_radius=2
+roi=setup_pwn(name,args.pwndata,phase,free_radius=free_radius)
+while len(roi.parameters())>19 and free_radius>0.5:
+    free_radius*=0.9
+    roi=setup_pwn(name,args.pwndata,phase,xml=None,free_radius=free_radius)
 
 
 from modify import modify_roi
@@ -92,10 +97,12 @@ def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_e
     print_summary = lambda: roi.print_summary(galactic=True)
     print_summary()
 
+    print roi
+
     def fit():
         """ Convenience function incase fit fails. """
         try:
-            roi.fit(use_gradient=False)
+            roi.fit(method="minuit",use_gradient=True)
         except Exception, ex:
             print 'ERROR spectral fitting: ', ex
         print_summary()

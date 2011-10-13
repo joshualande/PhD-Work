@@ -105,7 +105,7 @@ def setup_region(name,pwndata,phase, free_radius=5, tempdir=None, maxroi=10,
         binfile  = binfile)
 
     sa = SpectralAnalysis(ds,
-                          binsperdec = 4,
+                          binsperdec = 8,
                           emin       = 100,
                           emax       = 100000,
                           irf        = "P6_V11_DIFFUSE",
