@@ -1,0 +1,564 @@
+% Author: luca.baldini@pi.infn.it
+
+
+\mode<presentation>
+
+
+%%%%% Necessary packages.
+
+\usepackage{tikz}
+\usepackage{appendixnumberbeamer}
+\usetikzlibrary{arrows,shapes}
+
+
+%%%%% Definition of the options for the Fermi template
+
+\newif\ifbeamer@fermi@navbar
+\newif\ifbeamer@fermi@bkgimage
+\newif\ifbeamer@fermi@shadow
+\newif\ifbeamer@fermi@masterlogo
+
+%%%%% Enable/disable the navigation bar on top of the frametitle.
+\DeclareOptionBeamer{navbar}[true]%
+                    {\csname beamer@fermi@navbar#1\endcsname}
+\ExecuteOptionsBeamer{navbar=false}
+%%%%% Enable/disable the background image.
+\DeclareOptionBeamer{bkgimage}[true]%
+                    {\csname beamer@fermi@bkgimage#1\endcsname}
+\ExecuteOptionsBeamer{bkgimage=true}
+%%%%% Enable/disable the shadow on the block elements and other theme elements.
+\DeclareOptionBeamer{shadow}[true]%
+                    {\def\beamer@fermi@shadow{#1}%
+                      \csname beamer@fermi@shadow#1\endcsname}
+\ExecuteOptionsBeamer{shadow=true}
+%%%%% Enable/disable the Fermi logo on the master slide.
+\DeclareOptionBeamer{masterlogo}[true]%
+                    {\csname beamer@fermi@masterlogo#1\endcsname}
+\ExecuteOptionsBeamer{masterlogo=true}
+
+\ProcessOptionsBeamer
+
+
+%%%%% This is needed to aligh horizontally the bullets for the subsections
+%%%%% in the navigation bar :-)
+
+\beamer@compresstrue
+
+
+%%%%% Definition of the gradients for the images with drop shadows.
+
+\AtBeginDocument{
+  \pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{%
+    color(0pt)=(bg);
+    color(4pt)=(black!50!bg)}
+  \pgfdeclarehorizontalshading{beamer@rightshade}{\paperheight}{%
+    color(0pt)=(black!50!bg);
+    color(4pt)=(bg)}
+}
+
+
+%%%%% New commands for the email and the collaboration (similar to \author,
+%%%%% \date etc). If defined in the preamble will appear on the front slide.
+
+\def\email{\@dblarg\beamer@email}
+\long\def\beamer@email[#1]#2{%
+  \def\insertemail{#2}%
+}
+\email{}
+
+\def\collaboration{\@dblarg\beamer@collaboration}
+\long\def\beamer@collaboration[#1]#2{%
+  \def\insertcollaboration{#2}%
+}
+\collaboration{}
+
+\newcommand{\preliminary}[1]{%
+\node[fill=yellow, rotate=30, draw] at (#1) {\tiny Preliminary};}
+
+
+%%%%% Color definitions (a lot of work needed here to make it rational).
+
+\definecolor{darkred}{rgb}{0.8, 0.0 ,0.0}
+\definecolor{darkblue}{rgb}{0.0, 0.0, 0.8}
+
+\setbeamercolor*{palette primary}%
+		{use=structure,fg=white,bg=structure.fg!85!black}
+\setbeamercolor*{palette secondary}%
+		{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor*{palette tertiary}%
+		{use=structure,fg=white,bg=structure.fg!50!black}
+\setbeamercolor*{palette quaternary}%
+		{fg=white,bg=black}
+\setbeamercolor*{sidebar}%
+		{use=structure,bg=structure.fg}
+\setbeamercolor*{palette sidebar primary}%
+		{use=structure,fg=structure.fg!10}
+\setbeamercolor*{palette sidebar secondary}%
+		{fg=white}
+\setbeamercolor*{palette sidebar tertiary}%
+		{use=structure,fg=structure.fg!50}
+\setbeamercolor*{palette sidebar quaternary}%
+		{fg=white}
+\setbeamercolor*{titlelike}%
+		{parent=palette primary}
+\setbeamercolor*{separation line}%
+		{}
+\setbeamercolor*{fine separation line}%
+		{}
+\setbeamercolor*{frametitle}%
+                {parent=subsection in head/foot}
+\setbeamercolor*{headline}%
+                {bg=black,fg=black}
+\setbeamercolor*{frametitle right}%
+                {parent=frametitle}
+\setbeamercolor*{author in head/foot}%
+                {parent=frametitle}
+\setbeamercolor*{title in head/foot}%
+                {parent=frametitle}
+\setbeamercolor*{date in head/foot}%
+                {parent=frametitle}
+\setbeamercolor{block title}%
+               {use=structure,fg=white,bg=structure.fg!85!black}
+\setbeamercolor{block title alerted}%
+               {use=alerted text,fg=white,bg=alerted text.fg!75!black}
+\setbeamercolor{block title example}%
+               {use=example text,fg=white,bg=example text.fg!75!black}
+\setbeamercolor{block body}%
+               {parent=normal text,use=block title,bg=block title.bg!10!bg}
+\setbeamercolor{block body alerted}%
+               {parent=normal text,use=block title alerted,%
+                 bg=block title alerted.bg!10!bg}
+\setbeamercolor{block body example}%
+               {parent=normal text,use=block title example,%
+                 bg=block title example.bg!10!bg}
+\setbeamercolor{bullet color}{fg=darkblue}
+\setbeamercolor{item color}{fg=darkblue}
+\setbeamercolor{subitem color}{fg=black}
+\setbeamercolor{subsubitem color}{fg=darkblue}
+
+\setbeamercolor{itemize item}{parent=bullet color}
+\setbeamercolor{itemize subitem}{parent=bullet color}
+\setbeamercolor{itemize subsubitem}{parent=bullet color}
+
+\setbeamercolor{normal text}{fg=darkblue}
+
+
+\defbeamertemplate*{headline}{Fermi}%
+{
+  \ifbeamer@fermi@navbar
+  \begin{beamercolorbox}[ht=2.25ex,dp=3.75ex]{headline}
+    \insertnavigation{\paperwidth}
+  \end{beamercolorbox}%
+  \fi
+}
+
+\defbeamertemplate*{footline}{Fermi}%
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}%
+    [wd=.25\paperwidth, ht=2.5ex, dp=1ex, left]{author in head/foot}%
+    \usebeamerfont{author in head/foot}%
+    \hspace*{5ex}\insertshortauthor~~(\insertshortinstitute)%
+  \end{beamercolorbox}\hspace*{-0.01\paperwidth}%
+  \begin{beamercolorbox}%
+    [wd=.52\paperwidth, ht=2.5ex, dp=1ex, center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}%
+    \insertshortdate{}
+  \end{beamercolorbox}\hspace*{-0.01\paperwidth}%
+  \begin{beamercolorbox}%
+    [wd=.25\paperwidth, ht=2.5ex, dp=1ex, right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{5ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\defbeamertemplate{footline}{Appendix}%
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}%
+    [wd=.25\paperwidth, ht=2.5ex, dp=1ex, left]{author in head/foot}%
+    \usebeamerfont{author in head/foot}%
+    \hspace*{5ex}\insertshortauthor~~(\insertshortinstitute)%
+  \end{beamercolorbox}\hspace*{-0.01\paperwidth}%
+  \begin{beamercolorbox}%
+    [wd=.52\paperwidth, ht=2.5ex, dp=1ex, center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}%
+    \insertshortdate{}
+  \end{beamercolorbox}\hspace*{-0.01\paperwidth}%
+  \begin{beamercolorbox}%
+    [wd=.25\paperwidth, ht=2.5ex, dp=1ex, right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}%
+    Spare slides\hspace*{5ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+
+%%%%% Setup for the first slide of the presentation.
+
+\defbeamertemplate*{title page}{Fermi}{
+  \vbox{}%
+  \vfill%
+  \ifbeamer@fermi@masterlogo
+  \rule{0.5\textwidth}{0pt}\hfill%
+  \begin{minipage}{0.47\textwidth}
+  \else%
+  \rule{0.1\textwidth}{0pt}%
+  \begin{minipage}{0.8\textwidth}%
+  \rule{0.1\textwidth}{0pt}%
+  \fi
+    \begin{centering}
+      \begin{beamercolorbox}[sep=8pt,center,rounded=true,%
+          shadow=\beamer@fermi@shadow]{title}
+        \usebeamerfont{title}\inserttitle\par%
+        \ifx\insertsubtitle\@empty%
+        \else%
+        \vskip0.25em%
+               {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}%
+	         \insertsubtitle\par}%
+               \fi%     
+      \end{beamercolorbox}%
+      \vskip1em\par
+      \begin{beamercolorbox}[sep=8pt,center]{author}
+        \usebeamerfont{author}\usebeamercolor[bg]{palette primary}%
+        \insertauthor
+      \end{beamercolorbox}
+
+      \ifx\insertinstitute\@empty%
+      \else
+      \vspace*{-12pt}
+      \begin{beamercolorbox}[sep=8pt,center]{institute}
+        \usebeamerfont{institute}\usebeamercolor[bg]{palette primary}%
+        \insertinstitute
+      \end{beamercolorbox}
+      \fi
+
+      \ifx\insertemail\@empty%
+      \else
+      \vspace*{-12pt}
+      \begin{beamercolorbox}[sep=8pt,center]{email}
+        \usebeamerfont{institute}\usebeamercolor[bg]{palette primary}%
+        \insertemail
+      \end{beamercolorbox}
+      \fi
+
+      \ifx\insertcollaboration\@empty%
+      \else
+      \vspace*{-5pt}
+      \begin{beamercolorbox}[sep=8pt,center]{collaboration}
+        \usebeamerfont{author}\usebeamercolor[bg]{palette primary}%
+        on behalf of the \insertcollaboration\ collaboration
+      \end{beamercolorbox}
+      \fi
+
+      \vspace*{-5pt}
+      \begin{beamercolorbox}[sep=8pt,center]{date}
+        \usebeamerfont{date}\usebeamercolor[bg]{palette primary}%
+        {\insertdate}
+      \end{beamercolorbox}
+    \end{centering}
+  \end{minipage}
+  \vfill
+}
+
+\newcommand{\fermititle}{
+  {\setbeamertemplate{headline}{}
+    \setbeamertemplate{footline}{}
+    \ifbeamer@fermi@navbar
+    \addtolength{\topmargin}{-0.565cm}
+    \fi
+    \ifbeamer@fermi@masterlogo
+    \usebackgroundtemplate{     
+      \includegraphics[height=\paperheight]{master_logo}%
+      \ifbeamer@fermi@shadow%
+      \pgfuseshading{beamer@rightshade}%
+      \fi}
+    \fi
+    \maketitle}
+  \ifbeamer@fermi@bkgimage
+  \usebackgroundtemplate{\includegraphics[width=\paperwidth]{fermi_bkg}}
+  \fi
+}
+
+
+%%%%% Headers and footers.
+
+\defbeamertemplate*{frametitle}{Fermi}[1][center]
+{
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \begin{beamercolorbox}[sep=0.22cm,#1,wd=\the\@tempdima]{frametitle}
+    \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
+    {\usebeamerfont{frametitle}\insertframetitle\par}%
+    {%
+      \ifx\insertframesubtitle\@empty%
+      \else%
+      {\usebeamerfont{framesubtitle}%
+	\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+      \fi
+    }%
+    \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+  \end{beamercolorbox}%
+  \nointerlineskip
+  \vskip-0.2pt
+  \ifbeamer@fermi@shadow%
+  \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{beamer@topshade}%
+    \hskip-\Gm@rmargin}%
+  \vskip-2pt
+  \fi
+}
+
+
+\setbeamertemplate{blocks}[rounded][shadow=\beamer@fermi@shadow]
+
+\setbeamerfont{block title}{size={}}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamerfont{title}{shape=\sc, size=\large}
+\setbeamerfont{frametitle}{shape=\sc}
+\setbeamerfont{block title}{size=\scriptsize}
+\setbeamerfont{block body}{size=\fontsize{7}{8}\selectfont}
+\setbeamertemplate{itemize/enumerate body begin}{
+  \usebeamercolor[fg]{item color}
+}
+\setbeamertemplate{itemize/enumerate subbody begin}{
+  \usebeamercolor[fg]{subitem color}
+}
+\setbeamertemplate{itemize/enumerate subsubbody begin}{
+  \usebeamercolor[fg]{subsubitem color}
+}
+\setbeamertemplate{itemize items}[triangle]
+\graphicspath{{./figures/}}
+
+
+%%% Custom layouts.
+%\arrowsize=2pt
+
+\newcommand{\manual}[1]{
+  \begin{tikzpicture}[x=\textwidth, y=0.82\textheight]%, >=angle 90]
+    \useasboundingbox (0, 0) rectangle (1, 1);
+    #1
+  \end{tikzpicture}
+}
+
+
+%%% Custom nodes.
+
+\newcommand{\basenode}[4]{
+  \node[outer sep=6pt, anchor=#3] (#1) at (#2){#4};
+}
+
+\newcommand{\emptynode}[2]{
+  \basenode{#1}{#2}{base}{}
+
+}
+
+\newcommand{\minipagenode}[5]{
+  \basenode{#1}{#2}{#3}{
+    \begin{minipage}{#4}
+      \vspace*{-12pt}
+      {#5}
+      \vspace*{-8pt}
+  \end{minipage}}
+
+}
+
+\newcommand{\imagenode}[5]{
+  \minipagenode{#1}{#2}{#3}{#4}{%
+    \includegraphics[width=\textwidth]{#5}%
+  }
+}
+
+\newsavebox{\shadeimagebox}
+\newlength{\boxwidth}
+\newlength{\boxheight}
+\newlength{\boxdepth}
+\newlength{\shadewidth}
+\newlength{\shadeheight}
+\newlength{\shadesize}
+
+\newcommand{\shadeimagenode}[5]{
+  \begin{lrbox}{\shadeimagebox}
+    \includegraphics[width=#4]{#5}
+  \end{lrbox}
+  \settowidth{\boxwidth}{\usebox{\shadeimagebox}}
+  \settoheight{\boxheight}{\usebox{\shadeimagebox}}
+  \setlength{\shadewidth}{\boxwidth}
+  \setlength{\shadeheight}{\boxheight}
+  \setlength{\shadesize}{4pt}
+  \addtolength{\shadewidth}{-\shadesize}
+  \addtolength{\shadeheight}{-\shadesize}
+  \pgfdeclareverticalshading{beamer@imgbotshade}{\shadewidth}{%
+    color(0pt)=(bg);
+    color(\shadesize)=(black!50!bg)}
+  \pgfdeclarehorizontalshading{beamer@imgrightshade}{\shadeheight}{%
+    color(0pt)=(black!50!bg);
+    color(\shadesize)=(bg)}
+  \pgfdeclareradialshading{beamer@imgcornershade}{\pgfpointorigin}{%
+    color(0pt)=(black!50!bg);
+    color(\shadesize)=(bg)}
+  \minipagenode{tmp}{#2}{#3}{#4}{%
+    \rule{\boxwidth}{\boxheight}
+    
+    \nointerlineskip\vspace*{-\shadesize}%
+    \rule{\shadewidth}{0pt}%
+            {\pgfuseshading{beamer@imgcornershade}}
+  }
+  \minipagenode{#1}{#2}{#3}{#4}{%
+    \usebox{\shadeimagebox}%
+    \pgfuseshading{beamer@imgrightshade}
+    
+  \nointerlineskip
+  \hspace*{\shadesize}\pgfuseshading{beamer@imgbotshade}
+  }
+}
+
+
+%%%%% Drop-shade meant to be used in conjunction to all kind of boxes.
+
+\newsavebox{\dropshadebox}
+\newlength{\dropshadeboxwidth}
+\newlength{\dropshadeboxheight}
+\newlength{\dropshadeboxdepth}
+\newlength{\dropshadewidth}
+\newlength{\dropshadeheight}
+\newlength{\dropshadesize}
+\newlength{\dropshadepadding}
+\setlength{\dropshadesize}{4pt}
+\setlength{\dropshadepadding}{0.4pt}
+
+\newcommand{\dropshade}[1]{
+  \begin{lrbox}{\dropshadebox}#1\end{lrbox}
+  \settowidth{\dropshadeboxwidth}{\usebox{\dropshadebox}}
+  \settoheight{\dropshadeboxheight}{\usebox{\dropshadebox}}
+  \settodepth{\dropshadeboxdepth}{\usebox{\dropshadebox}}
+  \setlength{\dropshadewidth}{\dropshadeboxwidth}
+  \setlength{\dropshadeheight}{\dropshadeboxheight}
+  \addtolength{\dropshadeheight}{\dropshadeboxdepth}
+  \addtolength{\dropshadewidth}{-\dropshadesize}
+  \addtolength{\dropshadeheight}{-\dropshadesize}
+  \pgfdeclareverticalshading{beamer@imgbotshade}{\dropshadewidth}{%
+    color(0pt)=(bg);
+    color(\dropshadesize)=(black!50!bg)}
+  \pgfdeclarehorizontalshading{beamer@imgrightshade}{\dropshadeheight}{%
+    color(0pt)=(black!50!bg);
+    color(\dropshadesize)=(bg)}
+  \pgfdeclareradialshading{beamer@imgcornershade}{\pgfpointorigin}{%
+    color(0pt)=(black!50!bg);
+    color(\dropshadesize)=(bg)}
+  \parbox{0pt}{%
+    \rule{0pt}{\dropshadeheight}%
+
+    \nointerlineskip\vspace*{\dropshadesize}\vspace*{\dropshadepadding}
+    \rule{\dropshadewidth}{0pt}%
+    \pgfuseshading{beamer@imgcornershade}
+  }%
+  \usebox{\dropshadebox}%
+  \raisebox{-\dropshadeboxdepth}%
+           {\pgfuseshading{beamer@imgrightshade}}
+
+  \nointerlineskip\vspace*{-\dropshadesize}
+  \hspace*{\dropshadesize}%
+  \pgfuseshading{beamer@imgbotshade}
+}
+
+
+
+%%% Connectors.
+
+\newcommand{\connect}[4]{%
+  \draw[<->, color=darkblue, line width=1pt, out=#3, in=#4] (#1) to (#2);
+}
+\newcommand{\connectcolor}[5]{%
+  \draw[<->, color=#5, line width=1pt, out=#3, in=#4] (#1) to (#2);
+}
+\newcommand{\hconnect}[3]{%
+  \draw[<->, color=darkblue, line width=1pt]
+  (#1.east) .. controls +(right:#3) and +(left:#3) .. (#2.west);
+}
+\newcommand{\vconnect}[3]{%
+  \draw[<->, color=darkblue, line width=1pt]
+  (#1.south) .. controls +(down:#3) and +(up:#3) .. (#2.north);
+}
+
+
+\newenvironment{litemize}
+{\usebeamercolor[fg]{item color}%
+\begin{list}{$\blacktriangleright$}{%
+\setlength{\itemindent}{0pt}%
+\setlength{\labelwidth}{10pt}%
+\setlength{\leftmargin}{15pt}%
+}}
+{\end{list}}
+
+
+%%%%% Tables
+\usebeamercolor[bg]{frametitle}
+\colorlet{tableheaderbg}{bg}
+\usebeamercolor[fg]{frametitle}
+\colorlet{tableheaderfg}{fg}
+\newcommand{\thead}{\color{tableheaderfg}}
+
+\define@key{fermitable}{color}[true]%
+           {\csname beamer@fermitable@color#1\endcsname}
+\newif\ifbeamer@fermitable@color
+
+\newenvironment{fermitable}[2][]{%
+  \begingroup%
+  \setkeys{fermitable}{color=true}%
+  \setkeys{fermitable}{#1}%
+  \ifbeamer@fermitable@color
+  \rowcolors{2}{tableheaderbg!20}{tableheaderbg!5}%
+  \arrayrulecolor{tableheaderbg}%
+  \fi%
+  \begin{tabular}{#2}\rowcolor{tableheaderbg}%
+  }{%
+  \end{tabular}%
+  \endgroup}
+
+
+\newcommand{\spares}{%
+  
+  \appendix
+
+  \setbeamertemplate{footline}[Appendix]
+
+  \begin{frame}
+    \frametitle{\phantom{A}}
+    \centering\sc\huge Spare slides
+    
+
+    \value{finalframe}
+  \end{frame}
+}
+
+
+%%% Boxes filled with gradients.
+
+\pgfdeclareverticalshading{beamer@bluegrad}{\textwidth}{%
+  color(0cm)=(black);
+  color(2cm)=(blue)}
+\pgfdeclareverticalshading{beamer@redgrad}{\textwidth}{%
+  color(0cm)=(red!30!white);
+  color(2cm)=(darkred)}
+
+\newcommand{\bluenode}[3]{%
+  \node[shading=beamer@bluegrad, shape=rectangle, line width=0.5pt,%
+    draw=black, text=white, minimum height=20pt, anchor=west]%
+  (#1) at (#2) {#3};%
+}
+
+\newcommand{\rednode}[3]{%
+  \node[shading=beamer@redgrad, shape=rectangle, line width=0.5pt,%
+    draw=black, text=black, minimum height=20pt, anchor=west]%
+  (#1) at (#2) {#3};%
+}
+
+\mode<all>
+
