@@ -115,7 +115,7 @@ SLAC/Stanford}
     \item PSRJ0248+6021: TS$_\text{DC}$ = 70 (18M data)
     \item Vela: TS$_\text{DC}$ = 360,000 (18M data) 
     \item Two very different looking phaseograms
-    \item How to define the off peak emission?
+    \item How to define the off peak consistently for all pulsars?
   \end{itemize}
 \end{frame}
 
@@ -125,13 +125,17 @@ SLAC/Stanford}
   \column{0.5\textwidth}
    % taken from http://da.vidr.cc/2008/09/29/creating-flowcharts-with-pgftikz-in-latex/
   \begin{tikzpicture}[node distance=3cm]
-   \node[block] (a)                {Spectral analysis};
-   \node[block] (b)  [right of=a]  {Weighted light curve};
-   \node[block] (c)  [below of=a]  {light curve model};
-   \node[block] (d)  [right of=c]  {off-peak from model};
+   \node[block] (a)               {Phase Ft1};
+   \node[block] (b)  [right of=a] {Spectral analysis};
+   \node[block] (c)  [below of=a]  {Weighted light curve};
+   \node[block] (d)  [right of=c]  {light curve model};
+   \node[block] (e)  [below of=c]  {off-peak from model};
+   \node[block] (f)  [right of=e]  {Science!};
    \draw[->] (a) -- (b);
    \draw[->] (b) -- (c);
    \draw[->] (c) -- (d);
+   \draw[->] (d) -- (e);
+   \draw[->] (e) -- (f);
   \end{tikzpicture}
 
   \column{0.5\textwidth}
@@ -157,7 +161,7 @@ SLAC/Stanford}
     \item (a) Fit the model
     \item (b) Subtract lowest valley
     \item (c) Guess a center
-    \item (d) Integrate until fraction of total emission (say 1\%) is included.
+    \item (e) Integrate until fraction of total emission (say 1\%) is included.
     \item (e) Try many centers $\rightarrow$ pick biggest range
   \end{itemize}
 \end{columns}
@@ -186,67 +190,113 @@ SLAC/Stanford}
    \item Left Peak is not significant
    \item So would not be included in a pulsar model
    \item But for defining off pulse, should we keep it?
-   \item Probably not too important since if the peak is significant, woudl not much bias a PWN analysis
+   \item Probably not too important since if the peak is not significant, it would not much bias a PWN analysis
   \end{itemize}
    \end{columns}
 \end{frame}
 
 
-\begin{frame}{Benefits/downsides}
-  Benefits:
+\begin{frame}{Benefits}
   \begin{itemize}
-    \item Algorithm Fast to run + easy to explain
-    \item Algorithm performs what we anyway do by eye anyway
     \item While other algorithms use the off pulse to define
       the on pulse, this method uses the peaks to
       define where there are not peaks
-    \item By fitting a physical model, natural way to
-      remove statistical flucluations
-  \end{itemize}
-  Downsides: 
-  \begin{itemize}
-    \item dependent upon a model of the phaseogram
+    \item Algorithm Fast to run + easy to explain
+    \item Algorithm performs what we anyway do by eye 
+    \item Algoirthm indepdnet of spectral or spatial assumption about background model 
+    \item Personally, I believe that pickign the off pulse
+      always requires subjectivly deciding where you think the peaks are.
+    \item By fitting a model, you make explicity what you are assuming.
   \end{itemize}
 
+\end{frame}
+
+
+
+\begin{frame}{How Far to Integrate}
+
+\begin{columns}
+  \column{0.7\textwidth}
+
+  \includegraphics[width=1\textwidth]{plots/how_far_to_integrate.pdf}
+  \column{0.3\textwidth}
+  \begin{itemize}
+    \item   Top is Vela (TS$_\text{DC}$ = 360,000
+    \item Bottom is PSR J0742-2822 (TS$_\text{DC}$ = 27
+    \item 1\% of Vela is too much
+    \item 0.1\$ of PSR J0742-2822 is too little
+  \end{itemize}
+\end{columns}
+\end{frame}
+    
+
+\begin{frame}{Scale Contamination with energy?}
+
+  \begin{itemize}
+    \item Should the Contaminationbe a function of TS$_\text{DC}$?
+    \item Ideas:
+      \begin{equation}
+        \text{contamination} = 0.01 \times \left(\frac{\text{TS}_\text{DC}}{100}\right)^{-\tfrac{1}{4}}
+      \end{equation}
+    \item TS$_\text{DC}=100$ $\rightarrow$ Contamination = 1\%
+    \item TS$_\text{DC}=1\times 10^4$ $\rightarrow$ Contamination = 0.01\%
+    \item Preliminary testing looks good
+    \item Best formula requires more work\dots
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Determine a second off pulse?}
-  \begin{itemize}
-    \item For many pulsars (e.g. Vela), bridge emission between two peaks:
-    \item For others, could be good second off-peak region to include.
-  \end{itemize}
+  \begin{columns}
+    \column{0.6\textwidth}
+    \includegraphics[width=1\textwidth]{plots/second_off_pulse_a.pdf}
+    \column{0.4\textwidth}
+    \begin{itemize}
+      \item For many pulsars (e.g. Vela), bridge emission between two peaks:
+      \item For others, could be second off-peak region 
+      \item In PWNCAT1, only one had two ranges (PSRJ2032+4127)
+      \item General method to pick second range?
+    \end{itemize}
+  \end{columns}
 \end{frame}
+
+\begin{frame}{Determine a second off pulse? (cont)}
+  \begin{columns}
+    \column{0.6\textwidth}
+    \includegraphics[width=1\textwidth]{plots/second_off_pulse_b.pdf}
+    \column{0.4\textwidth}
+    \begin{itemize}
+      \item Select second largest off peak region if:
+      \item Peak in second range $>$ first range/4
+      \item poisson likelihodo of getting second counts assuming first counts is > 5\%
+      \item works here, not in other cases
+      \item Method needs work
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
 
 
 \begin{frame}{Look at high energy?}
   \begin{itemize}
-    \item Is this conservative enough?
+    \item Is this method conservative enough?
     \item Could the peaks be wider at high energy?
-    \item Or new peacks at high energy?
+    \item Or new peaks that are hard and only significant at high energy?
     \item As a cross check, should we refit + look for new peaks above 1GeV?
+    \item This question is general to any method to find off peak
   \end{itemize}
 \end{frame}
 
 
 
 
-
-
-\begin{frame}{What about very bright pulsars:}
-
-   * 1% of Vela is a lot of source!
-   * Should the containment be a function of source brightness?
-   * Ideas for containment = 0.01 * (100/TSdc)
-      * For vela, TSdc=… so contai
-   * Show Vela integrates to 0.01, 0.01 percent, etc.
-   * Make a plot of these issues.
-   * What about linear decrease: containment.
-\end{frame}
-
-
 \begin{frame}{Conclusion}
   \begin{itemize}
-  \item Real test will be how this performs on 108 pulsars + 30 months of data
+    \item Having a robust algorithm to define the off-peak will
+      be useful for a variety of science
+    \item New algorithm to define off peak using maximum likelihood
+      model fitting of the region
+    \item Preliminary testing of algoirhtm seems robust
+  \item Real test will be how this performs on 108 pulsars + 36 months of data
   \item All code is avalible in \texttt{uw.pulsar.lc\_off\_peak}
   \end{itemize}
 \end{frame}
