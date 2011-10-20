@@ -26,22 +26,28 @@ for pwn in allpwn.keys():
     flux_err=pl['flux_err']
     ul=pl['upper_limit']
 
-    table[r'F_{0.1-100}\\(10^-9ph)'].append(
+    flux_name=r'F_{0.1-100}'
+
+    table[flux_name].append(
         '%.1e \pm %.1e' % (flux,flux_err) if ts > 25 else '<%.1e' % ul)
 
     index=pl['Index']
     index_err=pl['Index_err']
-    table[r'$\Gamma'].append('%.1f \pm %.1f' % (index,index_err) if ts > 25 else r'\nodata')
+
+
+    gamma_name=r'$\Gamma'
+    table[gamma_name].append('%.1f \pm %.1f' % (index,index_err) if ts > 25 else r'\nodata')
 
 
 outtable=StringIO.StringIO()
 
-#print table
-#asciitable.write(table, outtable, Writer=asciitable.FixedWidth, names=table.keys())
-
-asciitable.write(table, outtable, Writer=asciitable.AASTex,names=table.keys(),
-                 latexdict = {'caption': r'Results of hte maximum likelihood\ldots'})
-
+asciitable.write(table, outtable, 
+                 Writer=asciitable.AASTex,
+                 names=['PSR',flux_name,gamma_name],
+                 latexdict = dict(caption=r'Results of hte maximum likelihood\ldots',
+                                  units={
+                                      flux_name:'ph cm^-2 s',
+                                      }))
 t=outtable.getvalue()
 
 
