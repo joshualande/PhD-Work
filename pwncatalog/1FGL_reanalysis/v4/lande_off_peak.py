@@ -31,7 +31,7 @@ def find_TSdc(name,pwndata):
             m=ExpCutoff(index=index,cutoff=cutoff)
             m.set_flux(f,1e2,1e5)
             roi.modify(which=name, model=m, keep_old_flux=False)
-            roi.fit(use_gradient=True, estimate_errors=False)
+            roi.fit(use_gradient=False, estimate_errors=False)
             ts=roi.TS(which=name)
             print cutoff,index,ts
             if  ts > best_ts:
@@ -94,11 +94,9 @@ def find_offpeak(ft1,name,rad,peaks,pwncat1phase, TSdc):
 
     op = OffPeak(lcf, contamination = contamination) 
 
-    for a,b in op.off_peak.tolist(dense=False):
-        P.axvspan(a, b, label='lande', alpha=0.25, color='green')
+    op.off_peak.axvspan(label='lande', alpha=0.25, color='green')
 
-    for a,b in pwncat1phase.tolist(dense=False):
-        P.axvspan(a, b, label='pwncat1', alpha=0.25, color='blue')
+    pwncat1phase.axvspan(label='pwncat1', alpha=0.25, color='blue')
 
     P.legend()
 
