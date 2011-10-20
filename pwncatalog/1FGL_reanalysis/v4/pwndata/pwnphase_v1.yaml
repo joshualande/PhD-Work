@@ -1,4 +1,4 @@
-# New file with just off peak phase.
+# Off pulse as defined in PWNCAT1
 PSRJ0007+7303:
   phase: [0.3, 0.7]
 PSRJ0030+0451:
