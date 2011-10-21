@@ -130,8 +130,8 @@ def pointlike_analysis(roi, hypothesis, localize=False, fit_extension=False):
         # likely fail to converge.
         try:
             print 'First, localize with GridLocalize (helps with convergence)'
-
-            grid=GridLocalize(roi,which=name,size=max(snrsize,0.5),pixelsize=snrsize/10)
+            size=size=max(snrsize,0.5)
+            grid=GridLocalize(roi,which=name,size,pixelsize=size/10)
             skydir = grid.best_position()
             print 'Using Grid Localize, best position is (l,b)=(%.3f,%.3f)' % (skydir.l(),skydir.b())
 
