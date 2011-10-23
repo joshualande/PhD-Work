@@ -1,282 +1,282 @@
 PSRJ0007+7303:
   cel: [1.7565, 73.05230555555555]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0007+7303/J0007+7303_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0007+7303/ltcube_J0007+7303.fits
 PSRJ0030+0451:
   cel: [7.614285927083334, 4.861028052777778]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0030+0451/J0030+0451_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0030+0451/ltcube_J0030+0451.fits
 PSRJ0034-0534:
   cel: [8.590976275416667, -5.576867141666667]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0034-0534/J0034-0534_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0034-0534/ltcube_J0034-0534.fits
 PSRJ0106+4855:
   cel: [16.60446204666667, 48.93103786111111]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0106+4855/J0106+4855_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0106+4855/ltcube_J0106+4855.fits
 PSRJ0205+6449:
   cel: [31.408000000000005, 64.8285555556111]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0205+6449/J0205+6449_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0205+6449/ltcube_J0205+6449.fits
 PSRJ0218+4232:
   cel: [34.52648882375, 42.538162102777775]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0218+4232/J0218+4232_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0218+4232/ltcube_J0218+4232.fits
 PSRJ0248+6021:
   cel: [42.07758592458333, 60.35972996666667]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0248+6021/J0248+6021_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0248+6021/ltcube_J0248+6021.fits
 PSRJ0340+4130:
   cel: [55.09703553791666, 41.512582027777775]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0340+4130/J0340+4130_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0340+4130/ltcube_J0340+4130.fits
 PSRJ0357+3205:
   cel: [59.467444167500005, 32.08998355]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0357+3205/J0357+3205_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0357+3205/ltcube_J0357+3205.fits
 PSRJ0437-4715:
   cel: [69.31623851291667, -47.2525325]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0437-4715/J0437-4715_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0437-4715/ltcube_J0437-4715.fits
 PSRJ0534+2200:
   cel: [83.63321799470833, 22.01446362288889]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0534+2200/J0534+2200_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0534+2200/ltcube_J0534+2200.fits
 PSRJ0610-2100:
   cel: [92.55664807666668, -21.007759091666667]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0610-2100/J0610-2100_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0610-2100/ltcube_J0610-2100.fits
 PSRJ0613-0200:
   cel: [93.43323229041667, -2.013118575]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0613-0200/J0613-0200_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0613-0200/ltcube_J0613-0200.fits
 PSRJ0614-3329:
   cel: [93.54311603333333, -33.49836518888889]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0614-3329/J0614-3329_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0614-3329/ltcube_J0614-3329.fits
 PSRJ0622+3749:
   cel: [95.54413351791666, 37.81937680555556]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0622+3749/J0622+3749_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0622+3749/ltcube_J0622+3749.fits
 PSRJ0631+1036:
   cel: [97.86567336208334, 10.616477074999999]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0631+1036/J0631+1036_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0631+1036/ltcube_J0631+1036.fits
 PSRJ0633+0632:
   cel: [98.43375705166666, 6.541578211111111]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0633+0632/J0633+0632_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0633+0632/ltcube_J0633+0632.fits
 PSRJ0633+1746:
   cel: [98.47617198166667, 17.770804244444445]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0633+1746/J0633+1746_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0633+1746/ltcube_J0633+1746.fits
 PSRJ0659+1414:
   cel: [104.95073027875, 14.239251469444444]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0659+1414/J0659+1414_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0659+1414/ltcube_J0659+1414.fits
 PSRJ0734-1559:
   cel: [113.69017862375, -15.987950030555554]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0734-1559/J0734-1559_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0734-1559/ltcube_J0734-1559.fits
 PSRJ0742-2822:
   cel: [115.70432999416667, -28.3789054]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0742-2822/J0742-2822_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0742-2822/ltcube_J0742-2822.fits
 PSRJ0751+1807:
   cel: [117.78814908749999, 18.12736495277778]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0751+1807/J0751+1807_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0751+1807/ltcube_J0751+1807.fits
 PSRJ0835-4510:
   cel: [128.83583924166666, -45.176336388888885]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0835-4510/J0835-4510_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0835-4510/ltcube_J0835-4510.fits
 PSRJ0908-4913:
   cel: [137.14804166666664, -49.218472222222225]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0908-4913/J0908-4913_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0908-4913/ltcube_J0908-4913.fits
 PSRJ0940-5428:
   cel: [145.24258333333333, -54.47794444444445]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0940-5428/J0940-5428_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J0940-5428/ltcube_J0940-5428.fits
 PSRJ1016-5857:
   cel: [154.0881666666667, -58.953361111111114]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1016-5857/J1016-5857_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1016-5857/ltcube_J1016-5857.fits
 PSRJ1019-5749:
   cel: [154.96724999999998, -57.81830555555556]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1019-5749/J1019-5749_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1019-5749/ltcube_J1019-5749.fits
 PSRJ1023-5746:
   cel: [155.76087743124998, -57.76983758888889]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1023-5746/J1023-5746_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1023-5746/ltcube_J1023-5746.fits
 PSRJ1024-0719:
   cel: [156.16114771875, -7.322065158333333]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1024-0719/J1024-0719_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1024-0719/ltcube_J1024-0719.fits
 PSRJ1028-5819:
   cel: [157.11617270166667, -58.31839321666667]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1028-5819/J1028-5819_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1028-5819/ltcube_J1028-5819.fits
 PSRJ1044-5737:
   cel: [161.13713316666667, -57.622088769444446]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1044-5737/J1044-5737_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1044-5737/ltcube_J1044-5737.fits
 PSRJ1048-5832:
   cel: [162.05083333333334, -58.53494444444444]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1048-5832/J1048-5832_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1048-5832/ltcube_J1048-5832.fits
 PSRJ1057-5226:
   cel: [164.49516666666665, -52.44897222222222]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1057-5226/J1057-5226_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1057-5226/ltcube_J1057-5226.fits
 PSRJ1105-6107:
   cel: [166.35904166666668, -61.130944444444445]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1105-6107/J1105-6107_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1105-6107/ltcube_J1105-6107.fits
 PSRJ1119-6127:
   cel: [169.80958333333334, -61.463750000000005]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1119-6127/J1119-6127_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1119-6127/ltcube_J1119-6127.fits
 PSRJ1135-6055:
   cel: [173.784122665, -60.92638191388889]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1135-6055/J1135-6055_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1135-6055/ltcube_J1135-6055.fits
 PSRJ1231-1411:
   cel: [187.7971389183333, -14.195459333333334]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1231-1411/J1231-1411_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1231-1411/ltcube_J1231-1411.fits
 PSRJ1357-6429:
   cel: [209.260125, -64.49172222222222]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1357-6429/J1357-6429_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1357-6429/ltcube_J1357-6429.fits
 PSRJ1410-6132:
   cel: [212.59204680625, -61.53305060833333]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1410-6132/J1410-6132_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1410-6132/ltcube_J1410-6132.fits
 PSRJ1413-6205:
   cel: [213.37590226083336, -62.093516975]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1413-6205/J1413-6205_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1413-6205/ltcube_J1413-6205.fits
 PSRJ1418-6058:
   cel: [214.6783438029167, -60.96665601666667]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1418-6058/J1418-6058_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1418-6058/ltcube_J1418-6058.fits
 PSRJ1420-6048:
   cel: [215.03432083333334, -60.804563888888886]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1420-6048/J1420-6048_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1420-6048/ltcube_J1420-6048.fits
 PSRJ1429-5911:
   cel: [217.49393235708334, -59.193483577777776]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1429-5911/J1429-5911_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1429-5911/ltcube_J1429-5911.fits
 PSRJ1459-6053:
   cel: [224.87567785916664, -60.88876880833333]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1459-6053/J1459-6053_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1459-6053/ltcube_J1459-6053.fits
 PSRJ1509-5850:
   cel: [227.36304166666667, -58.84891666666667]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1509-5850/J1509-5850_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1509-5850/ltcube_J1509-5850.fits
 PSRJ1513-5908:
   cel: [228.48175, -59.13583333333333]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1513-5908/J1513-5908_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1513-5908/ltcube_J1513-5908.fits
 PSRJ1531-5610:
   cel: [232.86625450374999, -56.18204572222222]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1531-5610/J1531-5610_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1531-5610/ltcube_J1531-5610.fits
 PSRJ1600-3053:
   cel: [240.21626413458335, -30.89704885]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1600-3053/J1600-3053_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1600-3053/ltcube_J1600-3053.fits
 PSRJ1614-2230:
   cel: [243.65211021124998, -22.50866388888889]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1614-2230/J1614-2230_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1614-2230/ltcube_J1614-2230.fits
 PSRJ1620-4927:
   cel: [245.17337721458333, -49.45999890555556]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1620-4927/J1620-4927_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1620-4927/ltcube_J1620-4927.fits
 PSRJ1702-4128:
   cel: [255.71883333333335, -41.48005555555556]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1702-4128/J1702-4128_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1702-4128/ltcube_J1702-4128.fits
 PSRJ1709-4429:
   cel: [257.4280333333333, -44.485622222222226]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1709-4429/J1709-4429_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1709-4429/ltcube_J1709-4429.fits
 PSRJ1713+0747:
   cel: [258.45638860791667, 7.793748491666666]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1713+0747/J1713+0747_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1713+0747/ltcube_J1713+0747.fits
 PSRJ1718-3825:
   cel: [259.5565208333333, -38.421683333333334]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1718-3825/J1718-3825_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1718-3825/ltcube_J1718-3825.fits
 PSRJ1732-3131:
   cel: [263.13967890000004, -31.52284016111111]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1732-3131/J1732-3131_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1732-3131/ltcube_J1732-3131.fits
 PSRJ1741+1351:
   cel: [265.3797866379167, 13.862269766666666]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1741+1351/J1741+1351_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1741+1351/ltcube_J1741+1351.fits
 PSRJ1741-2054:
   cel:
@@ -293,175 +293,175 @@ PSRJ1741-2054:
     - !!binary |
       GD26TFPnNMA=
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1741-2054/J1741-2054_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1741-2054/ltcube_J1741-2054.fits
 PSRJ1744-1134:
   cel: [266.1225317829167, -11.581858772222223]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1744-1134/J1744-1134_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1744-1134/ltcube_J1744-1134.fits
 PSRJ1746-3239:
   cel: [266.72898698, -32.66035048888889]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1746-3239/J1746-3239_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1746-3239/ltcube_J1746-3239.fits
 PSRJ1747-2958:
   cel: [266.8161750074167, -29.96694444447222]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1747-2958/J1747-2958_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1747-2958/ltcube_J1747-2958.fits
 PSRJ1801-2451:
   cel: [270.2497475070833, -24.868533]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1801-2451/J1801-2451_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1801-2451/ltcube_J1801-2451.fits
 PSRJ1803-2149:
   cel: [270.79015510041665, -21.820487758333332]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1803-2149/J1803-2149_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1803-2149/ltcube_J1803-2149.fits
 PSRJ1809-2332:
   cel: [272.45922059541664, -23.534349511111113]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1809-2332/J1809-2332_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1809-2332/ltcube_J1809-2332.fits
 PSRJ1813-1246:
   cel: [273.348935235, -12.766906047222221]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1813-1246/J1813-1246_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1813-1246/ltcube_J1813-1246.fits
 PSRJ1826-1256:
   cel: [276.53548863125, -12.942810897222223]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1826-1256/J1826-1256_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1826-1256/ltcube_J1826-1256.fits
 PSRJ1836+5925:
   cel: [279.05706059208336, 59.424907838888885]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1836+5925/J1836+5925_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1836+5925/ltcube_J1836+5925.fits
 PSRJ1846+0919:
   cel: [281.60784611125, 9.329361238888888]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1846+0919/J1846+0919_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1846+0919/ltcube_J1846+0919.fits
 PSRJ1907+0602:
   cel: [286.97805966875, 6.038049583333334]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1907+0602/J1907+0602_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1907+0602/ltcube_J1907+0602.fits
 PSRJ1939+2134:
   cel: [294.91067231874996, 21.58309091111111]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1939+2134/J1939+2134_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1939+2134/ltcube_J1939+2134.fits
 PSRJ1952+3252:
   cel: [298.24215244833334, 32.87812708888889]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1952+3252/J1952+3252_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1952+3252/ltcube_J1952+3252.fits
 PSRJ1954+2836:
   cel: [298.5797991033333, 28.601403061111114]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1954+2836/J1954+2836_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1954+2836/ltcube_J1954+2836.fits
 PSRJ1957+5033:
   cel: [299.44495142125, 50.56184785]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1957+5033/J1957+5033_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1957+5033/ltcube_J1957+5033.fits
 PSRJ1958+2846:
   cel: [299.66674069249996, 28.764825758333334]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1958+2846/J1958+2846_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1958+2846/ltcube_J1958+2846.fits
 PSRJ1959+2048:
   cel: [299.90317572333333, 20.804140433333334]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1959+2048/J1959+2048_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J1959+2048/ltcube_J1959+2048.fits
 PSRJ2017+0603:
   cel: [304.34460314875, 6.051549155555556]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2017+0603/J2017+0603_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2017+0603/ltcube_J2017+0603.fits
 PSRJ2021+3651:
   cel: [305.2740483191667, 36.85098863611111]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2021+3651/J2021+3651_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2021+3651/ltcube_J2021+3651.fits
 PSRJ2021+4026:
   cel: [305.3736791666667, 40.44850194444444]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2021+4026/J2021+4026_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2021+4026/ltcube_J2021+4026.fits
 PSRJ2028+3332:
   cel: [307.0827709670833, 33.534522566666666]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2028+3332/J2028+3332_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2028+3332/ltcube_J2028+3332.fits
 PSRJ2030+3641:
   cel: [307.5010865404167, 36.69088852222222]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2030+3641/J2030+3641_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2030+3641/ltcube_J2030+3641.fits
 PSRJ2030+4415:
   cel: [307.71410254999995, 44.26070981111111]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2030+4415/J2030+4415_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2030+4415/ltcube_J2030+4415.fits
 PSRJ2032+4127:
   cel: [308.0546036208334, 41.45679602222223]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2032+4127/J2032+4127_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2032+4127/ltcube_J2032+4127.fits
 PSRJ2043+2740:
   cel: [310.93127051791663, 27.68213396388889]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2043+2740/J2043+2740_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2043+2740/ltcube_J2043+2740.fits
 PSRJ2051-0827:
   cel: [312.78132951875006, -8.460486827777776]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2051-0827/J2051-0827_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2051-0827/ltcube_J2051-0827.fits
 PSRJ2055+2539:
   cel: [313.95381818208335, 25.66613578611111]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2055+2539/J2055+2539_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2055+2539/ltcube_J2055+2539.fits
 PSRJ2124-3358:
   cel: [321.1826993520833, -33.979144044444446]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2124-3358/J2124-3358_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2124-3358/ltcube_J2124-3358.fits
 PSRJ2139+4716:
   cel: [324.9829765620833, 47.270277505555555]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2139+4716/J2139+4716_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2139+4716/ltcube_J2139+4716.fits
 PSRJ2214+3000:
   cel: [333.66185863083336, 30.01061177777778]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2214+3000/J2214+3000_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2214+3000/ltcube_J2214+3000.fits
 PSRJ2229+6114:
   cel: [337.27388874416664, 61.234471694444444]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2229+6114/J2229+6114_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2229+6114/ltcube_J2229+6114.fits
 PSRJ2238+5903:
   cel: [339.61729356999996, 59.062434905555556]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2238+5903/J2238+5903_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2238+5903/ltcube_J2238+5903.fits
 PSRJ2240+5832:
   cel: [340.17896905291667, 58.54378761666666]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2240+5832/J2240+5832_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2240+5832/ltcube_J2240+5832.fits
 PSRJ2302+4442:
   cel: [345.6957459829167, 44.70614032777778]
   ft1: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2302+4442/J2302+4442_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/FT2-239557417.49-339548459.09MET_SLIM.fits
+  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/pwn/J2302+4442/ltcube_J2302+4442.fits
