@@ -1,3 +1,6 @@
+from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds
+from SED import SED
+
 def plots(roi, hypothesis, size=5):
     print 'Making plots for hypothesis %s' % hypothesis
     roi.plot_tsmap(filename='residual_tsmap_%s_%s.png' % (hypothesis,name), size=size, pixelsize=0.1)
@@ -22,12 +25,15 @@ def plots(roi, hypothesis, size=5):
 
     roi.toRegion('Region_file_%s.reg'%name)
     roi.toXML(filename="srcmodel_res_%s_%s.xml"%(hypothesis, name))
-    roi.plot_slice(which=name,filename="outslice_%s_%s.png"%(hypothesis, name),datafile='slice_points_%s_%s.out'%(hypothesis, name))
-    #plot_all_seds(roi, filename="allsed_%s_%s.png"%(hypothesis, name))
-    roi.plot_counts_spectra(filename="Spectra_%s_%s.png"%(hypothesis, name))
+    roi.plot_slice(which=name,filename="outslice_%s_%s.png"%(hypothesis, name),
+                   datafile='slice_points_%s_%s.out'%(hypothesis, name))
+    roi.plot_counts_spectra(filename="spectra_%s_%s.png"%(hypothesis, name))
 
 
-def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_extension=False, extension_upper_limit=False, cutoff=False):
+def pointlike_analysis(roi, name, hypothesis, emin, emax,
+                       upper_limit=False, localize=False, 
+                       fit_extension=False, extension_upper_limit=False, cutoff=False):
+    """ emin + emax used for computing upper limits. """
     print 'Performing Pointlike analysis for %s' % hypothesis
 
     print_summary = lambda: roi.print_summary(galactic=True)
@@ -38,7 +44,7 @@ def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_e
     def fit():
         """ Convenience function incase fit fails. """
         try:
-            roi.fit(method="minuit",use_gradient=True)
+            roi.fit(use_gradient=False)
         except Exception, ex:
             print 'ERROR spectral fitting: ', ex
         print_summary()
@@ -72,13 +78,14 @@ def pointlike_analysis(roi, hypothesis, upper_limit=False, localize=False, fit_e
         p['test_cutoff']=test_cutoff(roi,name)
 
     roi.plot_sed(which=name,filename='sed_pointlike_%s_%s.pdf' % (hypothesis,name), use_ergs=True)
+    plot_all_seds(roi, filename='all_seds_pointlike_%s_%s.pdf' % (hypothesis,name), use_ergs=True)
  
     roi.save('roi_%s_%s.dat' % (hypothesis,name))
 
     if do_plots: plots(roi, hypothesis)
     return p
 
-def gtlike_analysis(roi, hypothesis, upper_limit=False, cutoff=False):
+def gtlike_analysis(roi, name, hypothesis, emin, emax, upper_limit=False, cutoff=False):
     print 'Performing Gtlike crosscheck for %s' % hypothesis
 
     gtlike=Gtlike(roi)

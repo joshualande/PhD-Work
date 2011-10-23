@@ -8,15 +8,10 @@ from roi_gtlike import Gtlike
 from uw.like.sed_plotter import plot_sed
 
 from setup_pwn import setup_pwn,get_source
-from uw.like.SpatialModels import Gaussian
-from uw.like.roi_tsmap import TSCalc,TSCalcPySkyFunction
 from argparse import ArgumentParser
-from skymaps import SkyImage,SkyDir
 import yaml
-from SED import SED
 
 from toolbag import tolist
-from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff
 from collections import defaultdict
 import numpy as np
 np.seterr(all='ignore')
@@ -49,11 +44,7 @@ emax=args.emax
 
 phase=yaml.load(open(args.pwnphase))[name]['phase']
 
-free_radius=2
-roi=setup_pwn(name,args.pwndata,phase,free_radius=free_radius)
-while len(roi.parameters())>19 and free_radius>0.5:
-    free_radius*=0.9
-    roi=setup_pwn(name,args.pwndata,phase,xml=None,free_radius=free_radius)
+roi=setup_pwn(name,args.pwndata,phase,free_radius=5, max_free=10)
 
 
 from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results
@@ -63,22 +54,24 @@ modify_roi(name,roi)
 results=r=defaultdict(lambda: defaultdict(dict))
 
 
-r['at_pulsar']['pointlike']=pointlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=do_cutoff)
+kwargs = dict(roi=roi, name=name, emin=emin, emax=emax)
+
+r['at_pulsar']['pointlike']=pointlike_analysis(hypothesis='at_pulsar', upper_limit=True, cutoff=do_cutoff, **kwargs)
 save_results()
-if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(roi, 'at_pulsar', upper_limit=True, cutoff=do_cutoff)
+if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(hypothesis='at_pulsar', upper_limit=True, cutoff=do_cutoff, **kwargs)
 
 if do_point:
-    r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=do_cutoff, extension_upper_limit=do_extension_upper_limit)
+    r['point']['pointlike']=pointlike_analysis(hypothesis='point', localize=True, cutoff=do_cutoff, extension_upper_limit=do_extension_upper_limit, **kwargs)
     save_results()
-    if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
+    if do_gtlike: r['point']['gtlike']=gtlike_analysis(hypothesis='point', cutoff=do_cutoff, **kwargs)
 
 if do_extended:
     roi.del_source(name)
     roi.add_source(get_source(name,args.pwndata, extended=True))
 
-    r['extended']['pointlike']=pointlike_analysis(roi, 'point', cutoff=do_cutoff, fit_extension=True)
+    r['extended']['pointlike']=pointlike_analysis(hypothesis='point', cutoff=do_cutoff, fit_extension=True, **kwargs)
     save_results()
-    if do_gtlike: r['extended']['gtlike']=gtlike_analysis(roi, 'point', cutoff=do_cutoff)
+    if do_gtlike: r['extended']['gtlike']=gtlike_analysis(hypothesis='point', cutoff=do_cutoff, **kwargs)
 
     for which in ['pointlike','gtlike']:
         results['extended'][which]['ts_ext'] = \

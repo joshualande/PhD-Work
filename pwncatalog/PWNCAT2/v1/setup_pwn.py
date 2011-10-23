@@ -38,9 +38,9 @@ def setup_pwn(name, pwndata, *args, **kwargs):
     roi.add_source(get_source(name,pwndata))
     return roi
 
-def get_source(name,pwndata, extended=False):
+def get_source(name, pwndata, extended=False):
     sources=yaml.load(open(pwndata))
-    pulsar_position=SkyDir(*sources[name]['dir'])
+    pulsar_position=SkyDir(*sources[name]['cel'])
     model=PowerLaw(norm=1e-11, index=2)
 
     if extended:
@@ -54,34 +54,36 @@ def get_source(name,pwndata, extended=False):
             model=model,
             skydir=pulsar_position)
 
-def setup_region(name,pwndata,phase, free_radius=5, tempdir=None, maxroi=10,
-              xml=None, **kwargs):
+def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, tempdir=None, 
+                 **kwargs):
     """Name of the source
     pwndata Yaml file
     
     returns pointlike ROI.
     """
 
+    if tempdir is None: tempdir=mkdtemp(prefix='/scratch/')
+
     phase = PhaseRange(phase)
 
     sources=yaml.load(open(pwndata))
 
-    catalog_name=sources[name]['catalog']['2fgl']
     ltcube=sources[name]['ltcube']
-    pulsar_position=SkyDir(*sources[name]['dir'])
+
+    pulsar_position=SkyDir(*sources[name]['cel'])
     ft2=sources[name]['ft2']
     ft1=sources[name]['ft1']
 
+    diffuse_sources = get_default_diffuse(diffdir="/afs/slac/g/glast/groups/diffuse/rings/2year",
+                                          gfile="ring_2year_P76_v0.fits",
+                                          ifile="isotrop_2year_P76_source_v0.txt")
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"))
     catalog=Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
                         latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
-                        free_radius=free_radius)
-    catalog_source=catalog.get_source(catalog_name)
-
-    center=catalog_source.skydir
-
-    if tempdir is None: tempdir=mkdtemp(prefix='/scratch/')
+                        free_radius=free_radius,
+                        prune_radius = 0.1, # hopefully pulsar is within 0.1 degrees and will be removed
+                        max_free = 5)
 
     binfile=j(tempdir,'binned_phased.fits')
 
@@ -108,29 +110,16 @@ def setup_region(name,pwndata,phase, free_radius=5, tempdir=None, maxroi=10,
                           binsperdec = 8,
                           emin       = 100,
                           emax       = 100000,
-                          irf        = "P6_V11_DIFFUSE",
-                          roi_dir    = center,
-                          maxROI     = maxroi,
-                          minROI     = maxroi)
+                          irf        = "P7SOURCE_V6",
+                          roi_dir    = pulsar_position,
+                          maxROI     = roi_size,
+                          minROI     = roi_size)
 
-    if xml is None:
-        roi=sa.roi(
-            diffuse_sources=get_default_diffuse(diffdir="/afs/slac/g/glast/groups/diffuse/mapcubes",
-                                                gfile="gll_iem_v02.fit",
-                                                ifile="isotropic_iem_v02.txt"),
-            catalogs = catalog,
-            phase_factor =1,
-            **kwargs)
-    else:
-        roi=sa.roi_from_xml(
-            roi_dir=center,
-            xmlfile = xml,
-            phase_factor =1,
-            **kwargs)
+    roi=sa.roi(diffuse_sources=diffuse_sources,
+               catalogs=catalog,
+               phase_factor=1,
+               **kwargs)
 
     print 'bins ',roi.bin_edges
-
-    roi.del_source(catalog_name)
-        
 
     return roi
