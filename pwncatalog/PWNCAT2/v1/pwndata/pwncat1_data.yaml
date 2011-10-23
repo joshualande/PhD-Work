@@ -34,11 +34,6 @@ PSRJ0357+3205:
   ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/data/PWNCAT1/v1/J0357+3205/ltcube_pwncat1_PSRJ0357+3205.fits
   old_name: PSRJ0357+3206
-PSRJ0437-4715:
-  cel: [69.31623851291667, -47.2525325]
-  ft1: /nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/data/PWNCAT1/v1/J0437-4715/ft1_pwncat1_PSRJ0437-4715.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/data/PWNCAT1/v1/J0437-4715/ltcube_pwncat1_PSRJ0437-4715.fits
 PSRJ0534+2200:
   cel: [83.63321799470833, 22.01446362288889]
   ft1: /nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/data/PWNCAT1/v1/J0534+2200/ft1_pwncat1_PSRJ0534+2200.fits
