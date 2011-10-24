@@ -3,7 +3,7 @@
 # the original phase window is left as the field old_phasae
 PSRJ0007+7303:
   phase: [.6, .9]
-  old_phase: [0.3, 0.7]
+  old_phase: [0.35, 0.65]
 PSRJ0030+0451:
   phase: [0.7, 0.1]
 PSRJ0034-0534:

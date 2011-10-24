@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import yaml
+import os
+from glob import glob
 from os.path import expandvars as e, join as j
-import numbers
 from tempfile import mkdtemp
+import numbers
 
 import numpy as np
-import pyfits
 
 from skymaps import SkyDir
 
@@ -18,30 +19,23 @@ from uw.like.Models import PowerLaw
 from uw.utilities import phasetools
 from uw.pulsar.phase_range import PhaseRange
 
-def phase_ltcube(ltcube,outputfile,phase,phase_col_name='PULSE_PHASE'):
-    """ Scale ltcube """
+def setup_pwn(name, pwndata, fit_emin, fit_emax, **kwargs):
 
-    from numpy import array
-    ltcube = pyfits.open(ltcube)
-    cb=ltcube['exposure'].data.field('cosbins')
-    cb*=phase.phase_fraction
-
-    ltcube.writeto(outputfile,clobber=True)
-    ltcube.close()
-
-
-def setup_pwn(name, pwndata, *args, **kwargs):
-
-    roi = setup_region(name, pwndata, *args, **kwargs)
+    roi = setup_region(name, pwndata, 
+                       fit_emin=fit_emin, 
+                       fit_emax=fit_emax, **kwargs)
     # keep overall flux of catalog source,
     # but change the starting index to 2.
-    roi.add_source(get_source(name,pwndata))
+    roi.add_source(get_source(name,pwndata, fit_emin, fit_emax))
     return roi
 
-def get_source(name, pwndata, extended=False):
+def get_source(name, pwndata, fit_emin, fit_emax, extended=False):
     sources=yaml.load(open(pwndata))
     pulsar_position=SkyDir(*sources[name]['cel'])
-    model=PowerLaw(norm=1e-11, index=2)
+    model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax))
+    model.set_flux(
+        PowerLaw(norm=1e-11, index=2).i_flux(fit_emin,fit_emax),
+        fit_emin,fit_emax)
 
     if extended:
         return ExtendedSource(
@@ -54,7 +48,7 @@ def get_source(name, pwndata, extended=False):
             model=model,
             skydir=pulsar_position)
 
-def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, tempdir=None, 
+def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedir=None, 
                  **kwargs):
     """Name of the source
     pwndata Yaml file
@@ -62,7 +56,14 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, tempdi
     returns pointlike ROI.
     """
 
-    if tempdir is None: tempdir=mkdtemp(prefix='/scratch/')
+    if savedir is None: 
+        savedir=mkdtemp(prefix='/scratch/')
+    elif not os.path.exists(savedir):
+        os.makedirs(savedir)
+    else:
+        for file in glob(j(savedir,'*')):
+            os.remove(file)
+
 
     phase = PhaseRange(phase)
 
@@ -82,21 +83,20 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, tempdi
     catalog=Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
                         latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
                         free_radius=free_radius,
-                        prune_radius = 0.1, # hopefully pulsar is within 0.1 degrees and will be removed
-                        max_free = 5)
+                        max_free = max_free)
 
-    binfile=j(tempdir,'binned_phased.fits')
+    binfile=j(savedir,'binned_phased.fits')
 
     if np.allclose(phase.phase_fraction,1):
         phased_ltcube = ltcube
         phased_ft1 = ft1
     else:
         # create a temporary ltcube scaled by the phase factor
-        phased_ltcube=j(tempdir,'phased_ltcube.fits')
-        phase_ltcube(ltcube,phased_ltcube, phase=phase)
+        phased_ltcube=j(savedir,'phased_ltcube.fits')
+        phasetools.phase_ltcube(ltcube,phased_ltcube, phase=phase)
 
         # apply phase cut to ft1 file
-        phased_ft1 = j(tempdir,'ft1_phased.fits')
+        phased_ft1 = j(savedir,'ft1_phased.fits')
         phasetools.phase_cut(ft1,phased_ft1,phaseranges=phase.tolist(dense=False))
 
     from uw.like.pointspec import DataSpecification
@@ -106,10 +106,11 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, tempdi
         ltcube   = phased_ltcube,
         binfile  = binfile)
 
+    print 'For now, 4 bins per decade. Eventually, this will have to be better.'
     sa = SpectralAnalysis(ds,
-                          binsperdec = 8,
+                          binsperdec = 4,
                           emin       = 100,
-                          emax       = 100000,
+                          emax       = 1000000,
                           irf        = "P7SOURCE_V6",
                           roi_dir    = pulsar_position,
                           maxROI     = roi_size,
@@ -119,6 +120,11 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, tempdi
                catalogs=catalog,
                phase_factor=1,
                **kwargs)
+
+    for source in roi.get_sources():
+        if np.degrees(source.skydir.difference(pulsar_position)) < 0.1:
+            print 'Pruning nearby source %s' % source.name
+            roi.del_source(source)
 
     print 'bins ',roi.bin_edges
 
