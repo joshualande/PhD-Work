@@ -265,8 +265,6 @@ class SED(object):
         index.setTrueValue(self.powerlaw_index)
         index.setFree(0)
 
-        prefactor=like[like.par_index(name, 'Prefactor')]
-
         # assume a canonical dnde=1e-11 at 1GeV index 2 starting value
         dnde = lambda e: 1e-11*(e/1e3)**-2
 
@@ -282,7 +280,6 @@ class SED(object):
 
             # goot starting guess for source
             prefactor=like[like.par_index(name, 'Prefactor')]
-
             prefactor.setScale(dnde(e))
             prefactor.setValue(1)
             prefactor.setBounds(1e-10,1e10)
@@ -294,7 +291,11 @@ class SED(object):
 
             like.setEnergyRange(float(lower)+1, float(upper)-1)
 
-            like.fit(optverbosity,covar=True)
+            try:
+                like.fit(optverbosity,covar=True)
+            except Exception, ex:
+                if verbosity: print 'ERROR gtlike fit: ', ex
+
             self.ts[i]=like.Ts(name,reoptimize=False)
 
             if self.ts[i] < self.min_ts or self.always_upper_limit: 
@@ -520,6 +521,19 @@ class SED(object):
         axes.set_ylabel(r'Energy Flux (%s cm$^{-2}$ s$^{-1}$)' % flux_units)
 
         return axes
+
+    def todict(self):
+        """ Package up the SED points nicely into a dictionary. """
+        d=dict(energy=self.energies,
+               lower_energy=self.bin_edges[:-1],
+               upper_energy=self.bin_edges[1:],
+               flux=self.dnde,
+               flux_err=self.dnde_err,
+               significant=self.ts>self.min_ts,
+               upper_limit=self.ul,
+               test_statistic=self.ts)
+        for k in d: d[k] = d[k].tolist()
+        return d
 
     def plot(self, filename=None, **kwargs):
 
