@@ -360,6 +360,8 @@ class SED(object):
         # note, set empty columns to nan
 
         data = [
+            dict(name='Lower_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[:-1])),
+            dict(name='Upper_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[1:])),
             dict(name='Energy',        unit=eu,           fmt='f', data=ce(self.energies)),
             dict(name='Flux',          unit=fu, fmt='e',
                  data=cf(np.where(significant, self.dnde, self.ul)), ul=~significant),
@@ -369,8 +371,6 @@ class SED(object):
 
         if self.verbosity:
             data += [
-                dict(name='Lower_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[:-1])),
-                dict(name='Upper_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[1:])),
                 dict(name='Raw_Flux',       unit=fu, fmt='e', data=cf(self.dnde)),
                 dict(name='Raw_Flux_Err',   unit=fu, fmt='e', data=cf(self.dnde_err)),
                 dict(name='Test_Statistic', unit='', fmt='f', data=self.ts),
@@ -433,7 +433,7 @@ class SED(object):
             f.close()
 
     @staticmethod 
-    def _plot_data(energies, dnde, dnde_err, ul, significant,
+    def _plot_data(energies, bin_edges, dnde, dnde_err, ul, significant,
                    energy_units, flux_units,
                    axes=None, fignum=None, figsize=(4,4),
                    plot_spectral_fit=True, spectrum=None,
@@ -456,13 +456,6 @@ class SED(object):
 
         e=energies
         s = significant
-
-        # recreate bin edges from geometric
-        # mean of energy bins
-        bin_edges=np.empty((len(e)+1,))
-        le=np.log10(e)
-        bin_edges[:-2] = 10**(le[:-1] - (le[1:]-le[:-1])/2)
-        bin_edges[2:] = 10**(le[1:]  + (le[1:]-le[:-1])/2)
 
         elow=bin_edges[:-1]
         ehi=bin_edges[1:]
@@ -542,9 +535,9 @@ class SED(object):
         source = self.like.logLike.getSource(self.name)
         spectrum=source.spectrum()
 
-        axes = SED._plot_data(self.energies, self.dnde, 
-                              self.dnde_err, self.ul, 
-                              significant,
+        axes = SED._plot_data(self.energies, self.bin_edges, 
+                              self.dnde, self.dnde_err, 
+                              self.ul, significant,
                               energy_units = self.energy_units,
                               flux_units = self.flux_units,
                               spectrum=spectrum, **kwargs)
@@ -564,6 +557,8 @@ class SED(object):
         table=PrettyTable(precision=precision, colwidth=colwidth)
         data,comments=table.load(filename)
 
+        lower_energy=next(d for d in data if d['name']=='Lower_Energy')
+        upper_energy=next(d for d in data if d['name']=='Upper_Energy')
         energy=next(d for d in data if d['name']=='Energy')
         flux=next(d for d in data if d['name']=='Flux')
         flux_err=next(d for d in data if d['name']=='Flux_Err')
@@ -576,6 +571,12 @@ class SED(object):
         # convert whatever units are in the file for energy and flux to
         # MeV and ph/cm^2/s/MeV to injest into _plot_data
         e = SED.energy_to_MeV(np.asarray(energy['data'],dtype=float), file_energy_units)
+        lower_e = SED.energy_to_MeV(np.asarray(lower_energy['data'],dtype=float), file_energy_units)
+        upper_e = SED.energy_to_MeV(np.asarray(upper_energy['data'],dtype=float), file_energy_units)
+
+        bin_edges=np.empty((len(e)+1,))
+        bin_edges[:-1]=lower_e
+        bin_edges[1:]=upper_e
 
         significant = ~np.asarray(flux['ul']) if flux.has_key('ul') else np.asarray([True]*len(e))
 
@@ -587,7 +588,7 @@ class SED(object):
         spectrum=SED.string_to_spectrum(comments[1])
 
         # plot the SED
-        SED._plot_data(e, dnde, dnde_err, ul, significant, 
+        SED._plot_data(e, bin_edges, dnde, dnde_err, ul, significant, 
                        spectrum=spectrum, 
                        energy_units = energy_units,
                        flux_units = flux_units,

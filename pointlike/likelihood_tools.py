@@ -1,16 +1,44 @@
 """ This file contains various function which I have found useful. """
-import numpy as np
 import pprint
+from math import ceil
+
+import pylab as P
+import numpy as np
 import pyfits as pf
+
+from mpl_toolkits.axes_grid1 import AxesGrid
+
 from uw.like.roi_analysis import ROIAnalysis
 from uw.like.roi_extended import ExtendedSource
 from uw.like.Models import Model,PowerLaw,LogParabola,DefaultModelValues
-
-from toolbag import tolist
 from uw.like.roi_state import PointlikeState
 
-
+from toolbag import tolist
 from SED import SED
+from LikelihoodState import LikelihoodState
+
+def paranoid_gtlike_fit(like):
+    """ Perform a sepctral fit in gtlike in
+        a paranoid manner. """
+    saved_state = LikelihoodState(like)
+    try:
+        print 'First, fitting with minuit'
+        like.fit(optimizer="MINUIT",covar=True)
+    except Exception, ex:
+        print 'Minuit fit failed with optimizer=MINUIT, Try again with DRMNFB + NEWMINUIT!', ex
+        # See here for description of method.
+        #   http://fermi.gsfc.nasa.gov/ssc/data/analysis/documentation/Cicerone/Cicerone_Likelihood/Fitting_Models.html
+        saved_state.restore()
+
+        try:
+            print 'Refitting, first with DRMNFB'
+            like.fit(optimizer='DRMNFB', covar=False)
+            print 'Refitting, second with NEWMINUIT'
+            like.fit(optimizer='NEWMINUIT', covar=True)
+        except Exception, ex:
+            print 'ERROR spectral fitting with DRMNFB + NEWMINUIT: ', ex
+
+
 def pointlike_spectrum_to_dict(model):
 
     d = dict(name = model.name)
@@ -24,9 +52,9 @@ def pointlike_spectrum_to_dict(model):
 
     return tolist(d)
 
-def gtlike_spectrum_to_dict(model):
-    import pyLikelihood
-    parameters=pyLikelihood.ParameterVector()
+def gtlike_spectrum_to_dict(spectrum):
+    from pyLikelihood import ParameterVector
+    parameters=ParameterVector()
     spectrum.getParams(parameters)
 
     d = dict(name = spectrum.genericName())
@@ -36,33 +64,66 @@ def gtlike_spectrum_to_dict(model):
     return tolist(d)
 
 
-def spectrum_to_dict(model):
+def spectrum_to_dict(spectrum_or_model):
     from pyLikelihood import Function
-    if isinstance(model, Function):
+    if isinstance(spectrum_or_model, Function):
         f=gtlike_spectrum_to_dict
-    elif isinstance(model, Model):
+    elif isinstance(spectrum_or_model, Model):
         f=pointlike_spectrum_to_dict
     else:
         raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-    return f(model)
+    return f(spectrum_or_model)
 
 
 def gtlike_sourcedict(like, name, emin, emax):
-
     from pyLikelihood import ParameterVector
 
     d=dict(
-        ts=like.Ts(name,reoptimize=True),
+        TS=like.Ts(name,reoptimize=True),
         flux=like.flux(name,emin=emin,emax=emax),
-        flux_err=like.fluxError(name,emin=emin,emax=emax),
         logLikelihood=like.logLike.value()
     )
+    try:
+        d['flux_err']=like.fluxError(name,emin=emin,emax=emax)
+    except Exception, ex:
+        print 'ERROR calculating flux error: ', ex
+        d['flux_err']=-1
 
-    spectralparameters=ParameterVector()
-    like.model[name]['Spectrum'].getParams(spectralparameters)
-    for p in spectralparameters:
-        d[p.getName()]=p.getTrueValue()
-        d[p.getName()+'_err']=p.error()*p.getScale()
+    source = like.logLike.getSource(name)
+    spectrum = source.spectrum()
+
+    d['model']=spectrum_to_dict(spectrum)
+
+    parameters=ParameterVector()
+    spectrum.getParams(parameters)
+    for p in parameters:
+        d['model'][p.getName()+'_err']=p.error()*p.getScale()
+
+    # Save out gal+iso values.
+    # Warning: this implementation is fragile in that
+    # (a) the galacitc must have 'gal' in it and the isotropic
+    #     must have 'iso' in it 
+    # (b) all other sources cannot have 'gal' or 'iso' in them.
+    # (c) gal must be scaled by a powerlaw, iso must be scaled by a constant
+
+    def get(source,param):
+        f = like[name].src.getSrcFuncs()
+        return f['Spectrum'].getParam('Value').getTrueValue()
+
+    def get_full_name(str):
+        all_sources=like.sourceNames()
+        f = np.char.find(str,np.char.lower(all_sources)) != -1
+        return all_sources[f][0] if np.any(f) else None
+
+    name = get_full_name('gal')
+    if name is not None: 
+        d['galnorm'] = get(name,'Prefactor')
+        d['galindex'] = get(name,'Index')
+
+    name = get_full_name('gal')
+    if name is not None: 
+        d['isonorm'] = get(name,'Value')
+
     return d
 
 
@@ -80,9 +141,10 @@ def pointlike_sourcedict(roi, name, emin, emax):
     d['logLikelihood']=-roi.logLikelihood(roi.parameters())
 
     d['flux'],d['flux_err']=model.i_flux(emin=emin,emax=emax,error=True)
+
+    d['model']=spectrum_to_dict(model)
     for param in model.param_names:
-        d[param]=model[param]
-        d[param + '_err']=model.error(param)
+        d['model'][param + '_err']=model.error(param)
 
     # Source position
     d['gal'] = [source.skydir.l(),source.skydir.b()]
@@ -131,7 +193,6 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
     """
     print 'Calculating gtlike upper limit'
 
-    from LikelihoodState import LikelihoodState
     import IntegralUpperLimit
 
     if emin is None and emax is None: 
@@ -141,6 +202,10 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
     e = np.sqrt(emin*emax)
 
     saved_state = LikelihoodState(like)
+
+    # First, freeze all parameters in model (helps with convergence)
+    for i in range(len(like.model.params)):
+        like.freeze(i)
 
     source = like.logLike.getSource(name)
     old_spectrum = source.spectrum()
@@ -159,7 +224,9 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
     prefactor=like[like.par_index(name, 'Prefactor')]
     prefactor.setScale(dnde(e))
     prefactor.setValue(1)
-    prefactor.setBounds(1e-10,1e10)
+    # unbound the prefactor since the default range 1e-2 to 1e2 may not be big enough
+    # in small phase ranges.
+    prefactor.setBounds(0,1e10)
 
     scale=like[like.par_index(name, 'Scale')]
     scale.setScale(1)
@@ -168,6 +235,7 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
     like.syncSrcParams(name)
 
     ul_scipy, results_scipy = IntegralUpperLimit.calc_int(like, name, 
+                                                          skip_global_opt=True,
                                                           freeze_all=True,
                                                           cl=cl,
                                                           emin=emin, 
@@ -247,38 +315,53 @@ def pointlike_test_cutoff(roi, which):
 def gtlike_test_cutoff(like, name):
     print 'Testing cutoff in gtlike'
     d = {}
-    raise Exception('not ready...')
 
     saved_state = LikelihoodState(like)
 
-    # go powerlaw fit
-    source = like.logLike.getSource(name)
+    def fix(parname,value):
+        par=like[like.par_index(name, parname)]
+        par.setScale(1)
+        par.setTrueValue(value)
+        par.setBounds(value,value)
+        par.setFree(0)
+        like.syncSrcParams(name)
 
-    def set(**kwargs):
-        for k,v in kwargs:
-            index=like[like.par_index(name, k)]
-            index.setScale(v)
-            index.setValue(1)
-            prefactor.setBounds(1e-10,1e10)
+    def set(parname,value,scale,lower,upper):
+        """ Note, lower + upper are fractional limits if free=True. """
+        par=like[like.par_index(name, parname)]
+        par.setScale(scale)
+        par.setTrueValue(value)
+        par.setBounds(lower,upper)
+        par.setFree(1)
+        like.syncSrcParams(name)
 
     fit = lambda: like.fit(covar=False)
     ll = lambda: like.logLike.value()
-    ts = lambda: Ts(name,reoptimize=True)
-    spectrum = lambda: spectrum_to_dict(roi.get_model(which))
+    ts = lambda: like.Ts(name,reoptimize=True)
+    def spectrum():
+        source = like.logLike.getSource(name)
+        s=source.spectrum()
+        return spectrum_to_dict(s)
+
+    source = like.logLike.getSource(name)
+    old_spectrum = source.spectrum()
 
     like.setSpectrum(name,'PowerLaw')
-    set(Prefactor=1e-11, Index=-2, Scale=1e3)
+    fix('Scale', 1e3)
+
+    set('Prefactor',1e-11,1e-11,      0,1e10)
+    set('Index',       -2,    1,  -1e10,1e10)
 
     fit()
     d['ll_0'] = ll_0 = ll()
     d['TS_0'] = ts()
     d['model_0']=spectrum()
     
-
-
-    d['model_1']=spectrum_to_string(roi.get_model(which))
     like.setSpectrum(name,'LogParabola')
-    set(norm=1e-9, alpha=1, beta=2, Eb=300)
+    set('norm',  1e-9, 1e-9,     0,1e10)
+    set('alpha',    1,    1, -1e10,1e10)
+    set('beta',     2,    1, -1e10,1e10)
+    set('Eb',     300,    1,     0,1e10)
 
     fit()
     d['ll_1'] = ll_1 = ll()
@@ -287,6 +370,7 @@ def gtlike_test_cutoff(like, name):
 
     d['TS_cutoff']=2*(ll_1-ll_0)
 
+    like.setSpectrum(name,old_spectrum)
     saved_state.restore()
 
     return d
@@ -301,4 +385,28 @@ def test_cutoff(like_or_roi, name):
         raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
     return f(like_or_roi, name)
 
+
+
+
+def pointlike_plot_all_seds(roi, filename=None, ncols=4, **kwargs):
+    """ Create an SED of all sources in the ROI as a big plot. """
+
+    sources=roi.get_sources()
+    nrows = int(ceil(float(len(sources))/ncols))
+
+    fig = P.figure(figsize=(2.5*ncols,2*nrows))
+
+    grid = AxesGrid(fig, 111, 
+                    aspect=False,
+                    nrows_ncols = (nrows, ncols),
+                    axes_pad = 0.1,
+                    add_all=True,
+                    label_mode = "L")
+
+    for i,which in enumerate(sources):
+        roi.plot_sed(which,axes=grid[i],**kwargs)
+
+    if filename is not None: P.savefig(filename)
+
+plot_all_seds = pointlike_plot_all_seds # for now
 

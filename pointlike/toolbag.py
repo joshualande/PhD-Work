@@ -3,6 +3,7 @@ import numpy as np
 import pyfits as pf
 from uw.like.roi_analysis import ROIAnalysis
 from uw.like.roi_extended import ExtendedSource
+from uw.pulsar.phase_range import PhaseRange
 
 def tolist(x):
     """ convenience function that takes in a 
@@ -23,6 +24,8 @@ def tolist(x):
         return x.tolist()
     elif isinstance(x,np.str):
         return str(x)
+    elif isinstance(x,PhaseRange):
+        return x.tolist(dense=True)
     else:
         return x
 
@@ -161,4 +164,25 @@ def expand_fits(pf,factor,hdu=0):
 
     pf[hdu].data=larger_array
 
+
+
+# Taken form http://stackoverflow.com/questions/4126348/how-do-i-rewrite-this-function-to-implement-ordereddict
+import collections
+class OrderedDefaultdict(collections.OrderedDict):
+    def __init__(self, *args, **kwargs):
+        newdefault = None
+        newargs = ()
+        if len(args):
+            newdefault = args[0]
+            if not callable(newdefault) and newdefault != None:
+                raise TypeError('first argument must be callable or None')
+            newargs = args[1:]
+        self.default_factory = newdefault
+        super(OrderedDefaultdict, self).__init__(*newargs, **kwargs)
+
+    def __missing__ (self, key):
+        if self.default_factory is None:
+            raise KeyError(key)
+        self[key] = value = self.default_factory()
+        return value
 

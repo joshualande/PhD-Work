@@ -320,29 +320,6 @@ class LandeROI(ROIAnalysis):
             print 'No diffuse sources to prune. All diffuse sources have positive pixels'
 
 
-    def sorted_sources(self,names=True):
-        """ Return a list of all point & extended sources sorted by
-            distance from the center. """
-        extended_sources = [_ for _ in self.dsm.diffuse_sources if isinstance(_,ExtendedSource)]
-        extended_dirs    = [_.spatial_model.center for _ in extended_sources]
-        extended_names   = np.asarray([_.name for _ in extended_sources])
-        extended_diffs   = np.degrees(np.asarray([self.roi_dir.difference(d) for d in extended_dirs]))
-
-        point_sources = self.psm.point_sources
-        point_names   = self.psm.names
-        point_dirs    = [_.skydir for _ in point_sources]
-        point_diffs   = np.degrees(np.asarray([self.roi_dir.difference(d) for d in point_dirs]))
-
-        all_names=np.append(extended_names,point_names)
-        all_sources = np.append(extended_sources,point_sources)
-        all_diffs=np.append(extended_diffs,point_diffs)
-        sorting=np.argsort(all_diffs)
-
-        if names: 
-            return all_names[sorting]
-        else:
-            return all_sources[sorting]
-
     def localize(self,*args,**kwargs):
         try:
             return super(LandeROI,self).localize(*args,**kwargs)
@@ -356,39 +333,6 @@ class LandeROI(ROIAnalysis):
         except Exception, err:
             print '\n\n\n\nERROR FITTING EXTENSION: %s\n\n\n' % (str(err))
             return None
-
-    def localize_all(self,*args,**kwargs):
-        names=self.sorted_sources(self)
-        for name in names:
-            self.localize(which=name,*args,**kwargs)
-
-    def plot_all_seds(self,filename='all_seds.png',num_cols=4,**kwargs):
-        """ Create an SED of all sources in the ROI. 
-            It is important to make sure you are modeling
-            all sources with an adequate spectrum. """
-
-        if not self.quiet: print 'Plotting All SEDs'
-
-        names=self.sorted_sources()
-
-        num_src=len(names)
-        num_rows = int(math.ceil(num_src*1.0/num_cols))
-
-        P.figure(figsize=(2.5*num_cols,2*num_rows))
-
-
-        for i,which in enumerate(names):
-            P.subplot(num_rows,num_cols,i+1)
-            kwargs['axes']=P.gca()
-            kwargs['galmap']=False
-            self.plot_sed(which=which,quiet=True,autoscale=False,**kwargs)
-            P.xlabel('')
-            P.ylabel('')
-
-        P.subplots_adjust(left=.1,right=.9,bottom=.05,top=.95,
-                              wspace=0.5,hspace=0.5)
-
-        P.savefig(filename)
 
     def gtlike_followup(self,which=None,output_srcmdl_file=None, **kwargs):
 
@@ -511,108 +455,6 @@ class LandeROI(ROIAnalysis):
 
         P.savefig(filename)
 
-    def extension_profile(self,which,filename='profile.yaml',
-            num_points=15,lower_limit=None,upper_limit=None,
-            quick=True,use_gradient=True):
-        """ Perform a scan in extension. 
-
-            which is the source to calculate the profile of. Note that extension
-            profiles can only be calculated for sources. """
-
-        roi = self
-        manager,index=roi.mapper(which)
-
-        if manager != roi.dsm: 
-            raise Exception("An extension profile can only be calculated for diffuse sources.")
-        ds=manager.diffuse_sources[index]
-        esm=manager.bgmodels[index]
-
-        if not self.quiet: print 'Calculating extension profile for %s' % ds.name
-
-        if not isinstance(ds,ExtendedSource): 
-            raise Exception("An extension profile can only be calculated for extended sources")
-
-        sm=ds.spatial_model
-        if not len(sm.p)==3: 
-            raise Exception("An extension profile can only be calculated for extended sources with 3 parameters (position + one extension)")
-
-        # save spatial parameters
-        old_sm_p    = sm.p.copy()
-        old_sm_cov    = sm.cov_matrix.copy()
-
-        # save spectral parameters
-        old_roi_p = roi.get_parameters().copy()
-
-        # Keep the TS function quiet
-        old_quiet=roi.quiet
-        roi.quiet=True
-
-        p,plo,phi=sm.statistical(absolute=True,two_sided=True)
-
-        x,y,ext=p
-        upper_limit = min(p[2] + max(3*phi[2],p[2]),3) if upper_limit is None else upper_limit
-        if lower_limit is None:
-            lower_limit = float(upper_limit)/num_points/10.0 # make the bottom point ~ 0.1xfirst point
-        extension_list=np.linspace(lower_limit,upper_limit,num_points).tolist()
-
-        TS_spectral=[]
-        TS_bandfits=[]
-
-        TS_bin={}
-        roi.setup_energy_bands()
-        for band in roi.energy_bands:
-            TS_bin[band.emin,band.emax]=[]
-
-        if not old_quiet: print '%20s %20s %20s' % ('extension','TS_spectral','TS_bandfits')
-        for i,extension in enumerate(extension_list):
-            sm.set_parameters(p=[x,y,extension],absolute=True)
-            esm.initialize_counts(roi.bands)
-            roi.update_counts()
-
-            # Here the strategy is to try localizing and then
-            # try localizing again from the starting spectral
-            # value. The best fit from both is kepth. """
-            roi.fit(estimate_errors=False,use_gradient=use_gradient)
-            params=roi.parameters()
-            ll_a=-1*roi.logLikelihood(roi.parameters())
-            roi.update_counts(old_roi_p)
-            roi.fit(estimate_errors=False,use_gradient=use_gradient)
-            ll_b=-1*roi.logLikelihood(roi.parameters())
-            if ll_a > ll_b: roi.update_counts(params)
-
-            TS_spectral.append(float(roi.TS(which=which,quick=True)))
-            TS_bandfits.append(float(roi.TS(which=which,quick=True,bandfits=True)))
-            if not old_quiet: print '[ %20s ] %20g %20g' % (sm.pretty_spatial_string(),TS_spectral[i],TS_bandfits[i])
-            for band in roi.energy_bands: TS_bin[float(band.emin),float(band.emax)].append(float(band.ts))
-        
-        # set back spatial parameters
-        sm.set_parameters(old_sm_p,absolute=False)
-        sm.cov_matrix = old_sm_cov
-
-        # set back spectral parameters
-        roi.set_parameters(old_roi_p)
-        roi.__set_error__()
-
-        # reset counts
-
-        esm.initialize_counts(roi.bands)
-        roi.__update_state__()
-
-        roi.quiet=old_quiet
-
-        save_dict=[]
-
-        save_dict={'extension':extension_list,
-                   'TS_spectral':TS_spectral,
-                   'TS_bandfits':TS_bandfits,
-                   'bins':roi.bin_edges.tolist()}
-        save_dict['TS_bands']=[]
-        for (emin,emax),TS in TS_bin.items():
-            save_dict['TS_bands'].append({'emin':emin,'emax':emax,'TS':TS})
-        file=open(filename,'w')
-        file.write(yaml.dump(save_dict))
-
-        return extension_list,TS_spectral,TS_bandfits
 
     def dual_localize(self,*args,**kwargs):
         return super(LandeROI,self).dual_localize(*args,**kwargs)
@@ -821,7 +663,7 @@ class VerboseROI(LandeROI):
                               '    dist: %s' % np.degrees(self.roi_dir.difference(source.spatial_model.center)),
                               '    TS: %.3f ' % (self.TS(which=source,quick=True,quiet=True))])
 
-        for source in self.sorted_sources(names=False):
+        for source in self.get_sources():
             if np.any(source.model.free):
                 r.append(format_ps(source) \
                          if isinstance(source,PointSource) 
@@ -919,3 +761,104 @@ def random_point_near(skydir,distance):
 
 
 
+def extension_profile(roi,which,filename='profile.yaml',
+        num_points=15,lower_limit=None,upper_limit=None,
+        quick=True,use_gradient=True):
+    """ Perform a scan in extension. 
+
+        which is the source to calculate the profile of. Note that extension
+        profiles can only be calculated for sources. """
+
+    manager,index=roi.mapper(which)
+
+    if manager != roi.dsm: 
+        raise Exception("An extension profile can only be calculated for diffuse sources.")
+    ds=manager.diffuse_sources[index]
+    esm=manager.bgmodels[index]
+
+    if not roi.quiet: print 'Calculating extension profile for %s' % ds.name
+
+    if not isinstance(ds,ExtendedSource): 
+        raise Exception("An extension profile can only be calculated for extended sources")
+
+    sm=ds.spatial_model
+    if not len(sm.p)==3: 
+        raise Exception("An extension profile can only be calculated for extended sources with 3 parameters (position + one extension)")
+
+    # save spatial parameters
+    old_sm_p    = sm.p.copy()
+    old_sm_cov    = sm.cov_matrix.copy()
+
+    # save spectral parameters
+    old_roi_p = roi.get_parameters().copy()
+
+    # Keep the TS function quiet
+    old_quiet=roi.quiet
+    roi.quiet=True
+
+    p,plo,phi=sm.statistical(absolute=True,two_sided=True)
+
+    x,y,ext=p
+    upper_limit = min(p[2] + max(3*phi[2],p[2]),3) if upper_limit is None else upper_limit
+    if lower_limit is None:
+        lower_limit = float(upper_limit)/num_points/10.0 # make the bottom point ~ 0.1xfirst point
+    extension_list=np.linspace(lower_limit,upper_limit,num_points).tolist()
+
+    TS_spectral=[]
+    TS_bandfits=[]
+
+    TS_bin={}
+    roi.setup_energy_bands()
+    for band in roi.energy_bands:
+        TS_bin[band.emin,band.emax]=[]
+
+    if not old_quiet: print '%20s %20s %20s' % ('extension','TS_spectral','TS_bandfits')
+    for i,extension in enumerate(extension_list):
+        sm.set_parameters(p=[x,y,extension],absolute=True)
+        esm.initialize_counts(roi.bands)
+        roi.update_counts()
+
+        # Here the strategy is to try localizing and then
+        # try localizing again from the starting spectral
+        # value. The best fit from both is kepth. """
+        roi.fit(estimate_errors=False,use_gradient=use_gradient)
+        params=roi.parameters()
+        ll_a=-1*roi.logLikelihood(roi.parameters())
+        roi.update_counts(old_roi_p)
+        roi.fit(estimate_errors=False,use_gradient=use_gradient)
+        ll_b=-1*roi.logLikelihood(roi.parameters())
+        if ll_a > ll_b: roi.update_counts(params)
+
+        TS_spectral.append(float(roi.TS(which=which,quick=True)))
+        TS_bandfits.append(float(roi.TS(which=which,quick=True,bandfits=True)))
+        if not old_quiet: print '[ %20s ] %20g %20g' % (sm.pretty_spatial_string(),TS_spectral[i],TS_bandfits[i])
+        for band in roi.energy_bands: TS_bin[float(band.emin),float(band.emax)].append(float(band.ts))
+    
+    # set back spatial parameters
+    sm.set_parameters(old_sm_p,absolute=False)
+    sm.cov_matrix = old_sm_cov
+
+    # set back spectral parameters
+    roi.set_parameters(old_roi_p)
+    roi.__set_error__()
+
+    # reset counts
+
+    esm.initialize_counts(roi.bands)
+    roi.__update_state__()
+
+    roi.quiet=old_quiet
+
+    save_dict=[]
+
+    save_dict={'extension':extension_list,
+               'TS_spectral':TS_spectral,
+               'TS_bandfits':TS_bandfits,
+               'bins':roi.bin_edges.tolist()}
+    save_dict['TS_bands']=[]
+    for (emin,emax),TS in TS_bin.items():
+        save_dict['TS_bands'].append({'emin':emin,'emax':emax,'TS':TS})
+    file=open(filename,'w')
+    file.write(yaml.dump(save_dict))
+
+    return extension_list,TS_spectral,TS_bandfits

@@ -57,6 +57,7 @@ class Gtlike(object):
             ("emax",                    None, "Maximum energy. Default is to get from ROI."),
             ("enumbins",                None, "Number of bins. Defualt is to get from ROI."),
             ("savedir",                 None, "Directory to put output files into. Default is to use a temporary file and delete it when done."),
+            ("optimizer",           "MINUIT", "Optimizer to use when fitting.")
     )
 
 
@@ -106,7 +107,6 @@ class Gtlike(object):
         srcmap_file=join(self.tempdir,'srcmap.fits')
         bexpmap_file=join(self.tempdir,'bexpmap.fits')
         input_srcmdl_file=join(self.tempdir,'srcmdl.xml')
-        optimizer="MINUIT"
 
         pd=roi.sa.pixeldata
 
@@ -209,24 +209,10 @@ class Gtlike(object):
         if not roi.quiet: print 'Creating LIKE'
         obs=BinnedObs(srcmap_file,expcube_file,bexpmap_file,irfs)
 
-        self.like = BinnedAnalysis(obs,input_srcmdl_file,optimizer)
+        self.like = BinnedAnalysis(obs,input_srcmdl_file,self.optimizer)
 
 
         if not roi.quiet: print 'LIKE Created!'
-
-    def fit(self):
-        """ perform a gtlike spectral fit. """
-        if not self.roi.quiet: print 'Fitting ROI'
-        self.like.fit(covar=True)
-        if not self.roi.quiet: print 'Done ROI'
-
-    def plot_sed(self,which=None,filename=None, **kwargs):
-
-        if not self.roi.quiet: print 'Plotting SED of %s' % which
-        sed=SED(self.like,which,verbosity=not self.roi.quiet,**kwargs)
-        if not self.roi.quiet: print sed
-        print sed
-        sed.plot(filename)
 
     def __del__(self):
         if self.savedir is None:
