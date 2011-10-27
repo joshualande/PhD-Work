@@ -17,13 +17,13 @@ from toolbag import tolist
 from SED import SED
 from LikelihoodState import LikelihoodState
 
-def paranoid_gtlike_fit(like):
+def paranoid_gtlike_fit(like, covar=True):
     """ Perform a sepctral fit in gtlike in
         a paranoid manner. """
     saved_state = LikelihoodState(like)
     try:
         print 'First, fitting with minuit'
-        like.fit(optimizer="MINUIT",covar=True)
+        like.fit(optimizer="MINUIT",covar=covar)
     except Exception, ex:
         print 'Minuit fit failed with optimizer=MINUIT, Try again with DRMNFB + NEWMINUIT!', ex
         # See here for description of method.
@@ -34,7 +34,7 @@ def paranoid_gtlike_fit(like):
             print 'Refitting, first with DRMNFB'
             like.fit(optimizer='DRMNFB', covar=False)
             print 'Refitting, second with NEWMINUIT'
-            like.fit(optimizer='NEWMINUIT', covar=True)
+            like.fit(optimizer='NEWMINUIT', covar=covar)
         except Exception, ex:
             print 'ERROR spectral fitting with DRMNFB + NEWMINUIT: ', ex
 
@@ -101,7 +101,7 @@ def gtlike_sourcedict(like, name, emin=None, emax=None):
     parameters=ParameterVector()
     spectrum.getParams(parameters)
     for p in parameters:
-        d['model'][p.getName()+'_err']=p.error()*p.getScale()
+        d['model'][p.getName()+'_err']=np.abs(p.error()*p.getScale())
 
     # Save out gal+iso values.
     # Warning: this implementation is fragile in that
@@ -343,7 +343,6 @@ def gtlike_test_cutoff(like, name):
         par.setFree(1)
         like.syncSrcParams(name)
 
-    fit = lambda: like.fit(covar=False)
     ll = lambda: like.logLike.value()
     ts = lambda: like.Ts(name,reoptimize=True)
     def spectrum():
@@ -360,7 +359,7 @@ def gtlike_test_cutoff(like, name):
     set('Prefactor',1e-11,1e-11,      0,1e10)
     set('Index',       -2,    1,  -1e10,1e10)
 
-    fit()
+    paranoid_gtlike_fit(like)
     d['ll_0'] = ll_0 = ll()
     d['TS_0'] = ts()
     d['model_0']=spectrum()
@@ -371,7 +370,7 @@ def gtlike_test_cutoff(like, name):
     set('beta',     2,    1, -1e10,1e10)
     set('Eb',     300,    1,     0,1e10)
 
-    fit()
+    paranoid_gtlike_fit(like)
     d['ll_1'] = ll_1 = ll()
     d['TS_1'] = ts()
     d['model_1']=spectrum()
