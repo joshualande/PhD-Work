@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 # This import has to come first
-from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results
+from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results,plot_phaseogram,plot_phase_vs_time
+
+import os
+from glob import glob
 
 from setup_pwn import setup_pwn,get_source
 from argparse import ArgumentParser
@@ -38,6 +41,26 @@ emax=args.emax
 
 phase=yaml.load(open(args.pwnphase))[name]['phase']
 
+print 'phase = ',phase
+
+
+print 'Creating the output directories'
+
+seddir='seds'
+datadir='data'
+plotdir='plots'
+for dir in [seddir, datadir, plotdir]: 
+    if not os.path.exists(dir): os.makedirs(dir)
+
+print 'Making phaseogram'
+
+ft1 = yaml.load(open(args.pwndata))[name]['ft1']
+plot_phaseogram(name, ft1, phase, '%s/phaseogram_%s.png' % (plotdir,name))
+plot_phase_vs_time(name, ft1, phase, '%s/phase_vs_time_%s.png' % (plotdir,name))
+
+
+print 'Building the ROI'
+
 roi=setup_pwn(name,args.pwndata, phase=phase, 
               free_radius=5, max_free=10, fit_emin=args.emin, fit_emax=args.emax,
               savedir='savedir')
@@ -49,7 +72,11 @@ modify_roi(name,roi)
 results=r=defaultdict(lambda: defaultdict(dict))
 
 
-kwargs = dict(roi=roi, name=name, emin=emin, emax=emax)
+kwargs = dict(roi=roi, name=name, 
+              seddir=seddir, datadir=datadir, plotdir=plotdir,
+              emin=emin, emax=emax)
+
+
 
 r['at_pulsar']['pointlike']=pointlike_analysis(hypothesis='at_pulsar', upper_limit=True, 
                                                cutoff=do_cutoff, do_plots=do_plots, **kwargs)

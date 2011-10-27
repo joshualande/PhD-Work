@@ -20,13 +20,13 @@ from uw.utilities import phasetools
 from uw.pulsar.phase_range import PhaseRange
 
 def setup_pwn(name, pwndata, fit_emin, fit_emax, **kwargs):
+    ps = get_source(name,pwndata, fit_emin, fit_emax)
 
     roi = setup_region(name, pwndata, 
                        fit_emin=fit_emin, 
-                       fit_emax=fit_emax, **kwargs)
-    # keep overall flux of catalog source,
-    # but change the starting index to 2.
-    roi.add_source(get_source(name,pwndata, fit_emin, fit_emax))
+                       fit_emax=fit_emax, 
+                       point_sources = [ps],
+                       **kwargs)
     return roi
 
 def get_source(name, pwndata, fit_emin, fit_emax, extended=False):
@@ -47,6 +47,12 @@ def get_source(name, pwndata, fit_emin, fit_emax, extended=False):
             name=name,
             model=model,
             skydir=pulsar_position)
+
+def get_catalog(free_radius,max_free):
+    return Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
+                       latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
+                       free_radius=free_radius,
+                       max_free = max_free)
 
 def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedir=None, 
                  **kwargs):
@@ -80,10 +86,8 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedi
                                           ifile="isotrop_2year_P76_source_v0.txt")
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"))
-    catalog=Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
-                        latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
-                        free_radius=free_radius,
-                        max_free = max_free)
+
+    catalog=get_catalog(free_radius,max_free)
 
     binfile=j(savedir,'binned_phased.fits')
 
@@ -120,11 +124,6 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedi
                catalogs=catalog,
                phase_factor=1,
                **kwargs)
-
-    for source in roi.get_sources():
-        if np.degrees(source.skydir.difference(pulsar_position)) < 0.1:
-            print 'Pruning nearby source %s' % source.name
-            roi.del_source(source)
 
     print 'bins ',roi.bin_edges
 
