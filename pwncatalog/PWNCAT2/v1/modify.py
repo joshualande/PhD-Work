@@ -27,3 +27,8 @@ def modify_roi(name,roi):
             roi.modify(which=name,model=model)
 
     # Here, could modify crab to be a BrokenPowerlaw
+
+
+    if name=='PSRJ0835-4510':
+        print 'Deleting VelaX from background model!'
+        roi.del_source('VelaX')
