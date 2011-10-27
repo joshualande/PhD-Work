@@ -75,8 +75,12 @@ def spectrum_to_dict(spectrum_or_model):
     return f(spectrum_or_model)
 
 
-def gtlike_sourcedict(like, name, emin, emax):
+def gtlike_sourcedict(like, name, emin=None, emax=None):
     from pyLikelihood import ParameterVector
+
+    if emin is None and emax is None:
+        emin = like.energies[0]
+        emax = like.energies[-1]
 
     d=dict(
         TS=like.Ts(name,reoptimize=True),
@@ -130,6 +134,10 @@ def gtlike_sourcedict(like, name, emin, emax):
 def pointlike_sourcedict(roi, name, emin, emax):
     d={}
 
+    if emin is None and emax is None:
+        emin = roi.bin_edges[0]
+        emax = roi.bin_edges[-1]
+
     source=roi.get_source(name)
 
     model=source.model
@@ -166,7 +174,7 @@ def pointlike_sourcedict(roi, name, emin, emax):
     return d
 
 
-def sourcedict(like_or_roi, name, emin=100, emax=100000):
+def sourcedict(like_or_roi, name, emin=None, emax=None):
 
     from BinnedAnalysis import BinnedAnalysis
 
