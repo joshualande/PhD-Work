@@ -92,7 +92,7 @@ class PrettyTable(object):
     def dump(self,data,comments=[]):
         """ Writes data structure of the from:
             [ dict(name='energy', unit='[MeV]', data=[1,2,3],                          fmt='e'), 
-              dict(name='flux',   unit='[GeV]', data=[1,2,3], ul=[False, False, True], fmt='f')] . """
+              dict(name='dN/dE',  unit='[GeV]', data=[1,2,3], ul=[False, False, True], fmt='f')] . """
         lines = ['# '+c for c in comments] # comments
         lines.append(''.join([self.fmt(d['name']) for d in data])) #names
         lines.append(''.join([self.fmt(d['unit']) for d in data])) # nnits
@@ -202,8 +202,15 @@ class SED(object):
         # always in units of ph/cm^2/s/MeV
         self.dnde=np.empty_like(self.energies)
         self.dnde_err=np.empty_like(self.energies)
+        self.dnde_ul=-1*np.ones_like(self.energies) # -1 is no UL
+
+        self.flux=np.empty_like(self.energies)
+        self.flux_err=np.empty_like(self.energies)
+        self.flux_ul=-1*np.ones_like(self.energies) # -1 is no UL
+
         self.ts=np.empty_like(self.energies)
-        self.ul=-1*np.ones_like(self.energies) # -1 is no UL
+
+
         self._calculate()
 
     @staticmethod
@@ -212,9 +219,10 @@ class SED(object):
             prefactor. """
         import UpperLimits
         ul = UpperLimits.UpperLimits(like)
-        ul_prof, par_prof = ul[name].compute(emin=emin, emax=emax, verbosity=verbosity)
+        flux_ul, pref_ul = ul[name].compute(emin=emin, emax=emax, verbosity=verbosity)
         prefactor=like[like.par_index(name, 'Prefactor')]
-        return par_prof*prefactor.getScale()
+        pref_ul = pref_ul*prefactor.getScale()
+        return flux_ul, pref_ul
 
     @staticmethod
     def bayesian_upper_limit(like,name,verbosity):
@@ -224,13 +232,14 @@ class SED(object):
             since scale is set to the geometric mean
             of the energy bin). """
         import IntegralUpperLimit
-        ul_flux,results = IntegralUpperLimit.calc_int(like, name, 
+        flux_ul,results = IntegralUpperLimit.calc_int(like, name, 
                                                       freeze_all=True,
                                                       skip_global_opt=True,
                                                       cl=0.95,
                                                       verbosity=verbosity)
         prefactor=like[like.par_index(name, 'Prefactor')]
-        return results['ul_value']*prefactor.getScale()
+        pref_ul = results['ul_value']*prefactor.getScale()
+        return flux_ul, pref_ul
 
     def _calculate(self):
         """ Compute the flux data points for each energy. """
@@ -298,18 +307,22 @@ class SED(object):
 
             self.ts[i]=like.Ts(name,reoptimize=False)
 
-            if self.ts[i] < self.min_ts or self.always_upper_limit: 
-                if verbosity: print 'Calculating upper limit from %.0dMeV to %.0dMeV' % (lower,upper)
-                if self.ul_algorithm == 'frequentist':
-                    self.ul[i] = SED.frequentist_upper_limit(like,name,verbosity,lower,upper)
-                elif self.ul_algorithm == 'bayesian':
-                    self.ul[i] = SED.bayesian_upper_limit(like,name,verbosity)
-
             prefactor=like[like.par_index(name, 'Prefactor')]
             self.dnde[i] = prefactor.getTrueValue()
             self.dnde_err[i] = prefactor.error()*prefactor.getScale()
+
+            self.flux[i] = like.flux(name, lower, upper)
+            self.flux_err[i] = like.fluxError(name, lower, upper)
+
+            if self.ts[i] < self.min_ts or self.always_upper_limit: 
+                if verbosity: print 'Calculating upper limit from %.0dMeV to %.0dMeV' % (lower,upper)
+                if self.ul_algorithm == 'frequentist':
+                    self.flux_ul[i], self.dnde_ul[i] = SED.frequentist_upper_limit(like,name,verbosity,lower,upper)
+                elif self.ul_algorithm == 'bayesian':
+                    self.flux_ul[i], self.dnde_ul[i] = SED.bayesian_upper_limit(like,name,verbosity)
+
             if verbosity:
-                print lower,upper,self.dnde[i],self.dnde_err[i],self.ts[i],self.ul[i]
+                print lower,upper,self.dnde[i],self.dnde_err[i],self.ts[i],self.dnde_ul[i]
 
         # revert to old model
         like.setEnergyRange(self.bin_edges[0],self.bin_edges[-1])
@@ -355,27 +368,31 @@ class SED(object):
         ce=lambda e: SED.energy_from_MeV(e, self.energy_units)
 
         eu = '[%s]' % self.energy_units
-        fu = '[ph/cm^2/s/%s]' % self.flux_units
+        dnde_u = '[ph/cm^2/s/%s]' % self.flux_units
+        flux_u = '[ph/cm^2/s]'
+
 
         # note, set empty columns to nan
 
         data = [
             dict(name='Lower_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[:-1])),
             dict(name='Upper_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[1:])),
-            dict(name='Energy',        unit=eu,           fmt='f', data=ce(self.energies)),
-            dict(name='Flux',          unit=fu, fmt='e',
-                 data=cf(np.where(significant, self.dnde, self.ul)), ul=~significant),
-            dict(name='Flux_Err',      unit=fu, fmt='e', 
+            dict(name='Energy',         unit=eu,           fmt='f', data=ce(self.energies)),
+            dict(name='dN/dE',          unit=dnde_u, fmt='e',
+                 data=cf(np.where(significant, self.dnde, self.dnde_ul)), ul=~significant),
+            dict(name='dN/dE_Err',      unit=dnde_u, fmt='e', 
                  data=cf(np.where(significant,self.dnde_err,np.nan).astype(float)))
         ]
 
         if self.verbosity:
             data += [
-                dict(name='Raw_Flux',       unit=fu, fmt='e', data=cf(self.dnde)),
-                dict(name='Raw_Flux_Err',   unit=fu, fmt='e', data=cf(self.dnde_err)),
-                dict(name='Test_Statistic', unit='', fmt='f', data=self.ts),
-                dict(name='Upper_Limit',    unit=fu, fmt='e', 
-                     data=cf(np.where(~significant,self.ul,np.nan).astype(float)))
+                dict(name='Raw_dN/dE',       unit=dnde_u, fmt='e', data=cf(self.dnde)),
+                dict(name='Raw_dN/dE_Err',   unit=dnde_u, fmt='e', data=cf(self.dnde_err)),
+                dict(name='dN/dE_UL',        unit=dnde_u, fmt='e', data=cf(self.dnde_ul)),
+                dict(name='Test_Statistic',  unit='', fmt='f', data=self.ts),
+                dict(name='Raw_Flux',        unit=flux_u, fmt='e', data=self.dnde),
+                dict(name='Raw_Flux_Err',    unit=flux_u, fmt='e', data=self.dnde_err),
+                dict(name='Flux_UL',         unit=flux_u, fmt='e', data=self.dnde_ul)
             ]
 
         table=PrettyTable(precision=precision, colwidth=colwidth)
@@ -520,10 +537,13 @@ class SED(object):
         d=dict(energy=self.energies,
                lower_energy=self.bin_edges[:-1],
                upper_energy=self.bin_edges[1:],
-               flux=self.dnde,
-               flux_err=self.dnde_err,
+               dnde=self.dnde,
+               dnde_err=self.dnde_err,
+               dnde_ul=self.dnde_ul,
+               flux=self.flux,
+               flux_err=self.flux_err,
+               flux_ul=self.flux_ul,
                significant=self.ts>self.min_ts,
-               upper_limit=self.ul,
                test_statistic=self.ts)
         for k in d: d[k] = d[k].tolist()
         return d
@@ -537,7 +557,7 @@ class SED(object):
 
         axes = SED._plot_data(self.energies, self.bin_edges, 
                               self.dnde, self.dnde_err, 
-                              self.ul, significant,
+                              self.dnde_ul, significant,
                               energy_units = self.energy_units,
                               flux_units = self.flux_units,
                               spectrum=spectrum, **kwargs)
@@ -560,8 +580,8 @@ class SED(object):
         lower_energy=next(d for d in data if d['name']=='Lower_Energy')
         upper_energy=next(d for d in data if d['name']=='Upper_Energy')
         energy=next(d for d in data if d['name']=='Energy')
-        flux=next(d for d in data if d['name']=='Flux')
-        flux_err=next(d for d in data if d['name']=='Flux_Err')
+        flux=next(d for d in data if d['name']=='dN/dE')
+        flux_err=next(d for d in data if d['name']=='dN/dE_Err')
 
         file_energy_units = energy['unit'].replace('[','').replace(']','')
         if flux['unit'] != flux_err['unit']:
