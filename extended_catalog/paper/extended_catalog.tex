@@ -2,12 +2,13 @@
 
 % New text (from v3.0 to v?.?):
 %  * Better clarification about previous gtlike validation of extended source analysis.
+%  * Improve MC null distribution tests by using 8 bins per decade + perofrm new test with E>10GeV.
 
 \bibliographystyle{apj}
 
 \newif\ifcolorfigure
-\colorfiguretrue
-%\colorfigurefalse
+%\colorfiguretrue
+\colorfigurefalse
 
 
 
@@ -287,7 +288,7 @@ true position is known \citep{francesco_2011}.  But it is not optimal
 because the position, extension, and spectrum of the source must be
 simultaneously fit to find the best fit parameters and to maximize the
 statistical significance of the detection.  Furthermore, because the \gtlike
-approach is computationally intensive no large-scale Monte Carlo
+approach is computationally intensive, no large-scale Monte Carlo
 simulations have been run to calculate its false detection rate.
 }
 
@@ -497,34 +498,34 @@ taken to be the same as the isotropic spectrum measured by EGRET
 \citep{sreekumar_isotropic}.  The Monte Carlo simulation was performed
 over a one-year observation period using a representative rocking profile and a
 representative livetime fraction of 0.8.  The reconstruction was performed
-using photons with energies between 1 \gev and 100 \gev 
-and the Pass~7\_V6 (P7\_V6) Source Instrument
+using the Pass~7\_V6 (P7\_V6) Source Instrument
 Response Function (IRFs, \cite{lat_on_orbit_psf}).  For each 
 significantly detected point-like source ($\ts\ge25$), we used \pointlike
 to fit the source as an extended source and calculate \tsext.
+\newtext{
+This entire procedure was performed twice, once fitting in the 1 \gev
+to 100 \gev energy range and once fitting in the 10 \gev to 100 \gev
+energy range.
 
-
-For each set of spectral parameters, $\sim30,000$ statistically independent
+For each set of spectral parameters, $\sim20,000$ statistically independent
 simulations were performed. For dimmer spectral models, many of the
-simulations left the source undetected ($\ts<25$)
+simulations left the source insignificant ($\ts<25$)
 and were discarded.  Table~\ref{ts_ext_num_sims}
 shows the different spectral models used in our study as well as the
 number of simulations and the average point-like source
 significance.  The cumulative density of \tsext is plotted in
-Figure~\ref{ts_ext_mc} and compared to the $\chi^2_1/2$ distribution of
+Figure~\ref{ts_ext_mc_1000} and Figure~\ref{ts_ext_mc_10000} 
+and compared to the $\chi^2_1/2$ distribution of
 Equation~\ref{ts_ext_distribution}.
 
 Our study shows broad agreement between simulations and
-Equation~\ref{ts_ext_distribution}. Nevertheless, the agreement is
-not perfect.  It should be noted that the discrepancy seems to be
-worst for softer sources where we are anyways less sensitive to
-the source's extension.  One possible reason for departures from
-Equation~\ref{ts_ext_distribution} is that \pointlike ignores energy
-dispersion which will change the PSF shape as a function of energy.
-Considering the distribution in Figure~\ref{ts_ext_mc},
-the choice of a threshold \text set to 16 (correspond to a $4\sigma$
-detection if Equation~\ref{ts_ext_distribution} strictly held) is
-reasonable despite the imperfections of the corresponding calibration.
+Equation~\ref{ts_ext_distribution}. To the extent that there is
+disagreement, the simulations tended to produce smaller than expected
+values of \tsext which would make the formal significance conservative.
+Considering the distribution in Figure~\ref{ts_ext_mc_1000} and
+Figure~\ref{ts_ext_mc_10000}, the choice of a threshold \tsext set to 16
+(correspond to a formal $4\sigma$ significance) is reasonable.
+}
 
 
 \section{Extended Source Detection Threshold}
@@ -637,7 +638,7 @@ point-like sources and fit them with the same two hypothesis. By comparing
 the distribution of \tsinc and \tsext for the two cases, we evaluated
 how well the $\tsext>\tsinc$ test is at rejecting the possibility of
 source confusion as well as how likely it is to incorrectly reject 
-with this test that an extendd source is 
+with this test that an extended source is 
 spatially extended.  All sources were simulated using
 the same two-year time range included in 2FGL and all fit values were
 calculated using \pointlike. The simulations were performed against
@@ -1851,8 +1852,8 @@ acknowledged from the Istituto Nazionale di Astrofisica in Italy and the Centre 
 
 This research has made use of
 pywcsgrid2, an open-source plotting package for
-Python\footnote{http://leejjoon.github.com/pywcsgrid2/}. The authors acknowledge the
-use of HEALPix\footnote{http://healpix.jpl.nasa.gov/} \citep{healpix}.
+Python\footnote{\url{http://leejjoon.github.com/pywcsgrid2/}}. The authors acknowledge the
+use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
 
 
 
@@ -1910,55 +1911,62 @@ use of HEALPix\footnote{http://healpix.jpl.nasa.gov/} \citep{healpix}.
 
 
 \clearpage
-\begin{deluxetable}{rrrr}
+\begin{deluxetable}{rrrrrr}
 \tabletypesize{\normalsize}
 \tablecaption{Monte Carlo Spectral Parameters
 \label{ts_ext_num_sims}
 }
 \tablewidth{0pt}
 \tablehead{
-
 \colhead{Spectral Index}&
 \colhead{Flux\tablenotemark{(a)}}&
-\colhead{$N_\text{sims}$}&
-\colhead{$\langle\ts\rangle$}\\
+\colhead{$N_{1-100\gev}$}&
+\colhead{$\langle\ts\rangle_{1-100\gev}$}&
+\colhead{$N_{10-100\gev}$}&
+\colhead{$\langle\ts\rangle_{10-100\gev}$}\\
 \colhead{}&
 \colhead{(\phflux)}&
 \colhead{}&
-\colhead{}\\
+\colhead{}&
+\colhead{}&
+\colhead{}
 }
 
 \startdata
-      1.5 &          $10^{-6}$ &           31952 &  92862 \\
-          &  $3\times 10^{-7}$ &           31962 &  22169 \\
-          &          $10^{-7}$ &           31977 &   5806 \\
-          &  $3\times 10^{-8}$ &           31991 &   1270 \\
-          &          $10^{-8}$ &           31940 &    301 \\
-          &  $3\times 10^{-9}$ &           30324 &     62 \\
+      1.5 &  $3\times 10^{-7}$ &           18938 &  22233    &     18938   &    8084     \\
+          &          $10^{-7}$ &           19079 &   5827    &     19079   &    2258     \\
+          &  $3\times 10^{-8}$ &           19303 &   1276    &     19303   &     541     \\
+          &          $10^{-8}$ &           19385 &    303    &     19381   &     142     \\
+          &  $3\times 10^{-9}$ &           18694 &     62    &     12442   &      43     \\
       \hline
-        2 &          $10^{-6}$ &           31872 &  22067 \\
-          &  $3\times 10^{-7}$ &           31890 &   4898 \\
-          &          $10^{-7}$ &           31858 &   1097 \\
-          &  $3\times 10^{-8}$ &           31632 &    236 \\
-          &          $10^{-8}$ &           27491 &    103 \\
+        2 &          $10^{-6}$ &           18760 &  22101    &     18760   &    3033     \\
+          &  $3\times 10^{-7}$ &           18775 &   4913    &     18775   &     730     \\
+          &          $10^{-7}$ &           18804 &   1170    &     18803   &     192     \\
+          &  $3\times 10^{-8}$ &           18836 &    224    &     15256   &      50     \\
+          &          $10^{-8}$ &           17060 &     50    &   \nodata   & \nodata     \\
       \hline
-      2.5 &          $10^{-6}$ &           31822 &   4706 \\
-          &  $3\times 10^{-7}$ &           31822 &    889 \\
-          &          $10^{-7}$ &           31169 &    176 \\
-          &  $3\times 10^{-8}$ &           21591 &     41 \\
+      2.5 &  $3\times 10^{-6}$ &           18597 &  19036    &     18597   &     786    \\
+          &          $10^{-6}$ &           18609 &   4738    &     18608   &     208    \\
+          &  $3\times 10^{-7}$ &           18613 &    954    &     15958   &      53    \\
+          &          $10^{-7}$ &           18658 &    203    &   \nodata   & \nodata    \\
+          &  $3\times 10^{-8}$ &           14072 &     41    &   \nodata   & \nodata    \\
       \hline                                                
-      3   &          $10^{-6}$ &           31763 &    929 \\
-          &  $3\times 10^{-7}$ &           31665 &    161 \\
-          &          $10^{-7}$ &           19271 &     40 \\
+        3 &          $10^{-5}$ &           18354 &  19466    &     18354   &     215    \\
+          &  $3\times 10^{-6}$ &           18381 &   4205    &     15973   &      54    \\
+          &          $10^{-6}$ &           18449 &    966    &   \nodata   & \nodata    \\
+          &  $3\times 10^{-7}$ &           18517 &    174    &   \nodata   & \nodata    \\
+          &          $10^{-7}$ &           13714 &     41    &   \nodata   & \nodata    \\
 \enddata
 
-\tablenotetext{(a)}{Integral 1 \gev to 100 \gev flux.}
+\tablenotetext{(a)}{Integral 100 \mev to 100 \gev flux.}
 
 \tablecomments{
+\newtext{
     A list of the spectral models of the simulated point-like sources
     which were tested for extension.  For each model, the number of
     statistically independent simulations and the average value of \ts is
     also tabulated.  The models span representative spectral parameters.
+    }
 }
 \end{deluxetable}
 
@@ -1971,7 +1979,9 @@ use of HEALPix\footnote{http://healpix.jpl.nasa.gov/} \citep{healpix}.
     \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/ts_ext/v4/plot.py
     \caption{
-    Distribution of the test statistic for the extension test.
+    \newtext{
+    Distribution of the test statistic for the extension test when fitting
+    the sources in the 1 GeV to 100 GeV energy range.
     The four plots
     represent simulated point-like sources of different spectral indices and
     the different lines (colored in the online version) 
@@ -1979,9 +1989,25 @@ use of HEALPix\footnote{http://healpix.jpl.nasa.gov/} \citep{healpix}.
     to 100 \gev integral fluxes.  The dashed line (colored red)
     is the cumulative
     density function of Equation~\ref{ts_ext_distribution}.
-    }\label{ts_ext_mc}
+    }
+    }\label{ts_ext_mc_1000}
   \end{figure}
 
+\clearpage
+\begin{figure}
+    \ifcolorfigure
+    \plotone{mc_plots/ts_ext_emin_10000_color.eps}
+    \else
+    \plotone{mc_plots/ts_ext_emin_10000_bw.eps}
+    \fi
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/ts_ext/v4/plot.py
+    \caption{
+    \newtext{
+    The same plot as Figure~\ref{ts_ext_mc_10000} but fitting in the 10 \gev to 100 \gev energy 
+    range.
+    }
+    }\label{ts_ext_mc_10000}
+  \end{figure}
 
 
 \clearpage
