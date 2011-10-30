@@ -91,11 +91,11 @@ class PrettyTable(object):
 
     def dump(self,data,comments=[]):
         """ Writes data structure of the from:
-            [ dict(name='energy', unit='[MeV]', data=[1,2,3],                          fmt='e'), 
-              dict(name='dN/dE',  unit='[GeV]', data=[1,2,3], ul=[False, False, True], fmt='f')] . """
+            [ dict(name='energy', units='[MeV]', data=[1,2,3],                          fmt='e'), 
+              dict(name='dN/dE',  units='[GeV]', data=[1,2,3], ul=[False, False, True], fmt='f')] . """
         lines = ['# '+c for c in comments] # comments
         lines.append(''.join([self.fmt(d['name']) for d in data])) #names
-        lines.append(''.join([self.fmt(d['unit']) for d in data])) # nnits
+        lines.append(''.join([self.fmt(d['units']) for d in data])) # nnits
         for i in range(len(data[0]['data'])): # data
             lines.append(''.join([self.fmt(d['data'][i], fmt=d['fmt'],
                                            ul=d['ul'][i] if d.has_key('ul') else False) 
@@ -120,7 +120,7 @@ class PrettyTable(object):
             l=cw*i; u=l+cw
             d=dict(
                 name=lines[0][l:u].strip(),
-                unit=lines[1][l:u].strip())
+                units=lines[1][l:u].strip())
             d['data']=[line[l:u].strip() for line in lines[2:]]
 
             if '<' in ''.join(d['data']): d['ul']=['<' in i for i in d['data']]
@@ -208,38 +208,56 @@ class SED(object):
         self.flux_err=np.empty_like(self.energies)
         self.flux_ul=-1*np.ones_like(self.energies) # -1 is no UL
 
+        self.eflux=np.empty_like(self.energies)
+        self.eflux_err=np.empty_like(self.energies)
+        self.eflux_ul=-1*np.ones_like(self.energies) # -1 is no UL
+
         self.ts=np.empty_like(self.energies)
 
 
         self._calculate()
 
     @staticmethod
-    def frequentist_upper_limit(like,name,verbosity,emin,emax):
-        """ Calculate a frequentist upper limit on the
-            prefactor. """
+    def frequentist_upper_limit(like,name,emin,emax,verbosity):
+        """ Calculate a frequentist upper limit on the prefactor. 
+            Returns the unscaled prefactor upper limit. """
         import UpperLimits
         ul = UpperLimits.UpperLimits(like)
         flux_ul, pref_ul = ul[name].compute(emin=emin, emax=emax, verbosity=verbosity)
-        prefactor=like[like.par_index(name, 'Prefactor')]
-        pref_ul = pref_ul*prefactor.getScale()
-        return flux_ul, pref_ul
+        return pref_ul
 
     @staticmethod
-    def bayesian_upper_limit(like,name,verbosity):
-        """ Calculate a baysian upper limit.
-            Return the fit prefactor value (which is dN/dE
-            in the geometric mean of the energy bin
-            since scale is set to the geometric mean
-            of the energy bin). """
+    def bayesian_upper_limit(like,name,emin,emax,verbosity):
+        """ Calculate a baysian upper limit on the prefactor.
+            Return the unscaled prefactor upper limit. """
         import IntegralUpperLimit
         flux_ul,results = IntegralUpperLimit.calc_int(like, name, 
                                                       freeze_all=True,
                                                       skip_global_opt=True,
-                                                      cl=0.95,
+                                                      emin=emin, emax=emax,
                                                       verbosity=verbosity)
+        pref_ul = results['ul_value']
+        return pref_ul
+
+    @staticmethod
+    def upper_limit(like,name,ul_algorithm,emin,emax,*args,**kwargs):
+        """ Calculates the upper limit. Returns the dN/dE, Flux, and eergy
+            flux upper limit. """
+        if ul_algorithm == 'frequentist': 
+            f = SED.frequentist_upper_limit
+        elif ul_algorithm == 'bayesian':  
+            f = SED.bayesian_upper_limit
+
+        pref_ul = f(like,name,emin,emax,*args,**kwargs)
+
         prefactor=like[like.par_index(name, 'Prefactor')]
-        pref_ul = results['ul_value']*prefactor.getScale()
-        return flux_ul, pref_ul
+        pref_ul *= prefactor.getScale() # scale prefactor
+        prefactor.setTrueValue(pref_ul)
+
+        flux_ul = like.flux(name,emin,emax)
+        eflux_ul = like.energyFlux(name,emin,emax)
+
+        return pref_ul,flux_ul, eflux_ul
 
     def _calculate(self):
         """ Compute the flux data points for each energy. """
@@ -314,12 +332,12 @@ class SED(object):
             self.flux[i] = like.flux(name, lower, upper)
             self.flux_err[i] = like.fluxError(name, lower, upper)
 
+            self.eflux[i] = like.energyFluxError(name, lower, upper)
+            self.eflux_err[i] = like.energyFluxError(name, lower, upper)
+
             if self.ts[i] < self.min_ts or self.always_upper_limit: 
                 if verbosity: print 'Calculating upper limit from %.0dMeV to %.0dMeV' % (lower,upper)
-                if self.ul_algorithm == 'frequentist':
-                    self.flux_ul[i], self.dnde_ul[i] = SED.frequentist_upper_limit(like,name,verbosity,lower,upper)
-                elif self.ul_algorithm == 'bayesian':
-                    self.flux_ul[i], self.dnde_ul[i] = SED.bayesian_upper_limit(like,name,verbosity)
+                self.dnde_ul[i], self.flux_ul[i], self.eflux_ul[i] = SED.upper_limit(like,name,self.ul_algorithm,lower,upper,verbosity)
 
             if verbosity:
                 print lower,upper,self.dnde[i],self.dnde_err[i],self.ts[i],self.dnde_ul[i]
@@ -352,6 +370,58 @@ class SED(object):
         """ Convert flux to MeV. """
         return SED.energy_from_MeV(*args,**kwargs)
 
+    @staticmethod
+    def dnde_units_string(flux_units):
+        return '[ph/cm^2/s/%s]' % flux_units
+
+    @staticmethod
+    def flux_units_string():
+        return '[ph/cm^2/s]'
+
+    @staticmethod
+    def eflux_units_string(flux_units):
+        return '[%s/cm^2/s]' % flux_units
+
+    def _package(self,verbosity):
+
+        significant=self.ts>=self.min_ts
+
+        cf=lambda f: SED.flux_from_MeV(f,self.flux_units).tolist()
+        ce=lambda e: SED.energy_from_MeV(e, self.energy_units).tolist()
+
+        eu = '[%s]' % self.energy_units
+        dnde_u = SED.dnde_units_string(self.flux_units)
+        flux_u = SED.flux_units_string()
+        eflux_u = SED.eflux_units_string(self.flux_units)
+
+
+        # note, set empty columns to nan
+
+        data = [
+            dict(name='Lower_Energy',   units=eu, fmt='f', data=ce(self.bin_edges[:-1])),
+            dict(name='Upper_Energy',   units=eu, fmt='f', data=ce(self.bin_edges[1:])),
+            dict(name='Energy',         units=eu,           fmt='f', data=ce(self.energies)),
+            dict(name='dN/dE',          units=dnde_u, fmt='e',
+                 data=cf(np.where(significant, self.dnde, self.dnde_ul)), ul=~significant),
+            dict(name='dN/dE_Err',      units=dnde_u, fmt='e', 
+                 data=cf(np.where(significant,self.dnde_err,np.nan).astype(float)))
+        ]
+
+        if verbosity:
+            data += [
+                dict(name='Raw_dN/dE',              units=dnde_u, fmt='e', data=cf(self.dnde)),
+                dict(name='Raw_dN/dE_Err',          units=dnde_u, fmt='e', data=cf(self.dnde_err)),
+                dict(name='dN/dE_UL',               units=dnde_u, fmt='e', data=cf(self.dnde_ul)),
+                dict(name='Test_Statistic',         units='', fmt='f', data=self.ts),
+                dict(name='Raw_Flux',               units=flux_u, fmt='e', data=self.dnde),
+                dict(name='Raw_Flux_Err',           units=flux_u, fmt='e', data=self.dnde_err),
+                dict(name='Flux_UL',                units=flux_u, fmt='e', data=self.dnde_ul),
+                dict(name='Raw_Energy_Flux',        units=eflux_u, fmt='e', data=ce(self.dnde)),
+                dict(name='Raw_Energy_Flux_Err',    units=eflux_u, fmt='e', data=ce(self.dnde_err)),
+                dict(name='Energy_Flux_UL',         units=eflux_u, fmt='e', data=ce(self.dnde_ul)),
+            ]
+        return data
+
     def __str__(self,precision=1, colwidth=20, comments=[]):
         """ Pack up values into a nicely formatted string.
 
@@ -362,41 +432,20 @@ class SED(object):
             energies, and fluxes + flux errors (even when
             insignificant. """
 
-        significant=self.ts>=self.min_ts
-
-        cf=lambda f: SED.flux_from_MeV(f,self.flux_units)
-        ce=lambda e: SED.energy_from_MeV(e, self.energy_units)
-
-        eu = '[%s]' % self.energy_units
-        dnde_u = '[ph/cm^2/s/%s]' % self.flux_units
-        flux_u = '[ph/cm^2/s]'
-
-
-        # note, set empty columns to nan
-
-        data = [
-            dict(name='Lower_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[:-1])),
-            dict(name='Upper_Energy',   unit=eu, fmt='f', data=ce(self.bin_edges[1:])),
-            dict(name='Energy',         unit=eu,           fmt='f', data=ce(self.energies)),
-            dict(name='dN/dE',          unit=dnde_u, fmt='e',
-                 data=cf(np.where(significant, self.dnde, self.dnde_ul)), ul=~significant),
-            dict(name='dN/dE_Err',      unit=dnde_u, fmt='e', 
-                 data=cf(np.where(significant,self.dnde_err,np.nan).astype(float)))
-        ]
-
-        if self.verbosity:
-            data += [
-                dict(name='Raw_dN/dE',       unit=dnde_u, fmt='e', data=cf(self.dnde)),
-                dict(name='Raw_dN/dE_Err',   unit=dnde_u, fmt='e', data=cf(self.dnde_err)),
-                dict(name='dN/dE_UL',        unit=dnde_u, fmt='e', data=cf(self.dnde_ul)),
-                dict(name='Test_Statistic',  unit='', fmt='f', data=self.ts),
-                dict(name='Raw_Flux',        unit=flux_u, fmt='e', data=self.dnde),
-                dict(name='Raw_Flux_Err',    unit=flux_u, fmt='e', data=self.dnde_err),
-                dict(name='Flux_UL',         unit=flux_u, fmt='e', data=self.dnde_ul)
-            ]
-
+        data = self._package(self.verbosity)
         table=PrettyTable(precision=precision, colwidth=colwidth)
         return table.dump(data,comments=comments)
+
+    def todict(self):
+        """ Package up the SED points nicely into a dictionary. """
+
+        packaged = self._package(verbosity=True)
+        d = {}
+        for i in packaged:
+            i.pop('fmt')
+            name=i.pop('name')
+            d[name] = i
+        return d
 
     @staticmethod
     def spectrum_to_string(spectrum, precision):
@@ -461,8 +510,8 @@ class SED(object):
             energies must be in MeV
             dnde, dnde_err, and ul must be in ph/cm^2/s/MeV
 
-            energy_units - unit to plot energy in (x axis)
-            flux_units - unit to plot flux in (y axis)
+            energy_units - units to plot energy in (x axis)
+            flux_units - units to plot flux in (y axis)
 
             spectrum: pyLikelihood spectrum object (required if plot_spectral_fit=True)
             """
@@ -532,21 +581,6 @@ class SED(object):
 
         return axes
 
-    def todict(self):
-        """ Package up the SED points nicely into a dictionary. """
-        d=dict(energy=self.energies,
-               lower_energy=self.bin_edges[:-1],
-               upper_energy=self.bin_edges[1:],
-               dnde=self.dnde,
-               dnde_err=self.dnde_err,
-               dnde_ul=self.dnde_ul,
-               flux=self.flux,
-               flux_err=self.flux_err,
-               flux_ul=self.flux_ul,
-               significant=self.ts>self.min_ts,
-               test_statistic=self.ts)
-        for k in d: d[k] = d[k].tolist()
-        return d
 
     def plot(self, filename=None, **kwargs):
 
@@ -583,10 +617,10 @@ class SED(object):
         flux=next(d for d in data if d['name']=='dN/dE')
         flux_err=next(d for d in data if d['name']=='dN/dE_Err')
 
-        file_energy_units = energy['unit'].replace('[','').replace(']','')
-        if flux['unit'] != flux_err['unit']:
+        file_energy_units = energy['units'].replace('[','').replace(']','')
+        if flux['units'] != flux_err['units']:
             raise Exception("Flux and Flux_Err must be the same units")
-        file_flux_units = flux['unit'].replace('[ph/cm^2/s/','').replace(']','')
+        file_flux_units = flux['units'].replace('[ph/cm^2/s/','').replace(']','')
 
         # convert whatever units are in the file for energy and flux to
         # MeV and ph/cm^2/s/MeV to injest into _plot_data
