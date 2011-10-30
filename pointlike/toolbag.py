@@ -1,9 +1,11 @@
-""" This file contains various function which I have found useful. """
+""" This file contains various function which I have found useful, but
+    can't think of a better place to put. """
 import numpy as np
 import pyfits as pf
 from uw.like.roi_analysis import ROIAnalysis
 from uw.like.roi_extended import ExtendedSource
 from uw.pulsar.phase_range import PhaseRange
+
 
 def tolist(x):
     """ convenience function that takes in a 
@@ -28,22 +30,6 @@ def tolist(x):
         return x.tolist(dense=True)
     else:
         return x
-
-
-
-def mixed_linear(min,max,num):
-    """ Just like np.linspace but the numbers are mixed up
-        using the Van der Corput sequence. Handy for getting
-        a reasonable sample quickly.
-        
-        Use the http://en.wikipedia.org/wiki/Van_der_Corput_sequence
-        to mix up the numbers. """
-    from csc import util
-    x=util.sampling_sequence(min,max)
-    return np.asarray([x.next() for i in range(num)])
-
-def mixed_log(min,max,num):
-    return 10**mixed_linear(np.log10(min),np.log10(max),num)
 
 
 def expand_fits(pf,factor,hdu=0):
@@ -85,23 +71,64 @@ def expand_fits(pf,factor,hdu=0):
 
 
 
-# Taken form http://stackoverflow.com/questions/4126348/how-do-i-rewrite-this-function-to-implement-ordereddict
-import collections
-class OrderedDefaultdict(collections.OrderedDict):
-    def __init__(self, *args, **kwargs):
-        newdefault = None
-        newargs = ()
-        if len(args):
-            newdefault = args[0]
-            if not callable(newdefault) and newdefault != None:
-                raise TypeError('first argument must be callable or None')
-            newargs = args[1:]
-        self.default_factory = newdefault
-        super(OrderedDefaultdict, self).__init__(*newargs, **kwargs)
+try:
+    # Taken form http://stackoverflow.com/questions/4126348/how-do-i-rewrite-this-function-to-implement-ordereddict
+    import collections
+    class OrderedDefaultdict(collections.OrderedDict):
+        def __init__(self, *args, **kwargs):
+            newdefault = None
+            newargs = ()
+            if len(args):
+                newdefault = args[0]
+                if not callable(newdefault) and newdefault != None:
+                    raise TypeError('first argument must be callable or None')
+                newargs = args[1:]
+            self.default_factory = newdefault
+            super(OrderedDefaultdict, self).__init__(*newargs, **kwargs)
 
-    def __missing__ (self, key):
-        if self.default_factory is None:
-            raise KeyError(key)
-        self[key] = value = self.default_factory()
-        return value
+        def __missing__ (self, key):
+            if self.default_factory is None:
+                raise KeyError(key)
+            self[key] = value = self.default_factory()
+            return value
+except Exception, ex:
+    print 'error defining OrderedDefaultdict', ex
+
+
+
+
+from datetime import datetime
+from dateutil import relativedelta
+class StopWatch(object):
+    """ Simple object for timing code"""
+    def __init__(self):
+        self.start_time = self.__lap = datetime.now()
+  
+    @property
+    def lap(self):
+        current_time = datetime.now()
+        lap = relativedelta.relativedelta(current_time,self.__lap)
+        self.__lap = current_time
+        return lap
+
+    @property
+    def total(self):
+        return datetime.now() - self.start_time
+    
+    def __str__(self):
+        ret=[]
+        lap=self.lap
+        if lap.years > 0: ret.append('%g years' % lap.years)
+        if lap.months > 0: ret.append('%g months' % lap.months)
+        if lap.days > 0: ret.append('%g days' % lap.days)
+        if lap.hours > 0: ret.append('%g hours' % lap.hours)
+        if lap.minutes > 0: ret.append('%g minutes' % lap.minutes)
+        if lap.seconds > 0: ret.append('%g seconds' % lap.seconds)
+
+        # only add microseconds if necessary
+        if len(ret) < 1: ret.append('%g microseconds' % lap.microseconds)
+
+        return 'Lap time is '+', '.join(ret[0:2]) # only print out leading two 
+
+
 
