@@ -10,7 +10,7 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 
 from uw.like.roi_analysis import ROIAnalysis
 from uw.like.roi_extended import ExtendedSource
-from uw.like.Models import Model,PowerLaw,LogParabola,DefaultModelValues
+from uw.like.Models import Model,PowerLaw,ExpCutoff,DefaultModelValues
 from uw.like.roi_state import PointlikeState
 
 from toolbag import tolist
@@ -75,7 +75,7 @@ def spectrum_to_dict(spectrum_or_model):
     return f(spectrum_or_model)
 
 
-def gtlike_sourcedict(like, name, emin=None, emax=None):
+def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
     from pyLikelihood import ParameterVector
 
     if emin is None and emax is None:
@@ -84,14 +84,25 @@ def gtlike_sourcedict(like, name, emin=None, emax=None):
 
     d=dict(
         TS=like.Ts(name,reoptimize=True),
-        flux=like.flux(name,emin=emin,emax=emax),
         logLikelihood=like.logLike.value()
     )
+
+    ce=lambda e: SED.energy_from_MeV(e, flux_units)
+    d['flux']=f={}
+    f['flux']=like.flux(name,emin=emin,emax=emax)
+    f['eflux']=ce(like.energyFlux(name,emin=emin,emax=emax))
+    f['flux_units']=SED.flux_units_string()
+    f['eflux_units']=SED.eflux_units_string(flux_units)
+    f['emin'],f['emax']=emin,emax
+
     try:
+        # incase the errors were not calculated
         d['flux_err']=like.fluxError(name,emin=emin,emax=emax)
+        d['eflux_err']=ce(like.energyFluxError(name,emin=emin,emax=emax))
     except Exception, ex:
         print 'ERROR calculating flux error: ', ex
         d['flux_err']=-1
+        d['eflux_err']=-1
 
     source = like.logLike.getSource(name)
     spectrum = source.spectrum()
@@ -110,28 +121,37 @@ def gtlike_sourcedict(like, name, emin=None, emax=None):
     # (b) all other sources cannot have 'gal' or 'iso' in them.
     # (c) gal must be scaled by a powerlaw, iso must be scaled by a constant
 
-    def get(source,param):
-        f = like[name].src.getSrcFuncs()
-        return f['Spectrum'].getParam('Value').getTrueValue()
+    def get(sourcename,param):
+        source = like.logLike.getSource(sourcename)
+        spectrum = source.spectrum()
+        p = spectrum.getParam(param)
+        return dict(value=p.getTrueValue(),
+                    error=p.error()*p.getScale())
 
-    def get_full_name(str):
-        all_sources=like.sourceNames()
-        f = np.char.find(str,np.char.lower(all_sources)) != -1
-        return all_sources[f][0] if np.any(f) else None
+    def get_full_name(substr):
+        all_sources=np.char.lower(like.sourceNames())
+        f = np.char.find(all_sources,substr) != -1
+        if not np.any(f): return None
+        index = np.where(f)[0][0]
+        return like.sourceNames()[index]
 
-    name = get_full_name('gal')
-    if name is not None: 
-        d['galnorm'] = get(name,'Prefactor')
-        d['galindex'] = get(name,'Index')
+    d['diffuse'] = f = {}
 
-    name = get_full_name('gal')
-    if name is not None: 
-        d['isonorm'] = get(name,'Value')
+    galname = get_full_name('galactic')
+    if galname is None: galname = get_full_name('ring')
+    if galname is not None: 
+        f['galnorm'] = get(galname,'Prefactor')
+        f['galindex'] = get(galname,'Index')
+
+    isoname = get_full_name('isotropic')
+    if isoname is None: isoname = get_full_name('extragalactic')
+    if isoname is not None: 
+        f['isonorm'] = get(isoname,'Normalization')
 
     return d
 
 
-def pointlike_sourcedict(roi, name, emin, emax):
+def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
     d={}
 
     if emin is None and emax is None:
@@ -148,7 +168,14 @@ def pointlike_sourcedict(roi, name, emin, emax):
 
     d['logLikelihood']=-roi.logLikelihood(roi.parameters())
 
-    d['flux'],d['flux_err']=model.i_flux(emin=emin,emax=emax,error=True)
+    ce=lambda e: SED.energy_from_MeV(e, flux_units)
+    d['flux']=f={}
+    f['flux'],f['flux_err']=model.i_flux(emin=emin,emax=emax,error=True)
+    ef,ef_err=model.i_flux(emin=emin,emax=emax,e_weight=1,error=True)
+    f['eflux'],f['eflux_err']=ce(ef),ce(ef_err)
+    f['flux_units']=SED.flux_units_string()
+    f['eflux_units']=SED.eflux_units_string(flux_units)
+    f['emin'],f['emax']=emin,emax
 
     d['model']=spectrum_to_dict(model)
     for param in model.param_names:
@@ -188,7 +215,9 @@ def sourcedict(like_or_roi, name, emin=None, emax=None):
     return tolist(f(like_or_roi, name, emin, emax))
 
 
-def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=None, **kwargs):
+def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=None, 
+                                flux_units='erg',
+                                **kwargs):
     """ Wrap up calculating the flux upper limit for a powerlaw
         source.  This function employes the pyLikelihood function
         IntegralUpperLimit to calculate a Bayesian upper limit.
@@ -242,7 +271,7 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
 
     like.syncSrcParams(name)
 
-    ul_scipy, results_scipy = IntegralUpperLimit.calc_int(like, name, 
+    flux_ul, results = IntegralUpperLimit.calc_int(like, name, 
                                                           skip_global_opt=True,
                                                           freeze_all=True,
                                                           cl=cl,
@@ -250,9 +279,24 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
                                                           emax=emax, 
                                                           **kwargs)
 
+    prefactor=like[like.par_index(name, 'Prefactor')]
+    pref_ul = results['ul_value']*prefactor.getScale()
+    prefactor.setTrueValue(pref_ul)
+
+    flux_ul = like.flux(name,emin,emax)
+    flux_units_string = SED.flux_units_string()
+
+    eflux_ul = SED.energy_from_MeV(like.energyFlux(name,emin,emax), flux_units)
+    eflux_units_string = SED.eflux_units_string(flux_units)
+
+    ul = dict(
+        emin=emin, emax=emax,
+        flux_units=flux_units_string, flux=flux_ul, 
+        eflux_units=eflux_units_string, eflux=eflux_ul)
+
     like.setSpectrum(name,old_spectrum)
     saved_state.restore()
-    return ul_scipy
+    return tolist(ul)
 
 def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin, emax, **kwargs):
     print 'Calculating pointlike upper limit'
@@ -289,7 +333,11 @@ def pointlike_test_cutoff(roi, which):
     saved_state = PointlikeState(roi)
 
     print 'these are probably not good startin values!'
-    roi.modify(which=which, model=PowerLaw(norm=1e-11, index=2, e0=1e3))
+    emin,emax=roi.bin_edges[0],roi.bin_edges[-1]
+    old_flux = roi.get_model(which).i_flux(emin,emax)
+    m=PowerLaw(norm=1e-11, index=2, e0=1e3)
+    m.set_flux(old_flux,emin,emax)
+    roi.modify(which=which, model=m,keep_old_flux=False)
 
     fit = lambda: roi.fit(estimate_errors=False)
     ll = lambda: -1*roi.logLikelihood(roi.parameters())
@@ -306,8 +354,10 @@ def pointlike_test_cutoff(roi, which):
     d['TS_0'] = ts()
     d['model_0']=spectrum()
 
+    m=ExpCutoff(n0=1e-11, gamma=1, cutoff=1000, e0=1000)
+    m.set_flux(old_flux,emin,emax)
     roi.modify(which=which, 
-               model=LogParabola(norm=1e-9, index=1, beta=2, e_break=300))
+               model=m,keep_old_flux=False)
 
     fit()
     d['ll_1'] = ll_1 = ll()
@@ -343,6 +393,15 @@ def gtlike_test_cutoff(like, name):
         par.setFree(1)
         like.syncSrcParams(name)
 
+    def get_flux():
+        return like.flux(name, like.energies[0],like.energies[1])
+    def set_flux(flux):
+        current_flux = like.flux(name, like.energies[0],like.energies[1])
+        prefactor=like[like.par_index(name, 'Prefactor')]
+        prefactor.setTrueValue(
+            (flux/current_flux)*prefactor.getTrueValue())
+        like.syncSrcParams(name)
+
     ll = lambda: like.logLike.value()
     ts = lambda: like.Ts(name,reoptimize=True)
     def spectrum():
@@ -351,6 +410,7 @@ def gtlike_test_cutoff(like, name):
         return spectrum_to_dict(s)
 
     source = like.logLike.getSource(name)
+    old_flux = get_flux()
     old_spectrum = source.spectrum()
 
     like.setSpectrum(name,'PowerLaw')
@@ -358,17 +418,22 @@ def gtlike_test_cutoff(like, name):
 
     set('Prefactor',1e-11,1e-11,      0,1e10)
     set('Index',       -2,    1,  -1e10,1e10)
+    set_flux(old_flux)
+
+    plaw_flux = like.flux(name,like.energies[0],like.energies[-1])
 
     paranoid_gtlike_fit(like)
     d['ll_0'] = ll_0 = ll()
     d['TS_0'] = ts()
     d['model_0']=spectrum()
     
-    like.setSpectrum(name,'LogParabola')
-    set('norm',  1e-9, 1e-9,     0,1e10)
-    set('alpha',    1,    1, -1e10,1e10)
-    set('beta',     2,    1, -1e10,1e10)
-    set('Eb',     300,    1,     0,1e10)
+    like.setSpectrum(name,'PLSuperExpCutoff')
+    set('Prefactor', 1e-9,   1e-9,     0,1e10)
+    set('Index1',      -1,      1, -1e10,1e10)
+    fix('Scale',     1000)
+    set('Cutoff',    1000,   1000,     0,1e10)
+    fix('Index2',       1)
+    set_flux(old_flux)
 
     paranoid_gtlike_fit(like)
     d['ll_1'] = ll_1 = ll()
