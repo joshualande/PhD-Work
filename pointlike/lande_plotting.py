@@ -1,98 +1,117 @@
-import pylab as P
+import os
 
+import pylab as P
 import numpy as np
 
 from uw.like.roi_extended import BandFitExtended
 from uw.utilities import keyword_options
 
-import os
-
-class TSExtVsEnergy(object):
-
-    """ Object to make a plot of TSext vs energy. """
 
 
-    defaults = (
-            ('which',           None,  'Source to analyze'),
-            ('title',           None, 'Title for the plot'),
-            ('fignum',             1,                   ''),
-            ('figsize',        (6,4),                   ''),
-    )
+from uw.pulsar.lc_plotting_func import PulsarLightCurve
+from uw.pulsar.phase_range import PhaseRange
+def _get_pulsar_data(ft1, phase, radius=1, emin=100, emax=300000):
+    plc = PulsarLightCurve(ft1, emin=emin, emax=emax, radius=radius)
+    plc.fill_phaseogram()
+    phases = plc.get_phases()
+    times = plc.get_times()
+    return phases, times
+
+def plot_phaseogram(name, ft1, phase, filename):
+    """ Simple code to plot a phaseogram. """
+    phases, times = _get_pulsar_data(ft1, phase)
+
+    nbins=50
+    fig = P.figure(None, figsize=(5,5))
+    axes = fig.add_subplot(111)
+    axes.hist(phases,bins=np.linspace(0,1,nbins+1),histtype='step',ec='red',normed=True,lw=1)
+    axes.set_xlim(0,1)
+    axes.set_title(name)
+    axes.set_xlabel('phase')
+
+    PhaseRange(phase).axvspan(axes=axes, label='pwncat1', alpha=0.25, color='green')
+    P.savefig(filename)
+
+def plot_phase_vs_time(name, ft1, phase, filename):
+    """ Simple code to plot phase vs time. """
+    phases, times = _get_pulsar_data(ft1, phase)
+
+    # here, put a 2d histogram
+    fig = P.figure(None, figsize=(5,5))
+    fig.subplots_adjust(left=0.2)
+    axes = fig.add_subplot(111)
+    d, xedges, yedges = np.histogram2d(times, phases, bins=(50,50), range=[[min(times), max(times)], [0,1]])
+
+    extent = [yedges[0], yedges[-1], xedges[-1], xedges[0]]
+    axes.imshow(d, extent=extent, interpolation='nearest', aspect='auto')
+    axes.set_xlabel('phase')
+    axes.set_ylabel('MJD')
+    axes.set_title(name)
+
+    P.savefig(filename)
+
+ 
+from mpl_toolkits.axes_grid1.axes_grid import ImageGrid
+from uw.like.roi_plotting import ROITSMapPlotter
+from uw.like.roi_state import PointlikeState
+import pywcsgrid2
+class ROITSMapBandPlotter(object):
+
+    defaults = ROITSMapPlotter.defaults 
+    defaults=keyword_options.change_defaults(defaults,'figsize',(9,4))
 
     @keyword_options.decorate(defaults)
-    def __init__(self, roi, **kwargs):
+    def __init__(self,roi,bin_edges,**kwargs):
+
+        self.roi = roi
         keyword_options.process(self, kwargs)
 
-        roi.setup_energy_bands()
-        self.emin = np.asarray([eb.emin for eb in roi.energy_bands])
-        self.emax = np.asarray([eb.emax for eb in roi.energy_bands])
+        self.bin_edges = bin_edges
+        self.nplots = len(bin_edges) - 1
 
-        which = self.which
-        old_roi_p   = roi.get_parameters().copy()
+        for e in bin_edges:
+            if not np.any(np.abs(e-roi.bin_edges) < 0.5):
+                raise Exception("Energy %.1f inconsistent with ROI energy binning." % e)
 
-        # extended hypothesis
+        self.lower_energies = bin_edges[:-1]
+        self.upper_energies = bin_edges[1:]
 
-        source=roi.get_source(which='IC443')
-        sm = source.spatial_model
-        manager,index=roi.mapper(which)
-        roi.fit(use_gradient=True)
+        state = PointlikeState(roi)
+ 
+        # step 1, test consistentcy of each energy with binning in pointlike
 
-        self.ll_ext,self.ll_pt = [],[]
+        self.tsmaps = []
+        for i,(lower,upper) in enumerate(zip(self.lower_energies, self.upper_energies)):
+            roi.change_binning(fit_emin=lower,fit_emax=upper)
+            self.tsmaps.append(ROITSMapPlotter(roi,title='',show_colorbar=(i==0),**kwargs))
 
+        state.restore()
 
-        for eb in roi.energy_bands:
-            self.ll_ext.append(
-                -sum(band.logLikelihood() for band in eb.bands)
-                )
+    def show(self,filename=None):
+        print 'figsize = ',self.figsize
 
+        self.fig = fig = P.figure(self.fignum,self.figsize)
+        P.clf()
 
-        sm.shrink()
-        manager.bgmodels[index].initialize_counts(roi.bands)
-        roi.__update_state__()
+        header = self.tsmaps[0].pf[0].header
 
-        roi.fit(use_gradient=True, estimate_errors=False)
+        self.grid = grid = ImageGrid(fig, (1, 1, 1), 
+                                     nrows_ncols = (1, self.nplots),
+                                     axes_pad=0.1, share_all=True,
+                                     cbar_mode="single", cbar_pad="2%",
+                                     cbar_location="right",
+                                     axes_class=(pywcsgrid2.Axes,
+                                                 dict(header=header)))
 
-        # point hypothesis
+        for i,(tsmap,lower,upper) in enumerate(zip(self.tsmaps,self.lower_energies,self.upper_energies)):
+            tsmap.show(axes=grid[i], cax=grid.cbar_axes[0] if i==0 else None)
+            format_energy=lambda x: '%.1f' % (x/1000.) if x < 1000 else '%.0f' % (x/1000.)
+            lower_string=format_energy(lower)
+            upper_string=format_energy(upper)
+            grid[i].add_inner_title("%s-%s GeV" % (lower_string,upper_string), loc=2)
 
-        manager,index=roi.mapper('IC443')
-        for eb in roi.energy_bands:
-            self.ll_pt.append(
-                -sum(band.logLikelihood() for band in eb.bands)
-                )
+        if filename is not None: P.savefig(filename)
 
-        sm.unshrink()
-        manager.bgmodels[index].initialize_counts(roi.bands)
-
-        roi.set_parameters(old_roi_p)
-        roi.__update_state__()
-
-        self.ll_ext = np.asarray(self.ll_ext)
-        self.ll_pt = np.asarray(self.ll_pt)
-
-        self.ts_ext=2*(self.ll_ext-self.ll_pt)
-        self.ts_ext[self.ts_ext<0]=0
-
-    def show(self,filename=None,axes=None):
-
-        if axes is None:
-            fig = P.figure(self.fignum,self.figsize)
-            axes = fig.get_axes([0.15,0.15,0.7,0.7])
-            P.clf()
-
-        ax = self.axes = axes
-
-        ax.set_xlabel(r'Energy (MeV)')
-        ax.set_ylabel(r'$\mathrm{TS}_\mathrm{ext}$')
-        ax.semilogx(self.emin,self.ts_ext,'k',drawstyle='steps-post')
-
-        if self.title is None: 
-            self.title = '$\mathrm{TS}_\mathrm{ext}$ vs Energy'
-            self.title += ' for %s' % self.source.name
-
-        ax.set_title(self.title)
-
-        if filename is not None:
-            P.savefig(filename)
 
 
 def plot_ds9_contour(ax,contour,**kwargs):
