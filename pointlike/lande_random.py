@@ -1,6 +1,8 @@
 """ Function for generating random quantities.
 
 """
+from skymaps import SkyDIr
+
 
 def random_on_sphere():
     """ Pick a random SkyDir on the sphere. """
