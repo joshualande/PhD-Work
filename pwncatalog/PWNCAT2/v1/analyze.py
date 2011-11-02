@@ -27,6 +27,7 @@ parser.add_argument("--no-plots", default=False, action="store_true")
 parser.add_argument("--no-cutoff", default=False, action="store_true")
 parser.add_argument("--no-upper-limit", default=False, action="store_true")
 parser.add_argument("--no-extension-upper-limit", default=False, action="store_true")
+parser.add_argument("--no-savedir", default=False, action="store_true")
 args=parser.parse_args()
 
 do_point = not args.no_point
@@ -65,7 +66,7 @@ print 'Building the ROI'
 
 roi=setup_pwn(name,args.pwndata, phase=phase, 
               free_radius=5, max_free=10, fit_emin=args.emin, fit_emax=args.emax,
-              savedir='savedir')
+              savedir=None if not args.no_savedir else 'savedir')
 
 
 from modify import modify_roi

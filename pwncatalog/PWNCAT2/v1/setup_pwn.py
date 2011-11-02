@@ -97,11 +97,13 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedi
     else:
         # create a temporary ltcube scaled by the phase factor
         phased_ltcube=j(savedir,'phased_ltcube.fits')
-        phasetools.phase_ltcube(ltcube,phased_ltcube, phase=phase)
+        if not os.path.exists(phased_ltcube):
+            phasetools.phase_ltcube(ltcube,phased_ltcube, phase=phase)
 
         # apply phase cut to ft1 file
         phased_ft1 = j(savedir,'ft1_phased.fits')
-        phasetools.phase_cut(ft1,phased_ft1,phaseranges=phase.tolist(dense=False))
+        if not os.path.exists(phased_ft1):
+            phasetools.phase_cut(ft1,phased_ft1,phaseranges=phase.tolist(dense=False))
 
     from uw.like.pointspec import DataSpecification
     ds = DataSpecification(
