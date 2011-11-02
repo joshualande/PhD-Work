@@ -25,6 +25,7 @@ parser.add_argument("--no-extended", default=False, action="store_true")
 parser.add_argument("--no-gtlike", default=False, action="store_true")
 parser.add_argument("--no-plots", default=False, action="store_true")
 parser.add_argument("--no-cutoff", default=False, action="store_true")
+parser.add_argument("--no-upper-limit", default=False, action="store_true")
 parser.add_argument("--no-extension-upper-limit", default=False, action="store_true")
 args=parser.parse_args()
 
@@ -33,6 +34,7 @@ do_extended = not args.no_extended
 do_gtlike = not args.no_gtlike
 do_plots = not args.no_plots
 do_cutoff = not args.no_cutoff
+do_upper_limit = not args.no_upper_limit
 do_extension_upper_limit = not args.no_extension_upper_limit
 
 name=args.name
@@ -78,10 +80,10 @@ kwargs = dict(roi=roi, name=name,
 
 
 
-r['at_pulsar']['pointlike']=pointlike_analysis(hypothesis='at_pulsar', upper_limit=True, 
+r['at_pulsar']['pointlike']=pointlike_analysis(hypothesis='at_pulsar', upper_limit=do_upper_limit, 
                                                cutoff=do_cutoff, do_plots=do_plots, **kwargs)
 save_results(results,name)
-if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(hypothesis='at_pulsar', upper_limit=True, cutoff=do_cutoff, **kwargs)
+if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(hypothesis='at_pulsar', upper_limit=do_upper_limit, cutoff=do_cutoff, **kwargs)
 
 if do_point:
     r['point']['pointlike']=pointlike_analysis(hypothesis='point', localize=True, cutoff=do_cutoff, 
