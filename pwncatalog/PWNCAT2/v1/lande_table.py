@@ -19,8 +19,7 @@ def write_latex(table, filename, **kwargs):
                     )
     t=outtable.getvalue()
 
-
-
+    print t
     file=r"""
     \documentclass{aastex}
     \usepackage{amsmath}
@@ -66,9 +65,9 @@ def all_energy_table(pwnlist):
         ts=max(gt['TS'],0)
         table['TS'].append('%.1f' % ts)
 
-        flux=gt['flux']
+        flux=gt['flux']['flux']
         flux_err=gt['flux_err']
-        ul=gt['upper_limit']
+        ul=gt['upper_limit']['flux']
 
 
         table[flux_name].append(
@@ -77,12 +76,13 @@ def all_energy_table(pwnlist):
         index=gt['model']['Index']
         index_err=gt['model']['Index_err']
 
-        table[gamma_name].append('$%.1f \pm %.1f$' % (index,index_err) if ts > 25 else r'\nodata')
+        table[gamma_name].append('$%.2f \pm %.2f$' % (index,index_err) if ts > 25 else r'\nodata')
 
     write_latex(table,
                 filename='%s/all_energy_table.pdf' % savedir,
                 names=table.keys(),
                 latexdict = dict(caption=r'All Energy spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
+                                 preamble=r'\tabletypesize{\scriptsize}',
                                  units={
                                      flux_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
                                  }))
@@ -109,10 +109,10 @@ def each_energy_table(pwnlist):
             continue
 
         sed = results['at_pulsar']['gtlike']['sed']['1bpd_at_pulsar']
-        ts = sed['test_statistic']
-        flux = sed['flux']
-        flux_err = sed['flux_err']
-        ul = sed['upper_limit']
+        ts = sed['Test_Statistic']
+        flux = sed['Raw_Flux']
+        flux_err = sed['Raw_Flux_Err']
+        ul = sed['Flux_UL']
 
         table['PSR'].append(pwn.replace('PSR',''))
 
@@ -129,15 +129,16 @@ def each_energy_table(pwnlist):
                 filename='%s/each_energy_table.pdf' % savedir,
                 names=table.keys(),
                 latexdict = dict(caption=r'Energy bin spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
+                                 preamble=r'\tabletypesize{\scriptsize}',
                                  units={
                                      flux1_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
                                      flux2_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
                                      flux3_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
                                  }))
 
-fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v18/fits/'
-savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v18/'
+fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v21/fits/'
+savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v21/'
 
 pwnlist=sorted(yaml.load(open('pwndata/pwncat1_data.yaml')).keys())
-#all_energy_table(pwnlist)
+all_energy_table(pwnlist)
 each_energy_table(pwnlist)
