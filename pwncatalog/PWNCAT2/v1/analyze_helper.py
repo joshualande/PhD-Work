@@ -10,66 +10,47 @@ from toolbag import tolist
 from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit
 from SED import SED
 from LikelihoodState import LikelihoodState
-from uw.pulsar.lc_plotting_func import PulsarLightCurve
 from uw.pulsar.phase_range import PhaseRange
 
-def get_pulsar_data(ft1, phase, radius=1, emin=100, emax=300000):
-    plc = PulsarLightCurve(ft1, emin=emin, emax=emax,
-                           radius=radius)
-
-    plc.fill_phaseogram()
-    phases = plc.get_phases()
-    times = plc.get_times()
-    return phases, times
-
-def plot_phaseogram(name, ft1, phase, filename):
-    phases, times = get_pulsar_data(ft1, phase)
-
-    nbins=50
-    fig = P.figure(None, figsize=(5,5))
-    axes = fig.add_subplot(111)
-    axes.hist(phases,bins=np.linspace(0,1,nbins+1),histtype='step',ec='red',normed=True,lw=1)
-    axes.set_xlim(0,1)
-    axes.set_title(name)
-    axes.set_xlabel('phase')
-
-    PhaseRange(phase).axvspan(axes=axes, label='pwncat1', alpha=0.25, color='green')
-    P.savefig(filename)
-
-def plot_phase_vs_time(name, ft1, phase, filename):
-    phases, times = get_pulsar_data(ft1, phase)
-
-    # here, put a 2d histogram
-    fig = P.figure(None, figsize=(5,5))
-    fig.subplots_adjust(left=0.2)
-    axes = fig.add_subplot(111)
-    d, xedges, yedges = np.histogram2d(times, phases, bins=(50,50), range=[[min(times), max(times)], [0,1]])
-
-    extent = [yedges[0], yedges[-1], xedges[-1], xedges[0]]
-    axes.imshow(d, extent=extent, interpolation='nearest', aspect='auto')
-    #axes.colorbar()
-    axes.set_xlabel('phase')
-    axes.set_ylabel('MJD')
-    axes.set_title(name)
-
-    P.savefig(filename)
+from lande_pulsar import plot_phaseogram,plot_phase_vs_time
+from lande_plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter
 
 
-def plots(roi, name, hypothesis, datadir, plotdir, size=5):
+all_energy=lambda emin,emax: np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1)
+high_energy=lambda emin,emax: np.allclose([emin,emax],[10**4.5,10**5.5], rtol=0, atol=1)
+three_bins=[1e2,1e3,1e4,10**5.5]
+
+def plots(roi, name, hypothesis, emin, emax, datadir, plotdir, size=5, tsmap_pixelsize=0.1):
+    plot_kwargs = dict(size=size, pixelsize=tsmap_pixelsize)
+
+    if all_energy(emin,emax):
+        ROISourceBandPlotter(roi, which=name, bin_edges=three_bins, size=size).show(filename='%s/band_source_%s_%s.png' % (plotdir,hypothesis,name))
+        ROISourcesBandPlotter(roi,which=name, bin_edges=three_bins, size=size).show(filename='%s/band_sources_%s_%s.png' % (plotdir,hypothesis,name))
+
     print 'Making plots for hypothesis %s' % hypothesis
-    roi.plot_tsmap(filename='%s/residual_tsmap_%s_%s.png' % (plotdir,hypothesis,name), size=size, pixelsize=0.1)
+    roi.plot_tsmap(filename='%s/residual_tsmap_%s_%s.png' % (plotdir,hypothesis,name), **plot_kwargs)
+
+    if all_energy(emin,emax):
+        ROITSMapBandPlotter(roi,  bin_edges=three_bins, **plot_kwargs).show(filename='%s/band_residual_tsmap_%s_%s.png' % (plotdir,hypothesis,name))
+
     for pixelsize in [0.1,0.25]:
         roi.plot_counts_map(filename="%s/counts_%g_%s_%s.png"%(plotdir,pixelsize,hypothesis,name),
                             countsfile="%s/counts_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
                             modelfile="%s/model_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
-                            pixelsize=pixelsize,size=size)
+                            **plot_kwargs)
+
     roi.zero_source(which=name)
-    roi.plot_tsmap(filename='%s/source_tsmap_%s_%s.png' % (plotdir,hypothesis, name), size=size, pixelsize=0.1)
+
+    roi.plot_tsmap(filename='%s/source_tsmap_%s_%s.png' % (plotdir,hypothesis, name), **plot_kwargs)
+
+    if np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1):
+        ROITSMapBandPlotter(roi,bin_edges=three_bins, **plot_kwargs).show(filename='%s/band_source_tsmap_%s_%s.png' % (plotdir,hypothesis,name))
+
     for pixelsize in [0.1,0.25]:
         roi.plot_counts_map(filename="%s/counts_excess_%g_%s_%s.png"%(plotdir,pixelsize,hypothesis,name),
                             countsfile="%s/counts_excess_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
                             modelfile="%s/model_excess_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
-                            pixelsize=pixelsize,size=size)
+                            **plot_kwargs)
     roi.unzero_source(which=name)
 
     roi.plot_source(which=name,filename='%s/source_%s_%s.png' % (plotdir, hypothesis, name), 
@@ -131,7 +112,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax,
         p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian(), npoints=10)
 
     if upper_limit:
-        p['upper_limit'] = powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
+        p['upper_limit']=powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
     if cutoff:
         p['test_cutoff']=test_cutoff(roi,name)
     print_summary()
@@ -143,7 +124,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax,
  
     roi.save('roi_%s_%s.dat' % (hypothesis,name))
 
-    if do_plots: plots(roi, name, hypothesis, datadir, plotdir)
+    if do_plots: plots(roi, name, hypothesis, emin, emax, datadir, plotdir)
     return p
 
 
@@ -151,6 +132,7 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax, seddir, datadir, plotdir,
     print 'Performing Gtlike crosscheck for %s' % hypothesis
 
     gtlike=Gtlike(roi)
+    global like
     like=gtlike.like
 
     paranoid_gtlike_fit(like)
@@ -182,11 +164,11 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax, seddir, datadir, plotdir,
         sed.save('%s/sed_gtlike_%s_%s.dat' % (seddir,kind,name))
         r['sed'][kind]=sed.todict()
 
-    if np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1):
+    if all_energy(emin,emax):
         sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(2,5.5,15))
         sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(2,5.5,8))
-        sed('1bpd_%s' % hypothesis,bin_edges=[1e2, 1e3, 1e4,10**5.5])
-    elif np.allclose([emin,emax],[10**4.5,10**5.5], rtol=0, atol=1):
+        sed('1bpd_%s' % hypothesis,bin_edges=three_bins)
+    elif high_energy(emin,emax):
         sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,5))
         sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,3))
     else:
