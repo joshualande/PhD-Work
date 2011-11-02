@@ -309,10 +309,16 @@ def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin, emax, **
         emin = roi.bin_edges[0]
         emax = roi.bin_edges[-1]
 
-    ul = roi.upper_limit(which=name, confidence=cl, emin=emin, emax=emax, **kwargs)
-    saved_state.restore()
+    flux_ul = roi.upper_limit(which=name, confidence=cl, emin=emin, emax=emax, **kwargs)
 
-    return ul
+    flux_units_string = SED.flux_units_string()
+
+    ul = dict(
+        emin=emin, emax=emax,
+        flux_units=flux_units_string, flux=flux_ul)
+
+    saved_state.restore()
+    return tolist(ul)
 
 def powerlaw_upper_limit(like_or_roi, name, powerlaw_index=2, cl=0.95, **kwargs):
     from BinnedAnalysis import BinnedAnalysis
@@ -335,7 +341,7 @@ def pointlike_test_cutoff(roi, which):
     print 'these are probably not good startin values!'
     emin,emax=roi.bin_edges[0],roi.bin_edges[-1]
     old_flux = roi.get_model(which).i_flux(emin,emax)
-    m=PowerLaw(norm=1e-11, index=2, e0=1e3)
+    m=PowerLaw(norm=1e-11, index=2, e0=np.sqrt(emin*emax))
     m.set_flux(old_flux,emin,emax)
     roi.modify(which=which, model=m,keep_old_flux=False)
 
@@ -395,8 +401,9 @@ def gtlike_test_cutoff(like, name):
 
     def get_flux():
         return like.flux(name, like.energies[0],like.energies[1])
+
     def set_flux(flux):
-        current_flux = like.flux(name, like.energies[0],like.energies[1])
+        current_flux = get_flux()
         prefactor=like[like.par_index(name, 'Prefactor')]
         prefactor.setTrueValue(
             (flux/current_flux)*prefactor.getTrueValue())
@@ -404,6 +411,7 @@ def gtlike_test_cutoff(like, name):
 
     ll = lambda: like.logLike.value()
     ts = lambda: like.Ts(name,reoptimize=True)
+
     def spectrum():
         source = like.logLike.getSource(name)
         s=source.spectrum()
@@ -414,13 +422,10 @@ def gtlike_test_cutoff(like, name):
     old_spectrum = source.spectrum()
 
     like.setSpectrum(name,'PowerLaw')
-    fix('Scale', 1e3)
-
-    set('Prefactor',1e-11,1e-11,      0,1e10)
-    set('Index',       -2,    1,  -1e10,1e10)
+    fix('Scale', np.sqrt(like.energies[0]*like.energies[1]))
+    set('Prefactor',1e-11,1e-11,      1e-5,1e5)
+    set('Index',       -2,    1,  -5,5)
     set_flux(old_flux)
-
-    plaw_flux = like.flux(name,like.energies[0],like.energies[-1])
 
     paranoid_gtlike_fit(like)
     d['ll_0'] = ll_0 = ll()
@@ -428,10 +433,10 @@ def gtlike_test_cutoff(like, name):
     d['model_0']=spectrum()
     
     like.setSpectrum(name,'PLSuperExpCutoff')
-    set('Prefactor', 1e-9,   1e-9,     0,1e10)
-    set('Index1',      -1,      1, -1e10,1e10)
+    set('Prefactor', 1e-9,   1e-9,    1e-5,1e5)
+    set('Index1',      -1,      1,     -5,  5)
     fix('Scale',     1000)
-    set('Cutoff',    1000,   1000,     0,1e10)
+    set('Cutoff',    1000,      1,    1e2,1e5)
     fix('Index2',       1)
     set_flux(old_flux)
 
