@@ -11,6 +11,7 @@ from uw.pulsar.phase_range import PhaseRange
 from uw.like.roi_state import PointlikeState
 from roi_gtlike import Gtlike
 from LikelihoodState import LikelihoodState
+from likelihood_tools import paranoid_gtlike_fit
 
 
 def thierry_profile(name, func, phases):
@@ -33,22 +34,16 @@ def thierry_profile(name, func, phases):
 
     fix_prefactor(like)
     
-    # fit (unbounded) prefactor
-    prefactor=like[like.par_index(name, 'Prefactor')]
-    prefactor.setFree(1)
-    # now, save current ROI
-    fix_prefactor(like)
-
-    try:
-        # perform global fit w/ index fixed to 2
-        like.fit()
-    except Exception, ex:
-        print 'ERROR spectral fitting gtlike: ', ex
+    paranoid_gtlike_fit(like, covar=False)
 
     # freeze everything but prefactor of PWN
 
     for i in range(len(like.model.params)):
         like.freeze(i)
+
+    # set prefactor free
+    fix_prefactor(like)
+
     like.syncSrcParams()
 
     saved_state = LikelihoodState(like)
@@ -57,17 +52,15 @@ def thierry_profile(name, func, phases):
     for i,phase in enumerate(phases):
 
         like = func(phase)
-        fix_prefactor(like) # kind of lame, but needed
+        fix_prefactor(like) # kind of lame, but I think this is needed
 
         # give model the same parameters as global fit.
         saved_state.like = like
         saved_state.restore()
 
-        try:
-            like.fit()
-        except Exception, ex:
-            print 'ERROR spectral fitting gtlike: ', ex
-        # n.b. no need to reoptimize since only one parameter is fit.
+        paranoid_gtlike_fit(like, covar=False)
+
+        # n.b. no need to reoptimize since only one fit parameter!
         TS[i] = like.Ts(name,reoptimize=False)
 
         print 'Loop %4d/%4d: phase=%s, TS=%.1f' % (i+1,len(phases),str(phase),TS[i])
@@ -91,7 +84,7 @@ good_phase=PhaseRange(yaml.load(open(args.pwnphase))[name]['phase'])
 phase_center = good_phase.phase_center
 good_dphi = good_phase.phase_fraction
 npts = 10
-dphis = np.linspace(0,good_dphi+0.1, npts+1)[1:]
+dphis = np.linspace(0,good_dphi+0.2, npts+1)[1:]
 phases = [PhaseRange(phase_center-dphi/2, phase_center+dphi/2) for dphi in dphis]
 
 
