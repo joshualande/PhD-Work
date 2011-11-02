@@ -97,12 +97,12 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
 
     try:
         # incase the errors were not calculated
-        d['flux_err']=like.fluxError(name,emin=emin,emax=emax)
-        d['eflux_err']=ce(like.energyFluxError(name,emin=emin,emax=emax))
+        f['flux_err']=like.fluxError(name,emin=emin,emax=emax)
+        f['eflux_err']=ce(like.energyFluxError(name,emin=emin,emax=emax))
     except Exception, ex:
         print 'ERROR calculating flux error: ', ex
-        d['flux_err']=-1
-        d['eflux_err']=-1
+        f['flux_err']=-1
+        f['eflux_err']=-1
 
     source = like.logLike.getSource(name)
     spectrum = source.spectrum()
