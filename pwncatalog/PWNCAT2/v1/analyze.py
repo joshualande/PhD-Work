@@ -47,6 +47,8 @@ phase=yaml.load(open(args.pwnphase))[name]['phase']
 print 'phase = ',phase
 
 
+
+
 print 'Creating the output directories'
 
 seddir='seds'
@@ -61,12 +63,13 @@ ft1 = yaml.load(open(args.pwndata))[name]['ft1']
 plot_phaseogram(name, ft1, phase, '%s/phaseogram_%s.png' % (plotdir,name))
 plot_phase_vs_time(name, ft1, phase, '%s/phase_vs_time_%s.png' % (plotdir,name))
 
-
+savedir='savedir' if not args.no_savedir else None
+print savedir
 print 'Building the ROI'
 
 roi=setup_pwn(name,args.pwndata, phase=phase, 
               free_radius=5, max_free=10, fit_emin=args.emin, fit_emax=args.emax,
-              savedir=None if not args.no_savedir else 'savedir')
+              savedir='savedir' if not args.no_savedir else None)
 
 
 from modify import modify_roi
