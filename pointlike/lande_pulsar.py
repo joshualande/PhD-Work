@@ -34,10 +34,13 @@ def plot_phase_vs_time(name, ft1, phase, filename):
     fig = P.figure(None, figsize=(5,5))
     fig.subplots_adjust(left=0.2)
     axes = fig.add_subplot(111)
-    d, xedges, yedges = np.histogram2d(times, phases, bins=(50,50), range=[[min(times), max(times)], [0,1]])
 
-    extent = [yedges[0], yedges[-1], xedges[-1], xedges[0]]
-    axes.imshow(d, extent=extent, interpolation='nearest', aspect='auto')
+    # Note about 2D histograms: 
+    #  http://www.physics.ucdavis.edu/~dwittman/Matplotlib-examples/
+    hist, xedges, yedges = np.histogram2d(phases, times, bins=(50,50), range=[[0,1], [min(times), max(times)]])
+    extent = [xedges[0], xedges[-1], yedges[0], yedges[-1] ]
+    axes.imshow(hist.T,extent=extent,interpolation='nearest',origin='lower', aspect='auto')
+
     axes.set_xlabel('phase')
     axes.set_ylabel('MJD')
     axes.set_title(name)
