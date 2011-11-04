@@ -8,12 +8,13 @@ from roi_gtlike import Gtlike
 import yaml
 from toolbag import tolist
 from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit
-from SED import SED
 from LikelihoodState import LikelihoodState
 from uw.pulsar.phase_range import PhaseRange
+from uw.like.SpatialModels import Gaussian
 
 from lande_pulsar import plot_phaseogram,plot_phase_vs_time
 from lande_plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter
+from lande_sed import LandeSED
 
 
 all_energy=lambda emin,emax: np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1)
@@ -22,10 +23,6 @@ three_bins=[1e2,1e3,1e4,10**5.5]
 
 def plots(roi, name, hypothesis, emin, emax, datadir, plotdir, size=5, tsmap_pixelsize=0.1):
     plot_kwargs = dict(size=size, pixelsize=tsmap_pixelsize)
-
-    if all_energy(emin,emax):
-        ROISourceBandPlotter(roi, which=name, bin_edges=three_bins, size=size).show(filename='%s/band_source_%s_%s.png' % (plotdir,hypothesis,name))
-        ROISourcesBandPlotter(roi,which=name, bin_edges=three_bins, size=size).show(filename='%s/band_sources_%s_%s.png' % (plotdir,hypothesis,name))
 
     print 'Making plots for hypothesis %s' % hypothesis
     roi.plot_tsmap(filename='%s/residual_tsmap_%s_%s.png' % (plotdir,hypothesis,name), **plot_kwargs)
@@ -37,7 +34,7 @@ def plots(roi, name, hypothesis, emin, emax, datadir, plotdir, size=5, tsmap_pix
         roi.plot_counts_map(filename="%s/counts_%g_%s_%s.png"%(plotdir,pixelsize,hypothesis,name),
                             countsfile="%s/counts_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
                             modelfile="%s/model_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
-                            **plot_kwargs)
+                            size=size, pixelsize=pixelsize)
 
     roi.zero_source(which=name)
 
@@ -50,13 +47,20 @@ def plots(roi, name, hypothesis, emin, emax, datadir, plotdir, size=5, tsmap_pix
         roi.plot_counts_map(filename="%s/counts_excess_%g_%s_%s.png"%(plotdir,pixelsize,hypothesis,name),
                             countsfile="%s/counts_excess_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
                             modelfile="%s/model_excess_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
-                            **plot_kwargs)
+                            size=size, pixelsize=pixelsize)
     roi.unzero_source(which=name)
+
+    # smoothed counts maps
 
     roi.plot_source(which=name,filename='%s/source_%s_%s.png' % (plotdir, hypothesis, name), 
                     size=size, label_psf=False)
     roi.plot_sources(which=name,filename='%s/sources_%s_%s.png' % (plotdir, hypothesis, name), 
                      size=size, label_psf=False)
+
+    if all_energy(emin,emax):
+        ROISourceBandPlotter(roi, which=name, bin_edges=three_bins, size=size).show(filename='%s/band_source_%s_%s.png' % (plotdir,hypothesis,name))
+        ROISourcesBandPlotter(roi,which=name, bin_edges=three_bins, size=size).show(filename='%s/band_sources_%s_%s.png' % (plotdir,hypothesis,name))
+
 
     roi.toRegion('%s/region_%s_%s.reg'%(datadir,hypothesis, name))
     roi.plot_slice(which=name,filename="%s/slice_%s_%s.png"%(plotdir,hypothesis, name),
@@ -83,7 +87,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax,
     def fit():
         """ Convenience function incase fit fails. """
         try:
-            roi.fit()
+            roi.fit(use_gradient=False)
         except Exception, ex:
             print 'ERROR spectral fitting pointlike: ', ex
         print_summary()
@@ -109,7 +113,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax,
 
     if extension_upper_limit:
         print 'Calculating extension upper limit'
-        p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian(), npoints=10)
+        p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian())
 
     if upper_limit:
         p['upper_limit']=powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
@@ -154,15 +158,11 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax, seddir, datadir, plotdir,
             print 'ERROR gtlike test cutoff: ', ex
             r['test_cutoff']=-1
 
-    r['sed']={}
     def sed(kind,**kwargs):
-
         print 'Making %s SED' % kind
-        sed = SED(like, name, always_upper_limit=True, **kwargs)
+        sed = LandeSED(like, name, always_upper_limit=True, **kwargs)
         sed.plot('%s/sed_gtlike_%s_%s.png' % (seddir,kind,name)) 
-        sed.verbosity=True
-        sed.save('%s/sed_gtlike_%s_%s.dat' % (seddir,kind,name))
-        r['sed'][kind]=sed.todict()
+        sed.save('%s/sed_gtlike_%s_%s.yaml' % (seddir,kind,name))
 
     if all_energy(emin,emax):
         sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(2,5.5,15))
