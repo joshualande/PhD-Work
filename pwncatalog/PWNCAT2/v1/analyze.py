@@ -20,6 +20,7 @@ parser.add_argument("-p", "--pwnphase", required=True)
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 parser.add_argument("--emin", default=1e2, type=float)
 parser.add_argument("--emax", default=10**5.5, type=float)
+parser.add_argument("--binsperdec", default=4, type=float)
 parser.add_argument("--no-point", default=False, action="store_true")
 parser.add_argument("--no-extended", default=False, action="store_true")
 parser.add_argument("--no-gtlike", default=False, action="store_true")
@@ -67,46 +68,55 @@ savedir='savedir' if not args.no_savedir else None
 print savedir
 print 'Building the ROI'
 
-roi=setup_pwn(name,args.pwndata, phase=phase, 
-              free_radius=5, max_free=10, fit_emin=args.emin, fit_emax=args.emax,
-              savedir='savedir' if not args.no_savedir else None)
+def get_roi(**kwargs):
+    roi=setup_pwn(name,args.pwndata, phase=phase, 
+                  free_radius=5, max_free=10, fit_emin=args.emin, fit_emax=args.emax, binsperdec=args.binsperdec,
+                  savedir=None if args.no_savedir else 'savedir',
+                  **kwargs)
 
-
-from modify import modify_roi
-modify_roi(name,roi)
+    from modify import modify_roi
+    modify_roi(name,roi)
+    return roi
 
 results=r=defaultdict(lambda: defaultdict(dict))
 
 
-kwargs = dict(roi=roi, name=name, 
+kwargs = dict(name=name, 
               seddir=seddir, datadir=datadir, plotdir=plotdir,
               emin=emin, emax=emax)
 
 
+s=lambda:save_results(results,name)
 
-r['at_pulsar']['pointlike']=pointlike_analysis(hypothesis='at_pulsar', upper_limit=do_upper_limit, 
+roi=get_roi(extended=False)
+r['at_pulsar']['pointlike']=pointlike_analysis(roi, hypothesis='at_pulsar', upper_limit=do_upper_limit, 
                                                cutoff=do_cutoff, do_plots=do_plots, **kwargs)
-save_results(results,name)
-if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(hypothesis='at_pulsar', upper_limit=do_upper_limit, cutoff=do_cutoff, **kwargs)
+s()
+if do_gtlike: 
+    r['at_pulsar']['gtlike']=gtlike_analysis(roi, hypothesis='at_pulsar', upper_limit=do_upper_limit, cutoff=do_cutoff, **kwargs)
+    s()
 
+roi=get_roi(extended=False)
 if do_point:
-    r['point']['pointlike']=pointlike_analysis(hypothesis='point', localize=True, cutoff=do_cutoff, 
+    r['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, cutoff=do_cutoff, 
                                                extension_upper_limit=do_extension_upper_limit, do_plots=do_plots, **kwargs)
-    save_results(results,name)
-    if do_gtlike: r['point']['gtlike']=gtlike_analysis(hypothesis='point', cutoff=do_cutoff, **kwargs)
+    s()
+    if do_gtlike: 
+        r['point']['gtlike']=gtlike_analysis(roi, hypothesis='point', cutoff=do_cutoff, **kwargs)
+        s()
 
 if do_extended:
-    roi.del_source(name)
-    roi.add_source(get_source(name,args.pwndata, extended=True))
+    roi=get_roi(extended=True)
 
-    r['extended']['pointlike']=pointlike_analysis(hypothesis='point', cutoff=do_cutoff, 
+    r['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', cutoff=do_cutoff, 
                                                   fit_extension=True, do_plots=do_plots, **kwargs)
-    save_results(results,name)
-    if do_gtlike: r['extended']['gtlike']=gtlike_analysis(hypothesis='point', cutoff=do_cutoff, **kwargs)
+    s()
+    if do_gtlike: 
+        r['extended']['gtlike']=gtlike_analysis(roi, hypothesis='extended', cutoff=do_cutoff, **kwargs)
 
     for which in ['pointlike','gtlike']:
-        results['extended'][which]['ts_ext'] = \
-                2*(results['extended'][which]['logLikelihood'] - \
-                   results['point'][which]['logLikelihood'])
+        if results['extended'].has_key(which):
+            results['extended'][which]['ts_ext'] = \
+                    2*(results['extended'][which]['logLikelihood'] - results['point'][which]['logLikelihood'])
 
 save_results(results,name)
