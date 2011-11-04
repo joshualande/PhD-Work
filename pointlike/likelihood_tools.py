@@ -17,6 +17,8 @@ from toolbag import tolist
 from SED import SED
 from LikelihoodState import LikelihoodState
 
+import lande_units as units
+
 def paranoid_gtlike_fit(like, covar=True):
     """ Perform a sepctral fit in gtlike in
         a paranoid manner. """
@@ -52,22 +54,12 @@ def pointlike_spectrum_to_dict(model):
 
     return tolist(d)
 
-def gtlike_spectrum_to_dict(spectrum):
-    from pyLikelihood import ParameterVector
-    parameters=ParameterVector()
-    spectrum.getParams(parameters)
-
-    d = dict(name = spectrum.genericName())
-
-    for p in parameters:
-        d[p.getName()]= p.getTrueValue()
-    return tolist(d)
 
 
 def spectrum_to_dict(spectrum_or_model):
     from pyLikelihood import Function
     if isinstance(spectrum_or_model, Function):
-        f=gtlike_spectrum_to_dict
+        f=SED.spectrum_to_dict
     elif isinstance(spectrum_or_model, Model):
         f=pointlike_spectrum_to_dict
     else:
@@ -87,12 +79,13 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
         logLikelihood=like.logLike.value()
     )
 
-    ce=lambda e: SED.energy_from_MeV(e, flux_units)
+
+    ce=lambda e: units.convert(e,'MeV',flux_units)
     d['flux']=f={}
     f['flux']=like.flux(name,emin=emin,emax=emax)
     f['eflux']=ce(like.energyFlux(name,emin=emin,emax=emax))
-    f['flux_units']=SED.flux_units_string()
-    f['eflux_units']=SED.eflux_units_string(flux_units)
+    f['flux_units']='ph/cm^2/s'
+    f['eflux_units']='%s/cm^2/s' % flux_units
     f['emin'],f['emax']=emin,emax
 
     try:
@@ -168,13 +161,13 @@ def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
 
     d['logLikelihood']=-roi.logLikelihood(roi.parameters())
 
-    ce=lambda e: SED.energy_from_MeV(e, flux_units)
+    ce=lambda e: units.convert(e,'MeV',flux_units)
     d['flux']=f={}
     f['flux'],f['flux_err']=model.i_flux(emin=emin,emax=emax,error=True)
     ef,ef_err=model.i_flux(emin=emin,emax=emax,e_weight=1,error=True)
     f['eflux'],f['eflux_err']=ce(ef),ce(ef_err)
-    f['flux_units']=SED.flux_units_string()
-    f['eflux_units']=SED.eflux_units_string(flux_units)
+    f['flux_units']='ph/cm^2/s'
+    f['eflux_units']='%s/cm^2/s' % flux_units
     f['emin'],f['emax']=emin,emax
 
     d['model']=spectrum_to_dict(model)
@@ -185,19 +178,21 @@ def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
     d['gal'] = [source.skydir.l(),source.skydir.b()]
     d['equ'] = [source.skydir.ra(),source.skydir.dec()]
 
+    f = d['spatial_model'] = dict()
     if isinstance(source,ExtendedSource):
         # Extended Source parameters
         spatial_model = source.spatial_model
         for param in spatial_model.param_names:
-            d[param]=spatial_model[param]
-            d[param + '_err']=spatial_model.error(param)
+            f[param]=spatial_model[param]
+            f[param + '_err']=spatial_model.error(param)
 
     # add elliptical error, if they exist.
     # N.B. If no localization performed, this will return
     # an empty dictionary.
     # N.B. This method will do the wrong thing if you have recently relocalized
     # another source. This is rarely the case.
-    d.update(roi.get_ellipse())
+    f.update(roi.get_ellipse())
+
     return d
 
 
@@ -284,10 +279,10 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
     prefactor.setTrueValue(pref_ul)
 
     flux_ul = like.flux(name,emin,emax)
-    flux_units_string = SED.flux_units_string()
+    flux_units_string = 'ph/cm^2/s'
 
-    eflux_ul = SED.energy_from_MeV(like.energyFlux(name,emin,emax), flux_units)
-    eflux_units_string = SED.eflux_units_string(flux_units)
+    eflux_ul = units.convert(like.energyFlux(name,emin,emax), 'MeV', flux_units)
+    eflux_units_string = '%s/cm^2/s' % flux_units
 
     ul = dict(
         emin=emin, emax=emax,
@@ -311,7 +306,7 @@ def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin, emax, **
 
     flux_ul = roi.upper_limit(which=name, confidence=cl, emin=emin, emax=emax, **kwargs)
 
-    flux_units_string = SED.flux_units_string()
+    flux_units_string = 'ph/cm^2/s'
 
     ul = dict(
         emin=emin, emax=emax,
@@ -422,7 +417,7 @@ def gtlike_test_cutoff(like, name):
     old_spectrum = source.spectrum()
 
     like.setSpectrum(name,'PowerLaw')
-    fix('Scale', np.sqrt(like.energies[0]*like.energies[1]))
+    fix('Scale', np.sqrt(like.energies[0]*like.energies[-1]))
     set('Prefactor',1e-11,1e-11,      1e-5,1e5)
     set('Index',       -2,    1,  -5,5)
     set_flux(old_flux)
