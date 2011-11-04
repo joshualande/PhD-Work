@@ -4,6 +4,25 @@ def modify_roi(name,roi):
         this needs to be done + where you did the analysis
         which convinced you we need to do this to the region. """
 
+    # Examples of modifying an ROI (Nov, 4, 2011 - Joshua Lande):
+    #   Modify Position:
+    #   >> roi.modify(which='PSRNAME', skydir=SkyDir(...))
+    # 
+    #   Modify Spectrum
+    #   >> from uw.like.Models import PowerLaw
+    #   >> roi.modify(which='PSRNAME', model=PowerLaw(norm=1e-11, index=2), keep_old_flux=True)
+    #   
+    #  Freeze ALL spectral parameters:
+    #  >> roi.modify(which='PSRNAME', free=False)
+    # 
+    #  Freeze only one spectral parameter
+    #  >> roi.freeze(which='PSRNAME', free=[True, False]) 
+    #  (but, you have to know how many parameters there are in the model)!
+    # 
+    #  Modify the extension
+    #  >> roi.modify(which='PSRNAME', spatial_model=Disk(sigma=0.2, l=347, b=0.1), keep_old_center=False)
+    #  >> roi.modify(which='PSRNAME', sigma=0.2)
+
     print 'Modifying source %s' % name
 
     # first, modify known pulsars to their fit values from PWNCat1
@@ -20,15 +39,18 @@ def modify_roi(name,roi):
         ['PSRJ2124-3358',   22.78e-9, 2.06, ]]:
 
         if name == psr:
-            # these modificaitons come from PWN catalog 1
             model=roi.get_model(which=name)
             model['index']=index
             model.set_flux(flux,emin=100,emax=100000)
             roi.modify(which=name,model=model)
 
-    # Here, could modify crab to be a BrokenPowerlaw
-
-
     if name=='PSRJ0835-4510':
-        print 'Deleting VelaX from background model!'
+        # Vela X is already include in 2FGL and needs to be pruned
+        # out of the background model - Nov, 4, 2011 Joshua Lande
+        print 'Deleting Vela X from background model!'
         roi.del_source('VelaX')
+
+
+
+
+
