@@ -26,7 +26,7 @@ sed.save('sed_Vela.dat')
 # plot the SED
 sed.plot('sed_Vela.png') 
 
-To pase the outptu file,
+To load the data points in a new python script:
 
 results_dictionary=eval(open('sed_vela.data').read())
 
@@ -39,24 +39,16 @@ from os.path import join
 import csv
 from pprint import pformat
 from StringIO import StringIO
-from collections import OrderedDict
 
-import pylab as P
 import numpy as np
 
+from pyLikelihood import ParameterVector, dArg
 from LikelihoodState import LikelihoodState
-from pyLikelihood import ParameterVector
-import pyLikelihood
-_funcFactory = pyLikelihood.SourceFactory_funcFactory()
-
-
+from UpperLimits import UpperLimits
+from IntegralUpperLimit import calc_int
 
 class SED(object):
-    """ object to make SEDs using pyLikelihood. 
-    
-        Currently, this object only allows the SED
-        points to be the same as the binning in
-        the FT1 file. """
+    """ Object to make SEDs using pyLikelihood. """
 
     ul_choices = ['frequentist', 'bayesian']
 
@@ -80,7 +72,6 @@ class SED(object):
             * powerlaw_index - fixed spectral index to assume when
                                computing SED.
             * min_ts - minimum ts in which to quote a SED points instead of an upper limit. """
-        self.like               = like
         self.name               = name
         self.verbosity          = verbosity
         self.freeze_background  = freeze_background
@@ -89,7 +80,7 @@ class SED(object):
         self.powerlaw_index     = powerlaw_index
         self.min_ts             = min_ts
 
-        self.spectrum = self.like.logLike.getSource(self.name).spectrum()
+        self.spectrum = like.logLike.getSource(self.name).spectrum()
 
         if bin_edges is not None:
 
@@ -97,44 +88,42 @@ class SED(object):
                 if np.alltrue(np.abs(e - like.energies) > 0.5):
                     raise Exception("energy %.1f in bin_edges is not commensurate with the energy binning of pyLikelihood." % e)
             
-            self.bin_edges = np.asarray(bin_edges)
-            self.energies = np.sqrt(self.bin_edges[1:]*self.bin_edges[:-1])
+            bin_edges = np.asarray(bin_edges)
+            self.energy = np.sqrt(self.bin_edges[1:]*self.bin_edges[:-1])
         else:
             # These energies are always in MeV
-            self.bin_edges = like.energies
-            self.energies = like.e_vals
+            bin_edges = like.energies
+            self.energy = like.e_vals
 
-        self.lower_energy=self.bin_edges[:-1]
-        self.upper_energy=self.bin_edges[1:]
+        self.lower_energy=bin_edges[:-1]
+        self.upper_energy=bin_edges[1:]
 
         if ul_algorithm not in self.ul_choices:
             raise Exception("Upper Limit Algorithm %s not in %s" % (ul_algorithm,str(self.ul_choices)))
 
         # dN/dE, dN/dE_err and upper limits (ul)
         # always in units of ph/cm^2/s/MeV
-        self.dnde=np.empty_like(self.energies)
-        self.dnde_err=np.empty_like(self.energies)
-        self.dnde_ul=-1*np.ones_like(self.energies) # -1 is no UL
+        self.dnde=np.empty_like(self.energy)
+        self.dnde_err=np.empty_like(self.energy)
+        self.dnde_ul=-1*np.ones_like(self.energy) # -1 is no UL
 
-        self.flux=np.empty_like(self.energies)
-        self.flux_err=np.empty_like(self.energies)
-        self.flux_ul=-1*np.ones_like(self.energies)
+        self.flux=np.empty_like(self.energy)
+        self.flux_err=np.empty_like(self.energy)
+        self.flux_ul=-1*np.ones_like(self.energy)
 
-        self.eflux=np.empty_like(self.energies)
-        self.eflux_err=np.empty_like(self.energies)
-        self.eflux_ul=-1*np.ones_like(self.energies)
+        self.eflux=np.empty_like(self.energy)
+        self.eflux_err=np.empty_like(self.energy)
+        self.eflux_ul=-1*np.ones_like(self.energy)
 
-        self.ts=np.empty_like(self.energies)
+        self.ts=np.empty_like(self.energy)
 
-
-        self._calculate()
+        self._calculate(like)
 
     @staticmethod
     def frequentist_upper_limit(like,name,emin,emax,verbosity):
         """ Calculate a frequentist upper limit on the prefactor. 
             Returns the unscaled prefactor upper limit. """
-        import UpperLimits
-        ul = UpperLimits.UpperLimits(like)
+        ul = UpperLimits(like)
         flux_ul, pref_ul = ul[name].compute(emin=emin, emax=emax, verbosity=verbosity)
         return pref_ul
 
@@ -142,12 +131,11 @@ class SED(object):
     def bayesian_upper_limit(like,name,emin,emax,verbosity):
         """ Calculate a baysian upper limit on the prefactor.
             Return the unscaled prefactor upper limit. """
-        import IntegralUpperLimit
-        flux_ul,results = IntegralUpperLimit.calc_int(like, name, 
-                                                      freeze_all=True,
-                                                      skip_global_opt=True,
-                                                      emin=emin, emax=emax,
-                                                      verbosity=verbosity)
+        flux_ul,results = calc_int(like, name, 
+                                   freeze_all=True,
+                                   skip_global_opt=True,
+                                   emin=emin, emax=emax,
+                                   verbosity=verbosity)
         pref_ul = results['ul_value']
         return pref_ul
 
@@ -171,12 +159,12 @@ class SED(object):
 
         return pref_ul,flux_ul, eflux_ul
 
-    def _calculate(self):
+    def _calculate(self,like):
         """ Compute the flux data points for each energy. """
 
-        like    = self.like
         name    = self.name
         verbosity = self.verbosity
+        init_energes = like.energies[[0,-1]]
 
         # Freeze all sources except one to make sed of.
         all_sources = like.sourceNames()
@@ -203,15 +191,14 @@ class SED(object):
         index=like[like.par_index(name, 'Index')]
         index.setTrueValue(self.powerlaw_index)
         index.setFree(0)
+        like.syncSrcParams(name)
 
         # assume a canonical dnde=1e-11 at 1GeV index 2 starting value
         dnde = lambda e: 1e-11*(e/1e3)**-2
 
-        like.syncSrcParams(name)
-
         optverbosity = max(verbosity-1, 0) # see IntegralUpperLimit.py
 
-        for i,(lower,upper) in enumerate(zip(self.lower_energies,self.upper_energies)):
+        for i,(lower,upper) in enumerate(zip(self.lower_energy,self.upper_energy)):
 
             e = np.sqrt(lower*upper)
 
@@ -257,40 +244,38 @@ class SED(object):
         self.significant=self.ts>=self.min_ts
 
         # revert to old model
-        like.setEnergyRange(self.bin_edges[0],self.bin_edges[-1])
+        like.setEnergyRange(*init_energes)
         like.setSpectrum(name,old_spectrum)
         saved_state.restore()
 
     def todict(self):
-        """ Create a dictionary of the SED results, entirely
-            in gtlike units [MeV] and [ph/cm^2/s/MeV]. """
-
-        data = OrderedDict()
-
-        data['Lower_Energy']=self.lower_energy
-        data['Upper_Energy']=self.upper_energy
-        data['Energy']=self.energies
-        data['Energy_Units'] = '[MeV]'
-
-        data['dN/dE']=self.dnde
-        data['dN/dE_Err']=self.dnde_err
-        data['dN/dE_UL']=self.dnde_ul
-        data['dN/dE_Units'] = '[ph/cm^2/s/MeV]'
-
-        data['Ph_Flux']=self.dnde
-        data['Ph_Flux_Err']=self.dnde_err
-        data['Ph_Flux_UL']=self.dnde_ul
-        data['Ph_Flux_Units'] = '[ph/cm^2/s]'
-
-        data['En_Flux']=self.dnde
-        data['En_Flux_Err']=self.dnde_err
-        data['En_Flux_UL']=self.dnde_ul
-        data['En_Flux_Units'] = '[MeV/cm^2/s]'
-
-        data['Test_Statistic']=self.ts
-        data['Significant']=self.significant
-
-        data['Spectrum']=SED.spectrum_to_dict(self.spectrum)
+        """ Pacakge up the results of the SED fit into
+            a nice dictionary. """
+        return dict(
+            Name=self.name,
+            Energy=dict(
+                Lower=self.lower_energy.tolist(),
+                Upper=self.upper_energy.tolist(),
+                Value=self.energy.tolist(),
+                Units='MeV'),
+            dNdE=dict(
+                Value=self.dnde.tolist(),
+                Error=self.dnde_err.tolist(),
+                Upper_Limit=self.dnde_ul.tolist(),
+                Units='ph/cm^2/s/MeV'),
+            Ph_Flux=dict(
+                Value=self.flux.tolist(),
+                Error=self.flux_err.tolist(),
+                Upper_Limit=self.flux_ul.tolist(),
+                Units='ph/cm^2/s'),
+            En_Flux=dict(
+                Value=self.eflux.tolist(),
+                Error=self.eflux_err.tolist(),
+                Upper_Limit=self.eflux_ul.tolist(),
+                Units='MeV/cm^2/s'),
+            Test_Statistic=self.ts.tolist(),
+            Significant=self.significant.tolist(),
+            Spectrum=SED.spectrum_to_dict(self.spectrum))
 
     def __str__(self):
         """ Pack up values into a nicely formatted string. """
@@ -316,6 +301,10 @@ class SED(object):
             f.write(self.__str__())
             f.close()
 
+    @staticmethod
+    def get_dnde(spectrum,energies):
+        """ Returns the spectrum in units of ph/cm^2/s/MeV. """
+        return np.asarray([spectrum(dArg(i)) for i in energies])
     @staticmethod 
     def plot_spectrum(axes,spectrum, npts=100, **kwargs):
         """ This function overlays a pyLikleihood spectrum
@@ -323,59 +312,87 @@ class SED(object):
             (a) the x-axis is in MeV and (b) that
             the y-axis is E^2 dN/dE (MeV/cm^2/s) """
         low_lim, hi_lim = axes.get_xlim()
-        elist = np.logspace(np.log10(low_lim), np.log10(hi_lim), npts)
-        # remember that gtlike always returns ph/cm^2/s/MeV
-        flist = np.asarray([spectrum(pyLikelihood.dArg(i)) for i in elist])
-        axes.plot(elist, elist**2*flist, **kwargs)
+        eneriges = np.logspace(np.log10(low_lim), np.log10(hi_lim), npts)
+        axes.plot(energies , energies**2*SED.get_dnde(spectrum,energies), **kwargs)
 
-    def plot(axes=None, filename=None):
-        """ Plot the SED using matpotlib. """
-        if axes is None:
-            fig = P.figure(fignum,figsize)
-            axes = fig.add_axes((0.2,0.15,0.75,0.8))
+    @staticmethod
+    def _plot_points(x, xlo, xhi, 
+              y, y_err, y_ul, significant,
+              xlabel,ylabel,
+              axes, **kwargs):
 
-        e=self.energies
-        s = self.significant
+        plot_kwargs = dict(linestyle='none', color='black')
+        plot_kwargs.update(kwargs)
 
-        delo=e-self.lower_energy
-        dehi=self.upper_energy-e
+        s = significant
+
+        dx_hi=xhi-x
+        dx_lo=x-xlo
 
         # plot data points
         if sum(s)>0:
-            axes.errorbar(x(e[s]),
-                          y(e[s]**2*dnde[s]),
-                          xerr=[x(delo[s]),x(dehi[s])],
-                          yerr=y(e[s]**2*dnde_err[s]),
-                          linestyle='none',  color='black', capsize=0)
+            axes.errorbar(x[s], y[s],
+                          xerr=[dx_lo[s], dx_hi[s]], yerr=y_err[s],
+                          capsize=0, **plot_kwargs)
         
         # and upper limits
         if sum(~s)>0:
             ul_kwargs = dict(linestyle='none', lolims=True, color='black')
 
             # plot veritical lines (with arrow)
-            axes.errorbar(x(e[~s]),
-                          y(e[~s]**2*dnde_ul[~s]),
-                          yerr=[y(0.4*e[~s]**2*dnde_ul[~s]),np.zeros(sum(~s))],
-                          **ul_kwargs)
+            axes.errorbar(x[~s], y_ul[~s],
+                          yerr=[0.4*y_ul[~s],np.zeros(sum(~s))],
+                          lolims=True, **plot_kwargs)
 
             # plot horizontal line (no caps)
-            axes.errorbar(x(e[~s]),
-                          y(e[~s]**2*dnde_ul[~s]),
-                          xerr=[x(delo[~s]),x(dehi[~s])],
-                          capsize=0, **ul_kwargs)
+            axes.errorbar(x[~s], y_ul[~s],
+                          xerr=[dx_lo[~s], dx_hi[~s]],
+                          capsize=0, **plot_kwargs)
 
-        l,h=np.log10(lower_energy[0]),np.log10(upper_energy[-1])
+        axes.set_xscale('log')
+        axes.set_xlabel(xlabel)
+
+        axes.set_yscale('log')
+        axes.set_ylabel(ylabel)
+    
+    def set_xlim(self, axes,lower,upper, extra=0.1):
+        """ Set the xlim of the plot to be larger
+            in the x and y direciton by a fraction
+            'extra' in log-space. """
+        l,h=np.log10(lower),np.log10(upper)
         low_lim=10**(l - 0.1*(h-l))
         hi_lim =10**(h + 0.1*(h-l))
         axes.set_xlim(low_lim,hi_lim)
 
+    def plot(self,
+             filename=None,
+             axes=None, 
+             fignum=None, figsize=(4,4),
+             plot_spectral_fit=True,
+             data_kwargs=dict(),
+             spectral_kwargs=dict(color='red')):
+        """ Plot the SED using matpotlib. """
+        import pylab as P
+
+        if axes is None:
+            fig = P.figure(fignum,figsize)
+            axes = fig.add_axes((0.22,0.15,0.75,0.8))
+            self.set_xlim(axes,self.lower_energy[0],self.upper_energy[-1])
+
+        SED._plot_points(
+            x=self.energy, 
+            xlo=self.lower_energy, 
+            xhi=self.upper_energy, 
+            y=self.energy**2*self.dnde, 
+            y_err=self.energy**2*self.dnde_err, 
+            y_ul=self.energy**2*self.dnde_ul,
+            significant=self.significant,
+            xlabel='Energy (MeV)',
+            ylabel='Energy Flux (MeV cm$^{-2}$ s$^{-1}$)',
+            axes=axes, **data_kwargs)
+
         if plot_spectral_fit:
-            SED.plot_spectrum(axes,self.spectrum)
-
-        axes.set_xscale('log');
-        axes.set_xlabel('Energy (MeV)')
-
-        axes.set_yscale('log')
-        axes.set_ylabel(r'Energy Flux (MeV cm$^{-2}$ s$^{-1}$)')
+            print 'this is bad right now'
+            SED.plot_spectrum(axes,self.spectrum, **spectral_kwargs)
 
         if filename is not None: P.savefig(filename)
