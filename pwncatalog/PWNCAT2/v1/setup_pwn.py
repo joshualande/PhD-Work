@@ -19,13 +19,19 @@ from uw.like.Models import PowerLaw
 from uw.utilities import phasetools
 from uw.pulsar.phase_range import PhaseRange
 
-def setup_pwn(name, pwndata, fit_emin, fit_emax, **kwargs):
-    ps = get_source(name,pwndata, fit_emin, fit_emax)
+def setup_pwn(name, pwndata, fit_emin, fit_emax, extended=False, **kwargs):
+
+    source = get_source(name,pwndata, fit_emin, fit_emax, extended=False)
+    if isinstance(source,PointSource):
+        ps,ds = [source],[]
+    else:
+        ps,ds = [],[source]
 
     roi = setup_region(name, pwndata, 
                        fit_emin=fit_emin, 
                        fit_emax=fit_emax, 
-                       point_sources = [ps],
+                       point_sources = ps,
+                       diffuse_sources = ds,
                        **kwargs)
     return roi
 
@@ -54,7 +60,9 @@ def get_catalog(free_radius,max_free):
                        free_radius=free_radius,
                        max_free = max_free)
 
-def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedir=None, 
+def setup_region(name,pwndata, phase, free_radius, max_free, 
+                 roi_size=10, savedir=None, binsperdec=4,
+                 point_sources=[], diffuse_sources=[],
                  **kwargs):
     """Name of the source
     pwndata Yaml file
@@ -81,7 +89,7 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedi
     ft2=sources[name]['ft2']
     ft1=sources[name]['ft1']
 
-    diffuse_sources = get_default_diffuse(diffdir="/afs/slac/g/glast/groups/diffuse/rings/2year",
+    diffuse_sources += get_default_diffuse(diffdir="/afs/slac/g/glast/groups/diffuse/rings/2year",
                                           gfile="ring_2year_P76_v0.fits",
                                           ifile="isotrop_2year_P76_source_v0.txt")
 
@@ -114,7 +122,7 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedi
 
     print 'For now, 4 bins per decade. Eventually, this will have to be better.'
     sa = SpectralAnalysis(ds,
-                          binsperdec = 4,
+                          binsperdec = binsperdec,
                           emin       = 100,
                           emax       = 1000000,
                           irf        = "P7SOURCE_V6",
@@ -122,7 +130,8 @@ def setup_region(name,pwndata, phase, free_radius, max_free, roi_size=10, savedi
                           maxROI     = roi_size,
                           minROI     = roi_size)
 
-    roi=sa.roi(diffuse_sources=diffuse_sources,
+    roi=sa.roi(point_sources=point_sources,
+               diffuse_sources=diffuse_sources,
                catalogs=catalog,
                phase_factor=1,
                **kwargs)
