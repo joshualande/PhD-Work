@@ -15,20 +15,23 @@ name='Vela'
 like=BinnedAnalysis(...)
 sed = SED(like,name)
 
-# by default, energy is quoted in MeV and
-# flux is quted in MeV/cm^2/s:
 sed = SED(like,name)
-
 
 # save data points to a file
 sed.save('sed_Vela.dat') 
 
-# plot the SED
+# The SED can be plotted assuming that matplotlib is installed
 sed.plot('sed_Vela.png') 
 
-To load the data points in a new python script:
+# And finally, the results of the SED fit can be packaged 
+# into a convenient dictionary for further use
 
-results_dictionary=eval(open('sed_vela.data').read())
+results=sed.todict()
+
+# To load the data points into a new python script
+# which have previously been saved to a file:
+
+results_dictionary=eval(open('sed_vela.dat').read())
 
 @author J. Lande <lande@slac.stanford.edu>
 
