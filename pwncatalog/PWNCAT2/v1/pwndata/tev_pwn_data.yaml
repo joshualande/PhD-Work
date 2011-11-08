@@ -41,6 +41,7 @@ HESS J1356-645:
 HESS J1616-508:
   l_b: [332.39,-0.14]
   ext: [0.14,0.14]
+  spectra: '$pwn/pwndata/tevdata/HESSJ1616-508/HESSJ1616-508.txt'
 HESS J1632-478:
   l_b: [336.38,0.19]
   ext: [0.21,0.06]
