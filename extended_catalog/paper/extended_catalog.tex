@@ -14,6 +14,7 @@
 %  ** Add two nearby point-like sources to analysis of HESS J1632-478.
 %  ** Redo analysis of RX J1713 to be E>10GeV to avoid issues of diffuse uncertainty at low energy.
 %  * Better clarification about previous gtlike validation of extended source analysis + Citation of Francesco's work.
+%  * Removed from the GeV/TeV extension size plots RX J1713+Vela Jr becuase they were not directly fit at TeV energies.
 
 \bibliographystyle{apj}
 
@@ -299,7 +300,7 @@ past in several studies of source extension in the LAT Collaboration
 set of \gtlike maximum likelihood fits at fixed extensions was used
 to build a profile of the likelihood as a function of extension.
 \newtext{
-The gtlike likelihood profile approach has been show to correctly
+The \gtlike likelihood profile approach has been show to correctly
 reproduce the extension of simulated extended sources assuming that the
 true position is known \citep{francesco_2011}.  But it is not optimal
 because the position, extension, and spectrum of the source must be
@@ -364,7 +365,11 @@ distribution can be written as
 \end{equation}
 where $I_\text{src}(\vec r')$ is the spatial distribution of the
 source.
-For the LAT, the PSF can be parameterized by a King function \citep{king_function}:
+\newtext{
+The LAT's PSF is currently parameterized 
+in the Pass~7\_V6 (P7\_V6) Source Instrument
+Response Function \citep[IRFs,][]{lat_on_orbit_psf} by a King function \citep{king_function}:
+}
 \begin{equation}
   \text{PSF}(r) = 
   \frac{1}{2\pi\sigma^2}
@@ -470,7 +475,7 @@ $\sigma_\text{disk}=0.61\degree$ and
 $\sigma_\text{Gaussian}=0.33\degree$.
 
 For smaller and fainter extended sources, the differences in the PDF for
-different spatial models lost in the noise and the LAT is not sensitive
+different spatial models are lost in the noise and the LAT is not sensitive
 to the detailed spatial structure of these sources.  Therefore, in our
 search for extended sources we use only a radially-symmetric uniform
 surface brightness profile as our spatial extension shape. Unless otherwise noted,
@@ -516,8 +521,7 @@ taken to be the same as the isotropic spectrum measured by EGRET
 \citep{sreekumar_isotropic}.  The Monte Carlo simulation was performed
 over a one-year observation period using a representative rocking profile and a
 representative livetime fraction of 0.8.  The reconstruction was performed
-using the Pass~7\_V6 (P7\_V6) Source Instrument
-Response Function (IRFs, \cite{lat_on_orbit_psf}).  For each 
+using the P7\_V6 Source class event selection and IRFs \citep{lat_on_orbit_psf}. For each 
 significantly detected point-like source ($\ts\ge25$), we used \pointlike
 to fit the source as an extended source and calculate \tsext.
 \newtext{
@@ -552,7 +556,10 @@ Figure~\ref{ts_ext_mc_10000}, the choice of a threshold \tsext set to 16
 We calculated the LAT flux threshold to detect that a spatially extended
 source is extended. We define the detection threshold as the flux at
 which the value of $\tsext$ averaged over many statistical realizations is
-$\langle\tsext\rangle=16$ for a source of a given flux and true extension.
+$\langle\tsext\rangle=16$ for a source of a given flux and true extension
+\newtext{
+(corresponding to a formal $4\sigma$ significance).
+}
 
 We used a simulation setup similar to that described in
 Section~\ref{monte_carlo_validation}, but instead of point-like sources
@@ -567,12 +574,12 @@ to the flux and $\tsext$ values in the narrow range.
 Figure~\ref{index_sensitivity} shows the threshold for sources of four
 spectral indices from 1.5 to 3 and extensions varying from $\sigma=0\fdg1$
 to $2\fdg0$.  
-The LAT flux threshold for a significant detection
-of source extension drops quickly with
-increasing source size and reaches a minimum around 0\fdg5. 
 The threshold is high for small extensions when the
 source is 
-small compared to the size of the PSF. The threshold increases
+small compared to the size of the PSF. 
+It drops quickly with increasing source size and reaches
+a minimum around 0\fdg5. 
+The threshold increases
 for large extended sources because the source becomes
 increasingly diluted by the background.
 Figure~\ref{index_sensitivity} shows
@@ -650,9 +657,9 @@ consider a source to be extended if $\tsext>\tsinc$.
 We assessed the power of the $\tsext>\tsinc$ test with a Monte Carlo
 study.  We simulated one spatially extended source and fit it as both
 an extended source and as two point-like sources.  We then simulated two
-point-like sources and fit them with the same two hypothesis. By comparing
+point-like sources and fit them with the same two hypotheses. By comparing
 the distribution of \tsinc and \tsext for the two cases, we evaluated
-how well the $\tsext>\tsinc$ test is at rejecting the possibility of
+how good the $\tsext>\tsinc$ test is at rejecting the possibility of
 source confusion as well as how likely it is to incorrectly reject 
 with this test that an extended source is 
 spatially extended.  All sources were simulated using
@@ -692,7 +699,7 @@ figure~\ref{confusion_plot}d, and figure~\ref{confusion_plot}f but this
 time when analyzing a source of flux $10^{-9} \phflux$ (integrated from
 10 \gev to 100 \gev) only in the 10 \gev to 100 \gev energy range.
 This spectrum is typical of the new extended sources discovered
-using only photons with energies between 1 \gev and 100 \gev (see
+using only photons with energies between 10 \gev and 100 \gev (see
 Section~\ref{new_ext_srcs_section}).
 
 Several interesting conclusions can be made from this study. The overall
@@ -703,11 +710,11 @@ Furthermore, the distributions of \tsext and \tsinc separate better
 when the extended source is bigger or when the two point-like sources are
 farther apart.
 
-The distributions also shows that for simulated
+The distributions also show that for simulated
 extended sources with typical
-sizes ($\sigma\sim0\fdg5$), one can often obtain almost as good an
-increase in likelihood
-when fitting the extended source as two point-like sources ($\tsinc\sim\tsext$).
+sizes ($\sigma\sim0\fdg5$), one can often obtain almost as good 
+an increase in likelihood
+with two sources as with one extended source ($\tsinc\sim\tsext$).
 This is because although
 two point-like sources represent an incorrect spatial model, 
 the two point-like sources have four additional degrees
@@ -744,7 +751,7 @@ point-like sources. But it could always be the case that an extended
 source candidate is actually the superposition of multiple point-like or
 extended sources that could be resolved with deeper observations of the
 region.  There is nothing about this conclusion unique to LAT analysis,
-but the larger PSF of the LAT and the density of sources expected to be
+but the broad PSF of the LAT and the density of sources expected to be
 \gev emitters in the galactic plane makes this issue more significant
 for LAT analysis.  When possible, multiwavelength information should be
 used to help select the best model of the sky.
@@ -867,7 +874,7 @@ detected using photons with energies between
 1 \gev and 100 \gev. Our
 fit extension is comparable to the published result, but we note that
 the previous LAT Collaboration publication on LMC used a more complicated two 2D Gaussian surface
-brightness profile when fitting it (\citep{lmc}).
+brightness profile when fitting it \citep{lmc}.
 
 % 3 PWN
 Three PWNe, MSH\,15$-$52, Vela X, and HESS\,J1825$-$137 were
@@ -1040,7 +1047,7 @@ hypothesis to the hypothesis of two independent point-like sources.
 
 As was shown in Section~\ref{extension_sensitivity}, we gain little in
 sensitivity using photons with energies below 1 \gev. On the other hand,
-the large PSF at low energy makes us more susceptible to systematic
+the broad PSF at low energy makes us more susceptible to systematic
 errors arising from source confusion due to nearby soft point-like sources
 and by uncertainties in our modeling of the Galactic diffuse emission. 
 In addition, the Galactic
@@ -1382,7 +1389,7 @@ that this source was included in 2FGL to account for residual induced
 by not modeling the extension of 2FGL\,J1615.2$-$5138 and removed
 it from our model of the sky.  
 
-With this model of the sky, we iterativly fit the extensions of
+With this model of the sky, we iteratively fit the extensions of
 2FGL\,J1615.0$-$5051 and 2FGL\,J1615.2$-$5138.
 2FGL\,J1615.0$-$5051 was found to have an extension of
 $0\fdg32\pm0\fdg04_\stat\pm0\fdg01_\sys$ with an extension significance
@@ -1392,9 +1399,9 @@ of \tsext=16.7.
 with an extension significance of \tsext=46.5.
 To test for the possibility that
 2FGL\,J1615.2$-$5138 is not spatially extended but instead composed
-of two point-like sources (one of them represtend in 2FGL by
+of two point-like sources (one of them represented in 2FGL by
 2FGL\,J1614.9$-$5212), we refit 2FGL\,J1615.2$-$5138 as two point-like
-sources.  Because \tsinc is less than \tsext, we conclue that
+sources.  Because \tsinc is less than \tsext, we conclude that
 this emission does not originate from two nearby point-like sources.
 
 The \tev counterpart of 2FGL\,J1615.0$-$5051 was fit
@@ -1615,7 +1622,7 @@ with the $\gamma$-Cygni SNR. This $\gamma$-ray source has been speculated
 to originate from the interaction of accelerated particles in the SNR
 with dense molecular clouds \citep{pollock_1985,gaisser_1998}, but this
 association was disfavored when the LAT \gev emission from this source
-was detected to be pulsed (PSR\,J2021+4026, \cite{first_lat_pulsar_cat}).
+was detected to be pulsed \citep[PSR\,J2021+4026,][]{first_lat_pulsar_cat}.
 This pulsar was also been observed by AGILE \citep{gamma_cygni_agile}.
 
 Looking at the same region at energies above 10 \gev, the pulsar is
@@ -1674,7 +1681,7 @@ in $\gamma$-Cygni \citep{veritas_gamma_cygni}.
 
 \section{Discussion}
 
-Twelve extended sources were included in 2FGL and two additonal extended
+Twelve extended sources were included in 2FGL and two additional extended
 sources were studied in dedicated publications.  Using two years of
 LAT data and a new analysis method, we presented the detection of seven
 additional extended sources.  We also reanalyze the spatial shape of the
@@ -2195,8 +2202,8 @@ IC443                     &     189.05 &       3.04 & $  0.35 \pm   0.01 \pm   0
 Vela X                    &     263.34 &      -3.11 & $                         0.88$ &            &            &        &                       &                        \\
 Centaurus A               &     309.52 &      19.42 &                        $\sim10$ &            &            &        &                       &                        \\
 W28                       &       6.50 &      -0.27 & $  0.42 \pm   0.02 \pm   0.05 $ &     1330.8 &      163.8 &   0.01 & $   56.5 \pm     1.8$ & $   2.60 \pm    0.03$  \\
-W30                       &       8.61 &      -0.20 & $  0.34 \pm   0.02 \pm  -1.00 $ &      464.8 &       76.0 &   0.02 & $   29.1 \pm     1.5$ & $   2.56 \pm    0.05$  \\
-W44                       &      34.69 &      -0.39 & $  0.35 \pm   0.02 \pm  -1.00 $ &     1917.0 &      224.8 &   0.01 & $   71.2 \pm     0.5$ & $   2.66 \pm    0.00$  \\
+W30                       &       8.61 &      -0.20 & $  0.34 \pm   0.02 \pm   0.02 $ &      464.8 &       76.0 &   0.02 & $   29.1 \pm     1.5$ & $   2.56 \pm    0.05$  \\
+W44                       &      34.69 &      -0.39 & $  0.35 \pm   0.02 \pm   0.02 $ &     1917.0 &      224.8 &   0.01 & $   71.2 \pm     0.5$ & $   2.66 \pm    0.00$  \\
 W51C                      &      49.12 &      -0.45 & $  0.27 \pm   0.02 \pm   0.04 $ &     1823.4 &      118.9 &   0.01 & $   37.2 \pm     1.3$ & $   2.34 \pm    0.03$  \\
 Cygnus Loop               &      74.21 &      -8.48 & $  1.71 \pm   0.05 \pm   0.06 $ &      357.9 &      246.0 &   0.06 & $   11.4 \pm     0.7$ & $   2.50 \pm    0.10$  \\
 \cutinhead{E$>$10 \gev}
@@ -2205,7 +2212,7 @@ HESS\,J1825$-$137         &      17.57 &      -0.45 & $  0.65 \pm   0.04 \pm   0
 \enddata
 
 \tablenotetext{(a)}{
-Integral Flux in units of $10^{-9}\phflux$ and integrated in the fit
+Integral Flux in units of $10^{-9}$ \phflux and integrated in the fit
 energy range (either 1 \gev to 100 \gev or 10 \gev to 100 \gev).
 }
 
@@ -2281,7 +2288,7 @@ not fit in our analysis but are include for completeness.
 \enddata
 
 \tablenotetext{(a)}{
-Integral Flux in units of $10^{-9}\phflux$ and integrated in the fit
+Integral Flux in units of $10^{-9}$ \phflux and integrated in the fit
 energy range (either 1 \gev to 100 \gev or 10 \gev to 100 \gev).
 }
 
@@ -2707,24 +2714,21 @@ for the two point-like source hypothesis test
     \else
       \plotone{summary_plots/gev_vs_tev_histogram_bw.eps}
     \fi
-    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/extension_histogram/v4/extension_histogram.py
+    % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/extension_histogram/v5/extension_histogram.py
     \caption{
-    The distribution of the size of the 22 extended LAT sources
+    The distribution of the size of 18 extended LAT sources
     at \gev energies
     (colored blue in the electronic version) and the size of the
-    42 extended H.E.S.S. sources at \tev energies
-    (colored red).  The size of Vela X
-    is taken from \cite{velax}.  Except for RX\,J1713.7$-$3946 and
-    Vela Jr., the H.E.S.S. sources were fit with a 2D Gaussian surface
-    brightness profile so the LAT and H.E.S.S. sizes are first converted
+    40 extended H.E.S.S. sources at \tev energies
+    (colored red).  
+    The H.E.S.S. sources were fit with a 2D Gaussian surface
+    brightness profile so the LAT and H.E.S.S. sizes were first converted
     to \rsixeight. 
+    The \gev size of Vela X is taken from \cite{velax}.  
     Because of their large size, the shape of RX\,J1713.7$-$3946 and
-    Vela Jr. were not directly fit at \tev energies. Their size at
-    \tev energies is taken from the HESS source catalog to be 0\fdg5
-    and $1\degree$ respectively.  Because the spatial morphology of
-    RX\,J1713.7$-$3946 and Vela Jr. is poorly described by a 2D Gaussian,
-    the \gev and \tev extensions of these sources was not converted
-    to \rsixeight.
+    Vela Jr. were not directly fit at \tev energies
+    and are not included in this comparison.
+    Centaurus A is not included because of its large size.
     }\label{gev_vs_tev_histogram}
   \end{figure}
 
