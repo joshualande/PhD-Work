@@ -16,7 +16,7 @@ like=BinnedAnalysis(...)
 sed = SED(like,name)
 
 # by default, energy is quoted in MeV and
-# flux is quted in erg/cm^2/s:
+# flux is quted in MeV/cm^2/s:
 sed = SED(like,name)
 
 
@@ -59,7 +59,8 @@ class SED(object):
                  always_upper_limit=False,
                  ul_algorithm='bayesian',
                  powerlaw_index=-2,
-                 min_ts=4):
+                 min_ts=4,
+                 ul_confidence=.95):
         """ Parameters:
             * like - pyLikelihood object
             * name - source to make an SED for
@@ -71,7 +72,8 @@ class SED(object):
             * ul_algorithm - choices = 'frequentist', 'bayesian' 
             * powerlaw_index - fixed spectral index to assume when
                                computing SED.
-            * min_ts - minimum ts in which to quote a SED points instead of an upper limit. """
+            * min_ts - minimum ts in which to quote a SED points instead of an upper limit. 
+            * ul_confidence - confidence level for upper limit. """
         self.name               = name
         self.verbosity          = verbosity
         self.freeze_background  = freeze_background
@@ -79,6 +81,7 @@ class SED(object):
         self.ul_algorithm       = ul_algorithm
         self.powerlaw_index     = powerlaw_index
         self.min_ts             = min_ts
+        self.ul_confidence      = ul_confidence
 
         self.spectrum = like.logLike.getSource(self.name).spectrum()
 
@@ -89,7 +92,7 @@ class SED(object):
                     raise Exception("energy %.1f in bin_edges is not commensurate with the energy binning of pyLikelihood." % e)
             
             bin_edges = np.asarray(bin_edges)
-            self.energy = np.sqrt(self.bin_edges[1:]*self.bin_edges[:-1])
+            self.energy = np.sqrt(bin_edges[1:]*bin_edges[:-1])
         else:
             # These energies are always in MeV
             bin_edges = like.energies
@@ -120,27 +123,31 @@ class SED(object):
         self._calculate(like)
 
     @staticmethod
-    def frequentist_upper_limit(like,name,emin,emax,verbosity):
+    def frequentist_upper_limit(like,name,emin,emax,confidence,verbosity):
         """ Calculate a frequentist upper limit on the prefactor. 
             Returns the unscaled prefactor upper limit. """
+        delta_logl = lambda confidence: chi2.ppf(2*confidence-1,1)/2.
         ul = UpperLimits(like)
-        flux_ul, pref_ul = ul[name].compute(emin=emin, emax=emax, verbosity=verbosity)
+        flux_ul, pref_ul = ul[name].compute(emin=emin, emax=emax, 
+                                            delta=delta_logl,
+                                            verbosity=verbosity)
         return pref_ul
 
     @staticmethod
-    def bayesian_upper_limit(like,name,emin,emax,verbosity):
+    def bayesian_upper_limit(like,name,emin,emax,confidence,verbosity):
         """ Calculate a baysian upper limit on the prefactor.
             Return the unscaled prefactor upper limit. """
         flux_ul,results = calc_int(like, name, 
                                    freeze_all=True,
                                    skip_global_opt=True,
                                    emin=emin, emax=emax,
+                                   cl = confidence,
                                    verbosity=verbosity)
         pref_ul = results['ul_value']
         return pref_ul
 
     @staticmethod
-    def upper_limit(like,name,ul_algorithm,emin,emax,*args,**kwargs):
+    def upper_limit(like,name,ul_algorithm,emin,emax,**kwargs):
         """ Calculates the upper limit. Returns the dN/dE, Flux, and eergy
             flux upper limit. """
         if ul_algorithm == 'frequentist': 
@@ -148,7 +155,7 @@ class SED(object):
         elif ul_algorithm == 'bayesian':  
             f = SED.bayesian_upper_limit
 
-        pref_ul = f(like,name,emin,emax,*args,**kwargs)
+        pref_ul = f(like,name,emin,emax,**kwargs)
 
         prefactor=like[like.par_index(name, 'Prefactor')]
         pref_ul *= prefactor.getScale() # scale prefactor
@@ -236,7 +243,9 @@ class SED(object):
 
             if self.ts[i] < self.min_ts or self.always_upper_limit: 
                 if verbosity: print 'Calculating upper limit from %.0dMeV to %.0dMeV' % (lower,upper)
-                self.dnde_ul[i], self.flux_ul[i], self.eflux_ul[i] = SED.upper_limit(like,name,self.ul_algorithm,lower,upper,verbosity)
+                self.dnde_ul[i], self.flux_ul[i], self.eflux_ul[i] = SED.upper_limit(like,name,self.ul_algorithm,lower,upper,
+                                                                                     confidence=self.ul_confidence,
+                                                                                     verbosity=verbosity)
 
             if verbosity:
                 print lower,upper,self.dnde[i],self.dnde_err[i],self.ts[i],self.dnde_ul[i]
@@ -283,13 +292,15 @@ class SED(object):
         return pformat(results)
 
     @staticmethod
-    def spectrum_to_dict(spectrum):
+    def spectrum_to_dict(spectrum, errors=False):
         """ Convert a pyLikelihood object to a python 
             dictionary which can be easily saved to a file. """
         parameters=ParameterVector()
         spectrum.getParams(parameters)
         d = dict(name = spectrum.genericName())
-        for p in parameters: d[p.getName()]= p.getTrueValue()
+        for p in parameters: 
+            d[p.getName()]= p.getTrueValue()
+            if errors: d['%s_err' % p.getName()]= p.error()*p.getScale()
         return d
 
     def save(self,filename,**kwargs):
@@ -318,7 +329,7 @@ class SED(object):
     @staticmethod
     def _plot_points(x, xlo, xhi, 
               y, y_err, y_ul, significant,
-              xlabel,ylabel,
+              energy_units,flux_units,
               axes, **kwargs):
 
         plot_kwargs = dict(linestyle='none', color='black')
@@ -350,10 +361,11 @@ class SED(object):
                           capsize=0, **plot_kwargs)
 
         axes.set_xscale('log')
-        axes.set_xlabel(xlabel)
-
         axes.set_yscale('log')
-        axes.set_ylabel(ylabel)
+        
+        
+        axes.set_xlabel('Energy (%s)' % energy_units)
+        axes.set_ylabel('E$^2$ dN/dE (%s cm$^{-2}$ s$^{-1}$)' % flux_units)
     
     def set_xlim(self, axes,lower,upper, extra=0.1):
         """ Set the xlim of the plot to be larger
@@ -387,8 +399,7 @@ class SED(object):
             y_err=self.energy**2*self.dnde_err, 
             y_ul=self.energy**2*self.dnde_ul,
             significant=self.significant,
-            xlabel='Energy (MeV)',
-            ylabel='Energy Flux (MeV cm$^{-2}$ s$^{-1}$)',
+            energy_units='MeV', flux_units='MeV',
             axes=axes, **data_kwargs)
 
         if plot_spectral_fit:
