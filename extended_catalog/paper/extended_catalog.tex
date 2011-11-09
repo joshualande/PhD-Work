@@ -115,18 +115,18 @@ M.~Lemoine-Goumard\altaffilmark{11,12}
 
 \begin{abstract}
 Spatial extension is an important characteristic for correctly
-associating LAT sources with their counterparts at other wavelengths
+associating $\gamma$-ray-emitting sources with their counterparts at other wavelengths
 and for obtaining an unbiased model of their spectra.  We present a new
 method for quantifying the spatial extension of sources detected by the Large
 Area Telescope (LAT), the primary science instrument on the {\em \fermi
 Gamma-ray Space Telescope} (\fermi).  We perform a series of Monte Carlo
 simulations to validate this tool and calculate the LAT threshold for
-detecting the spatial extension of sources.  We then test all sources
+detecting the spatial extension of sources.  
+\newtext{
+We then test all sources
 in the second \fermi-LAT catalog (2FGL) for extension. 
-We report the
-detection of seven spatially extended sources in addition to the twelve
-spatially extended sources reported in 2FGL and two others studied
-in dedicated publications.
+We report the detection of seven new spatially extended sources.
+}
 \end{abstract}
 
 \section{Introduction}
@@ -134,7 +134,7 @@ in dedicated publications.
 A number of astrophysical source classes including supernova remnants
 (SNRs), pulsar wind nebulae (PWNe), molecular clouds, normal galaxies,
 and galaxy clusters are expected to be spatially resolvable at
-\gev energies.  Dark matter satellites are also hypothesized to
+\gev energies.  Additionally, dark matter satellites are also hypothesized to
 be spatially extended.  The Large Area Telescope
 (LAT) on the {\em \fermi Gamma-ray Space Telescope} (\fermi) has
 detected seven SNRs which are significantly extended
@@ -149,7 +149,7 @@ nearby galaxies, the Large and Small Magellanic Clouds, and one
 radio galaxy, Centaurus A, were spatially resolved at \gev energies
 \citep{lmc,smc,cen_a_lat}.  A number of additional sources detected
 at \gev energies are positionally coincident with sources that exhibit
-extension at other wavelengths, large enough to be spatially
+large enough extension at other wavelengths to be spatially
 resolvable by the LAT at \gev energies.
 
 The current generation of air Cherenkov detectors have
@@ -166,7 +166,7 @@ HESS\,J0632+057 \citep{HESS0632}, and the Crab nebula \citep{crab_weekes},
 have no detectable extension.  High-energy $\gamma$-rays from
 these sources are produced by the decay of $\pi^0$s produced by hadronic
 interactions with interstellar matter and by relativistic electrons
-due to Inverse Compton (IC) scattering and Bremsstrahlung radiation.  
+due to Inverse Compton (IC) scattering and bremsstrahlung radiation.  
 It is plausible that the \gev and
 \tev emission from these sources originates from the same population of
 high-energy particles and so at least some of these sources should be
@@ -209,7 +209,7 @@ significant residuals in the surrounding region \citep{first_cat,second_cat}.
 Such residuals can bias the significance and measured spectrum of
 neighboring sources in the densely populated Galactic plane.
 
-Previous analysis of extended LAT sources was performed as dedicated
+Previous analyses of extended LAT sources were performed as dedicated
 studies of individual sources so we expect that a systematic scan of
 all LAT detected sources could uncover additional spatially extended
 sources.  For these reasons, in Section~\ref{analysis_methods_section}
@@ -261,17 +261,19 @@ to these extended sources.
 
 \subsection{Modeling Extended Sources in the \pointlike Package}
 
-A new analysis tool has been developed to address the unique requirements
-for studying spatially extended sources with the LAT.
-The Poisson likelihood to find
-the observing counts is maximized given a parametrized spatial and
-spectral model of the source and its surrounding region.  The sky is
-divided into cubes of space and energy using the healpix representation
-of the sky \citep{healpix} and the likelihood is maximized over all bins
-in a region.  The extension of a source can be modeled by a geometric
-shape (e.g. a disk or a two-dimensional Gaussian) and the position, extension,
-and spectrum of the source
-can be simultaneously fit.
+\newtext{
+A new maximum-likelihood analysis tool has been developed to address the
+unique requirements for studying spatially extended sources with the LAT.
+It works by maximizing the Poisson likelihood to find the observing counts
+given a parametrized spatial and spectral model of the sky.  
+Space is
+divided into cubes of position and energy using the healpix representation of
+the sky \citep{healpix} and the likelihood is maximized over all bins in
+a region.
+}
+The extension of a source can be modeled by a geometric shape
+(e.g. a disk or a two-dimensional Gaussian) and the position, extension,
+and spectrum of the source can be simultaneously fit.
 
 This type of analysis is not feasible using the standard LAT likelihood
 analysis tool \gtlike\footnote{\gtlike is distributed publicly by the
@@ -297,7 +299,7 @@ The approach presented here is based on a second maximum likelihood
 fitting package developed in the LAT Collaboration called \pointlike
 \citep{first_cat,matthew_kerr_thesis}.  The choice to base the
 spatial extension fitting on \pointlike rather than \gtlike was made
-on considerations of computing time.  The \pointlike algorithm was
+due to considerations of computing time.  The \pointlike algorithm was
 optimized for speed to handle larger numbers of sources efficiently,
 which is important for our catalog scan and for being able
 to perform large-scale Monte Carlo simulations to validate the analysis.
@@ -438,24 +440,17 @@ or a uniform surface brightness profile
     0                      & x^2+y^2>\sigma^2.
   \end{cases}
 \end{equation}
-Although these shapes are significantly different, 
-Figure~\ref{compare_disk_gauss} shows that their PDF 
-are similar for a source that has a 
-0\fdg5
-radius
-typical of LAT detected extended sources.
-To
-allow a valid comparison between the Gaussian and the uniform surface
-brightness morphologies,
-we define the source size 
-as the radius containing
-68\% of the intensity ($\rsixeight$).  $\rsixeight_\text{,Gaussian}=1.51\sigma$
-and $\rsixeight_\text{,disk}=0.82\sigma$ where $\sigma$
-is defined in Equation~\ref{gauss_pdf} and
-Equation~\ref{disk_pdf} respectively.
-For this example, $\rsixeight=0\fdg5$ so
-$\sigma_\text{disk}=0.61\degree$ and 
-$\sigma_\text{Gaussian}=0.33\degree$.
+Although these shapes are significantly different,
+Figure~\ref{compare_disk_gauss} shows that, after convolution with the
+LAT PSF, their PDF are similar for a source that has a 0\fdg5 radius
+typical of LAT detected extended sources.  To allow a valid comparison
+between the Gaussian and the uniform surface brightness morphologies,
+we define the source size as the radius containing 68\% of the
+intensity ($\rsixeight$).  $\rsixeight_\text{,Gaussian}=1.51\sigma$
+and $\rsixeight_\text{,disk}=0.82\sigma$ where $\sigma$ is defined
+in Equation~\ref{gauss_pdf} and Equation~\ref{disk_pdf} respectively.
+For this example, $\rsixeight=0\fdg5$ so $\sigma_\text{disk}=0.61\degree$
+and $\sigma_\text{Gaussian}=0.33\degree$.
 
 For smaller and fainter extended sources, the differences in the PDF for
 different spatial models are lost in the noise and the LAT is not sensitive
@@ -615,7 +610,7 @@ to the square root of the exposure.
 \section{Testing Against Source Confusion}
 \label{dual_localization_method}
 
-It is impossible to discriminate with LAT data exclusively between a
+It is impossible to discriminate using only LAT data between a
 spatially extended source and multiple point-like sources separated by
 angular distances comparable to or smaller than the size of the LAT PSF.
 To assess the plausibility of source confusion for situations
@@ -624,8 +619,8 @@ simultaneously fit the position and spectrum of two point-like sources.
 
 After simultaneously fitting the two positions and two spectra,
 we define \tsinc as twice the increase in the log of the likelihood
-fitting the region as two point-like sources compared to fitting the
-region as one point-like source:
+fitting the region with two point-like sources compared to fitting the
+region with one point-like source:
 \begin{equation}
   \tsinc=2\log(\likelihood_\text{2pts}/\likelihood_\text{ps}).
 \end{equation} 
@@ -646,8 +641,8 @@ study.  We simulated one spatially extended source and fit it as both
 an extended source and as two point-like sources using \pointlike.
 We then simulated two point-like sources and fit them with the same two
 hypotheses. By comparing the distribution of \tsinc and \tsext computed by
-\pointlike for the two cases, we evaluated how good the $\tsext>\tsinc$
-test is at rejecting the possibility of source confusion as well as how
+\pointlike for the two cases, we evaluated how effective the $\tsext>\tsinc$
+test is at rejecting cases of source confusion as well as how
 likely it is to incorrectly reject that an extended source is spatially
 extended.  All sources were simulated using the same time range as in
 Section~\ref{extension_sensitivity} against a background 10 times the
@@ -698,7 +693,7 @@ farther apart.
 
 The distributions also show that for simulated
 extended sources with typical
-sizes ($\sigma\sim0\fdg5$), one can often obtain almost as good 
+sizes ($\sigma\sim0\fdg5$), one can often obtain almost as large
 an increase in likelihood
 with two sources as with one extended source ($\tsinc\sim\tsext$).
 This is because although
@@ -708,7 +703,7 @@ of freedom (two spatial and two spectral parameters)
 and can therefore easy model
 the extended source and statistical fluctuations in the data.
 This effect is most pronounced when using photons with energies between 1
-\gev and 100 \gev where the PSF is even larger.  
+\gev and 100 \gev where the PSF is larger.  
 On the other hand,
 when testing the two simulated point-like sources for extension our test
 found that \tsinc was larger than \tsext.
@@ -766,7 +761,7 @@ within $2\degree$ of the source.
 
 To validate our method, we tested LAT sources associated with AGN for
 extension.  \gev emission from AGN is believed to originate from the
-cores of kiloparsec-scale jets of distant galaxies.  Therefore AGN are
+cores of kiloparsec-scale jets.  Therefore AGN are
 not expected to be spatially resolvable by the LAT and provide a good
 calibration source to demonstrate that our extension detection method
 does not misidentify point-like sources as being extended.  We note that
@@ -805,7 +800,7 @@ we can use \tsext as a measure of the statistical significance of the
 detection of the extension of a source.
 }
 
-We should clarify that the LAT PSF used in this study was determined
+We note that the LAT PSF used in this study was determined
 empirically by fitting the observed shape of bright AGN (see
 Section~\ref{systematic_errors_on_extension}). Finding that the AGN we
 test are not extended is not surprising.  This validation analysis is
@@ -892,7 +887,7 @@ First, we estimated a systematic error due to
 uncertainty in our knowledge of the LAT PSF.  
 Before launch, the LAT PSF
 was determined by detector simulations which were verified in accelerator
-tests \citep{atwood_LAT_mission}. However, in-flight data revealed
+beam tests \citep{atwood_LAT_mission}. However, in-flight data revealed
 a discrepancy above a few \gev in the PSF compared to the angular
 distribution of photons from bright AGN \citep{lat_on_orbit_psf}.
 Subsequently, the PSF was fit empirically to bright AGN and this
@@ -923,8 +918,8 @@ emission \citep{isotropic_lat}.
 The intensities of various components
 of the Galactic diffuse emission were fitted individually using a
 spatial distribution of the intensities within the ROI as predicted by
-the model.  We distinguished contributions from CR interactions with the
-molecular hydrogen, the atomic+ionized hydrogen, residual gas traced
+the model.  We distinguished contributions from cosmic-ray interactions with the
+molecular hydrogen, the atomic and ionized hydrogen, residual gas traced
 by dust \citep{isabelle_dark_gass}, and the interstellar radiation
 field. We further split the contributions from interactions with molecular
 and atomic hydrogen to the Galactic diffuse emission according to the
@@ -1115,13 +1110,13 @@ by systematic errors at lower energies.
 Therefore, after selecting the list of background sources, we iteratively
 refit the position and spectrum of nearby background sources as well as
 the position and extension of the analyzed spatially extended
-sources until the overall fit globally converged.  For each extended
+sources until the overall fit converged globally.  For each extended
 source, we will describe the position of any relocalized background
 sources.
 
 After obtaining the overall best fit positions and extensions of all
 of the sources in the region using \pointlike, we refit the spectral
-parameters of the region using \gtlike.  Using \gtlike, we obtained a
+parameters of the region using \gtlike.  With \gtlike, we obtained a
 second measure of \tsext.  We only consider a source to be extended when
 both \pointlike and \gtlike agree that $\tsext>16$. 
 We further required that $\tsext>16$ using the alternate diffuse
@@ -1282,7 +1277,7 @@ This source is in a region of remarkably complicated diffuse emission.
 Even though it is $16\degree$ from the Galactic plane, this source is on
 top of the core of the Ophiuchus molecular cloud which contains massive
 star-forming regions that are bright in infrared.  The region also has
-abundant molecular and atomic gas traced by CO and HI but also plenty of
+abundant molecular and atomic gas traced by CO and HI and significant 
 dark gas found only by its association with dust emission
 \citep{isabelle_dark_gass}. Embedded star-forming regions make it even
 more challenging to measure the column density of dust.  Infared and 
@@ -1693,12 +1688,12 @@ at \tev energies. This is also true of Vela Jr., HESS\,J1825$-$137
 It is likely that the \gev and \tev emission from these sources originates
 from the same population of high-energy particles.
 
-Many of the \tev detected extended sources now seen at \gev energies are
-currently unidentified and further multiwavelength follow-up observations
-will be necessary to understand these particle accelerators.  But the
-extension of the spectrum of these \tev sources towards lower energies
-by LAT observations can help to determine the origin and nature of the
-high-energy emission seen from these sources.
+Many of the \tev detected extended sources now seen at \gev energies
+are currently unidentified and further multiwavelength follow-up
+observations will be necessary to understand these particle accelerators.
+But extending the spectra of these \tev sources towards lower energies
+with LAT observations may help to determine the origin and nature of
+the high-energy emission.
 
 
 
