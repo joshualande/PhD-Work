@@ -12,7 +12,7 @@
 
     # the most relevant parameters are 
     gtlike = Gtlike(roi,
-                  binsz       = 1/8.,  # spatial bins in gtliek
+                  binsz       = 1/8.,  # spatial bins in gtlike
                   bigger_roi  = False, # bigger_roi=True => put pointlike circular ROI inside gtlike square ROI
     )
 
