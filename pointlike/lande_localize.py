@@ -75,7 +75,6 @@ class MultiLocalizer():
         of an arbitrary number of point and extended sources. """
 
     defaults = (
-            ('use_gradient',     True, "Analytic gradient of spectral parameters when fitting."),
             ('tolerance',        0.01, "Fit tolerance to use when fitting"),
             ('verbose',          True, "Print more stuff during fit.")
     )
@@ -135,14 +134,14 @@ class MultiLocalizer():
 
         print 'fit'
 
-        ll=self.roi.fit(use_gradient=self.use_gradient,estimate_errors=False)
+        ll=self.roi.fit(estimate_errors=False)
 
         if ll < self.ll_0:
             prev= [source.model.get_parameters() for source in self.sources]
             for source,p in zip(self.sources,self.init_spectral):
                 source.model.set_parameters(p)
 
-            ll_alt=self.roi.fit(use_gradient=self.use_gradient,estimate_errors=False)
+            ll_alt=self.roi.fit(estimate_errors=False)
 
             if ll_alt > ll: 
                 ll=ll_alt
