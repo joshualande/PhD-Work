@@ -140,8 +140,10 @@ if do_extended:
     save()
 
     for which in ['pointlike','gtlike']:
-        if results['extended'].has_key(which):
+        try:
             results['extended'][which]['ts_ext'] = \
                     2*(results['extended'][which]['logLikelihood'] - results['point'][which]['logLikelihood'])
+        except KeyError:
+            pass
 
 save()
