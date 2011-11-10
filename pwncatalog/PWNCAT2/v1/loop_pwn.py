@@ -70,14 +70,14 @@ queue_jobs,err=p.communicate()
 
 for name in glob.iglob("*"):
     if isdir(name):
-        results="%s/results*%s.yaml" % (name,name)
         log="%s/log_%s.txt" % (name,name)
         run='$PWD/%s/run_%s.sh' % (name,name)
 
-        results_exists = len(glob.glob(results)) > 0
         is_in_queue = expandvars(run) in queue_jobs
+        log_exists = exists(log)
+        job_failed = log_exists and 'Successfully completed' not in open(log).read()
 
-        if not is_in_queue and not results_exists:
+        if not is_in_queue and (not log_exists or job_failed):
             string="cd %s; bsub -q %s -oo log_%s.txt sh $PWD/run_%s.sh; cd .." % (name,args.queue,name,name)
             if args.n:
                 print string
