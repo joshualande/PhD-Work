@@ -41,14 +41,16 @@ def paranoid_gtlike_fit(like, covar=True):
             print 'ERROR spectral fitting with DRMNFB + NEWMINUIT: ', ex
 
 
-def pointlike_spectrum_to_dict(model):
+def pointlike_spectrum_to_dict(model, errors=False):
 
     d = dict(name = model.name)
     default = DefaultModelValues.simple_models[model.name]
     for k,v in default.items():
         if k == '_p': continue
         elif k == 'param_names': 
-            for p in v: d[p]=model[p]
+            for p in v: 
+                d[p]=model[p]
+                d['%s_err' % p]=model.error(p)
         else: 
             d[k]=getattr(model,k)
 
@@ -56,7 +58,7 @@ def pointlike_spectrum_to_dict(model):
 
 
 
-def spectrum_to_dict(spectrum_or_model):
+def spectrum_to_dict(spectrum_or_model, *args, **kwargs):
     from pyLikelihood import Function
     if isinstance(spectrum_or_model, Function):
         f=SED.spectrum_to_dict
@@ -64,8 +66,26 @@ def spectrum_to_dict(spectrum_or_model):
         f=pointlike_spectrum_to_dict
     else:
         raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-    return f(spectrum_or_model)
+    return f(spectrum_or_model, *args, **kwargs)
 
+
+def gtlike_flux_dict(like,name,emin,emax,flux_units):
+    ce=lambda e: units.convert(e,'MeV',flux_units)
+    f=dict(flux=like.flux(name,emin=emin,emax=emax),
+           eflux=ce(like.energyFlux(name,emin=emin,emax=emax)),
+           flux_units='ph/cm^2/s',
+           eflux_units='%s/cm^2/s' % flux_units,
+           emin=emin,
+           emax=emax)
+    try:
+        # incase the errors were not calculated
+        f['flux_err']=like.fluxError(name,emin=emin,emax=emax)
+        f['eflux_err']=ce(like.energyFluxError(name,emin=emin,emax=emax))
+    except Exception, ex:
+        print 'ERROR calculating flux error: ', ex
+        f['flux_err']=-1
+        f['eflux_err']=-1
+    return f
 
 def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
     from pyLikelihood import ParameterVector
@@ -79,33 +99,12 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
         logLikelihood=like.logLike.value()
     )
 
-
-    ce=lambda e: units.convert(e,'MeV',flux_units)
-    d['flux']=f={}
-    f['flux']=like.flux(name,emin=emin,emax=emax)
-    f['eflux']=ce(like.energyFlux(name,emin=emin,emax=emax))
-    f['flux_units']='ph/cm^2/s'
-    f['eflux_units']='%s/cm^2/s' % flux_units
-    f['emin'],f['emax']=emin,emax
-
-    try:
-        # incase the errors were not calculated
-        f['flux_err']=like.fluxError(name,emin=emin,emax=emax)
-        f['eflux_err']=ce(like.energyFluxError(name,emin=emin,emax=emax))
-    except Exception, ex:
-        print 'ERROR calculating flux error: ', ex
-        f['flux_err']=-1
-        f['eflux_err']=-1
+    d['flux']=gtlike_flux_dict(like,name,emin,emax,flux_units)
 
     source = like.logLike.getSource(name)
     spectrum = source.spectrum()
 
-    d['model']=spectrum_to_dict(spectrum)
-
-    parameters=ParameterVector()
-    spectrum.getParams(parameters)
-    for p in parameters:
-        d['model'][p.getName()+'_err']=np.abs(p.error()*p.getScale())
+    d['model']=spectrum_to_dict(spectrum, errors=True)
 
     # Save out gal+iso values.
     # Warning: this implementation is fragile in that
@@ -144,6 +143,18 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
     return d
 
 
+def pointlike_flux_dict(roi,which,emin,emax,flux_units):
+    model=roi.get_model(which)
+    ce=lambda e: units.convert(e,'MeV',flux_units)
+    f=dict()
+    f['flux'],f['flux_err']=model.i_flux(emin=emin,emax=emax,error=True)
+    ef,ef_err=model.i_flux(emin=emin,emax=emax,e_weight=1,error=True)
+    f['eflux'],f['eflux_err']=ce(ef),ce(ef_err)
+    f['flux_units']='ph/cm^2/s'
+    f['eflux_units']='%s/cm^2/s' % flux_units
+    f['emin'],f['emax']=emin,emax
+    return f
+
 def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
     d={}
 
@@ -152,8 +163,7 @@ def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
         emax = roi.bin_edges[-1]
 
     source=roi.get_source(name)
-
-    model=source.model
+    model=roi.get_model(name)
 
     old_quiet = roi.quiet; roi.quiet=True
     d['TS'] = roi.TS(name,quick=False)
@@ -161,18 +171,9 @@ def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
 
     d['logLikelihood']=-roi.logLikelihood(roi.parameters())
 
-    ce=lambda e: units.convert(e,'MeV',flux_units)
-    d['flux']=f={}
-    f['flux'],f['flux_err']=model.i_flux(emin=emin,emax=emax,error=True)
-    ef,ef_err=model.i_flux(emin=emin,emax=emax,e_weight=1,error=True)
-    f['eflux'],f['eflux_err']=ce(ef),ce(ef_err)
-    f['flux_units']='ph/cm^2/s'
-    f['eflux_units']='%s/cm^2/s' % flux_units
-    f['emin'],f['emax']=emin,emax
+    d['flux']=pointlike_flux_dict(roi,name,emin,emax,flux_units)
 
-    d['model']=spectrum_to_dict(model)
-    for param in model.param_names:
-        d['model'][param + '_err']=model.error(param)
+    d['model']=spectrum_to_dict(model, errors=True)
 
     # Source position
     d['gal'] = [source.skydir.l(),source.skydir.b()]
@@ -315,7 +316,7 @@ def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin, emax, **
     saved_state.restore()
     return tolist(ul)
 
-def powerlaw_upper_limit(like_or_roi, name, powerlaw_index=2, cl=0.95, **kwargs):
+def powerlaw_upper_limit(like_or_roi, name, powerlaw_index=2, cl=0.95, *args, **kwargs):
     from BinnedAnalysis import BinnedAnalysis
     if isinstance(like_or_roi, BinnedAnalysis):
         f=gtlike_powerlaw_upper_limit
@@ -323,18 +324,18 @@ def powerlaw_upper_limit(like_or_roi, name, powerlaw_index=2, cl=0.95, **kwargs)
         f=pointlike_powerlaw_upper_limit
     else:
         raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-    return f(like_or_roi, name, powerlaw_index, cl, **kwargs)
+    return f(like_or_roi, name, powerlaw_index, cl, *args, **kwargs)
 
 
 
-def pointlike_test_cutoff(roi, which):
+def pointlike_test_cutoff(roi, which, flux_units='erg'):
     print 'Testing cutoff in pointlike'
+    emin,emax=roi.bin_edges[0],roi.bin_edges[-1]
     d = {}
 
     saved_state = PointlikeState(roi)
 
     print 'these are probably not good startin values!'
-    emin,emax=roi.bin_edges[0],roi.bin_edges[-1]
     old_flux = roi.get_model(which).i_flux(emin,emax)
     m=PowerLaw(norm=1e-11, index=2, e0=np.sqrt(emin*emax))
     m.set_flux(old_flux,emin,emax)
@@ -348,12 +349,13 @@ def pointlike_test_cutoff(roi, which):
         roi.quiet = old_quiet
         return ts
 
-    spectrum = lambda: spectrum_to_dict(roi.get_model(which))
+    spectrum = lambda: spectrum_to_dict(roi.get_model(which), errors=True)
 
     fit()
     d['ll_0'] = ll_0 = ll()
     d['TS_0'] = ts()
     d['model_0']=spectrum()
+    d['flux_0']=pointlike_flux_dict(roi,which,emin,emax,flux_units)
 
     m=ExpCutoff(n0=1e-11, gamma=1, cutoff=1000, e0=1000)
     m.set_flux(old_flux,emin,emax)
@@ -364,6 +366,7 @@ def pointlike_test_cutoff(roi, which):
     d['ll_1'] = ll_1 = ll()
     d['TS_1'] = ts()
     d['model_1']=spectrum()
+    d['flux_1']=pointlike_flux_dict(roi,which,emin,emax,flux_units)
 
     d['TS_cutoff']=2*(ll_1-ll_0)
 
@@ -371,8 +374,9 @@ def pointlike_test_cutoff(roi, which):
 
     return d
 
-def gtlike_test_cutoff(like, name):
+def gtlike_test_cutoff(like, name, flux_units='erg'):
     print 'Testing cutoff in gtlike'
+    emin, emax=like.energies[[0,-1]]
     d = {}
 
     saved_state = LikelihoodState(like)
@@ -380,6 +384,7 @@ def gtlike_test_cutoff(like, name):
     def fix(parname,value):
         par=like[like.par_index(name, parname)]
         par.setScale(1)
+        par.setBounds(-1e10,1e10) # kind of lame, but i think this is necessary
         par.setTrueValue(value)
         par.setBounds(value,value)
         par.setFree(0)
@@ -395,7 +400,7 @@ def gtlike_test_cutoff(like, name):
         like.syncSrcParams(name)
 
     def get_flux():
-        return like.flux(name, like.energies[0],like.energies[1])
+        return like.flux(name, emin, emax)
 
     def set_flux(flux):
         current_flux = get_flux()
@@ -410,35 +415,50 @@ def gtlike_test_cutoff(like, name):
     def spectrum():
         source = like.logLike.getSource(name)
         s=source.spectrum()
-        return spectrum_to_dict(s)
+        return spectrum_to_dict(s, errors=True)
 
     source = like.logLike.getSource(name)
     old_flux = get_flux()
     old_spectrum = source.spectrum()
 
     like.setSpectrum(name,'PowerLaw')
-    fix('Scale', np.sqrt(like.energies[0]*like.energies[-1]))
-    set('Prefactor',1e-11,1e-11,      1e-5,1e5)
-    set('Index',       -2,    1,  -5,5)
+    fix('Scale', np.sqrt(emin*emax))
+    set('Prefactor',1e-11,1e-11, 1e-5, 1e5)
+    set('Index',       -2,    1,   -5,   5)
     set_flux(old_flux)
 
     paranoid_gtlike_fit(like)
     d['ll_0'] = ll_0 = ll()
     d['TS_0'] = ts()
     d['model_0']=spectrum()
+    d['flux_0']=gtlike_flux_dict(like,name,emin,emax,flux_units)
     
     like.setSpectrum(name,'PLSuperExpCutoff')
-    set('Prefactor', 1e-9,   1e-9,    1e-5,1e5)
+    set('Prefactor', 1e-9,  1e-11,   1e-5,1e5)
     set('Index1',      -1,      1,     -5,  5)
     fix('Scale',     1000)
-    set('Cutoff',    1000,      1,    1e2,1e5)
+    set('Cutoff',    1000,      1,    1e2,1e8)
     fix('Index2',       1)
     set_flux(old_flux)
 
     paranoid_gtlike_fit(like)
+
+    if ll() < ll_0:
+        # if fit is worse than PowerLaw fit, then
+        # restart fit with parameters almost
+        # equal to best fit powerlaw
+        m = d['model_0']
+        set('Prefactor', m['Prefactor'],  1e-11,   1e-5,1e5)
+        set('Index1',        m['Index'],      1,     -5,  5)
+        fix('Scale',         m['Scale'])
+        set('Cutoff',               1e6,      1,    1e2,1e8)
+        fix('Index2',                 1)
+        paranoid_gtlike_fit(like)
+
     d['ll_1'] = ll_1 = ll()
     d['TS_1'] = ts()
     d['model_1']=spectrum()
+    d['flux_1']=gtlike_flux_dict(like,name,emin,emax,flux_units)
 
     d['TS_cutoff']=2*(ll_1-ll_0)
 
@@ -447,7 +467,7 @@ def gtlike_test_cutoff(like, name):
 
     return d
 
-def test_cutoff(like_or_roi, name):
+def test_cutoff(like_or_roi, *args, **kwargs):
     from BinnedAnalysis import BinnedAnalysis
     if isinstance(like_or_roi, BinnedAnalysis):
         f=gtlike_test_cutoff
@@ -455,7 +475,7 @@ def test_cutoff(like_or_roi, name):
         f=pointlike_test_cutoff
     else:
         raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-    return f(like_or_roi, name)
+    return f(like_or_roi, *args, **kwargs)
 
 
 
