@@ -29,5 +29,5 @@ tosympy=lambda array,units: sympy.Matrix(array)*units
 tonumpy=lambda array,units: sympy.list2numpy(array/units).astype(float)
 
 # Convert from one unit to another
-convert=lambda x, from_units, to_units: float((x/fromstring(from_units))*fromstring(to_units))
+convert=lambda x, from_units, to_units: float((x*fromstring(from_units))/fromstring(to_units))
 
