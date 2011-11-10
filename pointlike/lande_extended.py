@@ -12,6 +12,23 @@ from toolbag import tolist
 import pylab as P
 
 
+def fit_extension_frozen(roi, which, *args, **kwargs):
+    """ Perform an extension fit with all other
+        localizable sources in the ROI frozen. """
+    name = roi.get_source(which).name
+
+    frozen_sources = dict()
+    for other_source in roi.get_sources():
+        if np.any(other_source.model.free) and other_source.name != name:
+            frozen_sources[other_source.name]=other_source.model.free.copy()
+            roi.modify(which=other_source,free=False)
+
+    roi.fit_extension(which=which, *args, **kwargs)
+    for other_name,other_free in frozen_sources.items():
+        roi.modify(which=other_name,free=other_free)
+
+
+
 class ExtensionProfile(object):
     defaults = (
         ("num_points",      15, "Number of poitns to calcualte profile over"),
@@ -154,7 +171,7 @@ class TSExtVsEnergy(object):
         source=roi.get_source(which='IC443')
         sm = source.spatial_model
         manager,index=roi.mapper(which)
-        roi.fit(use_gradient=True)
+        roi.fit(estimate_errors=False)
 
         self.ll_ext,self.ll_pt = [],[]
 
@@ -169,7 +186,7 @@ class TSExtVsEnergy(object):
         manager.bgmodels[index].initialize_counts(roi.bands)
         roi.__update_state__()
 
-        roi.fit(use_gradient=True, estimate_errors=False)
+        roi.fit(estimate_errors=False)
 
         # point hypothesis
 
@@ -202,7 +219,7 @@ class TSExtVsEnergy(object):
 
         ax.set_xlabel(r'Energy (MeV)')
         ax.set_ylabel(r'$\mathrm{TS}_\mathrm{ext}$')
-        ax.semilogx(self.emin,self.ts_ext,'k',drawstyle='steps-post')
+        ax.semilogx(self.emin,self.ts_ext,'ko')
 
         if self.title is None: 
             self.title = '$\mathrm{TS}_\mathrm{ext}$ vs Energy'
