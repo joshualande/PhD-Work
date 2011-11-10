@@ -34,7 +34,7 @@ class LandeSED(SED):
         if isinstance(like,dict):
             self.fromdict(like)
         elif isinstance(like, str):
-            self.fromdict(yaml.load(open(like).read()))
+            self.fromdict(yaml.load(open(like)))
         else:
             super(LandeSED,self).__init__(like, *args, **kwargs)
 
@@ -44,7 +44,8 @@ class LandeSED(SED):
             a spectrum that has been saved by the spectrum_to_string
             object. This undoes the conversion of SED.spectrum_to_dict """
         spectrum=_funcFactory.create(d.pop('name'))
-        for k,v in d.items(): spectrum.getParam(k).setTrueValue(v)
+        for k,v in d.items(): 
+            if k[-4:] != '_err': spectrum.getParam(k).setTrueValue(v)
         return spectrum
 
 
@@ -137,9 +138,13 @@ class LandeSED(SED):
         return yaml.dump(results)
 
     @staticmethod
-    def plot_spectrum(axes, spectrum, energy_units, flux_units, npts=100, **kwargs):
-        """ Plot the spectrum, but correcting for the fact
-            that the spectrum is in units of ph/cm^2/s/MeV. """
+    def _plot_spectrum(spectrum, axes, energy_units, flux_units, npts=100, **kwargs):
+        """ Plot a pyLikelihood spectrum onto a matplotlib axes
+            whose x axis has units energy_units and y_axes has units
+            flux_units/cm^2/s. 
+            
+            N.B. This function corrects for the fact that gtlike always
+            internally represnts the spectrum in units of ph/cm^2/s/MeV. """
         low_lim, hi_lim = axes.get_xlim()
         energies = np.logspace(np.log10(low_lim), np.log10(hi_lim), npts)
 
@@ -151,6 +156,9 @@ class LandeSED(SED):
         # (c) convert to desired units
         e2_dnde = units.tonumpy(e2_dnde,flux_units/units.cm**2/units.s)
         axes.plot(energies, e2_dnde, **kwargs)
+
+    def plot_spectrum(self, spectrum, **kwargs):
+        LandeSED._plot_spectrum(spectrum, self.axes, self.energy_units, self.flux_units, **kwargs)
 
     def plot(self, filename=None,
              axes=None, 
@@ -166,6 +174,7 @@ class LandeSED(SED):
             self.set_xlim(axes,
                           float(self.lower_energy[0]/self.energy_units),
                           float(self.upper_energy[-1]/self.energy_units))
+        self.axes = axes
 
         ce = lambda x: units.tonumpy(x, self.energy_units)
         cf = lambda y: units.tonumpy(
@@ -180,8 +189,8 @@ class LandeSED(SED):
             y_err=cf(self.dnde_err),
             y_ul=cf(self.dnde_ul),
             significant=self.significant,
-            xlabel='Energy (%s)' % self.energy_units_str,
-            ylabel='Energy Flux (%s cm$^{-2}$ s$^{-1}$)' % self.flux_units_str,
+            energy_units=self.energy_units_str,
+            flux_units=self.flux_units_str,
             axes=axes, **data_kwargs)
 
         if plot_spectral_fit:
@@ -189,6 +198,7 @@ class LandeSED(SED):
             # and it gets mutlplied by energy_units**2,
             # so we need to multiple overall spectrum by
             # flux_units*MeV/energy_units**2
-            LandeSED.plot_spectrum(axes,self.spectrum, self.energy_units, self.flux_units, **spectral_kwargs)
+            self.plot_spectrum(self.spectrum, **spectral_kwargs)
 
         if filename is not None: P.savefig(filename)
+        return axes
