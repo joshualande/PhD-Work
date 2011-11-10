@@ -35,7 +35,7 @@ import numpy as np
 from tempfile import mkdtemp
 
 # pointlike
-from uw.like.SpatialModels import Disk
+from uw.like.SpatialModels import RadiallySymmetricModel
 from skymaps import SkyDir
 from uw.utilities import keyword_options
 
@@ -133,7 +133,7 @@ class Gtlike(object):
         # to have extended source smaller than the binsize.
         shrink_list = [ source for source in roi.get_sources() if \
                        hasattr(source,'spatial_model') and \
-                       isinstance(source.spatial_model,Disk) and \
+                       isinstance(source.spatial_model,RadiallySymmetricModel) and \
                        source.spatial_model['sigma'] < self.binsz ]
         for src in shrink_list: src.spatial_model.shrink(size=self.binsz)
 
