@@ -34,6 +34,7 @@ from os.path import *
 from roi_gtlike import *
 from lande_plotting import *
 from lande_extended import *
+from lande_decorators import *
 
 from uw.like import sed_plotter
 import pylab as P
@@ -43,12 +44,10 @@ from pylab import *
 from argparse import ArgumentParser
 import warnings
 import operator
-import inspect
 import cPickle
 import shutil
 import os
 import re
-import types
 import math
 import yaml
 from tempfile import NamedTemporaryFile
@@ -83,19 +82,6 @@ from os.path import join as j
 from uw.utilities import colormaps
 from uw.utilities.colormaps import *
 
-def select_quiet(func):
-    def new(self,*args,**kwargs):
-        old_quiet=self.quiet
-        if kwargs.has_key('quiet'):
-            self.quiet=kwargs.pop('quiet')
-        if kwargs.has_key('verbose'):
-            self.quiet=not kwargs.pop('verbose')
-
-        ret=func(self,*args,**kwargs)
-        self.quiet=old_quiet
-        return ret
-    return new
-
 
 class Empty: pass
 
@@ -116,28 +102,6 @@ def merge_dict(first,second):
 
 
 
-def modify_defaults(**kwargs):
-    """ Function decorator which replaces the default values
-        in the object whith the defaults specified by kwargs.
-        Useful if you disagree about what a meaningful
-        default is. """
-    def decorator(func):
-        spec=inspect.getargspec(func)
-        names,defaults=list(spec.args),list(spec.defaults)
-        # Defaults is generally shorter because not all parameters have a default.
-        offset=len(defaults)-len(names)
-
-        for k,v in kwargs.items():
-            index=names.index(k)
-            defaults[offset+index]=v
-
-        if isinstance(func, types.MethodType):
-            func.im_func.func_defaults=tuple(defaults)
-        else:
-            func.func_defaults=tuple(defaults)
-
-        return func
-    return decorator
 
 class LandeROI(ROIAnalysis):
     """ Subclass of ROIAnalysis with helper 
@@ -420,11 +384,6 @@ class LandeROI(ROIAnalysis):
         src_info['localization_error']=self.get_ellipse()
 
         return src_info
-
-    def fit_all_sources(self,*args,**kwargs):
-        """ Temporarily free all spectral parameters and perform a fit, 
-            then refreeze all the previously freezed parameters. """
-        raise Exception("...")
 
     def freeze_all_background_sources(self):
         background_sources = [_ for _ in self.dsm.diffuse_sources if not isinstance(_,ExtendedSource)]
