@@ -21,7 +21,7 @@ from uw.pulsar.phase_range import PhaseRange
 
 def setup_pwn(name, pwndata, fit_emin, fit_emax, extended=False, **kwargs):
 
-    source = get_source(name,pwndata, fit_emin, fit_emax, extended=False)
+    source = get_source(name,pwndata, fit_emin, fit_emax, extended=extended)
     if isinstance(source,PointSource):
         ps,ds = [source],[]
     else:
