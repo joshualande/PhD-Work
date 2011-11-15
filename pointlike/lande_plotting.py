@@ -12,8 +12,8 @@ from uw.like.roi_state import PointlikeState
 from lande_sed import LandeSED
 
 def plot_gtlike_cutoff_test(cutoff_results, sed_results, filename=None, title=None, 
-                            model_0_kwargs=dict(color='red'),
-                            model_1_kwargs=dict(color='blue'),
+                            model_0_kwargs=dict(color='red', zorder=0),
+                            model_1_kwargs=dict(color='blue', zorder=0),
                             sed_kwargs=dict(),
                            ):
     """ Plots the cutoff test performed of a spectrum using the function
@@ -31,7 +31,7 @@ def plot_gtlike_cutoff_test(cutoff_results, sed_results, filename=None, title=No
     """
     sed=LandeSED(sed_results,**sed_kwargs)
 
-    axes=sed.plot(plot_spectral_fit=True)
+    axes=sed.plot(plot_spectral_fit=False)
     axes.autoscale(enable=False)
 
     model_0 = LandeSED.dict_to_spectrum(cutoff_results['model_0'])
