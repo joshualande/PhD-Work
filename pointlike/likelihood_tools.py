@@ -393,6 +393,7 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
     def set(parname,value,scale,lower,upper):
         """ Note, lower + upper are fractional limits if free=True. """
         par=like[like.par_index(name, parname)]
+        par.setBounds(-1e10,1e10) # kind of lame, but i think this is necessary
         par.setScale(scale)
         par.setTrueValue(value)
         par.setBounds(lower,upper)
@@ -502,3 +503,17 @@ def pointlike_plot_all_seds(roi, filename=None, ncols=4, **kwargs):
 
 plot_all_seds = pointlike_plot_all_seds # for now
 
+
+def freeze_insignificant_to_catalog(roi,catalog, min_ts=4):
+    for source in roi.get_sources():
+        if np.any(source.model.free) and roi.TS(which=source)< min_ts:
+            try:
+                catalog_source = catalog.get_source(source.name)
+            except StopIteration:
+                pass
+            else:
+                model=catalog_source.model
+                model.free[0] = source.model.free[0]
+                model.free[1:] = False
+                print 'Freezing spectra of %s to 2FGL prediction' % source.name
+                roi.modify(which=source, model=model)
