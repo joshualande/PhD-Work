@@ -94,8 +94,6 @@ class Spectrum(object):
         """ Returns dN/dE. Energy must be in erg. """
         pass
 
-    def integrate(self, emin, emax, e_weight=0):
-
     @staticmethod
     @abstractmethod
     def units_string():
@@ -176,36 +174,44 @@ class BrokenPowerLawCutoff(ParticleSpectrum):
 class ThermalSpectrum(Spectrum):
     def __init__(self, **kwargs):
         """ A blackbody thermal spectrum
-            for a given temperature kT [energy]
-            and energy density [energy/volume]. """
-        if kwargs.has_key('kT'):
-            kt = kwargs.pop('kT')
-            self.kT = float(kT/u.erg)
-        elif kwargs.has_key('T'):
-            T = kwargs.pop('T')
-            self.kT = float(T*u.boltzmann/u.erg)
-        else:
-            raise Exception("Either kT or T must be passed into ThermalSpectrum")
-        if len(kwargs)>0:
-            raise Exception("Invalid argument(s) to ThermalSpectrum: %s" % str(kwargs))
+            for a given temperature kT [energy]. 
+
+            Input can be either 'kT' in energy units or
+            'T' in temperature units.
+            
+            This formula is on the top of page 208 in R&L """
+        if kwargs.has_key('kT'): kt = kwargs.pop('kT')
+        elif kwargs.has_key('T'): self.kT = u.boltzmann*kwargs.pop('T')
+        else: raise Exception("Either kT or T must be passed into ThermalSpectrum")
+        if len(kwargs)>0: raise Exception("Invalid argument(s) to ThermalSpectrum: %s" % str(kwargs))
 
         self.pref = 8*np.pi/(u.planck**3*u.speed_of_light**3)
-        print self.pref
-        print self.pref/(u.erg**-3*u.cm**-3)
-        self.pref = float(self.pref/(u.erg**-3*u.cm**-3))
 
-    def unit_string(self):
-        return 'erg/cm^3'
+    @staticmethod
+    def occupation_number(x):
+        """ This is equation 1.49 in R&L. """
+        return 1/(np.exp(x)-1)
 
     def dnde(self, energy):
-        """ Return the energy density."""
-        return self.pref*energy**2/(np.exp(energy/self.kT)-1)
+        """ Return the energy density in units of 1/energy/Volume."""
+        return self.pref*energy**2*ThermalSpectrum.occupation_number(float(energy/self.kT))
 
+    def integrate(self, emin, emax, e_weight=0):
+        """ Integrate the thermal spectrum from emin to emax.
+            
+            Integrand is in units of energy/volume
+        
+            Implementation note: integrate after performing
+            the change of variables (x = energy/kT)
 
+            # note the E^3 dE -> kT^3 x^2 dx
+        """
+        xmin,xmax = float(emin/self.kT), float(emax/self.kT)
+
+        return self.pref*self.kT**(3+e_weight)*integrate.quad(lambda x: x**(2+e_weight)**ThermalSpectrum.occupation_number(x), xmin, xmax)[0]
 
 class CMB(ThermalSpectrum):
-    def __init__(self):
-        super(CMB,self).__init__(T=2.725*u.kelvin)
+    def __init__(self): super(CMB,self).__init__(T=2.725*u.kelvin)
 
 
 class SingleElectronSynchrotron(Spectrum):
@@ -379,8 +385,8 @@ if __name__ == '__main__':
 
     def test_thermal_spectrum():
         cmb=CMB()
-        total_energy_density = integrate.quad(lambda e: e*cmb.dnde(e),0,10*cmb.kT)[0]*u.erg*u.cm**-3
-        print total_energy_density 
+        total_energy_density = cmb.integrate(0,np.inf*u.eV, e_weight=1)
+        print 'total',total_energy_density
         print total_energy_density/(u.eV*u.m**-3)
         print '%.2e eV/m^3' % float(total_energy_density/(u.eV*u.m**-3))
         print 'cmb = 2.60e5 eV/m^3'
