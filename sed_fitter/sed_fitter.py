@@ -5,12 +5,6 @@
     over efficiency. Anything that is supposed
     to be fast should probably be rewritten in c.
 
-    Implementation notes:
-    
-        all function input are sympy objects with units.
-        Internally, all objects are stored in their
-        fundamenal cgs representation.
-
 
     This file is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -69,7 +63,7 @@ class Spectrum(object):
                         np.log10(float(emax/u.erg)), npts)
 
         # y is in units of self.units()
-        y = np.asarray(map(self.dnde,x))
+        y = np.asarray(map(self,x))
 
         x=u.tosympy(x,u.erg)
         y=u.tosympy(y,self.units())
@@ -90,7 +84,7 @@ class Spectrum(object):
         return axes
 
     @abstractmethod
-    def dnde(self, energy): 
+    def __call__(self, energy): 
         """ Returns dN/dE. Energy must be in erg. """
         pass
 
@@ -102,27 +96,27 @@ class Spectrum(object):
 
     @classmethod
     def units(cls):
-        """ Returns the units that dnde is assumed to be in. """
+        """ Returns the units that __call__ is assumed to be in. """
         return u.fromstring(cls.units_string())
 
-    def __call__(self,*args,**kwargs): self.dnde(*args,**kwargs)
+    def __call__(self,*args,**kwargs): self(*args,**kwargs)
 
 
 class ParticleSpectrum(Spectrum):
     """ class to represent a spectrum of particles with total energy total_energy. 
     
-        dnde is number o particles per unit energy (in units of 1/erg)
+        __call__ returns dn/de, the number of particles per unit energy (in units of 1/erg)
     """
 
     def __init__(self,total_energy):
         self.norm = 1
 
         # Normalize total energy output
-        power = integrate.quad(lambda e: e*self.dnde(e), 0, np.inf)[0]
+        power = integrate.quad(lambda e: e*self(e), 0, np.inf)[0]
         self.norm= float(total_energy/self.energy())
 
     def energy(self, emin=0*u.erg, emax=np.inf*u.erg):
-        integral=integrate.quad(lambda e: e*self.dnde(e), float(emin/u.erg), float(emax/u.erg))[0]
+        integral=integrate.quad(lambda e: e*self(e), float(emin/u.erg), float(emax/u.erg))[0]
         return integral*u.erg**2*self.units()
         
     @staticmethod
@@ -138,7 +132,7 @@ class PowerLawCutoff(ParticleSpectrum):
         self.e_scale = float(u.GeV/u.erg)
         super(PowerLawCutoff,self).__init__(total_energy)
 
-    def dnde(self, energy):
+    def __call__(self, energy):
         return self.norm*(energy/self.e_scale)**(-self.index)*np.exp(-energy/self.e_cutoff)
 
 class SmoothBrokenPowerLaw(ParticleSpectrum):
@@ -154,7 +148,7 @@ class SmoothBrokenPowerLaw(ParticleSpectrum):
         self.e_scale = float(e_scale/u.erg)
         super(PowerLawCutoff,self).__init__(total_energy)
 
-    def dnde(self, energy):
+    def __call__(self, energy):
         return self.norm*(energy/self.e_scale)**(-self.index1)*(1 + (energy/self.e_break)**beta)*(-(index2-index1)/beta)
 
 class BrokenPowerLawCutoff(ParticleSpectrum):
@@ -167,7 +161,7 @@ class BrokenPowerLawCutoff(ParticleSpectrum):
         self.e_break = float(e_break/u.erg)
         super(BrokenPowerLawCutoff,self).__init__(total_energy)
 
-    def dnde(self, energy):
+    def __call__(self, energy):
         """ Return number of particles per unit enert [1/erg]. """
         return self.norm*(energy**-self.index1)/(1.+(energy/self.e_break)**(-self.index1+self.index2))*np.exp(-energy/self.e_cutoff)
 
@@ -180,7 +174,7 @@ class ThermalSpectrum(Spectrum):
             'T' in temperature units.
             
             This formula is on the top of page 208 in R&L """
-        if kwargs.has_key('kT'): kt = kwargs.pop('kT')
+        if kwargs.has_key('kT'): self.kT = kwargs.pop('kT')
         elif kwargs.has_key('T'): self.kT = u.boltzmann*kwargs.pop('T')
         else: raise Exception("Either kT or T must be passed into ThermalSpectrum")
         if len(kwargs)>0: raise Exception("Invalid argument(s) to ThermalSpectrum: %s" % str(kwargs))
@@ -192,7 +186,7 @@ class ThermalSpectrum(Spectrum):
         """ This is equation 1.49 in R&L. """
         return 1/(np.exp(x)-1)
 
-    def dnde(self, energy):
+    def __call__(self, energy):
         """ Return the energy density in units of 1/energy/Volume."""
         return self.pref*energy**2*ThermalSpectrum.occupation_number(float(energy/self.kT))
 
@@ -265,7 +259,7 @@ class SingleElectronSynchrotron(Spectrum):
         conversion_factor = float((u.erg/u.planck)/u.hz)
         return energy_in_erg*conversion_factor
 
-    def dnde(self,energy):
+    def __call__(self,energy):
         omega = self.energy_erg_to_angular_frequency_hz(energy)
         
         # return photons radiated per unit energy per unit time
@@ -283,7 +277,7 @@ class Synchrotron(Spectrum):
 
         print 'not sure what the prefactor should be yet'
 
-    def dnde(self, energy):
+    def __call__(self, energy):
         """ Returns number per unit energy dN/dE. """
         photon_energy = energy
 
@@ -297,7 +291,7 @@ class Synchrotron(Spectrum):
 
             # return [ph/s/photon energy/electron energy] = 
             #             [ph/s/electron/photon energy]*[number of electrons/electron energy]
-            return single_electron.dnde(photon_energy)*self.electron_spectrum.dnde(electron_energy)
+            return single_electron(photon_energy)*self.electron_spectrum(electron_energy)
 
         # integrate [ph/s/photon energy/electron energy] over electron energies
         # Returns the photon flux per unit time per unit photon energy
@@ -309,13 +303,22 @@ class Synchrotron(Spectrum):
 
 
 class InverseCompton(Spectrum):
-    def __init__(self, 
-                 enenergy_spectrum, 
-                 photon_spectrum):
+
+    @staticmethod
+    def f(x): 
+        """ This is 7.27 in R&L -- from Blumenthal and Gold, 1970. """
+        return 2*x*np.log(x) + x + 1 - 2*x**2
+
+    def __init__(self, enenergy_spectrum, photon_spectrum):
         """ The inverse compton radiation an electron spectrum
             and photon spectrum. """
         pass
 
+    def __call__(self, energy):
+        photon_energy = energy
+
+        def integrand(electron_energy):
+            pass
 
 if __name__ == '__main__':
 
@@ -330,7 +333,7 @@ if __name__ == '__main__':
         x = np.logspace(np.log10(float(emin/u.erg)), np.log10(float(emax/u.erg)), 100)
 
         # y is in units of self.units()
-        y = np.asarray(map(synch.dnde,x))
+        y = np.asarray(map(synch,x))
 
         x=u.tosympy(x,u.erg)
 
@@ -381,17 +384,19 @@ if __name__ == '__main__':
         plot_sed(synch,distance=4.2*u.kpc)
 
 
-    #stefan_hess_j1813()
+    stefan_hess_j1813()
 
     def test_thermal_spectrum():
         cmb=CMB()
+        print 'kt=',cmb.kT
+        print 'dnde=',cmb(cmb.kT)
         total_energy_density = cmb.integrate(0,np.inf*u.eV, e_weight=1)
         print 'total',total_energy_density
         print total_energy_density/(u.eV*u.m**-3)
         print '%.2e eV/m^3' % float(total_energy_density/(u.eV*u.m**-3))
         print 'cmb = 2.60e5 eV/m^3'
 
-    test_thermal_spectrum()
+    #test_thermal_spectrum()
 
     def yasunobu_w51c():
 
