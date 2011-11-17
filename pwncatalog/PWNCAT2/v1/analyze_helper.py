@@ -7,7 +7,7 @@ import numpy as np
 from roi_gtlike import Gtlike
 import yaml
 from toolbag import tolist
-from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit
+from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog
 from LikelihoodState import LikelihoodState
 from uw.pulsar.phase_range import PhaseRange
 from uw.like.SpatialModels import Gaussian
@@ -17,6 +17,7 @@ from lande_pulsar import plot_phaseogram,plot_phase_vs_time
 from lande_plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter,plot_gtlike_cutoff_test
 from lande_sed import LandeSED
 
+from setup_pwn import get_catalog
 
 all_energy=lambda emin,emax: np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1)
 high_energy=lambda emin,emax: np.allclose([emin,emax],[10**4.5,10**5.5], rtol=0, atol=1)
@@ -102,6 +103,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin,
         print_summary()
 
     fit()
+    freeze_insignificant_to_catalog(roi, get_catalog(), min_ts=4)
 
     if localize:
         try:
@@ -114,6 +116,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin,
         fit()
 
     if fit_extension:
+        init_flux = roi.get_model(which=name).i_flux(emin,emax)
         try:
             if localization_emin != emin: roi.change_binning(localization_emin,emax)
             fit_extension_frozen(roi,name)
@@ -121,7 +124,18 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin,
         except Exception, ex:
             print 'ERROR extension fitting pointlike: ', ex
         finally:
-            if localization_emin != emin: roi.change_binning(emin,emax)
+            if localization_emin != emin: 
+                roi.change_binning(emin,emax)
+
+                # after switching energy range, the fit may have gone horribly
+                # forcing the source to predict NaNs. a good strategy in 
+                # this case is to set teh flux back to what it was before
+                # extension fit.
+                if roi.logLikelihood(roi.parameters()) == 1e6:
+                    print 'After extension fit, likelihood is NaN, so setting back to old flux'
+                    model = roi.get_model(which=name)
+                    model.set_flux(init_flux,emin,emax)
+                    roi.modify(which=name, model=model)
         fit()
 
     p = sourcedict(roi, name)
