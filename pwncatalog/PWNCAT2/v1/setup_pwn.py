@@ -54,11 +54,10 @@ def get_source(name, pwndata, fit_emin, fit_emax, extended=False):
             model=model,
             skydir=pulsar_position)
 
-def get_catalog(free_radius,max_free):
+def get_catalog(**kwargs):
     return Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
                        latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
-                       free_radius=free_radius,
-                       max_free = max_free)
+                       **kwargs)
 
 def setup_region(name,pwndata, phase, free_radius, max_free, 
                  roi_size=10, savedir=None, binsperdec=4,
@@ -95,7 +94,7 @@ def setup_region(name,pwndata, phase, free_radius, max_free,
 
     catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"))
 
-    catalog=get_catalog(free_radius,max_free)
+    catalog=get_catalog(free_radius=free_radius,max_free=max_free)
 
     binfile=j(savedir,'binned_phased.fits')
 
