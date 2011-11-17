@@ -51,3 +51,10 @@ tesla = 1e4*gauss
 pc = parsec = 3.08568025e18*cm
 kpc = 1e3*parsec
 
+
+def repr(value,unit_string,format='%.2e'):
+    unit = fromstring(unit_string)
+    return format % float(value/unit) + ' ' + unit_string
+
+# classical electron radius
+r0=electron_charge**2/(electron_mass*speed_of_light**2)
