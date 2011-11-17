@@ -2,7 +2,7 @@
 
 # This import has to come first
 from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results,plot_phaseogram,plot_phase_vs_time,all_energy
-
+from uw.pulsar.phase_range import PhaseRange
 
 
 import os
@@ -18,7 +18,9 @@ np.seterr(all='ignore')
 
 parser = ArgumentParser()
 parser.add_argument("--pwndata", required=True)
-parser.add_argument("-p", "--pwnphase", required=True)
+group=parser.add_mutually_exclusive_group(required=True)
+group.add_argument("-p", "--pwnphase")
+group.add_argument("--no-phase-cut", default=False, action="store_true")
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 parser.add_argument("--emin", default=1e2, type=float)
 parser.add_argument("--localization-emin", default=1e3, type=float)
@@ -62,7 +64,10 @@ emax=args.emax
 if not all_energy(emin,emax) and do_cutoff:
     parser.error("Cutoff test can only be performed for analysis over all energy.")
 
-phase=yaml.load(open(args.pwnphase))[name]['phase']
+if args.no_phase_cut:
+    phase = PhaseRange(0,1)
+else:
+    phase=yaml.load(open(args.pwnphase))[name]['phase']
 
 print 'phase = ',phase
 
