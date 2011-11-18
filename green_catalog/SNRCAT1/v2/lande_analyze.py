@@ -109,7 +109,7 @@ def gtlike_analysis(roi, upper_limit=False):
 
     return results
 
-def pointlike_analysis(roi, hypothesis, localize=False, fit_extension=False):
+def pointlike_analysis(roi, hypothesis, localize=False, fit_extension=False, upper_limit=False):
 
     print '\n\nPerforming Pointlike analysis for %s hypothesis\n\n' % hypothesis
 
@@ -156,6 +156,9 @@ def pointlike_analysis(roi, hypothesis, localize=False, fit_extension=False):
 
     if fit_extension: 
         results['ts_ext_function'] = ts_ext
+
+    if upper_limit:
+        results['upper_limit'] = powerlaw_upper_limit(roi,name, verbosity=2)
 
     roi.save('roi_%s.dat' % hypothesis)
 
