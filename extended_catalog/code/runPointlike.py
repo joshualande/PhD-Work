@@ -199,8 +199,10 @@ if __name__ == "__main__":
             if name in roi.get_names():
                 roi.del_source(name)
 
+        kwargs = dict(use_gradient=True)
+
         roi.print_summary()
-        roi.fit()
+        roi.fit(**kwargs)
         roi.print_summary()
 
         if args.localize and hypothesis != 'Background':
@@ -211,12 +213,14 @@ if __name__ == "__main__":
             else:
 
                 roi.fit_extension(which=name,
-                                      bandfits=args.bandfits, error=args.error)
+                                  bandfits=args.bandfits, error=args.error,
+                                  **kwargs
+                                 )
 
                 # localize to get better localization error
                 roi.localize(which=name, bandfits=args.bandfits, update=False)
 
-        roi.fit()
+        roi.fit(**kwargs)
         roi.print_summary()
         print roi
 
