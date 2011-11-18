@@ -2,6 +2,7 @@ from sed_particle import BrokenPowerLawCutoff
 from sed_ic import InverseCompton
 from sed_synch import Synchrotron
 from sed_plotting import plot_sed
+from sed_thermal import CMB
 import sed_units as u
 
 def test_spectra():

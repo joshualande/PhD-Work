@@ -1,8 +1,8 @@
 from sed_spectrum import Spectrum
 import numpy as np
 
-import sed_units as u
 from sed_integrate import logsimps
+import sed_units as u
 
 class ParticleSpectrum(Spectrum):
     """ This class to represents a spectrum of particles with total energy total_energy. 

@@ -1,3 +1,5 @@
+import numpy as np
+
 from sed_spectrum import Spectrum
 
 class InverseCompton(Spectrum):
@@ -45,7 +47,7 @@ class InverseCompton(Spectrum):
             # v(energy) => 
 
             # prefactor has units cm^3*s^-1*erg^-1
-            pref = 2*math.pi*u.r0**2*c*electron_gamma**-2*(target_photon_energy*u.erg)**-1
+            pref = 2*np.pi*u.r0**2*c*electron_gamma**-2*(target_photon_energy*u.erg)**-1
             
             pref = float(pref/(u.cm**3*u.second**-1*u.erg**-1))
 

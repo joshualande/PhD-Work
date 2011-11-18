@@ -1,6 +1,8 @@
 import numpy as np
+from scipy import integrate,special
 
 from sed_spectrum import Spectrum
+from sed_integrate import logsimps
 import sed_units as u
 
 class Synchrotron(Spectrum):
