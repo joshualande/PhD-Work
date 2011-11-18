@@ -8,8 +8,8 @@ import tempfile
 import yaml
 import asciitable
 
-fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v36/analysis/'
-savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v36/'
+fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v45/analysis/'
+savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v45/'
 
 def write_latex(table, filename, **kwargs):
 
@@ -49,6 +49,7 @@ def get_results(pwn):
     results = yaml.load(open(f))
 
     if not results.has_key('at_pulsar') or not results['at_pulsar'].has_key('gtlike'):
+        return None
     return results
 
 def get_sed(pwn,binning,hypothesis):
