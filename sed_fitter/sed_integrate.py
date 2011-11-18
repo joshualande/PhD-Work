@@ -1,0 +1,89 @@
+import numpy as np
+from scipy import integrate
+def dbltrapz(f, x, y):
+    """ Perform a double trapezon integration of a vectorized function
+
+        f(x,y) where x is an array of x values and y is an array of y 
+        values to perform the integral over.
+    
+        Implementation taken from: 
+            http://mail.scipy.org/pipermail/scipy-user/2011-February/028592.html
+
+        I don't really understand it, but it seems to work...
+        
+        For example, if we wanted to integrate some really random function 
+
+            f(x,y) = e^(-x^2*y)
+
+        from 1<x<5 and 1<y<10.
+
+        Using matheamtica, we find that the integral is ~0.09:
+        
+            N[Integrate[Integrate[Exp[-(x^2*y)], {x, 1, 5}], {y, 1, 10}], 20]
+
+        Using our new function.
+
+        >>> import numpy as np
+        >>> f=lambda x,y: np.exp(-(x**2*y))
+        >>> int=dbltrapz(f, np.linspace(1,5,1000), np.linspace(1,10,1000))
+        >>> print np.allclose(int,0.089071862226039234609, rtol=1e-5, atol=1e-5)
+        True
+    """
+    yy = y[:,np.newaxis]
+    xx = x[np.newaxis,:]
+    integrand=f(xx,yy)
+
+    return integrate.trapz(integrate.trapz(integrand, yy, axis=0), x, axis=0)
+
+def dblsimps(f, x, y):
+    """ Same as dbltrapz, but performs a 2D simpson integral. 
+        
+        It should work the same as the other function:
+
+        >>> import numpy as np
+        >>> f=lambda x,y: np.exp(-(x**2*y))
+        >>> int=dbltrapz(f, np.linspace(1,5,1000), np.linspace(1,10,1000))
+        >>> print np.allclose(int,0.089071862226039234609, rtol=1e-5, atol=1e-5)
+        True
+    """
+    yy = y[:,np.newaxis]
+    xx = x[np.newaxis,:]
+    integrand=f(xx,yy)
+    return integrate.simps(integrate.simps(integrand, yy, axis=0), x, axis=0)
+
+
+def logsimps(f,xmin,xmax, per_decade):
+    """ Perform the simpson integral of a function f(x)
+        from xmin to xmax evaluationg the function
+        uniformly in log space.
+
+        This integration method is useful for typical astrophysical spectral which
+        roughly fairly constant over many decades in energy
+
+        per_decade is the number of points per decade in energy
+        to evaluate the function over.
+
+        Implementation Note: int f(x) dx = int f(x) x dlog(x). 
+
+        For example, a typical function to integrate is x^-2. To integrate it from 1e-2 to 1e2
+
+        Using mathematica, we find that the integral is ~100:
+
+        N[Integrate[x^-2, {x, .01, 100}]]
+
+        Using our nice function:
+
+        >>> print np.allclose(logsimps(lambda x: x**-2, .01, 100, 1000), 99.989, rtol=1e-5, atol=1e-5)
+        True
+    """
+    npts = int(np.ceil(per_decade*(np.log10(xmax)-np.log10(xmin))))
+    x = np.logspace(np.log10(xmin),np.log10(xmax), npts+1)
+    y = f(x) * x
+    log_x = np.log(x)
+    return integrate.simps(y=y, x=log_x)
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+

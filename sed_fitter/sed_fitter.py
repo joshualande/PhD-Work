@@ -30,26 +30,13 @@ from abc import abstractmethod
 
 import pylab as P
 import numpy as np
+from sed_integrate import logsimps
 from scipy import integrate
 from scipy import special
 
 import sympy
 
 import lande_units as u
-
-
-def logsimps(f,xmin,xmax, per_decade):
-    """ Perform the simpson integral of a function f(x)
-        from xmin to xmax evaluationg the function
-        unifomrly in log space.
-
-        Note: int f(x) dx = int f(x) x dlog(x). """
-
-    npts = per_decade*(np.log10(xmax)-np.log10(xmin))
-    x = np.logspace(np.log(xmin),np.log(xmax), npts)
-    y = f(x) * x
-    log_x = np.log(x)
-    return integrate.simps(y=y, x=log_x)
 
 class Spectrum(object):
     """ A spectrum is a base class which represents some
@@ -211,6 +198,10 @@ class ThermalSpectrum(Spectrum):
 
         self.kT = float(self.kT/u.erg)
 
+        # function is essentially 0 outside of this energy range.
+        self.emin=1e-3*self.kT
+        self.emax=1e2*self.kT
+
         self.pref = 8*math.pi/(u.planck**3*u.speed_of_light**3)
         self.pref = float(self.pref/(u.erg**-3*u.cm**-3))
 
@@ -281,7 +272,7 @@ class Synchrotron(Spectrum):
         q = u.electron_charge
         B = magnetic_field
         sin_alpha = 1 # ?
-        print 'what to do about sin(alpha)'
+        print 'what to do about sin(alpha)???'
         m = u.electron_mass
         c = u.speed_of_light
 
@@ -308,10 +299,8 @@ class Synchrotron(Spectrum):
         def integrand(electron_energy):
             """ Integrate over electron gamma: unitless =). """
             electron_gamma = electron_energy/self.mc2_in_erg
-            
 
             energy_c = electron_gamma**2*self.energy_c_pref
-
 
             # power_per_energy in units of erg/s/erg
             power_per_energy = self.pref*self.F(photon_energy/energy_c)
@@ -332,64 +321,85 @@ class Synchrotron(Spectrum):
     @staticmethod
     def units_string(): return '1/erg/s'
 
-class SingleElectronInverseCompton(Spectrum):
+class InverseCompton(Spectrum):
     """ The inverse compton radiation an electron spectrum
         and photon spectrum. """
+
+    per_decade = 10
 
     def __init__(self, electron_spectrum, photon_spectrum):
         self.electron_spectrum = electron_spectrum
         self.photon_spectrum = photon_spectrum
 
     @staticmethod
-    def f(q,gamma_e):
+    def F(q,gamma_e):
         """ This is equation 2.48 in Blumenthal & Gould. """
         return 2*q*np.log(q)+(1+2*q)*(1-q) + 0.5*(gamma_e*q)**2*(1-q)/(1+gamma_e*q)
 
-    def __call__(self, scattered_photon_energy):
+    def spectrum(self, scattered_photon_energy):
         """ Calculates the inverse compton spectrum expected
-            from a sinle electron and an arbitrary photon spectrum. """
+            from a sinle electron and an arbitrary photon spectrum. 
+            
+            Returns [ph/s/scattered photon energy]. """
 
-        mc2 = u.electron_mass*u.speed_of_light**2
+        mc2 = float(u.electron_mass*u.speed_of_light**2/u.erg)
 
         def integrand(electron_energy, target_photon_energy):
+            """ return [ph/s/incident photon energy/scattered photon energy] 
+                for a single electron
+                
+                in units [1/s/erg^2]
+            """
 
-            ee = self.electron_energy
+            ee = electron_energy
+            c = u.speed_of_light
+            m = u.electron_mass
 
-            # forbidden by kinematic concerns
-
-            minmum_photon_energy = .5*(scattered_photon_energy + \
-                  np.sqrt(scattered_photon_energy**2+ \
-                             scattered_photon_energy*(mc2)**2/target_photon_energy))
-
-            if ee < minmum_photon_energy: return 0
+            electron_gamma = target_photon_energy/mc2
 
             gamma_e = 4*target_photon_energy*ee/(mc2)**2
             q=scattered_photon_energy/(ee*gamma_e*(1-scattered_photon_energy/ee))
 
-            return 2*math.pi*u.r0**2*u.speed_of_light*\
-                    (mc2/target_photon_energy)*\
-                    self.photon_spectrum(target_photon_energy)*\
-                    self.f(q,gamma_e)
-                    
-        # integrate over the photon field
-        return uintegrate(integrand,0,np.inf, x_units=u.eV, y_units=1/u.seconds/u.eV)
+            # this formula is basically 7.28a in R&L with the difference that
 
-class InverseCompton(Spectrum):
+            # C => photon_spectrum
+            # v(energy) => 
+
+            # prefactor has units cm^3*s^-1*erg^-1
+            pref = 2*math.pi*u.r0**2*c*electron_gamma**-2*(target_photon_energy*u.erg)**-1
+            
+            pref = float(pref/(u.cm**3*u.second**-1*u.erg**-1))
+
+            # Note, photon_spectrum has units 'ph/erg/cm^3'
+            # F is unitless
+            # so pref*photon_spectrum*F has units ph/erg/cm^3 * cm^3*s^-1*erg^-1 = ph s^-1 erg^-2
+            return pref*\
+                    self.photon_spectrum(target_photon_energy, units=False)*\
+                    self.F(q,gamma_e)
+
+        def integrate_over_electron(target_photon_energy):
+            """ Integrate the InverseCompton spectrum over the photon electron distribution.
+            
+                returns [ph/s/incident photon energy/scattered photon energy] """
+            
+            f=lambda electron_energy: integrand(electron_energy,target_photon_energy)*\
+                    self.electron_spectrum(electron_energy, units=False)
+
+            emin = self.electron_spectrum.emin
+            emax = self.electron_spectrum.emax
+
+            return logsimps(f,emin,emax,self.per_decade)
+        # would be nice to vectorize both integrals =(
+        integrate_over_electron = np.vectorize(integrate_over_electron)
 
 
-    def __call__(self, photon_energy):
-        """ Returns number per unit energy dN/dE. """
+        emin = self.photon_spectrum.emin
+        emax = self.photon_spectrum.emax
 
-        def integrand(electron_energy):
-            single_electron=SingleElectronInverseCompton(
-                electron_energy = electron_energy, 
-                photon_spectrum = self.photon_spectrum)
+        return logsimps(integrate_over_electron,emin,emax,self.per_decade)
 
-            return single_electron(photon_energy)*self.electron_spectrum(electron_energy)
-
-        # integrate over all electrons
-        return uintegrate(integrand,0,np.inf, x_units=u.eV, y_units=1/u.seconds/u.eV**2)
-
+    @staticmethod
+    def units_string(): return '1/erg/s'
 
 def plot_sed(synch,
              distance,
@@ -423,7 +433,7 @@ def plot_sed(synch,
     axes.set_xlabel('Energy (%s)' % x_units)
     axes.set_ylabel(r'E$^2$ dN/dE (%s)' % y_units)
 
-    #axes.set_ylim(ymin=1e-5)
+    #axes.set_ylim(ymin=1e-8)
 
     P.savefig('sed.png')
 
@@ -439,6 +449,17 @@ if __name__ == '__main__':
         print 'total electron energy,',u.repr(p.integral(e_weight=1,units=True),'erg')
     #test_spectra()
 
+    def test_thermal():
+        cmb=CMB()
+        emin=1e-3*cmb.kT*u.erg
+        emax=1e2*cmb.kT*u.erg
+        cmb.loglog(emin=emin, emax=emax, 
+                   e_weight=2, 
+                   x_units='2.725*kelvin*boltzmann',
+                   filename='cmb.png')
+
+    #test_thermal()
+
     def stefan_hess_j1813():
         electron_spectrum = BrokenPowerLawCutoff(
                 total_energy = 2e48*u.erg,
@@ -446,7 +467,6 @@ if __name__ == '__main__':
                 index2 = 3.0,
                 e_break = 1e7*u.eV,
                 e_cutoff = 1.e14*u.eV,
-
                 emin=1e-6*u.eV,
                 emax=1e17*u.eV)
 
@@ -463,14 +483,12 @@ if __name__ == '__main__':
 
         cmb=CMB()
 
-        #ic = InverseCompton(electron_spectrum=electron_spectrum,
-        #                    photon_spectrum = cmb)
-
-        #ic = SingleElectronInverseCompton(electron_energy=u.TeV,
-        #                                  photon_spectrum = cmb)
+        ic = InverseCompton(electron_spectrum=electron_spectrum,
+                            photon_spectrum = cmb)
 
 
         plot_sed(synch,distance=4.2*u.kpc)
+        #plot_sed(ic,distance=4.2*u.kpc)
 
 
     stefan_hess_j1813()
