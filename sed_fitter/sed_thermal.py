@@ -1,3 +1,11 @@
+""" sed_thermal.py
+
+    Author: Joshua Lande <joshualande@gmail.com>
+"""
+import numpy as np
+
+from sed_spectrum import Spectrum
+import sed_units as u
 
 class ThermalSpectrum(Spectrum):
     def __init__(self, **kwargs):
@@ -19,7 +27,7 @@ class ThermalSpectrum(Spectrum):
         self.emin=1e-3*self.kT
         self.emax=1e2*self.kT
 
-        self.pref = 8*math.pi/(u.planck**3*u.speed_of_light**3)
+        self.pref = 8*np.pi/(u.planck**3*u.speed_of_light**3)
         self.pref = float(self.pref/(u.erg**-3*u.cm**-3))
 
     @staticmethod
