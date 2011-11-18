@@ -4,8 +4,7 @@ from os import makedirs,getcwd
 
 num=100000
 
-print 'putting the folder in the current directory, for now'
-workdir =  expandvars('/nfs/slac/g/ki/ki03/lande/compare_flight_mc_psf/v1')
+workdir =  expandvars('$FERMI/monte_carlo/compare_flight_mc_psf/v1')
 
 if not exists(workdir): makedirs(workdir) 
 
