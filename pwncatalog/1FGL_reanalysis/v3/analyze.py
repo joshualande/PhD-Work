@@ -180,4 +180,4 @@ r['point']['pointlike']=pointlike_analysis(roi, 'point', localize=True, cutoff=T
 save_results()
 if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, 'point', cutoff=True)
 
-plot('prelocalize')
+save_results()
