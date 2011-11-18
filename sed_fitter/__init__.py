@@ -1,11 +1,20 @@
-""" sed_fitter.py
+""" pysed
 
-    Code to compute SEDs. This code differs from other SED packages in
+    An object oriented package for computing spectral energy
+    distributions of astrophysical in python. 
+    
+    This code differs from other SED packages in
     valuing human readability over computational efficiency. 
 
+    Consequently, this code is probably not useful for professional work,
+    but might be a useful teaching aid.
 
+    References:
     Notes: 
         * R&L is Rybicki and Lightman "Radiative Processes in Astrophysics
+
+    Dependencies:
+        * numpy, scipy, matplotlib, sympy
 
 
     This file is free software; you can redistribute it and/or modify
@@ -23,17 +32,3 @@
 
     Author: Joshua Lande
 """
-
-import math
-from abc import abstractmethod
-
-import pylab as P
-import numpy as np
-from sed_integrate import logsimps
-from scipy import integrate
-from scipy import special
-
-import sympy
-
-import lande_units as u
-

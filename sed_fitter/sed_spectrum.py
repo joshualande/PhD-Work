@@ -1,3 +1,11 @@
+""" Author: J. Lande
+"""
+from abc import abstractmethod
+
+import numpy as np
+import pylab as P
+
+import sed_units as u
 
 class Spectrum(object):
     """ A spectrum is a base class which represents some

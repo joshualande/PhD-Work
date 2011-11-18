@@ -1,3 +1,7 @@
+import numpy as np
+
+from sed_spectrum import Spectrum
+import sed_units as u
 
 class Synchrotron(Spectrum):
     """ Calculates the syncrotron power radiated
@@ -40,7 +44,7 @@ class Synchrotron(Spectrum):
 
 
         # This is the prefactor from R&L (eq 6.18) - power/unit frequency
-        self.pref = (math.sqrt(3)/(2*math.pi))*(q**3*B*sin_alpha)/(u.electron_mass*c**2)
+        self.pref = (np.sqrt(3)/(2*np.pi))*(q**3*B*sin_alpha)/(u.electron_mass*c**2)
         # convert from (power/frequency) to (power/energy) in units of erg/s/erg (or 1/s)
         self.pref /= u.planck
         self.pref = float(self.pref/(u.erg*u.second**-1*u.erg**-1))

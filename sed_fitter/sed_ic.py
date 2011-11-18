@@ -1,3 +1,4 @@
+from sed_spectrum import Spectrum
 
 class InverseCompton(Spectrum):
     """ The inverse compton radiation an electron spectrum
