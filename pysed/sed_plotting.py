@@ -5,23 +5,23 @@ import sympy
 
 import sed_units as u
 
-def plot_sed(synch,
+def plot_sed(spectra,
              distance,
-             x_units = 'eV',
-             y_units = 'eV/cm^2/s^1',
+             x_units_string = 'eV',
+             y_units_string = 'eV/cm^2/s^1',
+             emin=1e-7*u.eV,
+             emax=1e15*u.eV,
+             npts=1000,
+             filename=None
             ):
-    """ Plot the synchotron + inverse compton SED. """
+    """ Plot an SED with multiple componets.
+    
+        Spectra is a dictionary:
 
-    emin=1e-7*u.eV
-    emax=1e15*u.eV
-
-    x = u.tosympy(np.logspace(np.log10(float(emin/u.erg)), np.log10(float(emax/u.erg)), 100),u.erg)
-    # y is in units of self.units()
-    y = sympy.Matrix(map(synch,x)).transpose()
-
-
-    y=y.multiply_elementwise(x).multiply_elementwise(x)
-    y /= (4*np.pi*distance**2)
+        E.G:
+            spectra = {'Synchrotron': sed_synch.Synctrotron(...),
+                       'Inverse Compton': sed_ic.InverseCompton(...)}
+    """
 
 
     fig = P.figure(None,figsize=(5.5,4.5))
@@ -29,14 +29,19 @@ def plot_sed(synch,
     fig.subplots_adjust(left=0.18,bottom=0.13,right=0.95,top=0.95)
     axes = fig.add_subplot(111)
 
-    x = u.tonumpy(x,u.fromstring(x_units))
-    y = u.tonumpy(y,u.fromstring(y_units))
-    axes.loglog(x,y)
+    for k,v in spectra.items():
+        print k,v
+        v.loglog(emin=emin, emax=emax,
+                 x_units_string = x_units_string,
+                 y_units_string = y_units_string,
+                 e_weight=2,
+                 scale=1/(4*np.pi*distance**2),
+                 npts=npts,
+                 axes=axes,
+                 label=k)
 
     axes.set_xlabel('Energy (%s)' % x_units)
     axes.set_ylabel(r'E$^2$ dN/dE (%s)' % y_units)
 
-    #axes.set_ylim(ymin=1e-8)
-
-    P.savefig('sed.png')
+    if filename is not None: P.savefig(filename)
     return axes

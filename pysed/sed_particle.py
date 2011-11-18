@@ -11,6 +11,8 @@ class ParticleSpectrum(Spectrum):
     """
     per_decade=10
 
+    vectorized = True
+
     def __init__(self,total_energy, emin, emax, *args, **kwargs):
         """ Normalize total energy output. """
         self.emin = float(emin/u.erg)

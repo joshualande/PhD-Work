@@ -8,6 +8,9 @@ from sed_spectrum import Spectrum
 import sed_units as u
 
 class ThermalSpectrum(Spectrum):
+
+    vectorized = True
+
     def __init__(self, **kwargs):
         """ A blackbody thermal spectrum
             for a given temperature kT [energy]. 

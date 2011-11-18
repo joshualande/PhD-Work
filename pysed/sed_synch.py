@@ -3,6 +3,7 @@ from scipy import integrate,special
 
 from sed_spectrum import Spectrum
 from sed_integrate import logsimps
+from sed_cache import FunctionCache
 import sed_units as u
 
 class Synchrotron(Spectrum):
@@ -18,20 +19,18 @@ class Synchrotron(Spectrum):
 
     """ This is equation 6.31 in R&L. """
 
+    vectorized = False
+
     per_decade = 10
 
-    @np.vectorize
     def F(x):
-        """ for some reason, special.kv(5/3,1e10) is NaN, not 0 ???
-            for now, just clip the function above 1e5 to be 0. 
-
-            N.B very important to always return a float since the type of
-            the entire return array returned when a vector is passed in
-            is decided by the type of the first number that is returned.
-
-            See http://docs.scipy.org/doc/numpy-1.6.0/reference/generated/numpy.vectorize.html """
-        if x>1e5: return float(0)
+        """ This is equation 6.31c in R&L.
+        
+            for some reason, special.kv(5/3,1e10) is NaN, not 0 ???
+            for now, just clip the function above 1e5 to be 0. """
+        if x>1e5: return 0
         return x*integrate.quad(lambda j: special.kv(5./3,j),x,np.inf)[0]
+    F=FunctionCache(F, xmin=0, xmax=20, npts=1000, fill_value=0)
 
     def __init__(self, electron_spectrum, magnetic_field):
 
@@ -71,7 +70,7 @@ class Synchrotron(Spectrum):
             energy_c = electron_gamma**2*self.energy_c_pref
 
             # power_per_energy in units of erg/s/erg
-            power_per_energy = self.pref*self.F(photon_energy/energy_c)
+            power_per_energy = self.pref*Synchrotron.F(photon_energy/energy_c)
             # divide by photon energy to get photons/energy for a single
             # electron (in units of ph/erg/s)
             photons_per_energy = power_per_energy/photon_energy

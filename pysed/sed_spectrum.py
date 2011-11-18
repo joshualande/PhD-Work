@@ -4,6 +4,7 @@ from abc import abstractmethod
 
 import numpy as np
 import pylab as P
+import sympy
 
 import sed_units as u
 
@@ -11,20 +12,46 @@ class Spectrum(object):
     """ A spectrum is a base class which represents some
         physical quanity as a function of energy. """
 
-    def loglog(self, emin, emax, e_weight=0, npts=1000, x_units='erg', y_units=None, 
-               filename=None, fignum=None, axes=None, **kwargs):
+    @staticmethod
+    def logspace_unit(emin,emax, npts):
+        """ Convenience function to compute
+            an array of points between
+            emin and emax when emin and emax
+            are united and have the same units.
+            
+            Example:
+
+            >>> Spectrum.logspace_unit(1*u.cm,1e3*u.cm,4)
+            [0.01*m, 0.1*m, 1.0*m, 10.0*m]
+        """
+        # make sure numbers have same units
+        val = lambda x: x.as_two_terms()[0]
+        unit = lambda x: x.as_two_terms()[1]
+
+        assert(unit(emin)==unit(emax))
+
+        units = unit(emin)
+        emin,emax = val(emin), val(emax)
+
+        return u.tosympy(np.logspace(np.log10(float(emin)),
+                                     np.log10(float(emax)), npts),units)
+                    
+    def loglog(self, emin, emax, 
+               x_units_string,
+               y_units_string,
+               e_weight=0, # weight the function by energy raised to this power
+               scale=1, # scale
+               npts=1000,
+               x_label=None,
+               y_label=None,
+               filename=None, fignum=None, 
+               axes=None, **kwargs):
         """ Plots the energy spectrum. 
 
             emin and emax must have sympy units.
             
-            x_units and y_units must be strings suitable
+            x_units_string and y_units_string must be strings suitable
             for plotting on the matplotlib axes. """
-
-        if y_units is None: 
-            if e_weight>0:
-                y_units = '%s^%s*%s' % ('erg',e_weight,self.units_string())
-            else:
-                y_units = '%s' % self.units_string()
 
         if axes is None:
             fig = P.figure(fignum,figsize=(5.5,4.5))
@@ -32,29 +59,26 @@ class Spectrum(object):
             fig.subplots_adjust(left=0.18,bottom=0.13,right=0.95,top=0.95)
             axes = fig.add_subplot(111)
 
-        x = np.logspace(np.log10(float(emin/u.erg)), np.log10(float(emax/u.erg)), npts)
-
+        x = Spectrum.logspace_unit(emin,emax,npts)
         # y is in units of self.units()
-        y = x**(e_weight)*self(x, units=False)
+        y = scale*self(x)
+        for i in range(e_weight): y=y.multiply_elementwise(x)
 
-        x=u.convert(x,u.erg, u.fromstring(x_units))
-        y=u.convert(y,u.erg**(e_weight)*self.units(), u.fromstring(y_units))
+        x=u.tonumpy(x,u.fromstring(x_units_string))
+        y=u.tonumpy(y,u.fromstring(y_units_string))
 
         axes.loglog(x,y, **kwargs)
-        axes.set_xlabel(x_units)
+
+        if x_label is None: x_label = x_units_string
+        if y_label is None: y_label = ('E$^%s$' % e_weight if e_weight>0 else '') + 'dN/dE (%s)' % y_units_string
+
+        axes.set_xlabel(x_label)
+        axes.set_ylabel(y_label)
+
         axes.set_xlim(x[0],x[-1])
 
-        if e_weight > 0:
-            axes.set_ylabel(r'E$^%s$ dN/dE (%s)' % (e_weight,y_units))
-        else:
-            axes.set_ylabel('dN/dE (%s)' % y_units)
         if filename is not None: P.savefig(filename)
         return axes
-
-    @abstractmethod
-    def __call__(self, energy): 
-        """ Returns dN/dE. Energy must be in erg. """
-        pass
 
     @classmethod                                                                                                                                                            
     def units(cls):                                                                                                                                                         
@@ -62,10 +86,31 @@ class Spectrum(object):
         return u.fromstring(cls.units_string())                                                                                                                             
 
     def __call__(self, energy, units=True):
-        """ Returns number of particles per unit energy [1/energy]. """
+        """ Returns number of particles per unit energy [1/energy]. 
+        
+            This function vectorized the output if a numpy array
+            or Sympy Matix of energies is passed """
+
+        if isinstance(energy,np.ndarray) and units==False:
+            if self.vectorized:
+                return self.spectrum(energy)
+            else:
+                return np.asarray([self(i) for i in energy])
+
+        if isinstance(energy,sympy.Matrix) and units==True:
+            if self.vectorized:
+                energy = u.tonumpy(energy,u.erg)
+                return u.tosympy(self.spectrum(energy),self.units())
+            else:
+                return sympy.Matrix([self(i) for i in energy]).transpose()*self.units()
+
         if units: energy = float(energy/u.erg)
         spectrum=self.spectrum(energy)
         return spectrum*(self.units() if units else 1)
 
 
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
 

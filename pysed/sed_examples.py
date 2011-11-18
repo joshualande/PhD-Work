@@ -35,8 +35,9 @@ def stefan_hess_j1813():
     emax=1e15*u.eV
 
     electron_spectrum.loglog(emin=emin, emax=emax, 
-               e_weight=2, x_units='eV', y_units='eV', 
-               filename='ElectronSpectrum.png')
+                             e_weight=2, 
+                             x_units_string='eV', y_units_string='eV', 
+                             filename='electrons.png')
 
     synch = Synchrotron(electron_spectrum=electron_spectrum,
                         magnetic_field=3e-6*u.gauss)
@@ -47,8 +48,17 @@ def stefan_hess_j1813():
                         photon_spectrum = cmb)
 
 
-    plot_sed(synch,distance=4.2*u.kpc)
-    #plot_sed(ic,distance=4.2*u.kpc)
+    #plot_sed(synch,distance=4.2*u.kpc)
+    spectra = dict()
+    #spectra['Synchrotron']=synch
+    spectra['Inverse Compton']=ic
+
+    axes=plot_sed(
+        spectra,
+        distance=4.2*u.kpc,
+        )
+    axes.set_ylim(ymin=1e-8)
+    P.savefig(filename='sed.png')
 
 
 def test_thermal_spectrum():
