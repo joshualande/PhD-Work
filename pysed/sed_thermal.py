@@ -14,28 +14,54 @@ class ThermalSpectrum(Spectrum):
     vectorized = True
     per_decade=10
 
-    def __init__(self, **kwargs):
-        """ A blackbody thermal spectrum
-            for a given temperature kT [energy]. 
+    def __init__(self, energy_density, kT=None, T=None):
+        """ A thermal spectrum has the sameself):
+            spectral shape as the blackbody
+            spectrum but has an arbitrarily 
+            normalizable energy density.
 
+            The thermal spectrum is
+
+            n(E) = 15*U/(pi*kT)^4*E^2/(exp(E/kT)-1)
+
+            where 
+              * n(E) is the number of photons per unit energy per unit volume,
+              * U is the total energy per unit volume.
+              * kT is the temperature of the photons
+
+            This formula is equation 33 from Sturner et al 1997
+            http://iopscience.iop.org/0004-637X/490/2/619/pdf/35841.pdf
+        
             Input can be either 'kT' in energy units or
             'T' in temperature units.
-            
-            This formula is on the top of page 208 in R&L """
-        if kwargs.has_key('kT'): self.kT = kwargs.pop('kT')
-        elif kwargs.has_key('T'): self.kT = u.boltzmann*kwargs.pop('T')
-        else: raise Exception("Either kT or T must be passed into ThermalSpectrum")
-        if len(kwargs)>0: raise Exception("Invalid argument(s) to ThermalSpectrum: %s" % str(kwargs))
 
-        self.kT = float(self.kT/u.erg)
+            For example, in XXX et al, the infrared photon
+            field has temperature kT=3e-3 eV and energy
+            density U=0.9 eV/cm^3
+
+                >>> infrared=ThermalSpectrum(kT=3e-3*u.eV, energy_density=0.9*u.eV/u.cm**3)
+
+            To convince yourself that this code correctly normalized
+            the spectrum, you can explicity integrate E*dN/dE = total energy per unit volume:
+
+                >>> print u.repr(infrared.integral(units=True,e_weight=1),'eV/cm^3','%.2f')
+                0.90 eV/cm^3
+             """
+        if kT is not None: kT = kT
+        elif T is not None: kT = u.boltzmann*kwargs.pop('T')
+        else: raise Exception("kT or k must be passed to ThermalSpectrum")
+
+        self.kT = float(kT/u.erg)
 
         # function is essentially 0 outside of this energy range.
         self.emin=1e-4*self.kT
         self.emax=1e2*self.kT
 
-        raise Exception("This is bad, need to allow for specifying the energy density.")
-
-        self.pref = 8*np.pi/(u.planck**3*u.speed_of_light**3)
+        # equation 33 in Sturner et al 1997
+        # Note, prefactor*E^2/(exp(E/kT)-1) has units
+        # of photons/energy/volume, so prefactor has units
+        # of photons/energy^3/volume.
+        self.pref = 15*energy_density/(np.pi*kT)**4
         self.pref = float(self.pref/(u.erg**-3*u.cm**-3))
 
     @staticmethod
@@ -50,9 +76,6 @@ class ThermalSpectrum(Spectrum):
     @staticmethod                                                                                                                                                           
     def units_string(): return '1/erg/cm^3'
 
-    def energy_density(self,units=True):
-        return self.integral(units=units,e_weight=1)
-
     def integral(self, units=True, e_weight=0):
         """ Integrate the thermal spectrum from emin to emax.
             
@@ -60,10 +83,64 @@ class ThermalSpectrum(Spectrum):
         int = logsimps(lambda e: e**e_weight*self.spectrum(e), self.emin, self.emax, self.per_decade)
         return int*(u.erg**(e_weight+1)*self.units() if units else 1)
 
-class BlackBody(ThermalSpectrum)
+class BlackBody(ThermalSpectrum):
+
+    @staticmethod
+    def compute_energy_density(kT):
+        """ Comparing the formula for a blackbody spectrum
+            with prefactor 
+
+                pref = 8pi/(hc)^3
+
+            to the fomrula for a general thermal spectrum:
+
+                pref = 15*U/(pi*kT)^4,
+
+            we find that for a blackbody spectrum,
+            we have a thermal spectrum with
+
+                U = (8*pi/(hc)^3)*(pi*kT)^4/15. """
+        h=u.planck
+        c=u.speed_of_light
+        pi=np.pi
+        return (8*pi/(h*c)**3)*((pi*kT)**4/15)
+
+
+    def __init__(self,kT=None,T=None):
+        """ Implement a blackbody spectrum.
+
+            The formula for the blackbody spectrum is 
+            
+            n(E)=((8pi)/(hc)^3)*E^2/(exp(E/kT)-1)
+
+            where 
+              * n(E) is the number of photons per unit energy per unit volume,
+              * kT is the temperature of the photons
+
+            This formula is on the top of page 208 in R&L
+        """
+        if kT is not None: kT = kT
+        elif T is not None: kT = u.boltzmann*T
+        else: raise Exception("kT or k must be passed to BlackBody")
+
+        energy_density=BlackBody.compute_energy_density(kT)
+        super(BlackBody,self).__init__(energy_density=energy_density, kT=kT)
+
 
 class CMB(BlackBody):
+    """ The CMB is a blackbody spectrum with temperature 2.725K.
+
+        Note, the energy density for a CMB spectrum is 0.26 eV/cm^3:
+        
+        >>> cmb = CMB()
+        >>> print u.repr(cmb.integral(units=True,e_weight=1),'eV/cm^3','%.2f')
+        0.26 eV/cm^3
+    """
     def __init__(self): super(CMB,self).__init__(T=2.725*u.kelvin)
 
 
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
 
