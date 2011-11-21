@@ -1,13 +1,13 @@
 """ pysed
 
     An object oriented package for computing spectral energy
-    distributions of astrophysical in python. 
-    
-    This code differs from other SED packages in
-    valuing human readability over computational efficiency. 
+    distributions of astrophysical sources in python. 
 
-    Consequently, this code is probably not useful for professional work,
-    but might be a useful teaching aid.
+    This code differs from other SED packages in valuing human readability
+    and conceptual clarity over computational efficiency.
+
+    Consequently, this code may not be fast enough for professional work
+    and is designed primarily as a teaching aid.
 
     References:
     Notes: 
@@ -15,7 +15,6 @@
 
     Dependencies:
         * numpy, scipy, matplotlib, sympy
-
 
     This file is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,5 +29,5 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    Author: Joshua Lande
+    Author: Joshua Lande <joshualande@gmail.com>
 """

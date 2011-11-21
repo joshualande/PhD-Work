@@ -3,6 +3,8 @@
     Author: Joshua Lande <joshualande@gmail.com>
 """
 import numpy as np
+from scipy import integrate
+from sed_integrate import logsimps
 
 from sed_spectrum import Spectrum
 import sed_units as u
@@ -10,6 +12,7 @@ import sed_units as u
 class ThermalSpectrum(Spectrum):
 
     vectorized = True
+    per_decade=10
 
     def __init__(self, **kwargs):
         """ A blackbody thermal spectrum
@@ -27,8 +30,10 @@ class ThermalSpectrum(Spectrum):
         self.kT = float(self.kT/u.erg)
 
         # function is essentially 0 outside of this energy range.
-        self.emin=1e-3*self.kT
+        self.emin=1e-4*self.kT
         self.emax=1e2*self.kT
+
+        raise Exception("This is bad, need to allow for specifying the energy density.")
 
         self.pref = 8*np.pi/(u.planck**3*u.speed_of_light**3)
         self.pref = float(self.pref/(u.erg**-3*u.cm**-3))
@@ -39,29 +44,25 @@ class ThermalSpectrum(Spectrum):
         return 1/(np.exp(x)-1)
 
     def spectrum(self, energy):
-        """ Return the energy density in units of 1/energy/Volume."""
+        """ Return the energy density in units of [1/erg/cm^-3]."""
         return self.pref*energy**2*self.occupation_number(energy/self.kT)
 
     @staticmethod                                                                                                                                                           
     def units_string(): return '1/erg/cm^3'
 
-    def integral(self, emin=0*u.erg, emax=np.inf*u.erg, units=True, e_weight=0):
+    def energy_density(self,units=True):
+        return self.integral(units=units,e_weight=1)
 
+    def integral(self, units=True, e_weight=0):
         """ Integrate the thermal spectrum from emin to emax.
             
-            Integrand is in units of energy/volume
-        
-            Implementation note: integrate with energy measured in units of kT
+            Returns the inegral in untis of [erg^e_weight/cm^-3] """
+        int = logsimps(lambda e: e**e_weight*self.spectrum(e), self.emin, self.emax, self.per_decade)
+        return int*(u.erg**(e_weight+1)*self.units() if units else 1)
 
-        """
-        if units:
-            if emin not in [0, -np.inf, np.inf]: emin = float(emin/u.erg)
-            if emax not in [0, -np.inf, np.inf]: emax = float(emax/u.erg)
+class BlackBody(ThermalSpectrum)
 
-        raise Exception("Fix")
-        return self.pref**self.kT**(3+e_weight)*integrate.quad(lambda x: x**(2+e_weight)*self.occupation_number(x), 0, np.inf)[0]
-
-class CMB(ThermalSpectrum):
+class CMB(BlackBody):
     def __init__(self): super(CMB,self).__init__(T=2.725*u.kelvin)
 
 

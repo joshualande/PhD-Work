@@ -1,3 +1,9 @@
+""" Code that calculates the synchrotron radiation
+    from a given electron spectrum and magnetic
+    field.
+
+    Author: Joshua Lande <joshualande@gmail.com>
+"""
 import numpy as np
 from scipy import integrate,special
 

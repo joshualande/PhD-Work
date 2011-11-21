@@ -1,3 +1,7 @@
+""" Code related to plotting SEDs.
+
+    Author: Joshua Lande <joshualande@gmail.com>
+"""
 import numpy as np
 import pylab as P
 
@@ -14,7 +18,7 @@ def plot_sed(spectra,
              npts=1000,
              filename=None
             ):
-    """ Plot an SED with multiple componets.
+    """ Plot an E^2 dN/dE SED with multiple componets.
     
         Spectra is a dictionary:
 
@@ -40,8 +44,8 @@ def plot_sed(spectra,
                  axes=axes,
                  label=k)
 
-    axes.set_xlabel('Energy (%s)' % x_units)
-    axes.set_ylabel(r'E$^2$ dN/dE (%s)' % y_units)
+    axes.set_xlabel('Energy (%s)' % x_units_string)
+    axes.set_ylabel(r'E$^2$ dN/dE (%s)' % y_units_string)
 
     if filename is not None: P.savefig(filename)
     return axes

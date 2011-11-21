@@ -1,3 +1,7 @@
+""" This code defines various particle spectra.
+
+    Author: Joshua Lande <joshualande@gmail.com>
+"""
 from sed_spectrum import Spectrum
 import numpy as np
 
@@ -61,16 +65,20 @@ class SmoothBrokenPowerLaw(ParticleSpectrum):
 
         This formula is taken from the fermi-LAT publication
         on W51C: http://arxiv.org/abs/0910.0908
+
+        but the hardcoded value 2 from the paper is settable
+        as the parameter beta.
     """
-    def init(self, index1, index2, e_scale, e_break):
-        self.index = index
-        self.e_cutoff = float(e_cutoff/u.erg)                                                                                                                               
-        self.e_break = float(e_break/u.erg)                                                                                                                                 
+    def init(self, index1, index2, e_break, e_scale, beta):
+        self.index1 = index1
+        self.index2 = index2
+        self.e_break = float(e_break/u.erg)                                                                                                                               
         self.e_scale = float(e_scale/u.erg)                                                                                                                                 
+        self.beta = beta
 
     def spectrum(self, energy):
         """ Returns number of particles per unit energy [1/erg]. """
-        return self.norm*(energy/self.e_scale)**(-self.index1)*(1 + (energy/self.e_break)**beta)*(-(index2-index1)/beta)
+        return self.norm*(energy/self.e_scale)**(-self.index1)*(1 + (energy/self.e_break)**self.beta)**(-(self.index2-self.index1)/self.beta)
 
 class BrokenPowerLawCutoff(ParticleSpectrum):
 

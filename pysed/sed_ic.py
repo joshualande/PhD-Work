@@ -1,3 +1,8 @@
+""" Module to compute inverse compton radiation
+    for a given electron and photon spectrum.
+    
+    Author: Joshua Lande <joshualande@gmail.com>
+"""
 import numpy as np
 
 from sed_integrate import logsimps
@@ -37,7 +42,7 @@ class InverseCompton(Spectrum):
                 in units [1/s/erg^2]
             """
 
-            ee = electron_energy
+            ee = electron_energy # in erg
             c = u.speed_of_light
             m = u.electron_mass
 
@@ -99,5 +104,5 @@ class InverseCompton(Spectrum):
         return logsimps(integrate_over_electron,emin,emax,self.per_decade)
 
     @staticmethod
-    def units_string(): return '1/erg/s'
+    def units_string(): return '1/s/erg'
 

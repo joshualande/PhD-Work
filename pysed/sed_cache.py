@@ -1,4 +1,5 @@
 """ Code to cache mathematical functions for faster evaluation.
+
     Author: Joshua Lande <joshualande@gmail.com>
 """
 import numpy as np
@@ -21,15 +22,14 @@ class FunctionCache(object):
                 >>> f = lambda x: x**2
                 >>> F = FunctionCache(f, 0,10) 
                 >>> x = np.asarray([0,2,4,8])
-                >>> F(x), f(x)
-                >>> print np.allclose(F(x), f(x))
+                >>> print np.allclose(F(x), x**2)
                 True
         """
         self.F = f
         self.x = np.linspace(xmin,xmax,npts)
         self.y = np.asarray([f(i) for i in self.x])
 
-        self.interp=interp1d(self.x,self.y,kind=3,bounds_error=bounds_error,fill_value=fill_value)
+        self.interp=interp1d(self.x,self.y,kind=kind,bounds_error=bounds_error,fill_value=fill_value)
 
     def __call__(self,x):
         return self.interp(x)

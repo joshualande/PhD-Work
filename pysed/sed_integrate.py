@@ -1,3 +1,8 @@
+""" These functions define integration routines 
+    necessary through the code.
+
+    Author: Joshua Lande <joshualande@gmail.com>
+"""
 import numpy as np
 from scipy import integrate
 def dbltrapz(f, x, y):
