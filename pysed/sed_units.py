@@ -41,7 +41,7 @@ units.microgauss = 1e-6*units.gauss
 units.tesla = 1e4*units.gauss
 
 units.pc = units.parsec = 3.08568025e18*units.cm
-units.kpc = 1e3*units.parsec
+units.kpc = units.kiloparsec = 1e3*units.parsec
 
 # classical electron radius
 units.r0=units.electron_charge**2/(units.electron_mass*units.speed_of_light**2)

@@ -64,6 +64,12 @@ class Spectrum(object):
             fig.subplots_adjust(left=0.18,bottom=0.13,right=0.95,top=0.95)
             axes = fig.add_subplot(111)
 
+            if x_label is None: x_label = x_units_string
+            if y_label is None: y_label = ('E$^%s$' % e_weight if e_weight>0 else '') + 'dN/dE (%s)' % y_units_string
+
+            axes.set_xlabel(x_label)
+            axes.set_ylabel(y_label)
+
         if emin is None: emin=self.emin*u.erg
         if emax is None: emax=self.emax*u.erg
 
@@ -75,12 +81,6 @@ class Spectrum(object):
         y=u.tonumpy(y,u.fromstring(y_units_string))
 
         axes.loglog(x,y, **kwargs)
-
-        if x_label is None: x_label = x_units_string
-        if y_label is None: y_label = ('E$^%s$' % e_weight if e_weight>0 else '') + 'dN/dE (%s)' % y_units_string
-
-        axes.set_xlabel(x_label)
-        axes.set_ylabel(y_label)
 
         if filename is not None: P.savefig(filename)
         return axes

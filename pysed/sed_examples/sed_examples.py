@@ -9,7 +9,7 @@ import pylab as P
 from sed_particle import BrokenPowerLawCutoff,SmoothBrokenPowerLaw
 from sed_ic import InverseCompton
 from sed_synch import Synchrotron
-from sed_plotting import plot_sed
+from sed_plotting import SEDPlotter
 from sed_thermal import CMB,ThermalSpectrum
 import sed_units as u
 
@@ -31,7 +31,7 @@ def test_spectra():
     p = PowerLaw(total_energy = 2e48*u.erg, index=2.6,
                  emin=1e-6*u.eV,emax=1e14*u.eV)
     #ax=p.loglog(u.keV,u.MeV, e_weight=2, filename='sed.png')
-    print 'total electron energy,',u.repr(p.integral(e_weight=1,units=True),'erg')
+    print 'total electron energy,',u.repr(p.integrate(e_weight=1,units=True),'erg')
 
 def plot_CMB_spectra():
     cmb=CMB()
@@ -50,7 +50,7 @@ def stefan_hess_j1813():
             emin=1e-6*u.eV,
             emax=1e17*u.eV)
 
-    print 'total electron energy %s' % u.repr(electron_spectrum.integral(e_weight=1,units=True),'erg')
+    print 'total electron energy %s' % u.repr(electron_spectrum.integrate(e_weight=1,units=True),'erg')
     emin=1e-7*u.eV
     emax=1e15*u.eV
 
@@ -99,16 +99,19 @@ def w51C_yasunobu_ic():
     # SmoothBrokenPowerLaw formula is equation 1 in text
 
     # Electron distribution parameters taken from Table 1 in text
+    # for model (c) InverseCompton
     electrons = SmoothBrokenPowerLaw(
         total_energy=11e50*u.erg,
         index1 = 1.5, # p10 in text
-        index2 = 1.5 + 1.4, # index2 = index1 + delta_s
+        index2 = 1.5 + 2.3, # index2 = index1 + delta_s
         e_break = 20*u.GeV,
         e_scale = 1*u.GeV, # p10 in text
         beta = 2,
         emin = 10*u.MeV, # from footnote to table 1
         emax = 100*u.TeV, # I hope this is large enough
         )
+
+    distance = 6*u.kiloparsec # from page 8 in text
 
     electrons.loglog(
         e_weight = 2,
@@ -119,38 +122,40 @@ def w51C_yasunobu_ic():
 
     # Photon fields take from table 1
     cmb = CMB()
-    infrared = ThermalSpectrum(kT=3e-3*u.eV)
-    optical = ThermalSpectrum(kT=0.25*u.eV)
+    infrared = ThermalSpectrum(kT=3e-3*u.eV, energy_density=0.9*u.eV*u.cm**-3)
+    optical = ThermalSpectrum(kT=0.25*u.eV, energy_density=0.84*u.eV*u.cm**-3)
 
     def plot_photon_fields():
         kwargs = dict(x_units_string='eV',y_units_string='eV/cm^3', e_weight=2)
-        axes = cmb.loglog(label='cmb',**kwargs)
-        infrared.loglog(label='infrared',axes=axes,**kwargs)
-        optical.loglog(label='optical',axes=axes,**kwargs)
-        P.legend()
+        axes = cmb.loglog(label='cmb',color='red',**kwargs)
+        infrared.loglog(label='infrared',axes=axes,color='blue',**kwargs)
+        optical.loglog(label='optical',axes=axes,color='green',**kwargs)
+        P.legend(loc=3)
         P.savefig('w51c_photon_fields.png')
     plot_photon_fields()
 
-    print 'Energy Density: \n\tCMB=%s, \n\tinfrared=%s, \n\toptical=%s' % \
-        (u.repr(cmb.energy_density(),'eV*cm^-3'),
-         u.repr(infrared.energy_density(),'eV*cm^-3'),
-         u.repr(optical.energy_density(),'eV*cm^-3'))
+    plot_field = lambda i: 'kT=%s, E=%s' % (u.repr(i.kT*u.erg,'eV'), u.repr(i.integrate(e_weight=1),'eV*cm^-3'))
 
-    synch = Synchrotron(electron_spectrum=electron_spectrum,
+    print 'Photon Fields: \n\tCMB: %s \n\tinfrared: %s \n\toptical: %s' % \
+        (plot_field(cmb),plot_field(infrared),plot_field(optical))
+
+    synch = Synchrotron(electron_spectrum=electrons,
                         magnetic_field=3e-6*u.gauss)
 
-    spectra = dict()
-    spectra['Synchrotron']=synch
-    #spectra['Inverse Compton']=ic
 
-    axes=plot_sed(
-        spectra,
+    sed = SEDPlotter(
+        emin=9e-6*u.eV, 
+        emax=2e12*u.eV,
         distance=distance,
-        x_units='eV',
+        x_units_string='eV',
         y_units_string='erg*cm^-2*s^-1',
-        )
-    #axes.set_ylim(ymin=1e-8)
-    P.savefig(filename='w51c_photon_fields.png')
+        figsize=(7,2))
+
+    sed.plot(synch, label='Synchrotron')
+    #sed.plot(ic, label='Inverse Compton')
+
+    sed.axes.set_ylim(ymin=2e-13, ymax=2e-10)
+    sed.save(filename='w51c_sed.png')
 
 if __name__ == '__main__':
 

@@ -44,7 +44,7 @@ class ThermalSpectrum(Spectrum):
             To convince yourself that this code correctly normalized
             the spectrum, you can explicity integrate E*dN/dE = total energy per unit volume:
 
-                >>> print u.repr(infrared.integral(units=True,e_weight=1),'eV/cm^3','%.2f')
+                >>> print u.repr(infrared.integrate(units=True,e_weight=1),'eV/cm^3','%.2f')
                 0.90 eV/cm^3
              """
         if kT is not None: kT = kT
@@ -76,7 +76,7 @@ class ThermalSpectrum(Spectrum):
     @staticmethod                                                                                                                                                           
     def units_string(): return '1/erg/cm^3'
 
-    def integral(self, units=True, e_weight=0):
+    def integrate(self, units=True, e_weight=0):
         """ Integrate the thermal spectrum from emin to emax.
             
             Returns the inegral in untis of [erg^e_weight/cm^-3] """
@@ -133,7 +133,7 @@ class CMB(BlackBody):
         Note, the energy density for a CMB spectrum is 0.26 eV/cm^3:
         
         >>> cmb = CMB()
-        >>> print u.repr(cmb.integral(units=True,e_weight=1),'eV/cm^3','%.2f')
+        >>> print u.repr(cmb.integrate(units=True,e_weight=1),'eV/cm^3','%.2f')
         0.26 eV/cm^3
     """
     def __init__(self): super(CMB,self).__init__(T=2.725*u.kelvin)

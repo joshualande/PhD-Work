@@ -25,9 +25,9 @@ class ParticleSpectrum(Spectrum):
 
         self.init(*args,**kwargs)
 
-        self.norm=float(total_energy/self.integral(units=True, e_weight=1))
+        self.norm=float(total_energy/self.integrate(units=True, e_weight=1))
 
-    def integral(self, units=True, e_weight=0):
+    def integrate(self, units=True, e_weight=0):
         integral=logsimps(lambda e: e**(e_weight)*self(e, units=False),
                           self.emin,self.emax,per_decade=self.per_decade)
         return integral*(u.erg**(e_weight+1)*self.units() if units else 1)
