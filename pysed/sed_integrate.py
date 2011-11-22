@@ -108,7 +108,7 @@ def dbllogsimps(f,xmin,xmax, ymin, ymax, per_decade):
     log_x, log_y = np.log(x), np.log(y)
     return integrate.dblsimps(f=integrand, x=log_x, y=log_y)
 
-def halfdbllogsimps(f, xmin, xmax, ymin, ymax, x_per_decade, y_npts)
+def halfdbllogsimps(f, xmin, xmax, ymin, ymax, x_per_decade, y_npts):
     """ Perform a simpson integral of f(x,y) where
         x is sampled uniformly in log space while y is
         sampled uniformly.

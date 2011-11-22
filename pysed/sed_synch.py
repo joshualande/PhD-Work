@@ -32,14 +32,37 @@ class Synchrotron(Spectrum):
 
     per_decade = 10
 
-    def F(x):
-        """ This is equation 6.31c in R&L.
+    def _F(x):
+        """ This is F(x) defined in equation 6.31c in R&L.
+            
+            F(x) = x*int(K_5/3(x)dx) where the integral goes from x to infinity.
         
             for some reason, special.kv(5/3,1e10) is NaN, not 0 ???
-            for now, just clip the function above 1e5 to be 0. """
+            for now, just clip the function above 1e5 to be 0. 
+            
+            This function can be evaluated in mathematica using the following command
+
+                F[x_] := N[x*Integrate[BesselK[5/3, y], {y, x, Infinity}]]
+
+            From mathematica, we find that
+
+                      x         F(x)
+                  ----- ------------
+                    0.1     0.818186
+                      1     0.651423
+                     10  0.000192238
+                    100            0
+
+            Comparing our function to the Mathematica integral, we find
+
+                >>> np.allclose(Synchrotron.F([0.1,1,10,100]), [0.818186, 0.651423, 0.000192238,0], rtol=1e-4, atol=1e-4)
+                True
+
+            Note, this function is _F so that the docstring will get executed.
+        """
         if x>1e5: return 0
         return x*integrate.quad(lambda j: special.kv(5./3,j),x,np.inf)[0]
-    F=FunctionCache(F, xmin=0, xmax=20, npts=1000, fill_value=0)
+    F=FunctionCache(_F, xmin=0, xmax=20, npts=1000, fill_value=0)
 
     def __init__(self, electron_spectrum, magnetic_field):
 
@@ -96,3 +119,8 @@ class Synchrotron(Spectrum):
 
     @staticmethod
     def units_string(): return '1/erg/s'
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+
