@@ -25,6 +25,9 @@ class Synchrotron(Spectrum):
 
     """ This is equation 6.31 in R&L. """
 
+    # default energy range = all energies
+    emin,emax = 0,np.inf
+
     vectorized = False
 
     per_decade = 10

@@ -50,7 +50,6 @@ class Spectrum(object):
               all spectra.
     """
 
-
     def __call__(self, energy, units=True):
         """ Returns number of particles per unit energy [1/energy]. 
         
@@ -59,14 +58,14 @@ class Spectrum(object):
 
         if isinstance(energy,np.ndarray) and units==False:
             if self.vectorized:
-                return np.where((energy>=self.emin)&(energy<=self.emax),self._spectrum(energy))
+                return np.where((energy>=self.emin)&(energy<=self.emax),self._spectrum(energy),0)
             else:
                 return np.asarray([self(i) for i in energy])
 
         if isinstance(energy,sympy.Matrix) and units==True:
             if self.vectorized:
                 energy = u.tonumpy(energy,u.erg)
-                spectrum = np.where((energy>=self.emin)&(energy<=self.emax),self._spectrum(energy))
+                spectrum = np.where((energy>=self.emin)&(energy<=self.emax),self._spectrum(energy),0)
                 return u.tosympy(spectrum,self.units())
             else:
                 return sympy.Matrix([self(i) for i in energy]).transpose()

@@ -16,6 +16,14 @@
     Dependencies:
         * numpy, scipy, matplotlib, sympy
 
+    General implementation notes:
+        * Keep everything object oriented so that it is flexible.
+        * As much as possible, vectorize the calculations using numpy and scipy
+        * Try to perform most integrals using the simpson method so
+          that the integrand evaluation can be vectorized.
+        * When integrating over energy, sample points uniformly in
+          log space (see sed_integrate.logsimps).
+
     This file is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 3 of the License, or

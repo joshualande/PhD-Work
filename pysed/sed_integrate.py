@@ -57,6 +57,15 @@ def dblsimps(f, x, y):
     return integrate.simps(integrate.simps(integrand, yy, axis=0), x, axis=0)
 
 
+def logrange(min,max,per_decade):
+    """ Creates a range of values from min to max
+        with per_decade points per logarithmic
+        decade of energy. """
+    npts = int(np.ceil(per_decade*(np.log10(xmax)-np.log10(xmin))))
+    x = np.logspace(np.log10(xmin),np.log10(xmax), npts+1)
+    return x
+
+
 def logsimps(f,xmin,xmax, per_decade):
     """ Perform the simpson integral of a function f(x)
         from xmin to xmax evaluationg the function
@@ -74,18 +83,43 @@ def logsimps(f,xmin,xmax, per_decade):
 
         Using mathematica, we find that the integral is ~100:
 
-        N[Integrate[x^-2, {x, .01, 100}]]
+            N[Integrate[x^-2, {x, .01, 100}]]
 
         Using our nice function:
 
-        >>> print np.allclose(logsimps(lambda x: x**-2, .01, 100, 1000), 99.989, rtol=1e-5, atol=1e-5)
-        True
+            >>> print np.allclose(logsimps(lambda x: x**-2, .01, 100, 1000), 99.989, rtol=1e-5, atol=1e-5)
+            True
     """
-    npts = int(np.ceil(per_decade*(np.log10(xmax)-np.log10(xmin))))
-    x = np.logspace(np.log10(xmin),np.log10(xmax), npts+1)
+    x = logrange(xmin, xmax, per_decade)
     y = f(x) * x
     log_x = np.log(x)
     return integrate.simps(y=y, x=log_x)
+
+
+def dbllogsimps(f,xmin,xmax, ymin, ymax, per_decade):
+    """ Perform a simpson integral of f(x,y) where
+        both x and y are sampled uniformly in log space.
+
+        Implementation Note: int f(x,y) dx dy = int f(x,y) x*y*dlog(x)*dlog(y)
+    """
+    x = logrange(xmin, xmax, per_decade)
+    y = logrange(ymin, ymax, per_decade)
+    integrand = lambda x,y: f(x,y) * x * y
+    log_x, log_y = np.log(x), np.log(y)
+    return integrate.dblsimps(f=integrand, x=log_x, y=log_y)
+
+def halfdbllogsimps(f, xmin, xmax, ymin, ymax, x_per_decade, y_npts)
+    """ Perform a simpson integral of f(x,y) where
+        x is sampled uniformly in log space while y is
+        sampled uniformly.
+
+        Implementation Note: int f(x,y) dx dy = int f(x,y) x*dlog(x)*dy
+    """
+    x = logrange(xmin, xmax, per_decade)
+    y = np.linspace(ymin, ymax, y_npts)
+    integrand = lambda x,y: f(x,y) * x
+    log_x = np.log(x)
+    return integrate.dblsimps(f=integrand, x=log_x, y=log_y)
 
 
 if __name__ == "__main__":

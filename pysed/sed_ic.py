@@ -13,6 +13,9 @@ class InverseCompton(Spectrum):
     """ The inverse compton radiation an electron spectrum
         and photon spectrum. """
 
+    # default energy range = all energies
+    emin,emax = 0,np.inf
+
     vectorized = False
 
     per_decade = 10

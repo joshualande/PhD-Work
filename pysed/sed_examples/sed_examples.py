@@ -6,12 +6,12 @@
 import numpy as np
 import pylab as P
 
-from sed_particle import BrokenPowerLawCutoff,SmoothBrokenPowerLaw
-from sed_ic import InverseCompton
-from sed_synch import Synchrotron
-from sed_plotting import SEDPlotter
-from sed_thermal import CMB,ThermalSpectrum
-import sed_units as u
+from pysed.sed_particle import BrokenPowerLawCutoff,SmoothBrokenPowerLaw
+from pysed.sed_ic import InverseCompton
+from pysed.sed_synch import Synchrotron
+from pysed.sed_plotting import SEDPlotter
+from pysed.sed_thermal import CMB,ThermalSpectrum
+import pysed.sed_units as u
 
 def plot_sychrotron_function():
     """ Reproduce Figure 6.6 from R&L, which
