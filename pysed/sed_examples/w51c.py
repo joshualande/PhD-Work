@@ -6,6 +6,7 @@
     Author: Joshua Lande <joshualande@gmail.com>
 """
 import pylab as P
+import numpy as np
 
 from pysed.sed_particle import SmoothBrokenPowerLaw
 from pysed.sed_ic import InverseCompton
@@ -15,6 +16,7 @@ from pysed.sed_plotting import SEDPlotter
 from pysed.sed_thermal import CMB,ThermalSpectrum
 import pysed.sed_units as u
 
+np.seterr(all='ignore')
 
 # SmoothBrokenPowerLaw formula is equation 1 in text
 # Electron distribution parameters taken from Table 1 in text
@@ -71,9 +73,9 @@ synch = Synchrotron(electron_spectrum=electrons,
 ic = InverseCompton(electron_spectrum=electrons,
                     photon_spectrum=photon_fields)
 
-# Plot the SED
+# Plot the SED. Try to make a figure like fig 4 from the text
 sed = SEDPlotter(
-    emin=9e-6*u.eV, 
+    emin=9e-7*u.eV, 
     emax=2e12*u.eV,
     distance=distance,
     x_units_string='eV',
@@ -84,6 +86,10 @@ sed = SEDPlotter(
 sed.plot(synch, color='red', label='Synchrotron')
 sed.plot(ic, color='blue', label='Inverse Compton')
 
-#sed.axes.set_ylim(ymin=2e-13, ymax=2e-10)
+axes=sed.axes
+axes.set_ylim(ymin=2e-13, ymax=2e-10)
+
+# same ticks as publication
+axes.xaxis.set_ticks([1e-6,1e-3, 1e-0, 1e3, 1e6, 1e9, 1e12])
 sed.save(filename='w51c_sed.png')
 

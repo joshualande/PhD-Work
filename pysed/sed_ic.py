@@ -5,7 +5,7 @@
 """
 import numpy as np
 
-from sed_integrate import logsimps
+from sed_integrate import dbllogsimps
 from sed_spectrum import Spectrum
 import sed_units as u
 
@@ -26,6 +26,12 @@ class InverseCompton(Spectrum):
 
         self.mc2 = float(u.electron_mass*u.speed_of_light**2/u.erg)
 
+        # this formula is basically 7.28a in R&L with the difference that
+
+        # prefactor has units cm^3 s^-1
+        self.pref = 2*np.pi*u.r0**2*u.speed_of_light
+        self.pref = float(self.pref/(u.cm**3*u.second**-1))
+
     @staticmethod
     def F(q,gamma_e):
         """ This is equation 2.48 in Blumenthal & Gould. """
@@ -39,72 +45,49 @@ class InverseCompton(Spectrum):
 
 
         def integrand(electron_energy, target_photon_energy):
-            """ return [ph/s/incident photon energy/scattered photon energy] 
+            """ electron_energy in erg
+                target_photon_energy in erg
+            
+                return [ph/s/incident photon energy/scattered photon energy] 
                 for a single electron
                 
-                in units [1/s/erg^2]
+                in units [s^-1 erg^-3]
             """
 
-            ee = electron_energy # in erg
-            c = u.speed_of_light
-            m = u.electron_mass
+            electron_gamma = electron_energy/self.mc2
 
-            electron_gamma = target_photon_energy/self.mc2
+            gamma_e = 4*target_photon_energy*electron_energy/(self.mc2)**2
+            q=scattered_photon_energy/(electron_energy*gamma_e*(1-scattered_photon_energy/electron_energy))
 
-            gamma_e = 4*target_photon_energy*ee/(self.mc2)**2
-            q=scattered_photon_energy/(ee*gamma_e*(1-scattered_photon_energy/ee))
+            # Note about units:
+            #  photon_spectrum has units 'photons/erg/cm^3'
+            #  electron spectrum has units 'electrons/erg'
+            #  F is unitless
+            # so the integrand (pref*photon_spectrum*electron_spectrum*F)
+            # has units (cm^3 s^-1 erg^-1) * (ph erg^-1 cm^-3) * (el erg^-1) * (1) = ph s^-1 erg^-3
 
-            # this formula is basically 7.28a in R&L with the difference that
+            kinematically_allowed=(q<=1)&(q>=1./(4*electron_gamma**2))
 
-            # C => photon_spectrum
-            # v(energy) => 
+            return np.where(kinematically_allowed,
+                            self.pref*
+                            electron_gamma**-2*target_photon_energy**-1*
+                            self.photon_spectrum(target_photon_energy, units=False)*
+                            self.electron_spectrum(electron_energy, units=False)*
+                            self.F(q,gamma_e),
+                            0)
 
-            # prefactor has units cm^3*s^-1*erg^-1
-            pref = 2*np.pi*u.r0**2*c*electron_gamma**-2*(target_photon_energy*u.erg)**-1
-            
-            pref = float(pref/(u.cm**3*u.second**-1*u.erg**-1))
+        # Return the integrand integrated over photon and electron energy.
+        # Note, integrand is in units of s^-1 erg^-3 so the twice
+        # integration over energy gets the total number of emitted photons
+        # per unit time per unit energy [s^-1 erg-^1]
 
-            # Note, photon_spectrum has units 'ph/erg/cm^3'
-            # F is unitless
-            # so pref*photon_spectrum*F has units ph/erg/cm^3 * cm^3*s^-1*erg^-1 = ph s^-1 erg^-2
-
-            z = pref*\
-                    self.photon_spectrum(target_photon_energy, units=False)*\
-                    self.F(q,gamma_e)
-
-            return pref*\
-                    self.photon_spectrum(target_photon_energy, units=False)*\
-                    self.F(q,gamma_e)
-
-        def integrate_over_electron(target_photon_energy):
-            """ Integrate the InverseCompton spectrum over electron
-                spectrum for a given target photon with energy
-                target_photon_energy.
-            
-                returns [ph/s/incident photon energy/scattered photon energy] """
-            
-            f=lambda electron_energy: integrand(electron_energy,target_photon_energy)*\
-                    self.electron_spectrum(electron_energy, units=False)
-
-            emin = .5*(scattered_photon_energy + 
-                       np.sqrt(scattered_photon_energy**2 + 
-                               scattered_photon_energy*self.mc2**2/target_photon_energy))
-
-            emin = max(emin, self.electron_spectrum.emin)
-            emax = self.electron_spectrum.emax
-
-            if emin >= emax: return float(0)
-
-            return logsimps(f,emin,emax,self.per_decade)
-        # would be nice to vectorize both integrals =(
-        integrate_over_electron = np.vectorize(integrate_over_electron)
-
-
-        # now, integrate over the photon spectrum
-        emin = self.photon_spectrum.emin
-        emax = self.photon_spectrum.emax
-
-        return logsimps(integrate_over_electron,emin,emax,self.per_decade)
+        return dbllogsimps(
+            f=integrand,
+            xmin = self.electron_spectrum.emin,
+            xmax = self.electron_spectrum.emax,
+            ymin = self.photon_spectrum.emin,
+            ymax = self.photon_spectrum.emax,
+            per_decade = self.per_decade)
 
     @staticmethod
     def units_string(): return '1/s/erg'

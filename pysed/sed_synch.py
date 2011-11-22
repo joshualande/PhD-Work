@@ -4,11 +4,11 @@
 
     Author: Joshua Lande <joshualande@gmail.com>
 """
-import numpy as np
+from numpy import pi, sqrt,inf,sin
 from scipy import integrate,special
 
 from sed_spectrum import Spectrum
-from sed_integrate import logsimps
+from sed_integrate import halfdbllogsimps
 from sed_cache import FunctionCache
 import sed_units as u
 
@@ -21,12 +21,15 @@ class Synchrotron(Spectrum):
     
         The spectrum is in unit of energy per unit time
         per unit frequency emitted by a single electron.
+
+        Something about averaging over pitch angle
+        and 
+
         """
 
-    """ This is equation 6.31 in R&L. """
 
     # default energy range = all energies
-    emin,emax = 0,np.inf
+    emin,emax = 0,inf
 
     vectorized = False
 
@@ -61,29 +64,26 @@ class Synchrotron(Spectrum):
             Note, this function is _F so that the docstring will get executed.
         """
         if x>1e5: return 0
-        return x*integrate.quad(lambda j: special.kv(5./3,j),x,np.inf)[0]
+        return x*integrate.quad(lambda j: special.kv(5./3,j),x,inf)[0]
     F=FunctionCache(_F, xmin=0, xmax=20, npts=1000, fill_value=0)
 
     def __init__(self, electron_spectrum, magnetic_field):
 
         self.electron_spectrum = electron_spectrum
 
-        q = u.electron_charge
+        e = u.electron_charge
         B = magnetic_field
-        sin_alpha = 1 # ?
-        print 'what to do about sin(alpha)???'
         m = u.electron_mass
         c = u.speed_of_light
 
+        # prefactor from Sturner et al 1997 formula 22:
+        # Returns power/energy in units of erg/s/erg
+        self.pref = pi*sqrt(3)*e**3*B/(2*pi*u.planck*m*c**2)
 
-        # This is the prefactor from R&L (eq 6.18) - power/unit frequency
-        self.pref = (np.sqrt(3)/(2*np.pi))*(q**3*B*sin_alpha)/(u.electron_mass*c**2)
-        # convert from (power/frequency) to (power/energy) in units of erg/s/erg (or 1/s)
-        self.pref /= u.planck
         self.pref = float(self.pref/(u.erg*u.second**-1*u.erg**-1))
 
         # This is formula 6.17 in R&L except for the gamma**2
-        omega_c = 3*q*B*sin_alpha/(2*m*c)
+        omega_c = 3*e*B/(2*m*c)
         self.energy_c_pref = float(u.hbar*omega_c/u.erg)
 
         self.mc2 = m*c**2
@@ -95,14 +95,20 @@ class Synchrotron(Spectrum):
             
             Integrate the power by a single electron over the spectrum of electrons. """
 
-        def integrand(electron_energy):
-            """ Integrate over electron gamma: unitless =). """
-            electron_gamma = electron_energy/self.mc2_in_erg
+        def integrand(electron_energy, theta):
+            """ The syncrotron radiation integrand
+                as a function of 
 
-            energy_c = electron_gamma**2*self.energy_c_pref
+                * electron energy, measured in erg
+                * the pitch angle theta, measured in radians.
+            """
+            electron_gamma = electron_energy/self.mc2_in_erg
+            sin_theta = sin(theta)
+
+            energy_c = self.energy_c_pref*electron_gamma**2*sin_theta
 
             # power_per_energy in units of erg/s/erg
-            power_per_energy = self.pref*Synchrotron.F(photon_energy/energy_c)
+            power_per_energy = self.pref*sin_theta**2*Synchrotron.F(photon_energy/energy_c)
             # divide by photon energy to get photons/energy for a single
             # electron (in units of ph/erg/s)
             photons_per_energy = power_per_energy/photon_energy
@@ -115,7 +121,15 @@ class Synchrotron(Spectrum):
         # Returns is photon flux per energy per time [1/erg/s]
         emin = self.electron_spectrum.emin
         emax = self.electron_spectrum.emax
-        return logsimps(integrand,emin, emax, per_decade=self.per_decade)
+
+        # integrate the function over the electron distribution and over
+        # pitch angle.
+        # Note: integrate energy in log space, angle in linear space.
+        return halfdbllogsimps(integrand, 
+                               xmin=emin, xmax=emax, 
+                               ymin=0, ymax=pi/2,
+                               x_per_decade=self.per_decade,
+                               y_npts=10)
 
     @staticmethod
     def units_string(): return '1/erg/s'

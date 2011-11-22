@@ -61,8 +61,8 @@ def logrange(min,max,per_decade):
     """ Creates a range of values from min to max
         with per_decade points per logarithmic
         decade of energy. """
-    npts = int(np.ceil(per_decade*(np.log10(xmax)-np.log10(xmin))))
-    x = np.logspace(np.log10(xmin),np.log10(xmax), npts+1)
+    npts = int(np.ceil(per_decade*(np.log10(max)-np.log10(min))))
+    x = np.logspace(np.log10(min),np.log10(max), npts+1)
     return x
 
 
@@ -104,9 +104,9 @@ def dbllogsimps(f,xmin,xmax, ymin, ymax, per_decade):
     """
     x = logrange(xmin, xmax, per_decade)
     y = logrange(ymin, ymax, per_decade)
-    integrand = lambda x,y: f(x,y) * x * y
+    integrand = lambda x,y: f(np.exp(x),np.exp(y)) * np.exp(x) * np.exp(y)
     log_x, log_y = np.log(x), np.log(y)
-    return integrate.dblsimps(f=integrand, x=log_x, y=log_y)
+    return dblsimps(f=integrand, x=log_x, y=log_y)
 
 def halfdbllogsimps(f, xmin, xmax, ymin, ymax, x_per_decade, y_npts):
     """ Perform a simpson integral of f(x,y) where
@@ -115,11 +115,11 @@ def halfdbllogsimps(f, xmin, xmax, ymin, ymax, x_per_decade, y_npts):
 
         Implementation Note: int f(x,y) dx dy = int f(x,y) x*dlog(x)*dy
     """
-    x = logrange(xmin, xmax, per_decade)
+    x = logrange(xmin, xmax, x_per_decade)
     y = np.linspace(ymin, ymax, y_npts)
-    integrand = lambda x,y: f(x,y) * x
+    integrand = lambda x,y: f(np.exp(x),y)*np.exp(x)
     log_x = np.log(x)
-    return integrate.dblsimps(f=integrand, x=log_x, y=log_y)
+    return dblsimps(f=integrand, x=log_x, y=y)
 
 
 if __name__ == "__main__":
