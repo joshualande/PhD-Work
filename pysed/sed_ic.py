@@ -28,7 +28,7 @@ class InverseCompton(Spectrum):
         """ This is equation 2.48 in Blumenthal & Gould. """
         return 2*q*np.log(q)+(1+2*q)*(1-q) + 0.5*(gamma_e*q)**2*(1-q)/(1+gamma_e*q)
 
-    def spectrum(self, scattered_photon_energy):
+    def _spectrum(self, scattered_photon_energy):
         """ Calculates the inverse compton spectrum expected
             from a sinle electron and an arbitrary photon spectrum. 
             

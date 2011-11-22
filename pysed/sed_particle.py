@@ -41,7 +41,7 @@ class PowerLaw(ParticleSpectrum):
         self.index = index
         self.e_scale = float(e_scale/u.erg)
 
-    def spectrum(self, energy):
+    def _spectrum(self, energy):
         """ Returns number of particles per unit energy [1/erg]. """
         return self.norm*(energy/self.e_scale)**(-self.index)
 
@@ -55,7 +55,7 @@ class PowerLawCutoff(ParticleSpectrum):
         self.e_break = float(e_break/u.erg)
         self.e_scale = float(e_scale/u.erg)
 
-    def spectrum(self, energy):
+    def _spectrum(self, energy):
         """ Returns number of particles per unit energy [1/erg]. """
         return self.norm*(energy/self.e_scale)**(-self.index)*np.exp(-energy/self.e_cutoff)
 
@@ -76,7 +76,7 @@ class SmoothBrokenPowerLaw(ParticleSpectrum):
         self.e_scale = float(e_scale/u.erg)                                                                                                                                 
         self.beta = beta
 
-    def spectrum(self, energy):
+    def _spectrum(self, energy):
         """ Returns number of particles per unit energy [1/erg]. """
         return self.norm*(energy/self.e_scale)**(-self.index1)*(1 + (energy/self.e_break)**self.beta)**(-(self.index2-self.index1)/self.beta)
 
@@ -89,7 +89,7 @@ class BrokenPowerLawCutoff(ParticleSpectrum):
         self.e_break = float(e_break/u.erg)
         self.e_scale = float(u.eV/u.erg)
 
-    def spectrum(self, energy):
+    def _spectrum(self, energy):
         """ Return number of particles per unit energy [1/erg]. """
         return self.norm*((energy/self.e_scale)**-self.index1)/(1.+(energy/self.e_break)**(-self.index1+self.index2))*np.exp(-energy/self.e_cutoff)
 

@@ -88,83 +88,11 @@ def test_thermal_spectrum():
     print 'computed = ', u.repr(total_energy_density,'eV/m^3')
     print 'from stefan = 2.60e5 eV/m^3'
 
-
-def w51C_yasunobu_ic():
-    """ Compute the SED of W51C using parameters from
-        http://arxiv.org/abs/0910.0908
-
-        SED for for hypothesis (c) InverseCompton
-    """
-
-    # SmoothBrokenPowerLaw formula is equation 1 in text
-
-    # Electron distribution parameters taken from Table 1 in text
-    # for model (c) InverseCompton
-    electrons = SmoothBrokenPowerLaw(
-        total_energy=11e50*u.erg,
-        index1 = 1.5, # p10 in text
-        index2 = 1.5 + 2.3, # index2 = index1 + delta_s
-        e_break = 20*u.GeV,
-        e_scale = 1*u.GeV, # p10 in text
-        beta = 2,
-        emin = 10*u.MeV, # from footnote to table 1
-        emax = 100*u.TeV, # I hope this is large enough
-        )
-
-    distance = 6*u.kiloparsec # from page 8 in text
-
-    electrons.loglog(
-        e_weight = 2,
-        x_units_string='MeV', y_units_string='MeV', 
-        filename='w51c_electrons.png')
-
-    B = 2*u.microgauss
-
-    # Photon fields take from table 1
-    cmb = CMB()
-    infrared = ThermalSpectrum(kT=3e-3*u.eV, energy_density=0.9*u.eV*u.cm**-3)
-    optical = ThermalSpectrum(kT=0.25*u.eV, energy_density=0.84*u.eV*u.cm**-3)
-
-    def plot_photon_fields():
-        kwargs = dict(x_units_string='eV',y_units_string='eV/cm^3', e_weight=2)
-        axes = cmb.loglog(label='cmb',color='red',**kwargs)
-        infrared.loglog(label='infrared',axes=axes,color='blue',**kwargs)
-        optical.loglog(label='optical',axes=axes,color='green',**kwargs)
-        P.legend(loc=3)
-        P.savefig('w51c_photon_fields.png')
-    plot_photon_fields()
-
-    plot_field = lambda i: 'kT=%s, E=%s' % (u.repr(i.kT*u.erg,'eV'), u.repr(i.integrate(e_weight=1),'eV*cm^-3'))
-
-    print 'Photon Fields: \n\tCMB: %s \n\tinfrared: %s \n\toptical: %s' % \
-        (plot_field(cmb),plot_field(infrared),plot_field(optical))
-
-    synch = Synchrotron(electron_spectrum=electrons,
-                        magnetic_field=3e-6*u.gauss)
-
-
-    sed = SEDPlotter(
-        emin=9e-6*u.eV, 
-        emax=2e12*u.eV,
-        distance=distance,
-        x_units_string='eV',
-        y_units_string='erg*cm^-2*s^-1',
-        figsize=(7,2))
-
-    sed.plot(synch, label='Synchrotron')
-    #sed.plot(ic, label='Inverse Compton')
-
-    sed.axes.set_ylim(ymin=2e-13, ymax=2e-10)
-    sed.save(filename='w51c_sed.png')
-
 if __name__ == '__main__':
 
 
-    w51C_yasunobu_ic()
-
-    if False:
-        plot_sychrotron_function()
-        test_spectra()
-        test_thermal()
-        test_thermal_spectrum()
-        stefan_hess_j1813()
+    plot_sychrotron_function()
+    test_spectra()
+    test_thermal()
+    test_thermal_spectrum()
+    stefan_hess_j1813()

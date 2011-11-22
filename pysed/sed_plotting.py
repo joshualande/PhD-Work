@@ -32,7 +32,9 @@ class SEDPlotter(object):
 
         self.distance=distance
         self.x_units_string = x_units_string
+        self.x_units = u.fromstring(x_units_string)
         self.y_units_string = y_units_string 
+        self.y_units = u.fromstring(y_units_string)
         self.emin = emin
         self.emax = emax
         self.npts = npts
@@ -50,7 +52,7 @@ class SEDPlotter(object):
             self.axes.set_xlabel('Energy (%s)' % x_units_string)
             self.axes.set_ylabel(r'E$^2$ dN/dE (%s)' % y_units_string)
 
-            self.axes.set_xlim(xmin=emin/, ymax=emax)
+            self.axes.set_xlim(xmin=float(emin/self.x_units), ymax=float(emax/self.x_units))
         else:
             self.axes = axes
 

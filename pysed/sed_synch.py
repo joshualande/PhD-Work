@@ -63,7 +63,7 @@ class Synchrotron(Spectrum):
         self.mc2 = m*c**2
         self.mc2_in_erg = float(self.mc2/u.erg)
 
-    def spectrum(self, photon_energy):
+    def _spectrum(self, photon_energy):
         """ return total power per emitted per unit energy by
             the spectrum of electrons.
             

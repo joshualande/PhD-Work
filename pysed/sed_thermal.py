@@ -69,7 +69,7 @@ class ThermalSpectrum(Spectrum):
         """ This is equation 1.49 in R&L. """
         return 1/(np.exp(x)-1)
 
-    def spectrum(self, energy):
+    def _spectrum(self, energy):
         """ Return the energy density in units of [1/erg/cm^-3]."""
         return self.pref*energy**2*self.occupation_number(energy/self.kT)
 
