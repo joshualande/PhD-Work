@@ -12,14 +12,24 @@ from sed_integrate import logsimps
 import sed_units as u
 
 class PPCrossSection(object):
-    """ Module wraps the ugliness of cparamlib 
-        for computing the proton-proton corss seciton
-        to decay into gammas.
+    """ Object to calculate the 
+        proton-proton cross section
+        for decaying into gammas.
 
-        To install this module, please visit this page:
+        This module using a parameterization
+        of numerical pi0 decay codes described
+        in Kamae et al 2006:
+
+            http://arxiv.org/abs/astro-ph/0605581
+
+        And performs the calculation by wraping
+        the numerical codes they provide in 
+        the swig interface to cparamlib
+
+        To install cparamlib so that it can be accessed
+        through python, please visit this very nice page:
 
             http://homepages.spa.umn.edu/~nkarlsson/cparamlib/
-    
     """
 
     def __init__(self):
