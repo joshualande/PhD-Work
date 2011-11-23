@@ -36,6 +36,14 @@ class ParticleSpectrum(Spectrum):
     def units_string(): return '1/erg'
 
 class PowerLaw(ParticleSpectrum):
+    """ A simple powerlaw spectral model defined
+        as dN/dE = N0*(E/E_0)**-gamma
+
+        >>> p = PowerLaw(total_energy = 2e48*u.erg, index=2.6,
+        ...              emin=1e-6*u.eV,emax=1e14*u.eV)
+        >>> print u.repr(p.integrate(e_weight=1,units=True),'erg')
+        2e+48 erg
+    """
 
     def init(self, index, e_scale=u.GeV):
         self.index = index
@@ -92,4 +100,8 @@ class BrokenPowerLawCutoff(ParticleSpectrum):
     def _spectrum(self, energy):
         """ Return number of particles per unit energy [1/erg]. """
         return self.norm*((energy/self.e_scale)**-self.index1)/(1.+(energy/self.e_break)**(-self.index1+self.index2))*np.exp(-energy/self.e_cutoff)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
 

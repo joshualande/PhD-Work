@@ -73,6 +73,6 @@ def convert(x, from_units, to_units):
         raise UnitsException("Unable to convert %s from %s to %s." % (x, from_units, to_units))
 
 # Print out a quanitiy with nice units
-repr=lambda value,unit_string,format='%.2e': format % float(value/fromstring(unit_string)) + ' ' + unit_string
+repr=lambda value,unit_string,format='%g': format % float(value/fromstring(unit_string)) + ' ' + unit_string
 
 from sympy.physics.units import *

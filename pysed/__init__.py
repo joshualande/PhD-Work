@@ -43,6 +43,7 @@
         * General method for enforcing units of input to objects.
         * Improve documentation of methods + clarify units/formulas
         * write integrate function which applies to all spectrum objects!
+        * Add unit testing for the integration methods
 
 
     Author: Joshua Lande <joshualande@gmail.com>
