@@ -45,7 +45,7 @@ def ic_dominated(axes):
     electrons.loglog(
         e_weight = 2,
         x_units_string='MeV', y_units_string='MeV', 
-        filename='w51c_electrons.png')
+        filename='w51C_electrons.png')
 
     magnetic_field = 2*u.microgauss # From table 1 in text for (c) Inverse Compton
 
@@ -63,7 +63,7 @@ def ic_dominated(axes):
         optical.loglog(label='optical',axes=axes,color='green',**kwargs)
         photon_fields.loglog(label='sum',axes=axes,color='orange',**kwargs)
         P.legend(loc=3)
-        P.savefig('w51c_photon_fields.png')
+        P.savefig('w51C_photon_fields.png')
     plot_photon_fields()
 
     # Sanity check, calculate energy density of photon fields
@@ -170,4 +170,4 @@ for axes in grid:
     # same range
     axes.set_ylim(ymin=2e-13, ymax=2e-10)
 
-fig.savefig('w51c_sed.png')
+fig.savefig('w51C_sed.png')
