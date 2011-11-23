@@ -33,6 +33,8 @@ units.electron_charge = 4.80320425e-10*units.statcoulomb
 
 units.electron_mass = 9.10938188e-28*units.grams
 
+units.proton_mass =  1.67262158e-24*units.grams
+
 # 1 Gauss written in terms of cm, g,s is taken from
 # http://en.wikipedia.org/wiki/Gaussian_units
 units.gauss = units.cm**-one_half*units.g**one_half*units.s**-1

@@ -42,8 +42,7 @@
         * Allow PER_DECADE to be set globablly somewhere
         * General method for enforcing units of input to objects.
         * Improve documentation of methods + clarify units/formulas
-        * Allow no energy range speciifed for plotting to default
-          to plots covering all of axes.
+        * write integrate function which applies to all spectrum objects!
 
 
     Author: Joshua Lande <joshualande@gmail.com>

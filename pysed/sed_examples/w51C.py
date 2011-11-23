@@ -116,8 +116,6 @@ def sed(axes, label, type, delta_s, e_break, magnetic_field, hydrogen_density, W
         helium_density = helium_density)
 
     sed = SEDPlotter(
-        emin=6e-7*u.eV, 
-        emax=2e12*u.eV,
         distance=distance,
         x_units_string='eV',
         y_units_string='erg*cm^-2*s^-1',
@@ -142,6 +140,21 @@ if __name__ == '__main__':
                   axes_pad = 0.1,
                   aspect=False,
                   share_all=True)
+
+    # Setup up the axes to be the same as figure 4 in the publiation
+    for axes in grid:
+
+        axes.set_xlabel(r'E [eV]')
+        axes.set_ylabel(r'$\nu f_\nu$ [erg cm$^{-2}$ s$^{-1}$]')
+
+        axes.set_xscale('log')
+        axes.set_yscale('log')
+
+        axes.set_ylim(ymin=2e-13, ymax=2e-10)
+        axes.set_xlim(xmin=6e-7, xmax=2e12)
+
+        axes.xaxis.set_ticks([1e-6,1e-3, 1e-0, 1e3, 1e6, 1e9, 1e12])
+        axes.yaxis.set_ticks([2e-12, 1e-11, 1e-10])
 
 
     # The parameters below are taken from Table 1 in the text
@@ -174,19 +187,5 @@ if __name__ == '__main__':
         Wp = 8.4e50*u.erg,
         We = 11e50*u.erg)
 
-    # Setup up the axes to be the same as figure 4 in the publiation
-    for axes in grid:
-
-        axes.set_xlabel(r'E [eV]')
-        axes.set_ylabel(r'$\nu f_\nu$ [erg cm$^{-2}$ s$^{-1}$]')
-
-        axes.set_xscale('log')
-        axes.set_yscale('log')
-
-        axes.set_ylim(ymin=2e-13, ymax=2e-10)
-        axes.set_xlim(xmin=6e-7, xmax=2e12)
-
-        axes.xaxis.set_ticks([1e-6,1e-3, 1e-0, 1e3, 1e6, 1e9, 1e12])
-        axes.yaxis.set_ticks([1e-12, 1e-11, 1e-10])
 
     fig.savefig('w51C_sed.pdf')

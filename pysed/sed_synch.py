@@ -77,7 +77,7 @@ class Synchrotron(Spectrum):
 
         # prefactor from Sturner et al 1997 formula 22:
         # Returns power/energy in units of erg/s/erg
-        self.pref = pi*sqrt(3)*e**3*B/(2*pi*u.planck*m*c**2)
+        self.pref = sqrt(3)*e**3*B/(u.planck*m*c**2)
 
         self.pref = float(self.pref/(u.erg*u.second**-1*u.erg**-1))
 

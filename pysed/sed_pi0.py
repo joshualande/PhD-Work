@@ -60,11 +60,17 @@ class PPCrossSection(object):
                 The two inputs must be in units of GeV and dlog(E) is
                 calculated (I assume) in units of GeV
         """
+        
 
         photon_energy_gev = photon_energy*self.erg_to_gev
         proton_energy_gev = proton_energy*self.erg_to_gev
 
-        dsigmadloge = self.param.sigma_incl_tot(photon_energy_gev, proton_energy_gev)
+        # Currently, cparamlib is not vecotrized, so vectorize it here :(
+        if isinstance(proton_energy_gev,np.ndarray):
+            dsigmadloge = np.asarray([self.param.sigma_incl_tot(photon_energy_gev, i) \
+                                      for i in proton_energy_gev])
+        else:
+            dsigmadloge = self.param.sigma_incl_tot(photon_energy_gev, proton_energy_gev)
 
         # convert from cross section per log(energy) in units of millibarn
         # to cross section per(energy) in units of cm^2
@@ -86,15 +92,21 @@ class Pi0Decay(Spectrum):
 
     def __init__(self,
                  proton_spectrum, 
-                 target_density,
+                 hydrogen_density,
                  scaling_factor):
         """ 
         
             proton_spectrum:  differental number of protons.
-            target_density: density that input spectrum is hitting
+            hydrogen_density: density that input spectrum is hitting
         
-            Scaling factor: to account for healium and heavy nuclei 
-                For W51C, was set to 1.85 (http://arxiv.org/abs/0910.0908)
+            scaling_factor: 
+                the unitless factor is introduced to account for healium and heavier nulclei. 
+            
+                In Abdo et al 2009, the SED of W51C was computed setting
+                the factor to 1.85 (http://arxiv.org/abs/0910.0908)
+
+                Mori et al 2009 says that the factor should be set between 1.8 and 2:
+                (http://arxiv.org/abs/0903.3260)
 
         """
         print 'The Pi0-decay code needs to be validated and the formulas inspected + documented'
@@ -106,20 +118,28 @@ class Pi0Decay(Spectrum):
 
         self.scaling_factor = scaling_factor
 
-        self.target_density = target_density
+        self.hydrogen_density = hydrogen_density
 
-        self.prefactor = self.scaling_factor*self.target_density*u.speed_of_light
+        self.prefactor = self.scaling_factor*self.hydrogen_density*u.speed_of_light
         self.prefactor = float(self.prefactor/(u.cm**-2*u.seconds**-1))
+
+        self.proton_rest_energy_erg = float(u.proton_mass*u.speed_of_light**2/u.erg)
 
     def _spectrum(self,photon_energy):
         """ Return spectrum in units of s^-1 erg^-1. """
 
         def integrand(proton_energy):
 
-            # Units: (s^-1 erg^-2) = (cm^-2 s^-1) x (protons erg^-1) x (cm^2 erg^-1)
-            return self.prefactor*self.proton_spectrum(proton_energy, units=False)*self.cross_section(proton_energy, photon_energy)
+            proton_gamma = proton_energy/self.proton_rest_energy_erg
 
-        integrand = np.vectorize(integrand) # right now, cparamlib not vectorized
+            # in case there are unphysically low energy protons, set beta=0
+            # These protons should have no cross section anyway
+            proton_beta = np.where(1-proton_gamma**-2>0,np.sqrt(1-proton_gamma**-2),0)
+
+            # Units: (s^-1 erg^-2) = (cm^-2 s^-1) x (protons erg^-1) x (cm^2 erg^-1)
+            return self.prefactor*proton_beta*\
+                    self.proton_spectrum(proton_energy, units=False)*\
+                    self.cross_section(proton_energy, photon_energy)
 
         emin = self.proton_spectrum.emin
         emax = self.proton_spectrum.emax

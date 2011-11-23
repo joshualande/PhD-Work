@@ -23,8 +23,8 @@ class SEDPlotter(object):
                  distance,
                  x_units_string = 'eV',
                  y_units_string = 'eV/cm^2/s^1',
-                 emin=1e-7*u.eV,
-                 emax=1e15*u.eV,
+                 emin=None,
+                 emax=None,
                  npts=1000,
                  axes=None, 
                  fignum=None, 
@@ -35,8 +35,7 @@ class SEDPlotter(object):
         self.x_units = u.fromstring(x_units_string)
         self.y_units_string = y_units_string 
         self.y_units = u.fromstring(y_units_string)
-        self.emin = emin
-        self.emax = emax
+        self.emin, self.emax = emin, emax
         self.npts = npts
 
         self.scale = 1/(4*np.pi*distance**2)
@@ -52,12 +51,16 @@ class SEDPlotter(object):
             self.axes.set_xlabel('Energy (%s)' % x_units_string)
             self.axes.set_ylabel(r'E$^2$ dN/dE (%s)' % y_units_string)
 
-            self.axes.set_xlim(xmin=float(emin/self.x_units), xmax=float(emax/self.x_units))
+            if self.emin is None or self.emax is None:
+                raise Exception("Either an existing axes must be passed into the class or emin and emax must both be set.")
+
+            self.axes.set_xlim(xmin=float(self.emin/self.x_units), xmax=float(self.emax/self.x_units))
         else:
             self.axes = axes
+            if self.emin is None and self.emax is None:
+                self.emin, self.emax = [i*self.x_units for i in self.axes.get_xlim()]
 
     def plot(self, spectra, **kwargs):
-
         spectra.loglog(emin=self.emin, emax=self.emax,
                  x_units_string = self.x_units_string,
                  y_units_string = self.y_units_string,
