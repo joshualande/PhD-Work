@@ -30,9 +30,7 @@ class Synchrotron(Spectrum):
 
     # default energy range = all energies
     emin,emax = 0,inf
-
     vectorized = False
-
     per_decade = 10
 
     def _F(x):
@@ -68,6 +66,7 @@ class Synchrotron(Spectrum):
     F=FunctionCache(_F, xmin=0, xmax=20, npts=1000, fill_value=0)
 
     def __init__(self, electron_spectrum, magnetic_field):
+        print 'The IC code needs to be validated and the formulas inspected + documented.'
 
         self.electron_spectrum = electron_spectrum
 

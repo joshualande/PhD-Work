@@ -78,7 +78,7 @@ class Spectrum(object):
 
     @abstractmethod
     def _spectrum(self,energy):
-        pass
+        raise NotImplementedError("Subclasses must implement this.")
 
     @abstractmethod
     def units_string(self):

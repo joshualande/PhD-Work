@@ -37,5 +37,14 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+    TODO:
+        * Allow PER_DECADE to be set globablly somewhere
+        * General method for enforcing units of input to objects.
+        * Improve documentation of methods + clarify units/formulas
+        * Allow no energy range speciifed for plotting to default
+          to plots covering all of axes.
+
+
     Author: Joshua Lande <joshualande@gmail.com>
 """

@@ -15,12 +15,12 @@ class InverseCompton(Spectrum):
 
     # default energy range = all energies
     emin,emax = 0,np.inf
-
     vectorized = False
-
     per_decade = 10
 
     def __init__(self, electron_spectrum, photon_spectrum):
+        print 'The IC code needs to be validated and the formulas inspected + documented'
+
         self.electron_spectrum = electron_spectrum
         self.photon_spectrum = photon_spectrum
 
