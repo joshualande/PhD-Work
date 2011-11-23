@@ -157,17 +157,22 @@ grid=AxesGrid(fig, 111,
               aspect=False,
               share_all=True)
 
-pi0_dominated(grid[0])
-#ic_dominated(grid[2])
-
+# Setup up the axes to be the same as figure 4 in the publiation
 for axes in grid:
-    # same ticks as publication
     axes.xaxis.set_ticks([1e-6,1e-3, 1e-0, 1e3, 1e6, 1e9, 1e12])
+    axes.yaxis.set_ticks([1e-12, 1e-11, 1e-10])
 
     axes.set_xlabel(r'E [eV]')
     axes.set_ylabel(r'$\nu f_\nu$ [erg cm$^{-2}$ s$^{-1}$]')
 
-    # same range
+    axes.set_xscale('log')
+    axes.set_yscale('log')
+
     axes.set_ylim(ymin=2e-13, ymax=2e-10)
+    axes.set_xlim(xmin=9e-7, xmax=2e12)
+
+pi0_dominated(grid[0])
+ic_dominated(grid[2])
+
 
 fig.savefig('w51C_sed.png')
