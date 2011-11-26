@@ -4,15 +4,15 @@
 """
 import numpy as np
 from scipy import integrate
-from sed_integrate import logsimps
 
-from sed_spectrum import Spectrum
-import sed_units as u
+from . sed_integrate import logsimps
+from . sed_spectrum import Spectrum
+from . import sed_config
+from . import sed_units as u
 
 class ThermalSpectrum(Spectrum):
 
     vectorized = True
-    per_decade=10
 
     def __init__(self, energy_density, kT=None, T=None):
         """ A thermal spectrum has the sameself):
@@ -80,7 +80,7 @@ class ThermalSpectrum(Spectrum):
         """ Integrate the thermal spectrum from emin to emax.
             
             Returns the integral in untis of [erg^e_weight/cm^-3] """
-        int = logsimps(lambda e: e**e_weight*self(e, units=False), self.emin, self.emax, self.per_decade)
+        int = logsimps(lambda e: e**e_weight*self(e, units=False), self.emin, self.emax, sed_config.PER_DECADE)
         return int*(u.erg**(e_weight+1)*self.units() if units else 1)
 
 class BlackBody(ThermalSpectrum):

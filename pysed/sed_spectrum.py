@@ -10,7 +10,7 @@ import numpy as np
 import pylab as P
 import sympy
 
-import sed_units as u
+from . import sed_units as u
 
 class Spectrum(object):
     """ A base class which represents some
@@ -55,24 +55,26 @@ class Spectrum(object):
         
             This function vectorized the output if a numpy array
             or Sympy Matix of energies is passed """
+        def nonzero(energy):
+            return (((energy>=self.emin) if hasattr(self,'emin') else True)&\
+                    ((energy<=self.emax) if hasattr(self,'emax') else True))
 
         if isinstance(energy,np.ndarray) and units==False:
             if self.vectorized:
-                return np.where((energy>=self.emin)&(energy<=self.emax),self._spectrum(energy),0)
+                return np.where(nonzero(energy),self._spectrum(energy),0)
             else:
                 return np.asarray([self(i) for i in energy])
 
         if isinstance(energy,sympy.Matrix) and units==True:
             if self.vectorized:
                 energy = u.tonumpy(energy,u.erg)
-                spectrum = np.where((energy>=self.emin)&(energy<=self.emax),self._spectrum(energy),0)
+                spectrum = np.where(nonzero(energy),self._spectrum(energy),0)
                 return u.tosympy(spectrum,self.units())
             else:
                 return sympy.Matrix([self(i) for i in energy]).transpose()
 
         if units: energy = float(energy/u.erg)
-        if energy>self.emax or energy<self.emin: return 0
-        spectrum=self._spectrum(energy)
+        spectrum=np.where(nonzero(energy), self._spectrum(energy), 0)
         return spectrum*(self.units() if units else 1)
 
 
@@ -143,8 +145,12 @@ class Spectrum(object):
             axes.set_xlabel(x_label)
             axes.set_ylabel(y_label)
 
-        if emin is None: emin=self.emin*u.erg
-        if emax is None: emax=self.emax*u.erg
+        if emin is None: 
+            if not hasattr(self,'emin'): raise Exception("Emin must be set.")
+            emin=self.emin*u.erg
+        if emax is None: 
+            if not hasattr(self,'emax'): raise Exception("Emax must be set.")
+            emax=self.emax*u.erg
 
         x = Spectrum.logspace_unit(emin,emax,npts)
         y = scale*self(x)

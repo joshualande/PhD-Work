@@ -1,17 +1,23 @@
 """ Calculates the gamma ray emisison predicted
     by pi0 decay.
-    for a given electron and photon spectrum.
+    for a given electron and photon spectrum
+    using the method described in 
+    Kamae et al 2006 (http://arxiv.org/abs/astro-ph/0605581)
+    .
     
 
     Author: Joshua Lande <joshualande@gmail.com>
 """
 import numpy as np
 
-from sed_spectrum import Spectrum
-from sed_integrate import logsimps
-import sed_units as u
+from . sed_spectrum import Spectrum
+from . sed_integrate import logsimps
+from . sed_cross_section import CrossSection
+from . sed_relativity import gamma_to_beta
+from . import sed_config
+from . import sed_units as u
 
-class PPCrossSection(object):
+class PPCrossSection(CrossSection):
     """ Object to calculate the 
         proton-proton cross section
         for decaying into gammas.
@@ -86,9 +92,7 @@ class Pi0Decay(Spectrum):
         hitting a density of particles. """
 
     # default energy range = all energies
-    emin,emax = 0,np.inf
     vectorized = False
-    per_decade = 10
 
     def __init__(self,
                  proton_spectrum, 
@@ -132,18 +136,20 @@ class Pi0Decay(Spectrum):
 
             proton_gamma = proton_energy/self.proton_rest_energy_erg
 
-            # in case there are unphysically low energy protons, set beta=0
-            # These protons should have no cross section anyway
-            proton_beta = np.where(1-proton_gamma**-2>0,np.sqrt(1-proton_gamma**-2),0)
+            # in case there are unphysically low proton eneriges (gamma<1), set beta=0
+            # This is a bit ugly, but these protons have no cross section so there
+            # is no harm in including them in the computation.
+            proton_beta = np.where(proton_gamma>=1,gamma_to_beta(proton_gamma),0)
+
+            dnde=self.proton_spectrum(proton_energy, units=False) # protons erg^-1
+            dsigmade=self.cross_section(proton_energy, photon_energy) # cm^2 erg^-1
 
             # Units: (s^-1 erg^-2) = (cm^-2 s^-1) x (protons erg^-1) x (cm^2 erg^-1)
-            return self.prefactor*proton_beta*\
-                    self.proton_spectrum(proton_energy, units=False)*\
-                    self.cross_section(proton_energy, photon_energy)
+            return self.prefactor*proton_beta*dnde*dsigmade
 
         emin = self.proton_spectrum.emin
         emax = self.proton_spectrum.emax
-        return logsimps(integrand, emin, emax, self.per_decade)
+        return logsimps(integrand, emin, emax, sed_config.PER_DECADE)
 
     @staticmethod
     def units_string(): return '1/s/erg'

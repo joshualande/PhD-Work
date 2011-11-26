@@ -39,7 +39,10 @@
 
 
     TODO:
-        * Allow PER_DECADE to be set globablly somewhere
+        * Try to make some of the spectrum calculators (like Bremsstrahlung)
+          fully vectorized for increased speed. N.B., this probably
+          requires some careful though about which axes logsimps integrates
+          over.
         * General method for enforcing units of input to objects.
         * Improve documentation of methods + clarify units/formulas
         * write integrate function which applies to all spectrum objects!

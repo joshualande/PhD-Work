@@ -7,10 +7,11 @@
 from numpy import pi, sqrt,inf,sin
 from scipy import integrate,special
 
-from sed_spectrum import Spectrum
-from sed_integrate import halfdbllogsimps
-from sed_cache import FunctionCache
-import sed_units as u
+from . sed_spectrum import Spectrum
+from . sed_integrate import halfdbllogsimps
+from . sed_cache import FunctionCache
+from . import sed_config
+from . import sed_units as u
 
 class Synchrotron(Spectrum):
     """ Calculates the syncrotron power radiated
@@ -29,9 +30,7 @@ class Synchrotron(Spectrum):
 
 
     # default energy range = all energies
-    emin,emax = 0,inf
     vectorized = False
-    per_decade = 10
 
     def _F(x):
         """ This is F(x) defined in equation 6.31c in R&L.
@@ -127,7 +126,7 @@ class Synchrotron(Spectrum):
         return halfdbllogsimps(integrand, 
                                xmin=emin, xmax=emax, 
                                ymin=0, ymax=pi/2,
-                               x_per_decade=self.per_decade,
+                               x_per_decade=sed_config.PER_DECADE,
                                y_npts=10)
 
     @staticmethod

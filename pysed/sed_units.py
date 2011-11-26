@@ -52,6 +52,8 @@ units.millibarn = 1e-3*units.barn
 # classical electron radius
 units.r0=units.electron_charge**2/(units.electron_mass*units.speed_of_light**2)
 
+units.alpha = float(units.electron_charge**2/(units.hbar*units.speed_of_light))
+
 # convert from a string to units
 fromstring=lambda string: sympy.sympify(string, sympy.physics.units.__dict__)
 

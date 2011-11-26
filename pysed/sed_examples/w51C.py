@@ -49,7 +49,7 @@ def print_photon_field(**kwargs):
         print '\t%s: %s' % (k,plot_field(v))
 
 def plot_electrons(type, electrons):
-    electrons.loglog(e_weight = 2,
+    electrons.loglog(e_weight=2,
                      x_units_string='MeV', y_units_string='MeV',
                      filename='w51C_%s_electrons.pdf' % type)
 
@@ -123,10 +123,10 @@ def sed(axes, label, type, delta_s, e_break, magnetic_field, hydrogen_density, W
         )
 
     # Overlay the Synchrotron and Inverse Compton radiation
-    sed.plot(synch, color='black')
-    sed.plot(pi0, color='black', dashes=[9,2])
-    sed.plot(ic, color='black', dashes=[2,2])
-    #sed.plot(brems, color='black', dashes=[4,2])
+    #sed.plot(synch, color='black')
+    #sed.plot(pi0, color='black', dashes=[9,2])
+    #sed.plot(ic, color='black', dashes=[2,2])
+    sed.plot(brems, color='black', dashes=[4,2])
 
     at = AnchoredText(label, frameon=False, loc=2, prop=dict(size=14))
     axes.add_artist(at)
@@ -150,15 +150,14 @@ if __name__ == '__main__':
         axes.set_xscale('log')
         axes.set_yscale('log')
 
-        axes.set_ylim(ymin=2e-13, ymax=2e-10)
         axes.set_xlim(xmin=6e-7, xmax=2e12)
+        #axes.set_ylim(ymin=2e-13, ymax=2e-10)
 
         axes.xaxis.set_ticks([1e-6,1e-3, 1e-0, 1e3, 1e6, 1e9, 1e12])
         axes.yaxis.set_ticks([2e-12, 1e-11, 1e-10])
 
-
+    # Plot the three hypothesis from the text into the three axes
     # The parameters below are taken from Table 1 in the text
-    # for the thee hypothesis
 
     sed(grid[0], type='pi0',
         label='(a) Pion-decay dominated',

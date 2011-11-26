@@ -5,18 +5,17 @@
 """
 import numpy as np
 
-from sed_integrate import dbllogsimps
-from sed_spectrum import Spectrum
-import sed_units as u
+from . sed_integrate import dbllogsimps
+from . sed_spectrum import Spectrum
+from . import sed_config
+from . import sed_units as u
 
 class InverseCompton(Spectrum):
     """ The inverse compton radiation an electron spectrum
         and photon spectrum. """
 
     # default energy range = all energies
-    emin,emax = 0,np.inf
     vectorized = False
-    per_decade = 10
 
     def __init__(self, electron_spectrum, photon_spectrum):
         print 'The IC code needs to be validated and the formulas inspected + documented'
@@ -87,7 +86,7 @@ class InverseCompton(Spectrum):
             xmax = self.electron_spectrum.emax,
             ymin = self.photon_spectrum.emin,
             ymax = self.photon_spectrum.emax,
-            per_decade = self.per_decade)
+            per_decade = sed_config.PER_DECADE)
 
     @staticmethod
     def units_string(): return '1/s/erg'

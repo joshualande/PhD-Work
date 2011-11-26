@@ -5,6 +5,7 @@
 """
 import numpy as np
 from scipy import integrate
+
 def dbltrapz(f, x, y):
     """ Perform a double trapezon integration of a vectorized function
 

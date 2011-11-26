@@ -2,18 +2,18 @@
 
     Author: Joshua Lande <joshualande@gmail.com>
 """
-from sed_spectrum import Spectrum
+from . sed_spectrum import Spectrum
 import numpy as np
 
-from sed_integrate import logsimps
-import sed_units as u
+from . sed_integrate import logsimps
+from . import sed_config
+from . import sed_units as u
 
 class ParticleSpectrum(Spectrum):
     """ This class to represents a spectrum of particles with total energy total_energy. 
     
         __call__ returns dn/de, the number of particles per unit energy (in units of 1/erg)
     """
-    per_decade=10
 
     vectorized = True
 
@@ -29,7 +29,7 @@ class ParticleSpectrum(Spectrum):
 
     def integrate(self, units=True, e_weight=0):
         integral=logsimps(lambda e: e**(e_weight)*self(e, units=False),
-                          self.emin,self.emax,per_decade=self.per_decade)
+                          self.emin,self.emax,per_decade=sed_config.PER_DECADE)
         return integral*(u.erg**(e_weight+1)*self.units() if units else 1)
 
     @staticmethod                                                                                                                                                           
