@@ -123,9 +123,9 @@ def sed(axes, label, type, delta_s, e_break, magnetic_field, hydrogen_density, W
         )
 
     # Overlay the Synchrotron and Inverse Compton radiation
-    #sed.plot(synch, color='black')
-    #sed.plot(pi0, color='black', dashes=[9,2])
-    #sed.plot(ic, color='black', dashes=[2,2])
+    sed.plot(synch, color='black')
+    sed.plot(pi0, color='black', dashes=[9,2])
+    sed.plot(ic, color='black', dashes=[2,2])
     sed.plot(brems, color='black', dashes=[4,2])
 
     at = AnchoredText(label, frameon=False, loc=2, prop=dict(size=14))
@@ -133,6 +133,9 @@ def sed(axes, label, type, delta_s, e_break, magnetic_field, hydrogen_density, W
 
 
 if __name__ == '__main__':
+
+    from pysed import sed_config
+    #sed_config.PER_DECADE = 100
 
     fig = P.figure(None,(7,6))
     grid=AxesGrid(fig, 111,
@@ -151,7 +154,7 @@ if __name__ == '__main__':
         axes.set_yscale('log')
 
         axes.set_xlim(xmin=6e-7, xmax=2e12)
-        #axes.set_ylim(ymin=2e-13, ymax=2e-10)
+        axes.set_ylim(ymin=2e-13, ymax=2e-10)
 
         axes.xaxis.set_ticks([1e-6,1e-3, 1e-0, 1e3, 1e6, 1e9, 1e12])
         axes.yaxis.set_ticks([2e-12, 1e-11, 1e-10])
