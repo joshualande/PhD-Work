@@ -56,6 +56,14 @@ class BremsEPCrossSection(CrossSection):
         Baring et al 1998 section 3.2 justifies using this formula for
         electron-ion scattering for all electron energies.
 
+        Note, from kinematic constrains, we must have 
+
+            1/2 m_e beta^2 c^2 > E_\gamma
+
+        which corresponds to the constraing:
+
+                beta^2 > 2*E_\gamma/m_e c^2
+
         Implementation note, this object calculates exclusively the 
         electron-proton cross section (Z=1)
     """
@@ -73,9 +81,14 @@ class BremsEPCrossSection(CrossSection):
         beta = gamma_to_beta(gamma)
         beta_prime = sqrt(beta**2 - 2*photon_energy/electron_rest_energy_erg)
 
-        return self.prefactor*\
+        sigma = self.prefactor*\
                 (1/photon_energy)*(1/beta**2)*\
                 log((beta+beta_prime)/(beta-beta_prime))
+
+        allowed = (beta**2 >=2*photon_energy/electron_rest_energy_erg)
+
+        return np.where(allowed, sigma, 0)
+
 
 class BremsEECrossSectionNR(CrossSection):
     """ Non-relativisitc electron-electron Bremsstrahlung
@@ -137,7 +150,6 @@ class BremsEECrossSectionRel(CrossSection):
 
     prefactor = u.r0**2*u.alpha
     prefactor = float(prefactor/u.cm**2)
-    
 
     @staticmethod
     def sigma_1(epsilon, gamma):
@@ -186,7 +198,13 @@ class BremsEECrossSectionRel(CrossSection):
 
         A = BremsEECrossSectionRel.A(epsilon_gamma, electron_gamma)
 
-        return (sigma_1+sigma_2)*A
+        sigma = (sigma_1+sigma_2)*A
+
+        # apply kinematic constraint, electron kinetic
+        # energy must be greater than photon energy.
+        allowed = electron_gamma -1 > epsilon_gamma
+
+        return np.where(allowed, sigma, 0)
 
 class BremsEECrossSection(CrossSection):
     """ Computes the electron electron Bremsstrahlung cross
@@ -241,6 +259,8 @@ class Bremsstrahlung(Spectrum):
         self.hydrogen_density = float(hydrogen_density/u.cm**-3)
         self.helium_density = float(helium_density/u.cm**-3)
 
+        print r'what to do about divergence as \omega -> 0'
+
         self.e_p_cross_section = BremsEPCrossSection()
         self.e_e_cross_section = BremsEECrossSection()
 
@@ -261,7 +281,6 @@ class Bremsstrahlung(Spectrum):
 
             sigmaEE = self.e_e_cross_section(electron_energy, photon_energy)
             sigmaEP = self.e_p_cross_section(electron_energy, photon_energy)
-            print 'sigma',electron_energy,photon_energy,sigmaEP
             dnde = self.electron_spectrum(electron_energy,units=False)
 
             return beta*c*((nP + 4*nHe)*sigmaEP + (nP + 2*nHe)*sigmaEE)*dnde
