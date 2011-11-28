@@ -43,4 +43,4 @@ if __name__ == '__main__':
     P.xlabel('energy (eV)')
     P.ylabel('intensity (ph/cm^3/eV)')
 
-    P.savefig('isrf.pdf')
+    P.savefig('estimate_fields.pdf')
