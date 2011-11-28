@@ -129,6 +129,12 @@ class Synchrotron(Spectrum):
                                x_per_decade=sed_config.PER_DECADE,
                                y_npts=10)
 
+    def energy_loss(self, energy):
+        """ Returns the energy loss due to synchrotron radiation
+            in units of erg s^-1. """
+        raise Exception("Not implemented yet...")
+
+
     @staticmethod
     def units_string(): return '1/erg/s'
 

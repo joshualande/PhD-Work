@@ -12,15 +12,23 @@ from . import sed_units as u
 class ParticleSpectrum(Spectrum):
     """ This class to represents a spectrum of particles with total energy total_energy. 
     
-        __call__ returns dn/de, the number of particles per unit energy (in units of 1/erg)
+        The __call__ function returns dn/de, the number of particles
+        per unit energy.  This defaults to be in units of 1/erg, but
+        can be set by the parameter units_string.
+
+        Note that the total energy must have units of energy^2*units_string.
+        By default, units_string has units of 1/erg so total_energy must have
+        energy units. If units_string is instead 1/erg/second, then total_energy
+        must be the total energy per unit time.
     """
 
     vectorized = True
 
-    def __init__(self,total_energy, emin, emax, *args, **kwargs):
+    def __init__(self,total_energy, emin, emax, units_string='1/erg', *args, **kwargs):
         """ Normalize total energy output. """
         self.emin = float(emin/u.erg)
         self.emax = float(emax/u.erg)
+        self._units_string = units_string
         self.norm = 1
 
         self.init(*args,**kwargs)
@@ -32,8 +40,7 @@ class ParticleSpectrum(Spectrum):
                           self.emin,self.emax,per_decade=sed_config.PER_DECADE)
         return integral*(u.erg**(e_weight+1)*self.units() if units else 1)
 
-    @staticmethod                                                                                                                                                           
-    def units_string(): return '1/erg'
+    def units_string(self): return self._units_string
 
 class PowerLaw(ParticleSpectrum):
     """ A simple powerlaw spectral model defined

@@ -6,6 +6,9 @@
 import numpy as np
 from scipy import integrate
 
+from . import sed_units as u
+from . sed_helper import logrange
+
 def dbltrapz(f, x, y):
     """ Perform a double trapezon integration of a vectorized function
 
@@ -56,15 +59,6 @@ def dblsimps(f, x, y):
     xx = x[np.newaxis,:]
     integrand=f(xx,yy)
     return integrate.simps(integrate.simps(integrand, yy, axis=0), x, axis=0)
-
-
-def logrange(min,max,per_decade):
-    """ Creates a range of values from min to max
-        with per_decade points per logarithmic
-        decade of energy. """
-    npts = int(np.ceil(per_decade*(np.log10(max)-np.log10(min))))
-    x = np.logspace(np.log10(min),np.log10(max), npts+1)
-    return x
 
 
 def logsimps(f,xmin,xmax, per_decade):
@@ -126,4 +120,3 @@ def halfdbllogsimps(f, xmin, xmax, ymin, ymax, x_per_decade, y_npts):
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-

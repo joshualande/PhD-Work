@@ -25,7 +25,6 @@ class SEDPlotter(object):
                  y_units_string = 'eV/cm^2/s^1',
                  emin=None,
                  emax=None,
-                 npts=1000,
                  axes=None, 
                  fignum=None, 
                  figsize=(5.5,4.5)):
@@ -36,7 +35,6 @@ class SEDPlotter(object):
         self.y_units_string = y_units_string 
         self.y_units = u.fromstring(y_units_string)
         self.emin, self.emax = emin, emax
-        self.npts = npts
 
         self.scale = 1/(4*np.pi*distance**2)
 
@@ -66,7 +64,6 @@ class SEDPlotter(object):
                  y_units_string = self.y_units_string,
                  e_weight=2,
                  scale=self.scale,
-                 npts=self.npts,
                  axes=self.axes,
                  **kwargs)
 

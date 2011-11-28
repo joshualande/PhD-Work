@@ -49,6 +49,8 @@ units.kpc = units.kiloparsec = 1e3*units.parsec
 units.barn = 1e-24*units.cm**2
 units.millibarn = 1e-3*units.barn
 
+units.kiloyear = units.kyr = 1e3*units.year
+
 # classical electron radius
 units.r0=units.electron_charge**2/(units.electron_mass*units.speed_of_light**2)
 

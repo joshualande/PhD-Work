@@ -10,7 +10,9 @@ import numpy as np
 import pylab as P
 import sympy
 
+from . import sed_config
 from . import sed_units as u
+from . sed_helper import logrange,logrange_unit
 
 class Spectrum(object):
     """ A base class which represents some
@@ -86,42 +88,16 @@ class Spectrum(object):
     def units_string(self):
         pass
 
-    @classmethod                                                                                                                                                            
-    def units(cls):                                                                                                                                                         
+    def units(self):
         """ Returns the units that __call__ is assumed to be in. """                                                                                                        
-        return u.fromstring(cls.units_string())                                                                                                                             
+        return u.fromstring(self.units_string())                                                                                                                             
 
-    @staticmethod
-    def logspace_unit(emin,emax, npts):
-        """ Convenience function to compute
-            an array of points between
-            emin and emax when emin and emax
-            are united and have the same units.
-            
-            Example:
-
-            >>> Spectrum.logspace_unit(1*u.cm,1e3*u.cm,4)
-            [0.01*m, 0.1*m, 1.0*m, 10.0*m]
-        """
-        # make sure numbers have same units
-        val = lambda x: x.as_two_terms()[0]
-        unit = lambda x: x.as_two_terms()[1]
-
-        assert(unit(emin)==unit(emax))
-
-        units = unit(emin)
-        emin,emax = val(emin), val(emax)
-
-        return u.tosympy(np.logspace(np.log10(float(emin)),
-                                     np.log10(float(emax)), npts),units)
-                    
     def loglog(self, 
                x_units_string,
                y_units_string,
                emin=None, emax=None, 
                e_weight=0, # weight the function by energy raised to this power
                scale=1, # scale
-               npts=1000,
                x_label=None,
                y_label=None,
                filename=None, fignum=None, 
@@ -152,7 +128,7 @@ class Spectrum(object):
             if not hasattr(self,'emax'): raise Exception("Emax must be set.")
             emax=self.emax*u.erg
 
-        x = Spectrum.logspace_unit(emin,emax,npts)
+        x = logrange_unit(emin,emax,sed_config.PER_DECADE)
         y = scale*self(x)
         for i in range(e_weight): y=y.multiply_elementwise(x)
 
@@ -165,44 +141,79 @@ class Spectrum(object):
         return axes
 
 
+class NumericalSpectrum(Spectrum):
+    """ Takes an analytic spectrum but 
+        stores it internally as a numerical array of values.
+
+        PDF is either evaluated at a user specified list
+        of energies or uniformly
+        
+        a parameter per_decade determines how many points to
+        store the function at per decade in energy.
+
+        Function is evaluated by interpolating in log-space.
+
+        Useful for non-analytic spectra, such as calcluating
+        energy losses of a population over time.
+
+        Could also be useful for a very costly spectrum
+        to be cached for repeated evaluation.
+    """
+    vectorized = True
+
+    def __init__(self, spectrum, energies=None, per_decade=None):
+
+
+        if energies is not None:
+            self.energies = energies
+        else:
+            if per_decade is None: per_decade = sed_config.PER_DECADE
+
+            if not hasattr(spectrum,'emin') or not hasattr(spectrum,'emax'):
+                raise Exception("NumericalSpectrum must be passed a spectrum with a min and max energy.")
+
+            self.energies = logrange(spectrum, emin, emax, self.per_decade)
+
+
+        self.values = spectrum(self.energies, units=False)
+
+        self.log_energies = np.log10(self.energies)
+        self.log_values = np.log10(self.log_values)
+
+        self.log_interp = interp1d(self.log_energies,self.log_values,kind=kind, bounds_error=True)
+
+
+        self._units_string = specturm.units_string()
+
+    def _spectrum(self,energy):
+        return 10**self.log_interp(energy)
+
+    def units_string(self): return self._units_string
+
 class Constant(Spectrum):
 
     vectorized = True
 
-    def __init__(self, value, units_string, emin, emax):
+    def __init__(self, value, units_string):
         """ Implements a constant value over a range of energy. 
             
-            Value is the constant value to reutrn
-            unit_string is the units to store the value intenrall with
-            emin and emax are the range over which function is defined.
+            Value is the constant value to return
+            unit_string is the units to store the value internall with
 
             For example:
 
-                >>> constant = Constant(u.erg, 'erg', u.keV, u.GeV)
-
-            Inside of the selected energy range, the value is always constant
-
+                >>> constant = Constant(u.erg, 'erg')
                 >>> print u.repr(constant(u.MeV),'erg','%g')
                 1 erg
-
-            Outside the selected energy range, the value is always 0
-                >>> constant(u.eV)
-                0
-                >>> constant(u.TeV)
-                0
         """
         self._units_string = units_string
-        self._units = u.fromstring(self._units_string)
-        self.internal = float(value/self._units)
+        self.internal = float(value/self.units())
         self.value = value
-        self.emin = float(emin/u.erg)
-        self.emax = float(emax/u.erg)
 
     def _spectrum(self,energy):
         return self.internal*np.ones_like(energy)
 
     def units_string(self): return self._units_string
-    def units(self): return self._units
 
 
 class CompositeSpectrum(Spectrum):
@@ -211,8 +222,8 @@ class CompositeSpectrum(Spectrum):
 
         Example:
 
-            >>> c1 = Constant(u.erg,     'erg', u.keV, u.GeV)
-            >>> c2 = Constant(0.5*u.erg, 'erg', u.keV, u.GeV)
+            >>> c1 = Constant(u.erg,     'erg')
+            >>> c2 = Constant(0.5*u.erg, 'erg')
             >>> c  = CompositeSpectrum(c1,c2)
 
         The composite spectrum is the sum of the two spectra (1.5 erg)
@@ -243,7 +254,6 @@ class CompositeSpectrum(Spectrum):
         return reduce(add,[s(*args,**kwargs) for s in self.spectra])
 
     def units_string(self): return self._units_string
-    def units(self): return self._units
 
 if __name__ == "__main__":
     import doctest

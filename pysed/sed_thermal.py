@@ -79,7 +79,7 @@ class ThermalSpectrum(Spectrum):
     def integrate(self, units=True, e_weight=0):
         """ Integrate the thermal spectrum from emin to emax.
             
-            Returns the integral in untis of [erg^e_weight/cm^-3] """
+            Returns the integral in units of [erg^e_weight/cm^-3] """
         int = logsimps(lambda e: e**e_weight*self(e, units=False), self.emin, self.emax, sed_config.PER_DECADE)
         return int*(u.erg**(e_weight+1)*self.units() if units else 1)
 
