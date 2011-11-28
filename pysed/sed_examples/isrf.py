@@ -24,17 +24,23 @@ if __name__ == '__main__':
 
     # convert to unitless quanitites + plot
     energy = u.tonumpy(energy, u.eV)
-    infrared = u.tonumpy(infrared, u.eV*u.cm**-3)
-    cmb = u.tonumpy(cmb, u.eV*u.cm**-3)
-    optical = u.tonumpy(optical, u.eV*u.cm**-3)
+    infrared = u.tonumpy(infrared, u.cm**-3*u.eV**-1)
+    cmb = u.tonumpy(cmb, u.cm**-3*u.eV**-1)
+    optical = u.tonumpy(optical, u.cm**-3*u.eV**-1)
 
-    P.loglog(energy, infrared, label='infrared')
-    P.loglog(energy, cmb, label='CMB')
-    P.loglog(energy, optical, label='optical')
+    P.loglog(energy, infrared, color='red', label='infrared')
+    P.loglog(energy, cmb, color='blue', label='CMB')
+    P.loglog(energy, optical, color='green', label='optical')
+
+
+    # now, overlay estimated quantities
+    infared_est = isrf.estimate_infrared(**kwargs)
+    plot_kwargs = dict(x_units_string = 'eV', y_units_string='ph/cm^3/eV', dashes=[5,2])
+    infared_est.loglog(color='red', **plot_kwargs)
 
     P.legend(loc=3)
 
-    P.xlabel('energy (eV')
-    P.ylabel('intensity (eV/cm^3)')
+    P.xlabel('energy (eV)')
+    P.ylabel('intensity (ph/cm^3/eV)')
 
     P.savefig('isrf.pdf')
