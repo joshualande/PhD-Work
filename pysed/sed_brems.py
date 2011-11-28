@@ -1,3 +1,9 @@
+""" Calculates the gamma ray emisison predicted
+    by Bremsstrahlung radiation using the prescription from
+    Barington et al 1999 (http://arxiv.org/abs/astro-ph/9810158)
+
+    Author: Joshua Lande <joshualande@gmail.com>
+"""
 import numpy as np
 from numpy import sqrt, log
 

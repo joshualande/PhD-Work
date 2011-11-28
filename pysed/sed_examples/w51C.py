@@ -161,6 +161,8 @@ if __name__ == '__main__':
 
     # Plot the three hypothesis from the text into the three axes
     # The parameters below are taken from Table 1 in the text
+    
+    print 'TODO: ask Yasunobu about how time dependence is implemented (P10 of text)!!!'
 
     sed(grid[0], type='pi0',
         label='(a) Pion-decay dominated',
