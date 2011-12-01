@@ -1,14 +1,11 @@
-#List of TeV sources associated with PWNe with localization and extension.
-# New PWN CTA1 - Joshua Lande - Nov 30, 2011
-CTA1:
-  gal: [119.58,10.20]
-  ext: '?'
+# List of TeV sources associated with PWNe with localization and extension.
+#
+# Information primarily taken from http://tevcat.uchicago.edu/
+# Changes:
+# * Add CTA1 + HESS J1831-098 - Joshua Lande, Nov 30, 2011
 0FGL J0631.8+1034 :
   gal: [201.3,0.51]
   ext: 0.0
-VelaX:
-  gal: [263.86,-3.09]
-  ext: [0.48,0.36]
 0FGL J1958.1+2848:
   gal: [65.85,-0.23]
   ext: 0.0
@@ -21,15 +18,18 @@ Boomerang:
 Crab:
   gal: [184.56,-5.79]
   ext: 0.0
+CTA1:
+  gal: [119.58,10.20]
+  ext: '?'
 G0.9+0.1:
   gal: [0.87,0.08]
-  ext: 0.0
-G54.1+0.3:
-  gal: [54.10,0.26]
   ext: 0.0
 G292.2-0.5
   gal: [292.10,-0.49]
   ext: [0.05,0.05]
+G54.1+0.3:
+  gal: [54.10,0.26]
+  ext: 0.0
 Geminga:
   gal: [195.34,3.78]
   ext: [2.6,2.6]
@@ -67,6 +67,9 @@ HESS J1813-178:
 HESS J1825-137:
   gal: [17.71,-0.7]
   ext: [0.13,0.12]
+HESS J1831-098:
+  gal: [21.85,-0.11]
+  ext: 0.15
 HESS J1833-105:
   gal: [21.51,-0.88]
   ext: 0.0
@@ -91,3 +94,6 @@ MGRO J2019+37:
 MSH 15-52:
   gal: [320.33,-1.19]
   ext: [0.11, 0.04]
+VelaX:
+  gal: [263.86,-3.09]
+  ext: [0.48,0.36]
