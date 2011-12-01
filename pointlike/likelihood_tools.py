@@ -226,72 +226,79 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
     """
     print 'Calculating gtlike upper limit'
 
-    import IntegralUpperLimit
-
-    if emin is None and emax is None: 
-        emin = like.energies[0]
-        emax = like.energies[-1]
-
-    e = np.sqrt(emin*emax)
-
     saved_state = LikelihoodState(like)
-
-    # First, freeze all parameters in model (helps with convergence)
-    for i in range(len(like.model.params)):
-        like.freeze(i)
-
     source = like.logLike.getSource(name)
     old_spectrum = source.spectrum()
 
-    # assume a canonical dnde=1e-11 at 1GeV index 2 starting value
-    dnde = PowerLaw(norm=1e-11, index=2,e_scale=1e3)
+    try:
+        import IntegralUpperLimit
 
-    like.setSpectrum(name,'PowerLaw')
+        if emin is None and emax is None: 
+            emin = like.energies[0]
+            emax = like.energies[-1]
 
-    # fix index to 0
-    index=like[like.par_index(name, 'Index')]
-    index.setTrueValue(-1*powerlaw_index)
-    index.setFree(0)
+        e = np.sqrt(emin*emax)
 
-    # good starting guess for source
-    prefactor=like[like.par_index(name, 'Prefactor')]
-    prefactor.setScale(dnde(e))
-    prefactor.setValue(1)
-    # unbound the prefactor since the default range 1e-2 to 1e2 may not be big enough
-    # in small phase ranges.
-    prefactor.setBounds(0,1e10)
 
-    scale=like[like.par_index(name, 'Scale')]
-    scale.setScale(1)
-    scale.setValue(e)
+        # First, freeze all parameters in model (helps with convergence)
+        for i in range(len(like.model.params)):
+            like.freeze(i)
 
-    like.syncSrcParams(name)
 
-    flux_ul, results = IntegralUpperLimit.calc_int(like, name, 
-                                                          skip_global_opt=True,
-                                                          freeze_all=True,
-                                                          cl=cl,
-                                                          emin=emin, 
-                                                          emax=emax, 
-                                                          **kwargs)
+        # assume a canonical dnde=1e-11 at 1GeV index 2 starting value
+        dnde = PowerLaw(norm=1e-11, index=2,e_scale=1e3)
 
-    prefactor=like[like.par_index(name, 'Prefactor')]
-    pref_ul = results['ul_value']*prefactor.getScale()
-    prefactor.setTrueValue(pref_ul)
+        like.setSpectrum(name,'PowerLaw')
 
-    flux_ul = like.flux(name,emin,emax)
-    flux_units_string = 'ph/cm^2/s'
+        # fix index to 0
+        index=like[like.par_index(name, 'Index')]
+        index.setTrueValue(-1*powerlaw_index)
+        index.setFree(0)
 
-    eflux_ul = units.convert(like.energyFlux(name,emin,emax), 'MeV', flux_units)
-    eflux_units_string = '%s/cm^2/s' % flux_units
+        # good starting guess for source
+        prefactor=like[like.par_index(name, 'Prefactor')]
+        prefactor.setScale(dnde(e))
+        prefactor.setValue(1)
+        # unbound the prefactor since the default range 1e-2 to 1e2 may not be big enough
+        # in small phase ranges.
+        prefactor.setBounds(0,1e10)
 
-    ul = dict(
-        emin=emin, emax=emax,
-        flux_units=flux_units_string, flux=flux_ul, 
-        eflux_units=eflux_units_string, eflux=eflux_ul)
+        scale=like[like.par_index(name, 'Scale')]
+        scale.setScale(1)
+        scale.setValue(e)
 
-    like.setSpectrum(name,old_spectrum)
-    saved_state.restore()
+        like.syncSrcParams(name)
+
+        flux_ul, results = IntegralUpperLimit.calc_int(like, name, 
+                                                              skip_global_opt=True,
+                                                              freeze_all=True,
+                                                              cl=cl,
+                                                              emin=emin, 
+                                                              emax=emax, 
+                                                              **kwargs)
+
+        prefactor=like[like.par_index(name, 'Prefactor')]
+        pref_ul = results['ul_value']*prefactor.getScale()
+        prefactor.setTrueValue(pref_ul)
+
+        flux_ul = like.flux(name,emin,emax)
+        flux_units_string = 'ph/cm^2/s'
+
+        eflux_ul = units.convert(like.energyFlux(name,emin,emax), 'MeV', flux_units)
+        eflux_units_string = '%s/cm^2/s' % flux_units
+
+        ul = dict(
+            emin=emin, emax=emax,
+            flux_units=flux_units_string, flux=flux_ul, 
+            eflux_units=eflux_units_string, eflux=eflux_ul)
+
+    except Exception, ex:
+        print 'ERROR gtlike upper limit: ', ex
+        ul = -1
+    finally:
+        like.setSpectrum(name,old_spectrum)
+        saved_state.restore()
+
     return tolist(ul)
 
 def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin, emax, **kwargs):
@@ -382,97 +389,103 @@ def pointlike_test_cutoff(roi, which, flux_units='erg'):
 
 def gtlike_test_cutoff(like, name, flux_units='erg'):
     print 'Testing cutoff in gtlike'
-    emin, emax=like.energies[[0,-1]]
-    d = {}
 
     saved_state = LikelihoodState(like)
-
-    def fix(parname,value):
-        par=like[like.par_index(name, parname)]
-        par.setScale(1)
-        par.setBounds(-1e10,1e10) # kind of lame, but i think this is necessary
-        par.setTrueValue(value)
-        par.setBounds(value,value)
-        par.setFree(0)
-        like.syncSrcParams(name)
-
-    def set(parname,value,scale,lower,upper):
-        """ Note, lower + upper are fractional limits if free=True. """
-        par=like[like.par_index(name, parname)]
-        par.setBounds(-1e10,1e10) # kind of lame, but i think this is necessary
-        par.setScale(scale)
-        par.setTrueValue(value)
-        par.setBounds(lower,upper)
-        par.setFree(1)
-        like.syncSrcParams(name)
-
-    def get_flux():
-        return like.flux(name, emin, emax)
-
-    def set_flux(flux):
-        current_flux = get_flux()
-        prefactor=like[like.par_index(name, 'Prefactor')]
-        prefactor.setTrueValue(
-            (flux/current_flux)*prefactor.getTrueValue())
-        like.syncSrcParams(name)
-
-    ll = lambda: like.logLike.value()
-    ts = lambda: like.Ts(name,reoptimize=True)
-
-    def spectrum():
-        source = like.logLike.getSource(name)
-        s=source.spectrum()
-        return spectrum_to_dict(s, errors=True)
-
     source = like.logLike.getSource(name)
-    old_flux = get_flux()
     old_spectrum = source.spectrum()
 
-    like.setSpectrum(name,'PowerLaw')
-    fix('Scale', np.sqrt(emin*emax))
-    set('Prefactor',1e-11,1e-11, 1e-5, 1e5)
-    set('Index',       -2,    1,   -5,   5)
-    set_flux(old_flux)
+    d = {}
 
-    paranoid_gtlike_fit(like)
-    d['ll_0'] = ll_0 = ll()
-    d['TS_0'] = ts()
-    d['model_0']=spectrum()
-    d['flux_0']=gtlike_flux_dict(like,name,emin,emax,flux_units)
-    
-    like.setSpectrum(name,'PLSuperExpCutoff')
-    set('Prefactor', 1e-9,  1e-11,   1e-5,1e5)
-    set('Index1',      -1,      1,     -5,  5)
-    fix('Scale',     1000)
-    set('Cutoff',    1000,      1,    1e2,1e8)
-    fix('Index2',       1)
-    set_flux(old_flux)
+    try:
+        emin, emax=like.energies[[0,-1]]
 
-    paranoid_gtlike_fit(like)
+        def fix(parname,value):
+            par=like[like.par_index(name, parname)]
+            par.setScale(1)
+            par.setBounds(-1e10,1e10) # kind of lame, but i think this is necessary
+            par.setTrueValue(value)
+            par.setBounds(value,value)
+            par.setFree(0)
+            like.syncSrcParams(name)
 
-    if ll() < ll_0:
-        # if fit is worse than PowerLaw fit, then
-        # restart fit with parameters almost
-        # equal to best fit powerlaw
-        m = d['model_0']
-        set('Prefactor', m['Prefactor'],  1e-11,   1e-5,1e5)
-        set('Index1',        m['Index'],      1,     -5,  5)
-        fix('Scale',         m['Scale'])
-        set('Cutoff',               1e6,      1,    1e2,1e8)
-        fix('Index2',                 1)
+        def set(parname,value,scale,lower,upper):
+            """ Note, lower + upper are fractional limits if free=True. """
+            par=like[like.par_index(name, parname)]
+            par.setBounds(-1e10,1e10) # kind of lame, but i think this is necessary
+            par.setScale(scale)
+            par.setTrueValue(value)
+            par.setBounds(lower,upper)
+            par.setFree(1)
+            like.syncSrcParams(name)
+
+        def get_flux():
+            return like.flux(name, emin, emax)
+
+        def set_flux(flux):
+            current_flux = get_flux()
+            prefactor=like[like.par_index(name, 'Prefactor')]
+            prefactor.setTrueValue(
+                (flux/current_flux)*prefactor.getTrueValue())
+            like.syncSrcParams(name)
+
+        ll = lambda: like.logLike.value()
+        ts = lambda: like.Ts(name,reoptimize=True)
+
+        def spectrum():
+            source = like.logLike.getSource(name)
+            s=source.spectrum()
+            return spectrum_to_dict(s, errors=True)
+
+        old_flux = get_flux()
+
+        like.setSpectrum(name,'PowerLaw')
+        fix('Scale', np.sqrt(emin*emax))
+        set('Prefactor',1e-11,1e-11, 1e-5, 1e5)
+        set('Index',       -2,    1,   -5,   5)
+        set_flux(old_flux)
+
+        paranoid_gtlike_fit(like)
+        d['ll_0'] = ll_0 = ll()
+        d['TS_0'] = ts()
+        d['model_0']=spectrum()
+        d['flux_0']=gtlike_flux_dict(like,name,emin,emax,flux_units)
+        
+        like.setSpectrum(name,'PLSuperExpCutoff')
+        set('Prefactor', 1e-9,  1e-11,   1e-5,1e5)
+        set('Index1',      -1,      1,     -5,  5)
+        fix('Scale',     1000)
+        set('Cutoff',    1000,      1,    1e2,1e8)
+        fix('Index2',       1)
+        set_flux(old_flux)
+
         paranoid_gtlike_fit(like)
 
-    d['ll_1'] = ll_1 = ll()
-    d['TS_1'] = ts()
-    d['model_1']=spectrum()
-    d['flux_1']=gtlike_flux_dict(like,name,emin,emax,flux_units)
+        if ll() < ll_0:
+            # if fit is worse than PowerLaw fit, then
+            # restart fit with parameters almost
+            # equal to best fit powerlaw
+            m = d['model_0']
+            set('Prefactor', m['Prefactor'],  1e-11,   1e-5,1e5)
+            set('Index1',        m['Index'],      1,     -5,  5)
+            fix('Scale',         m['Scale'])
+            set('Cutoff',               1e6,      1,    1e2,1e8)
+            fix('Index2',                 1)
+            paranoid_gtlike_fit(like)
 
-    d['TS_cutoff']=2*(ll_1-ll_0)
+        d['ll_1'] = ll_1 = ll()
+        d['TS_1'] = ts()
+        d['model_1']=spectrum()
+        d['flux_1']=gtlike_flux_dict(like,name,emin,emax,flux_units)
 
-    like.setSpectrum(name,old_spectrum)
-    saved_state.restore()
+        d['TS_cutoff']=2*(ll_1-ll_0)
+    except Exception, ex:
+        print 'ERROR gtlike test cutoff: ', ex
+        d=-1
+    finally:
+        like.setSpectrum(name,old_spectrum)
+        saved_state.restore()
 
-    return d
+    return tolist(d)
 
 def test_cutoff(like_or_roi, *args, **kwargs):
     from BinnedAnalysis import BinnedAnalysis
@@ -539,7 +552,7 @@ def fix_bad_cutoffs(roi, exclude_names):
 
         model = source.model
 
-        if isinstance(model,ExpCutoff) and model['cutoff'] > 1e7:
+        if np.any(model.free) and isinstance(model,ExpCutoff) and model['cutoff'] > 1e7:
             print 'Converting cutoff source %s to powerlaw because cutoff too high' % source.name
             new_model = PowerLaw(norm=model['norm'], index=model['index'], e0=model.e0)
 
