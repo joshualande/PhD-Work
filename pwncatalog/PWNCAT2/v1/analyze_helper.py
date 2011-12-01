@@ -104,6 +104,8 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin,
 
     fit()
     freeze_insignificant_to_catalog(roi, get_catalog(), min_ts=4)
+    # second fit necessary after freezing, which changes spectrum of insignificant sources
+    fit() 
 
     if localize:
         try:
