@@ -141,6 +141,8 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin,
                     roi.modify(which=name, model=model)
         fit()
 
+    # For some reason, one final fit seems to help with convergence and not getting negative TS values *shurgs*
+    fit() 
     p = sourcedict(roi, name)
 
     if extension_upper_limit:
