@@ -1,4 +1,8 @@
 #List of TeV sources associated with PWNe with localization and extension.
+# New PWN CTA1 - Joshua Lande - Nov 30, 2011
+CTA1:
+  l_b: [119.58,10.20]
+  ext: '?'
 0FGL J0631.8+1034 :
   l_b: [201.3,0.51]
   ext: 0.0
