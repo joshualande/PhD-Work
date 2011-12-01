@@ -299,7 +299,13 @@ def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin, emax, **
 
     saved_state = PointlikeState(roi)
 
-    roi.modify(which=name, model=PowerLaw(index=powerlaw_index))
+    # Note keep old flux, because it is important to have
+    # the spectral model pushed into the upper_limit
+    # code reasonably close to the best fit flux. This
+    # is because initial likelihood (ll_0) is used to scale
+    # the likelihood so it has to be reasonably close to 
+    # the best value.
+    roi.modify(which=name, model=PowerLaw(index=powerlaw_index), keep_old_flux=True)
 
     if emin is None and emax is None: 
         emin = roi.bin_edges[0]
@@ -504,8 +510,14 @@ def pointlike_plot_all_seds(roi, filename=None, ncols=4, **kwargs):
 plot_all_seds = pointlike_plot_all_seds # for now
 
 
-def freeze_insignificant_to_catalog(roi,catalog, min_ts=4):
+def freeze_insignificant_to_catalog(roi, catalog, exclude_names, min_ts=4):
+    """ Replace all insigificant 2FGL catalog sources
+        with the predictions of 2FGL and 
+        the spectral shape of the source frozen. """
     for source in roi.get_sources():
+
+        if source.name in exclude_names: continue
+
         if np.any(source.model.free) and roi.TS(which=source)< min_ts:
             try:
                 catalog_source = catalog.get_source(source.name)
@@ -516,4 +528,19 @@ def freeze_insignificant_to_catalog(roi,catalog, min_ts=4):
                 model.free[0] = source.model.free[0]
                 model.free[1:] = False
                 print 'Freezing spectra of %s to 2FGL prediction' % source.name
-                roi.modify(which=source, model=model)
+                roi.modify(which=source, model=model, keep_old_flux=False)
+
+
+
+def fix_bad_cutoffs(roi, exclude_names):
+    """ Loop over all sources. When ExpCutoff souce has cutoff>10TeV, convert to powerlaw. """
+    for source in roi.get_sources():
+        if source.name in exclude_names: continue
+
+        model = source.model
+
+        if isinstance(model,ExpCutoff) and model['cutoff'] > 1e7:
+            print 'Converting cutoff source %s to powerlaw because cutoff too high' % source.name
+            new_model = PowerLaw(norm=model['norm'], index=model['index'], e0=model.e0)
+
+            roi.modify(which=source, model=new_model, keep_old_flux=False)
