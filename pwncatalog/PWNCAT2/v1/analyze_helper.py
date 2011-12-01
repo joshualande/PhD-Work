@@ -7,7 +7,7 @@ import numpy as np
 from roi_gtlike import Gtlike
 import yaml
 from toolbag import tolist
-from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog
+from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog,fix_bad_cutoffs
 from LikelihoodState import LikelihoodState
 from uw.pulsar.phase_range import PhaseRange
 from uw.like.SpatialModels import Gaussian
@@ -103,8 +103,9 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin,
         print_summary()
 
     fit()
-    freeze_insignificant_to_catalog(roi, get_catalog(), min_ts=4)
-    # second fit necessary after freezing, which changes spectrum of insignificant sources
+    freeze_insignificant_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=4)
+    fix_bad_cutoffs(roi, exclude_names=[name])
+    # second fit necessary after these fixes, which change around sources.
     fit() 
 
     if localize:
@@ -177,11 +178,7 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax, seddir, datadir, plotdir,
     r=sourcedict(like, name)
 
     if upper_limit:
-        try:
-            r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95)
-        except Exception, ex:
-            print 'ERROR gtlike upper limit: ', ex
-            r['upper_limit'] = -1
+        r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95)
 
     def sed(kind,**kwargs):
         print 'Making %s SED' % kind
@@ -202,14 +199,13 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax, seddir, datadir, plotdir,
             sed(hypothesis)
 
     if cutoff:
+        r['test_cutoff']=test_cutoff(like,name)
         try:
-            r['test_cutoff']=test_cutoff(like,name)
             plot_gtlike_cutoff_test(cutoff_results=r['test_cutoff'],
                                     sed_results='%s/sed_gtlike_2bpd_%s_%s.yaml' % (seddir,hypothesis,name),
                                     filename='%s/test_cutoff_%s_%s.png' % (plotdir,hypothesis,name))
         except Exception, ex:
-            print 'ERROR gtlike test cutoff: ', ex
-            r['test_cutoff']=-1
+            print 'ERROR plotting cutoff test:', ex
 
     return r
     
