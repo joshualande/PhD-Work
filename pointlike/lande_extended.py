@@ -219,7 +219,7 @@ class TSExtVsEnergy(object):
 
         ax.set_xlabel(r'Energy (MeV)')
         ax.set_ylabel(r'$\mathrm{TS}_\mathrm{ext}$')
-        ax.semilogx(self.emin,self.ts_ext,'ko')
+        ax.semilogx(self.emin,self.ts_ext,'k',drawstyle='steps-post')
 
         if self.title is None: 
             self.title = '$\mathrm{TS}_\mathrm{ext}$ vs Energy'
