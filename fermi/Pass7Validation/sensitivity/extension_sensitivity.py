@@ -8,14 +8,18 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from pylab import *
 from matplotlib.ticker import FuncFormatter
 import numpy as np
+from mpl_toolkits.axes_grid.axes_grid import Grid
+from matplotlib import gridspec
+
 
 fig=figure(figsize=(4,3))
 
-ax=axes([0.15,0.1,0.8,0.85])
+gs = gridspec.GridSpec(2, 1, height_ratios=[3,2])
+ax=plt.subplot(gs[0])
+lower_ax = plt.subplot(gs[1], sharex=ax)
+fig.subplots_adjust(left=0.20, right=0.95, top=0.95, bottom=0.15)
 
 
-divider = make_axes_locatable(ax)
-lower_ax = divider.append_axes("bottom", size=1.2, pad=0.1, sharex=ax)
 
 emin=1000
 emax=1000
@@ -23,7 +27,6 @@ kwargs=dict(linestyle='-',color='black')
 
 loop_index = 2
 diff_factor=10
-
 
 data=yaml.load(open('extension_sensitivity.yaml'))
 exts=np.asarray(data['exts'])
@@ -44,8 +47,6 @@ ax.xaxis.set_major_formatter(FuncFormatter(lambda x, *args: '$%g^\circ$' % x))
 ax.set_xlim(0.1,2)
 
 # Use text object for easier alignment
-ax.text(-0.1, 0.5, 'Flux ($\mathrm{ph}\ \mathrm{cm}^{-2}\mathrm{s}^{-1}$)', transform=ax.transAxes, rotation=90,
-        ha='right', va='center')
 
 ax.get_xaxis().set_visible(False)
 
@@ -53,10 +54,13 @@ ax.set_ylim(3e-10,2e-8)
 
 ax.set_yscale('log')
 
+ax.set_ylabel('Flux ($\mathrm{ph}\ \mathrm{cm}^{-2}\,\mathrm{s}^{-1}$)')
+lower_ax.set_ylabel(r'$\textrm{F}_\textrm{2yr}/\textrm{F}_\textrm{10yr}$')
 
-lower_ax.text(-0.1, 0.5, r'$\textrm{F}_\textrm{2yr}/\textrm{F}_\textrm{10yr}$', transform=lower_ax.transAxes, rotation=90,
-        ha='right', va='center')
-
+# align labels: 
+#  http://matplotlib.sourceforge.net/faq/howto_faq.html#align-my-ylabels-across-multiple-subplots
+lower_ax.yaxis.set_label_coords(-0.15,0.5)
+ax.yaxis.set_label_coords(-.15,0.5)
 
 lower_ax.set_xlabel('Extension')
 
