@@ -3,12 +3,13 @@ rc('ps',usedistiller='xpdf')
 rc('text', usetex=True)
 rc('font', family='serif', serif="Computer Modern Roman")
 
-
+import yaml
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from pylab import *
-import numpy as N
+from matplotlib.ticker import FuncFormatter
+import numpy as np
 
-f=figure(figsize=(6,5))
+fig=figure(figsize=(4,3))
 
 ax=axes([0.15,0.1,0.8,0.85])
 
@@ -23,24 +24,22 @@ kwargs=dict(linestyle='-',color='black')
 loop_index = 2
 diff_factor=10
 
-exts=N.sort(N.append(N.arange(0.1,2.1,0.1),[0.15,0.25,0.35]))
 
-f2yrs=np.asarray([get_sensitivity(e,loop_index,emin,fit_emin,diff_factor,'2') for e in exts])
-f10yrs=np.asarray([get_sensitivity(e,loop_index,emin,fit_emin,diff_factor,'10') for e in exts])
+data=yaml.load(open('extension_sensitivity.yaml'))
+exts=np.asarray(data['exts'])
+f2yrs=np.asarray(data['f2yrs'])
+f10yrs=np.asarray(data['f10yrs'])
 
-
-ax.fill_between(exts,f2yrs/N.sqrt(5),f2yrs/5,
-                  color='lightgrey')
+ax.fill_between(exts,f2yrs/np.sqrt(5),f2yrs/5, color='lightgrey')
 
 ax.semilogy(exts,f10yrs,**kwargs)
 
 lower_ax.plot(exts,f2yrs/f10yrs,**kwargs)
 
-lower_ax.fill_between(exts,N.sqrt(5),5, color='lightgrey')
+lower_ax.fill_between(exts,np.sqrt(5),5, color='lightgrey')
 
 # add degrees to the x axis
-from uw.like.roi_plotting import DegreesFormatter
-ax.xaxis.set_major_formatter(DegreesFormatter)
+ax.xaxis.set_major_formatter(FuncFormatter(lambda x, *args: '$%g^\circ$' % x))
 
 ax.set_xlim(0.1,2)
 
@@ -50,7 +49,7 @@ ax.text(-0.1, 0.5, 'Flux ($\mathrm{ph}\ \mathrm{cm}^{-2}\mathrm{s}^{-1}$)', tran
 
 ax.get_xaxis().set_visible(False)
 
-ax.set_ylim(7e-11,2e-8)
+ax.set_ylim(3e-10,2e-8)
 
 ax.set_yscale('log')
 
@@ -58,9 +57,10 @@ ax.set_yscale('log')
 lower_ax.text(-0.1, 0.5, r'$\textrm{F}_\textrm{2yr}/\textrm{F}_\textrm{10yr}$', transform=lower_ax.transAxes, rotation=90,
         ha='right', va='center')
 
-lower_ax.set_ylim(N.sqrt(5)-0.5,5+0.5)
+
 lower_ax.set_xlabel('Extension')
 
+lower_ax.set_ylim(np.sqrt(5)-0.5,5+0.5)
 lower_ax.set_xticks([0.1,0.5,1,1.5,2])
 lower_ax.set_yticks([2,3,4,5])
 
