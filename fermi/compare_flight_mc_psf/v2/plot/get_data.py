@@ -13,7 +13,6 @@ ts=np.asarray(file['ts_P7SOURCE_V6'])
 ts_point = ts - ts_ext_P7SOURCE_V6
 index=np.asarray(file['index_mc'])
 
-max_ts=max(max(ts_ext_P7SOURCE_V4),max(ts_ext_P7SOURCE_V6)) + 1
 
 d=dict()
 
@@ -21,6 +20,8 @@ for i,(irf,all_ts_ext) in enumerate([
     ['P7SOURCE_V6',ts_ext_P7SOURCE_V6],
     ['P7SOURCE_V4',ts_ext_P7SOURCE_V4]
 ]):
+
+    max_ts=max(all_ts_ext) + 1
 
     d[irf]=dict()
 
@@ -44,13 +45,10 @@ for i,(irf,all_ts_ext) in enumerate([
         ts_ext[ts_ext<0] = 0
 
 
-        bins=np.linspace(0,max_ts,1e2)
+        bins=np.linspace(0,max_ts,1e3)
         bin_center=bins[:-1] + (bins[1]-bins[0])/2
 
         binned=np.histogram(ts_ext,bins=bins)[0]
-
-        if any(ts_ext>max_ts):
-            print '> max: ',irf,ts_ext[np.where(ts_ext>max_ts)]
 
         cdf=np.cumsum(binned[::-1])[::-1]
 
