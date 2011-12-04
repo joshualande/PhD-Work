@@ -134,7 +134,6 @@ class Synchrotron(Spectrum):
             in units of erg s^-1. """
         raise Exception("Not implemented yet...")
 
-
     @staticmethod
     def units_string(): return '1/erg/s'
 
