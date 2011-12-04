@@ -1,0 +1,302 @@
+function terminal_tweaks {
+    [ -z "$PS1" ] && return
+    export TERM=xterm-color
+
+    export FIGNORE=.svn # http://blog.pclewis.com/2010/03/tip-make-bash-tab-completion-ignore-svn-directories/
+
+    set -o vi # vi like navigation of command line.
+    export EDITOR=vim
+
+    #export PS1="\[\h:\W $ \[" # current folder as the prompt
+    export PS1="\h:\W $ " 
+
+    function fixscreen {
+        kinit
+        /usr/bin/aklog
+    }
+
+    ulimit -c 0 # Disable all core dump files
+
+    #stty sane;stty erase ^H # This stuff makes backspace work
+    shopt -s checkwinsize
+}
+terminal_tweaks
+
+
+
+function kipacsetup {
+    # ds9
+    export KIPACSOFT=/afs/slac/g/ki/software
+    export PATH=$KIPACSOFT/ds9/6.1/amd64_linux26:$PATH
+
+    # fv
+    export HEADAS=`echo $KIPACSOFT/heasoft/6.9/$(sys)/heasoft/*-linux-gnu-libc2.3.4`
+    source $HEADAS/headas-init.sh
+    export PATH=$HEADAS/bin/:$PATH
+
+    # get python
+    #export PATH=$KIPACSOFT:/afs/slac/g/ki/software/python/2.6.6/bin:$PATH
+    export setup="${setup} kipac"
+}
+
+
+function fix_matplotlib {
+    # This says to use file .matplotlib/matplotlibrc for my configuration
+    export MATPLOTLIBRC=~/.matplotlib/
+    # whereas this says to use as a temp folder random scratch space.
+    export MPLCONFIGDIR=/scratch/
+}
+
+function stockscons {
+    export SCTOOLS=09-25-02
+    #export BLDTYPE=redhat5-i686-32bit-gcc41
+    export BLDTYPE=redhat5-x86_64-64bit-gcc41
+    export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
+    export BUILDS=/nfs/farm/g/glast/u35/ReleaseManagerBuild
+    export INST_DIR=${BUILDS}/${BLDTYPE}/Optimized/ScienceTools/$SCTOOLS
+    source ${INST_DIR}/bin/${BLDTYPE}-Optimized/_setup.sh
+
+    #export PATH=$GLAST_EXT/python/2.7.1/gcc41/bin:$PATH
+    #export PATH=$GLAST_EXT/python/2.6.5/gcc41/bin:$PATH
+
+    # Get custom irfs
+    export CUSTOM_IRF_DIR=$FERMI/irfs
+    export CUSTOM_IRF_NAMES=P7SOURCE_V4PSF,P7SOURCE_V6,P7SOURCE_V4
+
+    fix_matplotlib
+
+    export setup="${setup} stockscons"
+}
+
+function headscons {
+    # stock version of science tools with head version of pointlike on top of it.
+    stockscons 
+
+    export INST_DIR=/u/gl/lande/head/ScienceTools-scons
+    # point at the most up to teh cvs version of all the pointlike code
+    export PYTHONPATH=${INST_DIR}/pointlike/python:$PYTHONPATH
+
+    # for the time being, use my version of pyLikelihood
+    export PYTHONPATH=${INST_DIR}/pyLikelihood/python:$PYTHONPATH
+
+    export PATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PATH
+    export PYTHONPATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PYTHONPATH
+
+    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
+    #export PYTHONPATH=/u/gl/lande/lib/python2.6/site-packages:$PYTHONPATH
+
+    export PATH=~/bin:$PATH # get my ipython
+
+    export python=$INST_DIR/pointlike/python/uw/like
+    export lande=~/svn/lande/trunk/pointlike/
+
+    export setup=`echo $setup | sed 's/stockscons/headscons/g'`
+}
+
+function headscons26 {
+    # same as headscons but uses python 2.6
+    headscons
+    export PATH=$GLAST_EXT/python/2.6.5/gcc41/bin:$PATH
+    export PYTHONPATH=`echo $PYTHONPATH | sed 's/python2.7/python2.6/g'`
+    export setup=`echo $setup | sed 's/headscons/headscons26/g'`
+}
+
+
+function devscons {
+    # path of scons code
+    export PATH=$PATH:/afs/slac/g/glast/applications/SCons/1.3.0/bin
+
+    export BLDTYPE=redhat5-x86_64-64bit-gcc41
+    export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
+
+    export INST_DIR=/u/gl/lande/dev/ScienceTools-scons
+    source ${INST_DIR}/bin/${BLDTYPE}-Optimized/_setup.sh
+
+    export PATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PATH
+    export PYTHONPATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PYTHONPATH
+
+    # point at the most up to the cvs version of all the pointlike code
+    export PYTHONPATH=/u/gl/lande/dev/ScienceTools-scons/pointlike/python:$PYTHONPATH
+
+    export python=$INST_DIR/pointlike/python/uw/like
+
+    export PFILES=".;$PFILES"
+
+    export CALDB=${INST_DIR}/irfs/caldb/CALDB/
+
+    export setup="${setup} sconsdev"
+}
+
+function buildscons {
+    scons --with-GLAST-EXT=${GLAST_EXT} --compile-opt pointlike 
+    scons --with-GLAST-EXT=${GLAST_EXT} --compile-opt skymaps
+    scons --with-GLAST-EXT=$GLAST_EXT --compile-opt setup
+}
+
+function alias_better {
+    # Things that Josh likes
+
+    alias clean="rm -f *~;rm -f .*~;rm -f '#'*;rm -rf .*.swp;rm -rf .'#'*"
+    alias screen='screen -RD'
+    alias root='root -l'
+    alias killeverything='for x in `jobs -p`; do kill -9 $x; done'
+    alias rm="rm -iv" # warn before removing & verbose
+    alias mv="mv -bfi"
+    alias cp="cp -abfi"
+    alias less='less -I' # case insensitive search
+    alias l="ls --color" # print out size next to each of them
+    alias duh='du -h --max-depth=1' # human readable and not recursive
+    alias ack='ack -i'
+    alias grep='grep -i'
+    #alias ssh="ssh -Y" # ssh forewarding wth x11 
+    function bj { 
+        run=`bjobs -r $@ 2> /dev/null | awk '$1!="JOBID"{print $0}' | wc -l`
+        jobs=`bjobs $@ 2> /dev/null | awk '$1!="JOBID"{print $0}' | wc -l`
+        echo $run/$jobs
+    }
+
+    alias bq="bqueues short medium long xlong xxl kipac-ibq"
+    alias sng="sed 's/:/\n/g'"
+    alias cvstat='cvs status | grep Stat | grep -v Up-to-date'
+    alias tarup="tar -czvf" # tar -czvf MyArchive.tgz Source_folder
+    alias untar="tar -xzvf" # tar -xzvf MyArchive.tgz
+
+    # alias public slac machiens
+    for input in ki-rh29 ki-ls{,01,02,03,04,05,06} `cat ~/.ssh/known_hosts | awk -F',' '{print $1}'  | grep -v '#' | grep -v "^$"`; do
+        alias $input="ssh lande@$input.slac.stanford.edu"
+        input=`echo $input | sed 's/[0-9]//g'`
+        alias $input="ssh lande@$input.slac.stanford.edu"
+    done
+
+    # places at SLAC
+    export u31="/nfs/farm/g/glast/u31/lande" # Josh's u31 home
+    export afs=/afs/slac/g/glast/users/lande
+    export markus=/u/gl/markusa/disk/glast_data/gammas/
+    export ki03="/nfs/slac/g/ki/ki03/lande"
+    export sass="/afs/slac/www/slac/sass"
+
+    export FERMI=$ki03/fermi/data
+    export CATALOG=$ki03/fermi_data/catalog_mirror/catalog_jan_31_2011/
+
+    alias svnvimdiff='svn diff --diff-cmd ~/bin/svnvimdiff'
+    alias svstat='svn stat'
+    alias f2f=fixed2fixed
+
+
+    function vimdump {
+        if [[ ! $string =~ kipac ]]; 
+        then
+            kipacsetup 
+        fi
+        fdump $1 STDOUT - - page=no pagewidth=256 | vim -
+    }
+}
+alias_better
+
+export PATH="/afs/slac.stanford.edu/g/glast/applications/stag/i386_rhel40/:$PATH"
+export PYTHONPATH="$HOME/bin:$HOME/python:$PYTHONPATH"
+
+function mathematica_setup {
+    PATH=$PATH:/afs/slac.stanford.edu/g/ki/software/Wolfram/Mathematica/6.0/Executables/
+}
+
+export PATH=~/bin:$PATH
+# local stuff
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
+
+#wget -O ~/.ssh/known_hosts ftp://ftp.slac.stanford.edu/admin/known_hosts 
+#curl ftp://ftp.slac.stanford.edu/admin/known_hosts  > ~/.ssh/known_hosts
+
+function lsf_setup {
+    export PATH="$PATH:/usr/local/bin" # For the program lsf program.
+    export PATH="$PATH:/usr/afsws/bin"
+
+}
+lsf_setup
+
+
+export CVSROOT=/nfs/slac/g/glast/ground/cvs
+
+function texlive {
+    # setup local tex build
+    export PATH=/u/gl/lande/texlive/2010/bin/x86_64-linux:$PATH
+    export setup="${setup} texlive"
+}
+
+function tagCollector {
+    # Tag the science tools
+    echo python tagCollector.py ScienceTools --new=HEAD -r True
+}
+
+
+function greensetup {
+    GREENCAT=/nfs/slac/g/ki/ki03/lande/green_catalog/v1
+    PYTHONPATH=/u/gl/lande/svn/lande/trunk/green_catalog/v1:$PYTHONPATH
+
+}
+greensetup
+
+export PYTHONUNBUFFERED=True
+
+
+function temposetup {
+    # Taken from Romain, who got it from Marie-Helene.
+    # For some reason, tempo2 can only be run in
+    # the cshell on rhel5-32 machines.
+    export TEMPO2=/afs/slac/g/glast/users/guillemot/tempo2/tempo2-1.11/T2runtime
+    export PATH=/afs/slac/g/glast/users/guillemot/tempo2/tempo2-1.11:${PATH}
+    export ephem='/afs/slac/g/glast/groups/pulsar/ephemeris'
+
+    # exmaple usage: 
+    #   http://fermi.gsfc.nasa.gov/ssc/data/analysis/user/Fermi_plug_doc.pdf
+    #   tempo2 -gr fermi -ft1 FT1.fits -ft2 FT2.fits -f pulsar.par -grdev toto.ps/cps -phase -col PULSE_PHASE
+
+    export setup="${setup} tempo2"
+}
+
+
+function CandA_paper_draft {
+    # Eric told me to add this to modify the C&A paper paper
+    export CVSROOT=/nfs/slac/g/glast/ground/paper_drafts/
+    #cvs co ScienceGroups/CandA/Pass7Validation
+
+    #The paper is in this folder: /u/gl/lande/cvs/ScienceGroups/CandA/Pass7Validation/
+
+    # Add text here on bad psf vs high level science
+    # /u/gl/lande/cvs/ScienceGroups/CandA/Pass7Validation/pointSpreadFunction/psfHighLevel.tex
+
+    # Add text here on
+    # 10 year vs 2 year sensitivity: to ~/cvs/ScienceGroups/CandA/Pass7Validation/sciencePerformance/perf_spatialExtent.tex
+
+}
+
+function dm_satellite_setup {
+    export SHERIDAN=~szalewsk
+}
+
+
+function green_catalog_setup {
+    # collect here things specific to green catalog analysis
+    export SNRTEMPLATES=/afs/slac/g/glast/users/jhewitt/snrcat1_fits
+}
+green_catalog_setup
+
+
+function pwncat_setup {
+    export alice=~allafort/ki05/pwncatalog/
+    export marianne=/nfs/farm/g/glast/u54/lemoine/PWNCat
+    export pwn=~/svn/lande/trunk/pwncatalog/PWNCAT2/v1/
+    export PWNSCRIPTS=~lande/svn/lande/trunk/pwncatalog_1yr/
+}
+pwncat_setup
+
+
+export svn=/u/gl/lande/svn/lande/trunk
+
+function setup_sed {
+    export PYTHONPATH=~/svn/lande/trunk/:$PYTHONPATH
+    export sed=~/svn/lande/trunk/pysed/
+}
+setup_sed
+
+
