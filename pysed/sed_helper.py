@@ -59,6 +59,18 @@ def logrange_unit(min,max, per_decade):
 
     return u.tosympy(logrange(float(min),float(max), per_decade), units)
 
+def argmax_unit(array):
+    """ Computes the argmax of a sympy list of numbers with units. 
+    
+        Example:
+
+        >>> import sympy
+        >>> x = sympy.Matrix([1*u.erg, 10*u.erg, 2*u.erg])
+        >> argmax_unit(x)
+        1
+    """
+    return np.argmax(array.tolist())
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
