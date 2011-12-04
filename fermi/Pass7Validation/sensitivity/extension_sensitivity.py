@@ -8,7 +8,9 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from pylab import *
 from matplotlib.ticker import FuncFormatter
 import numpy as np
+from mpl_toolkits.axes_grid.anchored_artists import AnchoredText
 from mpl_toolkits.axes_grid.axes_grid import Grid
+from matplotlib.patheffects import withStroke
 from matplotlib import gridspec
 
 
@@ -53,6 +55,13 @@ ax.get_xaxis().set_visible(False)
 ax.set_ylim(3e-10,2e-8)
 
 ax.set_yscale('log')
+
+kwargs=dict(frameon=False, loc=2,
+            prop=dict(path_effects=[withStroke(linewidth=5,foreground='w')]))
+#, prop=dict(size=14))
+
+ax.add_artist(AnchoredText('(a)', **kwargs))
+lower_ax.add_artist(AnchoredText('(b)', **kwargs))
 
 ax.set_ylabel('Flux ($\mathrm{ph}\ \mathrm{cm}^{-2}\,\mathrm{s}^{-1}$)')
 lower_ax.set_ylabel(r'$\textrm{F}_\textrm{2yr}/\textrm{F}_\textrm{10yr}$')
