@@ -1,7 +1,8 @@
 # List of TeV sources associated with PWNe with localization and extension.
-#
 # Information primarily taken from http://tevcat.uchicago.edu/
+#
 # Changes:
+# * Added more data for HESS J1616 - Joshua, Dec 4, 2011
 # * Add CTA1 + HESS J1831-098 - Joshua Lande, Nov 30, 2011
 0FGL J0631.8+1034 :
   gal: [201.3,0.51]
@@ -46,6 +47,7 @@ HESS J1616-508:
   gal: [332.39,-0.14]
   ext: [0.14,0.14]
   spectra: '$pwn/pwndata/tevdata/HESSJ1616-508/HESSJ1616-508.txt'
+  map: '$pwnpwndata/tevdata/HESSJ1616-508/HESSJ1616-508_Map.fits'
 HESS J1632-478:
   gal: [336.38,0.19]
   ext: [0.21,0.06]
