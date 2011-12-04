@@ -5,10 +5,14 @@
 
     Author: Joshua Lande <joshualande@gmail.com>
 """
+from math import pi, exp
 import pyfits
 import numpy as np
+from scipy.special import lambertw
 
 from . import sed_units as u
+from . sed_thermal import ThermalSpectrum
+from sed_helper import argmax_unit
 
 class ISRF(object):
 
@@ -74,29 +78,81 @@ class ISRF(object):
 
 
     def get(self, component, R, z):
-        """ Get the ISRF for a given compoenent and a given galactic position. """
+        """ Get the ISRF for a given compoenent and a given galactic position. 
+        
+            Returns photon density per unit energy (photons/volume/energy). """
 
         R_index = self.R_to_index(R)
         z_index = self.z_to_index(z)
 
         print 'for now, clip. This is BAD. Should be an interpolation.'
-        R_index = int(R_index)
-        z_index = int(z_index)
+        R_index = R_index
+        z_index = z_index
 
         radiation = self.isrf.data[component,:,z_index,R_index]
 
-        return u.tosympy(radiation,u.eV*u.cm**-3)
+        radiation = u.tosympy(radiation,u.eV*u.cm**-3)
+
+        energy = self.get_energy()
+        inverse_energy = energy.applyfunc(lambda x: x**-1)
+
+        # convert from energy output per unit energy (energy/cm^3)
+        # to photons per unit energy (ph/cm^3/energy)
+        # by dividing by two factors of energy.
+        print 'This dividing by 2 factors of energy needs to be validated!'
+        radiation = radiation.multiply_elementwise(inverse_energy)
+        radiation = radiation.multiply_elementwise(inverse_energy)
+
+        return radiation
 
         
-    def get_optical(self, *args, **kwargs): 
-        """ Get the optical ISRF. """
-        return self.get(0, *args, **kwargs)
+    def get_optical(self, *args, **kwargs): return self.get(0, *args, **kwargs)
+    def get_infrared(self, *args, **kwargs): return self.get(1, *args, **kwargs)
+    def get_CMB(self, *args, **kwargs): return self.get(2, *args, **kwargs)
 
-    def get_infrared(self, *args, **kwargs): 
-        """ Get the infrared ISRF. """
-        return self.get(1, *args, **kwargs)
+    def estimate(self, *args, **kwargs):
+        """ Estimate a thermal sectrum
+            based upon the peak energy in
+            the GALPROP spectrum. """
 
-    def get_CMB(self, *args, **kwargs): 
-        """ Get the CMB ISRF. """
-        return self.get(2, *args, **kwargs)
+        energy = self.get_energy()
+        intensity = self.get(*args, **kwargs)
 
+        def max_energy_to_temperature(energy):
+            """ Converts the peak energy to the peak. 
+
+                This formula is derived noting that the funcional dependence
+                is in the term x^2/(Exp[x]-1) where x=E/kT.
+
+                From mathematatica, we find:
+
+                In[0]:= ArgMax[x^2/(Exp[x] - 1), x]
+                Out[13]= 2 + ProductLog[-(2/E^2)]
+
+                Which is approximately 1.59362
+
+                So the peak energy is at x ~ 1.6, or kT~E/1.6
+
+                Implementation Note: ProductLog in Mathematica is 
+                the Lambert W function (scipy.special.lambertw) """
+            print 'fix documentation'
+            return energy/float(2 + lambertw(-2/exp(2)))
+
+
+        # find peak in spectrum
+        argmax = argmax_unit(intensity)
+
+        max_energy = energy[argmax]
+        max_intensity = intensity[argmax]
+
+        kT = max_energy_to_temperature(max_energy)
+
+        energy_density = ((pi*kT)**4/(15*max_energy**2))*(exp(float(max_energy/kT))-1)*max_intensity
+
+        return ThermalSpectrum(
+            energy_density=energy_density,
+            kT=kT)
+
+    def estimate_optical(self, *args, **kwargs): return self.estimate(0, *args, **kwargs)
+    def estimate_infrared(self, *args, **kwargs): return self.estimate(1, *args, **kwargs)
+    def estimate_CMB(self, *args, **kwargs): return self.estimate(2, *args, **kwargs)
