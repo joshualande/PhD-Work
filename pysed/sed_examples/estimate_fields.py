@@ -1,4 +1,7 @@
-""" Plots the ISRF as calculated by GALPROP
+""" An example to demonstrate the way in
+    which the Interstellar Radiation Field (ISRF)
+    can be estiamted at a given place in the galaxy
+    from the predictions by GALPROP.
 
     Typical reference for GALPROP: Moskalenko et al 2006 (arXiv:astro-ph/0511149v2)
 
@@ -6,6 +9,7 @@
 """
 import pylab as P
 from pysed.sed_isrf import ISRF
+from pysed.sed_spectrum import CompositeSpectrum
 import pysed.sed_units as u
 
 if __name__ == '__main__':
@@ -28,15 +32,31 @@ if __name__ == '__main__':
     cmb = u.tonumpy(cmb, u.cm**-3*u.eV**-1)
     optical = u.tonumpy(optical, u.cm**-3*u.eV**-1)
 
-    P.loglog(energy, infrared, color='red', label='infrared')
-    P.loglog(energy, cmb, color='blue', label='CMB')
-    P.loglog(energy, optical, color='green', label='optical')
+    plot_kwargs = dict(marker='+', linestyle='none')
+    P.loglog(energy, infrared, color='red', label='infrared', **plot_kwargs)
+    P.loglog(energy, cmb, color='blue', label='CMB', **plot_kwargs)
+    P.loglog(energy, optical, color='green', label='optical', **plot_kwargs)
+
+    P.loglog(energy, infrared + cmb + optical, color='black', label='total', **plot_kwargs)
+
+    axes = P.gca()
 
 
     # now, overlay estimated quantities
-    infared_est = isrf.estimate_infrared(**kwargs)
-    plot_kwargs = dict(x_units_string = 'eV', y_units_string='ph/cm^3/eV', dashes=[5,2])
-    infared_est.loglog(color='red', **plot_kwargs)
+    plot_kwargs = dict(axes=axes, x_units_string = 'eV', y_units_string='ph/cm^3/eV', dashes=[5,2])
+
+    infrared_est = isrf.estimate_infrared(**kwargs)
+    infrared_est.loglog(color='red', **plot_kwargs)
+
+    CMB_est = isrf.estimate_CMB(**kwargs)
+    CMB_est.loglog(color='blue', **plot_kwargs)
+    print 'CMB kT',u.repr(CMB_est.kT*u.erg/u.boltzmann,'kelvin')
+
+    optical_est = isrf.estimate_optical(**kwargs)
+    optical_est.loglog(color='green', **plot_kwargs)
+
+    total = CompositeSpectrum(infrared_est, CMB_est, optical_est)
+    total.loglog(color='black', **plot_kwargs)
 
     P.legend(loc=3)
 
