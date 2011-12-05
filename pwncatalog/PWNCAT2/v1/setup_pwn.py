@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import yaml
+import numbers
 import os
 from glob import glob
 from os.path import expandvars as e, join as j
@@ -19,49 +20,114 @@ from uw.like.Models import PowerLaw
 from uw.utilities import phasetools
 from uw.pulsar.phase_range import PhaseRange
 
-def setup_pwn(name, pwndata, fit_emin, fit_emax, extended=False, **kwargs):
+isnum = lambda x: isinstance(x, numbers.Real)
 
-    source = get_source(name,pwndata, fit_emin, fit_emax, extended=extended)
-    if isinstance(source,PointSource):
-        ps,ds = [source],[]
+def setup_tev(name, tevdata, fit_emin, fit_emax, extended=False, **kwargs):
+    """ Sets up the ROI for studying a TeV Source. """
+    tev=yaml.load(open(tevdata))
+    source=tev[name]
+    l,b=source['gal']
+    tev_position=SkyDir(l,b,SkyDir.GALACTIC)
+
+    # data, should be more elegant...
+    ft1=glob('/nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/pass7.3_pre_source_merit_*_pass7.4_source_z100_t90_cl0.fits')
+    ft2='/nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits'
+    ltcube='/nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ltcube_24m_pass7.4_source_z100_t90_cl0.fits'
+    binsperdec=4
+    binfile='/nfs/slac/g/ki/ki03/lande/fermi_data/allsky/2FGL/v9/binned_100_100000_4.fits'
+
+    # parse the extension
+    ext = source['ext']
+    if isnum(ext):
+        sigma = ext
+    elif isinstance(ext, list) and len(ext) == 2 and isnum(ext[0]) and isnum(ext[1]):
+        sigma = np.sqrt(ext[0]*ext[1]) # Same surface area
+    elif ext == '?':
+        sigma = 0 # best we can do since no published size
     else:
-        ps,ds = [],[source]
+        raise Exception("Unrecogized size %g" % sigma)
 
-    roi = setup_region(name, pwndata, 
+    source = get_source(name, 
+                        fit_emin=fit_emin, 
+                        fit_emax=fit_emax, 
+                        position = tev_position, sigma = sigma,
+                        extended=extended)
+
+    roi = setup_region(name, 
+                       phase = PhaseRange(0,1),
+                       ft1=ft1, 
+                       ft2=ft2, 
+                       ltcube=ltcube, 
+                       binsperdec=binsperdec,
+                       binfile=binfile,
+                       roi_dir=tev_position,
                        fit_emin=fit_emin, 
                        fit_emax=fit_emax, 
-                       point_sources = ps,
-                       diffuse_sources = ds,
+                       sources = [source],
+                       savedir = None,
                        **kwargs)
     return roi
 
-def get_source(name, pwndata, fit_emin, fit_emax, extended=False):
-    sources=yaml.load(open(pwndata))
-    pulsar_position=SkyDir(*sources[name]['cel'])
-    model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax))
-    model.set_flux(
-        PowerLaw(norm=1e-11, index=2).i_flux(fit_emin,fit_emax),
-        fit_emin,fit_emax)
+def setup_pwn(name, pwndata, fit_emin, fit_emax, extended=False, **kwargs):
+    """ Sets up the ROI for studying a LAT Pulsar in the off pulse. """
 
-    if extended:
+    sourcedict=yaml.load(open(pwndata))[name]
+    ltcube=sourcedict['ltcube']
+    pulsar_position=SkyDir(*sourcedict['cel'])
+    ft1=sourcedict['ft1']
+    ft2=sourcedict['ft2']
+
+    source = get_source(name, 
+                        fit_emin = fit_emin, 
+                        fit_emax = fit_emax, 
+                        position = pulsar_position,
+                        sigma = 0.1,
+                        spatial_model=spatial_model,
+                        extended=extended)
+
+    roi = setup_region(name, 
+                       ft1=ft1, 
+                       ft2=ft2, 
+                       ltcube=ltcube, 
+                       roi_dir=pulsar_position,
+                       fit_emin=fit_emin, 
+                       fit_emax=fit_emax, 
+                       sources = [source]
+                       **kwargs)
+    return roi
+
+def get_source(name, 
+               position, 
+               fit_emin, fit_emax, 
+               extended=False, sigma=None):
+    """ build a souce. """
+    model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax))
+    flux=PowerLaw(norm=1e-11, index=2, e0=1e3).i_flux(fit_emin,fit_emax)
+    model.set_flux(flux,fit_emin,fit_emax)
+
+    if extended and sigma != 0:
+        if not isnum(sigma): raise Exception("sigma must be set. """)
         return ExtendedSource(
             name=name,
             model=model,
-            spatial_model=Gaussian(sigma=0.1,center=pulsar_position))
+            spatial_model=Gaussian(sigma=sigma, center=position))
     else:
         return PointSource(
             name=name,
             model=model,
-            skydir=pulsar_position)
+            skydir=position)
 
 def get_catalog(**kwargs):
     return Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
                        latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
                        **kwargs)
 
-def setup_region(name,pwndata, phase, free_radius, max_free, 
-                 roi_size=10, savedir=None, binsperdec=4,
-                 point_sources=[], diffuse_sources=[],
+def setup_region(name, phase,
+                 ft1, ft2, ltcube, roi_dir,
+                 free_radius, max_free, binsperdec,
+                 roi_size=10, savedir=None, 
+                 sources = [], # list of point+diffuse sources 
+                 binfile = None,
                  **kwargs):
     """Name of the source
     pwndata Yaml file
@@ -77,16 +143,14 @@ def setup_region(name,pwndata, phase, free_radius, max_free,
         for file in glob(j(savedir,'*')):
             os.remove(file)
 
-
     phase = PhaseRange(phase)
 
-    sources=yaml.load(open(pwndata))
-
-    ltcube=sources[name]['ltcube']
-
-    pulsar_position=SkyDir(*sources[name]['cel'])
-    ft2=sources[name]['ft2']
-    ft1=sources[name]['ft1']
+    point_sources, diffuse_sources = [],[]
+    for source in sources:
+        if isinstance(source,PointSource):
+            point_sources.append(source)
+        else:
+            diffuse_sources.append(source)
 
     diffuse_sources += get_default_diffuse(diffdir="/afs/slac/g/glast/groups/diffuse/rings/2year",
                                           gfile="ring_2year_P76_v0.fits",
@@ -96,7 +160,7 @@ def setup_region(name,pwndata, phase, free_radius, max_free,
 
     catalog=get_catalog(free_radius=free_radius,max_free=max_free)
 
-    binfile=j(savedir,'binned_phased.fits')
+    if binfile is None: binfile=j(savedir,'binned_phased.fits')
 
     if np.allclose(phase.phase_fraction,1):
         phased_ltcube = ltcube
@@ -125,7 +189,7 @@ def setup_region(name,pwndata, phase, free_radius, max_free,
                           emin       = 100,
                           emax       = 1000000,
                           irf        = "P7SOURCE_V6",
-                          roi_dir    = pulsar_position,
+                          roi_dir    = roi_dir,
                           maxROI     = roi_size,
                           minROI     = roi_size)
 

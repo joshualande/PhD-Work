@@ -21,13 +21,20 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-c", "--command", required=True)
-parser.add_argument("--pwndata", required=True)
+group=parser.add_mutually_exclusive_group(required=True)
+group.add_argument("--pwndata")
+group.add_argument("--tevdata")
 parser.add_argument("-o", "--outdir", required=True)
 args,remaining_args = parser.parse_known_args()
 
 outdir=args.outdir
 
-sources=yaml.load(open(args.pwndata))
+if args.pwndata is not None:
+    sources=yaml.load(open(args.pwndata))
+    flags = '--pwndata %s' % args.pwndata
+else:
+    sources=yaml.load(open(args.tevdata))
+    flags = '--tevdata %s' % args.tevdata
 
 if os.path.exists(outdir):
     raise Exception("outdir %s already exists" % outdir)
@@ -45,8 +52,8 @@ for name in sources.keys():
     temp.write("""\
 python %s/%s \\
 -n %s \\
---pwndata %s %s""" % (os.getcwd(),args.command,name,
-                  args.pwndata,' '.join(remaining_args)))
+%s \\
+%s""" % (os.getcwd(),args.command,name, flags,' '.join(remaining_args)))
 
 submit_all=join(outdir,'submit_all.py')
 temp=open(submit_all,'w')

@@ -1,16 +1,20 @@
 # List of TeV sources associated with PWNe with localization and extension.
 # Information primarily taken from http://tevcat.uchicago.edu/
 #
+# Note: all extensions are the Gaussian sigma
+#
 # Changes:
-# * Added more data for HESS J1616 - Joshua, Dec 4, 2011
+# * Added TeVDAT - Joshua, Dec 4, 2011
+# * Validated taht all extensions are the Gaussian sigma - Joshua, Dec 4, 2011
+# * Added more tev data for HESS J1616 - Joshua, Dec 4, 2011
 # * Add CTA1 + HESS J1831-098 - Joshua Lande, Nov 30, 2011
-0FGL J0631.8+1034 :
+0FGL_J0631.8+1034:
   gal: [201.3,0.51]
   ext: 0.0
-0FGL J1958.1+2848:
+0FGL_J1958.1+2848:
   gal: [65.85,-0.23]
   ext: 0.0
-0FGL J2021.5+4026:
+0FGL_J2021.5+4026:
   gal: [78.23,2.07]
   ext: 0.0
 Boomerang:
@@ -25,77 +29,82 @@ CTA1:
 G0.9+0.1:
   gal: [0.87,0.08]
   ext: 0.0
-G292.2-0.5
+G292.2-0.5:
   gal: [292.10,-0.49]
-  ext: [0.05,0.05]
+  ext: 0.05 # Diameter is 0.1 degrees 
+            # (http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf)
 G54.1+0.3:
   gal: [54.10,0.26]
   ext: 0.0
 Geminga:
   gal: [195.34,3.78]
-  ext: [2.6,2.6]
-HESS J1026-582:
+  ext: 1.1 # FWHM=2.6 from (arXiv:0904.1018v3):
+           # So the Gaussian radius is R=2.6/2.35=1.1
+HESS_J1026-582:
   gal: [284.8,-0.52]
-  ext: [0.14,0.14]
-HESS J1303-631:
+  ext: 0.14 # Gaussian radius (arXiv:1009.3012v1)
+HESS_J1303-631:
   gal: [304.24,-0.36]
-  ext: [0.16,0.16]
-HESS J1356-645:
+  ext: 0.16
+HESS_J1356-645:
   gal: [309.81,-2.49]
-  ext: [0.2,0.2]
-HESS J1616-508:
+  ext: [0.2,0.2] # Gaussian radius (arXiv:astro-ph/0505219v1)
+HESS_J1616-508:
   gal: [332.39,-0.14]
-  ext: [0.14,0.14]
+  ext: 0.136 # Gaussian radius (arXiv:astro-ph/0510397v1)
   spectra: '$pwn/pwndata/tevdata/HESSJ1616-508/HESSJ1616-508.txt'
   map: '$pwnpwndata/tevdata/HESSJ1616-508/HESSJ1616-508_Map.fits'
-HESS J1632-478:
+HESS_J1632-478:
   gal: [336.38,0.19]
-  ext: [0.21,0.06]
-HESS J1640-465:
+  ext: [0.21,0.06] # Gaussian radius (arXiv:astro-ph/0510397v1)
+HESS_J1640-465:
   gal: [338.32,-0.02]
-  ext: [0.04,0.04]
-HESS J1708-443:
+  ext: 0.045 # Gaussian radius (arXiv:astro-ph/0510397v1)
+HESS_J1708-443:
   gal: [343.06,-2.38]
-  ext: [0.29,0.29]
-HESS J1718-385:
+  ext: 0.29 # Gaussian radius (arXiv:1102.0773v2)
+HESS_J1718-385:
   gal: [348.83,-0.49]
-  ext: [0.15,0.07]
-HESS J1809-193:
+  ext: [0.15,0.07] # Gaussain size (arXiv:0705.1605v1)
+HESS_J1809-193:
   gal: [11.18,-0.09]
-  ext: [0.53,0.25]
-HESS J1813-178:
+  ext: [0.53,0.25] # Gaussian size (arXiv:0705.1605v1)
+HESS_J1813-178:
   gal: [12.81,-0.03]
-  ext: [0.04,0.04]
-HESS J1825-137:
+  ext: 0.036 # Gaussian radius (arXiv:astro-ph/0510397v1)
+HESS_J1825-137:
   gal: [17.71,-0.7]
-  ext: [0.13,0.12]
-HESS J1831-098:
+  ext: [0.13,0.12] # Extension from (arXiv:astro-ph/0607548v1)
+                   # Note, extension in the paper is (apparently) the diameter.
+HESS_J1831-098:
   gal: [21.85,-0.11]
-  ext: 0.15
-HESS J1833-105:
+  ext: 0.15 # Gaussian radius (arXiv:1110.6837v1)
+HESS_J1833-105:
   gal: [21.51,-0.88]
   ext: 0.0
-HESS J1846-029:
+HESS_J1846-029:
   gal: [29.70,-0.24]
   ext: 0.0
-HESS J1912+101:
+HESS_J1912+101:
   gal: [44.39,-0.07]
-  ext: [0.26,0.26]
-IGR J18490-0000:
+  ext: 0.26 # Gaussian radius (arXiv:0802.3841v1)
+IGR_J18490-0000:
   gal: [32.64,0.53]
   ext: '?'
 Kookaburra:
   gal: [313.56,0.27]
-  ext: [0.06,0.06]
+  ext: 0.055 # Gaussian Radius 3.3' from (arXiv:astro-ph/0606311v2)
+  HESS name: HESS J1420-607
 Kookaburra_Rabbit:
   gal: [313.25,0.15]
-  ext: [0.08,0.06]
-MGRO J2019+37:
+  ext: [0.08,0.06] # Gaussian size is 4.9' & 2.7' (arXiv:astro-ph/0606311v2)
+  HESS name: HESS J1418-609
+MGRO_J2019+37:
   gal: [75.00,0.39]
-  ext: [0.55,0.55]
-MSH 15-52:
+  ext: 0.55 # Diameter is 1.1 degrees (arXiv:0705.0707v1)
+MSH_15-52:
   gal: [320.33,-1.19]
-  ext: [0.11, 0.04]
-VelaX:
+  ext: [0.11, 0.04] # Gaussian radisu 6.4' & 2.3' (arXiv:astro-ph/0504120v1)
+Vela_X:
   gal: [263.86,-3.09]
-  ext: [0.48,0.36]
+  ext: [0.48,0.36] # Gaussian size (arXiv:astro-ph/0601575v1)

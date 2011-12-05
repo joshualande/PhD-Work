@@ -1,14 +1,14 @@
 # Not entirely sure why, but pyLikelihood
 # will get a swig::stop_iteraiton error
 # unless it is imported first.
-
+import os
 import pylab as P
 import numpy as np
 from roi_gtlike import Gtlike
 import yaml
 from toolbag import tolist
-from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog,fix_bad_cutoffs
-from LikelihoodState import LikelihoodState
+from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog,fix_bad_cutoffs,fit_prefactor
+from uw.like.roi_state import PointlikeState
 from uw.pulsar.phase_range import PhaseRange
 from uw.like.SpatialModels import Gaussian
 
@@ -24,8 +24,11 @@ high_energy=lambda emin,emax: np.allclose([emin,emax],[10**4.5,10**5.5], rtol=0,
 three_bins=[1e2,1e3,1e4,10**5.5]
 
 def plots(roi, name, hypothesis, emin, emax, 
-          datadir, plotdir, size=5, tsmap_pixelsize=0.1):
+          datadir='data', plotdir='plots', size=5, tsmap_pixelsize=0.1):
     plot_kwargs = dict(size=size, pixelsize=tsmap_pixelsize)
+
+    for dir in [datadir, plotdir]: 
+        if not os.path.exists(dir): os.makedirs(dir)
 
     print 'Making plots for hypothesis %s' % hypothesis
     roi.plot_tsmap(filename='%s/tsmap_residual_%s_%s.png' % (plotdir,hypothesis,name), 
@@ -81,68 +84,82 @@ def plots(roi, name, hypothesis, emin, emax,
         print 'ERROR with plot_counts_spectra: ', ex
 
 
-def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin,
-                       seddir, datadir, plotdir,
+def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None,
+                       seddir='seds', datadir='data', plotdir='plots',
                        upper_limit=False, localize=False,
                        fit_extension=False, extension_upper_limit=False,
                        cutoff=False, seds=False):
     """ emin + emax used for computing upper limits. """
     print 'Performing Pointlike analysis for %s' % hypothesis
 
+    for dir in [seddir, datadir, plotdir]: 
+        if not os.path.exists(dir): os.makedirs(dir)
+
     print_summary = lambda: roi.print_summary(galactic=True)
     print_summary()
 
     print roi
 
-    def fit():
+    def fit(just_prefactor=False):
         """ Convenience function incase fit fails. """
         try:
-            roi.fit()
+            if just_prefactor:
+                fit_prefactor(roi, name) 
+            else:
+                roi.fit()
+                # For some reason, one final fit seems to help with convergence and not getting negative TS values *shurgs*
+                roi.fit() 
         except Exception, ex:
             print 'ERROR spectral fitting pointlike: ', ex
         print_summary()
 
+    # More robust to first fit the prefactor of PWN since the starting value is often very bad
+    fit(just_prefactor=True)
+
     fit()
-    freeze_insignificant_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=4)
+    freeze_insignificant_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=9)
     fix_bad_cutoffs(roi, exclude_names=[name])
     # second fit necessary after these fixes, which change around sources.
     fit() 
 
     if localize:
         try:
-            if localization_emin != emin: roi.change_binning(localization_emin,emax)
+            if localization_emin is not None and localization_emin != emin: 
+                roi.change_binning(localization_emin,emax)
             roi.localize(name, update=True)
         except Exception, ex:
             print 'ERROR localizing pointlike: ', ex
         finally:
-            if localization_emin != emin: roi.change_binning(emin,emax)
+            if localization_emin is not None and localization_emin != emin: 
+                roi.change_binning(emin,emax)
         fit()
 
     if fit_extension:
         init_flux = roi.get_model(which=name).i_flux(emin,emax)
         try:
-            if localization_emin != emin: roi.change_binning(localization_emin,emax)
+            if localization_emin is not None and localization_emin != emin: 
+                before_state = PointlikeState(roi)
+                roi.change_binning(localization_emin,emax)
+
             fit_extension_frozen(roi,name)
             roi.localize(name, update=True)
+
         except Exception, ex:
             print 'ERROR extension fitting pointlike: ', ex
         finally:
-            if localization_emin != emin: 
-                roi.change_binning(emin,emax)
+            if localization_emin is not None and localization_emin != emin: 
 
                 # after switching energy range, the fit may have gone horribly
-                # forcing the source to predict NaNs. a good strategy in 
-                # this case is to set teh flux back to what it was before
-                # extension fit.
-                if roi.logLikelihood(roi.parameters()) == 1e6:
-                    print 'After extension fit, likelihood is NaN, so setting back to old flux'
-                    model = roi.get_model(which=name)
-                    model.set_flux(init_flux,emin,emax)
-                    roi.modify(which=name, model=model)
+                # wrong (due to being a different energy range). 
+                # A good strategy to improve robustness of fit
+                # is to set the ROI back to what it was before extnesion
+                # fit and then modify just the spatial model
+                # to what the fit found.
+                spatial_model = roi.get_source(name).spatial_model
+                before_state.restore() # This restores previous energy
+                roi.modify(which=name, spatial_model=spatial_model, keep_old_center=False)
         fit()
 
-    # For some reason, one final fit seems to help with convergence and not getting negative TS values *shurgs*
-    fit() 
     p = sourcedict(roi, name)
 
     if extension_upper_limit:
@@ -166,8 +183,13 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin,
     return p
 
 
-def gtlike_analysis(roi, name, hypothesis, emin, emax, seddir, datadir, plotdir, upper_limit=False, cutoff=False, seds=False):
+def gtlike_analysis(roi, name, hypothesis, emin, emax, 
+                    seddir='seds', datadir='data', plotdir='plots',
+                    upper_limit=False, cutoff=False, seds=False):
     print 'Performing Gtlike crosscheck for %s' % hypothesis
+
+    for dir in [seddir, datadir, plotdir]: 
+        if not os.path.exists(dir): os.makedirs(dir)
 
     gtlike=Gtlike(roi)
     global like
