@@ -41,15 +41,19 @@ emax=args.emax
 
 def get_roi(**kwargs):
     print 'Building the ROI'
-    return setup_tev(name,args.tevdata, 
+    roi=setup_tev(name,args.tevdata, 
                   free_radius=5, max_free=args.max_free, 
                   fit_emin=emin, fit_emax=emax, 
                   **kwargs)
 
+    from modify_tev import modify_roi
+    modify_roi(name,roi)
+    return roi
+
 results=r=defaultdict(lambda: defaultdict(dict))
 results['name']=name
 
-kwargs = dict(name=name, seds = do_seds, emin=emin, emax=emax)
+kwargs = dict(name=name, seds=do_seds, emin=emin, emax=emax)
 
 save=lambda:save_results(results,name)
 

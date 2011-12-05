@@ -23,6 +23,7 @@ group.add_argument("-p", "--pwnphase")
 group.add_argument("--no-phase-cut", default=False, action="store_true")
 parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
 parser.add_argument("--emin", default=1e2, type=float)
+parser.add_argument("--binsperdec", default=4, type=int)
 parser.add_argument("--localization-emin", default=1e3, type=float)
 parser.add_argument("--emax", default=10**5.5, type=float)
 parser.add_argument("--use-gradient", default=False, action="store_true")
@@ -80,9 +81,10 @@ def get_roi(**kwargs):
     roi=setup_pwn(name,args.pwndata, phase=phase, 
                   free_radius=5, max_free=args.max_free, fit_emin=emin, fit_emax=emax, 
                   savedir=savedir,
+                  binsperdec=args.binsperdec,
                   **kwargs)
 
-    from modify import modify_roi
+    from modify_psr import modify_roi
     modify_roi(name,roi)
     return roi
 

@@ -82,7 +82,6 @@ def setup_pwn(name, pwndata, fit_emin, fit_emax, extended=False, **kwargs):
                         fit_emax = fit_emax, 
                         position = pulsar_position,
                         sigma = 0.1,
-                        spatial_model=spatial_model,
                         extended=extended)
 
     roi = setup_region(name, 
@@ -92,12 +91,11 @@ def setup_pwn(name, pwndata, fit_emin, fit_emax, extended=False, **kwargs):
                        roi_dir=pulsar_position,
                        fit_emin=fit_emin, 
                        fit_emax=fit_emax, 
-                       sources = [source]
+                       sources = [source],
                        **kwargs)
     return roi
 
-def get_source(name, 
-               position, 
+def get_source(name, position, 
                fit_emin, fit_emax, 
                extended=False, sigma=None):
     """ build a souce. """
@@ -129,11 +127,7 @@ def setup_region(name, phase,
                  sources = [], # list of point+diffuse sources 
                  binfile = None,
                  **kwargs):
-    """Name of the source
-    pwndata Yaml file
-    
-    returns pointlike ROI.
-    """
+    """ Create a pointlike ROI. """
 
     if savedir is None: 
         savedir=mkdtemp(prefix='/scratch/')
