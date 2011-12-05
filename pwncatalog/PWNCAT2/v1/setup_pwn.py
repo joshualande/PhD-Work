@@ -185,7 +185,8 @@ def setup_region(name, phase,
                           irf        = "P7SOURCE_V6",
                           roi_dir    = roi_dir,
                           maxROI     = roi_size,
-                          minROI     = roi_size)
+                          minROI     = roi_size,
+                          event_class= 0)
 
     roi=sa.roi(point_sources=point_sources,
                diffuse_sources=diffuse_sources,
