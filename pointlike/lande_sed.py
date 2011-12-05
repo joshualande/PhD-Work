@@ -57,7 +57,14 @@ class LandeSED(SED):
         self.flux_ul=np.nan*self.flux_ul
         self.eflux_ul=np.nan*self.eflux_ul
 
-        super(LandeSED,self)._calculate(*args,**kwargs)
+        try:
+            super(LandeSED,self)._calculate(*args,**kwargs)
+        except Exception, ex:
+            print 'ERROR computing SED:', ex
+            for v in ['dnde', 'dnde_err', 'dnde_ul',
+                      'flux', 'flux_err', 'flux_ul',
+                      'eflux','eflux_err', 'eflux_ul']:
+                self.__dict__[v] *= np.nan
 
         for values, u in [
             [['lower_energy', 'upper_energy', 'energy'], units.MeV],
