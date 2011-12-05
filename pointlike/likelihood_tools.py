@@ -291,6 +291,7 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
         ul = dict(
             emin=emin, emax=emax,
             flux_units=flux_units_string, flux=flux_ul, 
+            powerlaw_index=powerlaw_index,
             eflux_units=eflux_units_string, eflux=eflux_ul)
 
     except Exception, ex:
@@ -325,6 +326,7 @@ def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin, emax, **
 
     ul = dict(
         emin=emin, emax=emax,
+        powerlaw_index=powerlaw_index,
         flux_units=flux_units_string, flux=flux_ul)
 
     saved_state.restore()
@@ -602,3 +604,41 @@ def fix_bad_cutoffs(roi, exclude_names):
             new_model = PowerLaw(norm=model['norm'], index=model['index'], e0=model.e0)
 
             roi.modify(which=source, model=new_model, keep_old_flux=False)
+
+
+def fit_prefactor(roi, which, *args, **kwargs):
+    """ Fit the prefactor of source 'which'
+        without varying any other parmters.
+        
+        Can help if one source has a very bad 
+        starting value. """
+    source = roi.get_source(which)
+    model = roi.get_model(which)
+    name = source.name
+
+    frozen_sources = dict()
+    for other_source in roi.psm.point_sources.tolist() + roi.dsm.diffuse_sources.tolist():
+        other_model = roi.get_model(other_source)
+        if np.any(other_model.free) and other_source.name != name:
+            frozen_sources[other_source.name]=other_model.free.copy()
+            roi.modify(which=other_source,free=False)
+
+    old_free = model.free.copy()
+    new_free = np.zeros_like(model.free,dtype=bool)
+    new_free[0] = True
+    roi.modify(which=which, free=new_free)
+
+    roi.fit(*args, **kwargs)
+
+    roi.modify(which=which, free=old_free)
+
+    for other_name,other_free in frozen_sources.items():
+        roi.modify(which=other_name,free=other_free)
+
+
+def force_gradient(use_gradient):
+    """ A kludge to force use_gradient everywhere! """
+    from uw.like.roi_analysis import ROIAnalysis
+    from lande_decorators import modify_defaults
+    ROIAnalysis.fit=modify_defaults(use_gradient=use_gradient)(ROIAnalysis.fit)
+
