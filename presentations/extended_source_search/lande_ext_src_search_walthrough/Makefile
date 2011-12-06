@@ -13,4 +13,3 @@ clean:
 	rm -f $(paper).aux $(paper).log $(paper).out \
 		$(paper).toc $(paper).bbl \
 		$(paper).blg $(paper).nav $(paper).snm
-	rm -rf introduction.aux
