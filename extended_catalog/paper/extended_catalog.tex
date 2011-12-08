@@ -3,8 +3,8 @@
 \bibliographystyle{apj}
 
 \newif\ifcolorfigure
-%\colorfiguretrue
-\colorfigurefalse
+\colorfiguretrue
+%\colorfigurefalse
 
 
 
@@ -684,7 +684,7 @@ Several interesting conclusions can be made from this study.  As one would
 expect, $\tsext-\tsinc$ is mostly positive when fitting the simulated
 extended sources.  In the 1 \gev to 100 \gev analysis, only 11 of the
 200 simulated extended sources had $\tsext>16$ but were incorrectly
-reject due to \tsinc being greater than \tsext.  In the 10 \gev to 100 \gev
+rejected due to \tsinc being greater than \tsext.  In the 10 \gev to 100 \gev
 analysis, only 7 of the 200 sources were incorrectly reject. From this,
 we conclude that this test is unlikely to incorrectly reject truly
 spatially extended sources.
@@ -847,19 +847,13 @@ the previous LAT Collaboration publication on LMC used a more complicated two 2D
 brightness profile when fitting it \citep{lmc}.
 
 % 3 PWN
-Three PWNe, MSH\,15$-$52, Vela X, and HESS\,J1825$-$137, were
-identified in 2FGL \citep{msh1552,velax,fermi_hess_j1825}.  
-HESS\,J1825$-$137 was significantly detected using photons
-with energies between 10 \gev and 100 \gev.
-To improve our analysis of this source, we removed
-from our background model 
-2FGL\,J1823.1$-$1338c which was included in 2FGL to
-represent part of the extended emission.
-To avoid confusion with the nearby bright pulsar PSR\,J1509$-$5850, MSH\,15$-$52 had
-to be
-analyzed at high energies.  Using photons with energies above 10 \gev,
-we fit the extension of MSH\,15$-$52 to be consistent with the published
-size but with \tsext=6.6.
+Three PWNe, MSH\,15$-$52, Vela X, and HESS\,J1825$-$137, were identified
+in 2FGL \citep{msh1552,velax,fermi_hess_j1825}.  HESS\,J1825$-$137
+was significantly detected using photons with energies between 10
+\gev and 100 \gev.  To avoid confusion with the nearby bright pulsar
+PSR\,J1509$-$5850, MSH\,15$-$52 had to be analyzed at high energies.
+Using photons with energies above 10 \gev, we fit the extension of
+MSH\,15$-$52 to be consistent with the published size but with \tsext=6.6.
 
 % failed to detect vela x + cen a
 Our analysis was unable to resolve Vela X which would have required first
@@ -963,6 +957,7 @@ issues associated with analyzing spatially extended sources
 that our method can correctly analyze the extended sources included in
 2FGL (Section~\ref{validate_known}), we applied this method to search for
 new spatially extended \gev sources.
+The data and general analysis setting is as described in Section~\ref{test_2lac_sources}.
 
 Ideally, we would apply a completely blind and uniform search that
 tests the extension of each catalog source in the presence of all other
@@ -1170,7 +1165,7 @@ were found when using photons with energies between 10 \gev and 100 \gev.
 For the sources found at energies above 10 \gev, we restrict our
 analysis to higher energies because of the issues
 of source confusion and diffuse emission modeling described in
-section~\ref{extended_source_search_method}.
+Section~\ref{extended_source_search_method}.
 The spectral and spatial properties of these nine sources are summarized
 in Table~\ref{new_ext_srcs_table} and the results of our investigation of
 systematic errors are presented in Table~\ref{alt_diff_model_results}.
@@ -1350,16 +1345,8 @@ With this model of the sky, we iteratively fit the extensions of
 2FGL\,J1615.0$-$5051 and 2FGL\,J1615.2$-$5138.
 2FGL\,J1615.0$-$5051 was found to have an extension 
 $\sigma=0\fdg32\pm0\fdg04_\stat\pm0\fdg01_\sys$ and
-\tsext=16.7 and
-2FGL\,J1615.2$-$5138 was found
- to have an extension $\sigma=0\fdg42\pm0\fdg04_\stat\pm0.02_\sys$
-with $\tsext=46.5$.
-To test for the possibility that
-2FGL\,J1615.2$-$5138 is not spatially extended but instead composed
-of two point-like sources (one of them represented in 2FGL by
-2FGL\,J1614.9$-$5212), we refit 2FGL\,J1615.2$-$5138 as two point-like
-sources.  Because \tsinc is less than \tsext, we conclude that
-this emission does not originate from two nearby point-like sources.
+\tsext=16.7.
+
 
 The \tev counterpart of 2FGL\,J1615.0$-$5051 was fit
 with a radially-symmetric Gaussian surface brightness profile with
@@ -1392,6 +1379,16 @@ necessary to understand this $\gamma$-ray source.
 
 \subsection{2FGL\,J1615.2$-$5138}
 \label{section_2FGL_J1615.2-5138}
+
+2FGL\,J1615.2$-$5138 was found
+ to have an extension $\sigma=0\fdg42\pm0\fdg04_\stat\pm0.02_\sys$
+with $\tsext=46.5$.
+To test for the possibility that
+2FGL\,J1615.2$-$5138 is not spatially extended but instead composed
+of two point-like sources (one of them represented in 2FGL by
+2FGL\,J1614.9$-$5212), we refit 2FGL\,J1615.2$-$5138 as two point-like
+sources.  Because \tsinc is less than \tsext, we conclude that
+this emission does not originate from two nearby point-like sources.
 
 2FGL\,J1615.2$-$5138 is spatially coincident with 
 the extended \tev source HESS\,J1614$-$518.
@@ -2172,24 +2169,29 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
 \startdata
 \multicolumn{9}{c}{E$>$1 \gev} \\
 \hline
-SMC                       &     302.59 &     -44.42 & $  1.32 \pm   0.15 \pm   0.31 $ &       95.0 &       52.9 &   0.14 & $    2.7 \pm     0.3$ & $   2.48 \pm    0.19$  \\
-LMC                       &     279.26 &     -32.31 & $  1.37 \pm   0.04 \pm   0.11 $ &     1127.9 &      909.9 &   0.04 & $   13.6 \pm     0.6$ & $   2.43 \pm    0.06$  \\
-IC443                     &     189.05 &       3.04 & $  0.35 \pm   0.01 \pm   0.04 $ &    10692.9 &      554.4 &   0.01 & $   62.4 \pm     1.1$ & $   2.22 \pm    0.02$  \\
-Vela X                    &     263.34 &      -3.11 & $                         0.88$ &            &            &        &                       &                        \\
-Centaurus A               &     309.52 &      19.42 &                        $\sim10$ &            &            &        &                       &                        \\
-W28                       &       6.50 &      -0.27 & $  0.42 \pm   0.02 \pm   0.05 $ &     1330.8 &      163.8 &   0.01 & $   56.5 \pm     1.8$ & $   2.60 \pm    0.03$  \\
-W30                       &       8.61 &      -0.20 & $  0.34 \pm   0.02 \pm   0.02 $ &      464.8 &       76.0 &   0.02 & $   29.1 \pm     1.5$ & $   2.56 \pm    0.05$  \\
-W44                       &      34.69 &      -0.39 & $  0.35 \pm   0.02 \pm   0.02 $ &     1917.0 &      224.8 &   0.01 & $   71.2 \pm     0.5$ & $   2.66 \pm    0.00$  \\
-W51C                      &      49.12 &      -0.45 & $  0.27 \pm   0.02 \pm   0.04 $ &     1823.4 &      118.9 &   0.01 & $   37.2 \pm     1.3$ & $   2.34 \pm    0.03$  \\
-Cygnus Loop               &      74.21 &      -8.48 & $  1.71 \pm   0.05 \pm   0.06 $ &      357.9 &      246.0 &   0.06 & $   11.4 \pm     0.7$ & $   2.50 \pm    0.10$  \\
+SMC                                  &     302.59 &     -44.42 & $  1.32 \pm   0.15 \pm   0.31 $ &       95.0 &       52.9 &   0.14 & $    2.7 \pm     0.3$ & $   2.48 \pm    0.19$  \\
+LMC                                  &     279.26 &     -32.31 & $  1.37 \pm   0.04 \pm   0.11 $ &     1127.9 &      909.9 &   0.04 & $   13.6 \pm     0.6$ & $   2.43 \pm    0.06$  \\
+IC443                                &     189.05 &       3.04 & $  0.35 \pm   0.01 \pm   0.04 $ &    10692.9 &      554.4 &   0.01 & $   62.4 \pm     1.1$ & $   2.22 \pm    0.02$  \\
+Vela X                               &     263.34 &      -3.11 & $                         0.88$ &            &            &        &                       &                        \\
+Centaurus A                          &     309.52 &      19.42 &                        $\sim10$ &            &            &        &                       &                        \\
+W28                                  &       6.50 &      -0.27 & $  0.42 \pm   0.02 \pm   0.05 $ &     1330.8 &      163.8 &   0.01 & $   56.5 \pm     1.8$ & $   2.60 \pm    0.03$  \\
+W30                                  &       8.61 &      -0.20 & $  0.34 \pm   0.02 \pm   0.02 $ &      464.8 &       76.0 &   0.02 & $   29.1 \pm     1.5$ & $   2.56 \pm    0.05$  \\
+W44                                  &      34.69 &      -0.39 & $  0.35 \pm   0.02 \pm   0.02 $ &     1917.0 &      224.8 &   0.01 & $   71.2 \pm     0.5$ & $   2.66 \pm    0.00$  \\
+W51C                                 &      49.12 &      -0.45 & $  0.27 \pm   0.02 \pm   0.04 $ &     1823.4 &      118.9 &   0.01 & $   37.2 \pm     1.3$ & $   2.34 \pm    0.03$  \\
+Cygnus Loop                          &      74.21 &      -8.48 & $  1.71 \pm   0.05 \pm   0.06 $ &      357.9 &      246.0 &   0.06 & $   11.4 \pm     0.7$ & $   2.50 \pm    0.10$  \\
 \cutinhead{E$>$10 \gev}
-MSH\,15$-$52              &     320.39 &      -1.22 & $  0.21 \pm   0.04 \pm   0.04 $ &       76.3 &        6.6 &   0.03 & $    0.6 \pm     0.1$ & $   2.20 \pm    0.22$  \\
-HESS\,J1825$-$137         &      17.57 &      -0.45 & $  0.65 \pm   0.04 \pm   0.02 $ &       82.9 &       44.9 &   0.05 & $    1.8 \pm     0.8$ & $   1.83 \pm    0.73$  \\
+MSH\,15$-$52\tablenotemark{(b)}      &     320.39 &      -1.22 & $  0.21 \pm   0.04 \pm   0.04 $ &       76.3 &        6.6 &   0.03 & $    0.6 \pm     0.1$ & $   2.20 \pm    0.22$  \\
+HESS\,J1825$-$137\tablenotemark{(b)} &      17.56 &      -0.47 & $  0.65 \pm   0.04 \pm   0.02 $ &       59.7 &       33.8 &   0.05 & $    1.6 \pm     0.2$ & $   1.63 \pm    0.22$  \\
 \enddata
 
 \tablenotetext{(a)}{
 Integral Flux in units of $10^{-9}$ \phflux and integrated in the fit
 energy range (either 1 \gev to 100 \gev or 10 \gev to 100 \gev).
+}
+\tablenotetext{(b)}{
+The discrepancy in the best fit spectra of MSH\,15$-$52 and HESS\,J1825$-$137
+compared to \cite{msh1552} and
+\cite{fermi_hess_j1825} is due to fitting over a different energy range.
 }
 
 \tablecomments{
@@ -2254,22 +2256,28 @@ not fit in our analysis but are include for completeness.
 \startdata
 \multicolumn{10}{c}{E$>$1 \gev} \\
 \hline
-2FGL\,J0823.0$-$4246      &     260.32 &      -3.28 & $  0.37 \pm   0.03 \pm   0.02 $ &      322.2 &       48.0 &   0.02 & $    8.4 \pm     0.6$ & $   2.21 \pm    0.09$ &                  Puppis A \\
-2FGL\,J1627.0$-$2425c     &     353.07 &      16.80 & $  0.42 \pm   0.05 \pm   0.16 $ &      139.9 &       32.4 &   0.04 & $    6.3 \pm     0.6$ & $   2.50 \pm    0.14$ &                 Ophiuchus \\
+2FGL\,J0823.0$-$4246                       &     260.32 &      -3.28 & $  0.37 \pm   0.03 \pm   0.02 $ &      322.2 &       48.0 &   0.02 & $    8.4 \pm     0.6$ & $   2.21 \pm    0.09$ &                  Puppis A \\
+2FGL\,J1627.0$-$2425c                      &     353.07 &      16.80 & $  0.42 \pm   0.05 \pm   0.16 $ &      139.9 &       32.4 &   0.04 & $    6.3 \pm     0.6$ & $   2.50 \pm    0.14$ &                 Ophiuchus \\
 \cutinhead{E$>$10 \gev}
-2FGL\,J0851.7$-$4635      &     266.31 &      -1.43 & $  1.15 \pm   0.08 \pm   0.02 $ &      116.6 &       86.8 &   0.07 & $    1.3 \pm     0.2$ & $   1.74 \pm    0.21$ &                  Vela Jr. \\
-2FGL\,J1615.0$-$5051      &     332.37 &      -0.13 & $  0.32 \pm   0.04 \pm   0.01 $ &       50.4 &       16.7 &   0.04 & $    1.0 \pm     0.2$ & $   2.19 \pm    0.28$ &         HESS\,J1616$-$508 \\
-2FGL\,J1615.2$-$5138      &     331.66 &      -0.66 & $  0.42 \pm   0.04 \pm   0.02 $ &       76.1 &       46.5 &   0.04 & $    1.1 \pm     0.2$ & $   1.79 \pm    0.26$ &         HESS\,J1614$-$518 \\
-2FGL\,J1632.4$-$4753c     &     336.52 &       0.12 & $  0.35 \pm   0.04 \pm   0.02 $ &       64.4 &       26.9 &   0.04 & $    1.4 \pm     0.2$ & $   2.66 \pm    0.30$ &         HESS\,J1632$-$478 \\
-2FGL\,J1712.4$-$3941      &     347.26 &      -0.53 & $  0.56 \pm   0.04 \pm   0.02 $ &       59.4 &       38.5 &   0.05 & $    1.2 \pm     0.2$ & $   1.87 \pm    0.22$ &        RX\,J1713.7$-$3946 \\
-2FGL\,J1837.3$-$0700c     &      25.08 &       0.13 & $  0.33 \pm   0.07 \pm   0.05 $ &       47.0 &       18.5 &   0.07 & $    1.0 \pm     0.2$ & $   1.65 \pm    0.29$ &         HESS\,J1837$-$069 \\
-2FGL\,J2021.5+4026        &      78.24 &       2.20 & $  0.63 \pm   0.05 \pm   0.04 $ &      237.2 &      128.9 &   0.05 & $    2.0 \pm     0.2$ & $   2.42 \pm    0.19$ &            $\gamma$-Cygni \\
+2FGL\,J0851.7$-$4635                       &     266.31 &      -1.43 & $  1.15 \pm   0.08 \pm   0.02 $ &      116.6 &       86.8 &   0.07 & $    1.3 \pm     0.2$ & $   1.74 \pm    0.21$ &                  Vela Jr. \\
+2FGL\,J1615.0$-$5051                       &     332.37 &      -0.13 & $  0.32 \pm   0.04 \pm   0.01 $ &       50.4 &       16.7 &   0.04 & $    1.0 \pm     0.2$ & $   2.19 \pm    0.28$ &         HESS\,J1616$-$508 \\
+2FGL\,J1615.2$-$5138                       &     331.66 &      -0.66 & $  0.42 \pm   0.04 \pm   0.02 $ &       76.1 &       46.5 &   0.04 & $    1.1 \pm     0.2$ & $   1.79 \pm    0.26$ &         HESS\,J1614$-$518 \\
+2FGL\,J1632.4$-$4753c                      &     336.52 &       0.12 & $  0.35 \pm   0.04 \pm   0.02 $ &       64.4 &       26.9 &   0.04 & $    1.4 \pm     0.2$ & $   2.66 \pm    0.30$ &         HESS\,J1632$-$478 \\
+2FGL\,J1712.4$-$3941\tablenotemark{(b)}    &     347.26 &      -0.53 & $  0.56 \pm   0.04 \pm   0.02 $ &       59.4 &       38.5 &   0.05 & $    1.2 \pm     0.2$ & $   1.87 \pm    0.22$ &        RX\,J1713.7$-$3946 \\
+2FGL\,J1837.3$-$0700c                      &      25.08 &       0.13 & $  0.33 \pm   0.07 \pm   0.05 $ &       47.0 &       18.5 &   0.07 & $    1.0 \pm     0.2$ & $   1.65 \pm    0.29$ &         HESS\,J1837$-$069 \\
+2FGL\,J2021.5+4026                         &      78.24 &       2.20 & $  0.63 \pm   0.05 \pm   0.04 $ &      237.2 &      128.9 &   0.05 & $    2.0 \pm     0.2$ & $   2.42 \pm    0.19$ &            $\gamma$-Cygni \\
 \enddata
 
 \tablenotetext{(a)}{
 Integral Flux in units of $10^{-9}$ \phflux and integrated in the fit
 energy range (either 1 \gev to 100 \gev or 10 \gev to 100 \gev).
 }
+
+\tablenotetext{(b)}{
+The discrepancy in the best fit spectra of 2FGL\,J1712.4$-$3941 compared
+to \cite{rx_j1713_lat} is due to fitting over a different energy range.
+}
+
 
 \tablecomments{
     The columns in this table have the same meaning as those in
