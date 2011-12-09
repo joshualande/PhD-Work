@@ -13,9 +13,9 @@
 
 \title{Search for Spatially Extended \fermi-LAT Sources Using Two Years of Data}
 
-\author{Joshua Lande}
-\institute{SLAC/Stanford}
-\email{joshualande@gmail.com}
+\author{Joshua Lande,\\
+Stefan Funk,\\
+Markus Ackermann}
 \date{August 25, 2011}
 
 \begin{document}
@@ -39,11 +39,12 @@
 \end{frame}
 
 \begin{frame}{Section 2.1. Modeling Extended Sources in the \texttt{pointlike} Package}
+  New method to study spatially-extended {\em Fermi}-LAT sources
   \begin{itemize}
-    \item Short Description of \texttt{pointlike}
+    \item Description of \texttt{pointlike}
     \item Implementation of extended sources
     \item Simultaneously Fit position + extension
-    \item optimization of likelihood computation
+    \item speed up likelihood computation
     \item Cross check TS + spectral values using \texttt{gtlike}
   \end{itemize}
 \end{frame}
@@ -58,7 +59,7 @@
       \item Simulate point-like sources
       \item Test for extension
       \item Good agreement with Wilk's Theorem
-      \item Proves that we can use $\sqrt{\mathrm{TS}_\mathrm{ext}}$
+      \item Use $\sqrt{\mathrm{TS}_\mathrm{ext}}$
         as a measure of significance
       \item $\sim 20,000$ Simulations per spectral model!
       \item Test in 1 GeV to 100 GeV + 10 GeV to 100 GeV
@@ -105,53 +106,67 @@
 \begin{frame}{Fig. 10: $\text{TS}_\text{ext}$ for 2LAC AGN}
   \begin{columns}
     \column{.6\textwidth}
-    \includegraphics[scale=0.4]{plots/agn_color.pdf}
+    \includegraphics[scale=0.45]{plots/agn_color.pdf}
     \column{.4\textwidth}
-Use point-like AGN to validate extended source study
     \begin{itemize}
+      \item Use point-like AGN to validate extended source analysis
       \item Test clean 2LAC AGN for extension
       \item Don't find AGN to be extended!
     \end{itemize}
   \end{columns}
 \end{frame}
 
-\begin{frame}{Extended source systematics}
-  \begin{itemize}
-    \item \dots
-  \end{itemize}
-\end{frame}
 
-\begin{frame}{Reanalyze extended sources in 2FGL}
+\begin{frame}{Section 7: extended sources in 2FGL}
   \begin{columns}
     \column{.6\textwidth}
     \includegraphics[scale=0.4]{plots/table_reanalysis.pdf}
     \column{.4\textwidth}
     \begin{itemize}
       \item Test 12 extended 2FGL sources for extension
-      \item Systematic re-analytis using 2 years of data.
+      \item Systematic reanalysis using 2 years of data.
       \item Assume uniform disk
+      \item Extended sources are extended!
     \end{itemize}
   \end{columns}
 \end{frame}
 
-\begin{frame}{Extended Source Search}
+\begin{frame}{Section 8: Extension Systematics}
+  Test systematics due to not knowing PSF
+  \begin{itemize}
+    \item Compare best fit extension to 
+      MC based PSF
+    \item Use difference as systematic
+    \item Small effect on extension, large effect on statistical 
+      significance
+    \item Probably too conservative\dots
+  \end{itemize}
+  Test systematics due to not knowing PSF
+  \begin{itemize}
+    \item Break up GALPROP diffuse model into multiple components 
+    \item Fit each component locally
+    \item Tests systematics due to imperfect diffuse modeling
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Section 9: Extended Source Search}
   \begin{itemize}
     \item Run a dedicated search 
     \item Find previously-unresolved
       extended 2FGL sources
-    \item Search for $E>1$ and GeV $E>10$ GeV
+    \item Search for $E>1$ GeV and $E>10$ GeV
     \item Many difficulties in search, discussed at length in text\dots
     \item Publish only good candidates
   \end{itemize}
 \end{frame}
 
-\begin{frame}{New extended Sources (not in 2FGL)}
+\begin{frame}{Section 10: New extended Sources}
   \begin{columns}
     \column{.65\textwidth}
     \includegraphics[scale=0.30]{plots/new_extended.png}
     \column{.35\textwidth}
     \begin{itemize}
-      \item 7 new extended sources
+      \item 6 new extended sources
       \item + RX J1713-3946 \& Vela Jr (not extended in 2FGL)
       \item + 1 source in Ophiuchus region $\rightarrow$ diffuse emission
     \end{itemize}
@@ -199,7 +214,7 @@ Use point-like AGN to validate extended source study
     \item (left): 
       2FGL\,J1615.0$-$5051
     \item Coincident with HESS\,J1616$-$508
-    \item Coincident with X-ray pulsar
+    \item + X-ray pulsar
 PSR\,J1617$-$5055 + $\sim 1'$ PWN 
     \item PWN Candidate
     \end{itemize}
@@ -207,8 +222,9 @@ PSR\,J1617$-$5055 + $\sim 1'$ PWN
 
   \begin{itemize}
     \item (right):
-      2FGL\,J1615.2$-$5138 $\rightarrow$ HESS\,J1614$-$518
-    \item No compelling counterpart
+      2FGL\,J1615.2$-$5138 
+    \item Coincident with HESS\,J1614$-$518
+    \item No other compelling multiwavelenth counterpart
   \end{itemize}
 \end{frame}
 
@@ -244,9 +260,17 @@ PSR\,J1617$-$5055 + $\sim 1'$ PWN
       \item Second X-ray PSR + PWN candidate in region
         (but no pulsations)
     \end{itemize}
-
   \end{columns}
 \end{frame}
 
+
+\begin{frame}{Thank you}
+  See text for more details:
+  \begin{itemize}
+    \item
+  \url{https://www-glast.stanford.edu/cgi-prot/pub_download?id=662}
+  \end{itemize}
+
+\end{frame}
 
 \end{document}
