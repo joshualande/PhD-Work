@@ -36,58 +36,80 @@ G292.2-0.5:
   gal: [292.10,-0.49]
   ext: 0.05 
   notes: | 
-    Diameter is 0.1 degrees 
-    from http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf
+    "Diameter is 0.1 degrees 
+    from http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf"
 G54.1+0.3:
   gal: [54.10,0.26]
   ext: 0.0
 Geminga:
   gal: [195.34,3.78]
-  ext: 1.1 # FWHM=2.6 from (arXiv:0904.1018v3):
-           # So the Gaussian radius is R=2.6/2.35=1.1
+  ext: 1.1 
+  notes: |
+    "FWHM=2.6 from arXiv:0904.1018v3:
+     So the Gaussian radius is R=2.6/2.35=1.1"
 HESS_J1026-582:
   gal: [284.8,-0.52]
-  ext: 0.14 # Gaussian radius (arXiv:1009.3012v1)
+  ext: 0.14 
+  notes: |
+    "Gaussian radius from arXiv:1009.3012v1"
 HESS_J1303-631:
   gal: [304.24,-0.36]
   ext: 0.16
   spectra: $pwn/pwndata/tevdata/HESS_J1303-631/spectra.txt
 HESS_J1356-645:
   gal: [309.81,-2.49]
-  ext: [0.2,0.2] # Gaussian radius (arXiv:astro-ph/0505219v1)
+  ext: [0.2,0.2] 
+  notes: |
+    "Gaussian radius from arXiv:astro-ph/0505219v1"
 HESS_J1616-508:
   gal: [332.39,-0.14]
-  ext: 0.136 # Gaussian radius (arXiv:astro-ph/0510397v1)
+  ext: 0.136 
   spectra: '$pwn/pwndata/tevdata/HESSJ1616-508/HESSJ1616-508.txt'
   map: '$pwn/pwndata/tevdata/HESSJ1616-508/HESSJ1616-508_Map.fits'
+  notes: |
+    "Gaussian radius arXiv:astro-ph/0510397v1"
 HESS_J1632-478:
   gal: [336.38,0.19]
-  ext: [0.21,0.06] # Gaussian radius (arXiv:astro-ph/0510397v1)
+  ext: [0.21,0.06] 
+  notes: |
+    "Gaussian radius from arXiv:astro-ph/0510397v1"
 HESS_J1640-465:
   gal: [338.32,-0.02]
-  ext: 0.045 # Gaussian radius (arXiv:astro-ph/0510397v1)
+  ext: 0.045 
+  notes: |
+    "Gaussian radius from arXiv:astro-ph/0510397v1"
 HESS_J1708-443:
   gal: [343.06,-2.38]
-  ext: 0.29 # Gaussian radius (arXiv:1102.0773v2)
+  ext: 0.29 
+  notes: |
+    "Gaussian radius from arXiv:1102.0773v2"
 HESS_J1718-385:
   gal: [348.83,-0.49]
-  ext: [0.15,0.07] # Gaussain size (arXiv:0705.1605v1)
+  ext: [0.15,0.07] 
+  notes: | 
+    "Gaussain size from arXiv:0705.1605v1"
 HESS_J1809-193:
   gal: [11.18,-0.09]
-  ext: [0.53,0.25] # Gaussian size (arXiv:0705.1605v1)
+  ext: [0.53,0.25] 
+  notes: |
+    Gaussian size from arXiv:0705.1605v1
 HESS_J1813-178:
   gal: [12.81,-0.03]
-  ext: 0.036 # Gaussian radius (arXiv:astro-ph/0510397v1)
+  ext: 0.036 
+  notes: |
+    "Gaussian radius from arXiv:astro-ph/0510397v1"
 HESS_J1825-137:
   gal: [17.71,-0.7]
   ext: [0.13,0.12] 
   spectra: $pwn/pwndata/tevdata/HESS_J1825-137/spectra.txt
   notes : |
-    Extension from (arXiv:astro-ph/0607548v1)
-    Note: extension in the paper is (apparently) the diameter.
+    "Extension from arXiv:astro-ph/0607548v1
+     Note: extension in the paper is (apparently) the diameter."
 HESS_J1831-098:
   gal: [21.85,-0.11]
-  ext: 0.15 # Gaussian radius (arXiv:1110.6837v1)
+  ext: 0.15 
+  notes: |
+    "Gaussian radius from arXiv:1110.6837v1"
 HESS_J1833-105:
   gal: [21.51,-0.88]
   ext: 0.0
@@ -96,29 +118,37 @@ HESS_J1846-029:
   ext: 0.0
 HESS_J1912+101:
   gal: [44.39,-0.07]
-  ext: 0.26 # Gaussian radius (arXiv:0802.3841v1)
+  ext: 0.26
+  notes: |
+    "Gaussian radius from arXiv:0802.3841v1"
 IGR_J18490-0000:
   gal: [32.64,0.53]
   ext: '?'
 Kookaburra:
   gal: [313.56,0.27]
-  ext: 0.055 # Gaussian Radius 3.3' from (arXiv:astro-ph/0606311v2)
+  ext: 0.055
+  notes: 
+    "Gaussian Radius is 3.3' from arXiv:astro-ph/0606311v2"
   HESS name: HESS J1420-607
 Kookaburra_Rabbit:
   gal: [313.25,0.15]
-  ext: [0.08,0.06] # Gaussian size is 4.9' & 2.7' (arXiv:astro-ph/0606311v2)
+  ext: [0.08,0.06] 
   HESS name: HESS J1418-609
+  notes: |
+    "Gaussian size is 4.9arcmin & 2.7arcmin from arXiv:astro-ph/0606311v2"
 MGRO_J2019+37:
   gal: [75.00,0.39]
   ext: 0.55 
   notes: |
-    Diameter is 1.1 degrees (arXiv:0705.0707v1)
+    "Diameter is 1.1 degrees from arXiv:0705.0707v1"
 MSH_15-52:
   gal: [320.33,-1.19]
   ext: [0.11, 0.04]
   spectra: $pwn/pwndata/tevdata/MSH_15-52/spectra.txt
   notes: |
-    Gaussian radius 6.4' & 2.3' (arXiv:astro-ph/0504120v1)
+    "Gaussian radius 6.4arcmin & 2.3arcmin arXiv:astro-ph/0504120v1"
 Vela_X:
   gal: [263.86,-3.09]
-  ext: [0.48,0.36] # Gaussian size (arXiv:astro-ph/0601575v1)
+  ext: [0.48,0.36] 
+  notes: | 
+      "Gaussian size from arXiv:astro-ph/0601575v1
