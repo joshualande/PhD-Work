@@ -1,0 +1,5 @@
+# Taken from arXiv:0904.1018v3
+Mean energy     Flux      Flux Error
+  [TeV]    [/TeV cm^2 s] [/TeV cm^2 s]
+
+  35 34.7e-17 8.6e-17
