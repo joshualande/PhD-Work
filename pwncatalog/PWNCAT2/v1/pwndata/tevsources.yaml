@@ -11,144 +11,189 @@
 0FGL_J0631.8+1034:
   gal: [201.3,0.51]
   ext: 0.0
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=176"
 0FGL_J1958.1+2848:
   gal: [65.85,-0.23]
   ext: 0.0
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=180"
 0FGL_J2021.5+4026:
   gal: [78.23,2.07]
   ext: 0.0
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=181"
 Boomerang:
   gal: [106.57,2.91]
   ext: '?'
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=182"
 Crab:
   gal: [184.56,-5.79]
   ext: 0.0
+  spectrum: $pwn/pwndata/tevdata/Crab/spectrum.txt
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=74"
 CTA1:
   gal: [119.58,10.20]
   ext: '?'
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=227"
   notes: |
     "A preliminary spectral analysis gives an integral flux above 1 TeV
      of 4% of the flux from the Crab Nebula" (McArthur et al. 2011)
 G0.9+0.1:
   gal: [0.87,0.08]
   ext: 0.0
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=112"
 G292.2-0.5:
   gal: [292.10,-0.49]
   ext: 0.05 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=205"
   notes: | 
     "Diameter is 0.1 degrees 
     from http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf"
 G54.1+0.3:
   gal: [54.10,0.26]
   ext: 0.0
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=193"
 Geminga:
   gal: [195.34,3.78]
   ext: 1.1 
+  spectrum: "$pwn/pwndata/tevdata/Geminga/spectrum.txt"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=177"
   notes: |
     "FWHM=2.6 from arXiv:0904.1018v3:
      So the Gaussian radius is R=2.6/2.35=1.1"
+Westerlund_2:
+  gal: [284.22,-0.40]
+  ext: '0.18'
+  spectrum: "$pwn/pwndata/tevdata/HESS_J1023-575/spectrum.txt"
+  HESS name: HESS J1023-575
+  tevcat: "http://tevcat.uchicago.edu/?mode=1;id=132"
+  notes: |
+    "Gaussian extension from arXiv:1009.3012v1"
 HESS_J1026-582:
   gal: [284.8,-0.52]
   ext: 0.14 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=220"
+  spectrum: "$pwn/pwndata/tevdata/HESS_J1026-582/spectrum.txt"
   notes: |
     "Gaussian radius from arXiv:1009.3012v1"
 HESS_J1303-631:
   gal: [304.24,-0.36]
   ext: 0.16
-  spectra: $pwn/pwndata/tevdata/HESS_J1303-631/spectra.txt
+  spectrum: $pwn/pwndata/tevdata/HESS_J1303-631/spectrum.txt
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=94"
 HESS_J1356-645:
   gal: [309.81,-2.49]
   ext: [0.2,0.2] 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=170"
   notes: |
     "Gaussian radius from arXiv:astro-ph/0505219v1"
 HESS_J1616-508:
   gal: [332.39,-0.14]
   ext: 0.136 
-  spectra: '$pwn/pwndata/tevdata/HESSJ1616-508/HESSJ1616-508.txt'
-  map: '$pwn/pwndata/tevdata/HESSJ1616-508/HESSJ1616-508_Map.fits'
+  spectrum: '$pwn/pwndata/tevdata/HESS_J1616-508/spectrum.txt'
+  map: '$pwn/pwndata/tevdata/HESS_J1616-508/HESSJ1616-508_Map.fits'
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=104"
   notes: |
     "Gaussian radius arXiv:astro-ph/0510397v1"
 HESS_J1632-478:
   gal: [336.38,0.19]
   ext: [0.21,0.06] 
+  spectrum: '$pwn/pwndata/tevdata/HESS_J1632-478/spectrum.txt'
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=105"
   notes: |
     "Gaussian radius from arXiv:astro-ph/0510397v1"
 HESS_J1640-465:
   gal: [338.32,-0.02]
   ext: 0.045 
+  spectrum: '$pwn/pwndata/tevdata/HESS_J1640-465/spectrum.txt'
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=107"
   notes: |
     "Gaussian radius from arXiv:astro-ph/0510397v1"
 HESS_J1708-443:
   gal: [343.06,-2.38]
   ext: 0.29 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=191"
   notes: |
     "Gaussian radius from arXiv:1102.0773v2"
 HESS_J1718-385:
   gal: [348.83,-0.49]
   ext: [0.15,0.07] 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=154"
   notes: | 
     "Gaussain size from arXiv:0705.1605v1"
 HESS_J1809-193:
   gal: [11.18,-0.09]
   ext: [0.53,0.25] 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=155"
   notes: |
     Gaussian size from arXiv:0705.1605v1
 HESS_J1813-178:
   gal: [12.81,-0.03]
   ext: 0.036 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=114"
   notes: |
     "Gaussian radius from arXiv:astro-ph/0510397v1"
 HESS_J1825-137:
   gal: [17.71,-0.7]
   ext: [0.13,0.12] 
-  spectra: $pwn/pwndata/tevdata/HESS_J1825-137/spectra.txt
+  spectrum: $pwn/pwndata/tevdata/HESS_J1825-137/spectrum.txt
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=115"
   notes : |
     "Extension from arXiv:astro-ph/0607548v1
      Note: extension in the paper is (apparently) the diameter."
 HESS_J1831-098:
   gal: [21.85,-0.11]
   ext: 0.15 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=231"
   notes: |
     "Gaussian radius from arXiv:1110.6837v1"
 HESS_J1833-105:
   gal: [21.51,-0.88]
   ext: 0.0
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=140"
 HESS_J1846-029:
   gal: [29.70,-0.24]
   ext: 0.0
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=167"
 HESS_J1912+101:
   gal: [44.39,-0.07]
   ext: 0.26
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=157"
   notes: |
     "Gaussian radius from arXiv:0802.3841v1"
 IGR_J18490-0000:
   gal: [32.64,0.53]
   ext: '?'
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=188"
 Kookaburra:
   gal: [313.56,0.27]
   ext: 0.055
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=124"
   notes: 
     "Gaussian Radius is 3.3' from arXiv:astro-ph/0606311v2"
   HESS name: HESS J1420-607
 Kookaburra_Rabbit:
   gal: [313.25,0.15]
   ext: [0.08,0.06] 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=125"
   HESS name: HESS J1418-609
   notes: |
     "Gaussian size is 4.9arcmin & 2.7arcmin from arXiv:astro-ph/0606311v2"
 MGRO_J2019+37:
   gal: [75.00,0.39]
   ext: 0.55 
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=145"
   notes: |
     "Diameter is 1.1 degrees from arXiv:0705.0707v1"
 MSH_15-52:
   gal: [320.33,-1.19]
   ext: [0.11, 0.04]
-  spectra: $pwn/pwndata/tevdata/MSH_15-52/spectra.txt
+  spectrum: $pwn/pwndata/tevdata/MSH_15-52/spectrum.txt
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=95"
   notes: |
     "Gaussian radius 6.4arcmin & 2.3arcmin arXiv:astro-ph/0504120v1"
 Vela_X:
   gal: [263.86,-3.09]
   ext: [0.48,0.36] 
+  spectrum: $pwn/pwndata/tevdata/Vela_X/spectrum.txt
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=86"
   notes: | 
       "Gaussian size from arXiv:astro-ph/0601575v1
