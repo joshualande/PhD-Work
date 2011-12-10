@@ -2,6 +2,8 @@
 
     Author: J. Lande
 """
+from os.path import expandvars
+
 import yaml
 import pylab as P
 import numpy as np
@@ -34,7 +36,7 @@ class LandeSED(SED):
         if isinstance(like,dict):
             self.fromdict(like)
         elif isinstance(like, str):
-            self.fromdict(yaml.load(open(like)))
+            self.fromdict(yaml.load(open(expandvars(like))))
         else:
             super(LandeSED,self).__init__(like, *args, **kwargs)
 
