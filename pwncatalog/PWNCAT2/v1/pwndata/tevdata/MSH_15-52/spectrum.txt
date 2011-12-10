@@ -1,7 +1,5 @@
 # from http://www.mpi-hd.mpg.de/hfm/HESS/pages/publications/auxiliary/AA435_L17.html
 Energy interval     Mean energy     Flux Flux Error
-
-
 [TeV]           [TeV]       [/TeV cm^2 s]
 
 0.28 0.34       0.31        1.3e-10 3.2e-11
