@@ -24,6 +24,8 @@ Boomerang:
   gal: [106.57,2.91]
   ext: '?'
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=182"
+  notes: |
+    "Detected by Milagro"
 Crab:
   gal: [184.56,-5.79]
   ext: 0.0
@@ -34,8 +36,7 @@ CTA1:
   ext: '?'
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=227"
   notes: |
-    "A preliminary spectral analysis gives an integral flux above 1 TeV
-     of 4% of the flux from the Crab Nebula (McArthur et al. 2011)"
+    "integral flux above 1 TeV of 4% of the flux from the Crab Nebula (McArthur et al. 2011)"
 G0.9+0.1:
   gal: [0.87,0.08]
   ext: 0.0
@@ -45,8 +46,8 @@ G292.2-0.5:
   ext: 0.05 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=205"
   notes: | 
-    "Diameter is 0.1 degrees 
-    from http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf"
+    "Diameter is 0.1 degrees (http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf)
+     Flux ~ 4% Crab nebula (http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf)"
 G54.1+0.3:
   gal: [54.10,0.26]
   ext: 0.0
@@ -58,7 +59,8 @@ Geminga:
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=177"
   notes: |
     "FWHM=2.6 from arXiv:0904.1018v3:
-     So the Gaussian radius is R=2.6/2.35=1.1"
+     So the Gaussian radius is R=2.6/2.35=1.1
+     Note: Detected by Milagro"
 Westerlund_2:
   gal: [284.22,-0.40]
   ext: '0.18'
