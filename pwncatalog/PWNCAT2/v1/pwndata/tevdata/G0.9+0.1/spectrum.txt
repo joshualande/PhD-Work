@@ -1,0 +1,13 @@
+# From arXiv:astro-ph/0501265v1
+# From (http://www.mpi-hd.mpg.de/hfm/HESS/pages/publications/auxiliary/AA432_L25.html)
+# Note, using "80 photoelectron cut (filled circles)"
+Mean energy  Flux     Flux Error
+   [TeV]       [/TeV cm^2 s]
+   0.23    2.42e-11   8.60e-12
+   0.38    8.20e-12   1.49e-12
+   0.67    2.34e-12   3.78e-13
+   1.19    6.97e-13   1.20e-13
+   2.10    1.28e-13   4.24e-14
+   3.93    1.58e-14   1.40e-14
+   6.16    9.39e-15   5.99e-15
+
