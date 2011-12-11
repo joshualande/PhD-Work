@@ -104,12 +104,18 @@ HESS_J1303-631:
   spectrum: 
     HESS: "$pwn/pwndata/tevdata/HESS_J1303-631/spectrum.txt"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=94"
+  notes: 
+    " Gaussian radius from arXiv:astro-ph/0505219v1"
 HESS_J1356-645:
   gal: [309.81,-2.49]
-  ext: [0.2,0.2] 
+  ext: 0.2
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=170"
   notes: |
-    "Gaussian radius from arXiv:astro-ph/0505219v1"
+    "HESS detection: arXiv:1108.2855v1. 
+     No auxilary information yet (http://www.mpi-hd.mpg.de/hfm/HESS/pages/publications/pubs_jour.shtml)
+     LAT upper limits: http://arxiv.org/pdf/1108.0161v1
+     
+     Gaussian radius from arXiv:1108.2855v1."
 HESS_J1616-508:
   gal: [332.39,-0.14]
   ext: 0.136 
@@ -140,25 +146,34 @@ HESS_J1708-443:
   ext: 0.29 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=191"
   notes: |
-    "Gaussian radius from arXiv:1102.0773v2"
+    "HESS detection + SED in arXiv:1102.0773v2. 
+     But, cannot find spectrum as data points.
+     Gaussian radius from arXiv:1102.0773v2"
 HESS_J1718-385:
   gal: [348.83,-0.49]
   ext: [0.15,0.07] 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=154"
   notes: | 
-    "Gaussain size from arXiv:0705.1605v1"
+    "HESS detection + SED in arXiv:0705.1605v1. 
+     But, cannot find spectrum as data points...
+     Gaussain size from arXiv:0705.1605v1"
 HESS_J1809-193:
   gal: [11.18,-0.09]
   ext: [0.53,0.25] 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=155"
   notes: |
-    Gaussian size from arXiv:0705.1605v1
+    "HESS detection + SED in arXiv:0705.1605v1. 
+    But, cannot find spectrum as data points...
+    Gaussian size from arXiv:0705.1605v1"
 HESS_J1813-178:
   gal: [12.81,-0.03]
   ext: 0.036 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=114"
+  spectrum: 
+    HESS: "$pwn/pwndata/tevdata/HESS_J1813-178/spectrum.txt"
   notes: |
-    "Gaussian radius from arXiv:astro-ph/0510397v1"
+    "Detected in HESS galactic plane survey.
+     Gaussian radius from arXiv:astro-ph/0510397v1"
 HESS_J1825-137:
   gal: [17.71,-0.7]
   ext: [0.13,0.12] 
@@ -173,45 +188,69 @@ HESS_J1831-098:
   ext: 0.15 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=231"
   notes: |
-    "Gaussian radius from arXiv:1110.6837v1"
+    "Writeup for 2011 Fermi-symposium (arXiv:1110.6837v1)
+     No table of data points. LAT upper limit in paper seems very unconstraining.
+     
+     Gaussian radius from arXiv:1110.6837v1"
 HESS_J1833-105:
   gal: [21.51,-0.88]
   ext: 0.0
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=140"
+  notes: |
+    "ICRC presentation: arXiv:0710.2247v1
+     SED plot but no data points."
 HESS_J1846-029:
   gal: [29.70,-0.24]
   ext: 0.0
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=167"
+  notes: |
+    "ICRC presentation: arXiv:0710.2247v1
+     SED plot but no data points."
 HESS_J1912+101:
   gal: [44.39,-0.07]
   ext: 0.26
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=157"
+  spectrum: 
+    HESS: "$pwn/pwndata/tevdata/HESS_J1912+101/spectrum.txt"
   notes: |
-    "Gaussian radius from arXiv:0802.3841v1"
+    "HESS detection: arXiv:0802.3841v1
+
+     Gaussian radius from arXiv:0802.3841v1"
 IGR_J18490-0000:
   gal: [32.64,0.53]
   ext: '?'
+  HESS Name: HESS J1849-000
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=188"
+  notes: |
+    "Only conference preceding (Terrier et al 2008)
+     No SED in preceding."
 Kookaburra:
   gal: [313.56,0.27]
   ext: 0.055
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=124"
+  HESS name: "HESS J1420-607"
+  spectrum: 
+    HESS: "$pwn/pwndata/tevdata/Kookaburra/spectrum.txt"
   notes: 
     "Gaussian Radius is 3.3' from arXiv:astro-ph/0606311v2"
-  HESS name: "HESS J1420-607"
 Kookaburra_Rabbit:
   gal: [313.25,0.15]
   ext: [0.08,0.06] 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=125"
   HESS name: "HESS J1418-609"
+  spectrum: 
+    HESS: "$pwn/pwndata/tevdata/Kookaburra_Rabbit/spectrum.txt"
   notes: |
     "Gaussian size is 4.9arcmin & 2.7arcmin from arXiv:astro-ph/0606311v2"
 MGRO_J2019+37:
   gal: [75.00,0.39]
   ext: 0.55 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=145"
+  spectrum: 
+    Milagro: "$pwn/pwndata/tevdata/MGRO_J2019+37/spectrum.txt" 
   notes: |
-    "Diameter is 1.1 degrees from arXiv:0705.0707v1"
+    "Detected by Milagro
+     Diameter is 1.1 degrees from arXiv:0705.0707v1"
 MSH_15-52:
   gal: [320.33,-1.19]
   ext: [0.11, 0.04]
