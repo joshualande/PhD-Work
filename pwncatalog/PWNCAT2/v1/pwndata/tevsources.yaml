@@ -1,7 +1,9 @@
 # List of TeV sources associated with PWNe with localization and extension.
 # Information primarily taken from http://tevcat.uchicago.edu/
 #
-# Note: all extensions are the Gaussian sigma
+# Note: 
+#   "LAT Pulsar" - name if there is an associated LAT pulsar
+#   all extensions are the Gaussian sigma
 #
 # Changes:
 # * Added TeVDAT - Joshua, Dec 4, 2011
@@ -9,6 +11,7 @@
 # * Added more tev data for HESS J1616 - Joshua, Dec 4, 2011
 # * Add CTA1 + HESS J1831-098 - Joshua Lande, Nov 30, 2011
 0FGL_J0631.8+1034:
+  LAT Pulsar: PSRJ0631+1036
   gal: [201.3,0.51]
   ext: 0.0
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=176"
@@ -17,6 +20,7 @@
   notes: |
     "Detected by Milagro"
 0FGL_J1958.1+2848:
+  LAT Pulsar: PSRJ1958+2846
   gal: [65.85,-0.23]
   ext: 0.0
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=180"
@@ -26,6 +30,7 @@
     "Detected by Milagro
      TODO: add magic upper limit"
 0FGL_J2021.5+4026:
+  LAT Pulsar: PSRJ2021+4026
   gal: [78.23,2.07]
   ext: 0.0
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=181"
@@ -46,13 +51,14 @@ Crab:
     HESS: "$pwn/pwndata/tevdata/Crab/spectrum.txt"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=74"
 CTA1:
+  LAT Pulsar: PSRJ0007+7303
   gal: [119.58,10.20]
   ext: '?'
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=227"
   notes: |
-    "Veritas detection.
-    
-    Integral flux above 1 TeV of 4% of the flux from the Crab Nebula (McArthur et al. 2011)"
+    "Veritas detection (2011 Fermi Symposium):
+       * McArthur et al. 2011 -  arXiv:1111.2591v1
+       * Integral flux above 1 TeV of 4% of the flux from the Crab Nebula"
 G0.9+0.1:
   gal: [0.87,0.08]
   ext: 0.0
@@ -64,9 +70,13 @@ G292.2-0.5:
   gal: [292.10,-0.49]
   ext: 0.05 
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=205"
+  HESS Name: HESS J1119-614
   notes: | 
-    "Diameter is 0.1 degrees (http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf)
-     Flux ~ 4% Crab nebula (http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf)"
+    "Only a confernece proceding on this source
+     * http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf
+     * Diameter is 0.1 degrees
+     * Flux ~ 4% Crab nebula 
+     HESS news article on source: http://www.mpi-hd.mpg.de/hfm/HESS/pages/home/som/2009/11/"
 G54.1+0.3:
   gal: [54.10,0.26]
   ext: 0.0
@@ -83,7 +93,7 @@ Geminga:
      Note: Detected by Milagro"
 Westerlund_2:
   gal: [284.22,-0.40]
-  ext: '0.18'
+  ext: 0.18
   spectrum: 
     HESS: "$pwn/pwndata/tevdata/Westerlund_2/spectrum.txt"
   HESS name: "HESS J1023-575"
@@ -260,6 +270,7 @@ MSH_15-52:
   notes: |
     "Gaussian radius 6.4arcmin & 2.3arcmin arXiv:astro-ph/0504120v1"
 Vela_X:
+  LAT Pulsar: PSRJ0835-4510
   gal: [263.86,-3.09]
   ext: [0.48,0.36] 
   spectrum: 
