@@ -20,7 +20,9 @@ from lande_sed import LandeSED
 from setup_pwn import get_catalog
 
 all_energy=lambda emin,emax: np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1)
-high_energy=lambda emin,emax: np.allclose([emin,emax],[10**4.5,10**5.5], rtol=0, atol=1)
+high_energy=lambda emin,emax: np.allclose([emin,emax],[10**4,10**5.5], rtol=0, atol=1) 
+higher_energy=lambda emin,emax: np.allclose([emin,emax],[10**4.5,10**5.5], rtol=0, atol=1)
+
 three_bins=[1e2,1e3,1e4,10**5.5]
 
 def plots(roi, name, hypothesis, emin, emax, 
@@ -118,6 +120,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None
 
     fit()
     freeze_insignificant_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=9)
+    fit() 
     fix_bad_cutoffs(roi, exclude_names=[name])
     # second fit necessary after these fixes, which change around sources.
     fit() 
@@ -202,7 +205,7 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax,
     r=sourcedict(like, name)
 
     if upper_limit:
-        r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95)
+        r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95, delta_log_like_limits=10)
 
     def sed(kind,**kwargs):
         print 'Making %s SED' % kind
@@ -216,6 +219,9 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax,
             sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(2,5.5,8))
             sed('1bpd_%s' % hypothesis,bin_edges=three_bins)
         elif high_energy(emin,emax):
+            sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4,5.5,7))
+            sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4,5.5,4))
+        elif higher_energy(emin,emax):
             sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,5))
             sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,3))
         else:
