@@ -22,19 +22,19 @@ from uw.pulsar.phase_range import PhaseRange
 
 isnum = lambda x: isinstance(x, numbers.Real)
 
-def setup_tev(name, tevdata, fit_emin, fit_emax, extended=False, **kwargs):
+def setup_tev(name, tevsources, fit_emin, fit_emax, extended=False, **kwargs):
     """ Sets up the ROI for studying a TeV Source. """
-    tev=yaml.load(open(tevdata))
+    tev=yaml.load(open(tevsources))
     source=tev[name]
     l,b=source['gal']
     tev_position=SkyDir(l,b,SkyDir.GALACTIC)
 
     # data, should be more elegant...
-    ft1=glob('/nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/pass7.3_pre_source_merit_*_pass7.4_source_z100_t90_cl0.fits')
-    ft2='/nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ft2_2years.fits'
-    ltcube='/nfs/slac/g/ki/ki03/lande/fermi_data/catalog_mirror/catalog_jan_31_2011/P7_V4_SOURCE/ltcube_24m_pass7.4_source_z100_t90_cl0.fits'
+    ft1=e('$FERMILANDE/data/PWNCAT2/nov_30_2011/ft1_PWNCAT2_allsky.fits')
+    ft2=e('$FERMILANDE/data/PWNCAT2/nov_30_2011/ft2_PWNCAT2_allsky.fits')
+    ltcube=e('$FERMILANDE/data/PWNCAT2/nov_30_2011/ltcube_PWNCAT2_allsky.fits')
     binsperdec=4
-    binfile='/nfs/slac/g/ki/ki03/lande/fermi_data/allsky/2FGL/v9/binned_100_100000_4.fits'
+    binfile=e('$FERMILANDE/data/PWNCAT2/nov_30_2011/binned_%s.fits' % binsperdec)
 
     # parse the extension
     ext = source['ext']
@@ -118,6 +118,7 @@ def get_source(name, position,
 def get_catalog(**kwargs):
     return Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
                        latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
+                       prune_radius=0,
                        **kwargs)
 
 def setup_region(name, phase,
