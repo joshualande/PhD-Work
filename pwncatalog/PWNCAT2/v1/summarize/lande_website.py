@@ -12,18 +12,12 @@ import asciitable
 
 from toolbag import OrderedDefaultdict
 
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v38/'
+#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v3/'; at_pulsar='at_pulsar'
+base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_tev/v5/'; at_pulsar='at_tev'
 
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analysis/analysis_v1/'
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v44/'
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analysis/analysis_v2/'
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analysis/analysis_v3/'
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analysis/analysis_v4/'
-base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analysis/analysis_v6/'
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/high_energy/analysis_v2/'
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v46/'
-
-pwnlist=sorted([os.path.basename(i) for i in glob(j(base,'analysis','PSR*'))])
+analysis='analysis_plots'
+#analysis='analysis'
+pwnlist=sorted([os.path.basename(i) for i in glob(j(base,analysis,'*')) if os.path.isdir(i)])
 
 website=join(base,'website')
 
@@ -32,12 +26,14 @@ if not os.path.exists(website): os.makedirs(website)
 
 
 def get_results(pwn):
-    f = j(base,'analysis',pwn,'results_%s.yaml' % pwn)
+    f = j(base,analysis.replace('plots','no_plots'),pwn,'results_%s.yaml' % pwn)
+    #f = j(base,analysis,pwn,'results_%s.yaml' % pwn)
+
     if not os.path.exists(f): return None
     results = yaml.load(open(f))
 
-    #for hypothesis in ['at_pulsar', 'point', 'extended']:
-    for hypothesis in ['at_pulsar']:
+    #for hypothesis in [at_pulsar, 'point', 'extended']:
+    for hypothesis in [at_pulsar]:
         h=results[hypothesis]
         if not results.has_key(hypothesis):
             results[hypothesis]=defaultdict(lambda:-1),
@@ -50,7 +46,7 @@ def get_results(pwn):
     return results
 
 def get_sed(pwn,binning,hypothesis):
-    filename=j(base,'analysis',pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
+    filename=j(base,analysis,pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
     if os.path.exists(filename):
         return yaml.load(open(filename))
     elif binning == '1bpd':
@@ -103,7 +99,7 @@ def format_table(pwnlist):
         results = get_results(pwn)
         if results is None: continue
 
-        gt=results['at_pulsar']['gtlike']
+        gt=results[at_pulsar]['gtlike']
 
 
         ts=max(gt['TS'],0)
@@ -128,7 +124,7 @@ def format_table(pwnlist):
         index_err=-1*gt['model']['Index_err']
 
 
-        sed = get_sed(pwn,'1bpd','at_pulsar')
+        sed = get_sed(pwn,'1bpd',at_pulsar)
         bandts = map(lambda x: max(x,0), sed['Test_Statistic'])
         bandflux = sed['Ph_Flux']['Value']
         bandflux_err = sed['Ph_Flux']['Error']
@@ -169,11 +165,13 @@ def build_each_page(pwn):
     index_t2t.append(pwn+'\n\n')
     index_t2t.append(format_table([pwn]))
     index_t2t.append('')
-    index_t2t.append('[Analysis Folder ../analysis/%s]' % pwn)
+    index_t2t.append('[Analysis Folder ../%s/%s]' % (analysis,pwn))
+    index_t2t.append('')
+    index_t2t.append('[log ../%s/%s/log_%s.txt]' % (analysis,pwn,pwn))
 
-    hypothesis='at_pulsar'
+    hypothesis=at_pulsar
 
-    get_img_table = lambda *args: index_t2t.append('|| ' + ' | '.join(['[../analysis/%s/%s]' % (pwn,i) for i in args]) + ' |\n\n')
+    get_img_table = lambda *args: index_t2t.append('|| ' + ' | '.join(['[../%s/%s/%s]' % (analysis,pwn,i) for i in args]) + ' |\n\n')
 
     title = lambda i: index_t2t.append('== %s ==' % i)
 
@@ -212,6 +210,7 @@ def build_each_page(pwn):
         'seds/sed_gtlike_4bpd_%s_%s.png' % (hypothesis,pwn),
         'seds/sed_gtlike_2bpd_%s_%s.png' % (hypothesis,pwn),
         'seds/sed_gtlike_1bpd_%s_%s.png' % (hypothesis,pwn),
+        'seds/sed_gtlike_%s_%s.png' % (hypothesis,pwn),
         'seds/sed_pointlike_%s_%s.png' % (hypothesis,pwn))
 
     get_img_table(
