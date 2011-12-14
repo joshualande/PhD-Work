@@ -23,7 +23,7 @@ parser = ArgumentParser()
 parser.add_argument("-c", "--command", required=True)
 group=parser.add_mutually_exclusive_group(required=True)
 group.add_argument("--pwndata")
-group.add_argument("--tevdata")
+group.add_argument("--tevsources")
 parser.add_argument("-o", "--outdir", required=True)
 args,remaining_args = parser.parse_known_args()
 
@@ -33,8 +33,8 @@ if args.pwndata is not None:
     sources=yaml.load(open(args.pwndata))
     flags = '--pwndata %s' % args.pwndata
 else:
-    sources=yaml.load(open(args.tevdata))
-    flags = '--tevdata %s' % args.tevdata
+    sources=yaml.load(open(args.tevsources))
+    flags = '--tevsources %s' % args.tevsources
 
 if os.path.exists(outdir):
     raise Exception("outdir %s already exists" % outdir)
