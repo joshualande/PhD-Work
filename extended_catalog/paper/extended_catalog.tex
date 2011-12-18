@@ -231,7 +231,7 @@ extension of a LAT source and in Section~\ref{extension_sensitivity}
 we calculate the LAT detection threshold to resolve the extension
 of a source.  In Section~\ref{dual_localization_method}, we
 study the ability of the LAT to 
-distinguish between a single extended source and unresolved closely-spaced point sources
+distinguish between a single extended source and unresolved closely-spaced point-like sources
 In Section~\ref{test_2lac_sources}, we further demonstrate that our
 detection method does not misidentify point-like sources as being
 extended by testing the extension of active Galactic nuclei (AGN)
@@ -262,7 +262,7 @@ multiple scattering in the silicon strip tracking section
 of the detector and is several degrees at 100 \mev.  The PSF improves
 with energy approaching a 68\% containment radius of $\sim0\fdg2$ at
 the highest energies (when averaged over the acceptance of the LAT)
-and is limited by the strip pitch to the height of the tracker
+and is limited by the ratio of the strip pitch to the height of the tracker
 \citep{atwood_LAT_mission,on_orbit_calibration,lat_on_orbit_psf}.\footnote{More
 information about the performance of the LAT can be found at the \fermi
 Science Support Center (FSSC, \url{http://fermi.gsfc.nasa.gov}).} However,
@@ -277,9 +277,9 @@ to extended sources.
 A new maximum-likelihood analysis tool has been developed to address the
 unique requirements for studying spatially extended sources with the LAT.
 It works by maximizing the Poisson 
-likelihood to detect the observed distributions of gamma rays (referred to as counts)
+likelihood to detect the observed distributions of $\gamma$-rays (referred to as counts)
 given a parametrized spatial and spectral model of the sky.  
-The data are binned spatially, using HEALPix pixellization, and spectrally 
+The data are binned spatially, using a HEALPix pixellization, and spectrally 
 \citep{healpix} and the likelihood is maximized over all bins in
 a region.
 The extension of a source can be modeled by a geometric shape
@@ -616,7 +616,7 @@ than the square root of the relative exposures because the LAT is signal-limited
 at high energies where the present analysis is most sensitive. For large
 extended sources, the relevant background is over a larger spatial range
 and so the improvement is closer to a factor corresponding
-to the square root of the relative exposures and is caused by Poisson fluctuations in the background.
+to the square root of the relative exposures that is caused by Poisson fluctuations in the background.
 
 
 \section{Testing Against Source Confusion}
