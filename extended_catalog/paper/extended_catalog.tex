@@ -398,7 +398,7 @@ test statistic for the extension test. Therefore, when calculating
 \tsext, we compare the likelihood fitting the source with an extended
 spatial model to the likelihood when the extension is
 fixed to a very small value ($10^{-10}$ degrees in radius 
-for a uniform surface brightness profile).
+for a uniform disk model).
 
 We estimate the error on the extension of a source by fixing
 the position of the source and varying the extension until the
@@ -439,12 +439,11 @@ mentioned, all \ts, \tsext, and spectral parameters were calculated using
 \label{compare_source_size}
 
 We considered two models for the
-surface brightness profile for extended sources: a 2D Gaussian
-profile
+surface brightness profile for extended sources: a 2D Gaussian model
 \begin{equation}\label{gauss_pdf}
   I_\text{Gaussian}(x,y)=\tfrac{1}{2\pi\sigma^2}\exp\left(-(x^2+y^2)/2\sigma^2\right)
 \end{equation}
-or a uniform surface brightness profile
+or a uniform disk model
 \begin{equation}\label{disk_pdf}
   I_\text{disk}(x,y)=
   \begin{cases}
@@ -456,7 +455,7 @@ Although these shapes are significantly different,
 Figure~\ref{compare_disk_gauss} shows that, after convolution with the
 LAT PSF, their PDFs are similar for a source that has a 0\fdg5 radius
 typical of LAT detected extended sources.  To allow a valid comparison
-between the Gaussian and the uniform surface brightness morphologies,
+between the Gaussian and the uniform disk models,
 we define the source size as the radius containing 68\% of the
 intensity ($\rsixeight$).  $\rsixeight_\text{,Gaussian}=1.51\sigma$
 and $\rsixeight_\text{,disk}=0.82\sigma$ where $\sigma$ is defined
@@ -469,7 +468,7 @@ the differences in the PDF for
 different spatial models are lost in the noise and the LAT is not sensitive
 to the detailed spatial structure of these sources.  Therefore, in our
 search for extended sources we use only a radially-symmetric uniform
-surface brightness profile as our spatial extension shape. Unless otherwise noted,
+disk spatial model. Unless otherwise noted,
 we quote the radius to the edge ($\sigma$) as the size of the source.
 
 \section{Validation of the Analysis Method}
@@ -553,8 +552,8 @@ for a source of a given extension.
 
 We used a simulation setup similar to that described in
 Section~\ref{monte_carlo_validation}, but instead of point-like sources
-we simulated extended sources with radially-symmetric uniform surface
-brightness profiles. Additionally, we simulated our sources over the two-year
+we simulated extended sources with radially-symmetric uniform disk spatial 
+models. Additionally, we simulated our sources over the two-year
 time range included in the 2FGL catalog.  For each extension and spectral index,
 we selected a flux range which bracketed $\tsext=16$ and performed an
 extension test for $>100$ independent realizations of ten fluxes in
@@ -669,7 +668,7 @@ spectral index 2.  This spectrum was picked to be representative of the
 new extended sources that were discovered in the following analysis
 when looking in the 1 \gev to 100 \gev energy range
 (see Section~\ref{new_ext_srcs_section}).
-We simulated these sources using a uniform surface brightness profile
+We simulated these sources using uniform disk spatial models
 with extensions varying
 up to $1\degree$.  
 Figure~\ref{confusion_extended_plot}a shows the distribution
@@ -834,12 +833,13 @@ halos around AGN.
 
 As further validation of our method for studying
 spatially extended sources, we reanalyzed the twelve spatially extended
-sources which were included in the 2FGL catalog \citep{second_cat}.  Even though
-each of these sources required a dedicated analysis and they
-were fit with a variety of spatial models, it is valuable to show that
+sources which were included in the 2FGL catalog \citep{second_cat}.  
+Even though these sources had all been the subjects of dedicated
+analyses and separate publications, and had been fit with a variety
+of spatial models,
+it is valuable to show that
 these sources are significantly extended using our systematic 
-method assuming a radially-symmetric uniform surface
-brightness profile.  On the other hand, for some of
+method assuming radially-symmetric uniform disk spatial models.  On the other hand, for some of
 these sources a uniform disk spatial model does not well describe the
 observed extended emission and so the dedicated LAT publications provides
 a qualitatively better model of these sources.
@@ -883,12 +883,12 @@ removing the pulsed photons from the Vela pulsar which was beyond the
 scope of this paper.  Our analysis also failed to detect a significant
 extension for the Centaurus A Lobes because
 the shape of the source is significantly different from a uniform
-radially-symmetric surface brightness profile \citep{cen_a_lat}.
+radially-symmetric disk\citep{cen_a_lat}.
 
 Our analysis of these sources is summarized in
 Table~\ref{known_extended_sources}.  This table includes the best fit
 position and extension of these sources when fitting them 
-with a radially-symmetric uniform surface brightness profile. It also
+with a radially-symmetric uniform disk model. It also
 includes the best fit spectral parameters for each source.  The position
 and extension of Vela X and the Centaurus A Lobes were taken from
 \cite{velax,cen_a_lat} and are included in this list for completeness.
@@ -1009,14 +1009,13 @@ To account for these issues, we first produced a large list of possibly
 extended sources employing very liberal search criteria and then
 refined the analysis of the promising candidates on a case by case basis.
 Our strategy tested all point-like 2FGL sources for extension assuming
-they had a uniform radially-symmetric surface brightness profile
+they had a uniform radially-symmetric disk spatial model
 and a power-law spectral model.  Although not all extended sources are
-expected to have a shape very similar to a uniform surface brightness
-profile, Section~\ref{compare_source_size} showed that for many spatially
+expected to have a shape very similar to a uniform disk, Section~\ref{compare_source_size} showed that for many spatially
 extended sources the wide PSF of the LAT and limited statistics makes
 this a reasonable approximation.  On the other hand, choosing this
 spatial model biases us against finding extended sources that are not
-well described by uniform emission such as shell-type supernova remnants.
+well described by a uniform disk model such as shell-type supernova remnants.
 
 Before testing for extension, we automatically removed from the background
 model all other 2FGL sources within 0\fdg5 of the source.  This distance
@@ -1156,7 +1155,7 @@ of extended sources observed at other wavelengths and the high density
 of possible sources that are expected to emit at \gev energies, it is
 likely that in some of these regions further observations will resolve
 that the emission is significantly more complicated than the simple
-radially-symmetric uniform surface brightness profile that we assume.
+radially-symmetric uniform disk model that we assume.
 
 
 \section{New Extended Sources}
@@ -1788,7 +1787,7 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
     \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_disk_gauss/v3/plot.py
     \caption{
-    A comparison of a 2D Gaussian and uniform surface brightness profiles
+    A comparison of a 2D Gaussian and uniform disk spatial model
     of extended sources before and after convolving with the PSF for two
     energy ranges.  The solid black line is the PSF that would be observed
     for a power-law source of spectral index 2. The dashed line
@@ -1906,8 +1905,8 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
     \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/monte_carlo/sensitivity/v12/plot/plot_vs_index.py
     \caption{
-    The detection threshold to resolve a uniform surface brightness profile
-    extended source for a two-year exposure.  All sources have an
+    The detection threshold to resolve an
+    extended source with a uniform disk model for a two-year exposure.  All sources have an
     assumed power-law spectrum and the different line styles (colors in
     the electronic version) correspond to different simulated spectral
     indices.  The lines with no markers correspond to the detection
@@ -2010,7 +2009,7 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
 \enddata
 \tablecomments{
       The detection threshold to resolve spatially extended
-      sources with a uniform surface brightness profile for a two-year exposure
+      sources with a uniform disk spatial model for a two-year exposure
       The threshold is calculated for
       sources of varying energy
       ranges, spectral indices, and background levels.  The sensitivity
@@ -2145,8 +2144,9 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
     A diffuse-emission-subtracted 1 \gev to 100 \gev counts map of the
     region around 2FGL\,J1856.2+0450c smoothed by a 0\fdg1 2D Gaussian
     kernel. The plus-shaped marker and circle (colored red in
-    the online version) represent the center and size of the best fit
-    radially-symmetric source with a uniform intensity profile.  The black
+    the online version) represent the center and size of the source
+    fit with a
+    radially-symmetric uniform disk spatial model.  The black
     crosses represent the positions of other 2FGL sources.  The extension
     is statistically significant, but the extension encompasses many 2FGL
     sources and the emission does not look to be uniform. Although
@@ -2216,8 +2216,8 @@ compared to \cite{msh1552} and
 }
 
 \tablecomments{
-All sources were fit using a spatial model assuming a uniform radially
-symmetric intensity distribution. \glon and \glat are Galactic longitude
+All sources were fit using a radially-symmetric uniform disk spatial model.
+\glon and \glat are Galactic longitude
 and latitude of the best fit extended source respectively.  The first
 error on $\sigma$ is statistical and the second is systematic (see
 Section~\ref{systematic_errors_on_extension}).  
@@ -2378,7 +2378,7 @@ and $\tsext_\altdiff$ are the test statistic values of the extension
 test from \pointlike, \gtlike, and \gtlike with the alternative diffuse
 model respectively.  $\sigma$, $\sigma_\altdiff$, and $\sigma_\altpsf$
 are the fit size assuming
-a uniform radially symmetric intensity distribution
+a radially-symmetric uniform disk model
 with the standard analysis, the alternative diffuse
 model, and the alternative PSF respectively.  \tsinc is the test statistic
 for the two point-like source hypothesis test 
@@ -2403,7 +2403,7 @@ for the two point-like source hypothesis test
   marker and the circle (colored
   red) represent 
   the best fit position and extension of this source assuming a
-  radially-symmetric uniform surface brightness profile.  The two 
+  radially-symmetric uniform disk model.  The two 
   star-shaped markers (colored
   green) represent 2FGL sources that were
   removed from the background model.
@@ -2453,7 +2453,7 @@ for the two point-like source hypothesis test
   online version) represents the 2FGL position of this source.
   The plus-shaped marker and the circle (colored red) 
   represent the best fit position and extension of this
-  source assuming a radially-symmetric uniform surface brightness profile
+  source assuming a radially-symmetric uniform disk model
   and the black cross represents a background 2FGL source. 
   The
   contours in (a) correspond to the 100 $\mu$m image observed by
@@ -2480,7 +2480,7 @@ for the two point-like source hypothesis test
   kernel. The triangular marker (colored red in the electronic version)
   represents the 2FGL position of this source.  The plus-shaped marker
   and the circle (colored red) are the best fit position and extension of
-  this source assuming a radially-symmetric uniform surface brightness profile.
+  this source assuming a radially-symmetric uniform disk model.
   The three black crosses represent background 2FGL sources
   and the three star-shaped markers (colored green) represent other 2FGL sources
   that were removed from the background model 
@@ -2510,7 +2510,7 @@ for the two point-like source hypothesis test
     The cross-shaped markers and the
     circles (colored red) represent the best fit
     positions and extensions of these sources assuming a radially
-    symmetric uniform surface brightness profile.  
+    symmetric uniform disk model.  
     The two black crosses represent  background 2FGL sources and
     the star-shaped
     marker (colored green) represents another 2FGL source that was removed from the background
@@ -2561,8 +2561,7 @@ for the two point-like source hypothesis test
   The triangular marker (colored red in the electronic version)
   represents the 2FGL position of this source.  The plus-shaped marker
   and the circle (colored red) are the best fit position and extension of
-  2FGL\,J1632.4$-$4753c assuming a radially-symmetric uniform surface
-  brightness profile.  
+  2FGL\,J1632.4$-$4753c assuming a radially-symmetric uniform disk model.  
   The four black crosses represent background 2FGL
   sources subtracted in (b).  The 
   circular and square-shaped markers (colored blue) represent 
@@ -2592,7 +2591,7 @@ for the two point-like source hypothesis test
   (colored red in the online version) represents the 2FGL position of
   this source.  The plus-shaped marker and the circle (colored red) are
   the best fit position and extension of this source assuming a radially
-  symmetric uniform surface brightness profile.  
+  symmetric uniform disk model.  
   The two black crosses represent background 2FGL sources subtracted in (b).
   The contours (colored light blue)
   correspond to the \tev image \citep{rx_j1713_hess}.  
@@ -2617,8 +2616,8 @@ for the two point-like source hypothesis test
   position of this source. 
   The plus-shaped marker and 
   the circle (colored red) represent the best fit position and extension
-  of 2FGL\,J1837.3$-$0700c assuming a radially-symmetric uniform surface
-  brightness profile. The circular and square-shaped markers (colored
+  of 2FGL\,J1837.3$-$0700c assuming a radially-symmetric uniform disk model. 
+  The circular and square-shaped markers (colored
   blue) represent the 2FGL and the relocalized positions respectively of
   two background 2FGL sources subtracted in (b).  The star-shaped marker
   (colored green) represents a 2FGL source that was removed from the
@@ -2640,20 +2639,20 @@ for the two point-like source hypothesis test
     \fi
   % this plot came from 
   % /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/source_plots/Gamma_Cygni/v8/run.py
-  \caption{A Diffuse-emission-subtracted 
+  \caption{A diffuse-emission-subtracted 
   10 \gev to 100 \gev counts map of the
   region around 2FGL\,J2021.5+4026 smoothed by a 0\fdg1 2D Gaussian
   kernel. The triangular marker (colored red in the online version)
   represents the 2FGL position of this source.  The plus-shaped
   marker and the circle (colored red) represent the best fit position
   and extension of 2FGL\,J2021.5+4026 assuming a radially-symmetric
-  uniform surface brightness profile.  
+  uniform disk model.  
   The star-shaped marker (colored green)
   represents a 2FGL source that was removed from the background model.
   2FGL\,J2021.5+4026
   is spatially coincident with the $\gamma$-Cygni SNR.  The contours
   (colored light blue) correspond to the 408MHz image of $\gamma$-Cygni
-  observed by the Canadian Galactic Plane Survey.
+  observed by the Canadian Galactic Plane Survey \citep{canadian_galactic_plane_survey}.
   }\label{1FGL_J2020.0+4049}
 \end{figure}
 
@@ -2672,7 +2671,10 @@ for the two point-like source hypothesis test
       with two years of data.  The twelve extended sources included in
       2FGL are represented by the circular markers (colored red in the online
       version).  The nine new extended sources are represented by
-      the triangular markers (colored orange).}
+      the triangular markers (colored orange).
+      The source positions are overlaid on a 100 \mev to 100 \gev 
+      Aitoff projection sky map of the LAT data in Galactic coordinates.
+}
 \label{allsky_extended_sources}
   \end{figure}
 
@@ -2686,11 +2688,11 @@ for the two point-like source hypothesis test
       \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/compare_tev_gev_sizes/v5/run.py
     \caption{
-    A comparison of the size of extended sources detected at
+    A comparison of the sizes of extended sources detected at
     both \gev and \tev energies.  The \tev size of W30,
     2FGL\,J1837.3$-$0700c, 2FGL\,J1632.4$-$4753c, 2FGL\,J1615.0$-$5051,
     and 2FGL\,J1615.2$-$5138 are from \cite{hess_plane_survey}.
-    The \tev size of MSH\,15$-$52, HESS\,J1825$-$137,
+    The \tev sizes of MSH\,15$-$52, HESS\,J1825$-$137,
     Vela X, Vela Jr., RX\,J1713.7$-$3946 and W28 are from
     \cite{msh_15_52_hess,hess_j1825_hess,vela_x_hess,vela_jr_hess,rx_j1713_hess,w28_hess}.
     The \tev size of IC~443 is from \cite{ic443_veritas} and
@@ -2705,7 +2707,7 @@ for the two point-like source hypothesis test
     so the plotted \gev and \tev extensions were first converted to
     \rsixeight (see Section~\ref{compare_source_size}).  
     Because of
-    their large size, the shape of RX\,J1713.7$-$3946 and Vela Jr.
+    their large sizes, the shape of RX\,J1713.7$-$3946 and Vela Jr.
     were not directly fit at \tev energies and so are not included
     in this comparison. On the other hand, dedicated LAT publications on
     these sources showed that their morphologies are consistent
@@ -2725,7 +2727,7 @@ for the two point-like source hypothesis test
     \fi
     % this plot came from /u/gl/lande/work/fermi/extended_catalog/2FGL/plots_for_paper/extension_histogram/v5/extension_histogram.py
     \caption{
-    The distribution of the size of 18 extended LAT sources
+    The distributions of the size of 18 extended LAT sources
     at \gev energies
     (colored blue in the electronic version) and the size of the
     40 extended H.E.S.S. sources at \tev energies
