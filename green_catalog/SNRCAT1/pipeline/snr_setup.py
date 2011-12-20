@@ -52,7 +52,7 @@ def setup_roi(name, snrdata, catalog_dict=dict(), roi_dict=dict()):
     roi = sa.roi(
         catalogs = catalogs,
         diffuse_sources = diffuse_sources, 
-        **kwargs)
+        **roi_dict)
 
     return roi
 
