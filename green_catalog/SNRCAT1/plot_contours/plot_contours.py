@@ -69,7 +69,9 @@ if templates.has_key(name):
         contours = template['contours']
 
         for contour_type, contour in contours.items():
-            contour_loader = snr_contour_loader.factory(**contour)
+            contour_loader = snr_contour_loader.factory(
+                colors = templates['colors'][contour_type],
+                **contour)
             contour_loader.overlay(smooth.axes)
 
 P.savefig("counts_%s.png" % name)
