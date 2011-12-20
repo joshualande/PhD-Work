@@ -11,7 +11,11 @@
 import numpy as np
 #np.seterr(divide='ignore', invalid='ignore', over='ignore', under='ignore')
 
-from toolbag import *
+try:
+    from lande_toolbag import *
+except Exception, ex:
+    print 'Unable to import lande_toolbag: %s' % ex
+
 from lande_localize import *
 
 # import stuff generally useful

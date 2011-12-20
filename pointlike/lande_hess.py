@@ -2,21 +2,27 @@ from os.path import expandvars
 
 import numpy as np
 
+from SED import SED
+
 from uw.like.Models import PowerLaw
 
-from lande_sed import LandeSED
+import lande_units as units
 
-class SEDHESS(LandeSED):
+class TeVSED(object):
     """ General SED-like object
         for loading in publically
-        avaliable HESS data.
+        avaliable HESS-like SED data.
 
         This data can typically be found at:
             http://www.mpi-hd.mpg.de/hfm/HESS/pages/publications.
     """
-    def __init__(self, sed_file):
-        print 'yeah'
+    def __init__(self, sed_file, energy_units_str='MeV', flux_units_str='erg'):
         self.sed_file = sed_file
+
+        self.energy_units_str = energy_units_str
+        self.flux_units_str   = flux_units_str
+        self.energy_units     = units.fromstring(self.energy_units_str)
+        self.flux_units       = units.fromstring(self.flux_units_str)
 
         self.__load__(sed_file)
 
@@ -25,7 +31,6 @@ class SEDHESS(LandeSED):
             Note, there is no real consistency to
             these files, so just try many
             examples. """
-
 
         lines = open(expandvars(sed_file)).readlines()
 
@@ -45,10 +50,9 @@ class SEDHESS(LandeSED):
         flux_units='[/TeV/cm^2/s]'
 
         header = lines[0]
-        units = lines[1]
+        units_line = lines[1]
 
-
-        for u in units:
+        for u in units_line:
             if u not in [energy_units, flux_units]:
                 raise Exception("%s is an unrecognized unit" % u)
 
@@ -87,12 +91,17 @@ class SEDHESS(LandeSED):
             #  * http://www.mpi-hd.mpg.de/hfm/HESS/pages/publications/auxiliary/AA435_L17.html
             self.lower_energy, self.upper_energy, self.dnde, self.dnde_err = data
 
+        elif header == ['Mean','energy','Flux','Flux','Error','(','-','/','+',')']:
+            # This is like the SED for the Kookaburra
+            #  * http://www.mpi-hd.mpg.de/hfm/HESS/pages/publications/auxiliary/kookaburra_auxinfo.html
+            raise Exception("not implemented")
+
         if self.energy is None:
             self.energy = np.sqrt(self.lower_energy*self.upper_energy)
         if self.lower_energy is None or self.upper_energy is None:
-            # if only energy is given, assume uniform (in log space) energy binning
-            self.lower_energy = XXX
-            self.upper_energy = XXX
+            # if only energy is given, assume no range in energy
+            self.lower_energy = self.energy
+            self.upper_energy = self.energy
 
         self.significant = np.ones_like(self.energy,dtype=bool)
 
@@ -134,3 +143,43 @@ class SEDHESS(LandeSED):
 
             for v in values:
                 self.__dict__[v] = units.tosympy(self.__dict__[v], u)
+
+        # all hess points are significant (as far as I can tell)
+        self.significant = np.ones(len(self.energy),dtype=bool)
+        print 'en',self.energy
+        print 'sig',self.significant 
+
+    def plot(self, filename=None,
+             axes=None, 
+             fignum=None, figsize=(4,4),
+             data_kwargs=dict(),
+             spectral_kwargs=dict(color='red')):
+        """ Plot the SED using matpotlib. """
+
+        if axes is None:
+            fig = P.figure(fignum,figsize)
+            axes = fig.add_axes((0.22,0.15,0.75,0.8))
+            self.set_xlim(axes,
+                          float(self.lower_energy[0]/self.energy_units),
+                          float(self.upper_energy[-1]/self.energy_units))
+        self.axes = axes
+
+        ce = lambda x: units.tonumpy(x, self.energy_units)
+        cf = lambda y: units.tonumpy(
+            y.multiply_elementwise(self.energy).multiply_elementwise(self.energy),
+            self.flux_units/units.cm**2/units.s)
+
+        SED._plot_points(
+            x=ce(self.energy), 
+            xlo=ce(self.lower_energy), 
+            xhi=ce(self.upper_energy), 
+            y=cf(self.dnde),
+            y_err=cf(self.dnde_err),
+            y_ul=cf(self.dnde_ul),
+            significant=self.significant,
+            energy_units=self.energy_units_str,
+            flux_units=self.flux_units_str,
+            axes=axes, **data_kwargs)
+
+        if filename is not None: P.savefig(filename)
+        return axes

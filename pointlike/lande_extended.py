@@ -8,7 +8,6 @@ from uw.like.roi_plotting import DegreesFormatter
 from uw.like.roi_state import PointlikeState
 from uw.utilities import keyword_options
 
-from toolbag import tolist
 import pylab as P
 
 
@@ -122,6 +121,7 @@ class ExtensionProfile(object):
         d=dict(sigma=self.extension_list,
                TS_spectral=self.TS_spectral,
                TS_bandfits=self.TS_bandfits)
+        from lande_toolbag import tolist
         return tolist(d)
 
     def save(self, filename):

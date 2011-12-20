@@ -23,9 +23,7 @@
     # spectral fit with pyLikelihood
     like.fit()
 
-
-    Author: Joshua Lande
-    
+    Author: Joshua Lande <joshualande@gmail.com>
 """
 import os
 from os.path import join

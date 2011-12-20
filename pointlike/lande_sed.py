@@ -61,12 +61,17 @@ class LandeSED(SED):
 
         try:
             super(LandeSED,self)._calculate(*args,**kwargs)
+            self.crashed = False
         except Exception, ex:
             print 'ERROR computing SED:', ex
             for v in ['dnde', 'dnde_err', 'dnde_ul',
                       'flux', 'flux_err', 'flux_ul',
                       'eflux','eflux_err', 'eflux_ul']:
                 self.__dict__[v] *= np.nan
+
+            self.crashed = True
+            self.significant = np.zeros_like((len(self.energy)),dtype=bool)
+
 
         for values, u in [
             [['lower_energy', 'upper_energy', 'energy'], units.MeV],
@@ -79,6 +84,9 @@ class LandeSED(SED):
 
     def todict(self):
         """ Return a dictionary of the SED points with the desired units. """
+
+        if self.crashed: return dict()
+
         c_energy=lambda x: units.tonumpy(x,self.energy_units).tolist()
         c_dnde=lambda x: units.tonumpy(x,units.ph/units.cm**2/units.s/self.flux_units).tolist()
         c_flux=lambda x: units.tonumpy(x,units.ph/units.cm**2/units.s).tolist()
@@ -142,6 +150,8 @@ class LandeSED(SED):
 
         self.spectrum = LandeSED.dict_to_spectrum(d['Spectrum'])
 
+        self.crashed = False
+
     def __str__(self):
         results = self.todict()
         return yaml.dump(results)
@@ -185,29 +195,31 @@ class LandeSED(SED):
                           float(self.upper_energy[-1]/self.energy_units))
         self.axes = axes
 
-        ce = lambda x: units.tonumpy(x, self.energy_units)
-        cf = lambda y: units.tonumpy(
-            y.multiply_elementwise(self.energy).multiply_elementwise(self.energy),
-            self.flux_units/units.cm**2/units.s)
+        if not self.crashed:
 
-        SED._plot_points(
-            x=ce(self.energy), 
-            xlo=ce(self.lower_energy), 
-            xhi=ce(self.upper_energy), 
-            y=cf(self.dnde),
-            y_err=cf(self.dnde_err),
-            y_ul=cf(self.dnde_ul),
-            significant=self.significant,
-            energy_units=self.energy_units_str,
-            flux_units=self.flux_units_str,
-            axes=axes, **data_kwargs)
+            ce = lambda x: units.tonumpy(x, self.energy_units)
+            cf = lambda y: units.tonumpy(
+                y.multiply_elementwise(self.energy).multiply_elementwise(self.energy),
+                self.flux_units/units.cm**2/units.s)
 
-        if plot_spectral_fit:
-            # kind of ugly, but spectrum is ph/cm^2/s/MeV
-            # and it gets mutlplied by energy_units**2,
-            # so we need to multiple overall spectrum by
-            # flux_units*MeV/energy_units**2
-            self.plot_spectrum(self.spectrum, **spectral_kwargs)
+            SED._plot_points(
+                x=ce(self.energy), 
+                xlo=ce(self.lower_energy), 
+                xhi=ce(self.upper_energy), 
+                y=cf(self.dnde),
+                y_err=cf(self.dnde_err),
+                y_ul=cf(self.dnde_ul),
+                significant=self.significant,
+                energy_units=self.energy_units_str,
+                flux_units=self.flux_units_str,
+                axes=axes, **data_kwargs)
+
+            if plot_spectral_fit:
+                # kind of ugly, but spectrum is ph/cm^2/s/MeV
+                # and it gets mutlplied by energy_units**2,
+                # so we need to multiple overall spectrum by
+                # flux_units*MeV/energy_units**2
+                self.plot_spectrum(self.spectrum, **spectral_kwargs)
 
         if filename is not None: P.savefig(filename)
         return axes

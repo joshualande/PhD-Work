@@ -14,7 +14,7 @@ from uw.like.roi_extended import ExtendedSource
 from uw.like.Models import Model,PowerLaw,ExpCutoff,DefaultModelValues
 from uw.like.roi_state import PointlikeState
 
-from toolbag import tolist
+from lande_toolbag import tolist
 from SED import SED
 from LikelihoodState import LikelihoodState
 
