@@ -32,7 +32,10 @@ superfile=args.superfile
 results=dict(name=name)
 
 # *) Build the ROI
-roi=setup_roi(name,superfile, fit_emin=args.emin, fit_emax=args.emax)
+roi=setup_roi(name,superfile, 
+              roi_dict=dict(fit_emin=args.emin, fit_emax=args.emax),
+              catalog_dict=dict(free_radius=2, max_free=10),
+             )
 
 # get the SNR as an extended source object.
 
@@ -51,7 +54,7 @@ for source in roi.get_sources():
         free=np.asarray([True]+[False]*(len(source.model._p)-1))
         roi.modify(which=source,free=free)
 
-kwargs = dict(name=name, emin=args.emin, emax=args.emax, snrsize=snrsize)
+fit_kwargs = dict(name=name, emin=args.emin, emax=args.emax, snrsize=snrsize)
 plot_kwargs = dict(name=name, snrsize = snrsize, deleted_sources = deleted_sources, superfile=superfile)
 
 def save():
@@ -63,9 +66,9 @@ print '\n\nAnalyze SNR with radio template\n\n'
 roi.add_source(snr_radio_template)
 
 results['radio'] = {}
-results['radio']['pointlike']=pointlike_analysis(roi, hypothesis='radio', **kwargs)
+results['radio']['pointlike']=pointlike_analysis(roi, hypothesis='radio', **fit_kwargs)
 save()
-if do_gtlike: results['radio']['gtlike']=gtlike_analysis(roi, hypothesis='radio', upper_limit=True, **kwargs)
+if do_gtlike: results['radio']['gtlike']=gtlike_analysis(roi, hypothesis='radio', upper_limit=True, **fit_kwargs)
 save()
 if do_plots: plots(roi, hypothesis='radio', **plot_kwargs)
 
@@ -76,9 +79,10 @@ roi.del_source(which=name)
 roi.add_source(get_snr(name, superfile, point_like=True))
 
 results['point'] = {}
-results['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, **kwargs)
+results['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', 
+                                                 localize=True, **fit_kwargs)
 save()
-if do_gtlike: results['point']['gtlike']=gtlike_analysis(roi, hypothesis='point', **kwargs)
+if do_gtlike: results['point']['gtlike']=gtlike_analysis(roi, hypothesis='point', **fit_kwargs)
 save()
 if do_plots: plots(roi, hypothesis='point', **plot_kwargs)
 
@@ -88,9 +92,10 @@ roi.del_source(which=name)
 roi.add_source(get_snr(name, superfile))
 
 results['extended'] = {}
-results['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', fit_extension=True, **kwargs)
+results['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', 
+                                                    fit_extension=True, **fit_kwargs)
 save()
-if do_gtlike: results['extended']['gtlike']=gtlike_analysis(roi, hypothesis='extended', **kwargs)
+if do_gtlike: results['extended']['gtlike']=gtlike_analysis(roi, hypothesis='extended', **fit_kwargs)
 save()
 if do_plots: plots(roi, hypothesis='extended', **plot_kwargs)
 

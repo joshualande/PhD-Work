@@ -19,7 +19,7 @@ def setup_snr(name, snrdata, pointlike, **kwargs):
     roi.add_source(get_snr(name, snrdata, pointlike))
     return roi
 
-def setup_roi(name, snrdata, free_radius=2, fit_emin=1e4, fit_emax=1e5):
+def setup_roi(name, snrdata, catalog_dict=dict(), roi_dict=dict()):
 
     snr=yaml.load(open(snrdata))[name]
     skydir=SkyDir(*snr['cel'])
@@ -47,14 +47,12 @@ def setup_roi(name, snrdata, free_radius=2, fit_emin=1e4, fit_emax=1e5):
 
     catalogs = Catalog2FGL('$FERMILANDE/catalogs/gll_psc_v05.fit',
                            latextdir='$FERMILANDE/extended_archives/gll_psc_v05_templates/',
-                           free_radius=free_radius)
+                           **catalog_dict)
 
     roi = sa.roi(
         catalogs = catalogs,
-        diffuse_sources = diffuse_sources,
-        fit_emin = fit_emin, 
-        fit_emax = fit_emax
-        )
+        diffuse_sources = diffuse_sources, 
+        **kwargs)
 
     return roi
 
