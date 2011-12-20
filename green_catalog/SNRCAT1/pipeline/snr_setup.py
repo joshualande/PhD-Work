@@ -12,11 +12,11 @@ from uw.like.SpatialModels import Disk
 from argparse import ArgumentParser
 from skymaps import SkyDir
 
-def setup_snr(name, snrdata, **kwargs):
+def setup_snr(name, snrdata, pointlike, **kwargs):
     """ Creates the ROI + adds in the SNR. """
     roi=setup_roi(name, snrdata, **kwargs)
 
-    roi.add_source(get_snr(name, snrdata))
+    roi.add_source(get_snr(name, snrdata, pointlike))
     return roi
 
 def setup_roi(name, snrdata, free_radius=2, fit_emin=1e4, fit_emax=1e5):

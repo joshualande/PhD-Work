@@ -18,7 +18,13 @@ parser.add_argument("--snrdata", required=True)
 parser.add_argument("--name", required=True)
 parser.add_argument("--emin", type=float, default=1e4)
 parser.add_argument("--emax", type=float, default=1e5)
+parser.add_argument("--no-plots", action='store_true', default=False)
+parser.add_argument("--no-gtlike", action='store_true', default=False)
 args=parser.parse_args()
+
+do_plots = not args.no_plots
+do_gtlike = not args.no_gtlike
+
 
 name=args.name
 snrdata=args.snrdata
@@ -54,8 +60,8 @@ roi.add_source(snr_radio_template)
 
 results['radio'] = {}
 results['radio']['pointlike']=pointlike_analysis(roi, hypothesis='radio', **kwargs)
-plots(roi, hypothesis='radio', **plot_kwargs)
-results['radio']['gtlike']=gtlike_analysis(roi, hypothesis='radio', upper_limit=True, **kwargs)
+if do_plots: plots(roi, hypothesis='radio', **plot_kwargs)
+if do_gtlike: results['radio']['gtlike']=gtlike_analysis(roi, hypothesis='radio', upper_limit=True, **kwargs)
 
 print '\n\nAnalyze SNR as point-like source\n\n'
 
@@ -65,8 +71,8 @@ roi.add_source(get_snr(name, snrdata, point_like=True))
 
 results['point'] = {}
 results['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, **kwargs)
-plots(roi, hypothesis='point', **plot_kwargs)
-results['point']['gtlike']=gtlike_analysis(roi, hypothesis='point', **kwargs)
+if do_plots: plots(roi, hypothesis='point', **plot_kwargs)
+if do_gtlike: results['point']['gtlike']=gtlike_analysis(roi, hypothesis='point', **kwargs)
 
 print '\n\nAnalyze SNR as extended source\n\n'
 
@@ -75,14 +81,17 @@ roi.add_source(get_snr(name, snrdata))
 
 results['extended'] = {}
 results['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', fit_extension=True, **kwargs)
-plots(roi, hypothesis='extended', **plot_kwargs)
-results['extended']['gtlike']=gtlike_analysis(roi, hypothesis='extended', **kwargs)
+if do_plots: plots(roi, hypothesis='extended', **plot_kwargs)
+if do_gtlike: results['extended']['gtlike']=gtlike_analysis(roi, hypothesis='extended', **kwargs)
 
 
 for which in ['pointlike','gtlike']:
-    results['extended'][which]['ts_ext'] = \
-            2*(results['extended'][which]['logLikelihood'] - \
-               results['point'][which]['logLikelihood'])
+    try:
+        results['extended'][which]['ts_ext'] = \
+                2*(results['extended'][which]['logLikelihood'] - \
+                   results['point'][which]['logLikelihood'])
+    except:
+        pass
 
 f=open('results_%s.yaml' % name,'w')
 yaml.dump(tolist(results),f)
