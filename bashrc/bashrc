@@ -72,23 +72,27 @@ function headscons {
     # stock version of science tools with head version of pointlike on top of it.
     stockscons 
 
-    export INST_DIR=/u/gl/lande/head/ScienceTools-scons
+    export head=/u/gl/lande/head/
     # point at the most up to teh cvs version of all the pointlike code
-    export PYTHONPATH=${INST_DIR}/pointlike/python:$PYTHONPATH
 
-    # for the time being, use my version of pyLikelihood
-    export PYTHONPATH=${INST_DIR}/pyLikelihood/python:$PYTHONPATH
+    # To get the code:
+    #   cvs co -d uw ScienceTools-scons/pointlike/python/uw
+    export PYTHONPATH=$head:$PYTHONPATH
+
+    # Temporarily, get pyLikelihood 
+    #   cvs co -d pyLikelihood ScienceTools-scons/pyLikelihood/python
+    export PYTHONPATH=/u/gl/lande/head/pyLikelihood/:$PYTHONPATH
+
+
 
     export PATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PATH
     export PYTHONPATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PYTHONPATH
 
     export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
-    #export PYTHONPATH=/u/gl/lande/lib/python2.6/site-packages:$PYTHONPATH
 
     export PATH=~/bin:$PATH # get my ipython
 
-    export python=$INST_DIR/pointlike/python/uw/like
-    export lande=~/svn/lande/trunk/pointlike/
+    export python=$head/uw/like
 
     export setup=`echo $setup | sed 's/stockscons/headscons/g'`
 }
@@ -172,10 +176,11 @@ function alias_better {
     export u31="/nfs/farm/g/glast/u31/lande" # Josh's u31 home
     export afs=/afs/slac/g/glast/users/lande
     export markus=/u/gl/markusa/disk/glast_data/gammas/
-    export ki03="/nfs/slac/g/ki/ki03/lande"
     export sass="/afs/slac/www/slac/sass"
 
+    export ki03="/nfs/slac/g/ki/ki03/lande"
     export FERMI=$ki03/fermi/data
+    export FERMILANDE=$FERMI # in case I have to share with others
     export CATALOG=$ki03/fermi_data/catalog_mirror/catalog_jan_31_2011/
 
     alias svnvimdiff='svn diff --diff-cmd ~/bin/svnvimdiff'
@@ -300,3 +305,10 @@ function setup_sed {
 setup_sed
 
 
+
+function setup_snrcat1 {
+    export fits=/afs/slac/g/glast/groups/pulsar/snrcat1/fits
+    export superfile=~/svn/snrcat1/superfile
+    export PYTHONPATH=~/svn/snrcat1/code:$PYTHONPATH
+}
+setup_snrcat1
