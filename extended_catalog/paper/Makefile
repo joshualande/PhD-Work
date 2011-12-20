@@ -1,9 +1,9 @@
-base = extended_catalog
-extended_catalog:
-#	pdflatex extended_catalog
-#	bibtex extended_catalog
-#	pdflatex extended_catalog
-#	pdflatex extended_catalog
+base = extended_search
+extended_search:
+#	pdflatex extended_search
+#	bibtex extended_search
+#	pdflatex extended_search
+#	pdflatex extended_search
 	latex $(base)
 	bibtex $(base) 
 	latex  $(base)
