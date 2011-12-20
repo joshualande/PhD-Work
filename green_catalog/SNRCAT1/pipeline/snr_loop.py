@@ -4,7 +4,7 @@ doing analysis. Example:
 
 python snr_loop.py -c lande_pipeline.py \
         --snrdata $superfile/snrdata.yaml \
-        -o /nfs/slac/g/ki/ki03/lande/green_catalog/test/v1
+        -o $FERMILANDE/green_catalog/test/v1
 """
 import yaml
 from os.path import expandvars as e
@@ -28,6 +28,8 @@ if os.path.exists(outdir):
 os.makedirs(outdir)
 
 for name in sources.keys():
+    if name == 'notes': continue
+
     print name
 
     folder=join(outdir,name)

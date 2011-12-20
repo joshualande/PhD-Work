@@ -4,27 +4,29 @@ from argparse import ArgumentParser
 import yaml
 import numpy as np
 
-from toolbag import tolist
+from lande_toolbag import tolist
 
-from snr_helper import pointlike_analysis, gtlike_analysis
+from snr_setup import get_snr, setup_roi
+from snr_helper import pointlike_analysis, gtlike_analysis, plots
+
+from likelihood_tools import force_gradient
+
+force_gradient(use_gradient=False)
 
 parser = ArgumentParser()
 parser.add_argument("--snrdata", required=True)
 parser.add_argument("--name", required=True)
 parser.add_argument("--emin", type=float, default=1e4)
 parser.add_argument("--emax", type=float, default=1e5)
-
 args=parser.parse_args()
 
 name=args.name
 snrdata=args.snrdata
-emin=args.emin
-emax=args.emax
 
 results=dict(name=name)
 
 # *) Build the ROI
-roi=setup_roi(name,snrdata, fit_emin=emin, fit_emax=emax)
+roi=setup_roi(name,snrdata, fit_emin=args.emin, fit_emax=args.emax)
 
 # get the SNR as an extended source object.
 
@@ -43,14 +45,17 @@ for source in roi.get_sources():
         free=np.asarray([True]+[False]*(len(source.model._p)-1))
         roi.modify(which=source,free=free)
 
+kwargs = dict(name=name, emin=args.emin, emax=args.emax, snrsize=snrsize)
+plot_kwargs = dict(name=name, snrsize = snrsize, deleted_sources = deleted_sources)
 
 print '\n\nAnalyze SNR with radio template\n\n'
 
 roi.add_source(snr_radio_template)
 
 results['radio'] = {}
-results['radio']['pointlike']=pointlike_analysis(roi,'radio')
-results['radio']['gtlike']=gtlike_analysis(roi,upper_limit=True)
+results['radio']['pointlike']=pointlike_analysis(roi, hypothesis='radio', **kwargs)
+plots(roi, hypothesis='radio', **plot_kwargs)
+results['radio']['gtlike']=gtlike_analysis(roi, hypothesis='radio', upper_limit=True, **kwargs)
 
 print '\n\nAnalyze SNR as point-like source\n\n'
 
@@ -59,8 +64,9 @@ roi.del_source(which=name)
 roi.add_source(get_snr(name, snrdata, point_like=True))
 
 results['point'] = {}
-results['point']['pointlike']=pointlike_analysis(roi,'point', localize=True)
-results['point']['gtlike']=gtlike_analysis(roi)
+results['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, **kwargs)
+plots(roi, hypothesis='point', **plot_kwargs)
+results['point']['gtlike']=gtlike_analysis(roi, hypothesis='point', **kwargs)
 
 print '\n\nAnalyze SNR as extended source\n\n'
 
@@ -68,8 +74,9 @@ roi.del_source(which=name)
 roi.add_source(get_snr(name, snrdata))
 
 results['extended'] = {}
-results['extended']['pointlike']=pointlike_analysis(roi, 'extended', fit_extension=True)
-results['extended']['gtlike']=gtlike_analysis(roi)
+results['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', fit_extension=True, **kwargs)
+plots(roi, hypothesis='extended', **plot_kwargs)
+results['extended']['gtlike']=gtlike_analysis(roi, hypothesis='extended', **kwargs)
 
 
 for which in ['pointlike','gtlike']:

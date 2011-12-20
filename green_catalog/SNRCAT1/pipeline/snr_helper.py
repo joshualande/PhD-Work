@@ -9,7 +9,7 @@ from snr_setup import get_snr
 from uw.like.roi_plotting import ROISmoothedSource
 from uw.like.roi_extended import ExtendedSource
 
-from toolbag import sourcedict,powerlaw_upper_limit
+from likelihood_tools import sourcedict,powerlaw_upper_limit
 
 import pylab as P
 import pyfits
@@ -18,7 +18,7 @@ import yaml
 import os
 
 
-def overlay_on_plot(axes,header, roi):
+def overlay_on_plot(name, axes, header, roi, deleted_sources):
     """ Overlay:
         * Deleted 2FGL sources
         * the SNR + best fit extension. 
@@ -38,24 +38,13 @@ def overlay_on_plot(axes,header, roi):
         ROISmoothedSource.overlay_extension(source, axes, header, extension_color='blue',
                                             extension_zorder=10)
 
-    # overlay the green catalog SNR in red
-    ROISmoothedSource.overlay_extension(get_snr(name,snrdata), axes, header, extension_color='red',
-                                       extension_zorder=10)
 
-    temp=yaml.load(open(snrdata))[name]
-    if temp.has_key('contour'):
-        contour = temp['contour']
-        p = pyfits.open(os.path.expandvars(contour['file']))
-        hdu = p[contour['hdu']]
-        levels = eval(contour['levels'])
-        axes[hdu.header].contour(hdu.data, levels, colors='lightblue')
-
-def plots(hypothesis):
+def plots(roi, name, hypothesis, snrsize, deleted_sources):
     """ make a smoothed counts map + tsmap. 
 
-    here, plot again the region before + after background subtraction
+        here, plot again the region before + after background subtraction
 
-    Here, plot 'radio' size + extended source best fit spatial model
+        Here, plot 'radio' size + extended source best fit spatial model
     """
     
     plot_size = max(snrsize*4, 3)
@@ -67,24 +56,24 @@ def plots(hypothesis):
                             kernel_rad=kernel_rad, 
                             colorbar_radius = max(snrsize, 1),
                             title=r'%s %s ($\sigma_\mathrm{smooth}=%g^\circ$)' % (title_base,name,kernel_rad))
-            overlay_on_plot(smooth.axes, smooth.header, roi)
+            overlay_on_plot(name, smooth.axes, smooth.header, roi, deleted_sources)
             P.savefig('%s_%s_kernel_%g_%s.png' % (filename_base,hypothesis,kernel_rad,name))
 
 
     # Residual TS Map
     tsmap=roi.plot_tsmap(size = plot_size, pixelsize = 1./8, title='Residual TS Map %s' % name)
-    overlay_on_plot(tsmap.axes, tsmap.header, roi)
+    overlay_on_plot(name, tsmap.axes, tsmap.header, roi, deleted_sources)
     P.savefig('tsmap_residual_%s_%s.png' % (hypothesis,name))
 
     # Source TS Map
     roi.zero_source(name)
     tsmap=roi.plot_tsmap(size = plot_size, pixelsize = 1./8, title='Source TS Map %s' % name)
-    overlay_on_plot(tsmap.axes, tsmap.header, roi)
+    overlay_on_plot(name, tsmap.axes, tsmap.header, roi, deleted_sources)
     roi.unzero_source(name)
     P.savefig('tsmap_source_%s_%s.png' % (hypothesis,name))
 
 
-def gtlike_analysis(roi, upper_limit=False):
+def gtlike_analysis(roi, name, emin, emax, hypothesis, snrsize, upper_limit=False):
     """ perform spectral fit with gtlike to crosscheck the point-like anlaysis. """
 
     print '\n\nPerforming Gtlike analysis\n\n'
@@ -106,14 +95,15 @@ def gtlike_analysis(roi, upper_limit=False):
 
     return results
 
-def pointlike_analysis(roi, hypothesis, localize=False, fit_extension=False, upper_limit=False):
+def pointlike_analysis(roi, name, emin, emax, hypothesis, snrsize, 
+                       localize=False, fit_extension=False, upper_limit=False):
 
     print '\n\nPerforming Pointlike analysis for %s hypothesis\n\n' % hypothesis
 
     def fit():
         """ Convenience function incase fit fails. """
         try:
-            roi.fit(use_gradient=True)
+            roi.fit()
         except Exception, ex:
             print 'ERROR spectral fitting: ', ex
 
@@ -127,8 +117,8 @@ def pointlike_analysis(roi, hypothesis, localize=False, fit_extension=False, upp
         # likely fail to converge.
         try:
             print 'First, localize with GridLocalize (helps with convergence)'
-            size=size=max(snrsize,0.5)
-            grid=GridLocalize(roi,which=name,size,pixelsize=size/10)
+            size=max(snrsize,0.5)
+            grid=GridLocalize(roi,which=name,size=size,pixelsize=size/10)
             skydir = grid.best_position()
             print 'Using Grid Localize, best position is (l,b)=(%.3f,%.3f)' % (skydir.l(),skydir.b())
 
@@ -158,8 +148,5 @@ def pointlike_analysis(roi, hypothesis, localize=False, fit_extension=False, upp
         results['upper_limit'] = powerlaw_upper_limit(roi,name, verbosity=2)
 
     roi.save('roi_%s.dat' % hypothesis)
-
-    print 'Making Plots for %s hypothesis' % hypothesis
-    plots(hypothesis)
 
     return results

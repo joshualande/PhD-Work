@@ -27,9 +27,9 @@ def setup_roi(name, snrdata, free_radius=2, fit_emin=1e4, fit_emax=1e5):
 
     ds=DataSpecification(
         ft1files='$FERMILANDE/data/PWNCAT2/nov_30_2011/ft1_PWNCAT2_allsky.fits',
-        binfile='$FERMILANDE/data/PWNCAT2/nov_30_2011/ft2_PWNCAT2_allsky.fits',
-        ft2files='$FERMILANDE/data/PWNCAT2/nov_30_2011/ltcube_PWNCAT2_allsky.fits',
-        ltcube='$FERMILANDE/data/PWNCAT2/nov_30_2011/binned_%s.fits')
+        ft2files='$FERMILANDE/data/PWNCAT2/nov_30_2011/ft2_PWNCAT2_allsky.fits',
+        ltcube='$FERMILANDE/data/PWNCAT2/nov_30_2011/ltcube_PWNCAT2_allsky.fits',
+        binfile='$FERMILANDE/data/PWNCAT2/nov_30_2011/binned_%s.fits' % 4)
 
     sa=SpectralAnalysis(ds,
             binsperdec = 4,
