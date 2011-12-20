@@ -3,7 +3,7 @@ A script to loop over the snr when
 doing analysis. Example:
 
 python snr_loop.py -c lande_pipeline.py \
-        --snrdata $superfile/snrdata.yaml \
+        --superfile $superfile/snrdata.yaml \
         -o $FERMILANDE/green_catalog/test/v1
 """
 import yaml
@@ -14,14 +14,14 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument("-c", "--command", required=True)
-parser.add_argument("--snrdata", required=True)
+parser.add_argument("--superfile", required=True)
 parser.add_argument("-o", "--outdir", required=True)
 args,remaining_args = parser.parse_known_args()
 
   
 outdir=args.outdir
 
-sources=yaml.load(open(args.snrdata))
+sources=yaml.load(open(args.superfile))
 
 if os.path.exists(outdir):
     raise Exception("outdir %s already exists" % outdir)
@@ -41,8 +41,8 @@ for name in sources.keys():
     temp.write("""\
 python %s/%s \\
 --name %s \\
---snrdata %s %s""" % (os.getcwd(),args.command,name,
-                     args.snrdata,' '.join(remaining_args)))
+--superfile %s %s""" % (os.getcwd(),args.command,name,
+                     args.superfile,' '.join(remaining_args)))
 
 
 submit_all=join(outdir,'submit_all.py')

@@ -18,7 +18,7 @@ import yaml
 import os
 
 
-def overlay_on_plot(name, axes, header, roi, deleted_sources):
+def overlay_on_plot(name, axes, header, roi, deleted_sources, superfile):
     """ Overlay:
         * Deleted 2FGL sources
         * the SNR + best fit extension. 
@@ -39,13 +39,18 @@ def overlay_on_plot(name, axes, header, roi, deleted_sources):
                                             extension_zorder=10)
 
 
-def plots(roi, name, hypothesis, snrsize, deleted_sources):
+    # overlay the green catalog SNR in red
+    ROISmoothedSource.overlay_extension(get_snr(name,superfile), axes, header, extension_color='red',
+                                       extension_zorder=10)
+
+def plots(roi, name, hypothesis, snrsize, deleted_sources, superfile):
     """ make a smoothed counts map + tsmap. 
 
         here, plot again the region before + after background subtraction
 
         Here, plot 'radio' size + extended source best fit spatial model
     """
+    if not os.path.exists('plots'): os.makedirs('plots')
     
     plot_size = max(snrsize*4, 3)
     
@@ -56,21 +61,21 @@ def plots(roi, name, hypothesis, snrsize, deleted_sources):
                             kernel_rad=kernel_rad, 
                             colorbar_radius = max(snrsize, 1),
                             title=r'%s %s ($\sigma_\mathrm{smooth}=%g^\circ$)' % (title_base,name,kernel_rad))
-            overlay_on_plot(name, smooth.axes, smooth.header, roi, deleted_sources)
-            P.savefig('%s_%s_kernel_%g_%s.png' % (filename_base,hypothesis,kernel_rad,name))
+            overlay_on_plot(name, smooth.axes, smooth.header, roi, deleted_sources, superfile)
+            P.savefig('plots/%s_%s_kernel_%g_%s.png' % (filename_base,hypothesis,kernel_rad,name))
 
 
     # Residual TS Map
     tsmap=roi.plot_tsmap(size = plot_size, pixelsize = 1./8, title='Residual TS Map %s' % name)
-    overlay_on_plot(name, tsmap.axes, tsmap.header, roi, deleted_sources)
-    P.savefig('tsmap_residual_%s_%s.png' % (hypothesis,name))
+    overlay_on_plot(name, tsmap.axes, tsmap.header, roi, deleted_sources, superfile)
+    P.savefig('plots/tsmap_residual_%s_%s.png' % (hypothesis,name))
 
     # Source TS Map
     roi.zero_source(name)
     tsmap=roi.plot_tsmap(size = plot_size, pixelsize = 1./8, title='Source TS Map %s' % name)
-    overlay_on_plot(name, tsmap.axes, tsmap.header, roi, deleted_sources)
+    overlay_on_plot(name, tsmap.axes, tsmap.header, roi, deleted_sources, superfile)
     roi.unzero_source(name)
-    P.savefig('tsmap_source_%s_%s.png' % (hypothesis,name))
+    P.savefig('plots/tsmap_source_%s_%s.png' % (hypothesis,name))
 
 
 def gtlike_analysis(roi, name, emin, emax, hypothesis, snrsize, upper_limit=False):
@@ -91,7 +96,7 @@ def gtlike_analysis(roi, name, emin, emax, hypothesis, snrsize, upper_limit=Fals
         # of Gaussian regime. The likelihood function will be VERY linear. As a result,
         # delta_log_like_limits = 50 should be much more reasonable (not quite sure
         # how to quantify this right now...)
-        results['upper_limit'] = powerlaw_upper_limit(like,name, delta_log_like_limits=50, verbosity=2)
+        results['upper_limit'] = powerlaw_upper_limit(like,name, delta_log_like_limits=50, verbosity=2, emin=emin, emax=emax)
 
     return results
 
@@ -109,7 +114,6 @@ def pointlike_analysis(roi, name, emin, emax, hypothesis, snrsize,
 
     print 'Initial Spectral Model for %s hypothesis:' % hypothesis
     roi.print_summary(galactic=True)
-
 
     if localize:
         # Note, no preliminary spectral fit of point-like
@@ -130,9 +134,7 @@ def pointlike_analysis(roi, name, emin, emax, hypothesis, snrsize,
 
     if fit_extension:
         fit()
-
         roi.fit_extension(which=name)
-        ts_ext = roi.TS_ext(which=name) # can comapre to acutal point-like hypothesis
 
     fit()
 
@@ -141,11 +143,8 @@ def pointlike_analysis(roi, name, emin, emax, hypothesis, snrsize,
 
     results=sourcedict(roi,name,emin=emin,emax=emax)
 
-    if fit_extension: 
-        results['ts_ext_function'] = ts_ext
-
     if upper_limit:
-        results['upper_limit'] = powerlaw_upper_limit(roi,name, verbosity=2)
+        results['upper_limit'] = powerlaw_upper_limit(roi,name, emin=emin, emax=emax, verbosity=2)
 
     roi.save('roi_%s.dat' % hypothesis)
 
