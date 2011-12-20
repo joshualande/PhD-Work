@@ -2,9 +2,9 @@
 A script to loop over the snr when
 doing analysis. Example:
 
-python loop_snr.py -c analyze_v1.py \
+python snr_loop.py -c lande_pipeline.py \
         --snrdata $superfile/snrdata.yaml \
-        -o /nfs/slac/g/ki/ki03/lande/green_catalog/2FGL/v2/analyze_v1/fits
+        -o /nfs/slac/g/ki/ki03/lande/green_catalog/test/v1
 """
 import yaml
 from os.path import expandvars as e
