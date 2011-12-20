@@ -5,7 +5,7 @@ from roi_gtlike import Gtlike
 
 
 from lande_localize import GridLocalize
-from setup_snr import setup_roi, get_snr
+from snr_setup import setup_roi, get_snr
 from uw.like.roi_plotting import ROISmoothedSource
 from uw.like.Models import PowerLaw
 from uw.like.roi_extended import ExtendedSource
