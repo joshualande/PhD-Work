@@ -54,7 +54,7 @@ catalogs = Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit',
 roi = sa.roi(
     catalogs = catalogs,
     diffuse_sources = diffuse_sources,
-    fit_emin = 1e3,
+    fit_emin = 1e4,
     fit_emax = 1e5)
 
 print 'making plot'
