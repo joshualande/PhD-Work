@@ -1,27 +1,28 @@
+""" Examples of modifying an ROI (Nov, 4, 2011 - Joshua Lande):
+    Modify Position:
+    >> roi.modify(which='PSRNAME', skydir=SkyDir(...))
+    
+    Modify Spectrum
+    >> from uw.like.Models import PowerLaw
+    >> roi.modify(which='PSRNAME', model=PowerLaw(norm=1e-11, index=2), keep_old_flux=True)
+      
+    Freeze ALL spectral parameters:
+    >> roi.modify(which='PSRNAME', free=False)
+    
+    Freeze only one spectral parameter
+    >> roi.freeze(which='PSRNAME', free=[True, False]) 
+    (but, you have to know how many parameters there are in the model)!
+    
+    Modify the extension
+    >> roi.modify(which='PSRNAME', spatial_model=Disk(sigma=0.2, l=347, b=0.1), keep_old_center=False)
+    >> roi.modify(which='PSRNAME', sigma=0.2)
+"""
 
 def modify_roi(name,roi):
     """ For each modification, add some justifcaiton for why
         this needs to be done + where you did the analysis
         which convinced you we need to do this to the region. """
 
-    # Examples of modifying an ROI (Nov, 4, 2011 - Joshua Lande):
-    #   Modify Position:
-    #   >> roi.modify(which='PSRNAME', skydir=SkyDir(...))
-    # 
-    #   Modify Spectrum
-    #   >> from uw.like.Models import PowerLaw
-    #   >> roi.modify(which='PSRNAME', model=PowerLaw(norm=1e-11, index=2), keep_old_flux=True)
-    #   
-    #  Freeze ALL spectral parameters:
-    #  >> roi.modify(which='PSRNAME', free=False)
-    # 
-    #  Freeze only one spectral parameter
-    #  >> roi.freeze(which='PSRNAME', free=[True, False]) 
-    #  (but, you have to know how many parameters there are in the model)!
-    # 
-    #  Modify the extension
-    #  >> roi.modify(which='PSRNAME', spatial_model=Disk(sigma=0.2, l=347, b=0.1), keep_old_center=False)
-    #  >> roi.modify(which='PSRNAME', sigma=0.2)
 
     print 'Modifying source %s' % name
 
@@ -77,6 +78,10 @@ def modify_roi(name,roi):
         ['PSRJ0940-5428',[]], # no 2FGL source...
         ['PSRJ1016-5857','2FGL J1016.5-5858'],
 
+
+        # Had problems with a source associated with
+        # 1023 which is not removed. Actually two sources are associated
+        # to 1023 in the 2FGL - Romain Dec 21
         ['PSRJ1023-5746','2FGL J1023.5-5749c'],
 
         # MSH 15-52 is already included in the 2FGL with a template
@@ -90,8 +95,8 @@ def modify_roi(name,roi):
 
 
 
-    #Romain Dec 21 - had problems with a source associated with 1023 which is not removed. Actually two sources are associated to 1023 in the 2FGL
-    #Change a source into power law cause it seems to me that it should be a power law at least in the off
+    # Change a source into power law cause it seems to me that it should
+    # be a power law at least in the off - Romain Dec 21
     if name=="PSRJ1023-5746":
         from uw.like.Models import PowerLaw
         roi.modify(which='2FGL J1045.0-5941', model=PowerLaw(norm=1e-11, index=2), keep_old_flux=True)

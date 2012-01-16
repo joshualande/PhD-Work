@@ -267,6 +267,10 @@ MSH_15-52:
   spectrum: 
     HESS: "$pwn/pwndata/tevdata/MSH_15-52/spectrum.txt"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=95"
+  templates: 
+    HESS:
+      file: '$pwn/tevdata/MSH_15-52/HESS_MSH_15-52.fits'
+      hdu: 0
   notes: |
     "Gaussian radius 6.4arcmin & 2.3arcmin arXiv:astro-ph/0504120v1"
 Vela_X:
