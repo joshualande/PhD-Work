@@ -1,5 +1,5 @@
-# Dec 10 - Updating to latest ft1 files + increasing data set - JL
-# Nov 4, 2011: fixed the path to ltcube files - Rousseau
+# Updating to latest ft1 files + increasing data set - Dec 10 2011, JL
+# Fixed the path to ltcube files - Nov 4, 2011, Rousseau
 PSRJ0007+7303:
   cel: [1.7565, 73.0523055556]
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0007+7303/J0007+7303_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
