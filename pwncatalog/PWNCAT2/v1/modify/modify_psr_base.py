@@ -70,6 +70,8 @@ def modify_roi(name,roi):
         ['PSRJ0742-2822','2FGL J0742.4-2821'],
         ['PSRJ0751+1807','2FGL J0751.1+1809'],
 
+        # ...
+
         # Vela X is already include in 2FGL and needs to be pruned out
         # of the background model - Nov, 4, 2011 Joshua Lande
         ['PSRJ0835-4510',['2FGL J0835.3-4510','VelaX']], 
@@ -78,10 +80,9 @@ def modify_roi(name,roi):
         ['PSRJ0940-5428',[]], # no 2FGL source...
         ['PSRJ1016-5857','2FGL J1016.5-5858'],
 
-
         # Had problems with a source associated with
         # 1023 which is not removed. Actually two sources are associated
-        # to 1023 in the 2FGL - Romain Dec 21
+        # to 1023 in the 2FGL - Dec 21 Romain 
         ['PSRJ1023-5746','2FGL J1023.5-5749c'],
 
         # MSH 15-52 is already included in the 2FGL with a template
