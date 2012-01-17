@@ -6,7 +6,7 @@ import pylab as P
 import numpy as np
 from roi_gtlike import Gtlike
 import yaml
-from toolbag import tolist
+from lande_toolbag import tolist
 from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog,fix_bad_cutoffs,fit_prefactor
 from uw.like.roi_state import PointlikeState
 from uw.pulsar.phase_range import PhaseRange
@@ -242,4 +242,9 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax,
 def save_results(results, name): 
     open('results_%s.yaml' % name,'w').write(
         yaml.dump(tolist(results)))
+
+def import_module(filename):
+    """ import a python module from a pathname. """
+    import imp
+    return imp.load_source('module',filename)
 
