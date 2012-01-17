@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # This import has to come first
-from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results
+from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results, import_module
 from likelihood_tools import force_gradient
 
 import os
@@ -31,6 +31,7 @@ parser.add_argument("--no-plots", default=False, action="store_true")
 parser.add_argument("--no-upper-limits", default=False, action="store_true")
 parser.add_argument("--no-seds", default=False, action="store_true")
 parser.add_argument("--max-free", default=10, type=float)
+parser.add_argument("--modify", required=True)
 args=parser.parse_args()
 
 do_at_tev = not args.no_at_tev
@@ -55,8 +56,9 @@ def get_roi(**kwargs):
                   fit_emin=emin, fit_emax=emax, 
                   **kwargs)
 
-    from modify_tev import modify_roi
-    modify_roi(name,roi)
+    modify = import_module(args.modify)
+    modify.modify_roi(name,roi)
+
     return roi
 
 results=r=defaultdict(lambda: defaultdict(dict))
