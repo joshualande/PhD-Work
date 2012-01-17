@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # This import has to come first
-from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results,plot_phaseogram,plot_phase_vs_time,all_energy
+from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results,plot_phaseogram,plot_phase_vs_time,all_energy, import_module
 from uw.pulsar.phase_range import PhaseRange
 from likelihood_tools import force_gradient
 
@@ -38,6 +38,7 @@ parser.add_argument("--no-seds", default=False, action="store_true")
 parser.add_argument("--no-extension-upper-limits", default=False, action="store_true")
 parser.add_argument("--no-savedir", default=False, action="store_true")
 parser.add_argument("--max-free", default=10, type=float)
+parser.add_argument("--modify", required=True)
 args=parser.parse_args()
 
 do_at_pulsar = not args.no_at_pulsar
@@ -84,8 +85,9 @@ def get_roi(**kwargs):
                   binsperdec=args.binsperdec,
                   **kwargs)
 
-    from modify_psr import modify_roi
-    modify_roi(name,roi)
+    modify = import_module(args.modify)
+    modify.modify_roi(name,roi)
+
     return roi
 
 results=r=defaultdict(lambda: defaultdict(dict))
