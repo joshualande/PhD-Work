@@ -65,7 +65,7 @@ def modify_roi(name,roi):
         ['PSRJ0633+0632','2FGL J0633.7+0633'],
         ['PSRJ0633+1746','2FGL J0633.9+1746'],
         ['PSRJ0659+1414','2FGL J0659.7+1417'],
-        ['PSRJ0729-1448','?']
+#        ['PSRJ0729-1448','?'],
         ['PSRJ0734-1559','2FGL J0734.6-1558'],
         ['PSRJ0742-2822','2FGL J0742.4-2821'],
         ['PSRJ0751+1807','2FGL J0751.1+1809'],
@@ -76,7 +76,7 @@ def modify_roi(name,roi):
         # of the background model - Nov, 4, 2011 Joshua Lande
         ['PSRJ0835-4510',['2FGL J0835.3-4510','VelaX']], 
 
-        ['PSRJ0908-4913','2FGL J0908.5-49'],
+        ['PSRJ0908-4913','2FGL J0908.5-4913'],
         ['PSRJ0940-5428',[]], # no 2FGL source...
         ['PSRJ1016-5857','2FGL J1016.5-5858'],
 
@@ -91,5 +91,9 @@ def modify_roi(name,roi):
     ]:
 
         if name == psr_name: 
-            roi.del_source(cat_name)
+            print 'Removing 2FGL source %s because it is duplicating the pulsar %s' % (cat_name, psr_name)
+            if isinstance(cat_name,list):
+                map(roi.del_source,cat_name)
+            else:
+                roi.del_source(cat_name)
         
