@@ -8,12 +8,31 @@ def modify_roi(name,roi):
     import modify_psr_base
     modify_psr_base.modify(name,roi)
 
+    
+
     # Change a source into power law cause it seems to me that it should
     # be a power law at least in the off - Romain Dec 21
     if name=="PSRJ1023-5746":
         from uw.like.Models import PowerLaw
         roi.modify(which='2FGL J1045.0-5941', model=PowerLaw(norm=1e-11, index=2), keep_old_flux=True)
-        
+
+    #Romain Jan 05 - add asources to 1418-1420 analysis because the whole phase show significant excess at this location. 'P72Y2157' is included in the hard source list.
+    if name=="PSRJ1420-6048" or name=="PSRJ1418-6058":
+        from uw.like.Models import PowerLawFlux
+        from uw.like.pointspec_helpers import PointSource
+        from skymaps import SkyDir
+        source=PointSource(name="P72Y2157",model=PowerLawFlux(p=[2.10582112587e-8,1.92434098069]),skydir=SkyDir(211.792379263,-61.5591259624))
+        roi.add_source(source)
+
+    if name=="PSRJ1420-6048" and roi.bands[0].emin>1e4:
+        #Romain Jan 06 - for the analysis of PSRJ1420 at high energy, sources relocalized and fitted as power law
+        from skymaps import SkyDir
+        roi.modify(which="2FGL J1418.7-6058",model=PowerLawFlux(p=[1.0e-9,2.0]),skydir=SkyDir(214.46,-61.06))
+        roi.modify(which="2FGL J1422.5-6137c",model=PowerLawFlux(p=[1.0e-9,2.0]),skydir=SkyDir(215.34,-61.64))
+        roi.modify(which="2FGL J1427.6-6048c",model=PowerLawFlux(p=[1.0e-9,2.0]))
+        roi.modify(which="2FGL J1409.9-6129",model=PowerLawFlux(p=[1.0e-9,2.0]))
+        roi.modify(which="2FGL J1405.5-6121",model=PowerLawFlux(p=[1.0e-9,2.0]))
+
     #List of sources not well fitted in the run of Dec 05 - Dec 09 Romain
     #List modified on Jan 04 to not include two times the same sources -Romain
 
@@ -43,3 +62,9 @@ def modify_roi(name,roi):
                                 print "%s is not frozen"%name2
                                 
                                 
+    #Jan 04 - Romain : This is experimental cause I think we cannot justify it. In some case, some sources that I let free before gave bad fit in other regions so I fixed them
+    #here.
+    list_freeze=[["PSRJ1016-5857","2FGL J1020.0-6029"],["PSRJ1357-6429","2FGL J1418.7-6058"],["PSRJ1357-6429","2FGL J1420.1-6047"],["PSRJ1702-4128","2FGL J1652.5-4351c"],["PSRJ1813-1246","2FGL J1813.7-1139c"],["PSRJ1813-1246","2FGL J1814.1-1735c"],["PSRJ1813-1246","2FGL J1828.3-1124c"],["PSRJ1939+2134","2FGL J1928.8+1740c"],["PSRJ1954+2836","2FGL J2009.8+2747"],["PSRJ1958+2846","2FGL J2009.8+2747"],["PSRJ1958+2846","2FGL J1959.9+3336c"],["PSRJ1959+2048","2FGL J1949.7+2405"],["PSRJ1958+2846","2FGL J2009.8+2747"],["PSRJ2030+4415","2FGL J2036.0+4224c"],["PSRJ2030+4415","2FGL J2042.0+4252c"],["PSRJ2030+4415","2FGL J2047.9+4536c"],["PSRJ2043+2740","2FGL J1958.6+2845"],["PSRJ2051-0827","2FGL J2025.6-0736"]]
+    for element in list_freeze:
+        if element[0]==name:
+            roi.modify(which=element[1], free=False)
