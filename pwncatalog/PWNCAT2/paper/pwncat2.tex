@@ -2,9 +2,6 @@
 
 \bibliographystyle{apj}
 
-
-
-
 %#For adding line numbers:
 \usepackage{lineno}
 \linenumbers
@@ -20,6 +17,10 @@
 \usepackage{hyperref}
 
 \usepackage{color}
+
+% LaTeX stylings
+\input{style/style.tex}
+
 
 \begin{document}
 
@@ -47,14 +48,17 @@ pulsar wind nebula
   \input{sections/abstract.tex}
 \end{abstract}
 
-\section{Introduction}
-
 \input{sections/introduction.tex}
 
-\section{Analysis Methods}
+\input{sections/lat_description_and_observations.tex}
 
+\input{sections/timing_analysis.tex}
 
-\section{Discussion}
+\input{sections/off_peak_phase_selection.tex}
+
+\input{sections/analysis_of_the_fermi_lat_data.tex}
+
+\input{sections/results.tex}
 
 \input{sections/discussion.tex}
 
