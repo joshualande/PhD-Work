@@ -2,9 +2,6 @@
 
 \bibliographystyle{apj}
 
-\newif\ifcolorfigure
-\colorfiguretrue
-%\colorfigurefalse
 
 
 
@@ -36,6 +33,13 @@ Gamma rays: observations;
 pulsar wind nebula
 }
 
+\ifcolorfigure
+  Figures are in color
+\else
+  Figures are in black and white
+\fi
+
+
 \input{sections/authors.tex}
 
 
@@ -45,18 +49,16 @@ pulsar wind nebula
 
 \section{Introduction}
 
-
-Introduction\dots
+\input{sections/introduction.tex}
 
 \section{Analysis Methods}
 
 
 \section{Discussion}
 
-\section{sections/discussion.tex}
+\input{sections/discussion.tex}
 
-\section{sections/acknowledgements.tex}
-
+\input{sections/acknowledgements.tex}
 
 
 \bibliography{pwncat2}
