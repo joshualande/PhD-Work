@@ -1,37 +1,38 @@
 manuscript = pwncat2
 
-latexbw:
-	latex "\newif\ifcolorfigure\colorfigurefalse\input{$(manuscript)}"
-	
-latexcolor:
-	latex "\newif\ifcolorfigure\colorfiguretrue\input{$(manuscript)}"
+# These commands make sure no compression is applied
+# when running ps2pdf
+# http://cosmocoffee.info/viewtopic.php?p=213
+PS2PDFARGS = "-dAutoFilterColorImages=false -dColorImageFilter=/FlateEncode"
 
-dvips:
+DEFBWFIGS = \def\bwfigures{true}
+
+color: $(manuscript).pdfcolor
+
+bw: $(manuscript).pdfbw
+
+
+%.pdfcolor: %.dvicolor
 	dvips $(manuscript)
+	ps2pdf ${PS2PDFARGS} $(manuscript).ps
 
-ps2pdf:
-	# These commands make sure no compression is applied
-	# # http://cosmocoffee.info/viewtopic.php?p=213
-	ps2pdf -dAutoFilterColorImages=false -dColorImageFilter=/FlateEncode $(manuscript).ps
+%.pdfbw: %.dvibw
+	dvips $(manuscript)
+	ps2pdf ${PS2PDFARGS} $(manuscript).ps
 
-color:
-	latexcolor
+%.dvibw: %.tex
+	echo 'bw'
+	latex "${DEFBWFIGS} \input{$(manuscript)}"
 	bibtex $(manuscript) 
-	latexcolor
-	latexcolor
-	dvips
-	ps2pdf
+	latex "${DEFBWFIGS} \input{$(manuscript)}"
+	latex "${DEFBWFIGS} \input{$(manuscript)}"
 
-bw:
-	latexbw
+%.dvicolor: %.tex
+	echo 'color'
+	latex $(manuscript).tex
 	bibtex $(manuscript) 
-	latexbw
-	latexbw
-	dvips
-	ps2pdf
-
-all:
-	color
+	latex $(manuscript).tex
+	latex $(manuscript).tex
 
 clean:
 	-rm -f $(manuscript).aux $(manuscript).log $(manuscript).out \
