@@ -1,0 +1,445 @@
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=latex 2011.6.22)  18 JAN 2012 17:17
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**pwncat2
+(./pwncat2.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, galician, german, ngerman, swissgerman, monogreek, greek, hungarian,
+ icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, marathi, or
+iya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, kurmanji,
+ lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, pol
+ish, portuguese, romanian, russian, sanskrit, serbian, slovak, slovenian, spani
+sh, swedish, turkish, turkmen, ukrainian, uppersorbian, welsh, loaded.
+(./aastex.cls
+Document Class: aastex 2005/06/22 5.2/AAS markup document class
+Class aastex Info: Original \LaTeX2.09 style by Chris Biemesderfer (chris@seago
+at.com). Adapted to \LaTeXe by A. Ogawa (ogawa@teleport.com) on input line 83.
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/base/artic
+le.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/base/size1
+2.clo
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/base/latex
+sym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/graphics/g
+raphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/graphics/k
+eyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/graphics/g
+raphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/graphics/t
+rig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/latexconfi
+g/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/graphics/d
+vips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/amsfonts/a
+mssymb.sty
+Package: amssymb 2009/06/22 v3.00
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/amsfonts/a
+msfonts.sty
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\@emptytoks=\toks15
+\symAMSa=\mathgroup5
+\symAMSb=\mathgroup6
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/natbib/nat
+bib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip43
+\bibsep=\skip44
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count87
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/tools/verb
+atim.sty
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks16
+\verbatim@line=\toks17
+\verbatim@in@stream=\read1
+)
+\@slugcmmntwidth=\dimen105
+\abstract@box=\box26
+\c@editornote=\count88
+\c@cureqno=\count89
+\tnotemarkskip=\skip45
+\@abovenoteskip=\dimen106
+\pt@box=\box27
+\pt@width=\dimen107
+\pt@line=\count90
+\pt@column=\count91
+\pt@nlines=\count92
+\pt@ncol=\count93
+\pt@page=\count94
+\tabbaseskip=\dimen108
+\pt@tmpcapwidth=\dimen109
+\spew@tblnotesbox=\box28
+\restof@tblnotesbox=\box29
+\noteheight=\dimen110
+\pt@tabnoteminht=\dimen111
+\firsttabskip=\dimen112
+\captionbox=\box30
+\pt@reduceline=\dimen113
+\extra@vspace=\dimen114
+\c@plate=\count95
+\my@footins=\box31
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/lineno/lin
+eno.sty
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count96
+\output=\toks18
+\linenoprevgraf=\count97
+\linenumbersep=\dimen115
+\linenumberwidth=\dimen116
+\c@linenumber=\count98
+\c@pagewiselinenumber=\count99
+\c@LN@truepage=\count100
+\c@internallinenumber=\count101
+\c@internallinenumbers=\count102
+\quotelinenumbersep=\dimen117
+\bframerule=\dimen118
+\bframesep=\dimen119
+\bframebox=\box32
+LaTeX Info: Redefining \\ on input line 3056.
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/amsmath/am
+smath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip46
+
+For additional information on amsmath, use the `?' option.
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/amsmath/am
+stext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/amsmath/am
+sgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks19
+\ex@=\dimen120
+))
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/amsmath/am
+sbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen121
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/amsmath/am
+sopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count103
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count104
+\leftroot@=\count105
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count106
+\DOTSCASE@=\count107
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box33
+\strutbox@=\box34
+\big@size=\dimen122
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count108
+\c@MaxMatrixCols=\count109
+\dotsspace@=\muskip10
+\c@parentequation=\count110
+\dspbrk@lvl=\count111
+\tag@help=\toks20
+\row@=\count112
+\column@=\count113
+\maxfields@=\count114
+\andhelp@=\toks21
+\eqnshift@=\dimen123
+\alignsep@=\dimen124
+\tagshift@=\dimen125
+\tagwidth@=\dimen126
+\totwidth@=\dimen127
+\lineht@=\dimen128
+\@envbody=\toks22
+\multlinegap=\skip47
+\multlinetaggap=\skip48
+\mathdisplay@stack=\toks23
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/tools/xspa
+ce.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/url/url.st
+y
+\Urlmuskip=\muskip11
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/hyperref/h
+yperref.sty
+Package: hyperref 2011/04/17 v6.82g Hypertext links for LaTeX
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/generic/oberdiek
+/hobsub-hyperref.sty
+Package: hobsub-hyperref 2011/04/23 v1.4 Bundle oberdiek, subset hyperref (HO)
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/generic/oberdiek
+/hobsub-generic.sty
+Package: hobsub-generic 2011/04/23 v1.4 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2011/04/23 v1.4 Subsetting bundle oberdiek (HO)
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is not detected.
+Package: etexcmds 2011/02/16 v1.5 Prefix for e-TeX command names (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2011/04/07 v1.13 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Defining keys (HO)
+Package: pdftexcmds 2011/04/22 v0.16 Utilities of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode is ignored in DVI mode.
+Package: pdfescape 2011/04/04 v1.12 Provides string conversions (HO)
+Package: bigintcalc 2011/01/30 v1.2 Expandable big integer calculations (HO)
+Package: bitset 2011/01/30 v1.1 Data type bit set (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provides unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2011/01/30 v1.0 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/04/23 v1.7 Hooks at very end of document (HO)
+Package atveryend Info: \enddocument detected (standard).
+Package: atbegshi 2011/01/30 v1.15 At begin shipout hook (HO)
+Package: refcount 2010/12/01 v3.2 Data extraction from references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options of hyperref/bookmark (HO)
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/generic/ifxetex/
+ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/oberdiek/k
+voptions.sty
+Package: kvoptions 2010/12/23 v3.10 Keyval support for LaTeX options (HO)
+)
+\@linkdim=\dimen129
+\Hy@linkcounter=\count115
+\Hy@pagecounter=\count116
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/hyperref/p
+d1enc.def
+File: pd1enc.def 2011/04/17 v6.82g Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count117
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/latexconfi
+g/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4026.
+Package hyperref Info: Link nesting OFF on input line 4031.
+Package hyperref Info: Hyper index ON on input line 4034.
+Package hyperref Info: Plain pages OFF on input line 4041.
+Package hyperref Info: Backreferencing OFF on input line 4046.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4264.
+\c@Hy@tempcnt=\count118
+LaTeX Info: Redefining \url on input line 4617.
+\Fld@menulength=\count119
+\Field@Width=\dimen130
+\Fld@charsize=\dimen131
+Package hyperref Info: Hyper figures OFF on input line 5701.
+Package hyperref Info: Link nesting OFF on input line 5706.
+Package hyperref Info: Hyper index ON on input line 5709.
+Package hyperref Info: backreferencing OFF on input line 5716.
+Package hyperref Info: Link coloring OFF on input line 5721.
+Package hyperref Info: Link coloring with OCG OFF on input line 5726.
+Package hyperref Info: PDF/A mode OFF on input line 5731.
+LaTeX Info: Redefining \ref on input line 5771.
+LaTeX Info: Redefining \pageref on input line 5775.
+\Hy@abspage=\count120
+\c@Item=\count121
+\c@Hfootnote=\count122
+)
+
+Package hyperref Message: Driver (default): hdvips.
+
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/hyperref/h
+dvips.def
+File: hdvips.def 2011/04/17 v6.82g Hyperref driver for dvips
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/hyperref/p
+dfmark.def
+File: pdfmark.def 2011/04/17 v6.82g Hyperref definitions for pdfmark specials
+\pdf@docset=\toks24
+\pdf@box=\box35
+\pdf@toks=\toks25
+\pdf@defaulttoks=\toks26
+\Fld@listcount=\count123
+\c@bookmark@seq@number=\count124
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/oberdiek/r
+erunfilecheck.sty
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip49
+))
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/graphics/c
+olor.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/latexconfi
+g/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: dvips.def on input line 130.
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/graphics/d
+vipsnam.def
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+No file pwncat2.aux.
+\openout1 = `pwncat2.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+AAS preprint substyle, v5.2 <12 Dec 2003>.
+\AtBeginShipoutBox=\box36
+Package hyperref Info: Link coloring OFF on input line 27.
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/latex/hyperref/n
+ameref.sty
+Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
+
+(/afs/slac.stanford.edu/u/gl/lande/texlive/2010/texmf-dist/tex/generic/oberdiek
+/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count125
+)
+LaTeX Info: Redefining \ref on input line 27.
+LaTeX Info: Redefining \pageref on input line 27.
+LaTeX Info: Redefining \nameref on input line 27.
+\@outlinefile=\write3
+\openout3 = `pwncat2.out'.
+
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+
+! LaTeX Error: File `authors.tex' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: tex)
+
+Enter file name: 
+
+! LaTeX Error: File `abstract.tex' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: tex)
+
+Enter file name: 
+No file pwncat2.bbl.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 65.
+[1
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 65.
+ (./pwncat2.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 65.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 65.
+
+
+Package rerunfilecheck Warning: File `pwncat2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `pwncat2.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  47B60349166A5DC38200E8568A4FAAE8;265.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 65.
+ ) 
+Here is how much of TeX's memory you used:
+ 6544 strings out of 493764
+ 93363 string characters out of 3135545
+ 173284 words of memory out of 3000000
+ 9814 multiletter control sequences out of 15000+200000
+ 5798 words of font info for 21 fonts, out of 3000000 for 9000
+ 715 hyphenation exceptions out of 8191
+ 32i,5n,30p,220b,328s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on pwncat2.dvi (1 page, 4072 bytes).
