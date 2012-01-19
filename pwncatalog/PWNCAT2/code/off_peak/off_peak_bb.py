@@ -13,13 +13,64 @@ from uw.pulsar.phase_range import PhaseRange
 from lande_toolbag import tolist
 
 class OffPeakBB(object):
-    def __init__(self,phases,ncpPrior=9):
 
+    @staticmethod
+    def _max_phase(phases, ncpPrior):
+        """ find the (approximate) maximum in the pulsar light curve 
+        
+            This is conveniently determined by using
+            bayesian blocks upon the un-rotated light curve. """
         bb = BayesianBlocks.BayesianBlocks(phases)
         xx, yy = bb.lightCurve(ncpPrior)
+        return xx[np.argmax(yy)]
 
-        self.xx = np.asarray(xx)
-        self.yy = np.asarray(yy)
+    def __init__(self,phases,ncpPrior=5):
+        """ phases is the numpy array of pulsar phases. """
+
+        self.phases = phases
+        self.ncpPrior = ncpPrior
+
+        self.max_phase = max_phase = self._max_phase(phases, ncpPrior)
+
+        self.offset_phases = (phases - max_phase) % 1
+        self.offset_phases.sort()
+
+        self.bb = BayesianBlocks.BayesianBlocks(self.offset_phases)
+        offset_xx, yy = self.bb.lightCurve(ncpPrior)
+        offset_xx = np.asarray(offset_xx)
+        yy = np.asarray(yy)
+
+        # bayesian blocks dont always go exactly to the phase edges
+        offset_xx[0] = 0
+        offset_xx[-1] = 1
+
+        xx = (max_phase + offset_xx)
+        divide = np.where( xx > 1)[0]
+
+        if len(divide)>0:
+            # rotate blocks to correct phase
+            first_overflow = divide[0]
+            xx = np.append(xx[first_overflow:] % 1,xx[:first_overflow])
+            yy = np.append(yy[first_overflow:],yy[:first_overflow])
+
+        # connect the (now disconnected) edges to 0 and 1
+        if xx[0] != 0:
+            xx = np.append(0, xx)
+            yy = np.append(yy[0], yy)
+        if xx[-1] != 1:
+            xx = np.append(xx, 1)
+            yy = np.append(yy, yy[-1])
+
+        self.xx, self.yy = xx, yy
+
+        # find the lowest valey
+        min_bin = np.argmin(yy)
+
+        phase_min = xx[min_bin]
+        phase_max = xx[min_bin+1]
+        phase_range = phase_max - phase_min
+        phase_min, phase_max = phase_min + 0.1*phase_range, phase_max - 0.1*phase_range
+        self.phase_range = PhaseRange(phase_min, phase_max)
 
 
 def find_offpeak(ft1,name,rad,pwncat1phase):
@@ -30,7 +81,6 @@ def find_offpeak(ft1,name,rad,pwncat1phase):
     plc.fill_phaseogram()
 
     phases = plc.get_phases()
-    phases.sort()
 
     off_peak_bb = OffPeakBB(phases)
 
@@ -41,18 +91,15 @@ def find_offpeak(ft1,name,rad,pwncat1phase):
     axes = fig.add_subplot(111)
 
     axes.hist(phases,bins=bins,histtype='step',ec='red',lw=1)
-    axes.set_ylabel('Normalized Profile')
+    axes.set_ylabel('Counts')
     axes.set_xlabel('Phase')
+    #axes.set_xlim(0,1)
     axes.grid(True)
 
     binsz = (bins[1]-bins[0])
-    print phases
-    print off_peak_bb.xx
-    print off_peak_bb.yy*binsz
-
     P.plot(off_peak_bb.xx,off_peak_bb.yy*binsz)
 
-    #off_peak.axvspan(label='bb', alpha=0.25, color='green')
+    off_peak_bb.phase_range.axvspan(label='bb', alpha=0.25, color='green')
     pwncat1phase.axvspan(label='pwncat1', alpha=0.25, color='blue')
 
     P.legend()
@@ -64,11 +111,15 @@ def find_offpeak(ft1,name,rad,pwncat1phase):
 
     global results
     results=tolist(
-            dict(
-#                bb_phase = off_peak.tolist(),
-                pwncat1phase = pwncat1phase.tolist(),
-                )
+        dict(
+            pwncat1phase = pwncat1phase.tolist(),
+            bayesian_blocks = dict(
+                off_peak = off_peak_bb.phase_range.tolist(),
+                xx = off_peak_bb.xx,
+                yy = off_peak_bb.yy,
+                ) 
             )
+        )
 
     yaml.dump(results,open('results_%s.yaml' % name,'w'))
 
