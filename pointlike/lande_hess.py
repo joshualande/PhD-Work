@@ -103,7 +103,7 @@ class TeVSED(object):
             self.lower_energy = self.energy
             self.upper_energy = self.energy
 
-        self.significant = np.ones_like(self.energy,dtype=bool)
+        self.significant = np.ones_like(self.energy).astype(bool)
 
         def estimate_flux(dnde,energy,emin,emax, e_weight):
             """ estimate the emin to emax flux for a source with prefactor
