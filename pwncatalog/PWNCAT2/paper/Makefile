@@ -21,14 +21,12 @@ bw: $(manuscript).pdfbw
 	ps2pdf ${PS2PDFARGS} $(manuscript).ps
 
 %.dvibw: %.tex
-	echo 'bw'
 	latex "${DEFBWFIGS} \input{$(manuscript)}"
 	bibtex $(manuscript) 
 	latex "${DEFBWFIGS} \input{$(manuscript)}"
 	latex "${DEFBWFIGS} \input{$(manuscript)}"
 
 %.dvicolor: %.tex
-	echo 'color'
 	latex $(manuscript).tex
 	bibtex $(manuscript) 
 	latex $(manuscript).tex
