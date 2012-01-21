@@ -24,20 +24,45 @@ terminal_tweaks
 
 
 
-function kipacsetup {
-    # ds9
+function _kipac_base {
     export KIPACSOFT=/afs/slac/g/ki/software
+}
+
+function ds9kipac {
+    _kipac_base
+
     export PATH=$KIPACSOFT/ds9/6.1/amd64_linux26:$PATH
 
-    # fv
+    export setup="${setup} ds9"
+}
+
+function fvkipac {
+    _kipac_base
+
     export HEADAS=`echo $KIPACSOFT/heasoft/6.9/$(sys)/heasoft/*-linux-gnu-libc2.3.4`
     source $HEADAS/headas-init.sh
     export PATH=$HEADAS/bin/:$PATH
+    export setup="${setup} fv"
+}
 
-    # get python
-    #export PATH=$KIPACSOFT:/afs/slac/g/ki/software/python/2.6.6/bin:$PATH
+function texlivekipac {
+    _kipac_base
+
+    # setup local tex build
+    #export PATH=/u/gl/lande/texlive/2010/bin/x86_64-linux:$PATH
+    export PATH=$KIPACSOFT/texlive/amd64_rhel60/amd64_rhel60/bin/x86_64-linux/:$PATH
+    export KIPACSOFT=/afs/slac/g/ki/software
+    export setup="${setup} texlive"
+}
+
+function kipacsetup {
+    fvkipac
+    ds9kipac
+    texlivekipac
+
     export setup="${setup} kipac"
 }
+
 
 
 function fix_matplotlib {
@@ -48,7 +73,7 @@ function fix_matplotlib {
 }
 
 function stockscons {
-    export SCTOOLS=09-25-02
+    export SCTOOLS=09-26-02
     #export BLDTYPE=redhat5-i686-32bit-gcc41
     export BLDTYPE=redhat5-x86_64-64bit-gcc41
     export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
@@ -222,12 +247,6 @@ lsf_setup
 
 export CVSROOT=/nfs/slac/g/glast/ground/cvs
 
-function texlive {
-    # setup local tex build
-    export PATH=/u/gl/lande/texlive/2010/bin/x86_64-linux:$PATH
-    export setup="${setup} texlive"
-}
-
 function tagCollector {
     # Tag the science tools
     echo python tagCollector.py ScienceTools --new=HEAD -r True
@@ -290,7 +309,7 @@ green_catalog_setup
 function pwncat_setup {
     export alice=~allafort/ki05/pwncatalog/
     export marianne=/nfs/farm/g/glast/u54/lemoine/PWNCat
-    export pwn=~/svn/lande/trunk/pwncatalog/PWNCAT2/v1/
+    export pwn=~/svn/lande/trunk/pwncatalog/PWNCAT2/code
     export PWNSCRIPTS=~lande/svn/lande/trunk/pwncatalog_1yr/
 }
 pwncat_setup
