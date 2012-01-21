@@ -1,17 +1,23 @@
 from os.path import join as j
 import StringIO
+from textwrap import dedent
 import shutil
-from toolbag import OrderedDefaultdict
+from lande_toolbag import OrderedDefaultdict
 import os.path
 import tempfile
 
 import yaml
 import asciitable
 
-fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v45/analysis/'
-savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v45/'
+#fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v45/analysis/'
+#savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT1/fits/analyze_v45/'
 
-def write_latex(table, filename, **kwargs):
+fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v4/analysis_no_plots/'
+savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v4/tables'
+
+if not os.path.exists(savedir): os.makedirs(savedir)
+
+def write_latex(table, filebase, **kwargs):
 
     outtable=StringIO.StringIO()
 
@@ -22,26 +28,19 @@ def write_latex(table, filename, **kwargs):
                     )
     t=outtable.getvalue()
 
-    print t
-    file=r"""
-    \documentclass{aastex}
-    \usepackage{amsmath}
-    \begin{document}
-    %s
-    \end{document}
-    """ % t
+    os.chdir(savedir)
 
-    cwd=os.getcwd()
-    tempdir=tempfile.mkdtemp()
-    os.chdir(tempdir)
-    open('table.tex','w').write(file)
+    open('%s.tex' % filebase,'w').write(t)
 
-    os.system('pdflatex table.tex')
+    open('temp.tex','w').write(dedent(r"""
+        \documentclass{aastex}
+        \usepackage{amsmath}
+        \begin{document}
+        \include{%s}
+        \end{document}""" % filebase))
 
-    os.chdir(cwd)
-    shutil.copy('%s/table.pdf' % tempdir,
-                filename)
-
+    os.system('pdflatex temp.tex')
+    shutil.move('temp.pdf','%s.pdf' % filebase)
 
 def get_results(pwn):
     f = j(fitdir,pwn,'results_%s.yaml' % pwn)
@@ -82,8 +81,11 @@ def all_energy_table(pwnlist):
             flux_err=gt['flux']['flux_err']
             table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-9,flux_err/1e-9) )
         else:
-            ul=gt['upper_limit']['flux']
-            table[flux_name].append('$<%.2f$' % (ul/1e-9))
+            if gt['upper_limit'] != -1:
+                ul=gt['upper_limit']['flux']
+                table[flux_name].append('$<%.2f$' % (ul/1e-9))
+            else:
+                table[flux_name].append('None')
 
 
         index=-1*gt['model']['Index']
@@ -92,7 +94,7 @@ def all_energy_table(pwnlist):
         table[gamma_name].append('$%.2f \pm %.2f$' % (index,index_err) if ts > 25 else r'\nodata')
 
     write_latex(table,
-                filename='%s/all_energy_table.pdf' % savedir,
+                filebase='off_pulse_all_energy',
                 latexdict = dict(caption=r'All Energy spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
                                  preamble=r'\tabletypesize{\scriptsize}',
                                  units={
@@ -122,6 +124,8 @@ def each_energy_table(pwnlist):
         flux_err = sed['Ph_Flux']['Error']
         ul = sed['Ph_Flux']['Upper_Limit']
 
+        ts = [i if i > 0 else 0 for i in ts]
+
         table['PSR'].append(pwn.replace('PSR',''))
 
         table[TS1_name].append('%.1f' % ts[0])
@@ -134,7 +138,7 @@ def each_energy_table(pwnlist):
         table[flux3_name].append('$%.2f \pm %.2f$' % (flux[2]/1e-9,flux_err[2]/1e-9) if ts[2] > 25 else '$<%.2f$' % (ul[2]/1e-9))
 
     write_latex(table,
-                filename='%s/each_energy_table.pdf' % savedir,
+                filebase='off_pulse_each_energy',
                 latexdict = dict(caption=r'Energy bin spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
                                  preamble=r'\tabletypesize{\scriptsize}',
                                  units={
@@ -158,23 +162,29 @@ def cutoff_table(pwnlist,looppwn):
 
         table['PWN'].append(pwn)
 
-
         cutoff=results['at_pulsar']['gtlike']['test_cutoff']
 
-        flux=cutoff['flux_1']['eflux']
-        flux_err=cutoff['flux_1']['eflux_err']
-        table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-12,flux_err/1e-12))
-        index=-1*cutoff['model_1']['Index1']
-        index_err=cutoff['model_1']['Index1_err']
-        table[index_name].append('$%.2f \pm %.2f$' % (index,index_err))
-        cutoff_energy=cutoff['model_1']['Cutoff']
-        cutoff_energy_err=cutoff['model_1']['Cutoff_err']
-        table[cutoff_name].append('$%.2f \pm %.2f$' % (cutoff_energy/1000,cutoff_energy_err/1000))
-        ts_cutoff = max(cutoff['TS_cutoff'],0)
-        table[ts_cutoff_name].append('%.1f' % ts_cutoff)
+        if cutoff != -1:
+
+            flux=cutoff['flux_1']['eflux']
+            flux_err=cutoff['flux_1']['eflux_err']
+            table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-12,flux_err/1e-12))
+            index=-1*cutoff['model_1']['Index1']
+            index_err=cutoff['model_1']['Index1_err']
+            table[index_name].append('$%.2f \pm %.2f$' % (index,index_err))
+            cutoff_energy=cutoff['model_1']['Cutoff']
+            cutoff_energy_err=cutoff['model_1']['Cutoff_err']
+            table[cutoff_name].append('$%.2f \pm %.2f$' % (cutoff_energy/1000,cutoff_energy_err/1000))
+            ts_cutoff = max(cutoff['TS_cutoff'],0)
+            table[ts_cutoff_name].append('%.1f' % ts_cutoff)
+        else:
+            table[flux_name].append('None')
+            table[index_name].append('None')
+            table[cutoff_name].append('None')
+            table[ts_cutoff_name].append('None')
 
     write_latex(table,
-                filename='%s/test_cutoff.pdf' % savedir,
+                filebase='off_pulse_cutoff_test',
                 latexdict = dict(caption=r'Spectral fitting of pulsar wind nebula candidates with low energy component.',
                                  col_align=r'lrrrr',
                                  preamble=r'\tabletypesize{\scriptsize}',
@@ -184,7 +194,7 @@ def cutoff_table(pwnlist,looppwn):
                                  }))
 
 
-pwnlist=sorted(yaml.load(open('pwndata/pwncat1_data.yaml')).keys())
+pwnlist=sorted(yaml.load(open('../pwndata/pwncat1_data.yaml')).keys())
 all_energy_table(pwnlist)
 each_energy_table(pwnlist)
 cutoff_table(pwnlist, looppwn=['PSRJ0034-0534', 'PSRJ0633+1746', 'PSRJ1813-1246', 'PSRJ1836+5925', 'PSRJ2021+4026', 'PSRJ2055+2539', 'PSRJ2124-3358'])
