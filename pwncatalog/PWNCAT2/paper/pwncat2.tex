@@ -15,6 +15,7 @@
 
 % Note, hyperref has to come after other packages!
 \usepackage{hyperref}
+\usepackage{todonotes}
 
 \usepackage{color}
 
@@ -39,6 +40,8 @@ pulsar wind nebula
 \begin{abstract}
   \input{sections/abstract.tex}
 \end{abstract}
+
+\listoftodos
 
 %\ifdefined\bwfigures
 %  Figures are in black and white
@@ -65,5 +68,8 @@ pulsar wind nebula
 
 \bibliography{pwncat2}
 
+\appendix
+
+\input{sections/extension_upper_limits.tex}
 
 \end{document}
