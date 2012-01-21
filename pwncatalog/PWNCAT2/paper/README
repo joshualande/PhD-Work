@@ -10,7 +10,7 @@ Organization:
 
 pwncat2.tex is the top level file.  It inputs all the other files.
 
-Pass7Validation.bib is the bibtex bibliography file.
+pwncat2.bib is the bibtex bibliography file.
 
 There are a few standard style files sitting around:
 
