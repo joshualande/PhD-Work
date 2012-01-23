@@ -1,3 +1,4 @@
+# Commeting out PSRs with bad timing - Jan 21, 2012, JL
 # Updating to latest ft1 files + increasing data set - Dec 10 2011, JL
 # Fixed the path to ltcube files - Nov 4, 2011, Rousseau
 PSRJ0007+7303:
@@ -20,11 +21,11 @@ PSRJ0106+4855:
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0106+4855/J0106+4855_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0106+4855/ltcube_J0106+4855.fits
-PSRJ0205+6449:
-  cel: [31.408, 64.8285555556]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0205+6449/J0205+6449_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0205+6449/ltcube_J0205+6449.fits
+#PSRJ0205+6449:
+#  cel: [31.408, 64.8285555556]
+#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0205+6449/J0205+6449_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
+#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0205+6449/ltcube_J0205+6449.fits
 PSRJ0218+4232:
   cel: [34.5264888238, 42.5381621028]
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0218+4232/J0218+4232_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
@@ -255,11 +256,11 @@ PSRJ1620-4927:
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1620-4927/J1620-4927_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1620-4927/ltcube_J1620-4927.fits
-PSRJ1648-4611:
-  cel: [252.09175, -46.1877777778]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1648-4611/J1648-4611_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1648-4611/ltcube_J1648-4611.fits
+#PSRJ1648-4611:
+#  cel: [252.09175, -46.1877777778]
+#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1648-4611/J1648-4611_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
+#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1648-4611/ltcube_J1648-4611.fits
 PSRJ1702-4128:
   cel: [255.718833333, -41.4800555556]
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1702-4128/J1702-4128_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
@@ -280,11 +281,11 @@ PSRJ1718-3825:
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1718-3825/J1718-3825_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1718-3825/ltcube_J1718-3825.fits
-PSRJ1730-3350:
-  cel: [262.634829917, -33.84090655]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1730-3350/J1730-3350_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1730-3350/ltcube_J1730-3350.fits
+#PSRJ1730-3350:
+#  cel: [262.634829917, -33.84090655]
+#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1730-3350/J1730-3350_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
+#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1730-3350/ltcube_J1730-3350.fits
 PSRJ1732-3131:
   cel: [263.1396789, -31.5228401611]
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1732-3131/J1732-3131_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
@@ -310,11 +311,11 @@ PSRJ1747-2958:
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1747-2958/J1747-2958_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1747-2958/ltcube_J1747-2958.fits
-PSRJ1801-2451:
-  cel: [270.249747507, -24.868533]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1801-2451/J1801-2451_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1801-2451/ltcube_J1801-2451.fits
+#PSRJ1801-2451:
+#  cel: [270.249747507, -24.868533]
+#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1801-2451/J1801-2451_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
+#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1801-2451/ltcube_J1801-2451.fits
 PSRJ1803-2149:
   cel: [270.7901551, -21.8204877583]
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1803-2149/J1803-2149_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
@@ -340,11 +341,11 @@ PSRJ1826-1256:
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1826-1256/J1826-1256_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1826-1256/ltcube_J1826-1256.fits
-PSRJ1835-1106:
-  cel: [278.826874284, -11.1037049444]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1835-1106/J1835-1106_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1835-1106/ltcube_J1835-1106.fits
+#PSRJ1835-1106:
+#  cel: [278.826874284, -11.1037049444]
+#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1835-1106/J1835-1106_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
+#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1835-1106/ltcube_J1835-1106.fits
 PSRJ1836+5925:
   cel: [279.057060592, 59.4249078389]
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1836+5925/J1836+5925_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
@@ -455,11 +456,11 @@ PSRJ2214+3000:
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2214+3000/J2214+3000_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
   ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2214+3000/ltcube_J2214+3000.fits
-PSRJ2229+6114:
-  cel: [337.273888744, 61.2344716944]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2229+6114/J2229+6114_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2229+6114/ltcube_J2229+6114.fits
+#PSRJ2229+6114:
+#  cel: [337.273888744, 61.2344716944]
+#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2229+6114/J2229+6114_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
+#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2229+6114/ltcube_J2229+6114.fits
 PSRJ2238+5903:
   cel: [339.61729357, 59.0624349056]
   ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2238+5903/J2238+5903_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
