@@ -45,7 +45,7 @@ class LandeSED(SED):
         """ Load back as a pyLikelihood spectrum object
             a spectrum that has been saved by the spectrum_to_string
             object. This undoes the conversion of SED.spectrum_to_dict """
-        spectrum=_funcFactory.create(d.pop('name'))
+        spectrum=_funcFactory.create(d['name'])
         for k,v in d.items(): 
             if k[-4:] != '_err': spectrum.getParam(k).setTrueValue(v)
         return spectrum
