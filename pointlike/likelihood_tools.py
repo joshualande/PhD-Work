@@ -567,12 +567,17 @@ plot_all_seds = pointlike_plot_all_seds # for now
                                                                 
 
 
+def fit_only_prefactor(model):
+    model=model.copy()
+    model.free[0] = False
+    model.free[1:] = False
+    return model
 
-def freeze_insignificant_to_catalog(roi,catalog, exclude_names=[], min_ts=25):
+def freeze_insignificant_to_catalog(roi,catalog,exclude_names=[], min_ts=25):
     """ Replace all insigificant 2FGL catalog sources
         with the predictions of 2FGL and 
         the spectral shape of the source frozen. """
-
+    any_changed=False
     for source in roi.get_sources():
 
         if source.name in exclude_names: continue
@@ -583,17 +588,39 @@ def freeze_insignificant_to_catalog(roi,catalog, exclude_names=[], min_ts=25):
             except StopIteration:
                 pass
             else:
-                model=catalog_source.model
-                model.free[0] = False
-                model.free[1:] = False
-                print 'Freezing spectra of %s to 2FGL prediction' % source.name
+                model=fit_only_prefactor(catalog_source.model)
+                print 'Freezing spectra of %s to 2FGL prediction b/c it is insignificant' % source.name
+                any_changed=True
                 roi.modify(which=source, model=model,keep_old_flux=False)
+    return any_changed
 
+def freeze_bad_index_to_catalog(roi,catalog,exclude_names=[], min_ts=25):
+    """ Fix the spectrum of all power-law catalog sources with a bad spectral
+        index to the predictions from the catalog
+        with the predictions of 2FGL and 
+        the spectral shape of the source frozen. """
+    any_changed=False
+    for source in roi.get_sources():
 
+        if source.name in exclude_names: continue
 
+        if isinstance(source.model,PowerLaw):
+            index =source.model['index']
+            if index < -5 or index > 5:
+                try:
+                    catalog_source = catalog.get_source(source.name)
+                except StopIteration:
+                    pass
+                else:
+                    model=fit_only_prefactor(catalog_source.model)
+                    print 'Freezing spectra of %s to 2FGL prediction b/c fit index is bad' % source.name
+                    any_changed=True
+                    roi.modify(which=source, model=model,keep_old_flux=False)
+    return any_changed
 
 def fix_bad_cutoffs(roi, exclude_names):
     """ Loop over all sources. When ExpCutoff souce has cutoff>10TeV, convert to powerlaw. """
+    any_changed=False
     for source in roi.get_sources():
         if source.name in exclude_names: continue
 
@@ -603,8 +630,9 @@ def fix_bad_cutoffs(roi, exclude_names):
             print 'Converting cutoff source %s to powerlaw because cutoff too high' % source.name
             new_model = PowerLaw(norm=model['norm'], index=model['index'], e0=model.e0)
 
+            any_changed = Ture
             roi.modify(which=source, model=new_model, keep_old_flux=False)
-
+    return any_changed
 
 def fit_prefactor(roi, which, *args, **kwargs):
     """ Fit the prefactor of source 'which'
