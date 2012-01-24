@@ -37,14 +37,14 @@ class OffPeakBB(object):
             bayesian blocks upon the un-rotated light curve. """
             
         tstart=0
-        bins = np.linspace(0,1,21)
+        bins = np.linspace(0,1,51)
         bin_content = np.histogram(phases, bins=bins)[0]
         bin_sizes = np.ones_like(phases)*(bins[1]-bins[0])
         bb = BayesianBlocks.BayesianBlocks(tstart,bin_content.tolist(),bin_sizes.tolist())
         xx, yy = bb.lightCurve(ncpPrior)
         return xx[np.argmax(yy)]
 
-    def __init__(self,phases,ncpPrior=3):
+    def __init__(self,phases,ncpPrior=5):
         """ phases is the numpy array of pulsar phases. """
 
         self.phases = phases
@@ -61,7 +61,7 @@ class OffPeakBB(object):
         #offset_xx, yy = self.bb.lightCurve(ncpPrior)
 
         tstart=0
-        bins = np.linspace(0,1,21)
+        bins = np.linspace(0,1,51)
         bin_content = np.histogram(self.offset_phases, bins=bins)[0]
         bin_sizes = np.ones_like(self.offset_phases)*(bins[1]-bins[0])
         bb = BayesianBlocks.BayesianBlocks(tstart,bin_content.tolist(),bin_sizes.tolist())
@@ -78,7 +78,7 @@ class OffPeakBB(object):
         phase_max = max_phase + offset_xx[min_bin+1]
         phase_range = phase_max - phase_min
         phase_min, phase_max = phase_min + 0.1*phase_range, phase_max - 0.1*phase_range
-        self.phase_range = PhaseRange(phase_min, phase_max)
+        self.off_peak = PhaseRange(phase_min, phase_max)
 
         # next, construct un-offset bayesian blocks
 
@@ -106,18 +106,75 @@ class OffPeakBB(object):
         self.xx, self.yy = xx, yy
 
 
+from skymaps import SkyDir
+from uw.pulsar.stats import hm
+from uw.utilities.fitstools import rad_extract
 
-def find_offpeak(ft1,name,rad,pwncat1phase):
-    
-    plc = lc_plotting_func.PulsarLightCurve(ft1, 
-                                           psrname=name, radius=rad,
-                                           emin=1000, emax=300000)
-    plc.fill_phaseogram()
+class OptimizePhases(object):
+    """ very simple object to load in an ft1 file and
+        optimize the radius & energy to find the
+        best pulsations. """
 
-    phases = plc.get_phases()
 
-    global off_peak_bb
+    def __init__(self,
+                 ft1, 
+                 skydir,
+                 emax,
+                 ens=np.linspace(100,1000,21),
+                 rads=np.linspace(0.1,2,20),
+                 verbose=False 
+                ):
+
+        self.ft1 = ft1
+        self.skydir = skydir
+        self.emax = emax
+
+        ed = rad_extract(self.ft1,self.skydir,rads[-1],return_cols=['PULSE_PHASE'])
+        all_phases = ed['PULSE_PHASE']
+
+        stats = np.empty([len(ens),len(rads)])
+
+        get_mask = lambda e,r: (ed['ENERGY'] >= e) & (ed['ENERGY'] < self.emax) & (ed['DIFFERENCES'] < np.radians(r))
+
+
+        for iemin,emin in enumerate(ens):
+            for irad,rad in enumerate(rads):
+                mask = get_mask(emin,rad)
+                masked_phases = all_phases[mask]
+                if len(masked_phases) == 0: 
+                    stat = 0
+                else:
+                    stat = hm(masked_phases)
+                if verbose:
+                    print 'emin=%s, rad=%s, stat=%s, len=%s, n0=%s' % (emin,rad,stat,len(masked_phases),np.sum(masked_phases==0))
+                stats[iemin,irad] = stat
+
+        a = np.argmax(stats)
+        coord_e, coord_r = np.unravel_index(a, stats.shape)
+
+        self.optimal_emin = ens[coord_e]
+        self.optimal_rad = rads[coord_r]
+
+
+        self.optimal_phases = all_phases[ get_mask(self.optimal_emin, self.optimal_rad) ]
+        self.optimal_h = hm(self.optimal_phases)
+
+
+
+def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
+
+    # First, find energy and radius that maximize H test.
+
+    opt = OptimizePhases(ft1,skydir, emax=emax, verbose=True)
+
+    print 'optimal energy=%s & radius=%s, h=%s' % (opt.optimal_emin,opt.optimal_rad,opt.optimal_h)
+    phases = opt.optimal_phases
+
+    # Next, compute bayesian blocks on the optimized list of phases
+
     off_peak_bb = OffPeakBB(phases)
+
+    # N.B. The off pulse is defined as off_peak_bb.off_peak
 
     nbins=100
     bins = np.linspace(0,1,100)
@@ -134,7 +191,7 @@ def find_offpeak(ft1,name,rad,pwncat1phase):
     binsz = bins[1]-bins[0]
     P.plot(off_peak_bb.xx,off_peak_bb.yy*binsz)
 
-    off_peak_bb.phase_range.axvspan(label='bb', alpha=0.25, color='green')
+    off_peak_bb.off_peak.axvspan(label='bb', alpha=0.25, color='green')
     if pwncat1phase is not None:
         pwncat1phase.axvspan(label='pwncat1', alpha=0.25, color='blue')
 
@@ -149,10 +206,13 @@ def find_offpeak(ft1,name,rad,pwncat1phase):
         dict(
             pwncat1phase = pwncat1phase.tolist() if pwncat1phase is not None else None,
             bayesian_blocks = dict(
-                off_peak = off_peak_bb.phase_range.tolist(),
+                off_peak = off_peak_bb.off_peak.tolist(),
                 xx = off_peak_bb.xx,
                 yy = off_peak_bb.yy,
-                ) 
+                ),
+            emin = opt.optimal_emin,
+            emax = emax,
+            rad = opt.optimal_rad,
             )
         )
 
@@ -167,13 +227,14 @@ if __name__ == '__main__':
     parser.add_argument("--pwndata", required=True)
     parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
     parser.add_argument("--pwnphase", required=True)
-    parser.add_argument("--rad", default=1)
     args=parser.parse_args()
 
     name=args.name
     pwndata=args.pwndata
 
-    ft1=yaml.load(open(pwndata))[name]['ft1']
+    d=yaml.load(open(pwndata))[name]
+    ft1=d['ft1']
+    skydir = SkyDir(*d['cel'])
 
     pwncat1 = yaml.load(open(args.pwnphase))
     if pwncat1.has_key(name):
@@ -181,4 +242,4 @@ if __name__ == '__main__':
     else:
         pwncat1phase=None
 
-    find_offpeak(ft1,name,rad=args.rad,pwncat1phase=pwncat1phase)
+    find_offpeak(ft1,name,skydir,pwncat1phase=pwncat1phase)
