@@ -110,6 +110,8 @@ from skymaps import SkyDir
 from uw.pulsar.stats import hm
 from uw.utilities.fitstools import rad_extract
 
+from lande_pulsar import get_phases
+
 class OptimizePhases(object):
     """ very simple object to load in an ft1 file and
         optimize the radius & energy to find the
@@ -155,8 +157,7 @@ class OptimizePhases(object):
         self.optimal_emin = ens[coord_e]
         self.optimal_rad = rads[coord_r]
 
-
-        self.optimal_phases = all_phases[ get_mask(self.optimal_emin, self.optimal_rad) ]
+        self.optimal_phases = get_phases(self.ft1,self.skydir, self.optimal_emin, self.emax, self.optimal_rad)
         self.optimal_h = hm(self.optimal_phases)
 
 
@@ -243,4 +244,5 @@ if __name__ == '__main__':
     else:
         pwncat1phase=None
 
+    cel = d['cel']
     find_offpeak(ft1,name,cel,pwncat1phase=pwncat1phase)
