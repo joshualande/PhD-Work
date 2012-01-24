@@ -125,7 +125,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None
         any_changed = any_changed or freeze_insignificant_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=9)
         fit() 
         any_changed = any_changed or fix_bad_cutoffs(roi, exclude_names=[name])
-        if any_changed:
+        if not any_changed:
             break
 
     # second fit necessary after these fixes, which change around sources.
