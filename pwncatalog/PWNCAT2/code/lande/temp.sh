@@ -290,11 +290,11 @@ echo python loop_pwn.py  \
 
 # ----------------------------------------------------------------------------------------------------
 
-echo python loop_pwn.py  \
+echo python ../loop_pwn.py  \
 -c off_peak/off_peak_bb.py \
 -o /nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/off_peak/off_peak_bb/pwncat2/v1 \
---pwndata $PWD/pwndata/pwncat2_data.yaml  \
---pwnphase $PWD/pwndata/pwncat1_phase.yaml 
+--pwndata $PWD/../pwndata/pwncat2_data_lande.yaml  \
+--pwnphase $PWD/../pwndata/pwncat1_phase.yaml 
 
 # ----------------------------------------------------------------------------------------------------
 
