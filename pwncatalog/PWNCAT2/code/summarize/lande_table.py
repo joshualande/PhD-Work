@@ -9,8 +9,8 @@ import tempfile
 import yaml
 import asciitable
 
-fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v4/analysis_no_plots/'
-savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v4/tables'
+fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v6/analysis_no_plots/'
+savedir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v6/tables'
 
 if not os.path.exists(savedir): os.makedirs(savedir)
 
@@ -139,7 +139,7 @@ def each_energy_table(pwnlist):
         results = get_results(pwn)
         table['PSR'].append(table_name(pwn))
 
-        if results is None: 
+        if results is None or get_sed(pwn,'1bpd','at_pulsar') == {}: 
             table[TS1_name].append('None')
             table[flux1_name].append('None')
 
@@ -157,8 +157,6 @@ def each_energy_table(pwnlist):
             ul = sed['Ph_Flux']['Upper_Limit']
 
             ts = [i if i > 0 else 0 for i in ts]
-
-            table['PSR'].append(table_name(pwn))
 
             table[TS1_name].append('%.1f' % ts[0])
             table[flux1_name].append('$%.2f \pm %.2f$' % (flux[0]/1e-9,flux_err[0]/1e-9) if ts[0] > 25 else '$<%.2f$' % (ul[0]/1e-9))
@@ -234,7 +232,7 @@ cutoff_candidates = ['PSRJ0034-0534',
                      'PSRJ2055+2539', 
                      'PSRJ2124-3358']
 
-pwnlist=sorted(yaml.load(open('../pwndata/pwncat2_data.yaml')).keys())
+pwnlist=sorted(yaml.load(open('../pwndata/pwncat2_data_lande.yaml')).keys())
 all_energy_table(pwnlist)
 each_energy_table(pwnlist)
 cutoff_table(pwnlist, looppwn=cutoff_candidates)

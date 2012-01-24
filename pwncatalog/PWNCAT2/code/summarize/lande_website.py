@@ -10,10 +10,9 @@ from collections import defaultdict
 
 import asciitable
 
-from toolbag import OrderedDefaultdict
+from lande_toolbag import OrderedDefaultdict
 
-#base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v3/'; at_pulsar='at_pulsar'
-base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_tev/v5/'; at_pulsar='at_tev'
+base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v6/'; at_pulsar='at_pulsar'
 
 analysis='analysis_plots'
 #analysis='analysis'
@@ -46,8 +45,8 @@ def get_results(pwn):
     return results
 
 def get_sed(pwn,binning,hypothesis):
-    filename=j(base,analysis,pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
-    if os.path.exists(filename):
+    filename=j(base,analysis.replace('plots','no_plots'),pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
+    if os.path.exists(filename) and yaml.load(open(filename)) != {}:
         return yaml.load(open(filename))
     elif binning == '1bpd':
         d=defaultdict(lambda: defaultdict(lambda:[-1,-1,-1]))
