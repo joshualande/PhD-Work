@@ -7,7 +7,7 @@ import numpy as np
 from roi_gtlike import Gtlike
 import yaml
 from lande_toolbag import tolist
-from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog,fix_bad_cutoffs,fit_prefactor
+from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog,freeze_bad_index_to_catalog,fix_bad_cutoffs,fit_prefactor
 from uw.like.roi_state import PointlikeState
 from uw.pulsar.phase_range import PhaseRange
 from uw.like.SpatialModels import Gaussian
@@ -118,10 +118,16 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None
     # More robust to first fit the prefactor of PWN since the starting value is often very bad
     fit(just_prefactor=True)
 
-    fit()
-    freeze_insignificant_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=9)
-    fit() 
-    fix_bad_cutoffs(roi, exclude_names=[name])
+    while 1:
+        fit()
+        any_changed = freeze_bad_index_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=9)
+        fit()
+        any_changed = any_changed or freeze_insignificant_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=9)
+        fit() 
+        any_changed = any_changed or fix_bad_cutoffs(roi, exclude_names=[name])
+        if any_changed:
+            break
+
     # second fit necessary after these fixes, which change around sources.
     fit() 
 
