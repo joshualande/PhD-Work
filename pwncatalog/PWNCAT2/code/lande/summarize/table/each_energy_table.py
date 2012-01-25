@@ -71,59 +71,63 @@ def get_sed(pwn,binning,hypothesis):
     filename=j(fitdir,pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
     return yaml.load(open(filename))
 
-def all_energy_table(pwnlist):
 
+def each_energy_table(pwnlist):
 
     table = OrderedDefaultdict(list)
 
-    flux_name=r'$F_{0.1-316}$'
-    ts_name='TS'
-    gamma_name=r'$\Gamma$'
+    TS1_name = '$TS_{0.1-1}$'
+    TS2_name = '$TS_{1-10}$'
+    TS3_name = '$TS_{10-316}$'
+
+    flux1_name = '$F_{0.1-1}$'
+    flux2_name = '$F_{1-10}$'
+    flux3_name = '$F_{10-316}$'
 
     for pwn in pwnlist:
-        print pwn,j(fitdir,pwn,'results_%s.yaml' % pwn)
-
-        table['PSR'].append(table_name(pwn))
 
         results = get_results(pwn)
+        table['PSR'].append(table_name(pwn))
 
-        if results is None: 
-            table[ts_name].append('None')
-            table[flux_name].append('None')
-            table[gamma_name].append('None')
+        if results is None or get_sed(pwn,'1bpd','at_pulsar') == {}: 
+            table[TS1_name].append('None')
+            table[flux1_name].append('None')
+
+            table[TS2_name].append('None')
+            table[flux2_name].append('None')
+
+            table[TS3_name].append('None')
+            table[flux3_name].append('None')
         else:
 
-            pl=results['at_pulsar']['pointlike']
-            gt=results['at_pulsar']['gtlike']
+            sed = get_sed(pwn,'1bpd','at_pulsar')
+            ts = sed['Test_Statistic']
+            flux = sed['Ph_Flux']['Value']
+            flux_err = sed['Ph_Flux']['Error']
+            ul = sed['Ph_Flux']['Upper_Limit']
 
-            ts=max(gt['TS'],0)
-            table[ts_name].append('%.1f' % ts)
+            ts = [i if i > 0 else 0 for i in ts]
 
-            if ts > 25:
-                flux=gt['flux']['flux']
-                flux_err=gt['flux']['flux_err']
-                table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-9,flux_err/1e-9) )
-            else:
-                if gt['upper_limit'] != -1:
-                    ul=gt['upper_limit']['flux']
-                    table[flux_name].append(r'$<%.2f$' % (ul/1e-9))
-                else:
-                    table[flux_name].append('None')
+            table[TS1_name].append('%.1f' % ts[0])
+            table[flux1_name].append('$%.2f \pm %.2f$' % (flux[0]/1e-9,flux_err[0]/1e-9) if ts[0] > 25 else '$<%.2f$' % (ul[0]/1e-9))
 
+            table[TS2_name].append('%.1f' % ts[1])
+            table[flux2_name].append('$%.2f \pm %.2f$' % (flux[1]/1e-9,flux_err[1]/1e-9) if ts[1] > 25 else r'$<%.2f$' % (ul[1]/1e-9))
 
-            index=-1*gt['model']['Index']
-            index_err=-1*gt['model']['Index_err']
-
-            table[gamma_name].append('$%.2f \pm %.2f$' % (index,index_err) if ts > 25 else r'\nodata')
+            table[TS3_name].append('%.1f' % ts[2])
+            table[flux3_name].append('$%.2f \pm %.2f$' % (flux[2]/1e-9,flux_err[2]/1e-9) if ts[2] > 25 else r'$<%.2f$' % (ul[2]/1e-9))
 
     write_latex(table,
-                filebase='off_pulse_all_energy',
-                latexdict = dict(#caption=r'All Energy spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
+                filebase='off_pulse_each_energy',
+                latexdict = dict(#caption=r'Energy bin spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
                                  #preamble=r'\tabletypesize{\scriptsize}',
                                  units={
-                                     flux_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
+                                     flux1_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
+                                     flux2_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
+                                     flux3_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
                                  }))
 
 
 pwnlist=sorted(yaml.load(open('../../pwndata/pwncat2_data_lande.yaml')).keys())
 all_energy_table(pwnlist)
+each_energy_table(pwnlist)
