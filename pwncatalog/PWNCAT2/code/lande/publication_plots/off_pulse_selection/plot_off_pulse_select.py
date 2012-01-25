@@ -117,7 +117,18 @@ for i,pwn in enumerate(pwnlist):
         at.txt._text.set_path_effects([withStroke(foreground="w",linewidth=3)])
     add_text(pwn,2,i)
 
-    bb_phase.axvspan(axes=axes, phase_offsets=[0,1], fill=False, linewidth=0.5, color='black', linestyle='dashed', hatch=r'///')
+    bb_phase.axvspan(axes=axes, phase_offsets=[0,1], fill=True, edgecolor='0.5', 
+                     linewidth=linewidth, facecolor='0.75', linestyle='dashed')
+
+
+# if there are not plots alow all of the bottom, overlay
+# legend on higher up plots
+i=len(cutoff_candidates)
+while i < nrows*ncols:
+    axes=fig.add_subplot(nrows,ncols,i+1 - ncols)
+    axes.set_xlabel('Pulsar Phase')
+    i+=1
+
 
 if args.bw:
     P.savefig('off_pulse_select_bw.pdf')
