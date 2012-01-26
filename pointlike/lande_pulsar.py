@@ -1,6 +1,8 @@
 import pylab as P
 import numpy as np
 
+from uw.utilities.fitstools import rad_extract
+
 from uw.pulsar.lc_plotting_func import PulsarLightCurve
 from uw.pulsar.phase_range import PhaseRange
 def _get_pulsar_data(ft1, radius=1, emin=100, emax=300000):
@@ -57,3 +59,13 @@ def plot_phase_vs_time(name, ft1, filename, title=None, off_pulse=None):
 
     P.savefig(filename)
     return axes
+
+def get_phases(ft1, skydir, emin, emax, radius):
+    ed = rad_extract(ft1,skydir,radius,return_cols=['PULSE_PHASE'])
+    all_phases = ed['PULSE_PHASE']
+
+    cut = (ed['ENERGY'] < emax) & (ed['DIFFERENCES'] < np.radians(radius))
+    return all_phases[cut]
+
+
+
