@@ -56,7 +56,8 @@ def write_latex(table, filebase, **kwargs):
 
     os.system('pdflatex temp.tex')
     shutil.move('temp.pdf','%s.pdf' % filebase)
-    os.remove('temp.tex')
+    for i in ['temp.tex','temp.aux','temp.log']:
+        os.remove(i)
 
 def get_results(pwn):
     f = j(fitdir,pwn,'results_%s.yaml' % pwn)
