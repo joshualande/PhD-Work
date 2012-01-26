@@ -43,7 +43,7 @@ fig=P.figure(None,figsize=(6,6))
 
 fig.subplots_adjust(hspace=.25,wspace=.25, left=0.15, right=0.9, top=0.9, bottom=0.1)
 
-pwndata=yaml.load(open(expandvars('$pwn/pwndata/pwncat2_data_lande.yaml')))
+pwndata=yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml')))
 
 
 off_peak_selection='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/off_peak/off_peak_bb/pwncat2/v1'
@@ -110,15 +110,15 @@ for i,pwn in enumerate(pwnlist):
     def add_text(text,loc,i):
         letter = chr(i+97)
 
-        _text = '(%s) %s' % (letter, text.replace('PSR',''))
+        _text = '(%s) %s' % (letter, text.replace('PSR','').replace('-','$-$'))
 
         at = AnchoredText(_text, loc=loc, frameon=False)
         axes.add_artist(at)
         at.txt._text.set_path_effects([withStroke(foreground="w",linewidth=3)])
     add_text(pwn,2,i)
 
-    bb_phase.axvspan(axes=axes, phase_offsets=[0,1], fill=True, edgecolor='0.5', 
-                     linewidth=linewidth, facecolor='0.75', linestyle='dashed')
+    bb_phase.axvspan(axes=axes, phase_offsets=[0,1], fill=True, edgecolor='none', 
+                     linewidth=linewidth, facecolor='0.75')
 
 
 # if there are not plots alow all of the bottom, overlay
@@ -130,9 +130,10 @@ while i < nrows*ncols:
     i+=1
 
 
+base='off_pulse_select'
 if args.bw:
-    P.savefig('off_pulse_select_bw.pdf')
-    P.savefig('off_pulse_select_bw.eps')
+    P.savefig('%s_bw.pdf' % base)
+    P.savefig('%s_bw.eps' % base)
 else:
-    P.savefig('off_pulse_select_color.pdf')
-    P.savefig('off_pulse_select_color.eps')
+    P.savefig('%s_color.pdf' % base)
+    P.savefig('%s_color.eps' % base)
