@@ -130,7 +130,7 @@ while i < nrows*ncols:
     i+=1
 
 
-base='off_pulse_select'
+base='off_peak_select'
 if args.bw:
     P.savefig('%s_bw.pdf' % base)
     P.savefig('%s_bw.eps' % base)
