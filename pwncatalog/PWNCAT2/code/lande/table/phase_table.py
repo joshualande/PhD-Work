@@ -13,7 +13,7 @@ def all_energy_table(pwnlist):
     table = OrderedDefaultdict(list)
 
     psr_name='PSR'
-    phase_name='PHASE'
+    phase_name='Phase'
 
     obs_id = 'ObsID'
     distance = 'Distance'
