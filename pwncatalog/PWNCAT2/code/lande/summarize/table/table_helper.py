@@ -1,4 +1,5 @@
 from os.path import join as j
+from os.path import expandvars
 import StringIO
 from textwrap import dedent
 import shutil
@@ -7,7 +8,7 @@ import os.path
 import yaml
 import asciitable
 
-base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v7/'
+base='$pwndata/analyze_psr/v7/'
 
 fitdir=j(base,'analysis_no_plots/')
 savedir=j(base,'tables')
@@ -70,5 +71,6 @@ def get_sed(pwn,binning,hypothesis):
     return yaml.load(open(filename))
 
 def get_pwnlist():
-    pwnlist=sorted(yaml.load(open('../../pwndata/pwncat2_data_lande.yaml')).keys())
+    pwnlist=sorted(yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml'))).keys())
+    return pwnlist
 
