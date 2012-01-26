@@ -47,7 +47,7 @@ class LandeSED(SED):
             object. This undoes the conversion of SED.spectrum_to_dict """
         spectrum=_funcFactory.create(d['name'])
         for k,v in d.items(): 
-            if k[-4:] != '_err': spectrum.getParam(k).setTrueValue(v)
+            if k != 'name' and k[-4:] != '_err': spectrum.getParam(k).setTrueValue(v)
         return spectrum
 
 
@@ -70,7 +70,7 @@ class LandeSED(SED):
                 self.__dict__[v] *= np.nan
 
             self.crashed = True
-            self.significant = np.zeros_like((len(self.energy)),dtype=bool)
+            self.significant = np.zeros_like(self.energy).astype(bool)
 
 
         for values, u in [
