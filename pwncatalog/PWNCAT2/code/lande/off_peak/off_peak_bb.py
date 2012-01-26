@@ -162,8 +162,7 @@ class OptimizePhases(object):
 
 
 
-def find_offpeak(ft1,name,cel,pwncat1phase, emax=300000):
-    skydir = SkyDir(*cel)
+def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
 
     # First, find energy and radius that maximize H test.
 
@@ -215,7 +214,6 @@ def find_offpeak(ft1,name,cel,pwncat1phase, emax=300000):
             emin = opt.optimal_emin,
             emax = emax,
             rad = opt.optimal_rad,
-            cel = cel
             )
         )
 
@@ -244,5 +242,5 @@ if __name__ == '__main__':
     else:
         pwncat1phase=None
 
-    cel = d['cel']
-    find_offpeak(ft1,name,cel,pwncat1phase=pwncat1phase)
+    skydir = SkyDir(*d['cel'])
+    find_offpeak(ft1,name,skydir,pwncat1phase=pwncat1phase)
