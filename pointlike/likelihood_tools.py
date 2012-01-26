@@ -2,6 +2,8 @@
 """ This file contains various function which I have found useful. """
 import pprint
 from math import ceil
+import traceback
+import sys
 
 import pylab as P
 import numpy as np
@@ -296,6 +298,7 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
 
     except Exception, ex:
         print 'ERROR gtlike upper limit: ', ex
+        traceback.print_exc(file=sys.stdout)
         ul = -1
     finally:
         like.setSpectrum(name,old_spectrum)
@@ -630,7 +633,7 @@ def fix_bad_cutoffs(roi, exclude_names):
             print 'Converting cutoff source %s to powerlaw because cutoff too high' % source.name
             new_model = PowerLaw(norm=model['norm'], index=model['index'], e0=model.e0)
 
-            any_changed = Ture
+            any_changed = True
             roi.modify(which=source, model=new_model, keep_old_flux=False)
     return any_changed
 
@@ -652,7 +655,7 @@ def fit_prefactor(roi, which, *args, **kwargs):
             roi.modify(which=other_source,free=False)
 
     old_free = model.free.copy()
-    new_free = np.zeros_like(model.free,dtype=bool)
+    new_free = np.zeros_like(model.free).astype(bool)
     new_free[0] = True
     roi.modify(which=which, free=new_free)
 
