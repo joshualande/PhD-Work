@@ -35,5 +35,5 @@ bw: $(manuscript).pdfbw
 clean:
 	-rm -f $(manuscript).aux $(manuscript).log $(manuscript).out \
       $(manuscript).toc $(manuscript).dvi $(manuscript).bbl \
-      $(manuscript).blg $(manuscript).ps
+      $(manuscript).blg $(manuscript).ps $(manuscript).tdo
 
