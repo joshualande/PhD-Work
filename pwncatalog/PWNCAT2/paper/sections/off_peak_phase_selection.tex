@@ -2,14 +2,27 @@
 
 Off-peak goes here\ldots
 
-\figref{off_pulse_select} shows the off pulse selection for some pulsars\dots
+\figref{off_peak_select} shows the off peak selection for some pulsars\dots
 
 \begin{figure}
   \ifdefined\bwfigures
-  \plotone{off_pulse_select_bw.eps}
+  \plotone{off_peak_select_bw.eps}
   \else
-  \plotone{off_pulse_select_color.eps}
+  \plotone{off_peak_select_color.eps}
   \fi
-  \caption{Off pulse selection for some pulsars\dots}
-  \label{fig:off_pulse_select}
+  \caption{Off peak selection for some pulsars\dots}
+  \label{fig:off_peak_select}
 \end{figure}
+
+THe off peak phase range is defined in \tabref{off_peak_phase_range}.
+
+
+\begin{deluxetable}{lcccc}
+  \tabletypesize{\scriptsize}
+  \tablecaption{Observatories, off-pulse definitions and distances of the \todo[inline]{How many pulsars?} \lat-detected pulsars
+  \label{tab:off_peak_phase_range}
+  }
+  \input{tables/off_peak_phase_range}
+  \tablecomments{\todo[inline]{Put table comments}}
+\end{deluxetable}
+
