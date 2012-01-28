@@ -50,10 +50,10 @@ for name in sources.keys():
 
     temp=open(file,'w')
     temp.write("""\
-python %s/%s \\
+python %s \\
 -n %s \\
 %s \\
-%s""" % (os.getcwd(),args.command,name, flags,' '.join(remaining_args)))
+%s""" % (args.command,name, flags,' '.join(remaining_args)))
 
 submit_all=join(outdir,'submit_all.py')
 temp=open(submit_all,'w')
