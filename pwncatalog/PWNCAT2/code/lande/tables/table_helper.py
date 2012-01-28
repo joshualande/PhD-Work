@@ -8,7 +8,7 @@ import os.path
 import yaml
 import asciitable
 
-base='$pwndata/analyze_psr/v7/'
+base='$pwndata/spectral/v8/'
 
 fitdir=expandvars(j(base,'analysis_no_plots/'))
 savedir=expandvars(j(base,'tables'))
@@ -48,6 +48,9 @@ def write_latex(table, filebase, **kwargs):
     open('temp.tex','w').write(dedent(r"""
         \documentclass{aastex}
         \usepackage{amsmath}
+
+        \input{$pwnpaper/style/style.tex}
+
         \begin{document}
         %s
         \input{%s}

@@ -36,7 +36,7 @@ def all_energy_table(pwnlist):
                 latexdict = dict(
                     units=dict(
                         distance='kpc'
-                        #flux_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
+                        #flux_name:r'($10^{-9}\ \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
                         )
                     )
                )

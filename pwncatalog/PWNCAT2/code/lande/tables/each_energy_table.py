@@ -5,13 +5,17 @@ def each_energy_table(pwnlist):
 
     table = OrderedDefaultdict(list)
 
-    TS1_name = '$TS_{0.1-1}$'
-    TS2_name = '$TS_{1-10}$'
-    TS3_name = '$TS_{10-316}$'
+    TS1_name = r'$\ts_{0.1-1}$'
+    TS2_name = r'$\ts_{1-10}$'
+    TS3_name = r'$\ts_{10-316}$'
 
     flux1_name = '$F_{0.1-1}$'
     flux2_name = '$F_{1-10}$'
     flux3_name = '$F_{10-316}$'
+
+    index1_name = r'$\Gamma_{0.1-1}$'
+    index2_name = r'$\Gamma_{1-10}$'
+    index3_name = r'$\Gamma_{10-316}$'
 
     for pwn in pwnlist:
 
@@ -21,12 +25,15 @@ def each_energy_table(pwnlist):
         if results is None or get_sed(pwn,'1bpd','at_pulsar') == {}: 
             table[TS1_name].append('None')
             table[flux1_name].append('None')
+            table[index1_name].append('None')
 
             table[TS2_name].append('None')
             table[flux2_name].append('None')
+            table[index2_name].append('None')
 
             table[TS3_name].append('None')
             table[flux3_name].append('None')
+            table[index3_name].append('None')
         else:
 
             sed = get_sed(pwn,'1bpd','at_pulsar')
@@ -39,21 +46,25 @@ def each_energy_table(pwnlist):
 
             table[TS1_name].append('%.1f' % ts[0])
             table[flux1_name].append('$%.2f \pm %.2f$' % (flux[0]/1e-9,flux_err[0]/1e-9) if ts[0] > 25 else '$<%.2f$' % (ul[0]/1e-9))
+            table[index1_name].append('None')
+
 
             table[TS2_name].append('%.1f' % ts[1])
             table[flux2_name].append('$%.2f \pm %.2f$' % (flux[1]/1e-9,flux_err[1]/1e-9) if ts[1] > 25 else r'$<%.2f$' % (ul[1]/1e-9))
+            table[index2_name].append('None')
 
             table[TS3_name].append('%.1f' % ts[2])
             table[flux3_name].append('$%.2f \pm %.2f$' % (flux[2]/1e-9,flux_err[2]/1e-9) if ts[2] > 25 else r'$<%.2f$' % (ul[2]/1e-9))
+            table[index3_name].append('None')
 
     write_latex(table,
                 filebase='off_peak_each_energy',
                 latexdict = dict(#caption=r'Energy bin spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
                                  #preamble=r'\tabletypesize{\scriptsize}',
                                  units={
-                                     flux1_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
-                                     flux2_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
-                                     flux3_name:r'($10^{-9} \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
+                                     flux1_name:r'($10^{-9}\ \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
+                                     flux2_name:r'($10^{-9}\ \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
+                                     flux3_name:r'($10^{-9}\ \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
                                  }))
 
 pwnlist=get_pwnlist()

@@ -1,7 +1,7 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex
 from lande_toolbag import OrderedDefaultdict
 
-def cutoff_table(pwnlist,looppwn):
+def cutoff_table(pwnlist):
 
     table = OrderedDefaultdict(list)
 
@@ -10,27 +10,44 @@ def cutoff_table(pwnlist,looppwn):
     cutoff_name = r'$E_\text{cutoff}$'
     ts_cutoff_name = r'$\text{TS}_\text{cutoff}$'
 
-    for pwn in looppwn:
+    for pwn in pwnlist:
         results = get_results(pwn)
         if results is None: continue
 
+        if not results.has_key('point') or not results['point'].has_key('gtlike'):
+            continue
+
+        ts = results['point']['gtlike']['TS']
+
+        if ts < 25:
+            continue
+
         table['PSR'].append(table_name(pwn))
 
-        cutoff=results['at_pulsar']['gtlike']['test_cutoff']
+        cutoff=results['point']['gtlike']['test_cutoff']
 
         if cutoff != -1:
 
-            flux=cutoff['flux_1']['eflux']
-            flux_err=cutoff['flux_1']['eflux_err']
-            table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-12,flux_err/1e-12))
-            index=-1*cutoff['model_1']['Index1']
-            index_err=cutoff['model_1']['Index1_err']
-            table[index_name].append('$%.2f \pm %.2f$' % (index,index_err))
-            cutoff_energy=cutoff['model_1']['Cutoff']
-            cutoff_energy_err=cutoff['model_1']['Cutoff_err']
-            table[cutoff_name].append('$%.2f \pm %.2f$' % (cutoff_energy/1000,cutoff_energy_err/1000))
             ts_cutoff = max(cutoff['TS_cutoff'],0)
             table[ts_cutoff_name].append('%.1f' % ts_cutoff)
+
+
+            if ts_cutoff >= 16:
+
+                flux=cutoff['flux_1']['eflux']
+                flux_err=cutoff['flux_1']['eflux_err']
+                index=-1*cutoff['model_1']['Index1']
+                index_err=cutoff['model_1']['Index1_err']
+                cutoff_energy=cutoff['model_1']['Cutoff']
+                cutoff_energy_err=cutoff['model_1']['Cutoff_err']
+
+                table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-12,flux_err/1e-12))
+                table[index_name].append('$%.2f \pm %.2f$' % (index,index_err))
+                table[cutoff_name].append('$%.2f \pm %.2f$' % (cutoff_energy/1000,cutoff_energy_err/1000))
+            else:
+                table[flux_name].append(r'\nodata')
+                table[index_name].append(r'\nodata')
+                table[cutoff_name].append(r'\nodata')
         else:
             table[flux_name].append('None')
             table[index_name].append('None')
@@ -43,19 +60,11 @@ def cutoff_table(pwnlist,looppwn):
                                  #col_align=r'lrrrr',
                                  #preamble=r'\tabletypesize{\scriptsize}',
                                  units={
-                                     flux_name:r'($10^{-12}$\,erg\,cm$^{-2}$\,s$^{-1}$)',
+                                     flux_name:r'($10^{-12}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
                                      cutoff_name:r'(GeV)',
                                  }))
 
 
-cutoff_candidates = ['PSRJ0034-0534', 
-                     'PSRJ0633+1746', 
-                     'PSRJ1813-1246', 
-                     'PSRJ1836+5925', 
-                     'PSRJ2021+4026', 
-                     'PSRJ2055+2539', 
-                     'PSRJ2124-3358']
-
 pwnlist=get_pwnlist()
-cutoff_table(pwnlist, looppwn=cutoff_candidates)
+cutoff_table(pwnlist)
 
