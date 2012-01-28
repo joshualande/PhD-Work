@@ -1,22 +1,23 @@
 import sys
+from skymaps import SkyDir
+import numpy as np
 from glob import glob
 import yaml
 from StringIO import StringIO
 import re
 import os
-from os.path import join,exists
-from os.path import join as j
+from os.path import join,exists,expandvars
 from collections import defaultdict
 
 import asciitable
 
 from lande_toolbag import OrderedDefaultdict
 
-base='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v6/'; at_pulsar='at_pulsar'
+base=expandvars('$pwndata/spectral/v8')
+
 
 analysis='analysis_plots'
-#analysis='analysis'
-pwnlist=sorted([os.path.basename(i) for i in glob(j(base,analysis,'*')) if os.path.isdir(i)])
+pwnlist=sorted([os.path.basename(i) for i in glob(join(base,analysis,'*')) if os.path.isdir(i)])
 
 website=join(base,'website')
 
@@ -25,18 +26,16 @@ if not os.path.exists(website): os.makedirs(website)
 
 
 def get_results(pwn):
-    f = j(base,analysis.replace('plots','no_plots'),pwn,'results_%s.yaml' % pwn)
-    #f = j(base,analysis,pwn,'results_%s.yaml' % pwn)
+    f = join(base,analysis.replace('plots','no_plots'),pwn,'results_%s.yaml' % pwn)
 
     if not os.path.exists(f): return None
     results = yaml.load(open(f))
 
-    #for hypothesis in [at_pulsar, 'point', 'extended']:
-    for hypothesis in [at_pulsar]:
-        h=results[hypothesis]
+    for hypothesis in ['at_pulsar', 'point', 'extended']:
         if not results.has_key(hypothesis):
-            results[hypothesis]=defaultdict(lambda:-1),
+            results[hypothesis]=defaultdict(lambda:-1)
         for t in ['gtlike','pointlike']:
+            h=results[hypothesis]
             if not h.has_key(t):
                 h[t]=defaultdict(lambda:-1)
             for i in ['model', 'upper_limit', 'flux']:
@@ -45,7 +44,7 @@ def get_results(pwn):
     return results
 
 def get_sed(pwn,binning,hypothesis):
-    filename=j(base,analysis.replace('plots','no_plots'),pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
+    filename=join(base,analysis.replace('plots','no_plots'),pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
     if os.path.exists(filename) and yaml.load(open(filename)) != {}:
         return yaml.load(open(filename))
     elif binning == '1bpd':
@@ -55,21 +54,6 @@ def get_sed(pwn,binning,hypothesis):
     else:
         raise Exception("...")
 
-def get_t2t_table(table, **kwargs):
-
-    outtable=StringIO()
-
-    asciitable.write(table, outtable, 
-                     Writer=asciitable.FixedWidth,
-                     names=table.keys(),
-                     **kwargs
-                    )
-    t=outtable.getvalue()
-
-    # this is required by t2t for tables
-    # see for exmaple: http://txt2tags.org/markup.html
-    t='||' + t[2:]
-    return t
 
 
 def t2t(lines,name): 
@@ -84,76 +68,130 @@ def t2t(lines,name):
     os.system('txt2tags --target html --style color.css --css-sugar %s' % filename)
 
 
-def format_table(pwnlist):
+class TableFormatter(object):
+
+    def __init__(self, pwnlist):
+
+        table = OrderedDefaultdict(list)
+
+        flux_name=r'F(0.1-316)'
+        gamma_name=r'Gamma'
+
+        for pwn in pwnlist:
+            print pwn
+
+            results = get_results(pwn)
+            if results is None: continue
+
+            table['PSR'].append('[%s %s.html]' % (pwn,pwn))
+
+            gt_at_pulsar=results['at_pulsar']['gtlike']
+            gt_point=results['point']['gtlike']
+            gt_extended=results['extended']['gtlike']
+
+            pt_at_pulsar=results['at_pulsar']['pointlike']
+            pt_point=results['point']['pointlike']
+            pt_extended=results['extended']['pointlike']
 
 
-    table = OrderedDefaultdict(list)
+            ts_at_pulsar=max(gt_at_pulsar['TS'],0)
+            ts_point=max(gt_point['TS'],0)
+            ts_ext=max(gt_extended['ts_ext'],0)
 
-    flux_name=r'F(0.1-316)'
-    gamma_name=r'Gamma'
-
-    for pwn in pwnlist:
-        print pwn
-
-        results = get_results(pwn)
-        if results is None: continue
-
-        gt=results[at_pulsar]['gtlike']
-
-
-        ts=max(gt['TS'],0)
-        
-        try:
-            ts_ext=max(results['extended']['gtlike']['ts_ext'],0)
-        except:
-            ts_ext=-1
+            if ts_point > 25:
+                # source is significant
+                if ts_ext > 16:
+                    type = 'extended'
+                    self.hypothesis = 'extended'
+                    gt=gt_extended
+                else:
+                    type = 'point'
+                    self.hypothesis = 'point'
+                    gt=gt_point
+            else:
+                type = 'ul'
+                self.hypothesis = 'at_pulsar'
+                gt=gt_at_pulsar
 
 
-        if ts > 25:
-            flux=gt['flux']['flux']
-            flux_err=gt['flux']['flux_err']
-        else:
-            try:
-                ul=gt['upper_limit']['flux']
-            except:
-                ul=-1
+            if type == 'point':
+                displacement = '%.2f' % np.degrees(SkyDir(*pt_point['equ']).difference(SkyDir(*pt_at_pulsar['equ'])))
+            elif type == 'extended':
+                displacement = '%.2f' % np.degrees(SkyDir(*pt_extended['equ']).difference(SkyDir(*pt_at_pulsar['equ'])))
+            elif type == 'ul':
+                displacement = '-'
+                
+            ts_loc=ts_point-ts_at_pulsar
+            
+
+            if ts_point > 25:
+                flux=gt['flux']['flux']
+                flux_err=gt['flux']['flux_err']
+            else:
+                try:
+                    ul=gt['upper_limit']['flux']
+                except:
+                    ul=-1
+
+            if type != 'ul':
+
+                index=-1*gt['model']['Index']
+                index_err=-1*gt['model']['Index_err']
 
 
-        index=-1*gt['model']['Index']
-        index_err=-1*gt['model']['Index_err']
+            sed = get_sed(pwn,'1bpd','at_pulsar')
+            bandts = map(lambda x: max(x,0), sed['Test_Statistic'])
+            bandflux = sed['Ph_Flux']['Value']
+            bandflux_err = sed['Ph_Flux']['Error']
+            bandul = sed['Ph_Flux']['Upper_Limit']
 
 
-        sed = get_sed(pwn,'1bpd',at_pulsar)
-        bandts = map(lambda x: max(x,0), sed['Test_Statistic'])
-        bandflux = sed['Ph_Flux']['Value']
-        bandflux_err = sed['Ph_Flux']['Error']
-        bandul = sed['Ph_Flux']['Upper_Limit']
+            table['TS_at_pulsar'].append('%.1f' % ts_at_pulsar)
+            table['TS_loc'].append('%.1f' % (ts_loc))
+            table['TS_ext'].append('%.1f' % ts_ext)
+            table['disp'].append(displacement)
 
+            table[flux_name].append('%.1f +/- %.1f' % (flux/1e-9,flux_err/1e-9) if ts_point>=25 else '<%.1f' % (ul/1e-9))
 
-        table['PSR'].append('[%s %s.html]' % (pwn,pwn))
-        table['TS'].append('%.1f' % ts)
-        table['TS_ext'].append('%.1f' % ts_ext)
+            table[gamma_name].append('%.1f +/- %.1f' % (index,index_err) if ts_point>=25 else '-')
 
-        table[flux_name].append('%.2f +/- %.2f' % (flux/1e-9,flux_err/1e-9) if ts>=25 else '<%.2f' % (ul/1e-9))
+            table['TS(.1-1)'].append('%.1f' % bandts[0])
+            table['Flux(.1-1)'].append('%.1f +/- %.1f' % (bandflux[0]/1e-9,bandflux_err[0]/1e-9) if bandts[0] > 25 else '<%.1f' % (bandul[0]/1e-9))
 
-        table[gamma_name].append('%.2f +/- %.2f' % (index,index_err) if ts>=25 else '-')
+            table['TS(1-10)'].append('%.1f' % bandts[1])
+            table['Flux(1-10)'].append('%.1f +/- %.1f' % (bandflux[1]/1e-9,bandflux_err[1]/1e-9) if bandts[1] > 25 else '<%.1f' % (bandul[1]/1e-9))
 
-        table['TS(.1-1)'].append('%.1f' % bandts[0])
-        table['Flux(.1-1)'].append('%.2f +/- %.2f' % (bandflux[0]/1e-9,bandflux_err[0]/1e-9) if bandts[0] > 25 else '<%.2f' % (bandul[0]/1e-9))
+            table['TS(10-316)'].append('%.1f' % bandts[2])
+            table['Flux(10-316)'].append('%.1f +/- %.1f' % (bandflux[2]/1e-9,bandflux_err[2]/1e-9) if bandts[2] > 25 else '<%.1f' % (bandul[2]/1e-9))
 
-        table['TS(1-10)'].append('%.1f' % bandts[1])
-        table['Flux(1-10)'].append('%.2f +/- %.2f' % (bandflux[1]/1e-9,bandflux_err[1]/1e-9) if bandts[1] > 25 else '<%.2f' % (bandul[1]/1e-9))
+        self.table = table
 
-        table['TS(10-316)'].append('%.1f' % bandts[2])
-        table['Flux(10-316)'].append('%.2f +/- %.2f' % (bandflux[2]/1e-9,bandflux_err[2]/1e-9) if bandts[2] > 25 else '<%.2f' % (bandul[2]/1e-9))
+    def __str__(self):
+        return self.get_t2t_table(self.table)
 
-    return get_t2t_table(table)
+    @staticmethod
+    def get_t2t_table(table, **kwargs):
+
+        outtable=StringIO()
+
+        asciitable.write(table, outtable, 
+                         Writer=asciitable.FixedWidth,
+                         names=table.keys(),
+                         **kwargs
+                        )
+        t=outtable.getvalue()
+
+        # this is required by t2t for tables
+        # see for exmaple: http://txt2tags.org/markup.html
+        t='||' + t[2:]
+        return t
 
 def build_main_website():
 
     index_t2t = []
     index_t2t.append('PWNCatalog+\n\n')
-    index_t2t.append(format_table(pwnlist))
+    t=TableFormatter(pwnlist)
+    index_t2t.append(str(t))
     t2t(index_t2t, 'index')
 
 def build_each_page(pwn):
@@ -162,13 +200,14 @@ def build_each_page(pwn):
 
     index_t2t = []
     index_t2t.append(pwn+'\n\n')
-    index_t2t.append(format_table([pwn]))
+    t=TableFormatter([pwn])
+    index_t2t.append(str(t))
     index_t2t.append('')
     index_t2t.append('[Analysis Folder ../%s/%s]' % (analysis,pwn))
     index_t2t.append('')
     index_t2t.append('[log ../%s/%s/log_%s.txt]' % (analysis,pwn,pwn))
 
-    hypothesis=at_pulsar
+    hypothesis=t.hypothesis
 
     get_img_table = lambda *args: index_t2t.append('|| ' + ' | '.join(['[../%s/%s/%s]' % (analysis,pwn,i) for i in args]) + ' |\n\n')
 
