@@ -273,12 +273,11 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
         like.syncSrcParams(name)
 
         flux_ul, results = IntegralUpperLimit.calc_int(like, name, 
-                                                              skip_global_opt=True,
-                                                              freeze_all=True,
-                                                              cl=cl,
-                                                              emin=emin, 
-                                                              emax=emax, 
-                                                              **kwargs)
+                                                       freeze_all=True,
+                                                       cl=cl,
+                                                       emin=emin, 
+                                                       emax=emax, 
+                                                       **kwargs)
 
         prefactor=like[like.par_index(name, 'Prefactor')]
         pref_ul = results['ul_value']*prefactor.getScale()
