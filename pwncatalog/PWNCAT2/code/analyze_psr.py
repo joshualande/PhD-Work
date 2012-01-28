@@ -6,6 +6,7 @@ from uw.pulsar.phase_range import PhaseRange
 from likelihood_tools import force_gradient
 
 import os
+from os.path import join
 from glob import glob
 
 from setup_pwn import setup_pwn
@@ -75,7 +76,8 @@ if not os.path.exists('plots'): os.makedirs('plots')
 plot_phaseogram(name, ft1, off_pulse=phase, filename='plots/phaseogram_%s.png' % (name))
 plot_phase_vs_time(name, ft1, off_pulse=phase, filename='plots/phase_vs_time_%s.png' % (name))
 
-savedir=None if args.no_savedir else 'savedir'
+# nb, $PWD gets nicer paths then os.getcwd()
+savedir=None if args.no_savedir else join(os.getenv('PWD'),'savedir')
 
 def get_roi(**kwargs):
     print 'Building the ROI'
