@@ -1,7 +1,26 @@
 \section{Off-peak Phase Selection}
 
 
-\figref{off_peak_select} shows the off peak selection for some pulsars\dots
+To study the off-peak emission of \lat-detected pulsars, we first
+developed a new method for defining the off-peak emission.
+The primary constraint for this method was that it was systematic,
+computationally efficient and model independent, and that it correctly
+removed the pulsed emission for already studied pulsars.
+
+The method we developed is
+\begin{itemize}
+  \item First, deconstruct the pulsar phaseogram 
+    using a Bayseian blocks representation of the data.
+    \begin{itemize}
+      \item \figref{off_peak_select} shows the off peak selection for some pulsars\dots
+      \item Set the ncpPrior parameter to 5
+    \end{itemize}
+  \item Before beinning the data, first rotate the maximum phase range to 0
+    so that the off-peak region will not overlap the phase edge.
+  \item 
+\end{itemize}
+  required first representing the 
+
 
 \begin{figure}
   \ifdefined\bwfigures
@@ -13,14 +32,6 @@
   \label{fig:off_peak_select}
 \end{figure}
 
-
-To study the off-peak emission of \lat-detected pulsars, we first
-developed a new method for defining the off-peak emission.
-The primary constraint for this method was that it was systematic,
-computationally efficient and model independent, and that it correctly
-removed the pulsed emission for already studied pulsars.
-
-The method we developed required first representing the 
 
 THe off peak phase range is defined in \tabref{off_peak_phase_range}.
 
