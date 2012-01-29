@@ -339,3 +339,23 @@ echo python loop_pwn.py -c analyze_psr.py \
         -o /nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v7/analysis_plots
 
 # ----------------------------------------------------------------------------------------------------
+
+echo python $pwncode/loop_pwn.py -c $pwncode/analyze_psr.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify $pwncode/modify/modify_psr_lande.py \
+        -o $pwndata/spectral/v8/analysis_no_plots --no-plots --max-free 5
+
+echo python $pwncode/loop_pwn.py -c $pwncode/analyze_psr.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify $pwncode/modify/modify_psr_lande.py \
+        -o $pwndata/spectral/v8/analysis_plots --max-free 5
+
+# ----------------------------------------------------------------------------------------------------
+
+echo python $pwncode/loop_pwn.py -c $pwncode/analyze_psr.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify $pwncode/modify/modify_psr_lande.py \
+        -o $pwndata/spectral/temp/analysis_no_plots --no-plots --max-free 1 --no-point --no-extended --no-upper-limits
