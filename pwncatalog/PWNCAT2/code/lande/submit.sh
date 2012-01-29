@@ -358,4 +358,12 @@ echo python $pwncode/loop_pwn.py -c $pwncode/analyze_psr.py \
         --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
         --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
         --modify $pwncode/modify/modify_psr_lande.py \
-        -o $pwndata/spectral/temp/analysis_no_plots --no-plots --max-free 1 --no-point --no-extended --no-upper-limits
+        -o $pwndata/spectral/v9/analysis_no_plots --no-plots --max-free 5
+
+echo python $pwncode/loop_pwn.py -c $pwncode/analyze_psr.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify $pwncode/modify/modify_psr_lande.py \
+        -o $pwndata/spectral/v9/analysis_plots --max-free 5
+
+# ----------------------------------------------------------------------------------------------------
