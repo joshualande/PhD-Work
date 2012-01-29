@@ -14,10 +14,18 @@ import asciitable
 from lande_toolbag import OrderedDefaultdict
 
 base=expandvars('$pwndata/spectral/v8')
+#base=expandvars('$pwndata/spectral/temp')
+
 
 
 analysis='analysis_plots'
-pwnlist=sorted([os.path.basename(i) for i in glob(join(base,analysis,'*')) if os.path.isdir(i)])
+
+
+def get_pwnlist():
+    pwnlist=sorted(yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml'))).keys())
+    return pwnlist
+
+pwnlist=get_pwnlist()
 
 website=join(base,'website')
 
@@ -31,16 +39,10 @@ def get_results(pwn):
     if not os.path.exists(f): return None
     results = yaml.load(open(f))
 
-    for hypothesis in ['at_pulsar', 'point', 'extended']:
-        if not results.has_key(hypothesis):
-            results[hypothesis]=defaultdict(lambda:-1)
-        for t in ['gtlike','pointlike']:
-            h=results[hypothesis]
-            if not h.has_key(t):
-                h[t]=defaultdict(lambda:-1)
-            for i in ['model', 'upper_limit', 'flux']:
-                if not h[t].has_key(i):
-                    h[t][i]=defaultdict(lambda:-1)
+    if not results.has_key('at_pulsar') or \
+       not results['at_pulsar'].has_key('pointlike') or \
+       not results['at_pulsar'].has_key('gtlike'):
+        return None
     return results
 
 def get_sed(pwn,binning,hypothesis):
@@ -86,83 +88,144 @@ class TableFormatter(object):
             table['PSR'].append('[%s %s.html]' % (pwn,pwn))
 
             gt_at_pulsar=results['at_pulsar']['gtlike']
-            gt_point=results['point']['gtlike']
-            gt_extended=results['extended']['gtlike']
-
             pt_at_pulsar=results['at_pulsar']['pointlike']
-            pt_point=results['point']['pointlike']
-            pt_extended=results['extended']['pointlike']
 
+            if results.has_key('point') and results['point'].has_key('pointlike') and results['point'].has_key('gtlike'):
+                point_finished = True
+
+
+                gt_point=results['point']['gtlike']
+                pt_point=results['point']['pointlike']
+
+                ts_point=max(gt_point['TS'],0)
+            else:
+                point_finished = False
+
+            if results.has_key('extended') and results['extended'].has_key('pointlike') and results['extended'].has_key('gtlike'):
+                ext_finished = True
+
+                gt_extended=results['extended']['gtlike']
+                pt_extended=results['extended']['pointlike']
+
+                ts_ext=max(gt_extended['ts_ext'],0)
+            else:
+                ext_finished = False
 
             ts_at_pulsar=max(gt_at_pulsar['TS'],0)
-            ts_point=max(gt_point['TS'],0)
-            ts_ext=max(gt_extended['ts_ext'],0)
+            table['TS_at_pulsar'].append('%.1f' % ts_at_pulsar)
 
-            if ts_point > 25:
-                # source is significant
-                if ts_ext > 16:
-                    type = 'extended'
-                    self.hypothesis = 'extended'
-                    gt=gt_extended
-                else:
-                    type = 'point'
-                    self.hypothesis = 'point'
-                    gt=gt_point
+            if point_finished:
+                ts_loc = ts_point - ts_at_pulsar
+                table['TS_loc'].append('%.1f' % (ts_loc))
             else:
-                type = 'ul'
+                table['TS_loc'].append('None')
+                
+            if ext_finished:
+                table['TS_ext'].append('%.1f' % ts_ext)
+            else:
+                table['TS_ext'].append('None')
+
+
+            if ext_finished and ts_point > 25 and ts_ext > 16:
+                # is extended
+                besttype = 'extended'
+                self.hypothesis = 'extended'
+                gt=gt_extended
+                pt=pt_extended
+
+            elif point_finished and ts_point > 25:
+                # is point
+                besttype = 'point'
+                self.hypothesis = 'point'
+                gt=gt_point
+                pt=pt_point
+
+            elif (not point_finished) and ts_at_pulsar > 25:
+                # is point at_pulsar, only b/c 'point' has not finished
+               besttype='point'
+               self.hypothesis='at_pulsar'
+               gt=gt_at_pulsar
+               pt=pt_at_pulsar
+
+            else:
+                # upper limit
+                besttype = 'ul'
                 self.hypothesis = 'at_pulsar'
                 gt=gt_at_pulsar
+                pt=pt_at_pulsar
 
 
-            if type == 'point':
-                displacement = '%.2f' % np.degrees(SkyDir(*pt_point['equ']).difference(SkyDir(*pt_at_pulsar['equ'])))
-            elif type == 'extended':
-                displacement = '%.2f' % np.degrees(SkyDir(*pt_extended['equ']).difference(SkyDir(*pt_at_pulsar['equ'])))
-            elif type == 'ul':
-                displacement = '-'
-                
-            ts_loc=ts_point-ts_at_pulsar
-            
+            displacement = np.degrees(SkyDir(*pt['equ']).difference(SkyDir(*pt_at_pulsar['equ'])))
+            table['disp'].append('%.2f' % displacement)
 
-            if ts_point > 25:
+            if besttype != 'ul':
                 flux=gt['flux']['flux']
                 flux_err=gt['flux']['flux_err']
+                table[flux_name].append('%.1f +/- %.1f' % (flux/1e-9,flux_err/1e-9))
             else:
-                try:
+                if gt.has_key('upper_limit') and \
+                   type(gt['upper_limit']) == dict and \
+                   gt['upper_limit'].has_key('flux'):
                     ul=gt['upper_limit']['flux']
-                except:
-                    ul=-1
+                    table[flux_name].append('<%.1f' % (ul/1e-9))
+                else:
+                    table[flux_name].append('-')
 
-            if type != 'ul':
-
+            if besttype != 'ul':
                 index=-1*gt['model']['Index']
                 index_err=-1*gt['model']['Index_err']
+                table[gamma_name].append('%.1f +/- %.1f' % (index,index_err))
+            else:
+                table[gamma_name].append('-')
+            
+            if gt.has_key('bands'):
 
+                bands=gt['bands']
+                if not np.allclose(bands['Energy']['Lower'], [1e2, 1e3, 1e4]) or \
+                   not np.allclose(bands['Energy']['Upper'], [1e3, 1e4, 10**5.5]):
+                    raise Exception("...")
 
-            sed = get_sed(pwn,'1bpd','at_pulsar')
-            bandts = map(lambda x: max(x,0), sed['Test_Statistic'])
-            bandflux = sed['Ph_Flux']['Value']
-            bandflux_err = sed['Ph_Flux']['Error']
-            bandul = sed['Ph_Flux']['Upper_Limit']
+                ts1,ts2,ts3=bands['Test_Statistic']
+                index1,index2,index3=bands['Index']['Value']
+                index_err1,index_err2,index_err3=bands['Index']['Error']
 
+                flux1,flux2,flux3=bands['Ph_Flux']['Value']
+                flux_err1,flux_err2,flux_err3=bands['Ph_Flux']['Error']
 
-            table['TS_at_pulsar'].append('%.1f' % ts_at_pulsar)
-            table['TS_loc'].append('%.1f' % (ts_loc))
-            table['TS_ext'].append('%.1f' % ts_ext)
-            table['disp'].append(displacement)
+                ul1,ul2,ul3=bands['Ph_Flux']['Upper_Limit']
 
-            table[flux_name].append('%.1f +/- %.1f' % (flux/1e-9,flux_err/1e-9) if ts_point>=25 else '<%.1f' % (ul/1e-9))
+                table['TS(.1-1)'].append('%.1f' % ts1)
+                if ts1>25:
+                    table['F(.1-1)'].append('%.1f +/- %.1f' % (flux1/1e-9,flux_err1/1e-9))
+                    table['Index(.1-1)'].append('%.1f +/- %.1f' % (index1,index_err1))
+                else:
+                    table['F(.1-1)'].append('<%.1f' % (ul3/1e-9))
+                    table['Index(.1-1)'].append('-')
 
-            table[gamma_name].append('%.1f +/- %.1f' % (index,index_err) if ts_point>=25 else '-')
+                table['TS(1-10)'].append('%.1f' % ts2)
+                if ts2>25:
+                    table['F(1-10)'].append('%.1f +/- %.1f' % (flux2/1e-9,flux_err2/1e-9))
+                    table['Index(1-10)'].append('%.1f +/- %.1f' % (index2,index_err2))
+                else:
+                    table['F(1-10)'].append('<%.1f' % (ul2/1e-9))
+                    table['Index(1-10)'].append('-')
 
-            table['TS(.1-1)'].append('%.1f' % bandts[0])
-            table['Flux(.1-1)'].append('%.1f +/- %.1f' % (bandflux[0]/1e-9,bandflux_err[0]/1e-9) if bandts[0] > 25 else '<%.1f' % (bandul[0]/1e-9))
-
-            table['TS(1-10)'].append('%.1f' % bandts[1])
-            table['Flux(1-10)'].append('%.1f +/- %.1f' % (bandflux[1]/1e-9,bandflux_err[1]/1e-9) if bandts[1] > 25 else '<%.1f' % (bandul[1]/1e-9))
-
-            table['TS(10-316)'].append('%.1f' % bandts[2])
-            table['Flux(10-316)'].append('%.1f +/- %.1f' % (bandflux[2]/1e-9,bandflux_err[2]/1e-9) if bandts[2] > 25 else '<%.1f' % (bandul[2]/1e-9))
+                table['TS(10-316)'].append('%.1f' % ts3)
+                if ts3>25:
+                    table['F(10-316)'].append('%.1f +/- %.1f' % (flux3/1e-9,flux_err3/1e-9))
+                    table['Index(10-316)'].append('%.1f +/- %.1f' % (index3,index_err3))
+                else:
+                    table['F(10-316)'].append('<%.1f' % (ul3/1e-9))
+                    table['Index(10-316)'].append('-')
+            else:
+                table['F(.1-1)'].append('-')
+                table['Index(.1-1)'].append('-')
+                table['TS(1-10)'].append('-')
+                table['F(1-10)'].append('-')
+                table['Index(1-10)'].append('-')
+                table['TS(10-316)'].append('-')
+                table['F(10-316)'].append('-')
+                table['Index(10-316)'].append('-')
 
         self.table = table
 
