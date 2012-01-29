@@ -18,20 +18,20 @@
     >> roi.modify(which='PSRNAME', sigma=0.2)
 """
 
+def set_flux_index(roi,name,flux,index,emin=100,emax=10**5.5):
+    """ Sets the (100 MeV to 100 GeV) flux and index for a
+        given source. """
+    model=roi.get_model(which=name)
+    model['index']=index
+    model.set_flux(flux,emin=emin,emax=emax)
+    roi.modify(which=name,model=model,keep_old_flux=False)
+
 def modify_roi(name,roi):
     """ For each modification, add some justifcaiton for why
         this needs to be done + where you did the analysis
         which convinced you we need to do this to the region. """
 
     print 'Modifying source %s' % name
-
-    def set_flux_index(name,flux,index):
-        """ Sets the (100 MeV to 100 GeV) flux and index for a
-            given source. """
-        model=roi.get_model(which=name)
-        model['index']=index
-        model.set_flux(flux,emin=100,emax=100000)
-        roi.modify(which=name,model=model)
 
     if name == 'PSRJ0007+7303':
         roi.del_source('2FGL J0007.0+7303')
@@ -41,7 +41,7 @@ def modify_roi(name,roi):
 
     elif name == 'PSRJ0034-0534':
         roi.del_source('2FGL J0034.4-0534')
-        set_flux_index('PSRJ0034-0534',17.26e-9, 2.27) # from PWNCAT1
+        set_flux_index(roi,'PSRJ0034-0534',17.26e-9, 2.27) # from PWNCAT1
 
     elif name == 'PSRJ0106+4855':
         roi.del_source('2FGL J0106.5+4854')
@@ -88,7 +88,7 @@ def modify_roi(name,roi):
 
     elif name == 'PSRJ0633+1746':
         roi.del_source('2FGL J0633.9+1746')
-        set_flux_index('PSRJ0633+1746', 1115.54e-9, 2.24) # from PWNCAT1
+        set_flux_index(roi,'PSRJ0633+1746', 1115.54e-9, 2.24) # from PWNCAT1
 
     elif name == 'PSRJ0659+1414':
         roi.del_source('2FGL J0659.7+1417')
@@ -111,7 +111,7 @@ def modify_roi(name,roi):
         # of the background model - Nov, 4, 2011 Joshua Lande
         roi.del_source('2FGL J0835.3-4510')
         roi.del_source('VelaX')
-        set_flux_index('PSRJ0835-4510',405.44e-9, 2.30) # from PWNCAT1
+        set_flux_index(roi,'PSRJ0835-4510',405.44e-9, 2.30) # from PWNCAT1
 
     elif name == 'PSRJ0908-4913':
         roi.del_source('2FGL J0908.5-4913')
@@ -133,7 +133,7 @@ def modify_roi(name,roi):
         # to 1023 in the 2FGL - Dec 21 Romain 
         roi.del_source('2FGL J1023.5-5749c')
         roi.del_source('2FGL J1022.7-5741')
-        set_flux_index('PSRJ1023-5746',1.33e-9, 1.05) # from PWNCAT1
+        set_flux_index(roi,'PSRJ1023-5746',1.33e-9, 1.05) # from PWNCAT1
 
     elif name == 'PSRJ1024-0719':
         roi.del_source('2FGL J1024.6-0719')
@@ -241,7 +241,7 @@ def modify_roi(name,roi):
 
     elif name == 'PSRJ1813-1246':
         roi.del_source('2FGL J1813.4-1246')
-        set_flux_index('PSRJ1813-1246', 295.55e-9, 2.65) # from PWNCAT1
+        set_flux_index(roi,'PSRJ1813-1246', 295.55e-9, 2.65) # from PWNCAT1
 
     elif name == 'PSRJ1823-3021A':
         roi.del_source('2FGL J1823.4-3014')
@@ -255,7 +255,7 @@ def modify_roi(name,roi):
 
     elif name == 'PSRJ1836+5925':
         roi.del_source('2FGL J1836.2+5926')
-        set_flux_index('PSRJ1836+5925', 579.6e-9, 2.07) # from PWNCAT1
+        set_flux_index(roi,'PSRJ1836+5925', 579.6e-9, 2.07) # from PWNCAT1
 
     elif name == 'PSRJ1846+0919':
         roi.del_source('2FGL J1846.4+0920')
@@ -290,7 +290,7 @@ def modify_roi(name,roi):
 
     elif name == 'PSRJ2021+4026':
         roi.del_source('2FGL J2021.5+4026')
-        set_flux_index('PSRJ2021+4026', 1603.00e-9, 2.36) # from PWNCAT1
+        set_flux_index(roi,'PSRJ2021+4026', 1603.00e-9, 2.36) # from PWNCAT1
 
     elif name == 'PSRJ2028+3332':
         roi.del_source('2FGL J2028.3+3332')
@@ -313,11 +313,11 @@ def modify_roi(name,roi):
 
     elif name == 'PSRJ2055+2539':
         roi.del_source('2FGL J2055.8+2539')
-        set_flux_index('PSRJ2055+2539', 38.41e-9, 2.51) # from PWNCAT1
+        set_flux_index(roi,'PSRJ2055+2539', 38.41e-9, 2.51) # from PWNCAT1
 
     elif name == 'PSRJ2124-3358':
         roi.del_source('2FGL J2124.6-3357')
-        set_flux_index('PSRJ2124-3358', 22.78e-9, 2.06) # from PWNCAT1
+        set_flux_index(roi,'PSRJ2124-3358', 22.78e-9, 2.06) # from PWNCAT1
 
     elif name == 'PSRJ2139+4716':
         roi.del_source('2FGL J2139.8+4714')
