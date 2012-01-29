@@ -16,6 +16,7 @@ from lande_extended import fit_extension_frozen
 from lande_pulsar import plot_phaseogram,plot_phase_vs_time
 from lande_plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter,plot_gtlike_cutoff_test
 from lande_sed import LandeSED
+from lande_band_fitter import BandFitter
 
 from setup_pwn import get_catalog
 
@@ -212,6 +213,10 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax,
 
     if upper_limit:
         r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95, delta_log_like_limits=10)
+
+    if all_energy(emin,emax):
+        bf = BandFitter(like, name, bin_edges=three_bins)
+        r['bands'] = bf.todict()
 
     def sed(kind,**kwargs):
         print 'Making %s SED' % kind
