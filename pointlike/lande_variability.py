@@ -2,7 +2,8 @@
     using pointlike. 
 """
 from tempfile import mkdtemp
-from os.path import join
+from os.path import join, exists
+import os
 import shutil
  
 import pyfits
@@ -41,7 +42,7 @@ class VariabilityTester(object):
 
         if self.savedir is not None:
             self.tempdir=self.savedir
-            if not os.path.exists(self.tempdir):
+            if not exists(self.tempdir):
                 os.makedirs(self.savedir)
         else:
             self.tempdir=mkdtemp()
@@ -56,7 +57,7 @@ class VariabilityTester(object):
         self.tstops = self.time_bins[1:]
 
 
-        empty = lambda: np.empty_like(self.tstarts)
+        empty = lambda: np.empty_like(self.tstarts).astype(float)
 
         self.ll_0 = ll_0 = empty()
         self.ll_1 = ll_1 = empty()
@@ -76,18 +77,16 @@ class VariabilityTester(object):
 
             ll = lambda: -smaller_roi.logLikelihood(smaller_roi.parameters())
             F = lambda: smaller_roi.get_model(which).i_flux(emin, emax)
-            def p():
-                smaller_roi.print_summary()
-                print roi
+            p = lambda: smaller_roi.print_summary()
 
             # * freeze everything but normalization of source
 
-            for source in list(roi.psm.point_sources) + list(roi.dsm.diffuse_sources):
-                roi.modify(which=source,free=False)
+            for source in list(smaller_roi.psm.point_sources) + list(smaller_roi.dsm.diffuse_sources):
+                smaller_roi.modify(which=source,free=False)
 
-            free=np.zeros_like(roi.get_model(which).free).astype(bool)
+            free=np.zeros_like(smaller_roi.get_model(which).free).astype(bool)
             free[0]=True
-            roi.modify(which=which, free=free)
+            smaller_roi.modify(which=which, free=free)
 
             p()
 
@@ -97,7 +96,7 @@ class VariabilityTester(object):
 
             # * fit prefactor of source
 
-            roi.fit(use_gradient=False)
+            smaller_roi.fit(use_gradient=False)
             p()
 
             # * calcualte likelihood for fit flux
@@ -149,19 +148,27 @@ class VariabilityTester(object):
             raise Exception("sanity check")
 
 
-        # * cut ft1file on time using gtselect
+        # * cut ft1file on time using gtmktime
+
         ft1files=roi.sa.pixeldata.ft1files
+        ft2files=roi.sa.pixeldata.ft2files
+        if len(ft2files) > 1: raise Exception("...")
+        ft2file=ft2files[0]
+
         evfile=Gtlike.make_evfile(ft1files,tempdir)
 
-        cut_evfile=join(tempdir,"ft1_%s_%s.fits" % (tstart, tstop))
-        if not roi.quiet: print 'Running gtselect'
-        gtselect=GtApp('gtselect','dataSubselector')
-        gtselect.run(infile=evfile,
-                     outfile=cut_evfile,
-                     ra=0, dec=0, rad=180,
-                     tmin=tstart, tmax=tstop,
-                     emin=sa.emin, emax=sa.emax,
-                     zmax=180)
+        cut_evfile=join(tempdir,"cut_ft1_%s_%s.fits" % (tstart, tstop))
+
+        if not exists(cut_evfile):
+            if not roi.quiet: print 'Running gtmktime'
+            gtmktime=GtApp('gtmktime','dataSubselector')
+            gtmktime.run(scfile=ft2file,
+                         evfile=evfile,
+                         outfile=cut_evfile,
+                         roicut='no',
+                         filter="(START>=%s)&&(STOP<=%s)" % (tstart,tstop))
+        else:
+            print 'Skip gtmktime'
 
         ds_kwargs['ft1files'] = cut_evfile
 
@@ -186,7 +193,7 @@ class VariabilityTester(object):
         
         return smaller_roi
 
-    def todict():
+    def todict(self):
         return tolist(
             dict(
                 ll_0 = self.ll_0,
