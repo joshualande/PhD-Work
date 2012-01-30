@@ -430,7 +430,7 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
         def set(parname,value,scale,lower,upper):
             """ Note, lower + upper are fractional limits if free=True. """
             par=like[like.par_index(name, parname)]
-            par.setBounds(-1e-100,1e100) # kind of lame, but i think this is necessary
+            par.setBounds(-1e100,1e100) # kind of lame, but i think this is necessary
             par.setScale(scale)
             par.setTrueValue(value)
             par.setBounds(lower,upper)
