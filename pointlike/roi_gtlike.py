@@ -59,6 +59,23 @@ class Gtlike(object):
     )
 
 
+    @staticmethod
+    def make_evfile(ft1files,tempdir):
+        if isinstance(ft1files,str):
+            evfile=ft1files
+        elif len(ft1files) == 1:
+            evfile=ft1files[0]
+        else:
+            ft1list = join(tempdir,'ft1files.lst')
+            if not os.path.exists(ft1list):
+                temp=open(ft1list,'w')
+                temp.write('\n'.join(pd.ft1files))
+                temp.close()
+            evfile='@'+ft1list
+        return evfile
+
+
+
     @keyword_options.decorate(defaults)
     def __init__(self, roi, **kwargs):
         """ Build a gtlike pyLikelihood object
@@ -139,17 +156,7 @@ class Gtlike(object):
 
         for src in shrink_list: src.spatial_model.unshrink()
 
-        if isinstance(pd.ft1files,str):
-            evfile=pd.ft1files
-        elif len(pd.ft1files) == 1:
-            evfile=pd.ft1files[0]
-        else:
-            ft1list = join(self.tempdir,'ft1files.lst')
-            if not os.path.exists(ft1list):
-                temp=open(ft1list,'w')
-                temp.write('\n'.join(pd.ft1files))
-                temp.close()
-            evfile='@'+ft1list
+        evfile=Gtlike.make_evfile(pd.ft1files,self.tempdir)
 
         cut_evfile=join(self.tempdir,"ft1_cut.fits")
         if not os.path.exists(cut_evfile):
@@ -208,7 +215,6 @@ class Gtlike(object):
         obs=BinnedObs(srcmap_file,expcube_file,bexpmap_file,irfs)
 
         self.like = BinnedAnalysis(obs,input_srcmdl_file,self.optimizer)
-
 
         if not roi.quiet: print 'LIKE Created!'
 
