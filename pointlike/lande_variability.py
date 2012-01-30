@@ -15,6 +15,7 @@ from uw.utilities import keyword_options
 
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
 from uw.like.roi_state import PointlikeState
+from uw.utilities.phasetools import phase_ltcube
 
 from roi_gtlike import Gtlike
 
@@ -56,16 +57,21 @@ class VariabilityTester(object):
         self.tstarts = self.time_bins[:-1]
         self.tstops = self.time_bins[1:]
 
-
         empty = lambda: np.empty_like(self.tstarts).astype(float)
 
-        self.ll_0 = ll_0 = empty()
-        self.ll_1 = ll_1 = empty()
+        def ll(roi):
+            return -roi.logLikelihood(roi.parameters())
 
-        self.F_0 = F_0 = empty()
+        def F(roi):
+            emin, emax = roi.bin_edges[0], roi.bin_edges[-1]
+            return roi.get_model(which).i_flux(emin, emax)
+
+        self.ll_0 = ll_0 = ll(roi)
+        self.F_0 = F_0 = F(roi)
+
+        self.ll_1 = ll_1 = empty()
         self.F_1 = F_1 = empty()
 
-        emin, emax = roi.bin_edges[0], roi.bin_edges[-1]
 
         for i,(tstart,tstop) in enumerate(zip(self.tstarts, self.tstops)):
             
@@ -74,10 +80,6 @@ class VariabilityTester(object):
 
             smaller_roi = VariabilityTester.time_cut(roi, self.tempdir, tstart, tstop)
             self.smaller_roi = smaller_roi
-
-            ll = lambda: -smaller_roi.logLikelihood(smaller_roi.parameters())
-            F = lambda: smaller_roi.get_model(which).i_flux(emin, emax)
-            p = lambda: smaller_roi.print_summary()
 
             # * freeze everything but normalization of source
 
@@ -88,20 +90,14 @@ class VariabilityTester(object):
             free[0]=True
             smaller_roi.modify(which=which, free=free)
 
-            p()
-
-            # * calculate likelihood for flux constant
-
-            ll_0[i], F_0[i] = ll(), F()
-
             # * fit prefactor of source
 
             smaller_roi.fit(use_gradient=False)
-            p()
+            smaller_roi.print_summary()
 
             # * calcualte likelihood for fit flux
 
-            self.ll_1[i], self.F_1[i] = ll(), F()
+            self.ll_1[i], self.F_1[i] = ll(smaller_roi), F(smaller_roi)
 
 
         # * compute TS_var
@@ -117,9 +113,10 @@ class VariabilityTester(object):
 
         saved_state.restore()
 
-
     @staticmethod
     def get_time_range(ft1files):
+        """ Get the largest time range (in MET) from an ft1 file
+            or a list of ft1 files. """
         if isinstance(ft1files,list):
             tmins,tmaxs = zip(*[VariabilityTester.get_time_range(i) for i in ft1files])
             return min(tmins),max(tmaxs)
@@ -161,20 +158,52 @@ class VariabilityTester(object):
 
         if not exists(cut_evfile):
             if not roi.quiet: print 'Running gtmktime'
-            gtmktime=GtApp('gtmktime','dataSubselector')
+            gtmktime=GtApp('gtmktime', 'dataSubselector')
             gtmktime.run(scfile=ft2file,
                          evfile=evfile,
                          outfile=cut_evfile,
                          roicut='no',
                          filter="(START>=%s)&&(STOP<=%s)" % (tstart,tstop))
         else:
-            print 'Skip gtmktime'
+            print 'Skiping gtmktime for %s to %s' % (tstart,tstop)
 
         ds_kwargs['ft1files'] = cut_evfile
 
         # * create new binfile and ltcube
         ds_kwargs['binfile'] = join(tempdir,'binned_%s_%s.fits' % (tstart, tstop))
-        ds_kwargs['ltcube'] = join(tempdir,'ltcube_%s_%s.fits' % (tstart, tstop))
+
+        # save this to see if it has been phased by 
+        # the function uw.utilities.phasetools.phase_ltcube
+        all_time_ltcube = ds_kwargs['ltcube']
+
+        new_ltcube = join(tempdir,'ltcube_%s_%s.fits' % (tstart, tstop))
+
+        if not exists(new_ltcube):
+            if not roi.quiet: print 'Running gtltcube for %s to %s' % (tstart,tstop)
+            gtltcube=GtApp('gtltcube', 'Likelihood')
+            gtltcube.run(evfile=cut_evfile,
+                         scfile=ft2file,
+                         outfile=new_ltcube,
+                         dcostheta=0.025, 
+                         binsz=1)
+        else:
+            print 'Skiping gtltcube for %s to %s' % (tstart,tstop)
+
+        # next, check if ltcube is phased
+        f = pyfits.open(all_time_ltcube)
+        if f['exposure'].header.has_key('PHASE'):
+            assert f['exposure'].header['PHASE'] == f['weighted_exposure'].header['PHASE']
+            phase = f['exposure'].header['PHASE']
+
+            phased_ltcube = join(tempdir,'phased_ltcube_%s_%s.fits' % (tstart, tstop))
+            if not exists(phased_ltcube):
+                phase_ltcube(new_ltcube, phased_ltcube, phase)
+            else:
+                print 'Skiping gtltcube phasing for %s to %s' % (tstart,tstop)
+
+            ds_kwargs['ltcube'] = phased_ltcube
+        else:
+            ds_kwargs['ltcube'] = new_ltcube
 
         # * create new ds object
 
@@ -196,11 +225,13 @@ class VariabilityTester(object):
     def todict(self):
         return tolist(
             dict(
-                ll_0 = self.ll_0,
-                ll_1 = self.ll_1,
-                F_0 = self.F_0,
-                F_1 = self.F_1,
-                TS_var = self.TS_var
+                pointlike=dict(
+                    ll_0 = self.ll_0,
+                    ll_1 = self.ll_1,
+                    F_0 = self.F_0,
+                    F_1 = self.F_1,
+                    TS_var = self.TS_var
+                )
             )
         )
 
