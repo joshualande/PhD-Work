@@ -24,24 +24,37 @@ import lande_units as units
 
 def paranoid_gtlike_fit(like, covar=True):
     """ Perform a sepctral fit in gtlike in
-        a paranoid manner. """
+        a paranoid manner. 
+        
+        See here for description of method:
+            http://fermi.gsfc.nasa.gov/ssc/data/analysis/documentation/Cicerone/Cicerone_Likelihood/Fitting_Models.html
+    """
     saved_state = LikelihoodState(like)
     try:
         print 'First, fitting with minuit'
         like.fit(optimizer="MINUIT",covar=covar)
     except Exception, ex:
         print 'Minuit fit failed with optimizer=MINUIT, Try again with DRMNFB + NEWMINUIT!', ex
-        # See here for description of method.
-        #   http://fermi.gsfc.nasa.gov/ssc/data/analysis/documentation/Cicerone/Cicerone_Likelihood/Fitting_Models.html
+        traceback.print_exc(file=sys.stdout)
         saved_state.restore()
 
         try:
+            saved_state = LikelihoodState(like)
             print 'Refitting, first with DRMNFB'
             like.fit(optimizer='DRMNFB', covar=False)
             print 'Refitting, second with NEWMINUIT'
             like.fit(optimizer='NEWMINUIT', covar=covar)
         except Exception, ex:
             print 'ERROR spectral fitting with DRMNFB + NEWMINUIT: ', ex
+            traceback.print_exc(file=sys.stdout)
+            saved_state.restore()
+            try:
+                saved_state = LikelihoodState(like)
+                print 'Refitting with LBFGS'
+                like.fit(optimizer='LBFGS', covar=covar)
+            except Exception, ex:
+                print 'ERROR spectral fitting with LBFGS', ex
+                traceback.print_exc(file=sys.stdout)
 
 
 def pointlike_spectrum_to_dict(model, errors=False):
@@ -86,6 +99,7 @@ def gtlike_flux_dict(like,name,emin,emax,flux_units):
         f['eflux_err']=ce(like.energyFluxError(name,emin=emin,emax=emax))
     except Exception, ex:
         print 'ERROR calculating flux error: ', ex
+        traceback.print_exc(file=sys.stdout)
         f['flux_err']=-1
         f['eflux_err']=-1
     return f
@@ -264,7 +278,7 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
         prefactor.setValue(1)
         # unbound the prefactor since the default range 1e-2 to 1e2 may not be big enough
         # in small phase ranges.
-        prefactor.setBounds(0,1e10)
+        prefactor.setBounds(1e-10,1e10)
 
         scale=like[like.par_index(name, 'Scale')]
         scale.setScale(1)
@@ -407,7 +421,7 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
         def fix(parname,value):
             par=like[like.par_index(name, parname)]
             par.setScale(1)
-            par.setBounds(-1e10,1e10) # kind of lame, but i think this is necessary
+            par.setBounds(-1e100,1e100) # kind of lame, but i think this is necessary
             par.setTrueValue(value)
             par.setBounds(value,value)
             par.setFree(0)
@@ -416,7 +430,7 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
         def set(parname,value,scale,lower,upper):
             """ Note, lower + upper are fractional limits if free=True. """
             par=like[like.par_index(name, parname)]
-            par.setBounds(-1e10,1e10) # kind of lame, but i think this is necessary
+            par.setBounds(-1e-100,1e100) # kind of lame, but i think this is necessary
             par.setScale(scale)
             par.setTrueValue(value)
             par.setBounds(lower,upper)
@@ -485,6 +499,7 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
         d['TS_cutoff']=2*(ll_1-ll_0)
     except Exception, ex:
         print 'ERROR gtlike test cutoff: ', ex
+        traceback.print_exc(file=sys.stdout)
         d=-1
     finally:
         like.setSpectrum(name,old_spectrum)
