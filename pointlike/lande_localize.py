@@ -83,6 +83,8 @@ class MultiLocalizer():
     def __init__(self, roi, *sources, **kwargs):
         keyword_options.process(self, kwargs)
 
+        print "Warning: this code doesn't really work"
+
         self.roi=roi
 
         if len(sources)<2:
@@ -200,6 +202,4 @@ class MultiLocalizer():
         self.roi.quiet = old_quiet
 
         return
-
-
 
