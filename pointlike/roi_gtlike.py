@@ -169,7 +169,7 @@ class Gtlike(object):
                          emin=self.emin, emax=self.emax,
                          zmax=180)
         else:
-            if not roi.quiet: print 'Skip... gtselect'
+            if not roi.quiet: print '... Skiping gtselect'
 
         if not os.path.exists(cmap_file):
             if not roi.quiet: print 'Running gtbin (ccube)'
@@ -183,7 +183,7 @@ class Gtlike(object):
                       ebinalg='LOG', emin=self.emin, emax=self.emax, enumbins=self.enumbins,
                       coordsys=coordsys_str)
         else:
-            if not roi.quiet: print 'Skip... gtbin (ccube)'
+            if not roi.quiet: print '... Skiping gtbin (ccube)'
 
         if not os.path.exists(bexpmap_file):
             # https://confluence.slac.stanford.edu/display/ST/Science+Tools+Development+Notes?focusedCommentId=99484083#comment-99484083
@@ -196,7 +196,7 @@ class Gtlike(object):
                           outfile=bexpmap_file,
                           irfs=irfs)
         else:
-            if not roi.quiet: print 'Skip... gtexpcube'
+            if not roi.quiet: print '... Skiping gtexpcube'
 
         if not os.path.exists(srcmap_file):
             if not roi.quiet: print 'Running gtsrcmaps'
@@ -209,7 +209,7 @@ class Gtlike(object):
                           outfile=srcmap_file,
                           irfs=irfs)
         else:
-            if not roi.quiet: print 'skip... gtsrcmaps'
+            if not roi.quiet: print '... Skiping gtsrcmaps'
 
         if not roi.quiet: print 'Creating LIKE'
         obs=BinnedObs(srcmap_file,expcube_file,bexpmap_file,irfs)
