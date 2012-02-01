@@ -680,7 +680,6 @@ def fit_prefactor(roi, which, *args, **kwargs):
     for other_name,other_free in frozen_sources.items():
         roi.modify(which=other_name,free=other_free)
 
-
 def force_gradient(use_gradient):
     """ A kludge to force use_gradient everywhere! """
     from uw.like.roi_analysis import ROIAnalysis
