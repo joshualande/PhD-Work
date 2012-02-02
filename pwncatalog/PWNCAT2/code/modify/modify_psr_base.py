@@ -66,7 +66,7 @@ def modify_roi(name,roi):
 
     elif name == 'PSRJ0534+2200':
         roi.del_source('2FGL J0534.5+2201')
-        set_flux_index('PSRJ0534+2200',980.00e-9, 2.15) # from PWNCAT1
+        set_flux_index(roi,'PSRJ0534+2200',980.00e-9, 2.15) # from PWNCAT1
 
     elif name == 'PSRJ0610-2100':
         roi.del_source('2FGL J0610.3-2059')
