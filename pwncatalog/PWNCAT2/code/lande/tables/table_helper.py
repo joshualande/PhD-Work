@@ -8,7 +8,7 @@ import os.path
 import yaml
 import asciitable
 
-base='$pwndata/spectral/v8/'
+base='$pwndata/spectral/v9/'
 
 fitdir=expandvars(j(base,'analysis_no_plots/'))
 savedir=expandvars(j(base,'tables'))
@@ -79,3 +79,34 @@ def get_pwnlist():
     pwnlist=sorted(yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml'))).keys())
     return pwnlist
 
+
+class BestHypothesis(object):
+    def __init__(self, results):
+        self.results = results
+
+        at_pulsar_gtlike = results['at_pulsar']['gtlike']
+        at_pulsar_pointlike = results['at_pulsar']['pointlike']
+        
+
+        point_gtlike = results['point']['gtlike']
+        point_pointlike = results['point']['pointlike']
+        
+        extended_gtlike = results['extended']['gtlike']
+        extended_pointlike = results['extended']['pointlike']
+
+        ts_point = point_gtlike['TS']
+        ts_ext = max(extended_gtlike['ts_ext'],0)
+
+        if ts_point > 25:
+            if ts_ext > 16:
+                self.gtlike = extended_gtlike
+                self.pointlike = extended_pointlike
+                self.type = 'extended'
+            else:
+                self.gtlike = point_gtlike
+                self.pointlike = point_pointlike
+                self.type = 'point'
+        else:
+            self.type = 'upper_limit'
+            self.gtlike = at_pulsar_gtlike
+            self.pointlike = at_pulsar_pointlike

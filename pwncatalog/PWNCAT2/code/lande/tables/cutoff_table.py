@@ -8,7 +8,8 @@ def cutoff_table(pwnlist):
     flux_name = r'$G_{0.1-316}$'
     index_name = r'$\Gamma$'
     cutoff_name = r'$E_\text{cutoff}$'
-    ts_cutoff_name = r'$\text{TS}_\text{cutoff}$'
+    ts_point_name = r'$\ts_\text{point}$'
+    ts_cutoff_name = r'$\ts_\text{cutoff}$'
 
     for pwn in pwnlist:
         results = get_results(pwn)
@@ -27,6 +28,10 @@ def cutoff_table(pwnlist):
         cutoff=results['point']['gtlike']['test_cutoff']
 
         if cutoff != -1:
+
+            ts_point = results['point']['gtlike']['TS']
+
+            table[ts_point_name].append('%.1f' % ts_point)
 
             ts_cutoff = max(cutoff['TS_cutoff'],0)
             table[ts_cutoff_name].append('%.1f' % ts_cutoff)

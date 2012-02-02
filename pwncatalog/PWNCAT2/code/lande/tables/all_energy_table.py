@@ -1,4 +1,4 @@
-from table_helper import get_pwnlist,get_results,table_name,write_latex
+from table_helper import get_pwnlist,get_results,table_name,write_latex,BestHypothesis
 from lande_toolbag import OrderedDefaultdict
 
 def all_energy_table(pwnlist):
@@ -21,38 +21,47 @@ def all_energy_table(pwnlist):
             table[ts_name].append('None')
             table[flux_name].append('None')
             table[gamma_name].append('None')
+            table[luminosity_name].append(r'None')
         else:
 
-            pl=results['at_pulsar']['pointlike']
-            gt=results['at_pulsar']['gtlike']
+            b = BestHypothesis(results)
+            gtlike = b.gtlike
+            pointlike = b.pointlike
+            type = b.type
 
-            ts=max(gt['TS'],0)
+
+            ts=max(gtlike['TS'],0)
             table[ts_name].append('%.1f' % ts)
 
-            if ts > 25:
-                flux=gt['flux']['flux']
-                flux_err=gt['flux']['flux_err']
+            if type == 'point' or type == 'extended':
 
-                eflux=gt['flux']['eflux']
-                eflux_err=gt['flux']['eflux_err']
+                flux=gtlike['flux']['flux']
+                flux_err=gtlike['flux']['flux_err']
+
+                eflux=gtlike['flux']['eflux']
+                eflux_err=gtlike['flux']['eflux_err']
+
                 table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-9,flux_err/1e-9) )
                 table[energy_flux_name].append('$%.2f \pm %.2f$' % (eflux/1e-12,eflux_err/1e-12))
+
+                index=-1*gtlike['model']['Index']
+                index_err=-1*gtlike['model']['Index_err']
+                table[gamma_name].append('$%.2f \pm %.2f$' % (index,index_err))
+                table[luminosity_name].append(r'None')
+
             else:
-                if gt['upper_limit'] != -1:
-                    ul=gt['upper_limit']['flux']
-                    eul=gt['upper_limit']['eflux']
+                if gtlike['upper_limit'] != -1:
+                    ul=gtlike['upper_limit']['flux']
+                    eul=gtlike['upper_limit']['eflux']
                     table[flux_name].append(r'$<%.2f$' % (ul/1e-9))
                     table[energy_flux_name].append(r'$<%.2f$' % (eul/1e-12))
+                    table[gamma_name].append(r'\nodata')
+                    table[luminosity_name].append(r'None')
                 else:
                     table[flux_name].append('None')
                     table[energy_flux_name].append('None')
-
-
-            index=-1*gt['model']['Index']
-            index_err=-1*gt['model']['Index_err']
-
-            table[gamma_name].append('$%.2f \pm %.2f$' % (index,index_err) if ts > 25 else r'\nodata')
-            table[luminosity_name].append(r'None')
+                    table[gamma_name].append(r'None')
+                    table[luminosity_name].append(r'None')
 
     write_latex(table,
                 filebase='off_peak_all_energy',

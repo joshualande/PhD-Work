@@ -1,4 +1,4 @@
-from table_helper import get_pwnlist,get_results,table_name,get_sed,write_latex
+from table_helper import get_pwnlist,get_results,table_name,write_latex, BestHypothesis
 from lande_toolbag import OrderedDefaultdict
 
 def each_energy_table(pwnlist):
@@ -22,7 +22,7 @@ def each_energy_table(pwnlist):
         results = get_results(pwn)
         table['PSR'].append(table_name(pwn))
 
-        if results is None or get_sed(pwn,'1bpd','at_pulsar') == {}: 
+        if results is None: 
             table[TS1_name].append('None')
             table[flux1_name].append('None')
             table[index1_name].append('None')
@@ -35,12 +35,30 @@ def each_energy_table(pwnlist):
             table[flux3_name].append('None')
             table[index3_name].append('None')
         else:
+            at_pulsar_gtlike = results['at_pulsar']['gtlike']
+            at_pulsar_pointlike = results['at_pulsar']['pointlike']
+            
 
-            sed = get_sed(pwn,'1bpd','at_pulsar')
-            ts = sed['Test_Statistic']
-            flux = sed['Ph_Flux']['Value']
-            flux_err = sed['Ph_Flux']['Error']
-            ul = sed['Ph_Flux']['Upper_Limit']
+            point_gtlike = results['point']['gtlike']
+            point_pointlike = results['point']['pointlike']
+            
+            extended_gtlike = results['extended']['gtlike']
+            extended_pointlike = results['extended']['pointlike']
+
+            ts_point = point_gtlike['TS']
+            ts_ext = max(extended_gtlike['ts_ext'],0)
+
+            b = BestHypothesis(results)
+            gtlike = b.gtlike
+            pointlike = b.pointlike
+            type = b.type
+
+            ts = gtlike['bands']['TS']
+
+            f = gtlike['bands']['flux']
+            flux = f['value']
+            flux_err = f['error']
+            ul = f['upper_limit']
 
             ts = [i if i > 0 else 0 for i in ts]
 

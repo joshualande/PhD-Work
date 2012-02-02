@@ -1,4 +1,4 @@
-from table_helper import get_pwnlist,get_results,table_name,write_latex
+from table_helper import get_pwnlist,get_results,table_name,write_latex, BestHypothesis
 from lande_toolbag import OrderedDefaultdict
 import numpy as np
 from skymaps import SkyDir
@@ -42,16 +42,12 @@ def localization_table(pwnlist):
         ts_point = point_gtlike['TS']
         ts_ext = max(extended_gtlike['ts_ext'],0)
 
-        if ts_point > 25:
+        b = BestHypothesis(results)
+        gtlike = b.gtlike
+        pointlike = b.pointlike
+        type = b.type
 
-            if ts_ext > 16:
-                gtlike = extended_gtlike
-                pointlike = extended_pointlike
-                type = 'extended'
-            else:
-                gtlike = point_gtlike
-                pointlike = point_pointlike
-                type = 'point'
+        if b.type != 'ul':
 
             l,b=pointlike['gal']
 
