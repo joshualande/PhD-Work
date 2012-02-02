@@ -151,8 +151,6 @@ def setup_region(name, phase,
                                           gfile="ring_2year_P76_v0.fits",
                                           ifile="isotrop_2year_P76_source_v0.txt")
 
-    catalog=FermiCatalog(e("$FERMI/catalogs/gll_psc_v02.fit"))
-
     catalog=get_catalog(free_radius=free_radius,max_free=max_free)
 
     if binfile is None: binfile=j(savedir,'binned_phased.fits')
