@@ -22,6 +22,23 @@ from LikelihoodState import LikelihoodState
 
 import lande_units as units
 
+
+def gtlike_or_pointlike(f_gtlike, f_pointlike, like_or_roi, *args, **kwargs):
+
+    from BinnedAnalysis import BinnedAnalysis
+
+    if isinstance(like_or_roi, BinnedAnalysis):
+        f=f_gtlike
+    elif isinstance(like_or_roi, ROIAnalysis):
+        f=f_pointlike
+    else:
+        raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
+    return f(like_or_roi, *args, **kwargs)
+
+
+def gtlike_get_full_energy_range(like): return like.energies[[0,-1]]
+def pointlike_get_full_energy_range(roi): return roi.bin_edges[[0,-1]]
+
 def paranoid_gtlike_fit(like, covar=True):
     """ Perform a sepctral fit in gtlike in
         a paranoid manner. 
@@ -74,18 +91,12 @@ def pointlike_spectrum_to_dict(model, errors=False):
 
 
 
-def spectrum_to_dict(spectrum_or_model, *args, **kwargs):
-    from pyLikelihood import Function
-    if isinstance(spectrum_or_model, Function):
-        f=SED.spectrum_to_dict
-    elif isinstance(spectrum_or_model, Model):
-        f=pointlike_spectrum_to_dict
-    else:
-        raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-    return f(spectrum_or_model, *args, **kwargs)
 
+def gtlike_flux_dict(like,name,emin=None,emax=None,flux_units='erg', error=True):
 
-def gtlike_flux_dict(like,name,emin,emax,flux_units):
+    if emin is None and emax is None: 
+        emin, emax = get_full_energy_range(like)
+
     ce=lambda e: units.convert(e,'MeV',flux_units)
     f=dict(flux=like.flux(name,emin=emin,emax=emax),
            eflux=ce(like.energyFlux(name,emin=emin,emax=emax)),
@@ -93,23 +104,24 @@ def gtlike_flux_dict(like,name,emin,emax,flux_units):
            eflux_units='%s/cm^2/s' % flux_units,
            emin=emin,
            emax=emax)
-    try:
-        # incase the errors were not calculated
-        f['flux_err']=like.fluxError(name,emin=emin,emax=emax)
-        f['eflux_err']=ce(like.energyFluxError(name,emin=emin,emax=emax))
-    except Exception, ex:
-        print 'ERROR calculating flux error: ', ex
-        traceback.print_exc(file=sys.stdout)
-        f['flux_err']=-1
-        f['eflux_err']=-1
+
+    if error:
+        try:
+            # incase the errors were not calculated
+            f['flux_err']=like.fluxError(name,emin=emin,emax=emax)
+            f['eflux_err']=ce(like.energyFluxError(name,emin=emin,emax=emax))
+        except Exception, ex:
+            print 'ERROR calculating flux error: ', ex
+            traceback.print_exc(file=sys.stdout)
+            f['flux_err']=-1
+            f['eflux_err']=-1
     return f
 
 def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
     from pyLikelihood import ParameterVector
 
     if emin is None and emax is None:
-        emin = like.energies[0]
-        emax = like.energies[-1]
+        emin, emax = get_full_energy_range(like)
 
     d=dict(
         TS=like.Ts(name,reoptimize=True),
@@ -160,24 +172,34 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
     return d
 
 
-def pointlike_flux_dict(roi,which,emin,emax,flux_units):
+def pointlike_flux_dict(roi,which,emin=None,emax=None,flux_units='erg', error=True):
+
+    if emin is None and emax is None:
+        emin, emax = get_full_energy_range(roi)
+
     model=roi.get_model(which)
     ce=lambda e: units.convert(e,'MeV',flux_units)
     f=dict()
-    f['flux'],f['flux_err']=model.i_flux(emin=emin,emax=emax,error=True)
-    ef,ef_err=model.i_flux(emin=emin,emax=emax,e_weight=1,error=True)
-    f['eflux'],f['eflux_err']=ce(ef),ce(ef_err)
+    if error:
+        f['flux'],f['flux_err']=model.i_flux(emin=emin,emax=emax,error=True)
+        ef,ef_err=model.i_flux(emin=emin,emax=emax,e_weight=1,error=True)
+        f['eflux'],f['eflux_err']=ce(ef),ce(ef_err)
+    else:
+        f['flux']=model.i_flux(emin=emin,emax=emax,error=False)
+        ef=model.i_flux(emin=emin,emax=emax,e_weight=1,error=False)
+        f['eflux']=ce(ef)
+
     f['flux_units']='ph/cm^2/s'
     f['eflux_units']='%s/cm^2/s' % flux_units
     f['emin'],f['emax']=emin,emax
     return f
 
+
 def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
     d={}
 
     if emin is None and emax is None:
-        emin = roi.bin_edges[0]
-        emax = roi.bin_edges[-1]
+        emin, emax = get_full_energy_range(roi)
 
     source=roi.get_source(name)
     model=roi.get_model(name)
@@ -214,75 +236,25 @@ def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
     return d
 
 
-def sourcedict(like_or_roi, name, emin=None, emax=None):
+def gtlike_upper_limit(like, name, cl, emin=None, emax=None, 
+                       flux_units='erg', **kwargs):
 
-    from BinnedAnalysis import BinnedAnalysis
-
-    if isinstance(like_or_roi,BinnedAnalysis):
-        f = gtlike_sourcedict
-    elif isinstance(like_or_roi,ROIAnalysis):
-        f = pointlike_sourcedict
-    else:
-        raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-
-    return tolist(f(like_or_roi, name, emin, emax))
-
-
-def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=None, 
-                                flux_units='erg',
-                                **kwargs):
-    """ Wrap up calculating the flux upper limit for a powerlaw
-        source.  This function employes the pyLikelihood function
-        IntegralUpperLimit to calculate a Bayesian upper limit.
-
-        The primary benefit of this function is that it replaces the
-        spectral model automatically with a PowerLaw spectral model
-        and fixes the index to -2. It then picks a better scale for the
-        powerlaw and gives the upper limit calculation a more reasonable
-        starting value, which helps the convergence.
-    """
     print 'Calculating gtlike upper limit'
 
     saved_state = LikelihoodState(like)
     source = like.logLike.getSource(name)
-    old_spectrum = source.spectrum()
 
     try:
         import IntegralUpperLimit
 
         if emin is None and emax is None: 
-            emin = like.energies[0]
-            emax = like.energies[-1]
-
-        e = np.sqrt(emin*emax)
-
+            emin, emax = get_full_energy_range(like)
 
         # First, freeze all parameters in model (helps with convergence)
         for i in range(len(like.model.params)):
             like.freeze(i)
 
-
-        # assume a canonical dnde=1e-11 at 1GeV index 2 starting value
-        dnde = PowerLaw(norm=1e-11, index=2,e_scale=1e3)
-
-        like.setSpectrum(name,'PowerLaw')
-
-        # fix index to 0
-        index=like[like.par_index(name, 'Index')]
-        index.setTrueValue(-1*powerlaw_index)
-        index.setFree(0)
-
-        # good starting guess for source
-        prefactor=like[like.par_index(name, 'Prefactor')]
-        prefactor.setScale(dnde(e))
-        prefactor.setValue(1)
-        # unbound the prefactor since the default range 1e-2 to 1e2 may not be big enough
-        # in small phase ranges.
-        prefactor.setBounds(1e-10,1e10)
-
-        scale=like[like.par_index(name, 'Scale')]
-        scale.setScale(1)
-        scale.setValue(e)
+        like.thaw(like.par_index(name, 'Prefactor'))
 
         like.syncSrcParams(name)
 
@@ -306,63 +278,121 @@ def gtlike_powerlaw_upper_limit(like,name, powerlaw_index, cl, emin=None, emax=N
         ul = dict(
             emin=emin, emax=emax,
             flux_units=flux_units_string, flux=flux_ul, 
-            powerlaw_index=powerlaw_index,
             eflux_units=eflux_units_string, eflux=eflux_ul)
 
     except Exception, ex:
         print 'ERROR gtlike upper limit: ', ex
         traceback.print_exc(file=sys.stdout)
-        ul = -1
+        ul = None
     finally:
-        like.setSpectrum(name,old_spectrum)
         saved_state.restore()
 
     return tolist(ul)
 
-def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin, emax, **kwargs):
+
+def gtlike_powerlaw_upper_limit(like, name, powerlaw_index, cl, emin=None, emax=None, 
+                                flux_units='erg',
+                                **kwargs):
+    """ Wrap up calculating the flux upper limit for a powerlaw
+        source.  This function employes the pyLikelihood function
+        IntegralUpperLimit to calculate a Bayesian upper limit.
+
+        The primary benefit of this function is that it replaces the
+        spectral model automatically with a PowerLaw spectral model
+        and fixes the index to -2. It then picks a better scale for the
+        powerlaw and gives the upper limit calculation a more reasonable
+        starting value, which helps the convergence.
+    """
+    print 'Calculating gtlike power-law upper limit'
+
+    saved_state = LikelihoodState(like)
+    source = like.logLike.getSource(name)
+    old_spectrum = source.spectrum()
+
+    if emin is None and emax is None: 
+        emin, emax = get_full_energy_range(like)
+
+    e = np.sqrt(emin*emax)
+
+    # assume a canonical dnde=1e-11 at 1GeV index 2 starting value
+    dnde = PowerLaw(norm=1e-11, index=2,e_scale=1e3)
+
+    like.setSpectrum(name,'PowerLaw')
+
+    # fix index to 0
+    index=like[like.par_index(name, 'Index')]
+    index.setTrueValue(-1*powerlaw_index)
+
+    # good starting guess for source
+    prefactor=like[like.par_index(name, 'Prefactor')]
+    prefactor.setScale(dnde(e))
+    prefactor.setValue(1)
+    # unbound the prefactor since the default range 1e-2 to 1e2 may not be big enough
+    # in small phase ranges.
+    prefactor.setBounds(1e-10,1e10)
+
+    scale=like[like.par_index(name, 'Scale')]
+    scale.setScale(1)
+    scale.setValue(e)
+
+    like.syncSrcParams(name)
+
+    results = gtlike_upper_limit(like, name, cl, emin, emax, flux_units, **kwargs)
+    results['powerlaw_index']=powerlaw_index
+
+    like.setSpectrum(name,old_spectrum)
+    saved_state.restore()
+
+    return results
+
+def pointlike_upper_limit(roi, name, cl, emin=None, emax=None, flux_units='erg', **kwargs):
+
+    if emin is None and emax is None:
+        emin, emax = get_full_energy_range(roi)
+
+    try:
+        flux_ul = roi.upper_limit(which=name, confidence=cl, emin=emin, emax=emax, **kwargs)
+
+        flux_units_string = 'ph/cm^2/s'
+
+        ul = dict(
+            emin=emin, emax=emax,
+            flux_units=flux_units_string, 
+            flux=flux_ul)
+
+    except Exception, ex:
+        print 'ERROR pointlike upper limit: ', ex
+        traceback.print_exc(file=sys.stdout)
+        ul = None
+
+    return tolist(ul)
+
+
+def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin=None, emax=None, 
+                                   flux_units='erg', **kwargs):
     print 'Calculating pointlike upper limit'
 
     saved_state = PointlikeState(roi)
 
-    # Note keep old flux, because it is important to have
-    # the spectral model pushed into the upper_limit
-    # code reasonably close to the best fit flux. This
-    # is because initial likelihood (ll_0) is used to scale
-    # the likelihood so it has to be reasonably close to 
-    # the best value.
+    """ Note keep old flux, because it is important to have
+        the spectral model pushed into the upper_limit
+        code reasonably close to the best fit flux. This
+        is because initial likelihood (ll_0) is used to scale
+        the likelihood so it has to be reasonably close to 
+        the best value. """
     roi.modify(which=name, model=PowerLaw(index=powerlaw_index), keep_old_flux=True)
 
-    if emin is None and emax is None: 
-        emin = roi.bin_edges[0]
-        emax = roi.bin_edges[-1]
-
-    flux_ul = roi.upper_limit(which=name, confidence=cl, emin=emin, emax=emax, **kwargs)
-
-    flux_units_string = 'ph/cm^2/s'
-
-    ul = dict(
-        emin=emin, emax=emax,
-        powerlaw_index=powerlaw_index,
-        flux_units=flux_units_string, flux=flux_ul)
+    ul = pointlike_upper_limit(roi, name, cl, emin, emax, flux_units, **kwargs)
+    ul['powerlaw_index']=powerlaw_index
 
     saved_state.restore()
-    return tolist(ul)
 
-def powerlaw_upper_limit(like_or_roi, name, powerlaw_index=2, cl=0.95, *args, **kwargs):
-    from BinnedAnalysis import BinnedAnalysis
-    if isinstance(like_or_roi, BinnedAnalysis):
-        f=gtlike_powerlaw_upper_limit
-    elif isinstance(like_or_roi, ROIAnalysis):
-        f=pointlike_powerlaw_upper_limit
-    else:
-        raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-    return f(like_or_roi, name, powerlaw_index, cl, *args, **kwargs)
-
+    return ul
 
 
 def pointlike_test_cutoff(roi, which, flux_units='erg'):
     print 'Testing cutoff in pointlike'
-    emin,emax=roi.bin_edges[0],roi.bin_edges[-1]
+    emin,emax=get_full_energy_range(roi)
     d = {}
 
     saved_state = PointlikeState(roi)
@@ -416,7 +446,7 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
     d = {}
 
     try:
-        emin, emax=like.energies[[0,-1]]
+        emin, emax = get_full_energy_range(like)
 
         def fix(parname,value):
             par=like[like.par_index(name, parname)]
@@ -507,19 +537,6 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
 
     return tolist(d)
 
-def test_cutoff(like_or_roi, *args, **kwargs):
-    from BinnedAnalysis import BinnedAnalysis
-    if isinstance(like_or_roi, BinnedAnalysis):
-        f=gtlike_test_cutoff
-    elif isinstance(like_or_roi, ROIAnalysis):
-        f=pointlike_test_cutoff
-    else:
-        raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
-    return f(like_or_roi, *args, **kwargs)
-
-
-
-
 def pointlike_plot_all_seds(roi, filename=None, ncols=4, **kwargs):
     """ Create an SED of all sources in the ROI as a big plot. """
     
@@ -573,16 +590,11 @@ def pointlike_plot_all_seds(roi, filename=None, ncols=4, **kwargs):
             
         roi.plot_sed(which,axes=grid[i],axis=axis,title=which.name,energy_flux_unit=energy_flux_unit,**kwargs)
         
-
-        
-        
-        
-            
     if filename is not None: P.savefig(filename)
     
+
 plot_all_seds = pointlike_plot_all_seds # for now
                                                                 
-
 
 def fit_only_prefactor(model):
     model=model.copy()
@@ -686,3 +698,25 @@ def force_gradient(use_gradient):
     from lande_decorators import modify_defaults
     ROIAnalysis.fit=modify_defaults(use_gradient=use_gradient)(ROIAnalysis.fit)
 
+
+
+def spectrum_to_dict(*args, **kwargs):
+    return gtlike_or_pointlike(SED.spectrum_to_dict, pointlike_spectrum_to_dict, *args, **kwargs)
+
+def get_full_energy_range(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_get_full_energy_range, pointlike_get_full_energy_range, *args, **kwargs)
+
+def flux_dict(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_flux_dict, pointlike_flux_dict, *args, **kwargs)
+
+def sourcedict(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_sourcedict, pointlike_sourcedict, *args, **kwargs)
+
+def powerlaw_upper_limit(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_powerlaw_upper_limit, pointlike_powerlaw_upper_limit, *args, **kwargs)
+
+def upper_limit(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_upper_limit, pointlike_upper_limit, *args, **kwargs)
+
+def test_cutoff(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_test_cutoff, pointlike_test_cutoff, *args, **kwargs)
