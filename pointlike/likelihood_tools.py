@@ -350,6 +350,7 @@ def pointlike_upper_limit(roi, name, cl, emin=None, emax=None, flux_units='erg',
     if emin is None and emax is None:
         emin, emax = get_full_energy_range(roi)
 
+    params = roi.parameters().copy()
     try:
         flux_ul = roi.upper_limit(which=name, confidence=cl, emin=emin, emax=emax, **kwargs)
 
@@ -364,6 +365,9 @@ def pointlike_upper_limit(roi, name, cl, emin=None, emax=None, flux_units='erg',
         print 'ERROR pointlike upper limit: ', ex
         traceback.print_exc(file=sys.stdout)
         ul = None
+    finally:
+        roi.set_parameters(params)
+        roi.__update_state__()
 
     return tolist(ul)
 
