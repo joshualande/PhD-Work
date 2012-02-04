@@ -23,7 +23,7 @@ class ApproximateIsotropic(DiffuseSource):
 
         self.name = name
         self.smodel = PowerLaw(p=[1,1],index_offset=1)
-        self.scaling_factor
+        self.scaling_factor = scaling_factor
 
         for ds in diffuse_sources:
             if len(ds.dmodel) != 1: raise Exception("dmodels must have length 1")
