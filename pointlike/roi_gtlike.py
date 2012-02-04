@@ -60,13 +60,13 @@ class Gtlike(object):
 
 
     @staticmethod
-    def make_evfile(ft1files,tempdir):
+    def make_evfile(ft1files,savedir):
         if isinstance(ft1files,str):
             evfile=ft1files
         elif len(ft1files) == 1:
             evfile=ft1files[0]
         else:
-            ft1list = join(tempdir,'ft1files.lst')
+            ft1list = join(savedir,'ft1files.lst')
             if not os.path.exists(ft1list):
                 temp=open(ft1list,'w')
                 temp.write('\n'.join(pd.ft1files))
@@ -88,16 +88,17 @@ class Gtlike(object):
 
         self.old_dir=os.getcwd()
         if self.savedir is not None:
-            self.tempdir=self.savedir
-            if not os.path.exists(self.tempdir):
+            self.save_data = True
+            if not os.path.exists(self.savedir):
                 os.makedirs(self.savedir)
         else:
-            self.tempdir=mkdtemp()
+            self.save_data = False
+            self.savedir=mkdtemp()
 
         # put pfiles into savedir
-        os.environ['PFILES']=self.tempdir+';'+os.environ['PFILES'].split(';')[-1]
+        os.environ['PFILES']=self.savedir+';'+os.environ['PFILES'].split(';')[-1]
 
-        if not roi.quiet: print 'Saving files to ',self.tempdir
+        if not roi.quiet: print 'Saving files to ',self.savedir
 
         if self.emin==None and self.emax==None and self.enumbins==None:
             self.emin,self.emax=roi.bin_edges[0],roi.bin_edges[-1]
@@ -118,10 +119,10 @@ class Gtlike(object):
         else:
             npix=int(math.ceil(np.sqrt(2.0)*roi_radius/self.binsz))
 
-        cmap_file=join(self.tempdir,'ccube.fits')
-        srcmap_file=join(self.tempdir,'srcmap.fits')
-        bexpmap_file=join(self.tempdir,'bexpmap.fits')
-        input_srcmdl_file=join(self.tempdir,'srcmdl.xml')
+        cmap_file=join(self.savedir,'ccube.fits')
+        srcmap_file=join(self.savedir,'srcmap.fits')
+        bexpmap_file=join(self.savedir,'bexpmap.fits')
+        input_srcmdl_file=join(self.savedir,'srcmdl.xml')
 
         pd=roi.sa.pixeldata
 
@@ -156,9 +157,9 @@ class Gtlike(object):
 
         for src in shrink_list: src.spatial_model.unshrink()
 
-        evfile=Gtlike.make_evfile(pd.ft1files,self.tempdir)
+        evfile=Gtlike.make_evfile(pd.ft1files,self.savedir)
 
-        cut_evfile=join(self.tempdir,"ft1_cut.fits")
+        cut_evfile=join(self.savedir,"ft1_cut.fits")
         if not os.path.exists(cut_evfile):
             if not roi.quiet: print 'Running gtselect'
             gtselect=GtApp('gtselect','dataSubselector')
@@ -219,9 +220,9 @@ class Gtlike(object):
         if not roi.quiet: print 'LIKE Created!'
 
     def __del__(self):
-        if self.savedir is None:
-            if not self.roi.quiet: print 'Removing tempdir',self.tempdir
-            shutil.rmtree(self.tempdir)
+        if not self.save_data:
+            if not self.roi.quiet: print 'Removing savedir',self.savedir
+            shutil.rmtree(self.savedir)
 
     def get_gtlike_info_dict(self,which):
         """ get a bunch of gtlike stuff and
