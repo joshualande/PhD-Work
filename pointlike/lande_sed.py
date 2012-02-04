@@ -21,8 +21,6 @@ class LandeSED(SED):
         points to be the same as the binning in
         the FT1 file. """
 
-    ul_choices = ['frequentist', 'bayesian']
-
     def __init__(self, like, *args, **kwargs):
         """ Additional Parameters
             * flux_units - desired units to quote energy flux (y axis) in.
