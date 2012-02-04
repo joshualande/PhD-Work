@@ -57,11 +57,12 @@ class VariabilityTester(object):
         saved_state = PointlikeState(roi)
 
         if self.savedir is not None:
-            self.tempdir=self.savedir
-            if not exists(self.tempdir):
+            self.save_data = True
+            if not exists(self.savedir):
                 os.makedirs(self.savedir)
         else:
-            self.tempdir=mkdtemp()
+            self.save_data =False
+            self.savedir = mkdtemp()
 
         # Divide into several time bins
         ft1files=roi.sa.pixeldata.ft1files
@@ -77,10 +78,10 @@ class VariabilityTester(object):
         saved_state.restore()
 
 
-    def all_time_fit_gtlike(self, roi):
+    def all_time_fit_gtlike(self, roi, savedir):
         print 'First, computing best all-time parameters using gtlike.'
         gtlike=Gtlike(roi, 
-                      savedir=join(self.tempdir,'gtlike_all_time') if self.savedir is not None else None,
+                      savedir=savedir,
                       **self.gtlike_kwargs)
         like=gtlike.like
 
@@ -128,7 +129,7 @@ class VariabilityTester(object):
 
         return results
 
-    def each_time_fit_gtlike(self, smaller_roi, tstart, tstop):
+    def each_time_fit_gtlike(self, smaller_roi, tstart, tstop, subdir):
 
         print 'Performing gtlike analysis from %s to %s' % (tstart, tstop)
 
@@ -137,7 +138,7 @@ class VariabilityTester(object):
         results = dict()
 
         gtlike=Gtlike(smaller_roi, 
-                      savedir=join(self.tempdir,'gtlike_%s_%s' % (tstart, tstop)) if self.savedir is not None else None,
+                      savedir=subdir,
                       **self.gtlike_kwargs)
         like=gtlike.like
 
@@ -186,7 +187,8 @@ class VariabilityTester(object):
         self.flux_0 = dict(pointlike = F0p, error=False)
 
         if self.do_gtlike:
-            all_time_like = self.all_time_fit_gtlike(roi)
+            all_time_dir = join(self.savedir,'all_time')
+            all_time_like = self.all_time_fit_gtlike(roi,savedir=all_time_dir)
             self.flux_0['gtlike'] = F0g = flux_dict(all_time_like,which)
 
         empty = lambda: np.empty_like(self.tstarts).astype(float)
@@ -194,6 +196,11 @@ class VariabilityTester(object):
         self.bands = []
 
         for i,(tstart,tstop) in enumerate(zip(self.tstarts, self.tstops)):
+
+            subdir = join(self.savedir,'time_%s_%s' % (tstart, tstop))
+            print 'Subdir = ',subdir
+            if not exists(subdir):
+                os.makedirs(subdir)
 
             days = (tstop-tstart)/(60*60*24)
             print  '%s/%s Looping from time %s to %s (%.1f days)' % (i+1, self.nbins, tstart, tstop, days)
@@ -205,11 +212,15 @@ class VariabilityTester(object):
 
             self.bands.append(band)
 
-            smaller_roi = VariabilityTester.time_cut(roi, self.tempdir, tstart, tstop)
+            smaller_roi = VariabilityTester.time_cut(roi, tstart, tstop, subdir)
 
             band['pointlike'] = self.each_time_fit_pointlike(smaller_roi, tstart, tstop)
             if self.do_gtlike:
-                band['gtlike'] = self.each_time_fit_gtlike(smaller_roi, tstart, tstop)
+                band['gtlike'] = self.each_time_fit_gtlike(smaller_roi, tstart, tstop, subdir)
+
+            if not self.save_data:
+                print 'Removing subdir',subdir
+                shutil.rmtree(subdir)
 
         self.TS_var = dict(
             pointlike = self.compute_TS_var('pointlike')
@@ -248,7 +259,7 @@ class VariabilityTester(object):
         return tmin, tmax
 
     @staticmethod
-    def time_cut(roi, tempdir, tstart, tstop):
+    def time_cut(roi, tstart, tstop, subdir):
         """ Create a new ROI given a time cut. """
 
         sa = roi.sa
@@ -272,9 +283,9 @@ class VariabilityTester(object):
         if len(ft2files) > 1: raise Exception("...")
         ft2file=ft2files[0]
 
-        evfile=Gtlike.make_evfile(ft1files,tempdir)
+        evfile=Gtlike.make_evfile(ft1files,subdir)
 
-        cut_evfile=join(tempdir,"cut_ft1_%s_%s.fits" % (tstart, tstop))
+        cut_evfile=join(subdir,"cut_ft1_%s_%s.fits" % (tstart, tstop))
 
         if not exists(cut_evfile):
             if not roi.quiet: print 'Running gtselect'
@@ -292,13 +303,13 @@ class VariabilityTester(object):
         ds_kwargs['ft1files'] = cut_evfile
 
         # * create new binfile and ltcube
-        ds_kwargs['binfile'] = join(tempdir,'binned_%s_%s.fits' % (tstart, tstop))
+        ds_kwargs['binfile'] = join(subdir,'binned_%s_%s.fits' % (tstart, tstop))
 
         # save this to see if it has been phased by 
         # the function uw.utilities.phasetools.phase_ltcube
         all_time_ltcube = ds_kwargs['ltcube']
 
-        new_ltcube = join(tempdir,'ltcube_%s_%s.fits' % (tstart, tstop))
+        new_ltcube = join(subdir,'ltcube_%s_%s.fits' % (tstart, tstop))
 
         if not exists(new_ltcube):
             if not roi.quiet: print 'Running gtltcube for %s to %s' % (tstart,tstop)
@@ -318,7 +329,7 @@ class VariabilityTester(object):
             # If so, phase new ltcube
             phase = f['exposure'].header['PHASE']
 
-            phased_ltcube = join(tempdir,'phased_ltcube_%s_%s.fits' % (tstart, tstop))
+            phased_ltcube = join(subdir,'phased_ltcube_%s_%s.fits' % (tstart, tstop))
             if not exists(phased_ltcube):
                 phase_ltcube(new_ltcube, phased_ltcube, phase)
             else:
@@ -366,7 +377,36 @@ class VariabilityTester(object):
         return tolist(d)
 
     @staticmethod
-    def _plot(d, filename=None, figsize=(8,4)):
+    def _plot_points(axes, x, xerr, y, yerr, yup, significant, 
+                     ul_fraction=0.4, **kwargs):
+
+        plot_kwargs = dict(linestyle='none')
+        plot_kwargs.update(kwargs)
+
+        s = significant
+        if sum(s) > 0:
+            axes.errorbar(x[s],y[s],
+                          xerr=xerr[s], yerr=yerr[s], 
+                          capsize=0,
+                          **plot_kwargs)
+        if sum(~s) > 0:
+            axes.errorbar(x[~s], yup[~s], 
+                          yerr=[ul_fraction*yup[~s], np.zeros(sum(~s))],
+                          lolims=True,
+                          **plot_kwargs)
+
+            axes.errorbar(x[~s], yup[~s], 
+                          xerr=xerr[~s],
+                          capsize=0,
+                          **plot_kwargs)
+
+    @staticmethod
+    def _plot(d, min_ts, 
+              filename=None, 
+              figsize=(8,4), 
+              gtlike_color='black',
+              pointlike_color='red',
+              **kwargs):
         """ Create a plot from a dictionary. """
 
         fig = P.figure(None,figsize)
@@ -376,13 +416,43 @@ class VariabilityTester(object):
 
         starts=a(d['tstops'])
         stops=a(d['tstarts'])
-        x=(starts+stops)/2
-        xerr=(stops-starts)/2
-        y=a(d['gtlike']['flux']['value'])
-        yerr=a(d['gtlike']['flux']['error'])
-        axes.errorbar(x,y,xerr=xerr,yerr=yerr, linestyle='none')
+        time=(starts+stops)/2
+        time_err=(stops-starts)/2
 
-        axes.set_xlabel('Time (MET)')
+        for t,color in [
+#            ['gtlike',gtlike_color],
+            ['pointlike',pointlike_color]
+        ]:
+
+
+            results = d[t]
+
+            f0 = results['flux_0']['flux']
+
+            flux = results['flux']
+
+            ts = a(results['TS'])
+            significant = ts >= min_ts
+
+            f=a(flux['value'])
+            ferr=a(flux['error'])
+            fup=a(flux['upper_limit'])
+
+            VariabilityTester._plot_points(
+                axes,
+                x=time,
+                xerr=time_err,
+                y=f,
+                yerr=ferr,
+                yup=fup, 
+                significant=significant,
+                color=color,
+                **kwargs)
+
+        axes.axhline(f0, color=color)
+
+
+        axes.set_xlabel('MET')
         axes.set_ylabel('Flux (ph$\,$cm$^{-2}$s$^{-1}$)')
 
         if filename is not None: P.savefig(filename)
@@ -392,6 +462,6 @@ class VariabilityTester(object):
         return self._plot(self.todict(), *args, **kwargs)
 
     def __del__(self):
-        if self.savedir is None:
-            if not self.roi.quiet: print 'Removing tempdir',self.tempdir
-            shutil.rmtree(self.tempdir)
+        if not self.save_data:
+            if not self.roi.quiet: print 'Removing savedir',self.savedir
+            shutil.rmtree(self.savedir)
