@@ -17,7 +17,7 @@ from uw.like.pointspec_helpers import PointSource
 from tempfile import mkdtemp
 from shutil import rmtree
 
-from lande_toobag import todict
+from lande_toolbag import tolist
 
 
 i=0
@@ -54,6 +54,10 @@ for extension in extensions[0:1]:
     model = PowerLaw(gamma=2)
     model.set_flux(1e-8, 1e2, 10**5.5)
 
+# TEMPORARY
+    model.set_flux(1e-5, 1e2, 10**5.5)
+# TEMPORARY
+
     spatial_model = Disk(sigma=extension, center=skydir_mc)
 
     ext = ExtendedSource(
@@ -65,7 +69,10 @@ for extension in extensions[0:1]:
     ft1 = join(tempdir,'ft1.fits')
     binfile = join(tempdir, 'binned.fits')
 
+# TEMPORARY
     ft2 = join(tempdir, 'ft2.fits')
+# TEMPORARY
+
     mc=MonteCarlo(
         diffuse_sources=[bg.copy(), ext.copy()],
         seed=i,
@@ -77,8 +84,11 @@ for extension in extensions[0:1]:
         emin=emin,
         emax=emax,
 
+# TEMPORARY
         tstart=0,   
         tstop=604800,
+# TEMPORARY
+
         )
 
     mc.simulate()
@@ -109,9 +119,21 @@ for extension in extensions[0:1]:
 
     ps = PointSource(
         name='point',
-        model=model,
+        model=model.copy(),
         skydir = skydir_mc
     )
+    roi.add_source(ps)
+
+    roi.print_summary()
+    roi.fit(use_gradient=False)
+    roi.print_summary()
+    roi.localize(which='point', update=True)
+    roi.fit(use_gradient=False)
+    roi.print_summary()
+
+    TS_point = roi.TS(which='point')
+
+    extension_ul = roi.extension_upper_limit(which='point')
 
     # Fit point-like source
 
@@ -120,15 +142,25 @@ for extension in extensions[0:1]:
     # Then, compute TS_point & TS_ext
 
 
+    extension_fit = -1
+    TS_ext = TS_ext
+
     r = dict(
-        extension=extension
-        gal_mc = [ skydir_mc.l(), skydir.b()]
+        extension_mc=extension,
+        gal_mc = [ skydir_mc.l(), skydir_mc.b()],
+
+        TS_point = TS_point,
+
+        extension_ul = extension_ul,
+
+        extension_fit=extension_fit,
+        TS_ext=TS_ext
     )
 
     results.append(r)
 
     rmtree(tempdir)
 
-yaml.dump(open('results.yaml')).write(
-    todict(results)
+yaml.dump(open('results.yaml','w')).write(
+    tolist(results)
 )
