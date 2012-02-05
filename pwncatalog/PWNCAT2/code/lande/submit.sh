@@ -354,16 +354,59 @@ echo python $pwncode/loop_pwn.py -c $pwncode/analyze_psr.py \
 
 # ----------------------------------------------------------------------------------------------------
 
-echo python $pwncode/loop_pwn.py -c $pwncode/analyze_psr.py \
+echo python $pwncode/loop_pwn.py \
+        -c $pwncode/analyze_psr.py \
         --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
         --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
         --modify $pwncode/modify/modify_psr_lande.py \
         -o $pwndata/spectral/v9/analysis_no_plots --no-plots --max-free 5
 
-echo python $pwncode/loop_pwn.py -c $pwncode/analyze_psr.py \
+echo python $pwncode/loop_pwn.py \
+        -c $pwncode/analyze_psr.py \
         --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
         --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
         --modify $pwncode/modify/modify_psr_lande.py \
         -o $pwndata/spectral/v9/analysis_plots --max-free 5
 
 # ----------------------------------------------------------------------------------------------------
+
+echo python $pwncode/loop_pwn.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        -c $pwncode/lande/variability/test_variability.py \
+        --analysis-dir $pwndata/spectral/v9/analysis_no_plots \
+        -o $pwndata/spectral/v9/variability/v2
+
+# ----------------------------------------------------------------------------------------------------
+
+echo python $pwncode/loop_pwn.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        -c $pwncode/lande/variability/test_variability.py \
+        --analysis-dir $pwndata/spectral/v9/analysis_no_plots \
+        -o $pwndata/spectral/v9/variability/v3
+
+# ----------------------------------------------------------------------------------------------------
+
+echo python $pwncode/loop_pwn.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        -c $pwncode/lande/variability/test_variability.py \
+        --analysis-dir $pwndata/spectral/v9/analysis_no_plots \
+        -o $pwndata/spectral/v9/variability/v4
+
+# ----------------------------------------------------------------------------------------------------
+
+echo python $pwncode/loop_pwn.py \
+        -c $pwncode/analyze_psr.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify $pwncode/modify/modify_psr_lande.py \
+        -o $pwndata/spectral/v10/analysis_no_plots --no-plots --max-free 5
+
+echo python $pwncode/loop_pwn.py \
+        -c $pwncode/analyze_psr.py \
+        --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase $pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify $pwncode/modify/modify_psr_lande.py \
+        -o $pwndata/spectral/v10/analysis_plots --max-free 5
+
+# ----------------------------------------------------------------------------------------------------
+

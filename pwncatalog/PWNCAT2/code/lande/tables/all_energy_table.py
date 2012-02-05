@@ -5,6 +5,7 @@ def all_energy_table(pwnlist):
 
     table = OrderedDefaultdict(list)
 
+    psr_name='PSR'
     flux_name=r'$F_{0.1-316}$'
     energy_flux_name=r'$G_{0.1-316}$'
     ts_name=r'\ts'
@@ -13,7 +14,7 @@ def all_energy_table(pwnlist):
     luminosity_name = r'Luminosity'
 
     for pwn in pwnlist:
-        table['PSR'].append(table_name(pwn))
+        table[psr_name].append(table_name(pwn))
 
         results = get_results(pwn)
 
@@ -64,7 +65,7 @@ def all_energy_table(pwnlist):
                     table[luminosity_name].append(r'None')
 
     write_latex(table,
-                filebase='off_peak_all_energy',
+                filebase='all_energy',
                 latexdict = dict(#caption=r'All Energy spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
                                  #preamble=r'\tabletypesize{\scriptsize}',
                                  units={

@@ -13,7 +13,7 @@ import asciitable
 
 from lande_toolbag import OrderedDefaultdict
 
-base=expandvars('$pwndata/spectral/v8')
+base=expandvars('$pwndata/spectral/v9')
 #base=expandvars('$pwndata/spectral/temp')
 
 
@@ -92,7 +92,6 @@ class TableFormatter(object):
 
             if results.has_key('point') and results['point'].has_key('pointlike') and results['point'].has_key('gtlike'):
                 point_finished = True
-
 
                 gt_point=results['point']['gtlike']
                 pt_point=results['point']['pointlike']
@@ -181,25 +180,25 @@ class TableFormatter(object):
             if gt.has_key('bands'):
 
                 bands=gt['bands']
-                if not np.allclose(bands['Energy']['Lower'], [1e2, 1e3, 1e4]) or \
-                   not np.allclose(bands['Energy']['Upper'], [1e3, 1e4, 10**5.5]):
+                if not np.allclose(bands['energy']['lower'], [1e2, 1e3, 1e4]) or \
+                   not np.allclose(bands['energy']['upper'], [1e3, 1e4, 10**5.5]):
                     raise Exception("...")
 
-                ts1,ts2,ts3=bands['Test_Statistic']
-                index1,index2,index3=bands['Index']['Value']
-                index_err1,index_err2,index_err3=bands['Index']['Error']
+                ts1,ts2,ts3=bands['TS']
+                index1,index2,index3=bands['index']['value']
+                index_err1,index_err2,index_err3=bands['index']['error']
 
-                flux1,flux2,flux3=bands['Ph_Flux']['Value']
-                flux_err1,flux_err2,flux_err3=bands['Ph_Flux']['Error']
+                flux1,flux2,flux3=bands['flux']['value']
+                flux_err1,flux_err2,flux_err3=bands['flux']['error']
 
-                ul1,ul2,ul3=bands['Ph_Flux']['Upper_Limit']
+                ul1,ul2,ul3=bands['flux']['upper_limit']
 
                 table['TS(.1-1)'].append('%.1f' % ts1)
                 if ts1>25:
                     table['F(.1-1)'].append('%.1f +/- %.1f' % (flux1/1e-9,flux_err1/1e-9))
                     table['Index(.1-1)'].append('%.1f +/- %.1f' % (index1,index_err1))
                 else:
-                    table['F(.1-1)'].append('<%.1f' % (ul3/1e-9))
+                    table['F(.1-1)'].append('<%.1f' % (ul1/1e-9))
                     table['Index(.1-1)'].append('-')
 
                 table['TS(1-10)'].append('%.1f' % ts2)
@@ -280,61 +279,71 @@ def build_each_page(pwn):
     get_img_table(
         'plots/phaseogram_%s.png' % (pwn), 
         'plots/phase_vs_time_%s.png' % (pwn))
+
+    all = ['at_pulsar', 'point', 'extended']
             
-    title('TS Maps')
-    get_img_table(
-        'plots/tsmap_source_%s_%s.png' % (hypothesis,pwn),
-        'plots/tsmap_residual_%s_%s.png' % (hypothesis,pwn))
+    title('at_pulsar Source TS Maps')
+    get_img_table('plots/tsmap_source_%s_%s.png' % ('at_pulsar',pwn),
+                  'plots/band_tsmap_source_%s_%s.png' % ('at_pulsar',pwn),
+                 )
 
-    title('Smoothed Counts (0.1)')
-    get_img_table(
-        'plots/source_0.1_%s_%s.png' % (hypothesis,pwn),
-        'plots/sources_0.1_%s_%s.png' % (hypothesis,pwn))
+    title('Residual TS Maps')
+    get_img_table(*['plots/tsmap_residual_%s_%s.png' % (i,pwn) for i in all])
 
-    title('Counts (0.1)')
-    get_img_table(
-        'plots/counts_residual_0.1_%s_%s.png' % (hypothesis,pwn),
-        'plots/counts_source_0.1_%s_%s.png' % (hypothesis,pwn))
+    title('at_pulsar Smoothed Counts Diffuse Subtracted (0.1)')
+    get_img_table('plots/sources_0.1_%s_%s.png' % ('at_pulsar',pwn),
+                  'plots/band_sources_0.1_%s_%s.png' % ('at_pulsar',pwn))
 
-    title('Band TS Maps')
-    get_img_table(
-        'plots/band_tsmap_source_%s_%s.png' % (hypothesis,pwn),
-        'plots/band_tsmap_residual_%s_%s.png' % (hypothesis,pwn))
+    title('Smoothed Counts BG Source Subtracted (0.1)')
+    get_img_table(*['plots/source_0.1_%s_%s.png' % (i,pwn) for i in all])
+
+    title('Band Residual TS Maps')
+    get_img_table(*['plots/band_tsmap_residual_%s_%s.png' % (i,pwn) for i in all])
 
 
-    title('Band Smoothed Counts (0.1)')
-    get_img_table(
-        'plots/band_source_0.1_%s_%s.png' % (hypothesis,pwn),
-        'plots/band_sources_0.1_%s_%s.png' % (hypothesis,pwn))
+    title('Band Smoothed Counts BG Source Subtracted (0.1)')
+    get_img_table('plots/band_source_0.1_%s_%s.png' % (hypothesis,pwn))
 
-    get_img_table(
-        'seds/sed_gtlike_4bpd_%s_%s.png' % (hypothesis,pwn),
-        'seds/sed_gtlike_2bpd_%s_%s.png' % (hypothesis,pwn),
-        'seds/sed_gtlike_1bpd_%s_%s.png' % (hypothesis,pwn),
-        'seds/sed_gtlike_%s_%s.png' % (hypothesis,pwn),
-        'seds/sed_pointlike_%s_%s.png' % (hypothesis,pwn))
+    title('gtlike SED (4bpd')
+    get_img_table(*['seds/sed_gtlike_4bpd_%s_%s.png' % (i,pwn) for i in all])
+
+    title('gtlike SED (2bpd')
+    get_img_table(*['seds/sed_gtlike_2bpd_%s_%s.png' % (i,pwn) for i in all])
+
+    title('gtlike SED (1bpd')
+    get_img_table(*['seds/sed_gtlike_1bpd_%s_%s.png' % (i,pwn) for i in all])
 
     get_img_table(
         'plots/test_cutoff_%s_%s.png' % (hypothesis,pwn))
 
+    index_t2t.append("""```
+%s
+```""" % yaml.dump(results))
+
+
+    title('Pointlike SEDs')
+    get_img_table(*['seds/sed_pointlike_%s_%s.png' % (i,pwn) for i in all])
 
     title('Extra: Smoothed Counts (0.25)')
-    get_img_table(
-        'plots/source_0.25_%s_%s.png' % (hypothesis,pwn),
-        'plots/sources_0.25_%s_%s.png' % (hypothesis,pwn))
+    get_img_table(*['plots/source_0.25_%s_%s.png' % (i,pwn) for i in all])
+
+    title('Extra: Smoothed Counts (0.25)')
+    get_img_table(*['plots/sources_0.25_%s_%s.png' % (i,pwn) for i in all])
+
+
+    title('Extra: Band Smoothed Counts (0.25)')
+    get_img_table(*['plots/band_source_0.25_%s_%s.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/band_sources_0.25_%s_%s.png' % (i,pwn) for i in all])
+
+    title('Counts (0.1)')
+    get_img_table('plots/counts_residual_0.1_%s_%s.png' % (hypothesis,pwn),
+        'plots/counts_source_0.1_%s_%s.png' % (hypothesis,pwn))
+
 
     title('Extra: Counts (0.25)')
     get_img_table(
         'plots/counts_source_0.25_%s_%s.png' % (hypothesis,pwn),
         'plots/counts_residual_0.25_%s_%s.png' % (hypothesis,pwn))
-
-    title('Extra: Band Smoothed Counts (0.25)')
-    get_img_table(
-        'plots/band_source_0.25_%s_%s.png' % (hypothesis,pwn),
-        'plots/band_sources_0.25_%s_%s.png' % (hypothesis,pwn))
-    index_t2t.append("""```
-%s
-```""" % yaml.dump(results))
 
     t2t(index_t2t, pwn)
 

@@ -5,7 +5,9 @@ def cutoff_table(pwnlist):
 
     table = OrderedDefaultdict(list)
 
-    flux_name = r'$G_{0.1-316}$'
+    psr_name='PSR'
+    flux_name = r'$F_{0.1-316}$'
+    eflux_name = r'$G_{0.1-316}$'
     index_name = r'$\Gamma$'
     cutoff_name = r'$E_\text{cutoff}$'
     ts_point_name = r'$\ts_\text{point}$'
@@ -23,7 +25,7 @@ def cutoff_table(pwnlist):
         if ts < 25:
             continue
 
-        table['PSR'].append(table_name(pwn))
+        table[psr_name].append(table_name(pwn))
 
         cutoff=results['point']['gtlike']['test_cutoff']
 
@@ -39,33 +41,40 @@ def cutoff_table(pwnlist):
 
             if ts_cutoff >= 16:
 
-                flux=cutoff['flux_1']['eflux']
-                flux_err=cutoff['flux_1']['eflux_err']
+                flux=cutoff['flux_1']['flux']
+                flux_err=cutoff['flux_1']['flux_err']
+
+                eflux=cutoff['flux_1']['eflux']
+                eflux_err=cutoff['flux_1']['eflux_err']
                 index=-1*cutoff['model_1']['Index1']
                 index_err=cutoff['model_1']['Index1_err']
                 cutoff_energy=cutoff['model_1']['Cutoff']
                 cutoff_energy_err=cutoff['model_1']['Cutoff_err']
 
-                table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-12,flux_err/1e-12))
+                table[flux_name].append('$%.2f \pm %.2f$' % (flux/1e-9,flux_err/1e-9))
+                table[eflux_name].append('$%.2f \pm %.2f$' % (eflux/1e-12,eflux_err/1e-12))
                 table[index_name].append('$%.2f \pm %.2f$' % (index,index_err))
                 table[cutoff_name].append('$%.2f \pm %.2f$' % (cutoff_energy/1000,cutoff_energy_err/1000))
             else:
                 table[flux_name].append(r'\nodata')
+                table[eflux_name].append(r'\nodata')
                 table[index_name].append(r'\nodata')
                 table[cutoff_name].append(r'\nodata')
         else:
             table[flux_name].append('None')
+            table[eflux_name].append('None')
             table[index_name].append('None')
             table[cutoff_name].append('None')
             table[ts_cutoff_name].append('None')
 
     write_latex(table,
-                filebase='off_peak_cutoff_test',
+                filebase='cutoff_test',
                 latexdict = dict(#caption=r'Spectral fitting of pulsar wind nebula candidates with low energy component.',
                                  #col_align=r'lrrrr',
                                  #preamble=r'\tabletypesize{\scriptsize}',
                                  units={
-                                     flux_name:r'($10^{-12}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
+                                     flux_name:r'($10^{-9}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
+                                     eflux_name:r'($10^{-12}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
                                      cutoff_name:r'(GeV)',
                                  }))
 

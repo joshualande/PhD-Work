@@ -25,14 +25,14 @@ def all_energy_table(pwnlist):
 
         phase=get_phase(pwn)
         table[obs_id].append(r'\nodata')
-        table[phase_name].append('%.2f-%.2f' % tuple(phase))
+        table[phase_name].append('%.2f - %.2f' % tuple(phase))
 
         table[distance].append(r'\nodata')
         table[rejected].append(r'\nodata')
 
     print table
     write_latex(table,
-                filebase='off_peak_phase_range',
+                filebase='phase_range',
                 latexdict = dict(
                     units=dict(
                         distance='kpc'

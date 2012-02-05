@@ -1,10 +1,12 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex, BestHypothesis
 from lande_toolbag import OrderedDefaultdict
+from numpy import asarray as a
 
 def each_energy_table(pwnlist):
 
     table = OrderedDefaultdict(list)
 
+    psr_name='PSR'
     TS1_name = r'$\ts_{0.1-1}$'
     TS2_name = r'$\ts_{1-10}$'
     TS3_name = r'$\ts_{10-316}$'
@@ -20,7 +22,7 @@ def each_energy_table(pwnlist):
     for pwn in pwnlist:
 
         results = get_results(pwn)
-        table['PSR'].append(table_name(pwn))
+        table[psr_name].append(table_name(pwn))
 
         if results is None: 
             table[TS1_name].append('None')
@@ -35,48 +37,51 @@ def each_energy_table(pwnlist):
             table[flux3_name].append('None')
             table[index3_name].append('None')
         else:
-            at_pulsar_gtlike = results['at_pulsar']['gtlike']
-            at_pulsar_pointlike = results['at_pulsar']['pointlike']
-            
-
-            point_gtlike = results['point']['gtlike']
-            point_pointlike = results['point']['pointlike']
-            
-            extended_gtlike = results['extended']['gtlike']
-            extended_pointlike = results['extended']['pointlike']
-
-            ts_point = point_gtlike['TS']
-            ts_ext = max(extended_gtlike['ts_ext'],0)
+            print 'name',pwn
 
             b = BestHypothesis(results)
             gtlike = b.gtlike
             pointlike = b.pointlike
             type = b.type
+            print type
 
             ts = gtlike['bands']['TS']
-
-            f = gtlike['bands']['flux']
-            flux = f['value']
-            flux_err = f['error']
-            ul = f['upper_limit']
+            flux = gtlike['bands']['flux']['value']
+            flux_err = gtlike['bands']['flux']['error']
+            ul = gtlike['bands']['flux']['upper_limit']
+            index = -a(gtlike['bands']['index']['value'])
+            index_err = -a(gtlike['bands']['index']['error'])
 
             ts = [i if i > 0 else 0 for i in ts]
 
             table[TS1_name].append('%.1f' % ts[0])
-            table[flux1_name].append('$%.2f \pm %.2f$' % (flux[0]/1e-9,flux_err[0]/1e-9) if ts[0] > 25 else '$<%.2f$' % (ul[0]/1e-9))
-            table[index1_name].append('None')
+            if ts[0] >= 25:
+                table[flux1_name].append(r'$%.2f \pm %.2f$' % (flux[0]/1e-9,flux_err[0]/1e-9))
+                table[index1_name].append(r'$%.2f \pm %.2f$' % (index[0], index_err[0]))
+            else:
+                table[flux1_name].append('$<%.2f$' % (ul[0]/1e-9))
+                table[index1_name].append(r'\nodata')
 
 
             table[TS2_name].append('%.1f' % ts[1])
-            table[flux2_name].append('$%.2f \pm %.2f$' % (flux[1]/1e-9,flux_err[1]/1e-9) if ts[1] > 25 else r'$<%.2f$' % (ul[1]/1e-9))
-            table[index2_name].append('None')
+            if ts[1] >= 25:
+                table[flux2_name].append(r'$%.2f \pm %.2f$' % (flux[1]/1e-9,flux_err[1]/1e-9))
+                table[index2_name].append(r'$%.2f \pm %.2f$' % (index[1], index_err[1]))
+            else:
+                table[flux2_name].append(r'$<%.2f$' % (ul[1]/1e-9))
+                table[index2_name].append(r'\nodata')
 
             table[TS3_name].append('%.1f' % ts[2])
-            table[flux3_name].append('$%.2f \pm %.2f$' % (flux[2]/1e-9,flux_err[2]/1e-9) if ts[2] > 25 else r'$<%.2f$' % (ul[2]/1e-9))
-            table[index3_name].append('None')
+            if ts[2] >= 25:
+                table[flux3_name].append(r'$%.2f \pm %.2f$' % (flux[2]/1e-9,flux_err[2]/1e-9))
+                table[index3_name].append(r'$%.2f \pm %.2f$' % (index[2], index_err[2]))
+            else:
+                table[flux3_name].append(r'$<%.2f$' % (ul[2]/1e-9))
+                table[index3_name].append(r'\nodata')
 
+    print table
     write_latex(table,
-                filebase='off_peak_each_energy',
+                filebase='each_energy',
                 latexdict = dict(#caption=r'Energy bin spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
                                  #preamble=r'\tabletypesize{\scriptsize}',
                                  units={

@@ -47,7 +47,7 @@ def localization_table(pwnlist):
         pointlike = b.pointlike
         type = b.type
 
-        if b.type != 'ul':
+        if b.type != 'upper_limit':
 
             l,b=pointlike['gal']
 
@@ -79,7 +79,7 @@ def localization_table(pwnlist):
             
     deg = '(deg)'
     write_latex(table,
-                filebase='off_peak_localization',
+                filebase='localization',
                 latexdict = dict(#caption=r'All Energy spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
                                  #preamble=r'\tabletypesize{\scriptsize}',
                                  units={

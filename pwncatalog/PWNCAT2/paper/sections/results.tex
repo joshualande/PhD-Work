@@ -2,53 +2,56 @@
 
 Results goes here\ldots
 
-\tabref{off_peak_all_energy} shows the results of the all energy analysis of the off-peak emission for each pulsar.
+\tabref{all_energy} shows the results of the all energy analysis of the off-peak emission for each pulsar.
 
-\tabref{off_peak_each_energy} shows the results of the analysis in separate energy bins of each pulsar.
+\tabref{each_energy} shows the results of the analysis in separate energy bins of each pulsar.
 
-\tabref{off_peak_cutoff_test} shows the results of the cutoff test for pulsars with significant low-energy emission.
+\tabref{cutoff_test} shows the results of the cutoff test for pulsars with significant low-energy emission.
 
 
-\begin{deluxetable}{lccccc}
+\begin{deluxetable}{l*{5}c}
 \tabletypesize{\scriptsize}
 \tablecaption{All Energy spectral fit for the \todo[inline]{How many pulsars?} \lat-detected Pulsars
-\label{tab:off_peak_all_energy}
+\label{tab:all_energy}
 }
-\input{tables/off_peak_all_energy.tex}
+\input{tables/all_energy.tex}
 \tablecomments{\todo[inline]{Put table comments}}
 \end{deluxetable}
 
-\begin{deluxetable}{lccccccccc}
-\tabletypesize{\tiny}
+\clearpage
+\begin{deluxetable}{l*{9}c}
+%\tabletypesize{\tiny}
 \setlength{\tabcolsep}{0.04in}
+\tabletypesize{\scriptsize}
+\tablewidth{0pt}
+\rotate
 \tablecaption{Energy bin spectral fit for the \todo[inline]{How many pulsars?} \lat-detected Pulsars
-\label{tab:off_peak_each_energy}
+\label{tab:each_energy}
 }
-\input{tables/off_peak_each_energy.tex}
+\input{tables/each_energy.tex}
 \tablecomments{\todo[inline]{Put table comments}}
 \end{deluxetable}
 
-\begin{deluxetable}{lcccc}
+\begin{deluxetable}{l*{6}c}
 \tabletypesize{\scriptsize}
 \tablecaption{Spectral fitting of pulsar wind nebula candidates with low energy component
-\label{tab:off_peak_cutoff_test}
+\label{tab:cutoff_test}
 }
-\input{tables/off_peak_cutoff_test.tex}
+\input{tables/cutoff_test.tex}
 \tablecomments{\todo[inline]{Put table comments}}
 \end{deluxetable}
 
-The localization results are in \tabref{off_peak_localization}
+The localization results are in \tabref{localization}
 
-\begin{deluxetable}{lccccccc}
+\begin{deluxetable}{l*{7}c}
 \tabletypesize{\scriptsize}
 \tablecaption{Localization and extension fitting results
-\label{tab:off_peak_localization}
+\label{tab:localization}
 }
-\input{tables/off_peak_localization.tex}
+\input{tables/localization.tex}
 \tablecomments{\todo[inline]{Put table comments}}
 \end{deluxetable}
 
-\todo[inline]{Add table on PWN Variability}
 
 
 \figref{cutoff_test} shows the cutoff test\ldots
@@ -62,3 +65,15 @@ The localization results are in \tabref{off_peak_localization}
   \caption{Cutoff test for some pulsars\dots}
   \label{fig:cutoff_test}
 \end{figure}
+
+
+\figref{variability} shows the cutoff test\ldots
+
+\begin{deluxetable}{l*{2}c}
+\tabletypesize{\scriptsize}
+\tablecaption{Variability test
+\label{tab:variability}
+}
+\input{tables/variability.tex}
+\tablecomments{\todo[inline]{Put table comments}}
+\end{deluxetable}
