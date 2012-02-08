@@ -58,6 +58,7 @@ class VariabilityTester(object):
         ("do_gtlike",            True, """ Run gtlike varaibility test. """),
         ("refit_background",     True, """ Fit the background sources in each energy bin."""),
         ("refit_other_sources", False, """ Fit other sources in each energy bin. """),
+        ("filename",             None, """ Filename to save data to. """),
     )
 
     @keyword_options.decorate(defaults)
@@ -285,11 +286,15 @@ class VariabilityTester(object):
                 print 'Removing subdir',subdir
                 shutil.rmtree(subdir)
 
+            if self.filename is not None: self.save(self.filename)
+
         self.TS_var = dict(
             pointlike = self.compute_TS_var('pointlike')
         )
         if self.do_gtlike:
             self.TS_var['gtlike'] = self.compute_TS_var('gtlike')
+
+        if self.filename is not None: self.save(self.filename)
 
     def compute_TS_var(self,type):
         a=np.asarray
@@ -419,6 +424,11 @@ class VariabilityTester(object):
             all_time=self.all_time)
 
         return tolist(d)
+
+    def save(self, filename):
+        f=open(filename,'w')
+        f.write(self.todict())
+        f.close()
 
     @staticmethod
     def _plot_points(axes, x, xerr, y, yerr, yup, significant, 
