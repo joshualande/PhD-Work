@@ -24,12 +24,16 @@ import lande_units as units
 
 
 def gtlike_or_pointlike(f_gtlike, f_pointlike, like_or_roi, *args, **kwargs):
+    """ Note, like_or_roi can be either an ROI or a spectral model. """
 
+    from pyLikelihood import Function
     from BinnedAnalysis import BinnedAnalysis
 
-    if isinstance(like_or_roi, BinnedAnalysis):
+    if isinstance(like_or_roi, BinnedAnalysis) or \
+       isinstance(like_or_roi,Function):
         f=f_gtlike
-    elif isinstance(like_or_roi, ROIAnalysis):
+    elif isinstance(like_or_roi, ROIAnalysis) or \
+       isinstance(like_or_roi,Model):
         f=f_pointlike
     else:
         raise Exception("like_or_roi must be of type BinnedAnalysis or ROIAnalysis")
@@ -68,14 +72,28 @@ def paranoid_gtlike_fit(like, covar=True):
             try:
                 saved_state = LikelihoodState(like)
                 print 'Refitting with LBFGS'
-                like.fit(optimizer='LBFGS', covar=covar)
+                like.fit(optimizer='LBFGS', covar=False)
             except Exception, ex:
                 print 'ERROR spectral fitting with LBFGS', ex
                 traceback.print_exc(file=sys.stdout)
+                saved_state.restore()
 
 
 def pointlike_spectrum_to_dict(model, errors=False):
+    """ Package of a spectral model into a handy
+        python dictionary.
 
+            >>> from uw.like.Models import PowerLaw
+            >>> m=PowerLaw(norm=1, index=.5, index_offset=1)
+            >>> d=pointlike_spectrum_to_dict(m)
+            >>> print d['Norm']
+            1.0
+            >>> print d['Index']
+            -0.5
+            >>> d=pointlike_spectrum_to_dict(m, errors=False)
+            >>> d.has_key('Index_err')
+            False
+    """
     d = dict(name = model.name)
     default = DefaultModelValues.simple_models[model.name]
     for k,v in default.items():
@@ -83,16 +101,34 @@ def pointlike_spectrum_to_dict(model, errors=False):
         elif k == 'param_names': 
             for p in v: 
                 d[p]=model[p]
-                d['%s_err' % p]=model.error(p)
+                if errors:
+                    d['%s_err' % p]=model.error(p)
         else: 
             d[k]=getattr(model,k)
 
+    # stupid kluge:
+    if d.has_key('index_offset'):
+        index_offset = d.pop('index_offset')
+        d['Index'] -= index_offset
+        if errors:
+            d['Index_err'] -= index_offset
+
     return tolist(d)
 
+gtlike_spectrum_to_dict = SED.spectrum_to_dict
 
 
+def gtlike_name_to_dict(like, name, *args, **kwargs):
+    source = like.logLike.getSource(name)
+    spectrum = source.spectrum()
+    return gtlike_spectrum_to_dict(spectrum, *args, **kwargs)
 
-def gtlike_flux_dict(like,name,emin=None,emax=None,flux_units='erg', error=True):
+def pointlike_name_to_dict(roi, name, *args, **kwargs):
+    model = roi.get_model(name)
+    return pointlike_spectrum_to_dict(model, *args, **kwargs)
+
+
+def gtlike_fluxdict(like,name,emin=None,emax=None,flux_units='erg', error=True):
 
     if emin is None and emax is None: 
         emin, emax = get_full_energy_range(like)
@@ -117,6 +153,50 @@ def gtlike_flux_dict(like,name,emin=None,emax=None,flux_units='erg', error=True)
             f['eflux_err']=-1
     return f
 
+def gtlike_get_full_name(like,substr):
+    """ Gets the full source name for a source 
+        that contains the input substring. """
+    all_sources=like.sourceNames()
+    f = np.char.find(np.char.lower(all_sources),substr) != -1
+    if not np.any(f): return None
+    index = np.where(f)[0][0]
+    return all_sources[index]
+
+def pointlike_get_full_name(roi,substr):
+    """ Gets the full source name for a source 
+        that contains the input substring. """
+    all_sources=np.append(roi.psm.names,roi.dsm.names)
+    f = np.char.find(np.char.lower(all_sources),substr) != -1
+    if not np.any(f): return None
+    index = np.where(f)[0][0]
+    return all_sources[index]
+
+def diffusedict(like_or_roi):
+    """ Save out gal+iso values.
+
+        Note that this function works for both pointlike + gtlike!
+
+        Warning: this implementation is fragile in that 
+            (a) it relies upon the galactic and isotropic diffuse having a given name
+            (b) other names can not look like the names of the gal+iso
+            (c) gal must be scaled by a powerlaw, iso must be scaled by a constant
+    """
+    f = dict()
+
+    n = lambda i: get_full_name(like_or_roi,i)
+
+    galname = [n(i) for i in ['galactic','ring','gal_v02'] if n(i) is not None]
+    if len(galname) > 0:
+        galname = galname[0]
+        f['galactic'] = name_to_dict(like_or_roi, galname, errors=True)
+
+    isoname = [n(i) for i in ['isotropic','extragalactic','eg_v02'] if n(i) is not None]
+    if len(isoname) > 0:
+        isoname = isoname[0]
+        f['isotropic'] = name_to_dict(like_or_roi, isoname, errors=True)
+
+    return f
+
 def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
     from pyLikelihood import ParameterVector
 
@@ -128,51 +208,20 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
         logLikelihood=like.logLike.value()
     )
 
-    d['flux']=gtlike_flux_dict(like,name,emin,emax,flux_units)
+    d['flux']=fluxdict(like,name,emin,emax,flux_units)
 
     source = like.logLike.getSource(name)
     spectrum = source.spectrum()
 
     d['model']=spectrum_to_dict(spectrum, errors=True)
 
-    # Save out gal+iso values.
-    # Warning: this implementation is fragile in that
-    # (a) the galacitc must have 'gal' in it and the isotropic
-    #     must have 'iso' in it 
-    # (b) all other sources cannot have 'gal' or 'iso' in them.
-    # (c) gal must be scaled by a powerlaw, iso must be scaled by a constant
+    d['diffuse'] = diffusedict(like)
 
-    def get(sourcename,param):
-        source = like.logLike.getSource(sourcename)
-        spectrum = source.spectrum()
-        p = spectrum.getParam(param)
-        return dict(value=p.getTrueValue(),
-                    error=p.error()*p.getScale())
-
-    def get_full_name(substr):
-        all_sources=np.char.lower(like.sourceNames())
-        f = np.char.find(all_sources,substr) != -1
-        if not np.any(f): return None
-        index = np.where(f)[0][0]
-        return like.sourceNames()[index]
-
-    d['diffuse'] = f = {}
-
-    galname = get_full_name('galactic')
-    if galname is None: galname = get_full_name('ring')
-    if galname is not None: 
-        f['galnorm'] = get(galname,'Prefactor')
-        f['galindex'] = get(galname,'Index')
-
-    isoname = get_full_name('isotropic')
-    if isoname is None: isoname = get_full_name('extragalactic')
-    if isoname is not None: 
-        f['isonorm'] = get(isoname,'Normalization')
 
     return d
 
 
-def pointlike_flux_dict(roi,which,emin=None,emax=None,flux_units='erg', error=True):
+def pointlike_fluxdict(roi,which,emin=None,emax=None,flux_units='erg', error=True):
 
     if emin is None and emax is None:
         emin, emax = get_full_energy_range(roi)
@@ -195,7 +244,7 @@ def pointlike_flux_dict(roi,which,emin=None,emax=None,flux_units='erg', error=Tr
     return f
 
 
-def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
+def pointlike_sourcedict(roi, name, emin=None, emax=None, flux_units='erg'):
     d={}
 
     if emin is None and emax is None:
@@ -210,13 +259,15 @@ def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
 
     d['logLikelihood']=-roi.logLikelihood(roi.parameters())
 
-    d['flux']=pointlike_flux_dict(roi,name,emin,emax,flux_units)
+    d['flux']=fluxdict(roi,name,emin,emax,flux_units)
 
     d['model']=spectrum_to_dict(model, errors=True)
 
     # Source position
     d['gal'] = [source.skydir.l(),source.skydir.b()]
     d['equ'] = [source.skydir.ra(),source.skydir.dec()]
+
+    d['diffuse'] = diffusedict(roi)
 
     f = d['spatial_model'] = dict()
     if isinstance(source,ExtendedSource):
@@ -235,9 +286,36 @@ def pointlike_sourcedict(roi, name, emin, emax, flux_units='erg'):
 
     return d
 
+def gtlike_fit_only_prefactor(like, name):
+    """ Freeze everything but norm of source with name
+        in pyLikelihood object. """
+    from pyLikelihood import ParameterVector
+
+    source = like.logLike.getSource(name)
+    spectrum = source.spectrum()
+
+    parameters=ParameterVector()
+    spectrum.getParams(parameters)
+    for par in parameters: 
+        par.setFree(False)
+    par = like.normPar(name)
+    par.setFree(True)
+    like.syncSrcParams(name)
+
+def pointlike_fit_only_prefactor(roi, which):
+    model = roi.get_model(which)
+    old_free = model.free
+    new_free = np.zeros_like(old_free).astype(bool)
+    new_free[0] = True
+    roi.modify(which=which, free=new_free)
+
 
 def gtlike_upper_limit(like, name, cl, emin=None, emax=None, 
                        flux_units='erg', **kwargs):
+    """
+        N.B. spectral fit in this function instead
+        of in upper limits code since my
+        paranoid_gtlike_fit function is more robust. """
 
     print 'Calculating gtlike upper limit'
 
@@ -250,22 +328,30 @@ def gtlike_upper_limit(like, name, cl, emin=None, emax=None,
         if emin is None and emax is None: 
             emin, emax = get_full_energy_range(like)
 
-        # First, freeze all parameters in model (helps with convergence)
+        # First, freeze spectrum (except for normalization)
+        # of our soruce
+        gtlike_fit_only_prefactor(like, name)
+
+        # Spectral fit whole ROI
+
+        paranoid_gtlike_fit(like)
+
+        # Freeze everything but our source of interest
         for i in range(len(like.model.params)):
-            like.freeze(i)
+            like.model[i].setFree(False)
+            like.syncSrcParams(like[i].srcName)
 
-        like.thaw(like.par_index(name, 'Prefactor'))
-
-        like.syncSrcParams(name)
-
+        # Note, I think freeze_all is redundant, but flag it just 
+        # to be paranoid
         flux_ul, results = IntegralUpperLimit.calc_int(like, name, 
                                                        freeze_all=True,
+                                                       skip_global_opt=True,
                                                        cl=cl,
                                                        emin=emin, 
                                                        emax=emax, 
                                                        **kwargs)
 
-        prefactor=like[like.par_index(name, 'Prefactor')]
+        prefactor=like.normPar(name)
         pref_ul = results['ul_value']*prefactor.getScale()
         prefactor.setTrueValue(pref_ul)
 
@@ -290,7 +376,7 @@ def gtlike_upper_limit(like, name, cl, emin=None, emax=None,
     return tolist(ul)
 
 
-def gtlike_powerlaw_upper_limit(like, name, powerlaw_index, cl, emin=None, emax=None, 
+def gtlike_powerlaw_upper_limit(like, name, powerlaw_index=2 , cl=0.95, emin=None, emax=None, 
                                 flux_units='erg',
                                 **kwargs):
     """ Wrap up calculating the flux upper limit for a powerlaw
@@ -338,7 +424,8 @@ def gtlike_powerlaw_upper_limit(like, name, powerlaw_index, cl, emin=None, emax=
     like.syncSrcParams(name)
 
     results = gtlike_upper_limit(like, name, cl, emin, emax, flux_units, **kwargs)
-    results['powerlaw_index']=powerlaw_index
+    if results is not None:
+        results['powerlaw_index']=powerlaw_index
 
     like.setSpectrum(name,old_spectrum)
     saved_state.restore()
@@ -372,7 +459,7 @@ def pointlike_upper_limit(roi, name, cl, emin=None, emax=None, flux_units='erg',
     return tolist(ul)
 
 
-def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index, cl, emin=None, emax=None, 
+def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index=2, cl=0.95, emin=None, emax=None, 
                                    flux_units='erg', **kwargs):
     print 'Calculating pointlike upper limit'
 
@@ -421,7 +508,7 @@ def pointlike_test_cutoff(roi, which, flux_units='erg'):
     d['ll_0'] = ll_0 = ll()
     d['TS_0'] = ts()
     d['model_0']=spectrum()
-    d['flux_0']=pointlike_flux_dict(roi,which,emin,emax,flux_units)
+    d['flux_0']=fluxdict(roi,which,emin,emax,flux_units)
 
     m=ExpCutoff(n0=1e-11, gamma=1, cutoff=1000, e0=1000)
     m.set_flux(old_flux,emin,emax)
@@ -432,7 +519,7 @@ def pointlike_test_cutoff(roi, which, flux_units='erg'):
     d['ll_1'] = ll_1 = ll()
     d['TS_1'] = ts()
     d['model_1']=spectrum()
-    d['flux_1']=pointlike_flux_dict(roi,which,emin,emax,flux_units)
+    d['flux_1']=fluxdict(roi,which,emin,emax,flux_units)
 
     d['TS_cutoff']=2*(ll_1-ll_0)
 
@@ -501,7 +588,7 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
         d['ll_0'] = ll_0 = ll()
         d['TS_0'] = ts()
         d['model_0']=spectrum()
-        d['flux_0']=gtlike_flux_dict(like,name,emin,emax,flux_units)
+        d['flux_0']=fluxdict(like,name,emin,emax,flux_units)
         
         like.setSpectrum(name,'PLSuperExpCutoff')
         set('Prefactor', 1e-9,  1e-11,   1e-5,1e5)
@@ -528,7 +615,7 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
         d['ll_1'] = ll_1 = ll()
         d['TS_1'] = ts()
         d['model_1']=spectrum()
-        d['flux_1']=gtlike_flux_dict(like,name,emin,emax,flux_units)
+        d['flux_1']=fluxdict(like,name,emin,emax,flux_units)
 
         d['TS_cutoff']=2*(ll_1-ll_0)
     except Exception, ex:
@@ -612,19 +699,20 @@ def freeze_insignificant_to_catalog(roi,catalog,exclude_names=[], min_ts=25):
         the spectral shape of the source frozen. """
     any_changed=False
     for source in roi.get_sources():
+        name = source.name
 
-        if source.name in exclude_names: continue
+        if name in exclude_names: continue
 
         if np.any(source.model.free) and roi.TS(which=source)< min_ts:
             try:
-                catalog_source = catalog.get_source(source.name)
+                catalog_source = catalog.get_source(name)
             except StopIteration:
                 pass
             else:
-                model=fit_only_prefactor(catalog_source.model)
-                print 'Freezing spectra of %s to 2FGL prediction b/c it is insignificant' % source.name
+                print 'Freezing spectra of %s to 2FGL prediction b/c it is insignificant' % name
+                roi.modify(which=name, model=catalog_source.model, keep_old_flux=False)
+                fit_only_prefactor(roi, name)
                 any_changed=True
-                roi.modify(which=source, model=model,keep_old_flux=False)
     return any_changed
 
 def freeze_bad_index_to_catalog(roi,catalog,exclude_names=[], min_ts=25):
@@ -634,21 +722,22 @@ def freeze_bad_index_to_catalog(roi,catalog,exclude_names=[], min_ts=25):
         the spectral shape of the source frozen. """
     any_changed=False
     for source in roi.get_sources():
+        name = source.name
 
-        if source.name in exclude_names: continue
+        if name in exclude_names: continue
 
         if isinstance(source.model,PowerLaw):
             index =source.model['index']
             if index < -5 or index > 5:
                 try:
-                    catalog_source = catalog.get_source(source.name)
+                    catalog_source = catalog.get_source(name)
                 except StopIteration:
                     pass
                 else:
-                    model=fit_only_prefactor(catalog_source.model)
-                    print 'Freezing spectra of %s to 2FGL prediction b/c fit index is bad' % source.name
+                    print 'Freezing spectra of %s to 2FGL prediction b/c fit index is bad' % name
+                    roi.modify(which=name, model = catalog_source.model, keep_old_flux=False)
+                    fit_only_prefactor(roi, name)
                     any_changed=True
-                    roi.modify(which=source, model=model,keep_old_flux=False)
     return any_changed
 
 def fix_bad_cutoffs(roi, exclude_names):
@@ -705,13 +794,19 @@ def force_gradient(use_gradient):
 
 
 def spectrum_to_dict(*args, **kwargs):
-    return gtlike_or_pointlike(SED.spectrum_to_dict, pointlike_spectrum_to_dict, *args, **kwargs)
+    return gtlike_or_pointlike(gtlike_spectrum_to_dict, pointlike_spectrum_to_dict, *args, **kwargs)
+
+def name_to_dict(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_name_to_dict, pointlike_name_to_dict, *args, **kwargs)
 
 def get_full_energy_range(*args, **kwargs):
     return gtlike_or_pointlike(gtlike_get_full_energy_range, pointlike_get_full_energy_range, *args, **kwargs)
 
-def flux_dict(*args, **kwargs):
-    return gtlike_or_pointlike(gtlike_flux_dict, pointlike_flux_dict, *args, **kwargs)
+def fluxdict(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_fluxdict, pointlike_fluxdict, *args, **kwargs)
+
+def get_full_name(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_get_full_name, pointlike_get_full_name, *args, **kwargs)
 
 def sourcedict(*args, **kwargs):
     return gtlike_or_pointlike(gtlike_sourcedict, pointlike_sourcedict, *args, **kwargs)
@@ -724,3 +819,10 @@ def upper_limit(*args, **kwargs):
 
 def test_cutoff(*args, **kwargs):
     return gtlike_or_pointlike(gtlike_test_cutoff, pointlike_test_cutoff, *args, **kwargs)
+
+def fit_only_prefactor(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_fit_only_prefactor, pointlike_fit_only_prefactor, *args, **kwargs)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
