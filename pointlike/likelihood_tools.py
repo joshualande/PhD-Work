@@ -11,8 +11,12 @@ import pyfits as pf
 
 from mpl_toolkits.axes_grid1 import AxesGrid
 
+from skymaps import DiffuseFunction,IsotropicSpectrum,IsotropicPowerLaw
+
 from uw.like.roi_analysis import ROIAnalysis
+from uw.like.pointspec_helpers import PointSource
 from uw.like.roi_extended import ExtendedSource
+from uw.like.roi_diffuse import DiffuseSource
 from uw.like.Models import Model,PowerLaw,ExpCutoff,DefaultModelValues
 from uw.like.roi_state import PointlikeState
 
@@ -153,48 +157,78 @@ def gtlike_fluxdict(like,name,emin=None,emax=None,flux_units='erg', error=True):
             f['eflux_err']=-1
     return f
 
-def gtlike_get_full_name(like,substr):
-    """ Gets the full source name for a source 
-        that contains the input substring. """
-    all_sources=like.sourceNames()
-    f = np.char.find(np.char.lower(all_sources),substr) != -1
-    if not np.any(f): return None
-    index = np.where(f)[0][0]
-    return all_sources[index]
 
-def pointlike_get_full_name(roi,substr):
-    """ Gets the full source name for a source 
-        that contains the input substring. """
-    all_sources=np.append(roi.psm.names,roi.dsm.names)
-    f = np.char.find(np.char.lower(all_sources),substr) != -1
-    if not np.any(f): return None
-    index = np.where(f)[0][0]
-    return all_sources[index]
+def gtlike_get_spatial_model_name(like, name):
+    """ This code is adapted from
+        the Likelihood file SourceModelBuilder.cxx's
+        function
+        SourceModelBuilder::addSpatialPart
+    """
+    source = like.logLike.getSource(name)
+
+    fns = source.getSrcFuncs()
+
+    assert fns.count("Position") or fns.count("SpatialDist")
+
+    if fns.count("Position"):
+        return "SkyDirFunction"
+
+    elif fns.count("SpatialDist"):
+        type = fns["SpatialDist"].genericName()
+        return type
+
+def pointlike_get_spatial_model_name(roi, name):
+    source = roi.get_source(name)
+    if isinstance(source,PointSource):
+        return 'SkyDirFunction'
+    elif isinstance(source,ExtendedSource):
+        # this is only approximately true
+        return 'SpatialMap'
+    elif isinstance(source,DiffuseSource):
+        dm = source.dmodel
+        if hasattr(dm,'__len__') and len(dm)==1: dm = dm[0]
+        if isinstance(dm,DiffuseFunction):
+            return 'MapCubeFunction'
+        elif isinstance(dm,IsotropicSpectrum) or \
+                isinstance(dm,IsotropicPowerLaw):
+            return 'ConstantValue'
+
+def pointlike_get_all_names(roi):
+    """ Get a list of the names of all sources in the pointlike ROI. """
+    return np.append(roi.psm.names,roi.dsm.names)
+
+def gtlike_get_all_names(like):
+    """ Get a list of the names of all sources in the gtlike ROI. """
+    return like.sourceNames()
+
+def get_sources(like_or_roi):
+    """ Get a list of point-like and extended sources
+        in the ROI. """
+    all_names=get_all_names(like_or_roi)
+    all_ps = [i for i in all_names \
+              if get_spatial_model_name(like_or_roi,i) in \
+              ['SkyDirFunction','SpatialMap']]
+    return all_ps
+        
+
+def get_background(like_or_roi):
+    """ Get a list of the names of all background
+        sources in the ROI. """
+    all_names=get_all_names(like_or_roi)
+    all_bg = [i for i in all_names \
+              if get_spatial_model_name(like_or_roi,i) in \
+              ['ConstantValue','MapCubeFunction']]
+    return all_bg
 
 def diffusedict(like_or_roi):
-    """ Save out gal+iso values.
+    """ Save out all diffuse sources. """
 
-        Note that this function works for both pointlike + gtlike!
-
-        Warning: this implementation is fragile in that 
-            (a) it relies upon the galactic and isotropic diffuse having a given name
-            (b) other names can not look like the names of the gal+iso
-            (c) gal must be scaled by a powerlaw, iso must be scaled by a constant
-    """
     f = dict()
 
-    n = lambda i: get_full_name(like_or_roi,i)
+    bgs = get_background(like_or_roi)
 
-    galname = [n(i) for i in ['galactic','ring','gal_v02'] if n(i) is not None]
-    if len(galname) > 0:
-        galname = galname[0]
-        f['galactic'] = name_to_dict(like_or_roi, galname, errors=True)
-
-    isoname = [n(i) for i in ['isotropic','extragalactic','eg_v02'] if n(i) is not None]
-    if len(isoname) > 0:
-        isoname = isoname[0]
-        f['isotropic'] = name_to_dict(like_or_roi, isoname, errors=True)
-
+    for name in bgs:
+        f[name] = name_to_dict(like_or_roi, name, errors=True)
     return f
 
 def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
@@ -286,9 +320,8 @@ def pointlike_sourcedict(roi, name, emin=None, emax=None, flux_units='erg'):
 
     return d
 
-def gtlike_fit_only_prefactor(like, name):
-    """ Freeze everything but norm of source with name
-        in pyLikelihood object. """
+def gtlike_modify(like, name, free=True):
+    """ Freeze a source in a gtlike ROI. """
     from pyLikelihood import ParameterVector
 
     source = like.logLike.getSource(name)
@@ -297,7 +330,12 @@ def gtlike_fit_only_prefactor(like, name):
     parameters=ParameterVector()
     spectrum.getParams(parameters)
     for par in parameters: 
-        par.setFree(False)
+        par.setFree(free)
+    like.syncSrcParams(name)
+
+def gtlike_fit_only_prefactor(like, name):
+    """ Freeze everything but norm of source with name
+        in pyLikelihood object. """
     par = like.normPar(name)
     par.setFree(True)
     like.syncSrcParams(name)
@@ -685,7 +723,7 @@ def pointlike_plot_all_seds(roi, filename=None, ncols=4, **kwargs):
     
 
 plot_all_seds = pointlike_plot_all_seds # for now
-                                                                
+
 
 def fit_only_prefactor(model):
     model=model.copy()
@@ -805,9 +843,6 @@ def get_full_energy_range(*args, **kwargs):
 def fluxdict(*args, **kwargs):
     return gtlike_or_pointlike(gtlike_fluxdict, pointlike_fluxdict, *args, **kwargs)
 
-def get_full_name(*args, **kwargs):
-    return gtlike_or_pointlike(gtlike_get_full_name, pointlike_get_full_name, *args, **kwargs)
-
 def sourcedict(*args, **kwargs):
     return gtlike_or_pointlike(gtlike_sourcedict, pointlike_sourcedict, *args, **kwargs)
 
@@ -819,6 +854,12 @@ def upper_limit(*args, **kwargs):
 
 def test_cutoff(*args, **kwargs):
     return gtlike_or_pointlike(gtlike_test_cutoff, pointlike_test_cutoff, *args, **kwargs)
+
+def get_all_names(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_get_all_names, pointlike_get_all_names, *args, **kwargs)
+
+def get_spatial_model_name(*args, **kwargs):
+    return gtlike_or_pointlike(gtlike_get_spatial_model_name, pointlike_get_spatial_model_name, *args, **kwargs)
 
 def fit_only_prefactor(*args, **kwargs):
     return gtlike_or_pointlike(gtlike_fit_only_prefactor, pointlike_fit_only_prefactor, *args, **kwargs)
