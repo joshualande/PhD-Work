@@ -5,7 +5,7 @@ from LikelihoodState import LikelihoodState
 from SED import SED
 
 from lande_toolbag import tolist
-from likelihood_tools import gtlike_flux_dict,gtlike_powerlaw_upper_limit,paranoid_gtlike_fit
+from likelihood_tools import fluxdict,powerlaw_upper_limit,paranoid_gtlike_fit
 
 
 class BandFitter(object):
@@ -104,26 +104,27 @@ class BandFitter(object):
             self.index[i] = index.getTrueValue()
             self.index_err[i] = index.error()*index.getScale()
 
-            flux_dict = gtlike_flux_dict(like,name,
-                                         emin=lower,emax=upper,
-                                         flux_units=self.flux_units)
+            fd = fluxdict(like,name,
+                          emin=lower,emax=upper,
+                          flux_units=self.flux_units)
 
-            self.flux[i] = flux_dict['flux']
-            self.flux_err[i] = flux_dict['flux_err']
+            self.flux[i] = fd['flux']
+            self.flux_err[i] = fd['flux_err']
 
-            self.eflux[i] = flux_dict['eflux']
-            self.eflux_err[i] = flux_dict['eflux_err']
+            self.eflux[i] = fd['eflux']
+            self.eflux_err[i] = fd['eflux_err']
 
             print 'Calculating upper limit from %.0dMeV to %.0dMeV' % (lower,upper)
-            ul_dict = gtlike_powerlaw_upper_limit(like,name,powerlaw_index=-2,cl=self.ul_confidence,
+            ul_dict = powerlaw_upper_limit(like,name,powerlaw_index=2,
+                                                  cl=self.ul_confidence,
                                                   emin=lower,emax=upper,
                                                   flux_units=self.flux_units)
-            if ul_dict != -1:
+            if ul_dict != None:
                 self.flux_ul[i] = ul_dict['flux']
                 self.eflux_ul[i] = ul_dict['eflux']
             else:
-                self.flux_ul[i] = -1
-                self.eflux_ul[i] = -1
+                self.flux_ul[i] = np.nan
+                self.eflux_ul[i] = np.nan
 
         # revert to old model
         like.setEnergyRange(*init_energes)
