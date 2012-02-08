@@ -28,41 +28,70 @@ from uw.utilities.phasetools import phase_ltcube
 from roi_gtlike import Gtlike
 
 from lande_toolbag import tolist
-from likelihood_tools import paranoid_gtlike_fit,flux_dict,gtlike_upper_limit,pointlike_upper_limit
+from likelihood_tools import paranoid_gtlike_fit,fluxdict,gtlike_upper_limit,\
+        pointlike_upper_limit,diffusedict,fit_only_prefactor,get_background,get_sources,gtlike_modify
 
 
 class VariabilityTester(object):
+    """ Code to compute varability for for a pointlike ROI
+    using the method described in 2FGL:
+
+        arXiv:1108.1435v1
+
+    A nice description of this method is:
+
+        https://confluence.slac.stanford.edu/display/SCIGRPS/How+to+-+Variability+test
+    """
 
     defaults = (
-        ('f',                   0.02, """ percent systematic correction factor. 
-                                  Set to 0.02 for 2FGL. See Section 3.6
-                                  of 2FGL paper http://arxiv.org/pdf/1108.1435v1. """),
-        ("savedir",             None, """ Directory to put output files into. 
-                                  Default is to use a temporary file and 
-                                  delete it when done."""),
-        ("nbins",               None, """ Number of time bins. """),
-        ("always_upper_limit", False, """ Always compute an upper limit. """),
-        ("min_ts",                 4, """ minimum ts in which to quote a SED points instead of an upper limit."""),
-        ("ul_confidence",       0.95, """ confidence level for upper limit."""),
-        ("gtlike_kwargs",         {}, """ Kwargs to specify creating of gtlike object. """),
-        ("do_gtlike",           True, """ Run gtlike varaibility test. """),
+        ('f',                    0.02, """ percent systematic correction factor. 
+                                           Set to 0.02 for 2FGL. See Section 3.6
+                                           of 2FGL paper http://arxiv.org/pdf/1108.1435v1. """),
+        ("savedir",              None, """ Directory to put output files into. 
+                                           Default is to use a temporary file and 
+                                           delete it when done."""),
+        ("nbins",                None, """ Number of time bins. """),
+        ("always_upper_limit",  False, """ Always compute an upper limit. """),
+        ("min_ts",                  4, """ minimum ts in which to quote a SED points instead of an upper limit."""),
+        ("ul_confidence",        0.95, """ confidence level for upper limit."""),
+        ("gtlike_kwargs",          {}, """ Kwargs to specify creating of gtlike object. """),
+        ("do_gtlike",            True, """ Run gtlike varaibility test. """),
+        ("refit_background",     True, """ Fit the background sources in each energy bin."""),
+        ("refit_other_sources", False, """ Fit other sources in each energy bin. """),
     )
 
     @keyword_options.decorate(defaults)
     def __init__(self, roi, which, **kwargs):
+        self.roi = roi
         keyword_options.process(self, kwargs)
 
-        self.roi = roi
+        self.pointlike_fit_kwargs = dict(use_gradient=False)
+
         self.which = roi.get_source(which).name
+
+        self._setup_savedir()
+
+        self._setup_time_bins()
+
         saved_state = PointlikeState(roi)
 
+        self._test_variability()
+
+        saved_state.restore()
+
+
+    def _setup_savedir(self):
         if self.savedir is not None:
             self.save_data = True
             if not exists(self.savedir):
                 os.makedirs(self.savedir)
         else:
-            self.save_data =False
+            self.save_data = False
             self.savedir = mkdtemp()
+
+
+    def _setup_time_bins(self):
+        roi = self.roi
 
         # Divide into several time bins
         ft1files=roi.sa.pixeldata.ft1files
@@ -73,54 +102,90 @@ class VariabilityTester(object):
         self.tstarts = self.time_bins[:-1]
         self.tstops = self.time_bins[1:]
 
-        self._test_variability()
 
-        saved_state.restore()
+    def all_time_fit(self):
+        print 'First, computing best all-time parameters'
 
+        roi = self.roi
+        which = self.which
 
-    def all_time_fit_gtlike(self, roi, savedir):
-        print 'First, computing best all-time parameters using gtlike.'
-        gtlike=Gtlike(roi, 
-                      savedir=savedir,
-                      **self.gtlike_kwargs)
-        like=gtlike.like
+        # first, spectral fit in gtlike
 
-        like.fit(covar=True)
+        roi.fit(**self.pointlike_fit_kwargs)
 
-        self.best_gtlike_state = LikelihoodState(like)
+        F0p = fluxdict(roi, which, error=False)
+        diffp = diffusedict(roi)
 
-        return like
+        all_time = dict(
+            pointlike = dict(
+                flux = F0p,
+                diffuse = diffp,
+            )
+        )
+
+        if self.do_gtlike:
+
+            savedir = join(self.savedir,'all_time') if self.save_data else None
+
+            gtlike=Gtlike(roi, 
+                          savedir=savedir,
+                          **self.gtlike_kwargs)
+            like=gtlike.like
+
+            like.fit(covar=True)
+
+            self.best_gtlike_state = LikelihoodState(like)
+
+            F0g =  fluxdict(like,which)
+            diffg = diffusedict(like)
+
+            all_time['gtlike'] = dict(
+                flux = F0g,
+                diffuse = diffg,
+            )
+
+        return all_time
 
 
     def each_time_fit_pointlike(self, smaller_roi, tstart, tstop):
+
+        results = dict()
 
         print 'Performing Pointlike analysis from %s to %s' % (tstart, tstop)
         which=self.which
 
         smaller_roi.print_summary()
-
         ll = lambda: -smaller_roi.logLikelihood(smaller_roi.parameters())
 
-        results = dict()
+        if not self.refit_background:
+            for source in get_background(smaller_roi):
+                    roi.modify(which=source,free=False)
+
+        if not self.refit_other_sources:
+            for source in get_sources(smaller_roi):
+                smaller_roi.modify(which=source,free=False)
+
+        # Freeze source of interest
+        smaller_roi.modify(which=which, free=False)
+
+        smaller_roi.fit(**self.pointlike_fit_kwargs)
+
         results['ll_0'] = ll()
 
-        # * freeze everything but normalization of source
-
-        for source in list(smaller_roi.psm.point_sources) + list(smaller_roi.dsm.diffuse_sources):
-            smaller_roi.modify(which=source,free=False)
-
-        free=np.zeros_like(smaller_roi.get_model(which).free).astype(bool)
-        free[0]=True
-        smaller_roi.modify(which=which, free=free)
+        # Fit prefactor of source of interest
+        fit_only_prefactor(smaller_roi, which)
 
         # * fit prefactor of source
-        smaller_roi.fit(use_gradient=False)
+        smaller_roi.fit(**self.pointlike_fit_kwargs)
+
         smaller_roi.print_summary()
 
         # * calcualte likelihood for the fit flux
         results['ll_1'] = ll()
-        results['flux'] = flux_dict(smaller_roi,which)
+        results['flux'] = fluxdict(smaller_roi,which)
         results['TS'] = TS = smaller_roi.TS(which,quick=True)
+        results['diffuse'] = diffusedict(smaller_roi)
+
 
         if TS < self.min_ts or self.always_upper_limit:
             results['upper_limit'] = pointlike_upper_limit(smaller_roi, which, cl=0.95)
@@ -144,8 +209,6 @@ class VariabilityTester(object):
 
         ll = lambda: like.logLike.value()
 
-        results['ll_0'] = ll()
-
         # update gtlike object with best fit gtlike parameters
         state = self.best_gtlike_state
         state.old_like = state.like
@@ -153,23 +216,32 @@ class VariabilityTester(object):
         state.restore()
         state.old_like = state.old_like
 
-        # freeze everything but normalization of source
+        if not self.refit_background:
+            for source in get_background(like):
+                gtlike_modify(like, source, free=False)
 
-        for i in range(len(like.model.params)):
-            like.freeze(i)
+        if not self.refit_other_sources:
+            for source in get_sources(like):
+                gtlike_modify(like,source, free=False)
 
-        # Free the prefactor of our source
-        like.thaw(like.par_index(name, 'Prefactor'))
+        # Freeze source of interest
+        gtlike_modify(like, name, free=False)
 
-
-        # fit prefactor for source
         paranoid_gtlike_fit(like)
 
-        # * calcualte likelihood for the fit flux
+        results['ll_0'] = ll()
+
+        # Fit prefactor of source of interest
+        fit_only_prefactor(like, name)
+        like.thaw(like.par_index(name, 'Prefactor'))
+
+        paranoid_gtlike_fit(like)
+
         results['ll_1'] = ll()
-        results['flux'] = flux_dict(like,name)
+        results['flux'] = fluxdict(like,name)
 
         results['TS'] = TS = like.Ts(name,reoptimize=False)
+        results['diffuse'] = diffusedict(like)
 
         if TS < self.min_ts or self.always_upper_limit:
             results['upper_limit'] = gtlike_upper_limit(like, name, cl=0.95)
@@ -179,19 +251,10 @@ class VariabilityTester(object):
         return results
 
     def _test_variability(self):
-
         roi = self.roi
-        which = self.which
 
-        F0p = flux_dict(roi, which, error=False)
-        self.flux_0 = dict(pointlike = F0p, error=False)
-
-        if self.do_gtlike:
-            all_time_dir = join(self.savedir,'all_time')
-            all_time_like = self.all_time_fit_gtlike(roi,savedir=all_time_dir)
-            self.flux_0['gtlike'] = F0g = flux_dict(all_time_like,which)
-
-        empty = lambda: np.empty_like(self.tstarts).astype(float)
+        # Perform all-time analysis
+        self.all_time = self.all_time_fit()
 
         self.bands = []
 
@@ -236,7 +299,7 @@ class VariabilityTester(object):
         f = self.f
 
         F = a([b[type]['flux']['flux'] for b in self.bands])
-        F0 = self.flux_0[type]['flux']
+        F0 = self.all_time[type]['flux']['flux']
 
         df = F - F0
         TS_var = 2*np.sum(
@@ -347,38 +410,19 @@ class VariabilityTester(object):
             diffuse_sources = diffuse_sources,
             **roi_kwargs)
 
-    def summary_dict(self, type):
-        """ Condense information into more useful arrays. """
-        bands=self.bands
-        d = dict(
-            TS=[b[type]['TS'] for b in bands],
-            TS_var = self.TS_var[type],
-            flux = dict(
-                value=[b[type]['flux']['flux'] for b in bands],
-                error=[b[type]['flux']['flux_err'] for b in bands],
-                upper_limit=[b[type]['upper_limit']['flux']
-                             if b[type]['upper_limit'] is not None
-                             else None for b in bands]),
-            flux_0=self.flux_0[type],
-            ll_0=[b[type]['ll_0'] for b in bands],
-            ll_1=[b[type]['ll_1'] for b in bands])
-        return d
-
     def todict(self):
         d = dict(
             time_bins = self.time_bins,
             tstarts = self.tstarts,
-            tstops = self.tstops)
-
-        d['pointlike'] = self.summary_dict('pointlike')
-        if self.do_gtlike:
-            d['gtlike'] = self.summary_dict('gtlike')
+            tstops = self.tstops,
+            bands=self.bands,
+            all_time=self.all_time)
 
         return tolist(d)
 
     @staticmethod
     def _plot_points(axes, x, xerr, y, yerr, yup, significant, 
-                     ul_fraction=0.4, **kwargs):
+                     ul_fraction=0.4, label=None, **kwargs):
 
         plot_kwargs = dict(linestyle='none')
         plot_kwargs.update(kwargs)
@@ -388,42 +432,57 @@ class VariabilityTester(object):
             axes.errorbar(x[s],y[s],
                           xerr=xerr[s], yerr=yerr[s], 
                           capsize=0,
+                          label=label,
                           **plot_kwargs)
-        if sum(~s) > 0:
-            axes.errorbar(x[~s], yup[~s], 
-                          yerr=[ul_fraction*yup[~s], np.zeros(sum(~s))],
+
+        ns = not_significant = ~s & ~np.isnan(yup) # possibly, some UL failed
+
+        if sum(ns) > 0:
+            axes.errorbar(x[ns], yup[ns], 
+                          yerr=[ul_fraction*yup[ns], np.zeros(sum(ns))],
                           lolims=True,
                           **plot_kwargs)
 
-            axes.errorbar(x[~s], yup[~s], 
-                          xerr=xerr[~s],
+            if sum(s) == 0: 
+                plot_kwargs['label'] = label
+
+            axes.errorbar(x[ns], yup[ns], 
+                          xerr=xerr[ns],
                           capsize=0,
                           **plot_kwargs)
 
     @staticmethod
     def _plot(d, min_ts, 
               filename=None, 
-              figsize=(8,4), 
+              figsize=(7,4), 
               gtlike_color='black',
               pointlike_color='red',
+              time_scale = None,
+              flux_scale = None,
               **kwargs):
         """ Create a plot from a dictionary. """
 
         fig = P.figure(None,figsize)
         axes = fig.add_subplot(111)
 
-        a=np.asarray
+        # astype(float) converts None to nan
+        a=lambda x: np.asarray(x).astype(float)
 
         starts=a(d['tstops'])
         stops=a(d['tstarts'])
         time=(starts+stops)/2
         time_err=(stops-starts)/2
 
+        if time_scale is None:
+            time_scale = 10**np.floor(np.log10(np.average(time)))
+        if flux_scale is None:
+            fg=np.mean(a(d['gtlike']['flux']['value']))
+            flux_scale = 10**np.floor(np.log10(fg))
+
         for t,color in [
-#            ['gtlike',gtlike_color],
+            ['gtlike',gtlike_color],
             ['pointlike',pointlike_color]
         ]:
-
 
             results = d[t]
 
@@ -438,28 +497,50 @@ class VariabilityTester(object):
             ferr=a(flux['error'])
             fup=a(flux['upper_limit'])
 
+            #from matplotlib.ticker import ScalarFormatter
+            #formatter = ScalarFormatter(useMathText=True, useOffset=False)
+            #formatter.set_scientific(True)
+            #formatter.set_powerlimits((-1,1))
+            #axes.xaxis.set_major_formatter(formatter)
+            #axes.yaxis.set_major_formatter(formatter)
+
             VariabilityTester._plot_points(
                 axes,
-                x=time,
-                xerr=time_err,
-                y=f,
-                yerr=ferr,
-                yup=fup, 
+                x=time/time_scale,
+                xerr=time_err/time_scale,
+                y=f/flux_scale,
+                yerr=ferr/flux_scale,
+                yup=fup/flux_scale, 
                 significant=significant,
                 color=color,
+                label=t,
                 **kwargs)
+            
+            axes.axhline(f0/flux_scale, color=color, dashes=[5,2])
 
-        axes.axhline(f0, color=color)
+        t = np.log10(time_scale)
+        assert t == int(t)
 
+        f = np.log10(flux_scale)
+        assert f == int(f)
 
-        axes.set_xlabel('MET')
-        axes.set_ylabel('Flux (ph$\,$cm$^{-2}$s$^{-1}$)')
+        axes.set_xlabel('MET (10$^{%d}$ s)' % t)
+        axes.set_ylabel('Flux (10$^{%d}$ ph$\,$cm$^{-2}$s$^{-1}$)' % f)
+
+        # Kluge legend due to buggy legend impolementaiton
+        # for errorbar in matplotlib
+        from matplotlib.lines import Line2D
+        l=lambda c:Line2D([0],[0],linestyle='-', color=c)
+        axes.legend(
+            (l(gtlike_color), l(pointlike_color)),
+            ('gtlike','pointlike')
+            )
 
         if filename is not None: P.savefig(filename)
         return axes
 
     def plot(self, *args, **kwargs):
-        return self._plot(self.todict(), *args, **kwargs)
+        return self._plot(self.todict(), self.min_ts, *args, **kwargs)
 
     def __del__(self):
         if not self.save_data:
