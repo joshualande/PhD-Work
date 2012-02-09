@@ -51,7 +51,7 @@ def all_energy_table(pwnlist):
                 table[luminosity_name].append(r'None')
 
             else:
-                if gtlike['upper_limit'] != -1:
+                if gtlike['upper_limit'] != None:
                     ul=gtlike['upper_limit']['flux']
                     eul=gtlike['upper_limit']['eflux']
                     table[flux_name].append(r'$<%.2f$' % (ul/1e-9))

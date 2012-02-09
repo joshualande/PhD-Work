@@ -27,7 +27,8 @@ def localization_table(pwnlist):
            not results.has_key('extended') or \
            not results['extended'].has_key('gtlike') or \
            not results['extended'].has_key('pointlike'):
-            break
+            continue
+            
 
         at_pulsar_gtlike = results['at_pulsar']['gtlike']
         at_pulsar_pointlike = results['at_pulsar']['pointlike']
@@ -47,7 +48,12 @@ def localization_table(pwnlist):
         pointlike = b.pointlike
         type = b.type
 
-        if b.type != 'upper_limit':
+
+        print pwn,type
+
+        if type != 'upper_limit':
+
+            print pwn
 
             l,b=pointlike['gal']
 
