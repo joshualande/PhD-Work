@@ -12,6 +12,8 @@ from tempfile import mkdtemp
 from os.path import join, exists
 import os
 import shutil
+
+import yaml
  
 import pylab as P
 import pyfits
@@ -112,7 +114,10 @@ class VariabilityTester(object):
 
         # first, spectral fit in gtlike
 
+        print 'Performing pointlike spectral analyis over all energy'
+        print '... Before'; roi.print_summary()
         roi.fit(**self.pointlike_fit_kwargs)
+        print '... After'; roi.print_summary()
 
         F0p = fluxdict(roi, which, error=False)
         diffp = diffusedict(roi)
@@ -133,7 +138,10 @@ class VariabilityTester(object):
                           **self.gtlike_kwargs)
             like=gtlike.like
 
-            like.fit(covar=True)
+            print 'Performing gtlike spectral analyis over all energy'
+            print '... Before'; print like.model
+            paranoid_gtlike_fit(like)
+            print '... After'; print like.model
 
             self.best_gtlike_state = LikelihoodState(like)
 
@@ -155,7 +163,6 @@ class VariabilityTester(object):
         print 'Performing Pointlike analysis from %s to %s' % (tstart, tstop)
         which=self.which
 
-        smaller_roi.print_summary()
         ll = lambda: -smaller_roi.logLikelihood(smaller_roi.parameters())
 
         if not self.refit_background:
@@ -166,20 +173,28 @@ class VariabilityTester(object):
             for source in get_sources(smaller_roi):
                 smaller_roi.modify(which=source,free=False)
 
+
         # Freeze source of interest
         smaller_roi.modify(which=which, free=False)
 
+        
+        print 'Performing pointlike spectral analyis with source of interest frozen'
+
+        print '... Before'; smaller_roi.print_summary()
         smaller_roi.fit(**self.pointlike_fit_kwargs)
+        print '... After'; smaller_roi.print_summary()
 
         results['ll_0'] = ll()
 
         # Fit prefactor of source of interest
         fit_only_prefactor(smaller_roi, which)
 
-        # * fit prefactor of source
-        smaller_roi.fit(**self.pointlike_fit_kwargs)
+        print "Performing pointlike spectral analyis with source of interest's prefactor free"
 
-        smaller_roi.print_summary()
+        # * fit prefactor of source
+        print '... Before'; smaller_roi.print_summary()
+        smaller_roi.fit(**self.pointlike_fit_kwargs)
+        print '... After'; smaller_roi.print_summary()
 
         # * calcualte likelihood for the fit flux
         results['ll_1'] = ll()
@@ -225,18 +240,29 @@ class VariabilityTester(object):
             for source in get_sources(like):
                 gtlike_modify(like,source, free=False)
 
+        print 'Performing gtlike spectral analyis with source of interest frozen'
+
+        def p(x):
+            print '... %s' % x; 
+            print like.model
+
         # Freeze source of interest
         gtlike_modify(like, name, free=False)
 
+        p('Before')
         paranoid_gtlike_fit(like)
+        p('After')
 
         results['ll_0'] = ll()
 
         # Fit prefactor of source of interest
         fit_only_prefactor(like, name)
-        like.thaw(like.par_index(name, 'Prefactor'))
 
+        print "Performing gtlike spectral analyis with source of interest's prefactor free"
+
+        p('Before')
         paranoid_gtlike_fit(like)
+        p('After')
 
         results['ll_1'] = ll()
         results['flux'] = fluxdict(like,name)
@@ -427,7 +453,9 @@ class VariabilityTester(object):
 
     def save(self, filename):
         f=open(filename,'w')
-        f.write(self.todict())
+        f.write(
+            yaml.dump(self.todict())
+        )
         f.close()
 
     @staticmethod

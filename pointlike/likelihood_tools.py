@@ -321,21 +321,31 @@ def pointlike_sourcedict(roi, name, emin=None, emax=None, flux_units='erg'):
     return d
 
 def gtlike_modify(like, name, free=True):
-    """ Freeze a source in a gtlike ROI. """
-    from pyLikelihood import ParameterVector
+    """ Freeze a source in a gtlike ROI. 
+    
+        The method for modifying the ROI
+        follows the code in LikelihoodState.py 
+        
+        I am not sure why the modificaiton
+        has to be done in this particular way. """
+    from pyLikelihood import StringVector
 
     source = like.logLike.getSource(name)
-    spectrum = source.spectrum()
+    spectrum = like[name].src.spectrum()
 
-    parameters=ParameterVector()
-    spectrum.getParams(parameters)
-    for par in parameters: 
+    parNames = StringVector()
+    spectrum.getParamNames(parNames)
+    for parName in parNames:
+        index = like.par_index(name, parName)
+        par = like.params()[index]
         par.setFree(free)
+
     like.syncSrcParams(name)
 
 def gtlike_fit_only_prefactor(like, name):
     """ Freeze everything but norm of source with name
         in pyLikelihood object. """
+    gtlike_modify(like, name, free=False)
     par = like.normPar(name)
     par.setFree(True)
     like.syncSrcParams(name)
