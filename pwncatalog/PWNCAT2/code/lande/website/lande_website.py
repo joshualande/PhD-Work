@@ -13,7 +13,7 @@ import asciitable
 
 from lande_toolbag import OrderedDefaultdict
 
-base=expandvars('$pwndata/spectral/v9')
+base=expandvars('$pwndata/spectral/v11')
 #base=expandvars('$pwndata/spectral/temp')
 
 
@@ -96,7 +96,7 @@ class TableFormatter(object):
                 gt_point=results['point']['gtlike']
                 pt_point=results['point']['pointlike']
 
-                ts_point=max(gt_point['TS'],0)
+                ts_point=gt_point['TS']
             else:
                 point_finished = False
 
@@ -106,11 +106,11 @@ class TableFormatter(object):
                 gt_extended=results['extended']['gtlike']
                 pt_extended=results['extended']['pointlike']
 
-                ts_ext=max(gt_extended['ts_ext'],0)
+                ts_ext=gt_extended['ts_ext']
             else:
                 ext_finished = False
 
-            ts_at_pulsar=max(gt_at_pulsar['TS'],0)
+            ts_at_pulsar=gt_at_pulsar['TS']
             table['TS_at_pulsar'].append('%.1f' % ts_at_pulsar)
 
             if point_finished:
@@ -262,6 +262,7 @@ def build_each_page(pwn):
 
     index_t2t = []
     index_t2t.append(pwn+'\n\n')
+    index_t2t.append('([back index.html])')
     t=TableFormatter([pwn])
     index_t2t.append(str(t))
     index_t2t.append('')
