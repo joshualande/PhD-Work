@@ -23,13 +23,9 @@ roi.fit(use_gradient=False)
 roi.print_summary()
 
 v = lande_variability.VariabilityTester(roi,name,
+                                        filename='results_%s.yaml' % name,
                                         nbins=36)
 
 print v.todict()
-
-d=v.todict()
-open('results_%s.yaml' % name,'w').write(
-    yaml.dump(d)
-)
 
 v.plot(filename='variability_%s.pdf' % name)
