@@ -1,34 +1,37 @@
 #!/usr/bin/env python
-""" Simple script to automate submitting lots
-    of jobs to the queue. """
+
+import subprocess
 import random
 import os
-from os.path import join as j
+from os.path import join, expandvars, exists
 from argparse import ArgumentParser
 
-parser = ArgumentParser()
-parser.add_argument("-q","--queue",required=True)
+parser = ArgumentParser(prog='submit_all', 
+                        description= """ Simple script to automate submitting lots
+                                         of jobs to the queue, and resubmitting
+                                         failed jobs. """)
+parser.add_argument("-q","--queue",default='xxl')
 parser.add_argument("-n",action='store_true', default=False)
 parser.add_argument("file",nargs='+')
-args,extra=parser.parse_known_args()
+args=parser.parse_args()
 
+p=subprocess.Popen(['bjobs', '-w'],stdout=subprocess.PIPE)
+queue_jobs,err=p.communicate()
 
 files = args.file
 random.shuffle(files)
 
-pwd = lambda: os.popen('pwd').readlines()[0].strip()
-
 for file in files:
-    old = pwd()
+    old = os.environ['PWD']
 
     dir=os.path.dirname(file)
     base=os.path.basename(file)
 
-    if not os.path.exists(j(dir,'log.txt')):
+    if not os.path.exists(join(dir,'log.txt')):
 
         if dir is not '': os.chdir(dir)
 
-        new = pwd()
+        new = os.environ['PWD']
 
         ext = os.path.splitext(file)[1]
         if ext == '.py':
@@ -38,11 +41,21 @@ for file in files:
         else:
             parser.error("Unknown extension for file %s" % file)
 
+        log = 'log.txt'
 
-        command='bsub -q %s -oo log.txt %s %s/%s' % (args.queue,program,new,base)
-        if args.n:
-            print os.path.expandvars(command)
-        else:
-            os.system(command)
-        os.chdir(old)
+        abspath = join(new,base)
+
+        is_in_queue = expandvars(abspath) in queue_jobs
+        log_exists = exists(log)
+        job_failed = log_exists and 'Successfully completed' not in open(log).read()
+
+
+        if not is_in_queue and (not log_exists or job_failed):
+
+            command='bsub -q %s -oo %s %s %s' % (args.queue,log,program,abspath)
+            if args.n:
+                print os.path.expandvars(command)
+            else:
+                os.system(command)
+            os.chdir(old)
 
