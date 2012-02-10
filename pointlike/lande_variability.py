@@ -59,7 +59,6 @@ class VariabilityTester(object):
         ("do_gtlike",            True, """ Run gtlike varaibility test. """),
         ("refit_background",     True, """ Fit the background sources in each energy bin."""),
         ("refit_other_sources", False, """ Fit other sources in each energy bin. """),
-        ("filename",             None, """ Filename to save data to. """),
     )
 
     @keyword_options.decorate(defaults)
@@ -318,15 +317,11 @@ class VariabilityTester(object):
                 print 'Removing subdir',subdir
                 shutil.rmtree(subdir)
 
-            if self.filename is not None: self.save(self.filename)
-
         self.TS_var = dict(
             pointlike = self.compute_TS_var('pointlike')
         )
         if self.do_gtlike:
             self.TS_var['gtlike'] = self.compute_TS_var('gtlike')
-
-        if self.filename is not None: self.save(self.filename)
 
     def compute_TS_var(self,type):
         a=np.asarray
@@ -451,14 +446,14 @@ class VariabilityTester(object):
         self.time  = d['time']
         self.bands = d['bands']
         self.all_time = d['all_time']
+        self.TS_var = d['TS_var']
 
     def todict(self):
         d = dict(
             time = self.time,
             bands=self.bands,
-            all_time=self.all_time)
-
-        if hasattr(self,'TS_var'): d['TS_var'] = self.TS_var
+            all_time=self.all_time,
+            TS_var = self.TS_var)
 
         return tolist(d)
 
