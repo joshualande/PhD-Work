@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+import csv,sys,optparse
+
+parser = optparse.OptionParser(usage="usage: %prog")
+parser.add_option("-d", "--delimiter",default=",",help="What separates colums")
+parser.add_option("-s", "--spacing",type="int",help="Number of space between the output colums")
+parser.add_option("-o", "--outputdelimiter",
+                  help="A particular delimiter to use as output. This will be separated by spaces.")
+(options, args) = parser.parse_args()
+
+if options.outputdelimiter is not None: options.outputdelimiter = ' '+options.outputdelimiter+' '
+if options.spacing is not None: 
+    if options.spacing<1: parser.error("--spacing must be a positive integer.")
+    options.outputdelimiter = ' '*options.spacing
+if options.outputdelimiter is None: options.outputdelimiter = ' '
+
+reader=csv.reader(sys.stdin,skipinitialspace=True,delimiter=options.delimiter)
+
+# read the csv data in
+rows=[]
+line=reader.next()
+while True:
+    try:
+        rows.append(line)
+        line=reader.next()
+    except StopIteration:
+        break
+
+max_row=max([len(row) for row in rows])
+for i in range(len(rows)):
+    rows[i] += [ ' ' ]*(max_row-len(rows[i]))
+
+# assume all rows same len
+nrows=len(rows)
+ncols=len(rows[0])
+# array of the max width of s
+max_width=[max([len(rows[j][i]) for j in range(nrows)]) for i in range(ncols)]
+
+for row in rows:
+    for i,(col,width) in enumerate(zip(row,max_width)):
+        sys.stdout.write("%*s" % (width,col))
+        if i!=len(row)-1:
+            sys.stdout.write(options.outputdelimiter)
+    print
+
+sys.exit(0)

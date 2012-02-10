@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+import os
+import time
+from argparse import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument("-l","--limit",required=True,type=int)
+parser.add_argument("-q",required=True)
+args,extra=parser.parse_known_args()
+
+while True:
+    num=len(os.popen("bjobs -q %s 2>/dev/null" % args.q).readlines())-1
+    if num < args.limit:
+        os.system(' '.join(['bsub','-q',args.q]+extra))
+        break
+
+    print '%d currently running jobs. Waiting until < %d jobs to submit' % (num,args.limit)
+    time.sleep(10)
+
+#time.sleep(4)

@@ -1,0 +1,2 @@
+#!/bin/bash
+fixed2csv | csv2fixed -s1

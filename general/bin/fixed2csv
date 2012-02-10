@@ -1,0 +1,8 @@
+#!/bin/bash
+cat | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | \
+awk 'BEGIN{FS=" ";OFS=","} {
+    for(j=1;j<=NF;j++){
+        printf $j (j==NF ? RS : OFS)
+    }
+}'
+
