@@ -1,11 +1,8 @@
 import numpy as np
 
-from LikelihoodState import LikelihoodState
-
-from SED import SED
-
 from lande_toolbag import tolist
 from likelihood_tools import fluxdict,powerlaw_upper_limit,paranoid_gtlike_fit
+from lande_state import LandeState
 
 
 class BandFitter(object):
@@ -63,10 +60,7 @@ class BandFitter(object):
         if name not in all_sources:
             raise Exception("Cannot find source %s in list of sources" % name)
 
-        saved_state = LikelihoodState(like)
-
-        source = like.logLike.getSource(name)
-        old_spectrum=source.spectrum()
+        saved_state = LandeState(like)
 
         like.setSpectrum(name,'PowerLaw')
 
