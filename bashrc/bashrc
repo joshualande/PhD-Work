@@ -72,10 +72,20 @@ function fix_matplotlib {
     export MPLCONFIGDIR=/scratch/
 }
 
+function set_bldtype {
+    if [[ `cat /etc/redhat-release` =~ "release 5" ]]; then
+        export BLDTYPE=redhat5-x86_64-64bit-gcc41
+    elif [[ `cat /etc/redhat-release` =~ "release 6" ]]; then
+        export BLDTYPE=redhat6-x86_64-64bit-gcc44
+    else
+        echo 'ERROR: UNABLE TO DETERMINE COMPUTER TYPE'
+    fi
+}
+
+
 function stockscons {
     export SCTOOLS=09-26-02
-    #export BLDTYPE=redhat5-i686-32bit-gcc41
-    export BLDTYPE=redhat5-x86_64-64bit-gcc41
+    set_bldtype
     export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
     export BUILDS=/nfs/farm/g/glast/u35/ReleaseManagerBuild
     export INST_DIR=${BUILDS}/${BLDTYPE}/Optimized/ScienceTools/$SCTOOLS
@@ -135,7 +145,6 @@ function devscons {
     # path of scons code
     export PATH=$PATH:/afs/slac/g/glast/applications/SCons/1.3.0/bin
 
-    export BLDTYPE=redhat5-x86_64-64bit-gcc41
     export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
 
     export INST_DIR=/u/gl/lande/dev/ScienceTools-scons
@@ -309,8 +318,16 @@ green_catalog_setup
 function pwncat_setup {
     export alice=~allafort/ki05/pwncatalog/
     export marianne=/nfs/farm/g/glast/u54/lemoine/PWNCat
-    export pwn=~/svn/lande/trunk/pwncatalog/PWNCAT2/code
-    export PWNSCRIPTS=~lande/svn/lande/trunk/pwncatalog_1yr/
+
+    export pwncode=~/svn/lande/trunk/pwncatalog/PWNCAT2/code
+    export pwnpaper=~/svn/lande/trunk/pwncatalog/PWNCAT2/paper
+    export pwndata=$ki03/pwncatalog/PWNCAT2/analyze_psr/
+    export pwnpersonal=/u/gl/lande/work/fermi/pwncatalog/PWNCAT2
+
+    export tevdata=$ki03/pwncatalog/PWNCAT2/analyze_tev/
+
+
+    #export PWNSCRIPTS=~lande/svn/lande/trunk/pwncatalog_1yr/
 }
 pwncat_setup
 
@@ -331,3 +348,7 @@ function setup_snrcat1 {
     export PYTHONPATH=~/svn/snrcat1/code:$PYTHONPATH
 }
 setup_snrcat1
+
+function xxl {
+    bsub -q xxl -oo log.txt python $PWD/$1
+}
