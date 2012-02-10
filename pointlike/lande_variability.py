@@ -5,11 +5,10 @@
 """
 # N.B. Have to import gtlike stuff first
 from roi_gtlike import Gtlike
-from LikelihoodState import LikelihoodState
 from SED import SED
 
 from tempfile import mkdtemp
-from os.path import join, exists
+from os.path import join, exists, expandvars
 import os
 import shutil
 
@@ -32,6 +31,7 @@ from roi_gtlike import Gtlike
 from lande_toolbag import tolist
 from likelihood_tools import paranoid_gtlike_fit,fluxdict,gtlike_upper_limit,\
         pointlike_upper_limit,diffusedict,fit_only_prefactor,get_background,get_sources,gtlike_modify
+from lande_state import LandeState
 
 
 class VariabilityTester(object):
@@ -45,10 +45,9 @@ class VariabilityTester(object):
         https://confluence.slac.stanford.edu/display/SCIGRPS/How+to+-+Variability+test
     """
 
+    f = 0.02
+
     defaults = (
-        ('f',                    0.02, """ percent systematic correction factor. 
-                                           Set to 0.02 for 2FGL. See Section 3.6
-                                           of 2FGL paper http://arxiv.org/pdf/1108.1435v1. """),
         ("savedir",              None, """ Directory to put output files into. 
                                            Default is to use a temporary file and 
                                            delete it when done."""),
@@ -64,7 +63,17 @@ class VariabilityTester(object):
     )
 
     @keyword_options.decorate(defaults)
-    def __init__(self, roi, which, **kwargs):
+    def __init__(self, roi_or_dict, *args, **kwargs):
+
+        if isinstance(roi_or_dict,dict):
+            self.fromdict(roi_or_dict)
+        elif isinstance(roi_or_dict, str):
+            self.fromdict(yaml.load(open(expandvars(roi_or_dict))))
+        else:
+            self._setup(roi_or_dict, *args, **kwargs)
+
+    def _setup(self, roi, which, **kwargs):
+
         self.roi = roi
         keyword_options.process(self, kwargs)
 
@@ -101,9 +110,10 @@ class VariabilityTester(object):
         self.earliest_time, self.latest_time = VariabilityTester.get_time_range(ft1files)
 
         # round to nearest second, for simplicity
-        self.time_bins = np.round(np.linspace(self.earliest_time, self.latest_time, self.nbins+1)).astype(int)
-        self.tstarts = self.time_bins[:-1]
-        self.tstops = self.time_bins[1:]
+        self.time = dict()
+        self.time['bins'] = b = np.round(np.linspace(self.earliest_time, self.latest_time, self.nbins+1)).astype(int)
+        self.time['starts'] = b[:-1]
+        self.time['stops'] = b[1:]
 
 
     def all_time_fit(self):
@@ -143,7 +153,7 @@ class VariabilityTester(object):
             paranoid_gtlike_fit(like)
             print '... After'; print like.model
 
-            self.best_gtlike_state = LikelihoodState(like)
+            self.best_gtlike_state = LandeState(like)
 
             F0g =  fluxdict(like,which)
             diffg = diffusedict(like)
@@ -226,11 +236,7 @@ class VariabilityTester(object):
         ll = lambda: like.logLike.value()
 
         # update gtlike object with best fit gtlike parameters
-        state = self.best_gtlike_state
-        state.old_like = state.like
-        state.like = like
-        state.restore()
-        state.old_like = state.old_like
+        self.best_gtlike_state.restore(like)
 
         if not self.refit_background:
             for source in get_background(like):
@@ -285,7 +291,7 @@ class VariabilityTester(object):
 
         self.bands = []
 
-        for i,(tstart,tstop) in enumerate(zip(self.tstarts, self.tstops)):
+        for i,(tstart,tstop) in enumerate(zip(self.time['starts'], self.time['stops'])):
 
             subdir = join(self.savedir,'time_%s_%s' % (tstart, tstop))
             print 'Subdir = ',subdir
@@ -441,13 +447,18 @@ class VariabilityTester(object):
             diffuse_sources = diffuse_sources,
             **roi_kwargs)
 
+    def fromdict(self, d):
+        self.time  = d['time']
+        self.bands = d['bands']
+        self.all_time = d['all_time']
+
     def todict(self):
         d = dict(
-            time_bins = self.time_bins,
-            tstarts = self.tstarts,
-            tstops = self.tstops,
+            time = self.time,
             bands=self.bands,
             all_time=self.all_time)
+
+        if hasattr(self,'TS_var'): d['TS_var'] = self.TS_var
 
         return tolist(d)
 
