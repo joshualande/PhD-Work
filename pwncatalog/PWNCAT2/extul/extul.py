@@ -1,7 +1,9 @@
 from os.path import join
 import yaml
+import traceback
 
 import numpy as np
+np.seterr(all='ignore')
 
 from skymaps import SkyDir
 from skymaps import IsotropicPowerLaw
@@ -19,16 +21,22 @@ from shutil import rmtree
 
 from lande_toolbag import tolist
 
+from likelihood_tools import force_gradient, sourcedict, spectrum_to_dict, pointlike_model_to_flux
+
+force_gradient(use_gradient=False)
+
 
 i=0
 
 emin=1e2
 emax=10**5.5
-#emax=10**3
 irf="P7SOURCE_V6"
 
 skydir_mc = SkyDir()
 
+
+#flux_mc = 1e-8
+flux_mc = 1e-5
 
 
 bg = DiffuseSource(
@@ -41,30 +49,55 @@ catalog_basedir = "/afs/slac/g/glast/groups/catalog/P7_V4_SOURCE/"
 ft2    = join(catalog_basedir,"ft2_2years.fits")
 ltcube = join(catalog_basedir,"ltcube_24m_pass7.4_source_z100_t90_cl0.fits")
 
-
-
 results = []
 
-extensions = np.linspace(0.1,2.0,20)
+extensions = np.linspace(0.0,2.0,21)
 
-for extension in extensions[0:1]:
+for extension_mc in extensions:
+
+    model_mc = PowerLaw(gamma=2)
+    model_mc.set_flux(flux_mc, emin, emax)
+
+    r = dict(
+        mc = dict(
+            extension=extension_mc,
+            gal=[ skydir_mc.l(), skydir_mc.b() ],
+            cel=[ skydir_mc.ra(), skydir_mc.dec() ],
+            model=spectrum_to_dict(model_mc),
+            flux=pointlike_model_to_flux(model_mc, emin, emax),
+        )
+    )
 
     tempdir = mkdtemp()
 
-    model = PowerLaw(gamma=2)
-    model.set_flux(1e-8, 1e2, 10**5.5)
-
-# TEMPORARY
-    model.set_flux(1e-5, 1e2, 10**5.5)
-# TEMPORARY
-
-    spatial_model = Disk(sigma=extension, center=skydir_mc)
-
-    ext = ExtendedSource(
-        name='extended',
-        model=model,
-        spatial_model=spatial_model,
+    point = 'point'
+    ps = PointSource(
+        name=point,
+        model=model_mc.copy(),
+        skydir = skydir_mc
     )
+
+    extended = 'extended_%f' % extension_mc
+    if extension_mc > 0:
+        sm = Disk(sigma=extension_mc, center=skydir_mc)
+        es = ExtendedSource(
+            name=extended,
+            model=model_mc,
+            spatial_model=sm,
+        )
+        sim_es = es
+    else:
+        # If the source has no extension,
+        # simulate the source as point-like
+        # but create a small extended
+        # source for the later extension test
+        sm = Disk(sigma=1e-10, center=skydir_mc)
+        es = ExtendedSource(
+            name=extended,
+            model=model_mc,
+            spatial_model=sm,
+        )
+        sim_es = ps
 
     ft1 = join(tempdir,'ft1.fits')
     binfile = join(tempdir, 'binned.fits')
@@ -74,7 +107,7 @@ for extension in extensions[0:1]:
 # TEMPORARY
 
     mc=MonteCarlo(
-        diffuse_sources=[bg.copy(), ext.copy()],
+        sources=[bg.copy(), sim_es.copy()],
         seed=i,
         irf=irf,
         ft1=ft1,
@@ -117,50 +150,48 @@ for extension in extensions[0:1]:
         fit_emax = emax
     )
 
-    ps = PointSource(
-        name='point',
-        model=model.copy(),
-        skydir = skydir_mc
-    )
-    roi.add_source(ps)
+    roi.add_source(ps.copy())
 
     roi.print_summary()
-    roi.fit(use_gradient=False)
-    roi.print_summary()
-    roi.localize(which='point', update=True)
-    roi.fit(use_gradient=False)
+    roi.fit()
     roi.print_summary()
 
-    TS_point = roi.TS(which='point')
+    try:
+        roi.localize(which=point, update=True)
+    except Exception, ex:
+        traceback.print_exc(file=sys.stdout)
 
-    extension_ul = roi.extension_upper_limit(which='point')
+    roi.fit()
+    roi.print_summary()
 
-    # Fit point-like source
+    r['point'] = sourcedict(roi,point)
+
+    r['extension_ul'] = roi.extension_upper_limit(which=point)
+
+    roi.del_source(point)
+
+    roi.add_source(es.copy())
+
+    roi.print_summary()
+    roi.fit()
+    roi.print_summary()
+    roi.fit_extension(which=extended)
+    roi.fit()
+    roi.print_summary()
+
+    fit_sm = roi.get_source(extended)
+
+    r['extended'] = sourcedict(roi,extended)
+
+    r['TS_ext'] = 2*(r['extended']['logLikelihood'] - r['point']['logLikelihood'])
 
     # Extension upper limit
 
     # Then, compute TS_point & TS_ext
 
-
-    extension_fit = -1
-    TS_ext = TS_ext
-
-    r = dict(
-        extension_mc=extension,
-        gal_mc = [ skydir_mc.l(), skydir_mc.b()],
-
-        TS_point = TS_point,
-
-        extension_ul = extension_ul,
-
-        extension_fit=extension_fit,
-        TS_ext=TS_ext
-    )
-
     results.append(r)
 
     rmtree(tempdir)
 
-yaml.dump(open('results.yaml','w')).write(
-    tolist(results)
-)
+    # Save results to file
+    open('results.yaml','w').write(yaml.dump(tolist(results)))
