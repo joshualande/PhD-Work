@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+""" Simple script to automate submitting lots
+    of jobs to the queue. """
+import random
+import os
+from os.path import join as j
+from argparse import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument("-q","--queue",required=True)
+parser.add_argument("-n",action='store_true', default=False)
+parser.add_argument("file",nargs='+')
+args,extra=parser.parse_known_args()
+
+
+files = args.file
+random.shuffle(files)
+
+pwd = lambda: os.popen('pwd').readlines()[0].strip()
+
+for file in files:
+    old = pwd()
+
+    dir=os.path.dirname(file)
+    base=os.path.basename(file)
+
+    if not os.path.exists(j(dir,'log.txt')):
+
+        if dir is not '': os.chdir(dir)
+
+        new = pwd()
+
+        ext = os.path.splitext(file)[1]
+        if ext == '.py':
+            program = 'python'
+        elif ext == '.sh':
+            program = 'sh'
+        else:
+            parser.error("Unknown extension for file %s" % file)
+
+
+        command='bsub -q %s -oo log.txt %s %s/%s' % (args.queue,program,new,base)
+        if args.n:
+            print os.path.expandvars(command)
+        else:
+            os.system(command)
+        os.chdir(old)
+
