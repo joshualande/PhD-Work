@@ -8,7 +8,7 @@ import os.path
 import yaml
 import asciitable
 
-base='$pwndata/spectral/v11/'
+base='$pwndata/spectral/v12/'
 
 fitdir=expandvars(j(base,'analysis_no_plots/'))
 savedir=expandvars(j(base,'tables'))
