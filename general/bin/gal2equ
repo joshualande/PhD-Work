@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+from skymaps import SkyDir
+from argparse import ArgumentParser
+
+# Note that ArgumentParser correctly interprets negative numbers as positional arguments!
+parser = ArgumentParser()
+parser.add_argument("-v", "--verbose", action="store_true", default=False,help="Output more verbosely")
+parser.add_argument("l",type=float,help="The galactic latitude coordinate.")
+parser.add_argument("b",type=float,help="The galactic longitude coordiante.")
+args=parser.parse_args()
+
+dir=SkyDir(args.l,args.b,SkyDir.GALACTIC)
+ra,dec=dir.ra(),dir.dec()
+
+if args.verbose:
+    print "l=%g, b=%g => ra=%g dec=%g" % (args.l,args.b,ra,dec) 
+else:
+    print ra,dec
