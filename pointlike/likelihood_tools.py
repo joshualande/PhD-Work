@@ -22,9 +22,10 @@ from uw.like.roi_state import PointlikeState
 
 from lande_toolbag import tolist
 from SED import SED
-from LikelihoodState import LikelihoodState
 
 import lande_units as units
+
+from lande_state import LandeState
 
 
 def gtlike_or_pointlike(f_gtlike, f_pointlike, like_or_roi, *args, **kwargs):
@@ -54,7 +55,7 @@ def paranoid_gtlike_fit(like, covar=True):
         See here for description of method:
             http://fermi.gsfc.nasa.gov/ssc/data/analysis/documentation/Cicerone/Cicerone_Likelihood/Fitting_Models.html
     """
-    saved_state = LikelihoodState(like)
+    saved_state = LandeState(like)
     try:
         print 'First, fitting with minuit'
         like.fit(optimizer="MINUIT",covar=covar)
@@ -64,7 +65,7 @@ def paranoid_gtlike_fit(like, covar=True):
         saved_state.restore()
 
         try:
-            saved_state = LikelihoodState(like)
+            saved_state = LandeState(like)
             print 'Refitting, first with DRMNFB'
             like.fit(optimizer='DRMNFB', covar=False)
             print 'Refitting, second with NEWMINUIT'
@@ -74,7 +75,7 @@ def paranoid_gtlike_fit(like, covar=True):
             traceback.print_exc(file=sys.stdout)
             saved_state.restore()
             try:
-                saved_state = LikelihoodState(like)
+                saved_state = LandeState(like)
                 print 'Refitting with LBFGS'
                 like.fit(optimizer='LBFGS', covar=False)
             except Exception, ex:
@@ -324,7 +325,7 @@ def gtlike_modify(like, name, free=True):
     """ Freeze a source in a gtlike ROI. 
     
         The method for modifying the ROI
-        follows the code in LikelihoodState.py 
+        follows the code in LandeState.py 
         
         I am not sure why the modificaiton
         has to be done in this particular way. """
@@ -367,7 +368,7 @@ def gtlike_upper_limit(like, name, cl, emin=None, emax=None,
 
     print 'Calculating gtlike upper limit'
 
-    saved_state = LikelihoodState(like)
+    saved_state = LandeState(like)
     source = like.logLike.getSource(name)
 
     try:
@@ -439,9 +440,7 @@ def gtlike_powerlaw_upper_limit(like, name, powerlaw_index=2 , cl=0.95, emin=Non
     """
     print 'Calculating gtlike power-law upper limit'
 
-    saved_state = LikelihoodState(like)
-    source = like.logLike.getSource(name)
-    old_spectrum = source.spectrum()
+    saved_state = LandeState(like)
 
     if emin is None and emax is None: 
         emin, emax = get_full_energy_range(like)
@@ -475,7 +474,6 @@ def gtlike_powerlaw_upper_limit(like, name, powerlaw_index=2 , cl=0.95, emin=Non
     if results is not None:
         results['powerlaw_index']=powerlaw_index
 
-    like.setSpectrum(name,old_spectrum)
     saved_state.restore()
 
     return results
@@ -578,9 +576,7 @@ def pointlike_test_cutoff(roi, which, flux_units='erg'):
 def gtlike_test_cutoff(like, name, flux_units='erg'):
     print 'Testing cutoff in gtlike'
 
-    saved_state = LikelihoodState(like)
-    source = like.logLike.getSource(name)
-    old_spectrum = source.spectrum()
+    saved_state = LandeState(like)
 
     d = {}
 
@@ -671,7 +667,6 @@ def gtlike_test_cutoff(like, name, flux_units='erg'):
         traceback.print_exc(file=sys.stdout)
         d=-1
     finally:
-        like.setSpectrum(name,old_spectrum)
         saved_state.restore()
 
     return tolist(d)
