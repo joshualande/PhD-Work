@@ -27,9 +27,9 @@ class LandeState(object):
             spectrum.getParams(parameters)
 
             type = spectrum.genericName()
-            self.sources[name] = dict(type = type, parameters=dict())
+            self.sources[name] = d = dict(type = type, parameters=dict())
             for p in parameters:
-                self.sources[name]['parameters'][p.getName()] = _Parameter(p)
+                d['parameters'][p.getName()] = _Parameter(p)
 
     def restore(self, like=None):
         if like is None: like = self.like
@@ -39,11 +39,16 @@ class LandeState(object):
             type = v['type']
             parameters = v['parameters']
 
-            like.setSpectrum(sname,type)
+
+            if type != "FileFunction":
+                # Bad idea to replace FileFunction objects
+                # since that will remove the file part
+                # of the spectrum.
+                like.setSpectrum(sname,type)
 
             for pname,pcache in parameters.items():
-                index = self.like.par_index(sname, pname)
-                like_par = self.like.params()[index]
+                index = like.par_index(sname, pname)
+                like_par = like.params()[index]
                 pcache.setDataMembers(like_par)
 
-        self.like.syncSrcParams()
+        like.syncSrcParams()
