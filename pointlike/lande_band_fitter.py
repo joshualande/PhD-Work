@@ -1,5 +1,6 @@
 import numpy as np
 
+from SED import SED
 from lande_toolbag import tolist
 from likelihood_tools import fluxdict,powerlaw_upper_limit,paranoid_gtlike_fit
 from lande_state import LandeState
@@ -122,7 +123,6 @@ class BandFitter(object):
 
         # revert to old model
         like.setEnergyRange(*init_energes)
-        like.setSpectrum(name,old_spectrum)
         saved_state.restore()
 
     def todict(self):
