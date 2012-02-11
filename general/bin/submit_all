@@ -51,11 +51,10 @@ for file in files:
     is_in_queue = expandvars(abspath) in queue_jobs
     log_exists = exists(log)
 
-    l = open(log).read()
-    job_finished = log_exists and 'Resource usage summary' in l
-    job_failed = log_exists and job_finished and 'Successfully completed' not in l
+    job_finished = log_exists and 'Resource usage summary' in open(log).read()
+    job_failed = log_exists and job_finished and 'Successfully completed' not in open(log).read()
 
-    if (not is_in_queue) and (job_finished and job_failed):
+    if (not is_in_queue) and (not log_exists or job_failed):
 
         command='bsub -q %s -oo %s %s %s' % (args.queue,log,program,abspath)
         print 'Submitting Job %s' % abspath
