@@ -17,6 +17,8 @@ import yaml
 import pylab as P
 import pyfits
 import numpy as np
+from scipy import stats
+from scipy.optimize import fmin
 
 from GtApp import GtApp
 
@@ -67,9 +69,13 @@ class VariabilityTester(object):
         if isinstance(roi_or_dict,dict):
             self.fromdict(roi_or_dict)
         elif isinstance(roi_or_dict, str):
-            self.fromdict(yaml.load(open(expandvars(roi_or_dict))))
+            self._setup_from_dict(roi_or_dict, *args, **kwargs)
         else:
             self._setup(roi_or_dict, *args, **kwargs)
+
+    def _setup_from_dict(self, dict):
+            self.save_data = True # Nothing to delete
+            self.fromdict(yaml.load(open(expandvars(dict))))
 
     def _setup(self, roi, which, **kwargs):
 
@@ -334,11 +340,17 @@ class VariabilityTester(object):
         F0 = self.all_time[type]['flux']['flux']
 
         df = F - F0
-        TS_var = 2*np.sum(
-            df**2/(df**2 + f**2*F0**2)*
-            (ll1-ll0)
-        )
-        return TS_var 
+        TS_var = 2*(ll1-ll0)
+
+        fraction = df**2/(df**2 + f**2*F0**2)
+
+        # Sometimes flux can e nan, in which case do not scale 
+        # by this term.
+        good_fraction = np.where(~np.isnan(fraction), fraction, 1)
+
+        TS_var *= good_fraction
+
+        return np.sum(TS_var)
 
     @staticmethod
     def get_time_range(ft1files):
@@ -447,9 +459,11 @@ class VariabilityTester(object):
         self.bands = d['bands']
         self.all_time = d['all_time']
         self.TS_var = d['TS_var']
+        self.min_ts = d['min_ts']
 
     def todict(self):
         d = dict(
+            min_ts = self.min_ts,
             time = self.time,
             bands=self.bands,
             all_time=self.all_time,
@@ -496,7 +510,88 @@ class VariabilityTester(object):
                           **plot_kwargs)
 
     @staticmethod
-    def _plot(d, min_ts, 
+    def _TS_to_sigma(ts, nbins):
+        """ Followign the 2FGL discussion of TS_var,
+
+            TS should have a chi^2/2 distribution
+            with nbins-1 degrees of freedom.
+
+            The survival function of the chi^2 distribution
+            is the false detection rate (remember the
+            survival function is 1-cdf).
+
+            By figuring out at what value the survival function of twice
+            the (normalized) normal distribution equals the above survival function of
+            the chi^2 distribution, we can figure out the 'sigma' of
+            the detection.
+
+            Note, this is a two sided significance, which (I believe)
+            is more suitable for variability since it avoids obtaining
+            negative TS values
+
+
+            This code is equivalent to the mathematica function:
+
+            NSolve[
+                SurvivalFunction[ChiSquareDistribution[nbins-1], ts] == 
+                SurvivalFunction[2*NormalDistribution[0, 1], y], y
+            ]
+
+
+            Assuming 36 time bins, I precomputed with mathematica that
+
+                >>> sigma = VariabilityTester._TS_to_sigma
+                >>> print '%.1f' % sigma(50, 36)
+                2.0
+                >>> print '%.1f' % sigma(30, 24)
+                1.4
+
+            Since we compute the (2 sided) significance, the smallest sigma
+            we can get is 0 (for TSvar=0)
+
+                >>> print '%.1f' % sigma(0, 24)
+                0.0
+
+            This is a 5 sigma detection (with 36 time bins)
+
+                >>> print '%.1f' % sigma(91.6638, 36)
+                5.0
+
+            Now, lest see how far we can push the limits of the float precision
+
+                >>> print '%.1f' % sigma(200, 36)
+                10.3
+
+                >>> print '%.1f' % sigma(800, 36)
+                25.7
+
+            Our function fails to provide meaningful
+            statstical significances larger than this.
+
+            Fortunately, Crab has TS_var ~ 600 so
+            we don't have to worry about these outliers
+
+        """
+        chidist = stats.chi2(nbins-1)
+
+        # This is 1 minus the fase detection probability
+        prob = chidist.sf(ts)
+
+        normdist = stats.norm(loc=0, scale=1)
+
+        # Try to solve sf(norm)(i) = prob for i
+        # by minimizing the difference
+        f = lambda i: (2*normdist.sf(i) - prob)**2
+
+        # 1 sigma is a reasonable guess
+        sigma = fmin(f,[1], xtol=1e-10000, ftol=1e-10000, 
+                     full_output=False, disp=False)[0]
+        return sigma
+
+        
+
+
+    def plot(self, 
               filename=None, 
               figsize=(7,4), 
               gtlike_color='black',
@@ -506,40 +601,43 @@ class VariabilityTester(object):
               **kwargs):
         """ Create a plot from a dictionary. """
 
+
         fig = P.figure(None,figsize)
         axes = fig.add_subplot(111)
 
         # astype(float) converts None to nan
         a=lambda x: np.asarray(x).astype(float)
 
-        starts=a(d['tstops'])
-        stops=a(d['tstarts'])
+        starts=a(self.time['starts'])
+        stops=a(self.time['stops'])
         time=(starts+stops)/2
         time_err=(stops-starts)/2
 
         if time_scale is None:
-            time_scale = 10**np.floor(np.log10(np.average(time)))
+            #time_scale = 10**np.floor(np.log10(np.average(time)))
+            time_scale = 1e8
         if flux_scale is None:
-            fg=np.mean(a(d['gtlike']['flux']['value']))
-            flux_scale = 10**np.floor(np.log10(fg))
+            fg=np.mean(a([b['gtlike']['flux']['flux'] for b in self.bands]))
+            #flux_scale = 10**np.floor(np.log10(fg))
+            flux_scale = 1e-8
 
         for t,color in [
             ['gtlike',gtlike_color],
             ['pointlike',pointlike_color]
         ]:
 
-            results = d[t]
+            f0 = self.all_time[t]['flux']['flux']
 
-            f0 = results['flux_0']['flux']
 
-            flux = results['flux']
+            ts = a([b[t]['TS'] for b in self.bands])
 
-            ts = a(results['TS'])
-            significant = ts >= min_ts
+            significant = (ts >= self.min_ts)
 
-            f=a(flux['value'])
-            ferr=a(flux['error'])
-            fup=a(flux['upper_limit'])
+            f = a([b[t]['flux']['flux'] for b in self.bands])
+            ferr=a([b[t]['flux']['flux_err'] for b in self.bands])
+            ferr=a([b[t]['flux']['flux_err'] for b in self.bands])
+
+            fup=a([b[t]['upper_limit']['flux'] if b[t]['upper_limit'] is not None else None for b in self.bands])
 
             #from matplotlib.ticker import ScalarFormatter
             #formatter = ScalarFormatter(useMathText=True, useOffset=False)
@@ -583,10 +681,13 @@ class VariabilityTester(object):
         if filename is not None: P.savefig(filename)
         return axes
 
-    def plot(self, *args, **kwargs):
-        return self._plot(self.todict(), self.min_ts, *args, **kwargs)
 
     def __del__(self):
         if not self.save_data:
             if not self.roi.quiet: print 'Removing savedir',self.savedir
             shutil.rmtree(self.savedir)
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
