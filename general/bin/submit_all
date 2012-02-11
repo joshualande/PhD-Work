@@ -21,41 +21,48 @@ queue_jobs,err=p.communicate()
 files = args.file
 random.shuffle(files)
 
+old_good_format = os.environ['PWD']
+old_bad_format  = os.getcwd()
+
 for file in files:
-    old = os.environ['PWD']
 
     dir=os.path.dirname(file)
     base=os.path.basename(file)
 
-    if not os.path.exists(join(dir,'log.txt')):
+    if dir is not '': os.chdir(dir)
 
-        if dir is not '': os.chdir(dir)
+    # Python wil not update the (nicely formatted) $PWD
+    # so here we can just replace out the poorly formatted
+    # base with the nicely formatted part.
+    new = os.getcwd().replace(old_bad_format,old_good_format)
 
-        new = os.environ['PWD']
+    ext = os.path.splitext(file)[1]
+    if ext == '.py':
+        program = 'python'
+    elif ext == '.sh':
+        program = 'sh'
+    else:
+        parser.error("Unknown extension for file %s" % file)
 
-        ext = os.path.splitext(file)[1]
-        if ext == '.py':
-            program = 'python'
-        elif ext == '.sh':
-            program = 'sh'
+    log = 'log.txt'
+
+    abspath = join(new,base)
+
+    is_in_queue = expandvars(abspath) in queue_jobs
+    log_exists = exists(log)
+
+    l = open(log).read()
+    job_finished = log_exists and 'Resource usage summary' in l
+    job_failed = log_exists and job_finished and 'Successfully completed' not in l
+
+    if (not is_in_queue) and (job_finished and job_failed):
+
+        command='bsub -q %s -oo %s %s %s' % (args.queue,log,program,abspath)
+        print 'Submitting Job %s' % abspath
+        if args.n:
+            print os.path.expandvars(command)
         else:
-            parser.error("Unknown extension for file %s" % file)
+            os.system(command)
 
-        log = 'log.txt'
-
-        abspath = join(new,base)
-
-        is_in_queue = expandvars(abspath) in queue_jobs
-        log_exists = exists(log)
-        job_failed = log_exists and 'Successfully completed' not in open(log).read()
-
-
-        if not is_in_queue and (not log_exists or job_failed):
-
-            command='bsub -q %s -oo %s %s %s' % (args.queue,log,program,abspath)
-            if args.n:
-                print os.path.expandvars(command)
-            else:
-                os.system(command)
-            os.chdir(old)
+    os.chdir(old_good_format)
 
