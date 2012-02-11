@@ -243,7 +243,7 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
         logLikelihood=like.logLike.value()
     )
 
-    d['flux']=fluxdict(like,name,emin,emax,flux_units)
+    d['flux']=fluxdict(like,name,emin,emax,flux_units=flux_units)
 
     source = like.logLike.getSource(name)
     spectrum = source.spectrum()
@@ -255,13 +255,8 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
 
     return d
 
+def pointlike_model_to_flux(model, emin, emax, flux_units='erg', error=True):
 
-def pointlike_fluxdict(roi,which,emin=None,emax=None,flux_units='erg', error=True):
-
-    if emin is None and emax is None:
-        emin, emax = get_full_energy_range(roi)
-
-    model=roi.get_model(which)
     ce=lambda e: units.convert(e,'MeV',flux_units)
     f=dict()
     if error:
@@ -277,6 +272,15 @@ def pointlike_fluxdict(roi,which,emin=None,emax=None,flux_units='erg', error=Tru
     f['eflux_units']='%s/cm^2/s' % flux_units
     f['emin'],f['emax']=emin,emax
     return f
+
+def pointlike_fluxdict(roi, which, emin=None, emax=None, *args, **kwargs):
+
+    if emin is None and emax is None:
+        emin, emax = get_full_energy_range(roi)
+
+    model=roi.get_model(which)
+    return pointlike_model_to_flux(model, emin, emax, *args, **kwargs)
+
 
 
 def pointlike_sourcedict(roi, name, emin=None, emax=None, flux_units='erg'):
