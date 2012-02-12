@@ -1,23 +1,17 @@
-from matplotlib import rc
-rc('ps',usedistiller='xpdf')
-rc('text', usetex=True)
-rc('font', family='serif', serif="Computer Modern Roman")
+import plot_helper 
 
 import math
-from argparse import ArgumentParser
 
-parser = ArgumentParser()
-parser.add_argument("--bw", action="store_true", default=False)
-args=parser.parse_args()
+bw = plot_helper.get_bw()
 
 import pylab as P
 import yaml
-from os.path import join as j
+from os.path import join, expandvars
 from lande_plotting import plot_gtlike_cutoff_test
 
 from matplotlib.offsetbox import AnchoredText
 
-fitdir='/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/v7/analysis_no_plots/'
+fitdir=expandvars('$pwndata/spectral/v10/analysis_no_plots/')
 
 cutoff_candidates = ['PSRJ0034-0534', 
                      'PSRJ0633+1746', 
@@ -29,7 +23,7 @@ cutoff_candidates = ['PSRJ0034-0534',
 
 binning = '4bpd'
 
-hypothesis='at_pulsar'
+hypothesis='point'
 
 
 
@@ -57,17 +51,17 @@ for i,pwn in enumerate(cutoff_candidates):
     axes=grid[i]
 
 
-    f = j(fitdir,pwn,'results_%s.yaml' % pwn)
+    f = join(fitdir,pwn,'results_%s.yaml' % pwn)
     r=yaml.load(open(f))
 
     cutoff_results=r[hypothesis]['gtlike']['test_cutoff']
-    sed=j(fitdir,pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
+    sed=join(fitdir,pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
 
     linewidth=1
 
     plot_gtlike_cutoff_test(cutoff_results=cutoff_results,
-                            model_0_kwargs=dict(color='0.8' if args.bw else 'red', zorder=0, dashes=[5,2]),
-                            model_1_kwargs=dict(color='0.4' if args.bw else 'blue', zorder=0),
+                            model_0_kwargs=dict(color='0.8' if bw else 'red', zorder=0, dashes=[5,2]),
+                            model_1_kwargs=dict(color='0.4' if bw else 'blue', zorder=0),
 
                             sed_results=sed, 
                             plot_kwargs=dict(
@@ -91,10 +85,4 @@ for i in range(nrows*ncols):
     axes.set_ylabel('E$^2\,$dN/dE')
 
 
-base='cutoff_test'
-if args.bw:
-    P.savefig('%s_bw.pdf' % base)
-    P.savefig('%s_bw.eps' % base)
-else:
-    P.savefig('%s_color.pdf' % base)
-    P.savefig('%s_color.eps' % base)
+plot_helper.save('cutoff_test')

@@ -46,13 +46,12 @@ def get_ts_var():
 #
 #        ts_point.append(f['at_pulsar']['gtlike']['TS'])
 #
-#ts_var = get_ts_var()
 #ts_point = get_ts_point()
 #ts_point = np.asarray(ts)
 #open('ts_var.yaml','w').write(yaml.dump(ts_point,ts_var))
 
-ts_var=yaml.load(open('ts_var.yaml'))
-
+ts_var = get_ts_var()
+#ts_var=yaml.load(open('ts_var.yaml'))
 ts_var = np.asarray(ts_var)
 
 

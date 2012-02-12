@@ -1,7 +1,4 @@
-from matplotlib import rc
-rc('ps',usedistiller='xpdf')
-rc('text', usetex=True)
-rc('font', family='serif', serif="Computer Modern Roman")
+import plot_helper 
 
 from argparse import ArgumentParser
 
@@ -24,6 +21,8 @@ from skymaps import SkyDir
 from uw.pulsar.phase_range import PhaseRange
 
 from lande_pulsar import get_phases
+
+bw = plot_helper.get_bw()
 
 cutoff_candidates = ['PSRJ0034-0534', 
                      'PSRJ0633+1746', 
@@ -84,11 +83,11 @@ for i,pwn in enumerate(pwnlist):
 
         x,y = np.append(x, x+1), np.append(y, y)
 
-        P.plot(x,y, lw=linewidth, color='black' if args.bw else 'blue')
+        P.plot(x,y, lw=linewidth, color='black' if bw else 'blue')
 
     xx, yy = np.append(xx, xx+1), np.append(yy, yy)
 
-    axes.plot(xx,yy*binsz, color='gray' if args.bw else 'red', lw=linewidth)
+    axes.plot(xx,yy*binsz, color='gray' if bw else 'red', lw=linewidth)
 
     axes.set_ylim(ymin=0)
     axes.set_ylim(ymax=axes.get_ylim()[1]*1.5)
@@ -131,7 +130,7 @@ while i < nrows*ncols:
 
 
 base='off_peak_select'
-if args.bw:
+if bw:
     P.savefig('%s_bw.pdf' % base)
     P.savefig('%s_bw.eps' % base)
 else:
