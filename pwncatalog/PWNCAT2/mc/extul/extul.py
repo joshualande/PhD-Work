@@ -1,6 +1,10 @@
 from os.path import join
 import yaml
 import traceback
+import sys
+from argparse import ArgumentParser
+from tempfile import mkdtemp
+from shutil import rmtree
 
 import numpy as np
 np.seterr(all='ignore')
@@ -16,28 +20,29 @@ from uw.like.roi_monte_carlo import MonteCarlo
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
 from uw.like.pointspec_helpers import PointSource
 
-from tempfile import mkdtemp
-from shutil import rmtree
-
 from lande_toolbag import tolist
-
+from lande_random import mixed_linear
 from likelihood_tools import force_gradient, sourcedict, spectrum_to_dict, pointlike_model_to_flux
 
 force_gradient(use_gradient=False)
 
+parser = ArgumentParser()
+parser.add_argument("i",type=int)
+parser.add_argument("--index",type=float, required=True)
+parser.add_argument("--flux",type=float, required=True)
+args=parser.parse_args()
+i=args.i
 
-i=0
 
-emin=1e2
+i=args.i
+flux_mc = args.flux
+index_mc = args.index
+
+emin=1e3
 emax=10**5.5
 irf="P7SOURCE_V6"
 
 skydir_mc = SkyDir()
-
-
-#flux_mc = 1e-8
-flux_mc = 1e-5
-
 
 bg = DiffuseSource(
     IsotropicPowerLaw(1.5e-5,2.1),
@@ -51,12 +56,14 @@ ltcube = join(catalog_basedir,"ltcube_24m_pass7.4_source_z100_t90_cl0.fits")
 
 results = []
 
-extensions = np.linspace(0.0,2.0,21)
+from lande_random import mixed_linear
+extensions = mixed_linear(0.0, 2.0, 50)
+#extensions = np.linspace(0.0,2.0,21)
 
 for extension_mc in extensions:
 
-    model_mc = PowerLaw(gamma=2)
-    model_mc.set_flux(flux_mc, emin, emax)
+    model_mc = PowerLaw(gamma=index_mc)
+    model_mc.set_flux(flux_mc, 1e2, 10**5.5)
 
     r = dict(
         mc = dict(
@@ -102,10 +109,6 @@ for extension_mc in extensions:
     ft1 = join(tempdir,'ft1.fits')
     binfile = join(tempdir, 'binned.fits')
 
-# TEMPORARY
-    ft2 = join(tempdir, 'ft2.fits')
-# TEMPORARY
-
     mc=MonteCarlo(
         sources=[bg.copy(), sim_es.copy()],
         seed=i,
@@ -116,12 +119,6 @@ for extension_mc in extensions:
         maxROI=15,
         emin=emin,
         emax=emax,
-
-# TEMPORARY
-        tstart=0,   
-        tstop=604800,
-# TEMPORARY
-
         )
 
     mc.simulate()
