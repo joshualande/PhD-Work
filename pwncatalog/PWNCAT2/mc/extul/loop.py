@@ -5,7 +5,7 @@ from os import makedirs,getcwd
 
 random.seed(0)
 
-num=10
+num=100
 
 basedir =  expandvars('$pwndata/monte_carlo/extul/v2/')
 

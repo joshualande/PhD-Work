@@ -62,6 +62,8 @@ extensions = mixed_linear(0.0, 2.0, 50)
 
 for extension_mc in extensions:
 
+    print 'Looping over extension_mc=%g' % extension_mc
+
     model_mc = PowerLaw(gamma=index_mc)
     model_mc.set_flux(flux_mc, 1e2, 10**5.5)
 
