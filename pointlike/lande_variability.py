@@ -32,7 +32,8 @@ from roi_gtlike import Gtlike
 
 from lande_toolbag import tolist
 from likelihood_tools import paranoid_gtlike_fit,fluxdict,gtlike_upper_limit,\
-        pointlike_upper_limit,diffusedict,fit_only_prefactor,get_background,get_sources,gtlike_modify
+        pointlike_upper_limit,diffusedict,fit_only_prefactor,get_background,\
+        get_sources,gtlike_modify,sourcedict
 from lande_state import LandeState
 
 
@@ -134,15 +135,9 @@ class VariabilityTester(object):
         roi.fit(**self.pointlike_fit_kwargs)
         print '... After'; roi.print_summary()
 
-        F0p = fluxdict(roi, which, error=False)
-        diffp = diffusedict(roi)
+        all_time = dict(pointlike = sourcedict(roi, which))
 
-        all_time = dict(
-            pointlike = dict(
-                flux = F0p,
-                diffuse = diffp,
-            )
-        )
+        all_time['pointlike']['TS'] = roi.TS(which,quick=False)
 
         if self.do_gtlike:
 
@@ -160,13 +155,7 @@ class VariabilityTester(object):
 
             self.best_gtlike_state = LandeState(like)
 
-            F0g =  fluxdict(like,which)
-            diffg = diffusedict(like)
-
-            all_time['gtlike'] = dict(
-                flux = F0g,
-                diffuse = diffg,
-            )
+            all_time['gtlike'] = sourcedict(like, which)
 
         return all_time
 
@@ -214,7 +203,7 @@ class VariabilityTester(object):
         # * calcualte likelihood for the fit flux
         results['ll_1'] = ll()
         results['flux'] = fluxdict(smaller_roi,which)
-        results['TS'] = TS = smaller_roi.TS(which,quick=True)
+        results['TS'] = TS = smaller_roi.TS(which,quick=False)
         results['diffuse'] = diffusedict(smaller_roi)
 
 
@@ -278,7 +267,7 @@ class VariabilityTester(object):
         results['ll_1'] = ll()
         results['flux'] = fluxdict(like,name)
 
-        results['TS'] = TS = like.Ts(name,reoptimize=False)
+        results['TS'] = TS = like.Ts(name,reoptimize=True)
         results['diffuse'] = diffusedict(like)
 
         if TS < self.min_ts or self.always_upper_limit:
