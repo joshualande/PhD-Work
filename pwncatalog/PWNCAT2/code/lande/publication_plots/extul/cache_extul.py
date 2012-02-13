@@ -5,7 +5,7 @@ from collections import defaultdict
 import pylab as P
 import yaml
 
-from uw.utilities.makerec import RecArray
+from uw.utilities.makerec import RecArray,makefits
 
 datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v2'
 
@@ -39,3 +39,7 @@ for index in [1.5, 2, 2.5, 3]:
                 ts_ext=max(i['TS_ext'],0)
 
                 rec.append(f,index,e,e_ul,ts,ts_ext)
+
+rec = rec()
+makefits(rec,'cached.fits')
+
