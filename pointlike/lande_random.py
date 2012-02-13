@@ -34,7 +34,11 @@ def mixed_linear(min,max,num):
         a reasonable sample quickly.
         
         Use the http://en.wikipedia.org/wiki/Van_der_Corput_sequence
-        to mix up the numbers. """
+        to mix up the numbers. 
+
+        To get the csc package, go to http://pypi.python.org/pypi/csc-utils
+        
+        """
     from csc import util
     x=util.sampling_sequence(min,max)
     return np.asarray([x.next() for i in range(num)])
