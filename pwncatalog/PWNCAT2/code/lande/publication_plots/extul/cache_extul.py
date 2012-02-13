@@ -1,4 +1,5 @@
 from os.path import join, exists
+from os import remove
 from glob import glob
 from collections import defaultdict
 
@@ -9,17 +10,13 @@ from uw.utilities.makerec import RecArray,makefits
 
 datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v2'
 
-rec = RecArray('flux index extension_mc extension_ul TS_point TS_ext'.split())
+rec = RecArray('flux_mc index_mc extension_mc extension_ul ts_point ts_ext'.split())
 
 for index in [1.5, 2, 2.5, 3]:
 
     subdir = join(datadir,'index_%s' % index)
 
     jobdirs = glob(join(subdir,'?????'))
-
-    # TEMPORARY
-    jobdirs = jobdirs[0:10]
-    # TEMPORARY
 
     for i,jobdir in enumerate(jobdirs):
         print '%s - %s/%s' % (jobdir, i, len(jobdirs))
@@ -41,5 +38,7 @@ for index in [1.5, 2, 2.5, 3]:
                 rec.append(f,index,e,e_ul,ts,ts_ext)
 
 rec = rec()
-makefits(rec,'cached.fits')
 
+file='cached.fits'
+if exists(file): remove(file)
+makefits(rec,file)

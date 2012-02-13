@@ -15,8 +15,6 @@ from lande_plotting import fix_axesgrid
 
 bw=plot_helper.get_bw()
 
-datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v2'
-
 fig = P.figure(None,(6,6))
 
 grid = Grid(fig, 111, 
@@ -24,8 +22,14 @@ grid = Grid(fig, 111,
             share_all=False,
             axes_pad=0.0)
 
+from uw.utilities.makerec import fitsrec
+r = fitsrec('cached.fits')
 
-
+extension_mc = r['extension_mc']
+extension_ul = r['extension_ul']
+index_mc = r['index_mc']
+ts_point = r['ts_point']
+ts_ext = r['ts_ext']
 
 for index, plot_kwargs in [[1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
                            [2,   dict(label=r'$\gamma=2$',   color='red'  )],
@@ -33,44 +37,18 @@ for index, plot_kwargs in [[1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
                            [3,   dict(label=r'$\gamma=3$',   color='black')]
                           ]:
 
-    subdir = join(datadir,'index_%s' % index)
+    cut = index_mc == index
 
-    extension = defaultdict(lambda: defaultdict(list))
-
-    for jobdir in glob(join(subdir,'?????'))[0:10]:
-        print jobdir
-
-        results = join(jobdir,'results.yaml')
-        
-        if exists(results):
-
-            r = yaml.load(open(results))
-
+    extlist = np.sort(np.unique(extension_mc[cut]))
             
+    avg_ts_point = [np.mean(ts_point[cut&(extension_mc==e)]) for e in extlist]
+    avg_ts_ext = [np.mean(ts_point[cut&(extension_mc==e)]) for e in extlist]
+    coverage = [ np.average(e < extension_ul[cut&(extension_mc==e)]) for e in extlist]
 
-            for i in r:
-
-                e=i['mc']['extension']
-
-                ts=max(i['point']['TS'],0)
-                extension[e]['TS_point'].append(ts)
-
-                ts_ext=max(i['TS_ext'],0)
-                extension[e]['TS_ext'].append(ts_ext)
-                extension[e]['extension_ul'].append(i['extension_ul'])
-
-    extlist = np.sort(extension.keys())
-
-    av_ts_point = [ np.mean(extension[e]['TS_point']) for e in extlist ]
-    av_ts_ext = [ np.mean(extension[e]['TS_ext']) for e in extlist ]
-
-    coverage = [ np.average(e < np.asarray(extension[e]['extension_ul'])) for e in extlist ]
-
-    grid[0].plot(extlist, av_ts_point, 'o', **plot_kwargs)
-    grid[1].plot(extlist, av_ts_ext, 'o', **plot_kwargs)
+    grid[0].plot(extlist, avg_ts_point, 'o', **plot_kwargs)
+    grid[1].plot(extlist, avg_ts_ext, 'o', **plot_kwargs)
     grid[2].plot(extlist, coverage, '-', **plot_kwargs)
 
-    #print dict(extension)
 
 grid[0].legend(numpoints=1)
 
