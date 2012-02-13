@@ -15,7 +15,7 @@ from lande_plotting import fix_axesgrid
 
 bw=plot_helper.get_bw()
 
-datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v1'
+datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v2'
 
 fig = P.figure(None,(6,6))
 
@@ -30,14 +30,14 @@ grid = Grid(fig, 111,
 for index, plot_kwargs in [[1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
                            [2,   dict(label=r'$\gamma=2$',   color='red'  )],
                            [2.5, dict(label=r'$\gamma=2.5$', color='green')],
-#                           [3,   dict(label=r'$\gamma=3$',   color='black')]
+                           [3,   dict(label=r'$\gamma=3$',   color='black')]
                           ]:
 
     subdir = join(datadir,'index_%s' % index)
 
     extension = defaultdict(lambda: defaultdict(list))
 
-    for jobdir in glob(join(subdir,'?????')):
+    for jobdir in glob(join(subdir,'?????'))[0:10]:
         print jobdir
 
         results = join(jobdir,'results.yaml')
