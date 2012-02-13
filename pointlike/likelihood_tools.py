@@ -734,12 +734,6 @@ def pointlike_plot_all_seds(roi, filename=None, ncols=4, **kwargs):
 plot_all_seds = pointlike_plot_all_seds # for now
 
 
-def fit_only_prefactor(model):
-    model=model.copy()
-    model.free[0] = False
-    model.free[1:] = False
-    return model
-
 def freeze_insignificant_to_catalog(roi,catalog,exclude_names=[], min_ts=25):
     """ Replace all insigificant 2FGL catalog sources
         with the predictions of 2FGL and 
@@ -750,7 +744,9 @@ def freeze_insignificant_to_catalog(roi,catalog,exclude_names=[], min_ts=25):
 
         if name in exclude_names: continue
 
-        if np.any(source.model.free) and roi.TS(which=source)< min_ts:
+        # Note only check sources with MORE than their
+        # prefactor frozen!
+        if np.any(source.model.free[1:]) and roi.TS(which=source)< min_ts:
             try:
                 catalog_source = catalog.get_source(name)
             except StopIteration:
