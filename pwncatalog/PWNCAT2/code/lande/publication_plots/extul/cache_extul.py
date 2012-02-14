@@ -8,7 +8,7 @@ import yaml
 
 from uw.utilities.makerec import RecArray,makefits
 
-datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v4'
+datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v5'
 
 rec = RecArray('flux_mc index_mc extension_mc extension_ul ts_point ts_ext'.split())
 
@@ -34,12 +34,18 @@ for index in [1.5, 2, 2.5, 3]:
                 e=i['mc']['extension']
                 f=i['mc']['flux']['flux']
                 e_ul=i['extension_ul']['extension']
+
+                print 'THIS IS BAD'
+                if e_ul is None: e_ul = 0
+
                 ts=max(i['point']['TS'],0)
                 ts_ext=max(i['TS_ext'],0)
 
                 rec.append(f,index,e,e_ul,ts,ts_ext)
 
+print rec
 rec = rec()
+print rec
 
 file='cached.fits'
 if exists(file): remove(file)
