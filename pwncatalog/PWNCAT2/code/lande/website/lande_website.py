@@ -7,18 +7,35 @@ from StringIO import StringIO
 import re
 import os
 from os.path import join,exists,expandvars
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 import asciitable
 
 from lande_toolbag import OrderedDefaultdict
 
-base=expandvars('$pwndata/spectral/v11')
-#base=expandvars('$pwndata/spectral/temp')
+from table_helper import BestHypothesis
+
+#if True:
+if False:
+    var_version='v10/variability/v3/'
+    spec_version='v12'
+    gtlike=True
+
+#if False:
+if True:
+    var_version='v10/variability/v3/'
+    spec_version='v13'
+    gtlike=False
+
+variability_unix=expandvars('$pwndata/spectral/%s' % var_version)
+variability_website=expandvars('../../%s' % var_version)
 
 
+analysis_plots_unix=expandvars('$pwndata/spectral/%s/analysis_plots' % spec_version)
+analysis_no_plots_unix=expandvars('$pwndata/spectral/%s/analysis_no_plots' % spec_version)
+website_unix=expandvars('$pwndata/spectral/%s/website' % spec_version)
+analysis_plots_website=expandvars('../../%s/analysis_plots' % spec_version)
 
-analysis='analysis_plots'
 
 
 def get_pwnlist():
@@ -27,26 +44,41 @@ def get_pwnlist():
 
 pwnlist=get_pwnlist()
 
-website=join(base,'website')
 
-if not os.path.exists(website): os.makedirs(website)
+if not os.path.exists(website_unix): os.makedirs(website_unix)
 
 
 
 def get_results(pwn):
-    f = join(base,analysis.replace('plots','no_plots'),pwn,'results_%s.yaml' % pwn)
+    f = join(analysis_no_plots_unix,pwn,'results_%s.yaml' % pwn)
 
     if not os.path.exists(f): return None
     results = yaml.load(open(f))
 
     if not results.has_key('at_pulsar') or \
-       not results['at_pulsar'].has_key('pointlike') or \
-       not results['at_pulsar'].has_key('gtlike'):
+       not results['at_pulsar'].has_key('pointlike'):
+       return None
+
+    if gtlike and not results['at_pulsar'].has_key('gtlike'):
         return None
+
+    else:
+        # Quick fix, if pointlike copy of pointlike stuff into gtlike stuff
+        for k in ['at_pulsar', 'point', 'extended']:
+            if results.has_key(k):
+                results[k]['gtlike'] = results[k]['pointlike']
+
+
     return results
 
+def get_variability(pwn):
+    f = join(variability_unix, pwn, 'results_%s.yaml' % pwn)
+    if not os.path.exists(f): return None
+    return yaml.load(open(f))
+
+
 def get_sed(pwn,binning,hypothesis):
-    filename=join(base,analysis.replace('plots','no_plots'),pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
+    filename=join(analysis_no_plots_unix,pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
     if os.path.exists(filename) and yaml.load(open(filename)) != {}:
         return yaml.load(open(filename))
     elif binning == '1bpd':
@@ -60,7 +92,7 @@ def get_sed(pwn,binning,hypothesis):
 
 def t2t(lines,name): 
     """ create the HTML for a given t2t file. """
-    filename = join(website,'%s.t2t' % name)
+    filename = join(website_unix,'%s.t2t' % name)
     
     temp=open(filename,'w')
     temp.write(
@@ -74,18 +106,25 @@ class TableFormatter(object):
 
     def __init__(self, pwnlist):
 
-        table = OrderedDefaultdict(list)
-
         flux_name=r'F(0.1-316)'
         gamma_name=r'Gamma'
 
-        for pwn in pwnlist:
+        table = OrderedDict()
+        for k in ['PSR', 
+                  'TS_at_pulsar', 'TS_loc', 'TS_ext', 'TS_var',
+                  'disp', flux_name, gamma_name,
+                  'TS(.1-1)', 'F(.1-1)', 'Index(.1-1)',
+                  'TS(1-10)', 'F(1-10)', 'Index(1-10)', 
+                  'TS(10-316)', 'F(10-316)', 'Index(10-316)']:
+            table[k] = ['None']*len(pwnlist)
+
+        for i,pwn in enumerate(pwnlist):
             print pwn
+
+            table['PSR'][i]='[%s %s.html]' % (pwn,pwn)
 
             results = get_results(pwn)
             if results is None: continue
-
-            table['PSR'].append('[%s %s.html]' % (pwn,pwn))
 
             gt_at_pulsar=results['at_pulsar']['gtlike']
             pt_at_pulsar=results['at_pulsar']['pointlike']
@@ -111,19 +150,18 @@ class TableFormatter(object):
                 ext_finished = False
 
             ts_at_pulsar=gt_at_pulsar['TS']
-            table['TS_at_pulsar'].append('%.1f' % ts_at_pulsar)
+            table['TS_at_pulsar'][i] = '%.1f' % ts_at_pulsar
 
             if point_finished:
                 ts_loc = ts_point - ts_at_pulsar
-                table['TS_loc'].append('%.1f' % (ts_loc))
-            else:
-                table['TS_loc'].append('None')
+                table['TS_loc'][i] = '%.1f' % (ts_loc)
                 
             if ext_finished:
-                table['TS_ext'].append('%.1f' % ts_ext)
-            else:
-                table['TS_ext'].append('None')
+                table['TS_ext'][i] = '%.1f' % ts_ext
 
+            var = get_variability(pwn)
+            if var is not None:
+                table['TS_var'][i] = '%.1f' % var['TS_var']['gtlike']
 
             if ext_finished and ts_point > 25 and ts_ext > 16:
                 # is extended
@@ -154,28 +192,27 @@ class TableFormatter(object):
                 pt=pt_at_pulsar
 
 
+
             displacement = np.degrees(SkyDir(*pt['equ']).difference(SkyDir(*pt_at_pulsar['equ'])))
-            table['disp'].append('%.2f' % displacement)
+            table['disp'][i] = '%.2f' % displacement
 
             if besttype != 'ul':
                 flux=gt['flux']['flux']
                 flux_err=gt['flux']['flux_err']
-                table[flux_name].append('%.1f +/- %.1f' % (flux/1e-9,flux_err/1e-9))
+                table[flux_name][i] = '%.1f +/- %.1f' % (flux/1e-9,flux_err/1e-9)
             else:
                 if gt.has_key('upper_limit') and \
                    type(gt['upper_limit']) == dict and \
                    gt['upper_limit'].has_key('flux'):
                     ul=gt['upper_limit']['flux']
-                    table[flux_name].append('<%.1f' % (ul/1e-9))
-                else:
-                    table[flux_name].append('-')
+                    table[flux_name][i] = '<%.1f' % (ul/1e-9)
 
             if besttype != 'ul':
                 index=-1*gt['model']['Index']
                 index_err=-1*gt['model']['Index_err']
-                table[gamma_name].append('%.1f +/- %.1f' % (index,index_err))
+                table[gamma_name][i] = '%.1f +/- %.1f' % (index,index_err)
             else:
-                table[gamma_name].append('-')
+                table[gamma_name][i] = '-'
             
             if gt.has_key('bands'):
 
@@ -193,38 +230,29 @@ class TableFormatter(object):
 
                 ul1,ul2,ul3=bands['flux']['upper_limit']
 
-                table['TS(.1-1)'].append('%.1f' % ts1)
+                table['TS(.1-1)'][i] = '%.1f' % ts1
                 if ts1>25:
-                    table['F(.1-1)'].append('%.1f +/- %.1f' % (flux1/1e-9,flux_err1/1e-9))
-                    table['Index(.1-1)'].append('%.1f +/- %.1f' % (index1,index_err1))
+                    table['F(.1-1)'][i] = '%.1f +/- %.1f' % (flux1/1e-9,flux_err1/1e-9)
+                    table['Index(.1-1)'][i] = '%.1f +/- %.1f' % (index1,index_err1)
                 else:
-                    table['F(.1-1)'].append('<%.1f' % (ul1/1e-9))
-                    table['Index(.1-1)'].append('-')
+                    table['F(.1-1)'][i] = '<%.1f' % (ul1/1e-9)
+                    table['Index(.1-1)'][i] = '-'
 
-                table['TS(1-10)'].append('%.1f' % ts2)
+                table['TS(1-10)'][i] = '%.1f' % ts2
                 if ts2>25:
-                    table['F(1-10)'].append('%.1f +/- %.1f' % (flux2/1e-9,flux_err2/1e-9))
-                    table['Index(1-10)'].append('%.1f +/- %.1f' % (index2,index_err2))
+                    table['F(1-10)'][i] = '%.1f +/- %.1f' % (flux2/1e-9,flux_err2/1e-9)
+                    table['Index(1-10)'][i] = '%.1f +/- %.1f' % (index2,index_err2)
                 else:
-                    table['F(1-10)'].append('<%.1f' % (ul2/1e-9))
-                    table['Index(1-10)'].append('-')
+                    table['F(1-10)'][i] = '<%.1f' % (ul2/1e-9)
+                    table['Index(1-10)'][i] = '-'
 
-                table['TS(10-316)'].append('%.1f' % ts3)
+                table['TS(10-316)'][i] = '%.1f' % ts3
                 if ts3>25:
-                    table['F(10-316)'].append('%.1f +/- %.1f' % (flux3/1e-9,flux_err3/1e-9))
-                    table['Index(10-316)'].append('%.1f +/- %.1f' % (index3,index_err3))
+                    table['F(10-316)'][i] = '%.1f +/- %.1f' % (flux3/1e-9,flux_err3/1e-9)
+                    table['Index(10-316)'][i] = '%.1f +/- %.1f' % (index3,index_err3)
                 else:
-                    table['F(10-316)'].append('<%.1f' % (ul3/1e-9))
-                    table['Index(10-316)'].append('-')
-            else:
-                table['F(.1-1)'].append('-')
-                table['Index(.1-1)'].append('-')
-                table['TS(1-10)'].append('-')
-                table['F(1-10)'].append('-')
-                table['Index(1-10)'].append('-')
-                table['TS(10-316)'].append('-')
-                table['F(10-316)'].append('-')
-                table['Index(10-316)'].append('-')
+                    table['F(10-316)'][i] = '<%.1f' % (ul3/1e-9)
+                    table['Index(10-316)'][i] = '-'
 
         self.table = table
 
@@ -266,13 +294,15 @@ def build_each_page(pwn):
     t=TableFormatter([pwn])
     index_t2t.append(str(t))
     index_t2t.append('')
-    index_t2t.append('[Analysis Folder ../%s/%s]' % (analysis,pwn))
+    index_t2t.append('[Analysis Folder %s/%s]' % (analysis_plots_website,pwn))
     index_t2t.append('')
-    index_t2t.append('[log ../%s/%s/log_%s.txt]' % (analysis,pwn,pwn))
+    index_t2t.append('[log %s/%s/log_%s.txt]' % (analysis_plots_website,pwn,pwn))
+    index_t2t.append('')
+    index_t2t.append('[Variability %s/%s/]' % (variability_website, pwn))
 
     hypothesis=t.hypothesis
 
-    get_img_table = lambda *args: index_t2t.append('|| ' + ' | '.join(['[../%s/%s/%s]' % (analysis,pwn,i) for i in args]) + ' |\n\n')
+    get_img_table = lambda *args: index_t2t.append('|| ' + ' | '.join(['[%s/%s/%s]' % (analysis_plots_website,pwn,i) for i in args]) + ' |\n\n')
 
     title = lambda i: index_t2t.append('== %s ==' % i)
 
@@ -317,6 +347,9 @@ def build_each_page(pwn):
     get_img_table(
         'plots/test_cutoff_%s_%s.png' % (hypothesis,pwn))
 
+    # Add variability plot
+    index_t2t.append('| [%s/%s/variability_%s.png] |' % (variability_website,pwn,pwn))
+
     index_t2t.append("""```
 %s
 ```""" % yaml.dump(results))
@@ -345,6 +378,13 @@ def build_each_page(pwn):
     get_img_table(
         'plots/counts_source_0.25_%s_%s.png' % (hypothesis,pwn),
         'plots/counts_residual_0.25_%s_%s.png' % (hypothesis,pwn))
+
+
+    var = get_variability(pwn)
+
+    index_t2t.append("""```
+%s
+```""" % yaml.dump(var))
 
     t2t(index_t2t, pwn)
 
