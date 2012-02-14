@@ -4,34 +4,31 @@ from os.path import join,exists,expandvars
 import yaml
 
 
-ts_var_folder = '$pwndata/spectral/v10/variability/v2/'
+ts_var_folder = '$pwndata/spectral/v10/variability/v3/'
 
 def cutoff_table(pwnlist):
 
     table = OrderedDefaultdict(list)
     psr_name='PSR'
-    ts_point_name = r'$\ts_\text{point}$'
-    ts_var_gtlike_name = r'$\ts_\text{var}'
+    #ts_point_name = r'$\ts_\text{point}$'
+    ts_var_name = r'$\ts_\text{var}$'
 
     t='gtlike'
 
     for pwn in pwnlist:
-        results = get_results(pwn)
-        if results is None: continue
+        #results = get_results(pwn)
+        #if results is None: continue
 
-        if not results.has_key('point') or not results['point'].has_key(t):
-            continue
+        #ts_point = results['point'][t]['TS']
 
-        ts_point = results['point'][t]['TS']
-
-        if ts_point < 25:
-            continue
+        #if ts_point < 25:
+        #    continue
 
         print pwn
 
         table[psr_name].append(table_name(pwn))
 
-        table[ts_point_name].append('%.1f' % ts_point)
+        #table[ts_point_name].append('%.1f' % ts_point)
 
         var = expandvars(join(ts_var_folder,pwn,'results_%s.yaml' % pwn))
         if exists(var): 
