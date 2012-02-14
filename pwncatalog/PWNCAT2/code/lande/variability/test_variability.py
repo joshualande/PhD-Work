@@ -16,16 +16,16 @@ args=parser.parse_args()
 
 
 name=args.name
-roi = load('%s/%s/roi_at_pulsar_%s.dat' % (args.analysis_dir,name,name))
+roi = load('%s/%s/roi_point_%s.dat' % (args.analysis_dir,name,name))
 
 roi.print_summary()
 roi.fit(use_gradient=False)
 roi.print_summary()
 
 v = lande_variability.VariabilityTester(roi,name,
-                                        filename='results_%s.yaml' % name,
                                         nbins=36)
 
 print v.todict()
 
+v.save('results_%s.yaml' % name)
 v.plot(filename='variability_%s.pdf' % name)
