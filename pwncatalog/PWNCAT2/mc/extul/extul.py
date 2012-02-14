@@ -39,7 +39,8 @@ i=args.i
 min_flux_mc = args.min_flux
 max_flux_mc = args.max_flux
 
-flux_mc = lambda extension: min_flux_mc + (max_flux_mc - min_flux_mc)*extension
+# formula to interpolate from the flux at lowest to highest extension
+flux_mc = lambda extension: np.exp(np.log(min_flux_mc) + (np.log(max_flux_mc) - np.log(min_flux_mc))*extension)
 
 index_mc = args.index
 
