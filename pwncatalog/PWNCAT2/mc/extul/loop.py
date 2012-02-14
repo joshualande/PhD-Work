@@ -5,14 +5,22 @@ from os import makedirs,getcwd
 
 random.seed(0)
 
-num=500
+num=100
 
-basedir =  expandvars('$pwndata/monte_carlo/extul/v4/')
 
-for index_mc,min_flux,max_flux in [[1.5, 1.5e-9, 4.5e-9], 
-                                   [2,   5e-9,   1.5e-8],
-                                   [2.5, 1.5e-8, 4.5e-8],
-                                   [3,   2.5e-8, 7.5e-8]]:
+# v4
+#basedir =  expandvars('$pwndata/monte_carlo/extul/v4/')
+#for index_mc,min_flux,max_flux in [[1.5, 1.5e-9, 4.5e-9], 
+#                                   [2,   5e-9,   1.5e-8],
+#                                   [2.5, 1.5e-8, 4.5e-8],
+#                                   [3,   2.5e-8, 7.5e-8]]:
+
+# v5
+basedir =  expandvars('$pwndata/monte_carlo/extul/v5/')
+for index_mc,min_flux,max_flux in [[1.5, 1e-9,   1e-8], 
+                                   [2,   5e-9,   1e-8],
+                                   [2.5, 1e-8,   1.5e-8],
+                                   [3,   1.5e-8, 2.5e-8]]:
 
     workdir = join(basedir,'index_%g' % (index_mc))
 
