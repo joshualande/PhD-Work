@@ -5,17 +5,16 @@ from os import makedirs,getcwd
 
 random.seed(0)
 
-num=100
+num=500
 
-basedir =  expandvars('$pwndata/monte_carlo/extul/v2/')
+basedir =  expandvars('$pwndata/monte_carlo/extul/v4/')
 
-# Note, flux here is defined as the 100MeV to 316GeV flux
-for index,flux in [[1.5, 1e-9], 
-                   [2,   5e-9],
-                   [2.5, 1e-8],
-                   [3,   1e-7]]:
+for index_mc,min_flux,max_flux in [[1.5, 1.5e-9, 4.5e-9], 
+                                   [2,   5e-9,   1.5e-8],
+                                   [2.5, 1.5e-8, 4.5e-8],
+                                   [3,   2.5e-8, 7.5e-8]]:
 
-    workdir = join(basedir,'index_%g' % (index))
+    workdir = join(basedir,'index_%g' % (index_mc))
 
     for i in xrange(num):
 
@@ -30,8 +29,9 @@ for index,flux in [[1.5, 1e-9],
         run.write(dedent("""\
             python $pwnmc/extul/extul.py \\
                 --index=%g \\
-                --flux=%g \\
-                %g""" % (index,flux,i)))
+                --min-flux=%g \\
+                --max-flux=%g \\
+                %g""" % (index_mc,min_flux,max_flux,i)))
         run.close()
 
 

@@ -29,16 +29,21 @@ force_gradient(use_gradient=False)
 parser = ArgumentParser()
 parser.add_argument("i",type=int)
 parser.add_argument("--index",type=float, required=True)
-parser.add_argument("--flux",type=float, required=True)
+parser.add_argument("--min-flux",type=float, required=True)
+parser.add_argument("--max-flux",type=float, required=True)
 args=parser.parse_args()
 i=args.i
 
 
 i=args.i
-flux_mc = args.flux
+min_flux_mc = args.min_flux
+max_flux_mc = args.max_flux
+
+flux_mc = lambda extension: min_flux_mc + (max_flux_mc - min_flux_mc)*extension
+
 index_mc = args.index
 
-emin=1e3
+emin=1e2
 emax=10**5.5
 irf="P7SOURCE_V6"
 
@@ -57,15 +62,15 @@ ltcube = join(catalog_basedir,"ltcube_24m_pass7.4_source_z100_t90_cl0.fits")
 results = []
 
 from lande_random import mixed_linear
-extensions = mixed_linear(0.0, 2.0, 50)
-#extensions = np.linspace(0.0,2.0,21)
+#extensions = mixed_linear(0.0, 2.0, 2**6+1)
+extensions = mixed_linear(0.0, 2.0, 2**3+1)
 
 for extension_mc in extensions:
 
     print 'Looping over extension_mc=%g' % extension_mc
 
-    model_mc = PowerLaw(gamma=index_mc)
-    model_mc.set_flux(flux_mc, 1e2, 10**5.5)
+    model_mc = PowerLaw(index=index_mc)
+    model_mc.set_flux(flux_mc(extension_mc), emin, emax)
 
     r = dict(
         mc = dict(
