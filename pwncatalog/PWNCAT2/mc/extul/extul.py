@@ -39,8 +39,13 @@ i=args.i
 min_flux_mc = args.min_flux
 max_flux_mc = args.max_flux
 
+
+extensions = mixed_linear(0.0, 2.0, 2**3+1)
+
 # formula to interpolate from the flux at lowest to highest extension
-flux_mc = lambda extension: np.exp(np.log(min_flux_mc) + (np.log(max_flux_mc) - np.log(min_flux_mc))*extension)
+flux_mc = lambda extension: np.exp(np.log(min_flux_mc) + 
+                                   (np.log(max_flux_mc) - np.log(min_flux_mc))*\
+                                   (extension-min(extensions))/(max(extensions)-min(extensions)))
 
 index_mc = args.index
 
@@ -64,7 +69,6 @@ results = []
 
 from lande_random import mixed_linear
 #extensions = mixed_linear(0.0, 2.0, 2**6+1)
-extensions = mixed_linear(0.0, 2.0, 2**3+1)
 
 for extension_mc in extensions:
 
