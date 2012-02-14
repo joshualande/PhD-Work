@@ -61,7 +61,7 @@ class VariabilityTester(object):
         ("gtlike_kwargs",          {}, """ Kwargs to specify creating of gtlike object. """),
         ("do_gtlike",            True, """ Run gtlike varaibility test. """),
         ("refit_background",     True, """ Fit the background sources in each energy bin."""),
-        ("refit_other_sources", False, """ Fit other sources in each energy bin. """),
+        ("refit_other_sources",  True, """ Fit other sources in each energy bin. """),
     )
 
     @keyword_options.decorate(defaults)
