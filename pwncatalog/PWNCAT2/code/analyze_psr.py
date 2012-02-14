@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 # This import has to come first
-from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results,plot_phaseogram,plot_phase_vs_time,all_energy, import_module
+from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results,\
+        plot_phaseogram,plot_phase_vs_time,all_energy,import_module
 from uw.pulsar.phase_range import PhaseRange
 from likelihood_tools import force_gradient
 
@@ -132,10 +133,8 @@ if do_extended:
     save()
 
     for which in ['pointlike','gtlike']:
-        try:
+        if results['extended'].has_key(which) and results['point'].has_key(which):
             results['extended'][which]['ts_ext'] = \
                     2*(results['extended'][which]['logLikelihood'] - results['point'][which]['logLikelihood'])
-        except KeyError:
-            pass
 
 save()
