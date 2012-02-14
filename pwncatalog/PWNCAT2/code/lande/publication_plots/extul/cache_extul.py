@@ -8,7 +8,7 @@ import yaml
 
 from uw.utilities.makerec import RecArray,makefits
 
-datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v2'
+datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v4'
 
 rec = RecArray('flux_mc index_mc extension_mc extension_ul ts_point ts_ext'.split())
 
@@ -27,11 +27,13 @@ for index in [1.5, 2, 2.5, 3]:
 
             r = yaml.load(open(results))
 
+            if r is None: continue
+
             for i in r:
 
                 e=i['mc']['extension']
                 f=i['mc']['flux']['flux']
-                e_ul=i['extension_ul']
+                e_ul=i['extension_ul']['extension']
                 ts=max(i['point']['TS'],0)
                 ts_ext=max(i['TS_ext'],0)
 

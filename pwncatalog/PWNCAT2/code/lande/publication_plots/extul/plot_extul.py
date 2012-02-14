@@ -20,7 +20,7 @@ fig = P.figure(None,(6,6))
 grid = Grid(fig, 111, 
             nrows_ncols = (3, 1),
             share_all=False,
-            axes_pad=0.0)
+            axes_pad=0.2)
 
 from uw.utilities.makerec import fitsrec
 r = fitsrec('cached.fits')
@@ -34,7 +34,7 @@ ts_ext = r['ts_ext']
 for index, plot_kwargs in [[1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
                            [2,   dict(label=r'$\gamma=2$',   color='red'  )],
                            [2.5, dict(label=r'$\gamma=2.5$', color='green')],
-                           [3,   dict(label=r'$\gamma=3$',   color='black')]
+#                           [3,   dict(label=r'$\gamma=3$',   color='black')]
                           ]:
 
     cut = index_mc == index
@@ -42,7 +42,7 @@ for index, plot_kwargs in [[1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
     extlist = np.sort(np.unique(extension_mc[cut]))
             
     avg_ts_point = [np.mean(ts_point[cut&(extension_mc==e)]) for e in extlist]
-    avg_ts_ext = [np.mean(ts_point[cut&(extension_mc==e)]) for e in extlist]
+    avg_ts_ext = [np.mean(ts_ext[cut&(extension_mc==e)]) for e in extlist]
     coverage = [ np.average(e < extension_ul[cut&(extension_mc==e)]) for e in extlist]
 
     grid[0].plot(extlist, avg_ts_point, 'o', **plot_kwargs)
@@ -59,10 +59,14 @@ for g in grid:
 
 grid[2].set_ylim(ymax=1.1)
 
-grid[0].set_ylabel(r'$\mathrm{TS}_\mathrm{point}$')
-grid[1].set_ylabel(r'$\mathrm{TS}_\mathrm{ext}$')
+grid[0].set_ylabel(r'$\langle\mathrm{TS}_\mathrm{point}\rangle$')
+grid[1].set_ylabel(r'$\langle\mathrm{TS}_\mathrm{ext}\rangle$')
 grid[2].set_ylabel(r'Coverage')
 
-fix_axesgrid(grid)
+grid[0].axhline(25, color='black', dashes=[5,2])
+grid[1].axhline(16, color='black', dashes=[5,2])
+grid[2].axhline(0.95, color='black', dashes=[5,2])
+
+#fix_axesgrid(grid)
 
 plot_helper.save('extul')
