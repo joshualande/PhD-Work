@@ -35,6 +35,7 @@ analysis_plots_unix=expandvars('$pwndata/spectral/%s/analysis_plots' % spec_vers
 analysis_no_plots_unix=expandvars('$pwndata/spectral/%s/analysis_no_plots' % spec_version)
 website_unix=expandvars('$pwndata/spectral/%s/website' % spec_version)
 analysis_plots_website=expandvars('../../%s/analysis_plots' % spec_version)
+analysis_no_plots_website=expandvars('../../%s/analysis_no_plots' % spec_version)
 
 
 
@@ -294,11 +295,10 @@ def build_each_page(pwn):
     t=TableFormatter([pwn])
     index_t2t.append(str(t))
     index_t2t.append('')
-    index_t2t.append('[Analysis Folder %s/%s]' % (analysis_plots_website,pwn))
-    index_t2t.append('')
-    index_t2t.append('[log %s/%s/log_%s.txt]' % (analysis_plots_website,pwn,pwn))
-    index_t2t.append('')
-    index_t2t.append('[Variability %s/%s/]' % (variability_website, pwn))
+    index_t2t.append('[Analysis Folder %s/%s]\n' % (analysis_plots_website,pwn))
+    index_t2t.append('[log (plots) %s/%s/log.txt]\n' % (analysis_plots_website,pwn))
+    index_t2t.append('[log (no plots) %s/%s/log.txt]\n' % (analysis_no_plots_website,pwn))
+    index_t2t.append('[Variability %s/%s/]\n' % (variability_website, pwn))
 
     hypothesis=t.hypothesis
 
