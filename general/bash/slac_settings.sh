@@ -307,8 +307,3 @@ function setup_pysed {
 setup_pysed
 
 
-function lande_svn_setup {
-    export svn=/u/gl/lande/svn/lande/trunk
-    export presentations=$svn/presentations/
-}
-lande_svn_setup

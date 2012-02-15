@@ -69,3 +69,11 @@ export PYTHONUNBUFFERED=True
 }
 python_general
 
+
+function lande_svn_setup {
+    # Best to put my SVN in the same place on all machine so
+    # aliases are the same
+    export svn=$HOME/svn/lande/trunk
+    export presentations=$svn/presentations/
+}
+lande_svn_setup
