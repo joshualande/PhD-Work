@@ -1,0 +1,103 @@
+" get the global settings
+"source /etc/vimrc
+set scrolloff=2
+
+" Enable vim enhancements
+set nocompatible
+"allow backspacing over everything in insert mode
+set backspace=2
+set showmatch " show matching brackets
+
+set statusline=%F%m%r%h%w\ [TYPE=%Y]\ [POS=%04l,%04v]\ [%p%%]\ [LEN=%L]
+set laststatus=2
+
+set hidden
+
+"autocmd FileType python set tabstop=4 shiftwidth=4 softtabstop=4
+"set tabstop=4 shiftwidth=4 softtabstop=4
+set tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType cpp set tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType tex set tabstop=2 shiftwidth=2 softtabstop=2
+
+set smarttab
+set expandtab
+set autoindent
+
+set incsearch
+set smartcase
+set ignorecase
+
+" don't wrap lines
+set nowrap 
+
+syntax on
+
+" Make autocomplete of a file act more like bash's.
+set wildmode=longest:full
+set wildmenu
+
+set gdefault
+
+map <C-right> <ESC>:bn<CR> 
+map <C-left> <ESC>:bp<CR>
+
+set t_kb=^V
+fixdel
+
+
+filetype plugin indent on
+
+"Ignore these files when completing names and in Explorer
+set wildignore=.par,.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
+
+set guioptions-=T
+
+set nostartofline "Lets CTRL-D go down a page without going to the beginning of the line
+
+set showcmd " show number selected lines when in visual mode
+
+set isfname-== " remove = from isfname so that equals is not considered part of filename - good for competion.
+set isfname-=,
+
+
+
+
+
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='pdflatex'
+let g:Tex_DefaultTargetFormat='pdf'
+
+let g:Tex_IgnoredWarnings =
+\"Underfull\n".
+\"Overfull\n".
+\"specifier changed to\n".
+\"You have requested\n".
+\"Missing number, treated as zero.\n".
+\"There were undefined references\n".
+\"Citation %.%# undefined\n".
+\'LaTeX Font Warning:'"
+" This number N says that latex-suite should ignore the first N of the above.
+let g:Tex_IgnoreLevel = 8
+
+
+"set nosmartindent
+"filetype plugin on
+"filetype indent on
