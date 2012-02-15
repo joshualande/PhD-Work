@@ -1,4 +1,4 @@
-paper = lande_ext_src_search_walthrough
+paper = lande_ext_src_search_fermi_lunch
 
 all: 
 	pdflatex $(paper)
