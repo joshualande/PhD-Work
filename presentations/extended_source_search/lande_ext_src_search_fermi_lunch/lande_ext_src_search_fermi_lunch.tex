@@ -16,7 +16,7 @@
 \author{Joshua Lande,\\
 Stefan Funk,\\
 Markus Ackermann}
-\date{August 25, 2011}
+\date{February 15, 2012}
 
 \begin{document}
 
@@ -44,14 +44,15 @@ Markus Ackermann}
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Fig. 1: IC~443}
-    \includegraphics[scale=0.4]{plots/four_plots_ic443_color.pdf}
-    \end{frame}
 
-\begin{frame}{Fig. 3+4: False-Detection Rate}
+\begin{frame}{Fig. 2: LAT PSF}
+    \includegraphics[scale=0.5]{plots/compare_disk_gauss_color.pdf}
+\end{frame}
+
+\begin{frame}{Table 1: False-Detection Rate}
   \begin{columns}
     \column{.5\textwidth} 
-    \includegraphics[scale=0.4]{plots/ts_ext_emin_1000_color.pdf}
+    \includegraphics[scale=0.35]{plots/table_1.pdf}
     \column{.5\textwidth} 
     \begin{itemize}
       \item Simulate point-like sources
@@ -66,10 +67,19 @@ Markus Ackermann}
   \end{columns}
 \end{frame}
 
-\begin{frame}{Fig. 5+6+7: Detection Threshold}
+\begin{frame}{Fig. 3+4: False-Detection Rate (cont)}
+  \begin{columns}
+    \column{.5\textwidth} 
+    \includegraphics[scale=0.35]{plots/ts_ext_emin_1000_color.pdf}
+    \column{.5\textwidth} 
+    \includegraphics[scale=0.35]{plots/ts_ext_emin_10000_color.pdf}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Fig. 5: Detection Threshold}
   \begin{columns}
     \column{.6\textwidth}
-    \includegraphics[scale=0.5]{plots/all_sensitivity_color.pdf}
+    \includegraphics[scale=0.5]{plots/index_sensitivity_color.pdf}
     \column{.4\textwidth}
     \begin{itemize}
       \item Detetion threshold to extension
@@ -81,22 +91,57 @@ Markus Ackermann}
   \end{columns}
 \end{frame}
 
-\begin{frame}{Fig. 8+9: Effects of Source Confusion}
-  Non-nested model comparison
-  \begin{equation*}
-    \text{TS}_\text{2pts} = 2 \log(\mathcal{L}_\text{2pts}/\mathcal{L}_\text{ps})
-  \end{equation*}
-
+\begin{frame}{Fig. 6: Detection Threshold (cont)}
   \begin{columns}
     \column{.6\textwidth}
-    \includegraphics[scale=0.30]{plots/confusion_2pts_plot_color.pdf}
-
-    Simulate extended sources. Fit as point-like sources.
-
+    \includegraphics[scale=0.5]{plots/all_sensitivity_color.pdf}
     \column{.4\textwidth}
-    \includegraphics[scale=0.30]{plots/confusion_extended_plot_color.pdf}
+    \begin{itemize}
+      \item Compute sensitivty for different background levels, energy ranges.
+    \end{itemize}
+  \end{columns}
+\end{frame}
 
-    Simulate point-like sources. Fit for extension.
+\begin{frame}{Fig. 7: Detection Threshold (cont)}
+  \begin{columns}
+    \column{.6\textwidth}
+    \includegraphics[scale=0.5]{plots/time_sensitivity_color.pdf}
+    \column{.4\textwidth}
+    \begin{itemize}
+      \item Compute sensitivty after 10 years.
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Fig. 8: Effects of Source Confusion}
+  \begin{columns}
+    \column{.6\textwidth}
+    \includegraphics[scale=0.50]{plots/confusion_extended_plot_color.pdf}
+    \column{.4\textwidth}
+    \begin{enumerate}
+      \item Non-nested model comparison
+        \begin{multline*}
+          \text{TS}_\text{2pts} =  \\
+          2 \log(\mathcal{L}_\text{2pts}/\mathcal{L}_\text{ps})
+        \end{multline*}
+      \item Simulate extended sources. 
+      \item Fit as point-like sources.
+    \end{enumerate}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{Fig. 9: Effects of Source Confusion (cont)}
+
+  \begin{columns}
+
+    \column{.6\textwidth}
+    \includegraphics[scale=0.50]{plots/confusion_2pts_plot_color.pdf}
+    \column{.4\textwidth}
+    \begin{enumerate}
+      \item Simulate point-like sources. 
+      \item Fit for extension.
+    \end{enumerate}
   \end{columns}
 \end{frame}
 
@@ -114,6 +159,14 @@ Markus Ackermann}
   \end{columns}
 \end{frame}
 
+\begin{frame}{Fig. 1: IC~443}
+    \includegraphics[scale=0.5]{plots/four_plots_ic443_color.pdf}
+\end{frame}
+
+\begin{frame}{Fig. 11: Residual TS Map}
+  \includegraphics[scale=0.5]{plots/res_tsmap_ic443_color.pdf}
+\end{frame}
+
 
 \begin{frame}{Section 7: extended sources in 2FGL}
   \begin{columns}
@@ -127,6 +180,10 @@ Markus Ackermann}
       \item Extended sources are extended!
     \end{itemize}
   \end{columns}
+\end{frame}
+
+\begin{frame}{Fig. 12: Systematics in the plane}
+  \includegraphics[scale=0.5]{plots/example_bad_fit_color.pdf}
 \end{frame}
 
 \begin{frame}{Section 8: Extension Systematics}
