@@ -135,18 +135,22 @@ class LandeSED(SED):
         self.dnde_err = dnde(d['dNdE']['Error'])
         self.dnde_ul = dnde(d['dNdE']['Upper_Limit'])
 
-        self.flux = flux(d['Ph_Flux']['Value'])
-        self.flux_err = flux(d['Ph_Flux']['Error'])
-        self.flux_ul = flux(d['Ph_Flux']['Upper_Limit'])
+        if d.has_key('Ph_flux'):
+            self.flux = flux(d['Ph_Flux']['Value'])
+            self.flux_err = flux(d['Ph_Flux']['Error'])
+            self.flux_ul = flux(d['Ph_Flux']['Upper_Limit'])
 
-        self.eflux = eflux(d['En_Flux']['Value'])
-        self.eflux_err = eflux(d['En_Flux']['Error'])
-        self.eflux_ul = eflux(d['En_Flux']['Upper_Limit'])
+        if d.has_key('En_flux'):
+            self.eflux = eflux(d['En_Flux']['Value'])
+            self.eflux_err = eflux(d['En_Flux']['Error'])
+            self.eflux_ul = eflux(d['En_Flux']['Upper_Limit'])
 
-        self.ts = np.asarray(d['Test_Statistic'])
+        if d.has_key('Test_Statistic'):
+            self.ts = np.asarray(d['Test_Statistic'])
         self.significant = np.asarray(d['Significant'])
 
-        self.spectrum = LandeSED.dict_to_spectrum(d['Spectrum'])
+        if d.has_key('Spectrum'):
+            self.spectrum = LandeSED.dict_to_spectrum(d['Spectrum'])
 
         self.crashed = False
 
@@ -212,7 +216,7 @@ class LandeSED(SED):
                 flux_units=self.flux_units_str,
                 axes=axes, **data_kwargs)
 
-            if plot_spectral_fit:
+            if plot_spectral_fit and hasattr(self,'spectrum'):
                 # kind of ugly, but spectrum is ph/cm^2/s/MeV
                 # and it gets mutlplied by energy_units**2,
                 # so we need to multiple overall spectrum by
