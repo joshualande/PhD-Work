@@ -13,6 +13,13 @@ function _kipac_base {
     export KIPACSOFT=/afs/slac/g/ki/software
 }
 
+function pythonkipac {
+    _kipac_base 
+    #export PATH=$KIPACSOFT/python/2.6.2/amd64_linux26/bin:$PATH
+    export PATH=/afs/slac/g/ki/software/python/2.5.5/amd64_rhel50/bin/:$PATH
+    export PYTHONPATH=/afs/slac/g/ki/software/python/2.5.5/amd64_rhel50/lib/python2.5/:$PYTHONPATH
+}
+
 function ds9kipac {
     _kipac_base
 
@@ -57,16 +64,30 @@ function fix_matplotlib {
     export MPLCONFIGDIR=/scratch/
 }
 
+
 function set_bldtype {
     # Pick the $BILDTYPE based upon which version of red hat current computer is
     if [[ `cat /etc/redhat-release` =~ "release 5" ]]; then
-        export BLDTYPE=redhat5-x86_64-64bit-gcc41
+        if [[ `uname -m` == i686 ]]; then
+            export BLDTYPE=redhat5-i686-32bit-gcc41
+        elif [[ `uname -m` == 'x86_64' ]]; then
+            export BLDTYPE=redhat5-x86_64-64bit-gcc41
+        else
+            echo 'ERROR: UNABLE TO DETERMINE COMPUTER TYPE'
+        fi
+
     elif [[ `cat /etc/redhat-release` =~ "release 6" ]]; then
-        export BLDTYPE=redhat6-x86_64-64bit-gcc44
+        if [[ `uname -m` == 'x86_64' ]]; then
+            export BLDTYPE=redhat6-x86_64-64bit-gcc44
+        else
+            echo 'ERROR: UNABLE TO DETERMINE COMPUTER TYPE'
+        fi
+
     else
         echo 'ERROR: UNABLE TO DETERMINE COMPUTER TYPE'
     fi
 }
+
 
 function stockscons {
     export SCTOOLS=09-26-02
@@ -168,6 +189,8 @@ function slac_alias {
     export FERMILANDE=$FERMI # in case I have to share with others
     export CATALOG=$ki03/fermi_data/catalog_mirror/catalog_jan_31_2011/
 
+    export yajie=~yuanyj
+
     alias f2f=fixed2fixed
 
     function vimdump {
@@ -204,9 +227,11 @@ function lsf_setup {
     }
 
     # Nice function submit jobs to xxl queue
-    function xxl {
-        bsub -q xxl -oo log.txt python $PWD/$1
-    }
+    for queue in long xlong xxl kipac-ibq; do
+        eval "function $queue { bsub -q $queue -oo log.txt python $PWD/$1; }"
+    done
+    
+    #function xxl { bsub -q xxl -oo log.txt python $PWD/$1 }
 
     # Alias to show just the queues I like
     alias bq="bqueues short medium long xlong xxl kipac-ibq"

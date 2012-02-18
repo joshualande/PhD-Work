@@ -40,7 +40,7 @@ function alias_general {
     alias mv="mv -bfi"
     alias cp="cp -abfi"
     alias less='less -I' # case insensitive search
-    alias l="ls -color" # print out size next to each of them
+    alias l="ls --color" # print out size next to each of them
     alias duh='du -h --max-depth=1' # human readable and not recursive
     alias ack='ack -i'
     alias grep='grep -i'
