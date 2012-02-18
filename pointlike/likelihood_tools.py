@@ -156,7 +156,7 @@ def gtlike_fluxdict(like,name,emin=None,emax=None,flux_units='erg', error=True):
             traceback.print_exc(file=sys.stdout)
             f['flux_err']=-1
             f['eflux_err']=-1
-    return f
+    return tolist(f)
 
 
 def gtlike_get_spatial_model_name(like, name):
@@ -230,7 +230,7 @@ def diffusedict(like_or_roi):
 
     for name in bgs:
         f[name] = name_to_dict(like_or_roi, name, errors=True)
-    return f
+    return tolist(f)
 
 def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
     from pyLikelihood import ParameterVector
@@ -253,7 +253,7 @@ def gtlike_sourcedict(like, name, emin=None, emax=None, flux_units='erg'):
     d['diffuse'] = diffusedict(like)
 
 
-    return d
+    return tolist(d)
 
 def pointlike_model_to_flux(model, emin, emax, flux_units='erg', error=True):
 
@@ -271,7 +271,7 @@ def pointlike_model_to_flux(model, emin, emax, flux_units='erg', error=True):
     f['flux_units']='ph/cm^2/s'
     f['eflux_units']='%s/cm^2/s' % flux_units
     f['emin'],f['emax']=emin,emax
-    return f
+    return tolist(f)
 
 def pointlike_fluxdict(roi, which, emin=None, emax=None, *args, **kwargs):
 
@@ -279,7 +279,7 @@ def pointlike_fluxdict(roi, which, emin=None, emax=None, *args, **kwargs):
         emin, emax = get_full_energy_range(roi)
 
     model=roi.get_model(which)
-    return pointlike_model_to_flux(model, emin, emax, *args, **kwargs)
+    return tolist(pointlike_model_to_flux(model, emin, emax, *args, **kwargs))
 
 
 
@@ -323,7 +323,7 @@ def pointlike_sourcedict(roi, name, emin=None, emax=None, flux_units='erg'):
     # another source. This is rarely the case.
     f.update(roi.get_ellipse())
 
-    return d
+    return tolist(d)
 
 def gtlike_modify(like, name, free=True):
     """ Freeze a source in a gtlike ROI. 
@@ -480,7 +480,7 @@ def gtlike_powerlaw_upper_limit(like, name, powerlaw_index=2 , cl=0.95, emin=Non
 
     saved_state.restore()
 
-    return results
+    return tolist(results)
 
 def pointlike_upper_limit(roi, name, cl, emin=None, emax=None, flux_units='erg', **kwargs):
 
@@ -528,7 +528,7 @@ def pointlike_powerlaw_upper_limit(roi, name, powerlaw_index=2, cl=0.95, emin=No
 
     saved_state.restore()
 
-    return ul
+    return tolist(ul)
 
 
 def pointlike_test_cutoff(roi, which, flux_units='erg'):
@@ -575,7 +575,7 @@ def pointlike_test_cutoff(roi, which, flux_units='erg'):
 
     saved_state.restore()
 
-    return d
+    return tolist(d)
 
 def gtlike_test_cutoff(like, name, flux_units='erg'):
     print 'Testing cutoff in gtlike'
