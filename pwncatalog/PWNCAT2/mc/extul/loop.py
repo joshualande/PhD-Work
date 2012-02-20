@@ -5,7 +5,7 @@ from os import makedirs,getcwd
 
 random.seed(0)
 
-num=100
+num=1000
 
 
 # v4
@@ -23,11 +23,34 @@ num=100
 #                                   [3,   1.5e-8, 2.5e-8]]:
 
 # v6
-basedir =  expandvars('$pwndata/monte_carlo/extul/v6/')
-for index_mc,min_flux,max_flux in [[1.5, 1e-9,   1e-8], 
-                                   [2,   3e-9,   2e-8],
-                                   [2.5, 1e-8,   2e-8],
-                                   [3,   1.5e-8, 2e-8]]:
+#basedir =  expandvars('$pwndata/monte_carlo/extul/v6/')
+#for index_mc,min_flux,max_flux in [[1.5, 1e-9,   1e-8], 
+#                                   [2,   3e-9,   2e-8],
+#                                   [2.5, 1e-8,   2e-8],
+#                                   [3,   1.5e-8, 2e-8]]:
+
+# v7
+#basedir =  expandvars('$pwndata/monte_carlo/extul/v7/')
+#for index_mc,min_flux,max_flux in [[1.5, 1e-9,   2e-8], 
+#                                   [2,   5e-9,   2e-8],
+#                                   [2.5, 1e-8,   3.5e-8],
+#                                   [3,   1.5e-8, 3.5e-8]]:
+
+# v8
+for index_mc,min_flux,max_flux,min_extension, max_extension, type in \
+                                                                     [[1.5, 1e-9,   2e-8,     0,  3.0,  'dim'], 
+                                                                      [2,   4e-9,   2e-8,     0,  3.0,  'dim'],
+                                                                      [2.5, 1e-8,   1.75e-8,  0,  3.0,  'dim'],
+                                                                      [3,   1.5e-8, 2e-8,     0,  3.0,  'dim'],
+
+                                                                      [1.5, 1e-6, 1e-6, 0, 0.25,   'bright'], 
+                                                                      [2,   1e-6, 1e-6, 0, 0.25,   'bright'],
+                                                                      [2.5, 1e-6, 1e-6, 0, 0.25,   'bright'],
+                                                                      [3,   1e-6, 1e-6, 0, 0.25,   'bright'],
+
+                                       ]:
+
+    basedir =  expandvars('$pwndata/monte_carlo/extul/v8/%s' % type)
 
     workdir = join(basedir,'index_%g' % (index_mc))
 
@@ -46,7 +69,9 @@ for index_mc,min_flux,max_flux in [[1.5, 1e-9,   1e-8],
                 --index=%g \\
                 --min-flux=%g \\
                 --max-flux=%g \\
-                %g""" % (index_mc,min_flux,max_flux,i)))
+                --min-extension=%g
+                --max-extension=%g
+                %g""" % (index_mc,min_flux,max_flux,min_extension,max_extension,i)))
         run.close()
 
 

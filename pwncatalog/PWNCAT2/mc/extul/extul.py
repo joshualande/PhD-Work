@@ -31,6 +31,8 @@ parser.add_argument("i",type=int)
 parser.add_argument("--index",type=float, required=True)
 parser.add_argument("--min-flux",type=float, required=True)
 parser.add_argument("--max-flux",type=float, required=True)
+parser.add_argument("--min-extension",type=float, required=True)
+parser.add_argument("--max-extension",type=float, required=True)
 args=parser.parse_args()
 i=args.i
 
@@ -39,13 +41,19 @@ i=args.i
 min_flux_mc = args.min_flux
 max_flux_mc = args.max_flux
 
+min_extension = args.min_extension
+max_extension = args.max_extension
 
-extensions = mixed_linear(0.0, 2.0, 2**3+1)
+extensions = mixed_linear(min_extension, max_extension, 2**3+1)
 
 # formula to interpolate from the flux at lowest to highest extension
 flux_mc = lambda extension: np.exp(np.log(min_flux_mc) + 
                                    (np.log(max_flux_mc) - np.log(min_flux_mc))*\
                                    (extension-min(extensions))/(max(extensions)-min(extensions)))
+
+# Linear interpolation
+#flux_mc = lambda extension: min_flux_mc + \
+#        (max_flux_mc - min_flux_mc)*(extension-min(extensions))/(max(extensions)-min(extensions))
 
 index_mc = args.index
 
