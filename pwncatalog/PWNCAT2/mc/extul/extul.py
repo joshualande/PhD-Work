@@ -28,6 +28,7 @@ force_gradient(use_gradient=False)
 
 parser = ArgumentParser()
 parser.add_argument("i",type=int)
+parser.add_argument("--type", required=True)
 parser.add_argument("--index",type=float, required=True)
 parser.add_argument("--min-flux",type=float, required=True)
 parser.add_argument("--max-flux",type=float, required=True)
@@ -86,6 +87,7 @@ for extension_mc in extensions:
     model_mc.set_flux(flux_mc(extension_mc), emin, emax)
 
     r = dict(
+        type = args.type,
         mc = dict(
             extension=extension_mc,
             gal=[ skydir_mc.l(), skydir_mc.b() ],
