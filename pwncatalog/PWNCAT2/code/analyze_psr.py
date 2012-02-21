@@ -80,55 +80,53 @@ plot_phase_vs_time(name, ft1, off_pulse=phase, filename='plots/phase_vs_time_%s.
 # nb, $PWD gets nicer paths then os.getcwd()
 savedir=None if args.no_savedir else join(os.getenv('PWD'),'savedir')
 
-def get_roi(**kwargs):
-    print 'Building the ROI'
-    roi=setup_pwn(name,args.pwndata, phase=phase, 
-                  free_radius=5, max_free=args.max_free, fit_emin=emin, fit_emax=emax, 
-                  savedir=savedir,
-                  binsperdec=args.binsperdec,
-                  **kwargs)
-
-    modify = import_module(args.modify)
-    modify.modify_roi(name,roi)
-
-    return roi
-
 results=r=defaultdict(lambda: defaultdict(dict))
 results['name']=name
 results['phase']=phase
 
-kwargs = dict(name=name, seds = do_seds, emin=emin, emax=emax)
+kwargs = dict(name=name, seds = do_seds)
 pointlike_kwargs = kwargs.copy()
 pointlike_kwargs.update(dict(localization_emin=localization_emin))
 gtlike_kwargs = kwargs.copy()
 
 save=lambda:save_results(results,name)
 
+print 'Building the ROI'
+roi=setup_pwn(name, args.pwndata, phase=phase, 
+              free_radius=5, max_free=args.max_free, fit_emin=emin, fit_emax=emax, 
+              savedir=savedir,
+              binsperdec=args.binsperdec,
+              extended=False)
+
+modify = import_module(args.modify)
+new_sources = modify.modify_roi(name,roi)
+
+pulsar_position = roi.get_source(name).skydir
+overlay_kwargs = dict(pulsar_position=pulsar_position, new_sources=new_sources)
+
 if do_at_pulsar:
-    roi=get_roi(extended=False)
     r['at_pulsar']['pointlike']=pointlike_analysis(roi, hypothesis='at_pulsar', upper_limit=do_upper_limits, 
                                                    cutoff=do_cutoff, **pointlike_kwargs)
     save()
-    if do_plots: plots(roi, name, 'at_pulsar', emin, emax)
+    if do_plots: plots(roi, name, 'at_pulsar', **overlay_kwargs)
     if do_gtlike: r['at_pulsar']['gtlike']=gtlike_analysis(roi, hypothesis='at_pulsar', upper_limit=do_upper_limits, cutoff=do_cutoff, **gtlike_kwargs)
     save()
 
 if do_point:
-    roi=get_roi(extended=False)
     r['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, cutoff=do_cutoff, 
                                                extension_upper_limit=do_extension_upper_limits, **pointlike_kwargs)
     save()
-    if do_plots: plots(roi, name, 'point', emin, emax)
+    if do_plots: plots(roi, name, 'point', **overlay_kwargs)
     if do_gtlike: r['point']['gtlike']=gtlike_analysis(roi, hypothesis='point', cutoff=do_cutoff, **gtlike_kwargs)
     save()
 
 if do_extended:
-    roi=get_roi(extended=True)
+    roi.modify(which=name, spatial_model=Gaussian(sigma=0.1), keep_old_center=True)
 
     r['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', cutoff=do_cutoff, 
                                                   fit_extension=True, **pointlike_kwargs)
     save()
-    if do_plots: plots(roi, name, 'extended', emin, emax)
+    if do_plots: plots(roi, name, 'extended', **overlay_kwargs)
     if do_gtlike: r['extended']['gtlike']=gtlike_analysis(roi, hypothesis='extended', cutoff=do_cutoff, **gtlike_kwargs)
     save()
 
