@@ -23,7 +23,7 @@ if False:
 
 #if False:
 if True:
-    var_version='v10/variability/v3/'
+    var_version='v13/variability/v1/'
     spec_version='v13'
     gtlike=False
 
@@ -150,19 +150,18 @@ class TableFormatter(object):
             else:
                 ext_finished = False
 
+            bold = lambda text, doit=True: '**%s**' % text if doit else text
+
             ts_at_pulsar=gt_at_pulsar['TS']
-            table['TS_at_pulsar'][i] = '%.1f' % ts_at_pulsar
+            table['TS_at_pulsar'][i] = bold('%.1f' % ts_at_pulsar, ts_at_pulsar>25)
+
 
             if point_finished:
                 ts_loc = ts_point - ts_at_pulsar
-                table['TS_loc'][i] = '%.1f' % (ts_loc)
+                table['TS_loc'][i] = bold('%.1f' % (ts_loc), ts_point>25)
                 
             if ext_finished:
-                table['TS_ext'][i] = '%.1f' % ts_ext
-
-            var = get_variability(pwn)
-            if var is not None:
-                table['TS_var'][i] = '%.1f' % var['TS_var']['gtlike']
+                table['TS_ext'][i] = bold('%.1f' % ts_ext, ts_point > 25 and ts_ext > 16)
 
             if ext_finished and ts_point > 25 and ts_ext > 16:
                 # is extended
@@ -254,6 +253,11 @@ class TableFormatter(object):
                 else:
                     table['F(10-316)'][i] = '<%.1f' % (ul3/1e-9)
                     table['Index(10-316)'][i] = '-'
+
+            var = get_variability(pwn)
+            if var is not None:
+                table['TS_var'][i] = '%.1f' % var['TS_var']['gtlike']
+
 
         self.table = table
 
