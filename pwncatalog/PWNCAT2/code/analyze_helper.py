@@ -1,17 +1,22 @@
 # Not entirely sure why, but pyLikelihood
 # will get a swig::stop_iteraiton error
 # unless it is imported first.
+import traceback
+import sys
 import os
 import pylab as P
 import numpy as np
 from roi_gtlike import Gtlike
 import yaml
-from lande_toolbag import tolist
-from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,freeze_insignificant_to_catalog,freeze_bad_index_to_catalog,fix_bad_cutoffs,fit_prefactor
+from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,\
+        freeze_insignificant_to_catalog,freeze_bad_index_to_catalog,fix_bad_cutoffs,fit_prefactor,get_full_energy_range
 from uw.like.roi_state import PointlikeState
 from uw.pulsar.phase_range import PhaseRange
 from uw.like.SpatialModels import Gaussian
 
+
+from lande_localize import GridLocalize
+from lande_toolbag import tolist
 from lande_extended import fit_extension_frozen
 from lande_pulsar import plot_phaseogram,plot_phase_vs_time
 from lande_plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter,plot_gtlike_cutoff_test
@@ -26,56 +31,62 @@ higher_energy=lambda emin,emax: np.allclose([emin,emax],[10**4.5,10**5.5], rtol=
 
 three_bins=[1e2,1e3,1e4,10**5.5]
 
-def plots(roi, name, hypothesis, emin, emax, 
-          datadir='data', plotdir='plots', size=5, tsmap_pixelsize=0.1):
-    plot_kwargs = dict(size=size, pixelsize=tsmap_pixelsize)
+def overlay_on_plot(axes, pulsar_position):
+    """ Function to overlay on all plots
+        * The pulsar position
+        * New non-2FGL sources addded to the ROI. """
+    axes['gal'].plot([pulsar_position.l()],[pulsar_position.b()], 
+                     marker='*', color='green',
+                     markeredgecolor='white', markersize=12, zorder=1)
 
-    for dir in [datadir, plotdir]: 
-        if not os.path.exists(dir): os.makedirs(dir)
+def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, tsmap_pixelsize=0.1, **common_kwargs):
+    """ TS maps """
+    emin, emax = get_full_energy_range(roi)
+
+    tsmap_kwargs = dict(size=size, pixelsize=tsmap_pixelsize, **common_kwargs)
 
     print 'Making plots for hypothesis %s' % hypothesis
-    roi.plot_tsmap(filename='%s/tsmap_residual_%s_%s.png' % (plotdir,hypothesis,name), 
+    roi.plot_tsmap(filename='%s/tsmap_residual_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size), 
                    title='Residual TS Map for %s' % name,
-                   **plot_kwargs)
+                   **tsmap_kwargs)
 
     if all_energy(emin,emax):
-        ROITSMapBandPlotter(roi,  bin_edges=three_bins, **plot_kwargs).show(filename='%s/band_tsmap_residual_%s_%s.png' % (plotdir,hypothesis,name))
-
-    for pixelsize in [0.1,0.25]:
-        roi.plot_counts_map(filename="%s/counts_residual_%g_%s_%s.png"%(plotdir,pixelsize,hypothesis,name),
-                            countsfile="%s/counts_residual_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
-                            modelfile="%s/model_residual_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
-                            size=size, pixelsize=pixelsize)
+        ROITSMapBandPlotter(roi,  bin_edges=three_bins, **tsmap_kwargs).show(filename='%s/band_tsmap_residual_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size))
 
     roi.zero_source(which=name)
 
     roi.plot_tsmap(filename='%s/tsmap_source_%s_%s.png' % (plotdir,hypothesis, name), 
                    title='Source TS Map for %s' % name,
-                   **plot_kwargs)
+                   **tsmap_kwargs)
 
     if np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1):
-        ROITSMapBandPlotter(roi,bin_edges=three_bins, **plot_kwargs).show(filename='%s/band_tsmap_source_%s_%s.png' % (plotdir,hypothesis,name))
+        ROITSMapBandPlotter(roi,bin_edges=three_bins, **tsmap_kwargs).show(filename='%s/band_tsmap_source_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size))
 
-    for pixelsize in [0.1,0.25]:
-        roi.plot_counts_map(filename="%s/counts_source_%g_%s_%s.png"%(plotdir,pixelsize,hypothesis,name),
-                            countsfile="%s/counts_source_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
-                            modelfile="%s/model_source_%g_%s_%s.fits"%(datadir,pixelsize,hypothesis,name),
-                            size=size, pixelsize=pixelsize)
     roi.unzero_source(which=name)
 
-    # smoothed counts maps
+def counts_plots(roi, name, hypothesis, datadir, plotdir, size, **common_kwargs):
+    """ Counts plots """
+    emin, emax = get_full_energy_range(roi)
 
-    for kernel_rad in [0.1,0.25]:
-        kwargs = dict(which=name, size=size, kernel_rad=kernel_rad)
-        roi.plot_source(filename='%s/source_%g_%s_%s.png' % (plotdir, kernel_rad, hypothesis, name), **kwargs)
-        roi.plot_sources(filename='%s/sources_%g_%s_%s.png' % (plotdir, kernel_rad, hypothesis, name), **kwargs)
+    counts_kwargs = dict(size=size, **common_kwargs)
+    for pixelsize in [0.1,0.25]:
+        roi.plot_counts_map(filename="%s/counts_residual_%g_%s_%s_%sdeg.png"%(plotdir,pixelsize,hypothesis,name,size),
+                            countsfile="%s/counts_residual_%g_%s_%s_%sdeg.fits"%(datadir,pixelsize,hypothesis,name,size),
+                            modelfile="%s/model_residual_%g_%s_%s_%sdeg.fits"%(datadir,pixelsize,hypothesis,name,size),
+                            pixelsize=pixelsize,
+                            **counts_kwargs)
 
-        if all_energy(emin,emax):
-            ROISourceBandPlotter(roi, bin_edges=three_bins, **kwargs).show(filename='%s/band_source_%g_%s_%s.png' % (plotdir,kernel_rad,hypothesis,name))
-            ROISourcesBandPlotter(roi, bin_edges=three_bins, **kwargs).show(filename='%s/band_sources_%g_%s_%s.png' % (plotdir,kernel_rad,hypothesis,name))
 
+    roi.zero_source(which=name)
 
-    roi.toRegion('%s/region_%s_%s.reg'%(datadir,hypothesis, name))
+    for pixelsize in [0.1,0.25]:
+        roi.plot_counts_map(filename="%s/counts_source_%g_%s_%s_%sdeg.png"%(plotdir,pixelsize,hypothesis,name,size),
+                            countsfile="%s/counts_source_%g_%s_%s_%sdeg.fits"%(datadir,pixelsize,hypothesis,name,size),
+                            modelfile="%s/model_source_%g_%s_%s_%sdeg.fits"%(datadir,pixelsize,hypothesis,name,size),
+                            pixelsize=pixelsize,
+                            **counts_kwargs)
+    roi.unzero_source(which=name)
+
     roi.plot_slice(which=name,filename="%s/slice_%s_%s.png"%(plotdir,hypothesis, name),
                    datafile='%s/slice_%s_%s.dat'%(datadir,hypothesis, name))
 
@@ -85,9 +96,53 @@ def plots(roi, name, hypothesis, emin, emax,
         roi.plot_counts_spectra(filename="%s/spectra_%s_%s.png"%(plotdir,hypothesis, name))
     except Exception, ex:
         print 'ERROR with plot_counts_spectra: ', ex
+        traceback.print_exc(file=sys.stdout) 
+
+def smooth_plots(roi, name, hypothesis, datadir, plotdir, size, **common_kwargs):
+    """ smoothed counts maps """
+    emin, emax = get_full_energy_range(roi)
+
+    smooth_kwargs = dict(which=name, 
+                         size=size,
+                         colorbar_radius=1, # most interesting within one degrees
+                         **common_kwargs)
+
+    for kernel_rad in [0.1,0.25]:
+        roi.plot_source(filename='%s/source_%g_%s_%s_%sdeg.png' % (plotdir, kernel_rad, hypothesis, name, size), kernel_rad=kernel_rad, **smooth_kwargs)
+        roi.plot_sources(filename='%s/sources_%g_%s_%s_%sdeg.png' % (plotdir, kernel_rad, hypothesis, name, size), kernel_rad=kernel_rad, **smooth_kwargs)
+
+        if all_energy(emin,emax):
+            ROISourceBandPlotter(roi, bin_edges=three_bins, kernel_rad=kernel_rad, **smooth_kwargs).show(filename='%s/band_source_%g_%s_%s_%sdeg.png' % (plotdir,kernel_rad,hypothesis,name,size))
+            ROISourcesBandPlotter(roi, bin_edges=three_bins, kernel_rad=kernel_rad, **smooth_kwargs).show(filename='%s/band_sources_%g_%s_%s_%sdeg.png' % (plotdir,kernel_rad,hypothesis,name,size))
 
 
-def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None,
+def plots(roi, name, hypothesis, 
+          pulsar_position, new_sources,
+          datadir='data', plotdir='plots', size=5, 
+          tsmap_pixelsize=0.1):
+
+    extra_overlay = lambda ax: overlay_on_plot(ax, pulsar_position=pulsar_position)
+
+    # Override marker for new sources to be red stars
+    override_kwargs = {source:dict(color='red',marker='*') for source in new_sources}
+
+    common_kwargs = dict(extra_overlay=extra_overlay, 
+                         overlay_kwargs=dict(override_kwargs=override_kwargs))
+
+    for dir in [datadir, plotdir]: 
+        if not os.path.exists(dir): os.makedirs(dir)
+
+    args = (roi, name, hypothesis, datadir, plotdir, size)
+
+    counts_plots(*args, **common_kwargs)
+    smooth_plots(*args, **common_kwargs)
+    tsmap_plots(*args, tsmap_pixelsize=0.1, **common_kwargs)
+
+
+
+    roi.toRegion('%s/region_%s_%s.reg'%(datadir,hypothesis, name))
+
+def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
                        seddir='seds', datadir='data', plotdir='plots',
                        upper_limit=False, localize=False,
                        fit_extension=False, extension_upper_limit=False,
@@ -100,6 +155,8 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None
 
     print_summary = lambda: roi.print_summary(galactic=True)
     print_summary()
+
+    emin, emax = get_full_energy_range(roi)
 
     print roi
 
@@ -114,6 +171,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None
                 roi.fit() 
         except Exception, ex:
             print 'ERROR spectral fitting pointlike: ', ex
+            traceback.print_exc(file=sys.stdout)
         print_summary()
 
     # More robust to first fit the prefactor of PWN since the starting value is often very bad
@@ -136,9 +194,17 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None
         try:
             if localization_emin is not None and localization_emin != emin: 
                 roi.change_binning(localization_emin,emax)
+
+            print 'About to Grid localize'
+            grid=GridLocalize(roi,which=name,
+                              update=True,
+                              size=0.5, pixelsize=0.1)
+            print_summary()
+            print 'Grid localized to best position = ',grid.best_position
             roi.localize(name, update=True)
         except Exception, ex:
             print 'ERROR localizing pointlike: ', ex
+            traceback.print_exc(file=sys.stdout)
         finally:
             if localization_emin is not None and localization_emin != emin: 
                 roi.change_binning(emin,emax)
@@ -156,6 +222,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None
 
         except Exception, ex:
             print 'ERROR extension fitting pointlike: ', ex
+            traceback.print_exc(file=sys.stdout)
         finally:
             if localization_emin is not None and localization_emin != emin: 
 
@@ -193,7 +260,7 @@ def pointlike_analysis(roi, name, hypothesis, emin, emax, localization_emin=None
     return p
 
 
-def gtlike_analysis(roi, name, hypothesis, emin, emax, 
+def gtlike_analysis(roi, name, hypothesis, 
                     seddir='seds', datadir='data', plotdir='plots',
                     upper_limit=False, cutoff=False, seds=False):
     print 'Performing Gtlike crosscheck for %s' % hypothesis
@@ -204,6 +271,8 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax,
     gtlike=Gtlike(roi)
     global like
     like=gtlike.like
+
+    emin, emax = get_full_energy_range(like)
 
     paranoid_gtlike_fit(like)
 
@@ -247,6 +316,7 @@ def gtlike_analysis(roi, name, hypothesis, emin, emax,
                                     filename='%s/test_cutoff_%s_%s.png' % (plotdir,hypothesis,name))
         except Exception, ex:
             print 'ERROR plotting cutoff test:', ex
+            traceback.print_exc(file=sys.stdout)
 
     return r
     
