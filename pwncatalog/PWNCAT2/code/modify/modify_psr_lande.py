@@ -12,6 +12,7 @@ from uw.like.roi_extended import ExtendedSource
 def modify_roi(name,roi):
     modify_psr_base.modify_roi(name,roi)
 
+
     if name == 'PSRJ0007+7303':
         print 'fixing starting value of %s' % name
         # In previous analysis, I found trouble converging for some hypothesis,
@@ -165,4 +166,8 @@ def modify_roi(name,roi):
         # Gamma-Cygni SNR
         roi.del_source(which='2FGL J2019.1+4040')
 
+    
+    new_sources = [source for source in roi.get_sources() if
+                   '2FGL' not in source.name and 'PSRJ' not in source.name]
+    return new_sources
 
