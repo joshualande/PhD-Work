@@ -103,6 +103,7 @@ def smooth_plots(roi, name, hypothesis, datadir, plotdir, size, **common_kwargs)
     emin, emax = get_full_energy_range(roi)
 
     smooth_kwargs = dict(which=name, 
+                         override_center=roi.roi_dir,
                          size=size,
                          colorbar_radius=1, # most interesting within one degrees
                          **common_kwargs)
@@ -118,7 +119,7 @@ def smooth_plots(roi, name, hypothesis, datadir, plotdir, size, **common_kwargs)
 
 def plots(roi, name, hypothesis, 
           pulsar_position, new_sources,
-          datadir='data', plotdir='plots', size=5, 
+          datadir='data', plotdir='plots', 
           tsmap_pixelsize=0.1):
 
     extra_overlay = lambda ax: overlay_on_plot(ax, pulsar_position=pulsar_position)
@@ -132,13 +133,11 @@ def plots(roi, name, hypothesis,
     for dir in [datadir, plotdir]: 
         if not os.path.exists(dir): os.makedirs(dir)
 
-    args = (roi, name, hypothesis, datadir, plotdir, size)
-
-    counts_plots(*args, **common_kwargs)
-    smooth_plots(*args, **common_kwargs)
-    tsmap_plots(*args, tsmap_pixelsize=0.1, **common_kwargs)
-
-
+    for size in [5,10]:
+        args = (roi, name, hypothesis, datadir, plotdir, size)
+        counts_plots(*args, **common_kwargs)
+        smooth_plots(*args, **common_kwargs)
+        tsmap_plots(*args, tsmap_pixelsize=0.1, **common_kwargs)
 
     roi.toRegion('%s/region_%s_%s.reg'%(datadir,hypothesis, name))
 
