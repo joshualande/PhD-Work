@@ -1,17 +1,29 @@
+import traceback
+import sys
+
 from uw.utilities import keyword_options
 import numpy as np
 
 from uw.like.roi_plotting import ROISlice
 from skymaps import SkyImage
 
+from uw.like.roi_state import PointlikeState
+
+from likelihood_tools import fit_prefactor
 
 class GridLocalize():
     """ Simple class evalulates the TS of a source
         along a grid in position (a TS map) and find the 
         maximum TS.
     
-        Useful to avoid false minima before acutal
-        source localization. """
+        This code can e useful because it might avoid false minima 
+        and help converge on the true minimum.
+        
+        In addition, during the spectral analysis, this function
+        will try an alternate default spectral parmaeters for the
+        source of interest, so it may be a ltitle more robust
+        at really finding the best spectral parmaeters for the source
+        """
 
 
     defaults = (
@@ -19,6 +31,7 @@ class GridLocalize():
         ('pixelsize',0.1,   'size, in degrees, of pixels'),
         ('galactic', False, 'galactic or equatorial coordinates'),
         ('proj',     'ZEA', 'projection name: can change if desired'),
+        ('update',   False, 'Update the source of interest with the best fit'),
     )
 
     @keyword_options.decorate(defaults)
@@ -26,30 +39,59 @@ class GridLocalize():
         keyword_options.process(self, kwargs)
 
         self.roi = roi
-        self.which = which
         self.source = roi.get_source(which)
+        self.which = self.source.name
 
         self.__fill__()
 
     def __call__(self,skydir):
         roi = self.roi
+        which = self.which
+
+        roi.modify(which=which,skydir=skydir)
 
         # always start with same spectral model (better good for convergence)
-        ROISlice.uncache_roi(roi)
+        self.state.restore(just_spectra=True)
 
-        roi.modify(which=self.which,skydir=skydir)
-        roi.fit(estimate_errors=False)
-        ts = roi.TS(which=self.which, quick=False)
-        return ts
+        def fit():
+            try:
+                # Fit just prefactor to begin with.
+                # Helps with convergence
+                fit_prefactor(roi,which)
+
+                roi.fit(estimate_errors=False)
+            except Exception, ex:
+                print 'ERROR spectral fitting pointlike: ', ex
+                traceback.print_exc(file=sys.stdout)
+
+        fit()
+        ll = -roi.logLikelihood(roi.parameters())
+
+        best_model = roi.get_model(which).copy()
+
+        self.state.restore(just_spectra=True)
+
+        # Try a new model with a more standard starting value
+        new_model = best_model.__class__()
+        new_model.free = best_model.free.copy()
+
+        roi.modify(which=which, model=new_model)
+        fit()
+        ll_alt = -roi.logLikelihood(roi.parameters())
+
+        if ll_alt > ll:
+            ll = ll_alt
+            best_model = roi.get_model(which).copy()
+
+        return ll,best_model
 
     def __fill__(self):
 
+
         roi = self.roi
+        self.state = PointlikeState(roi)
 
-        old_quiet = roi.quiet
         roi.quiet = True
-
-        ROISlice.cache_roi(roi)
 
         self.init_skydir = self.source.skydir
         self.init_model = self.source.model.copy()
@@ -59,15 +101,22 @@ class GridLocalize():
         self.skyimage = SkyImage(self.init_skydir, '', self.pixelsize, self.size, 1, self.proj, self.galactic, False)
         self.all_dirs = self.skyimage.get_wsdl()
 
-        self.all_ts = [self(skydir) for skydir in self.all_dirs]
+        self.all_ll,self.all_models = zip(*[self(skydir) for skydir in self.all_dirs])
 
-        roi.modify(which=self.source, skydir=self.init_skydir)
-        ROISlice.uncache_roi(roi)
+        self.state.restore()
 
-        roi.quiet = old_quiet
+        if self.update:
+            roi.modify(which=self.which, 
+                       skydir = self.best_position,
+                       model = self.best_model)
 
+    @property
     def best_position(self):
-        return self.all_dirs[int(np.argmax(self.all_ts))]
+        return self.all_dirs[int(np.argmax(self.all_ll))]
+
+    @property
+    def best_model(self):
+        return self.all_models[int(np.argmax(self.all_ll))]
         
 
 class MultiLocalizer():
