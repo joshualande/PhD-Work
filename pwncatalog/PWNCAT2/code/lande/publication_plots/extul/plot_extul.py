@@ -42,8 +42,8 @@ for index, plot_kwargs in [
                            [3,   dict(label=r'$\gamma=3$',   color='black')]
                           ]:
 
-    #cut = (index_mc == index) & (type=='dim')
-    cut = (index_mc == index) & (type=='bright')
+    cut = (index_mc == index) & (type=='dim')
+    #cut = (index_mc == index) & (type=='bright')
 
     extlist = np.sort(np.unique(extension_mc[cut]))
 
@@ -59,7 +59,14 @@ for index, plot_kwargs in [
     avg_ts_ext = [np.mean(ts_ext[cut&(extension_mc==e)]) for e in extlist]
     coverage = [ np.average(e < extension_ul[cut&(extension_mc==e)]) for e in extlist]
 
-    print index, extlist, flux, avg_ts_point, avg_ts_ext, coverage
+    number = [ sum(cut&(extension_mc==e)) for e in extlist]
+    print 'index=',index
+    print '-- extlist=',extlist
+    print '-- flux=',flux
+    print '-- avg_ts_point', avg_ts_point
+    print '-- avg_ts_ext', avg_ts_ext
+    print '-- coverage', coverage
+    print '-- number', number
 
     #grid[0].semilogy(extlist, flux, '-', **plot_kwargs)
     grid[0].semilogy(extlist, flux, '*', **plot_kwargs)
