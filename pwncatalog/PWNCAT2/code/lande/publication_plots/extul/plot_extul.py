@@ -25,6 +25,7 @@ grid = Grid(fig, 111,
 
 from uw.utilities.makerec import fitsrec
 r = fitsrec('cached.fits')
+print r
 
 extension_mc = r['extension_mc']
 extension_ul = r['extension_ul']
@@ -32,17 +33,22 @@ index_mc = r['index_mc']
 ts_point = r['ts_point']
 ts_ext = r['ts_ext']
 flux_mc = r['flux_mc']
+type = np.char.strip(r['type'])
 
 for index, plot_kwargs in [
-#                           [1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
+                           [1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
                            [2,   dict(label=r'$\gamma=2$',   color='red'  )],
                            [2.5, dict(label=r'$\gamma=2.5$', color='green')],
                            [3,   dict(label=r'$\gamma=3$',   color='black')]
                           ]:
 
-    cut = index_mc == index
+    #cut = (index_mc == index) & (type=='dim')
+    cut = (index_mc == index) & (type=='bright')
 
     extlist = np.sort(np.unique(extension_mc[cut]))
+
+    print sum(cut),len(extlist)
+    print 'for gamma=%s, avg num=%s' % (index,sum(cut)/len(extlist))
 
     for e in extlist:
         assert len(np.unique(flux_mc[cut&(extension_mc==e)])) == 1
@@ -53,14 +59,18 @@ for index, plot_kwargs in [
     avg_ts_ext = [np.mean(ts_ext[cut&(extension_mc==e)]) for e in extlist]
     coverage = [ np.average(e < extension_ul[cut&(extension_mc==e)]) for e in extlist]
 
-    grid[0].semilogy(extlist, flux, '-', **plot_kwargs)
+    print index, extlist, flux, avg_ts_point, avg_ts_ext, coverage
+
+    #grid[0].semilogy(extlist, flux, '-', **plot_kwargs)
+    grid[0].semilogy(extlist, flux, '*', **plot_kwargs)
     grid[1].plot(extlist, avg_ts_point, 'o', **plot_kwargs)
-    grid[2].plot(extlist, avg_ts_ext, 'o', **plot_kwargs)
-    grid[3].plot(extlist, coverage, '-', **plot_kwargs)
+    grid[2].semilogy(extlist, avg_ts_ext, 'o', **plot_kwargs)
+    #grid[3].plot(extlist, coverage, '-', **plot_kwargs)
+    grid[3].plot(extlist, coverage, '*', **plot_kwargs)
 
 
 prop = FontProperties(size=10)
-grid[2].legend(numpoints=1, ncol=2, loc=2, prop=prop)
+grid[1].legend(numpoints=1, ncol=2, loc=2, prop=prop)
 
 for g in grid: 
     g.xaxis.set_major_formatter(DegreesFormatter)

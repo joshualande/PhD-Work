@@ -10,11 +10,13 @@ from scipy import stats
 bw = plot_helper.get_bw()
 
 d=yaml.load(open('ts_var.yaml'))
-ts_var = np.asarray(d['ts_var'])
-ts_point = np.asarray(d['ts_point'])
+a=np.asarray
+ts_var = a(d['ts_var'])
+ts_point = a(d['ts_point'])
 
 
 print np.min(ts_var), np.max(ts_var)
+print sorted(ts_var)
 
 fig=P.figure(figsize=(6.5,6))
 axes = fig.add_subplot(111)
@@ -25,10 +27,13 @@ xmin = 0
 xmax = np.max(ts_var[ts_var<400]) + 10
 
 #nbins = 30
-nbins = 10
+nbins = 20
 bins = np.linspace(xmin, xmax, nbins + 1)
 
-axes.hist(ts_var, bins=bins, histtype='step', color='black')
+print 'num significiant',sum(ts_point>=25)
+print 'num not significiant',sum(ts_point<25)
+axes.hist(ts_var[ts_point>=25], bins=bins, histtype='step', color='black')
+axes.hist(ts_var[ts_point<25], bins=bins, histtype='step', color='blue')
 
 
 
@@ -38,7 +43,7 @@ months=36
 chidist = stats.chi2(months-1)
 y=chidist.pdf(x)
 # Normalize the distribution
-y*=len(ts_var)*(bins[1]-bins[0])
+y*=sum(ts_point>=25)*(bins[1]-bins[0])
 axes.plot(x,y, dashes=[5,2], color='red' if not bw else 'black')
 
 axes.set_xlabel(r'$\mathrm{TS}_\mathrm{var}$')
