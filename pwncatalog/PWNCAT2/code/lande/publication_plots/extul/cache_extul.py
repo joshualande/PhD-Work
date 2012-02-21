@@ -8,44 +8,42 @@ import yaml
 
 from uw.utilities.makerec import RecArray,makefits
 
-datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v5'
+datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v8'
 
-rec = RecArray('flux_mc index_mc extension_mc extension_ul ts_point ts_ext'.split())
+rec = RecArray('flux_mc index_mc extension_mc extension_ul ts_point ts_ext type'.split())
 
-for index in [1.5, 2, 2.5, 3]:
 
-    subdir = join(datadir,'index_%s' % index)
+subdir = join(datadir,'*_index_*')
 
-    jobdirs = glob(join(subdir,'?????'))
+jobdirs = glob(join(subdir,'?????'))
 
-    for i,jobdir in enumerate(jobdirs):
-        print '%s - %s/%s' % (jobdir, i, len(jobdirs))
+for i,jobdir in enumerate(jobdirs):
+    print '%s - %s/%s' % (jobdir, i, len(jobdirs))
 
-        results = join(jobdir,'results.yaml')
-        
-        if exists(results):
+    results = join(jobdir,'results.yaml')
+    
+    if exists(results):
 
-            r = yaml.load(open(results))
+        r = yaml.load(open(results))
 
-            if r is None: continue
+        if r is None: continue
 
-            for i in r:
+        for i in r:
 
-                e=i['mc']['extension']
-                f=i['mc']['flux']['flux']
-                e_ul=i['extension_ul']['extension']
+            e=i['mc']['extension']
+            f=i['mc']['flux']['flux']
+            index=i['mc']['model']['Index']
+            e_ul=i['extension_ul']['extension']
 
-                print 'THIS IS BAD'
-                if e_ul is None: e_ul = 0
+            if e_ul is None: e_ul = 0
 
-                ts=max(i['point']['TS'],0)
-                ts_ext=max(i['TS_ext'],0)
+            ts=max(i['point']['TS'],0)
+            ts_ext=max(i['TS_ext'],0)
+            type=i['type']
 
-                rec.append(f,index,e,e_ul,ts,ts_ext)
+            rec.append(f,index,e,e_ul,ts,ts_ext,type)
 
-print rec
 rec = rec()
-print rec
 
 file='cached.fits'
 if exists(file): remove(file)
