@@ -152,8 +152,7 @@ class TeVSED(object):
     def plot(self, filename=None,
              axes=None, 
              fignum=None, figsize=(4,4),
-             data_kwargs=dict(),
-             spectral_kwargs=dict(color='red')):
+             data_kwargs=dict()):
         """ Plot the SED using matpotlib. """
 
         if axes is None:
