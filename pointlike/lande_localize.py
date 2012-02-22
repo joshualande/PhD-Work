@@ -83,18 +83,26 @@ class GridLocalize():
             ll = ll_alt
             best_model = roi.get_model(which).copy()
 
+
+        if not self.old_quiet: print '-- %s, ll=%.2f, ll-ll_0=%.2f' % (galstr(skydir), ll, ll-self.ll_0)
+
+
         return ll,best_model
 
     def __fill__(self):
 
-
         roi = self.roi
         self.state = PointlikeState(roi)
 
+        self.ll_0 = -roi.logLikelihood(roi.parameters())
+
+        self.old_quiet = roi.quiet
         roi.quiet = True
 
         self.init_skydir = self.source.skydir
         self.init_model = self.source.model.copy()
+
+        if not self.old_quiet: print 'Grid localizing around initial position %s' % (galstr(self.init_skydir))
 
         # here, create skyimage
 
@@ -105,7 +113,7 @@ class GridLocalize():
 
         self.state.restore()
 
-        print 'Grid localized to best position = ',galstr(grid.best_position)
+        if not self.old_quiet: print 'Done Grid localizing, best position=%s, best ll=%.2f' % (galstr(self.best_position), self.best_logLikelihood-self.ll_0)
 
         if self.update:
             roi.modify(which=self.which, 
@@ -115,6 +123,10 @@ class GridLocalize():
     @property
     def best_position(self):
         return self.all_dirs[int(np.argmax(self.all_ll))]
+
+    @property
+    def best_logLikelihood(self):
+        return np.max(self.all_ll)
 
     @property
     def best_model(self):
