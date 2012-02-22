@@ -19,7 +19,7 @@ bw=plot_helper.get_bw()
 fig = P.figure(None,(6,6))
 
 grid = Grid(fig, 111, 
-            nrows_ncols = (4, 1),
+            nrows_ncols = (5, 1),
             share_all=False,
             axes_pad=0.2)
 
@@ -68,16 +68,16 @@ for index, plot_kwargs in [
     print '-- coverage', coverage
     print '-- number', number
 
-    #grid[0].semilogy(extlist, flux, '-', **plot_kwargs)
-    grid[0].semilogy(extlist, flux, '*', **plot_kwargs)
+    grid[0].semilogy(extlist, flux, '-', **plot_kwargs)
     grid[1].plot(extlist, avg_ts_point, 'o', **plot_kwargs)
     grid[2].semilogy(extlist, avg_ts_ext, 'o', **plot_kwargs)
-    #grid[3].plot(extlist, coverage, '-', **plot_kwargs)
-    grid[3].plot(extlist, coverage, '*', **plot_kwargs)
+    grid[3].plot(extlist, coverage, '-', **plot_kwargs)
+    grid[4].plot(extension_mc[cut], extension_ul[cut], '.', markersize=1, markeredgecolor=plot_kwargs['color'], **plot_kwargs)
 
+grid[4].plot(extlist, extlist, '-', color='black')
 
 prop = FontProperties(size=10)
-grid[1].legend(numpoints=1, ncol=2, loc=2, prop=prop)
+grid[0].legend(numpoints=1, ncol=2, loc=2, prop=prop)
 
 for g in grid: 
     g.xaxis.set_major_formatter(DegreesFormatter)
