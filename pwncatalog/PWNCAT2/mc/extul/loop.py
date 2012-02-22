@@ -5,7 +5,7 @@ from os import makedirs,getcwd
 
 random.seed(0)
 
-num=50
+num=100
 
 
 # v4
@@ -37,20 +37,32 @@ num=50
 #                                   [3,   1.5e-8, 3.5e-8]]:
 
 # v8
-basedir =  expandvars('$pwndata/monte_carlo/extul/v8/')
+#basedir =  expandvars('$pwndata/monte_carlo/extul/v8/')
+#for index_mc,min_flux,max_flux,min_extension, max_extension, type in \
+#     [[1.5,   1e-9,    2e-8, 0, 2.0,  'dim'], 
+#      [  2,   4e-9,    2e-8, 0, 2.0,  'dim'],
+#      [2.5,   1e-8, 1.75e-8, 0, 2.0,  'dim'],
+#      [  3, 1.5e-8,    2e-8, 0, 2.0,  'dim'],
+#
+#      [1.5,   5e-8,   5e-8, 0, 0.5,   'bright'], 
+#      [  2, 1.3e-7, 1.3e-7, 0, 0.5,   'bright'],
+#      [2.5, 2.1e-7, 2.1e-7, 0, 0.5,   'bright'],
+#      [  3, 2.5e-7, 2.5e-7, 0, 0.5,   'bright'],
+#                                       ]:
+
+# v9
+basedir =  expandvars('$pwndata/monte_carlo/extul/v9/')
 for index_mc,min_flux,max_flux,min_extension, max_extension, type in \
-                                                                     [[1.5, 1e-9,   2e-8,     0,  3.0,  'dim'], 
-                                                                      [2,   4e-9,   2e-8,     0,  3.0,  'dim'],
-                                                                      [2.5, 1e-8,   1.75e-8,  0,  3.0,  'dim'],
-                                                                      [3,   1.5e-8, 2e-8,     0,  3.0,  'dim'],
+     [[1.5,   1e-9,  1.6e-8, 0, 2.0,  'dim'], 
+      [  2,   4e-9,    2e-8, 0, 2.0,  'dim'],
+      [2.5,   1e-8, 2.31e-8, 0, 2.0,  'dim'],
+      [  3, 1.5e-8,  2.4e-8, 0, 2.0,  'dim'],
 
-                                                                      [1.5, 1e-6, 1e-6, 0, 0.25,   'bright'], 
-                                                                      [2,   1e-6, 1e-6, 0, 0.25,   'bright'],
-                                                                      [2.5, 1e-6, 1e-6, 0, 0.25,   'bright'],
-                                                                      [3,   1e-6, 1e-6, 0, 0.25,   'bright'],
-
+      [1.5,  4.6e-8,  4.6e-8, 0, 0.5,   'bright'], 
+      [  2, 1.15e-7, 1.15e-7, 0, 0.5,   'bright'],
+      [2.5,  2.1e-7,  2.1e-7, 0, 0.5,   'bright'],
+      [  3,  2.8e-7,  2.8e-7, 0, 0.5,   'bright'],
                                        ]:
-
 
     workdir = join(basedir,'%s_index_%g' % (type,index_mc))
 
@@ -70,8 +82,8 @@ for index_mc,min_flux,max_flux,min_extension, max_extension, type in \
                 --index=%g \\
                 --min-flux=%g \\
                 --max-flux=%g \\
-                --min-extension=%g
-                --max-extension=%g
+                --min-extension=%g \\
+                --max-extension=%g \\
                 %g""" % (type,index_mc,min_flux,max_flux,min_extension,max_extension,i)))
         run.close()
 
