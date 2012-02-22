@@ -9,7 +9,7 @@ from skymaps import SkyImage
 
 from uw.like.roi_state import PointlikeState
 
-from likelihood_tools import fit_prefactor
+from likelihood_tools import fit_prefactor, galstr
 
 class GridLocalize():
     """ Simple class evalulates the TS of a source
@@ -104,6 +104,8 @@ class GridLocalize():
         self.all_ll,self.all_models = zip(*[self(skydir) for skydir in self.all_dirs])
 
         self.state.restore()
+
+        print 'Grid localized to best position = ',galstr(grid.best_position)
 
         if self.update:
             roi.modify(which=self.which, 
