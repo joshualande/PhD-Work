@@ -74,7 +74,8 @@ pulsars with significant low-energy emission.
 \end{figure}
 
 
-\figref{variability} shows the cutoff test\ldots
+\figref{variability} shows the variability test for each source
+candidate. The distribution of \tsvar is plotted in 
 
 \begin{deluxetable}{l*{2}c}
 \tabletypesize{\scriptsize}
@@ -84,3 +85,13 @@ pulsars with significant low-energy emission.
 \input{tables/variability.tex}
 \tablecomments{\todo[inline]{Put table comments}}
 \end{deluxetable}
+
+\begin{figure}
+  \ifdefined\bwfigures
+  \plotone{variability_bw.eps}
+  \else
+  \plotone{variability_color.eps}
+  \fi
+  \caption{Distribution of \tsvar for each source candidate. \todo[inline]{Disclaimer about crab not being included}.}
+  \label{fig:variability}
+\end{figure}
