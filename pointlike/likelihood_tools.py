@@ -834,6 +834,8 @@ def force_gradient(use_gradient):
     from lande_decorators import modify_defaults
     ROIAnalysis.fit=modify_defaults(use_gradient=use_gradient)(ROIAnalysis.fit)
 
+def galstr(skydir):
+    return 'SkyDir(%.3f,%.3f,SkyDir.GALACTIC)' % (skydir.l(),skydir.b())
 
 
 def spectrum_to_dict(*args, **kwargs):
