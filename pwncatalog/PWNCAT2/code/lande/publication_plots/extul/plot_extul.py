@@ -12,89 +12,88 @@ import numpy as np
 
 from uw.like.roi_plotting import DegreesFormatter
 
-from lande_plotting import fix_axesgrid
+from lande_plotting import label_axesgrid
 
 bw=plot_helper.get_bw()
 
-fig = P.figure(None,(6,6))
+for type in ['dim','bright']:
 
-grid = Grid(fig, 111, 
-            nrows_ncols = (5, 1),
-            share_all=False,
-            axes_pad=0.2)
+    fig = P.figure(None,(6,6))
 
-from uw.utilities.makerec import fitsrec
-r = fitsrec('cached.fits')
-print r
+    grid = Grid(fig, 111, 
+                nrows_ncols = (4, 1),
+                share_all=False,
+                axes_pad=0.2)
 
-extension_mc = r['extension_mc']
-extension_ul = r['extension_ul']
-index_mc = r['index_mc']
-ts_point = r['ts_point']
-ts_ext = r['ts_ext']
-flux_mc = r['flux_mc']
-type = np.char.strip(r['type'])
+    from uw.utilities.makerec import fitsrec
 
-for index, plot_kwargs in [
-                           [1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
-                           [2,   dict(label=r'$\gamma=2$',   color='red'  )],
-                           [2.5, dict(label=r'$\gamma=2.5$', color='green')],
-                           [3,   dict(label=r'$\gamma=3$',   color='black')]
-                          ]:
+    r = fitsrec('/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v9/cached.fits')
+    print r
 
-    cut = (index_mc == index) & (type=='dim')
-    #cut = (index_mc == index) & (type=='bright')
+    extension_mc = r['extension_mc']
+    extension_ul = r['extension_ul']
+    index_mc = r['index_mc']
+    ts_point = r['ts_point']
+    ts_ext = r['ts_ext']
+    flux_mc = r['flux_mc']
+    type_array = np.char.strip(r['type'])
 
-    extlist = np.sort(np.unique(extension_mc[cut]))
+    for index, plot_kwargs in [
+                               [1.5, dict(label=r'$\gamma=1.5$', color='blue' )],
+                               [2,   dict(label=r'$\gamma=2$',   color='red'  )],
+                               [2.5, dict(label=r'$\gamma=2.5$', color='green')],
+                               [3,   dict(label=r'$\gamma=3$',   color='black')]
+                              ]:
 
-    print sum(cut),len(extlist)
-    print 'for gamma=%s, avg num=%s' % (index,sum(cut)/len(extlist))
+        cut = (index_mc == index) & (type_array==type)
 
-    for e in extlist:
-        assert len(np.unique(flux_mc[cut&(extension_mc==e)])) == 1
+        extlist = np.sort(np.unique(extension_mc[cut]))
 
-    flux = [flux_mc[cut&(extension_mc==e)][0] for e in extlist]
-            
-    avg_ts_point = [np.mean(ts_point[cut&(extension_mc==e)]) for e in extlist]
-    avg_ts_ext = [np.mean(ts_ext[cut&(extension_mc==e)]) for e in extlist]
-    coverage = [ np.average(e < extension_ul[cut&(extension_mc==e)]) for e in extlist]
+        print sum(cut),len(extlist)
+        print 'for gamma=%s, avg num=%s' % (index,sum(cut)/len(extlist))
 
-    number = [ sum(cut&(extension_mc==e)) for e in extlist]
-    print 'index=',index
-    print '-- extlist=',extlist
-    print '-- flux=',flux
-    print '-- avg_ts_point', avg_ts_point
-    print '-- avg_ts_ext', avg_ts_ext
-    print '-- coverage', coverage
-    print '-- number', number
+        for e in extlist:
+            assert len(np.unique(flux_mc[cut&(extension_mc==e)])) == 1
 
-    grid[0].semilogy(extlist, flux, '-', **plot_kwargs)
-    grid[1].plot(extlist, avg_ts_point, 'o', **plot_kwargs)
-    grid[2].semilogy(extlist, avg_ts_ext, 'o', **plot_kwargs)
-    grid[3].plot(extlist, coverage, '-', **plot_kwargs)
-    grid[4].plot(extension_mc[cut], extension_ul[cut], '.', markersize=1, markeredgecolor=plot_kwargs['color'], **plot_kwargs)
+        flux = [flux_mc[cut&(extension_mc==e)][0] for e in extlist]
+                
+        avg_ts_point = [np.mean(ts_point[cut&(extension_mc==e)]) for e in extlist]
+        avg_ts_ext = [np.mean(ts_ext[cut&(extension_mc==e)]) for e in extlist]
+        coverage = [ np.average(e < extension_ul[cut&(extension_mc==e)]) for e in extlist]
 
-grid[4].plot(extlist, extlist, '-', color='black')
+        number = [ sum(cut&(extension_mc==e)) for e in extlist]
+        print 'index=',index
+        print '-- extlist=',extlist
+        print '-- flux=',flux
+        print '-- avg_ts_point', avg_ts_point
+        print '-- avg_ts_ext', avg_ts_ext
+        print '-- coverage', coverage
+        print '-- number', number
 
-prop = FontProperties(size=10)
-grid[0].legend(numpoints=1, ncol=2, loc=2, prop=prop)
+        grid[0].semilogy(extlist, flux, '-', **plot_kwargs)
+        grid[1].plot(extlist, avg_ts_point, 'o', **plot_kwargs)
+        grid[2].semilogy(extlist, avg_ts_ext, 'o', **plot_kwargs)
+        grid[3].plot(extlist, coverage, '-', **plot_kwargs)
 
-for g in grid: 
-    g.xaxis.set_major_formatter(DegreesFormatter)
-    g.set_xlabel('Extension')
+    prop = FontProperties(size=10)
+    grid[3].legend(numpoints=1, ncol=2, loc=3, prop=prop)
+
+    label_axesgrid(grid)
+
+    for g in grid: 
+        g.xaxis.set_major_formatter(DegreesFormatter)
+        g.set_xlabel('Extension')
 
 
-grid[3].set_ylim(ymax=1.1)
+    grid[3].set_ylim(ymax=1.1)
 
-grid[0].set_ylabel(r'Flux')
-grid[1].set_ylabel(r'$\langle\mathrm{TS}_\mathrm{point}\rangle$')
-grid[2].set_ylabel(r'$\langle\mathrm{TS}_\mathrm{ext}\rangle$')
-grid[3].set_ylabel(r'Coverage')
+    grid[0].set_ylabel(r'Flux')
+    grid[1].set_ylabel(r'$\langle\mathrm{TS}_\mathrm{point}\rangle$')
+    grid[2].set_ylabel(r'$\langle\mathrm{TS}_\mathrm{ext}\rangle$')
+    grid[3].set_ylabel(r'Coverage')
 
-grid[1].axhline(25, color='black', dashes=[5,2])
-grid[2].axhline(16, color='black', dashes=[5,2])
-grid[3].axhline(0.95, color='black', dashes=[5,2])
+    grid[1].axhline(25, color='black', dashes=[5,2])
+    grid[2].axhline(16, color='black', dashes=[5,2])
+    grid[3].axhline(0.95, color='black', dashes=[5,2])
 
-#fix_axesgrid(grid)
-
-plot_helper.save('extul')
+    plot_helper.save('extul_%s' % type)
