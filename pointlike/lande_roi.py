@@ -40,6 +40,8 @@ from lande_plotting import *
 from lande_extended import *
 from lande_decorators import *
 
+from likelihood_tools import galstr
+
 from uw.like import sed_plotter
 import pylab as P
 import pylab
@@ -481,10 +483,6 @@ class LandeROI(ROIAnalysis):
     def save(self,filename='roi.dat',*args,**kwargs):
         super(LandeROI,self).save(filename,*args,**kwargs)
 
-    @staticmethod 
-    def galstr(skydir):
-        return 'SkyDir(%.3f,%.3f,SkyDir.GALACTIC)' % (skydir.l(),skydir.b())
-
 class VerboseROI(LandeROI):
     def __init__(self,*args,**kwargs):
         super(VerboseROI,self).__init__(*args,**kwargs)
@@ -535,14 +533,14 @@ class VerboseROI(LandeROI):
         if not self.quiet:
             print;print
             print 'Beginning Localization of source %s' % name
-            print '  Initial Position is ',LandeROI.galstr(initdir)
+            print '  Initial Position is ',galstr(initdir)
 
         retval=super(VerboseROI,self).localize(which,*args,**kwargs)
 
         if retval is not None and not self.quiet:
             print 'Done Localizing source %s' % name
-            print '  Initial Position is:',LandeROI.galstr(initdir)
-            print '  Final Position is:',LandeROI.galstr(retval[0])
+            print '  Initial Position is:',galstr(initdir)
+            print '  Final Position is:',galstr(retval[0])
             print '  Distance (deg):',retval[2]
             print '  lsigma (deg):',self.lsigma
             print '  Distance/lsigma:',retval[2]/self.lsigma
@@ -597,7 +595,7 @@ class VerboseROI(LandeROI):
             return '\n'.join(['  %s:'%source.name,
                               '    %s:'%(source.model.full_name()),
                               '      '+source.model.__str__(indent='      '),
-                              '    dir: %s' % LandeROI.galstr(source.skydir),
+                              '    dir: %s' % galstr(source.skydir),
                               '    dist: %s' % np.degrees(self.roi_dir.difference(source.skydir)),
                               '    TS: %.3f ' % (self.TS(which=source,quick=True,quiet=True))])
 
