@@ -22,6 +22,7 @@ def pointlike_sed_to_yaml(bandflux, filename):
         Usage: 
             
             bf = roi.plot_sed(which=which, filename='plot.png')
+            from lande_sed import pointlike_sed_to_yaml
             pointlike_sed_to_yaml(bf, filename='data.yaml')
     """
 
