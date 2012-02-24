@@ -16,7 +16,7 @@ Boomerang:
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=182"
   shape: pointsource
   type: "PWN"
-  hardsource: "?"
+  hardsource: "P72Y3615"
   spectrum: 
     Milagro: "$pwn/pwndata/tevdata/Boomerang/spectrum.txt"
   notes: |
@@ -31,6 +31,8 @@ G0.9+0.1:
   type: "PWN"
   spectrum: 
     HESS: "$pwn/pwndata/tevdata/G0.9+0.1/spectrum.txt"
+  notes: |
+    "Heller et al.,A&A, 2012 : cannot explain VHE from the radio -> hadronic ? relic ?"
 G292.2-0.5:
   gal: [292.10,-0.49]
   ext: 0.05 
@@ -52,9 +54,11 @@ G54.1+0.3:
   shape: pointsource
   type: "PWN"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=193"
+  notes: |
+    "hadronic ? Li et al.,2010"
 Geminga:
   gal: [195.34,3.78]
-  ext: 1.1
+  ext: 1.3
   hardsource: "P72Y0963 associated with the pulsar"
   shape: gaussian
   type: "PWN" 
@@ -105,6 +109,7 @@ HESS_J1616-508:
   ext: 0.136 
   shape: gaussian
   type: "PWN"
+  Josh: 0.32
   hardsource: "P72Y2472"
   spectrum: 
     HESS: '$pwn/pwndata/tevdata/HESS_J1616-508/spectrum.txt'
@@ -116,6 +121,7 @@ HESS_J1632-478:
   gal: [336.38,0.19]
   ext: [0.21,0.06,21.0] 
   shape: 2Dgaussian
+  Josh: 0.35
   type: "PWN"
   hardsource: "a lot. In the Spectral document they are merged in HESS_J1632-478"
   spectrum: 
@@ -235,10 +241,10 @@ HESS_J1912+101:
      Gaussian radius from arXiv:0802.3841v1"
 IGR_J18490-0000:
   gal: [32.64,0.53]
-  ext: 0;0
+  ext: 0.0
   shape: pointsource
   type: "PWN"
-  hardsouce: "?"
+  hardsouce: "no"
   HESS Name: HESS J1849-000
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=188"
   notes: |
@@ -294,15 +300,6 @@ G318.2+0.1:
   template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_G318.2+0.1_0.31_0.17_318.36_-0.43_2D_Gaussian.fits
   notes: |
       "size and position from http://pos.sissa.it/archive/conferences/123/196/Texas%202010_196.pdf , angle : 67 +/- 15 deg, from negative longitude to positive latitude axis"
-HESS_J1800-240A:
-  gal: [6.14,-0.63]
-  ext: 0.15
-  type: "SNR + Molecular Cloud"
-  hardsource: "no"
-  shape: gaussian
-  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=163"
-  notes: |
-       "size and position : http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2008A%26A...481..401A&link_type=ARTICLE&db_key=AST&high="
 HESS_J1832-093:
   gal: [22.48, -0.16]
   ext: 0.06
@@ -317,7 +314,7 @@ RCW_86:
   ext: 0.45
   type: "SNR Shell"
   hardsource: "no"
-  shape: gaussian
+  shape: disk
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=168"
   notes: |
        "constraining UL by Fermi. position and extension : http://adsabs.harvard.edu/abs/2009ApJ...692.1500A"
@@ -325,7 +322,7 @@ SN_1006_SW:
   gal: [327.86,15.35]
   ext: 0.50
   type: "SNR Shell"
-  hardsouce: "no"
+  hardsource: "no"
   shape: gaussian
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=171"
 SN_1006:
@@ -366,7 +363,7 @@ MAGIC_J0223+403:
   hardsource: "P72Y0344 : source associated with MAGIC ? SNR ... Not yet removed from srcmodel."
   type: "UNID"
   shape: pointsource
-  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=138"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=138, still a significant excess as a point source (add it in next fit)"
 Vela_Region:
   gal: [263.23,-2.92]
   ext: 0.0
@@ -397,23 +394,23 @@ HESS_J1708-410:
   ext: [0.06,0.08,340.0]
   shape: 2Dgaussian
   type: "UNID"
-  hardsource: "no no rien n'a change"
+  hardsource: "no"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=109"
-  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_J1708-410_0.06_0.08_257.098910_-41.092762_2D_Gaussian.fits
+  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1708-410_0.06_0.08_257.052065_-44.334125_2D_Gaussian.fits
   notes: |
        "angle: -20 +/- 23 deg
        measured counter-clk relative to RA axis"
 HESS_J1729-345:
   gal: [353.44,-0.13]
   ext: 0.14
-  hardsource: "nono le petit robot"
+  hardsource: "no"
   shape: gaussian
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=224"
 HESS_J1741-302:
   gal: [358.40,0.19]
   ext: 0.0
-  hardsource: "nothing else matter"
+  hardsource: "no"
   shape: pointsource
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=189"
@@ -461,7 +458,7 @@ HESS_J1843-033:
   gal: [29.30,0.51]
   ext: 0.0
   shape: pointsource
-  hardsource: "?"
+  hardsource: "no"
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=190"
   notes: |
@@ -489,8 +486,9 @@ HESS_J1503-582:
 HESS_J1614-518:
   gal: [331.52,-0.58]
   ext: [0.23,0.15,49]
+  Josh: 0.42
   shape: 2Dgaussian
-  hardsource: "?"
+  hardsource: "HESS J1614. Unknown name P72Y..."
   type: "massive star cluster"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=103"
   template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1614-518_0.23_0.15_331.52_-0.58_2D_Gaussian.fits
@@ -501,7 +499,7 @@ PWN_SNR_G15.4+0.1:
   gal: [15.41,0.17]
   ext: 0.14
   shape: gaussian
-  hardsource: "?"
+  hardsource: "no"
   type: "PWN"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=233"
   notes: |
@@ -510,7 +508,7 @@ PWN_SNR_G15.4+0.1:
   gal: [201.30,0.51]
   ext: 0.0
   shape: pointsource
-  hardsource: "?"
+  hardsource: "no"
   type: "PWN"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=176"
   notes: |
@@ -519,25 +517,16 @@ PWN_SNR_G327.1-1.1:
   gal: [327.16,-1.07]
   ext: 0.0
   shape: pointsource
-  hardsource: "?"
+  hardsource: "no"
   type: "PWN"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=235"
   notes: |
       "http://arxiv.org/abs/1201.0481"
-IGR_J18490-0000:
-  gal: [32.64,0.53]
-  ext: 0.0
-  shape: pointsource
-  hardsource: "?"
-  type: "PWN"
-  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=188"
-  notes: |
-      "Extension not described"
 0FGL_J1958.1+2848:
   gal: [65.85,-0.23]
   ext: 0.0
   shape: pointsource
-  hardsource: "?"
+  hardsource: "P72Y3215"
   type: "PWN"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=180"
   notes: |
@@ -545,17 +534,18 @@ IGR_J18490-0000:
 0FGL_J2021.5+4026:
   gal: [78.23, 2.07]
   ext: 0.0
+  Josh: 0.63
   shape: pointsource
-  hardsource: "?"
+  hardsource: "P72Y3287"
   type: "PWN"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=181"
   notes: |
-      ""
+      "gamma cygnii"
 0FGL_J1844.1-0335:
   gal: [28.91,-0.02]
   ext: 0.0
   shape: pointsource
-  hardsource: "?"
+  hardsource: "no"
   type: UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=136"
   notes: |
@@ -564,7 +554,7 @@ IGR_J18490-0000:
   gal: [37.42,-0.11]
   ext: 0.0
   shape: pointsource
-  hardsource: "?"
+  hardsource: "no"
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=161"
   notes: |
@@ -573,7 +563,7 @@ MGRO_J2031+41:
   gal: [79.53,0.64]
   ext: 1.5 
   shape: gaussian
-  hardsource: "?"
+  hardsource: "4 in the region"
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=149"
   notes: |
@@ -582,7 +572,7 @@ IC_443:
   gal: [189.07,2.92]
   ext: 0.16
   shape: gaussian
-  hardsource: "?"
+  hardsource: "IC 443"
   type: "SNR-Shell"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=120"
   notes: |
@@ -591,7 +581,7 @@ SNR_G65.1+0.6:
   gal: [65.30,0.38]
   ext: 0.0
   shape: pointsource
-  hardsource: "?"
+  hardsource: "no"
   type: "SNR-Shell"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=179"
   notes: |
@@ -600,57 +590,260 @@ G106.3+2.7:
   gal: [106.35,2.71]
   ext: [0.27,0.18,22]
   shape: 2Dgaussian
-  hardsource: "?"
+  hardsource: "P72Y3615 ?"
   type: "SNR-Shell"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=174"
-  template: "/afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1427-608_0.04_0.08_216.966457_-60.844569_2D_Gaussian.fits"
+  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_G106.3+2.7_0.27_0.18_337.003441_60.877296_2D_Gaussian.fits
   notes: |
       "angle: 22 deg east of north, http://iopscience.iop.org/1538-4357/703/1/L6/pdf/apjl_703_1_6.pdf"
 HESS_J1745-303:
   gal: [358.71,-0.64]
   ext: [0.21,0.09,54 ]
   shape: 2Dgaussian
-  hardsource: "?"
+  hardsource: "no"
   type: "SNR + Molecular Cloud"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=111"
-  template: "/afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1745-303_0.21_0.09_358.71_-0.64_2D_Gaussian.fits"
+  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1745-303_0.21_0.09_358.71_-0.64_2D_Gaussian.fits
   notes: |
       "angle: 54 +/- 7 deg, measured counter-clk wrt the positive Gal. Lat. axis, http://iopscience.iop.org/1538-4357/703/1/L6/pdf/apjl_703_1_6.pdf"
 HESS_J1427-608:
   gal: [314.41,-0.14]
   ext: [0.04,0.08,80.0]
   shape: 2Dgaussian
-  hardsource: "?"
+  hardsource: "no"
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=139"
-  template: "/afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_G106.3+2.7_0.27_0.18_337.003441_60.877296_2D_Gaussian.fits"
+  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1427-608_0.04_0.08_216.966457_-60.844569_2D_Gaussian.fits
   notes: |
       "angle: 80 +/- 17 deg, measured counter-clk relative to RA axis, http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2008A%26A...477..353A&link_type=ARTICLE&db_key=AST&high="
+HESS_J1507-622:
+  gal: [317.95,-3.49]
+  ext: 0.15
+  shape: gaussian
+  type: "UNID"
+  hardsource: "?"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=204"
+  notes: |
+      ""
 HESS_J1626-490:
   gal: [334.77,0.05]
   ext: [0.07,0.1,3.0]
   shape: 2Dgaussian
-  hardsource: "?"
+  hardsource: "no"
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=137"
-  template: "/afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1626-490_0.07_0.1_246.512858_-49.085398_2D_Gaussian.fits"
+  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1626-490_0.1_0.07_246.512858_-49.085398_2D_Gaussian.fits
   notes: |
       "angle: 3 +/- 40 deg, measured counter-clk relative to RA axis,  http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2008A%26A...477..353A&link_type=ARTICLE&db_key=AST&high="
 TeV_J1907+062:
   gal: [40.39,-0.79]
   ext: 0.34
   shape: gaussian
-  hardsource: "?"
+  hardsource: "P72Y3082"
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=148"
   notes: |
       "http://arxiv.org/abs/0904.3409, 	MGRO J1908+06, HESS J1908+063, In MH's list correspond to HESS J1907+062"
+TeV_J2016+372:
+  gal: [74.94,1.15]
+  ext: 0.0
+  shape: pointsource
+  type: "UNID"
+  hardsource: "?"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=228"
+  notes: |
+      "extended but no information on the extension"
+TeV_J2019+407:
+  gal: [78.33,2.54]
+  ext: 0.16
+  shape: gaussian
+  type: "UNID"
+  hardsource: "?"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=201"
+  notes: |
+      "" 
 TeV_J2032+4130:
   gal: [80.25,1.07]
   ext: 0.1
   shape: gaussian
-  hardsource: "?"
+  hardsource: "P72Y3317"
   type: "UNID"
   tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=87"
   notes: |
       "http://arxiv.org/abs/1201.1973"
+CTA_1:
+  gal: [119.58,10.20]
+  ext: 0.0
+  shape: pointsource
+  hardsource: "SEED-290"
+  type: "PWN"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=227"
+  notes: |
+      "Source extended but extension is not described"
+MSH_15_52:
+  gal: [320.33,-1.19]
+  ext: [0.11,0.04,41.0]
+  shape: 2Dgaussian
+  hardsource: "MSH 15-52"
+  type : "PWN"
+  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_MSH_15_52_0.11_0.04_228.524671_-59.155197_2D_Gaussian.fits
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=95"
+  notes: |
+      "semi-major axis: 6.4' +/- 0.7' (= 0.11 +/- 0.01 deg), semi-minor axis: 2.3' +/- 0.5' (= 0.04 +/- 0.01 deg),fitted direction of major axis is 41 +/- 13 deg wrt the RA axis, http://adsabs.harvard.edu/abs/2005A%26A...435L..17A"
+HESS_J1825-137:
+  gal: [17.71,-0.70]
+  ext: [0.13,0.12,17.0]
+  shape: 2Dgaussian
+  hardsource: "HESS J1825-137"
+  type: "PWN"
+  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1825-137_0.13_0.12_276.422921_-13.841206_2D_Gaussian.fits
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=115"
+  notes: |
+      "angle: 17 +/- 12 deg, http://adsabs.harvard.edu/abs/2006A%26A...460..365A"
+W28_Radio:
+  gal: [6.66, -0.27]
+  ext: 0.17
+  shape: gaussian
+  hardsource: "W28"
+  type: "SNR+Molecular Cloud"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=162"
+  notes: |
+      "http://adsabs.harvard.edu/abs/2008A%26A...481..401A"
+W28A:
+  gal: [6.14,-0.63]
+  ext: 0.15
+  shape: gaussian
+  hardsource: "W28"
+  type: "SNR+Molecular Cloud"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=162"
+  notes: |
+      "http://adsabs.harvard.edu/abs/2008A%26A...481..401A"
+W28B:
+  gal: [5.90,-0.37]
+  ext: 0.15
+  shape: gaussian
+  hardsource: "W28"
+  type: "SNR+Molecular Cloud"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=162"
+  notes: |
+      "http://adsabs.harvard.edu/abs/2008A%26A...481..401A"
+W28C:
+  gal: [5.71,-0.06]
+  ext: 0.02
+  shape: gaussian
+  hardsource: "W28"
+  type: "SNR+Molecular Cloud"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=162"
+  notes: |
+      "http://adsabs.harvard.edu/abs/2008A%26A...481..401A"
+W49B:
+  gal: [43.26,-0.19]
+  ext: 0.0
+  shape: pointsource
+  hardsource: "P72Y3088"
+  type: "SNR+Molecular Cloud"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=218"
+  notes: |
+      "http://adsabs.harvard.edu/abs/2011arXiv1104.5003B"
+HESS_J1923+141:
+  gal: [49.13,-0.40]
+  ext: 0.16
+  shape: gaussian
+  hardsource: "W51c"
+  type: "SNR+Molecular Cloud"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=178"
+  notes: |
+      "http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1111.0066, W51"
+Tycho:
+  gal: [120.11,1.45]
+  ext: 0.0
+  shape: pointsource
+  hardsource: "No"
+  type: "Shell SNR"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=209"
+  notes: |
+      "http://adsabs.harvard.edu/abs/2011ApJ...730L..20A"
+RX_J0852.0-4622:
+  gal: [266.28,-1.24]
+  ext: 1.0
+  shape: gaussian
+  Josh: 1.15
+  hardsource: "Vela Junior"
+  type: "Shell SNR"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=98"
+  notes: |
+      ""
+RX_J1713.7-3946:
+  gal: [347.34,-0.47]
+  ext: 0.25
+  Josh: 0.3
+  shape: gaussian
+  hardsource: "RX J1713"
+  type: "Shell SNR"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=84"
+  notes: |
+      ""
+Cassiopeia_A:
+  gal: [111.71,-2.13]
+  ext: 0.0
+  shape: pointsource
+  hardsource: "P72Y3738"
+  type: "Shell SNR"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=82"
+  notes: |
+      ""
+HESS_J1857+026:
+  gal: [35.96,-0.06]
+  ext: [0.11,0.08,-3]
+  shape: 2Dgaussian
+  hardsource: "P72Y3049"
+  type: "UNID"
+  template: /afs/slac/g/glast/users/rousseau/TeV_sources/Templates/Templates/template_HESS_J1857+026_0.11_0.08_284.294272_2.667018_2D_Gaussian.fits
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=143"
+  notes: |
+      "http://adsabs.harvard.edu/abs/2008A%26A...477..353A, angle: -3 +/- 49 deg" 
+Westerlund_2:
+  gal: [284.22,-0.40]
+  ext: 0.18
+  shape: gaussian
+  hardsource: "P72Y1491"
+  type: "Massive Star Cluster"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=132"
+  notes: |
+      " "
+HESS_J1848-018:
+  gal: [31.00,-0.16]
+  ext: 0.32
+  shape: gaussian
+  hardsource: "no"
+  type: "Massive Star Cluster"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=187"
+  notes: |
+      " "
+TeV_J1959+208:
+  gal: [59.20,-4.70]
+  ext: 0.0
+  shape: pointsource  
+  hardsource: "no"
+  type: "PSR"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=152"
+  notes: |
+      " "
+W49A:
+  gal: [43.27,-0.00]
+  ext: 0.0
+  shape: pointsource
+  hardsource: "P72Y3088"
+  type: "Star Forming Region"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=217"
+  notes: |
+      " "
+CTB_37A:
+  gal: [348.39,0.11]
+  ext: 0.7
+  shape: gaussian
+  hardsource: "?"
+  type : "SNR + Molec Cloud"
+  tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=158"
+  notes: |
+      " "

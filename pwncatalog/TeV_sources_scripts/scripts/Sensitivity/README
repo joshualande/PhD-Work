@@ -1,0 +1,1 @@
+python preparation_sensibilite.py -o /afs/slac/g/glast/users/rousseau/TeV_sources/Sensitivity_plots/tralala/ -d /afs/slac/g/glast/users/rousseau/TeV_sources/runs/23_01_10GeV_hard_source -t /afs/slac/g/glast/users/rousseau/TeV_sources/scripts/tevdata/tev_galactic_sources.yaml -m at_tev

@@ -1,0 +1,2 @@
+#0: Emin_bin(MeV) 1: Emax_bin(MeV) 2: F(erg/cm2/s) 3: F_error(erg/cm2/s)
+11.06e6 110.67e6 6.81e-13 1.68e-13
