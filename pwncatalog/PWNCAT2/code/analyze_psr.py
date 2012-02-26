@@ -6,6 +6,8 @@ from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results
 from uw.pulsar.phase_range import PhaseRange
 from likelihood_tools import force_gradient
 
+from uw.like.SpatialModels import Gaussian
+
 import os
 from os.path import join
 from glob import glob
