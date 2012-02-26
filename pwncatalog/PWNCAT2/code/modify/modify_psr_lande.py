@@ -25,12 +25,12 @@ def modify_roi(name,roi):
 
     if name == 'PSRJ1023-5746':
 
-        # In previous analysis 
+        # In previous analysis v9:
         # $pwndata/spectral/v9/analysis_no_plots/PSRJ1023-5746/results_PSRJ1023-5746.yaml
         # I foudn that this source had large residual surrounding it. So always fit it
         roi.modify(which='2FGL J1044.5-5737', free=True)
 
-        # Add new source 'seed1' that represents residual found in the TSmap at the top left
+        # v9: Add new source 'seed1' that represents residual found in the TSmap at the top left
         # (in galactic coordinates) at (l,b)=(286.252,0.522)
         # The best fit parameters of this new source are taken from
         # $pwnpersonal/individual_sources/PSRJ1023-5746/v1/iteration_v1/run.py
@@ -39,7 +39,7 @@ def modify_roi(name,roi):
                          model=PowerLaw(norm=3.8835219935993907e-12,index=2.2310422346640504))
         roi.add_source(ps1)
 
-        # Add new source 'seed2' that represents additional residual found from
+        # v10: Add new source 'seed2' that represents additional residual found from
         # $pwnpersonal/individual_sources/PSRJ1023-5746/v2/iteration_v1/run.py
         ps2 = PointSource(name='seed2',
                          skydir=SkyDir(284.5071255898265,0.9734675040757886,SkyDir.GALACTIC),
