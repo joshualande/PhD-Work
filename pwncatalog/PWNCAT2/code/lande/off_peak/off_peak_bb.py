@@ -1,18 +1,24 @@
 from argparse import ArgumentParser
 from os.path import expandvars
-import copy
-import numbers
-import pickle
+
 import yaml
 import numpy as np
 import pylab as P
 
 import BayesianBlocks
 
+from skymaps import SkyDir
+
+from uw.utilities.fitstools import rad_extract
+
 from uw.pulsar import lc_plotting_func
 from uw.pulsar.phase_range import PhaseRange
+from uw.pulsar.stats import hm
 from uw.like.roi_image import memoize
+
 from lande_toolbag import tolist
+
+from lande_pulsar import get_phases,plot_phaseogram
 
 class OffPeakBB(object):
     """ Algorithm to compute the off peak window
@@ -56,11 +62,6 @@ class OffPeakBB(object):
         print 'max phase',max_phase
 
         self.offset_phases = (phases - max_phase) % 1
-        #self.offset_phases.sort()
-        #print 'offset_phases = ',self.offset_phases
-
-        #self.bb = BayesianBlocks.BayesianBlocks(self.offset_phases)
-        #offset_xx, yy = self.bb.lightCurve(ncpPrior)
 
         tstart=0
         bins = np.linspace(0,1,51)
@@ -109,30 +110,11 @@ class OffPeakBB(object):
 
         self.blocks = dict(xx = xx, yy = yy)
 
-from skymaps import SkyDir
-from uw.pulsar.stats import hm
-from uw.utilities.fitstools import rad_extract
-
-from lande_pulsar import get_phases
 
 class OptimizePhases(object):
     """ very simple object to load in an ft1 file and
         optimize the radius & energy to find the
         best pulsations. """
-
-    @staticmethod
-    @memoize
-    def get_all(ft1, skydir):
-        """ Cache photons = faster """
-        ed = rad_extract(expandvars(ft1),skydir,radius_function=180,return_cols=['PULSE_PHASE'])
-        return ed
-
-    @staticmethod
-    def get_phases(ft1, skydir, emin, emax, radius):
-        ed = OptimizePhases.get_all(ft1, skydir)
-        all_phases = ed['PULSE_PHASE']
-        mask = (ed['ENERGY'] >= emin) & (ed['ENERGY'] < emax) & (ed['DIFFERENCES'] < np.radians(radius))
-        return all_phases[mask]
 
     def __init__(self, ft1, skydir, emax,
                  ens=np.linspace(100,1000,21),
@@ -148,7 +130,7 @@ class OptimizePhases(object):
 
         for iemin,emin in enumerate(ens):
             for irad,radius in enumerate(rads):
-                phases = OptimizePhases.get_phases(ft1, skydir, emin, emax, radius)
+                phases = get_phases(ft1, skydir, emin, emax, radius)
                 stat = hm(phases) if len(phases) > 0 else 0
                 if verbose: print 'emin=%s, radius=%s, stat=%s, len=%s, n0=%s' % (emin,radius,stat,len(phases),np.sum(phases==0))
                 stats[iemin,irad] = stat
@@ -160,27 +142,17 @@ class OptimizePhases(object):
         self.optimal_radius = rads[coord_r]
         self.optimal_h = np.max(stats)
 
-def plot(ft1, skydir, emin, emax, radius, off_peak_phase, 
-         blocks, pwncat1phase=None, axes=None):
 
-    phases = OptimizePhases.get_phases(ft1, skydir, emin, emax, radius)
+def plot(ft1, off_peak_phase, blocks, pwncat1phase=None, **kwargs):
 
-    nbins=100
-    bins = np.linspace(0,1,100)
+    # plot bins
+    axes, bins = plot_phaseogram(ft1, **kwargs)
 
-    if axes is None:
-        fig = P.figure(None)
-        axes = fig.add_subplot(111)
-
-    axes.hist(phases,bins=bins,histtype='step',ec='red',lw=1)
-    axes.set_ylabel('Counts')
-    axes.set_xlabel('Phase')
-    axes.set_xlim(0,1)
-    axes.grid(True)
-
+    # plot blocks
     binsz = bins[1]-bins[0]
-    P.plot(np.asarray(blocks['xx']),np.asarray(blocks['yy'])*binsz)
+    axes.plot(np.asarray(blocks['xx']),np.asarray(blocks['yy'])*binsz)
 
+    # plot phase ranges
     PhaseRange(off_peak_phase).axvspan(label='bb', alpha=0.25, color='green')
     if pwncat1phase is not None:
         PhaseRange(pwncat1phase).axvspan(label='pwncat1', alpha=0.25, color='blue')
@@ -195,7 +167,7 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=100000):
     print 'optimal energy=%s & radius=%s, h=%s' % (opt.optimal_emin,opt.optimal_radius,opt.optimal_h)
 
     # Get optimal phases
-    phases = OptimizePhases.get_phases(ft1, skydir, opt.optimal_emin, emax, opt.optimal_radius)
+    phases = get_phases(ft1, skydir, opt.optimal_emin, emax, opt.optimal_radius)
 
     # compute bayesian blocks on the optimized list of phases
     off_peak_bb = OffPeakBB(phases)
