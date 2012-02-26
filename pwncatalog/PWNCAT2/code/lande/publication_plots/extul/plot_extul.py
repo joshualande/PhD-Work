@@ -16,6 +16,10 @@ from lande_plotting import label_axesgrid
 
 bw=plot_helper.get_bw()
 
+from uw.utilities.makerec import fitsrec
+
+r = fitsrec('/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v11/cached.fits')
+
 for type in ['dim','bright']:
 
     fig = P.figure(None,(6,6))
@@ -25,10 +29,6 @@ for type in ['dim','bright']:
                 share_all=False,
                 axes_pad=0.2)
 
-    from uw.utilities.makerec import fitsrec
-
-    r = fitsrec('/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v9/cached.fits')
-    print r
 
     extension_mc = r['extension_mc']
     extension_ul = r['extension_ul']
@@ -49,34 +49,51 @@ for type in ['dim','bright']:
 
         extlist = np.sort(np.unique(extension_mc[cut]))
 
-        print sum(cut),len(extlist)
-        print 'for gamma=%s, avg num=%s' % (index,sum(cut)/len(extlist))
 
         for e in extlist:
             assert len(np.unique(flux_mc[cut&(extension_mc==e)])) == 1
 
-        flux = [flux_mc[cut&(extension_mc==e)][0] for e in extlist]
-                
-        avg_ts_point = [np.mean(ts_point[cut&(extension_mc==e)]) for e in extlist]
-        avg_ts_ext = [np.mean(ts_ext[cut&(extension_mc==e)]) for e in extlist]
-        coverage = [ np.average(e < extension_ul[cut&(extension_mc==e)]) for e in extlist]
+        a = np.asarray
 
-        number = [ sum(cut&(extension_mc==e)) for e in extlist]
-        print 'index=',index
-        print '-- extlist=',extlist
-        print '-- flux=',flux
-        print '-- avg_ts_point', avg_ts_point
-        print '-- avg_ts_ext', avg_ts_ext
-        print '-- coverage', coverage
-        print '-- number', number
+        flux = a([flux_mc[cut&(extension_mc==e)][0] for e in extlist])
+                
+        avg_ts_point = a([np.mean(ts_point[cut&(extension_mc==e)]) for e in extlist])
+        avg_ts_ext = a([np.mean(ts_ext[cut&(extension_mc==e)]) for e in extlist])
+        coverage = a([ np.average(e < extension_ul[cut&(extension_mc==e)]) for e in extlist])
+
+        number = a([ sum(cut&(extension_mc==e)) for e in extlist])
+        print 'For %s, gamma=%s:' % (type,index)
+        print '-- extlist=',extlist.tolist()
+        print '-- flux=',flux.tolist()
+        print '-- avg_ts_point', avg_ts_point.tolist()
+        print '-- avg_ts_ext', avg_ts_ext.tolist()
+        print '-- coverage', coverage.tolist()
+        print '-- number', number.tolist()
 
         grid[0].semilogy(extlist, flux, '-', **plot_kwargs)
         grid[1].plot(extlist, avg_ts_point, 'o', **plot_kwargs)
         grid[2].semilogy(extlist, avg_ts_ext, 'o', **plot_kwargs)
-        grid[3].plot(extlist, coverage, '-', **plot_kwargs)
 
-    prop = FontProperties(size=10)
-    grid[3].legend(numpoints=1, ncol=2, loc=3, prop=prop)
+
+        #error=False
+        error=True
+        if not error:
+            grid[3].plot(extlist, coverage, '-', **plot_kwargs)
+        else:
+            import scipy.stats.distributions as dist
+
+            c = 0.683 # See page 6 in the text
+            k = a([np.sum(e < extension_ul[cut&(extension_mc==e)]) for e in extlist])
+            n = a([np.sum(cut&(extension_mc==e)) for e in extlist])
+
+            # Formula from http://arxiv.org/pdf/1012.0566v3.pdf
+            p = coverage
+            p_lower = dist.beta.ppf((1-c)/2.,k+1,n-k+1)
+            p_higher = dist.beta.ppf(1-(1-c)/2.,k+1,n-k+1)
+
+            grid[3].fill_between(extlist.tolist(), p_lower.tolist(), p_higher.tolist(), alpha=0.5, **plot_kwargs)
+
+    grid[0].legend(numpoints=1, ncol=2, loc=3, prop=FontProperties(size=10))
 
     label_axesgrid(grid)
 
