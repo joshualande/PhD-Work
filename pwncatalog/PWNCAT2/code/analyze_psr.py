@@ -5,6 +5,7 @@ from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results
         plot_phaseogram,plot_phase_vs_time,all_energy,import_module
 from uw.pulsar.phase_range import PhaseRange
 from likelihood_tools import force_gradient
+from skymaps import SkyDir
 
 from uw.like.SpatialModels import Gaussian
 
@@ -68,16 +69,23 @@ if not all_energy(emin,emax) and do_cutoff:
 if args.no_phase_cut:
     phase = PhaseRange(0,1)
 else:
-    phase=yaml.load(open(args.pwnphase))[name]['phase']
+    pwnphase=yaml.load(open(args.pwnphase))[name]
+    phase=pwnphase['phase']
 
 print 'phase = ',phase
 
 print 'Making phaseogram'
 
-ft1 = yaml.load(open(args.pwndata))[name]['ft1']
+pwndata=yaml.load(open(args.pwndata))[name]
+ft1 = pwndata['ft1']
+pulsar_position = SkyDir(*pwndata['cel'])
+
 if not os.path.exists('plots'): os.makedirs('plots')
-plot_phaseogram(name, ft1, off_pulse=phase, filename='plots/phaseogram_%s.png' % (name))
-plot_phase_vs_time(name, ft1, off_pulse=phase, filename='plots/phase_vs_time_%s.png' % (name))
+
+plot_kwargs = dict(ft1=ft1, skydir=pulsar_position, off_pulse=phase, 
+                   emin=pwnphase['optimal_emin'], emax=pwnphase['emax'], radius=pwnphase['optimal_radius'])
+plot_phaseogram(title='Phaseogram for %s' % name, filename='plots/phaseogram_%s.png' % name, **plot_kwargs)
+plot_phase_vs_time(title='Phase vs Time for %s' % name, filename='plots/phase_vs_time_%s.png' % name, **plot_kwargs)
 
 # nb, $PWD gets nicer paths then os.getcwd()
 savedir=None if args.no_savedir else join(os.getenv('PWD'),'savedir')
@@ -103,7 +111,6 @@ roi=setup_pwn(name, args.pwndata, phase=phase,
 modify = import_module(args.modify)
 new_sources = modify.modify_roi(name,roi)
 
-pulsar_position = roi.get_source(name).skydir
 overlay_kwargs = dict(pulsar_position=pulsar_position, new_sources=new_sources)
 
 if do_at_pulsar:
