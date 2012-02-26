@@ -59,7 +59,7 @@ flux_mc = lambda extension: np.exp(np.log(min_flux_mc) +
 index_mc = args.index
 
 emin=1e2
-emax=10**5.5
+emax=1e5
 irf="P7SOURCE_V6"
 
 skydir_mc = SkyDir()
