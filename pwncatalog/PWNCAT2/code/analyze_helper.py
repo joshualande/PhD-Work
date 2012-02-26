@@ -17,7 +17,6 @@ from uw.like.SpatialModels import Gaussian
 
 from lande_localize import GridLocalize
 from lande_toolbag import tolist
-from lande_extended import fit_extension_frozen
 from lande_pulsar import plot_phaseogram,plot_phase_vs_time
 from lande_plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter,plot_gtlike_cutoff_test
 from lande_sed import LandeSED
@@ -55,7 +54,7 @@ def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, tsmap_pixelsize=0
 
     roi.zero_source(which=name)
 
-    roi.plot_tsmap(filename='%s/tsmap_source_%s_%s.png' % (plotdir,hypothesis, name), 
+    roi.plot_tsmap(filename='%s/tsmap_source_%s_%s_%sdeg.png' % (plotdir,hypothesis, name,size), 
                    title='Source TS Map for %s' % name,
                    **tsmap_kwargs)
 
@@ -133,7 +132,8 @@ def plots(roi, name, hypothesis,
     for dir in [datadir, plotdir]: 
         if not os.path.exists(dir): os.makedirs(dir)
 
-    for size in [5,10]:
+    #for size in [5,10]:
+    for size in [5]:
         args = (roi, name, hypothesis, datadir, plotdir, size)
         counts_plots(*args, **common_kwargs)
         smooth_plots(*args, **common_kwargs)
@@ -199,7 +199,6 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
                               update=True,
                               size=0.5, pixelsize=0.1)
             print_summary()
-            print 'Grid localized to best position = ',grid.best_position
             roi.localize(name, update=True)
         except Exception, ex:
             print 'ERROR localizing pointlike: ', ex
@@ -216,7 +215,7 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
                 before_state = PointlikeState(roi)
                 roi.change_binning(localization_emin,emax)
 
-            fit_extension_frozen(roi,name)
+            roi.fit_extension(which=name)
             roi.localize(name, update=True)
 
         except Exception, ex:
