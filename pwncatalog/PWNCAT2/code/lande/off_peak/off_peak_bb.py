@@ -107,6 +107,7 @@ class OffPeakBB(object):
 
         self.xx, self.yy = xx, yy
 
+        self.blocks = dict(xx = xx, yy = yy)
 
 from skymaps import SkyDir
 from uw.pulsar.stats import hm
@@ -123,7 +124,7 @@ class OptimizePhases(object):
     @memoize
     def get_all(ft1, skydir):
         """ Cache photons = faster """
-        ed = rad_extract(ft1,skydir,radius_function=180,return_cols=['PULSE_PHASE'])
+        ed = rad_extract(expandvars(ft1),skydir,radius_function=180,return_cols=['PULSE_PHASE'])
         return ed
 
     @staticmethod
@@ -146,10 +147,10 @@ class OptimizePhases(object):
         stats = np.empty([len(ens),len(rads)])
 
         for iemin,emin in enumerate(ens):
-            for irad,rad in enumerate(rads):
-                phases = OptimizePhases.get_phases(ft1, skydir, emin, emax, rad)
+            for irad,radius in enumerate(rads):
+                phases = OptimizePhases.get_phases(ft1, skydir, emin, emax, radius)
                 stat = hm(phases) if len(phases) > 0 else 0
-                if verbose: print 'emin=%s, rad=%s, stat=%s, len=%s, n0=%s' % (emin,rad,stat,len(phases),np.sum(phases==0))
+                if verbose: print 'emin=%s, radius=%s, stat=%s, len=%s, n0=%s' % (emin,radius,stat,len(phases),np.sum(phases==0))
                 stats[iemin,irad] = stat
 
         a = np.argmax(stats)
@@ -159,9 +160,10 @@ class OptimizePhases(object):
         self.optimal_radius = rads[coord_r]
         self.optimal_h = np.max(stats)
 
-def plot(ft1, skydir, emin, emax, rad, off_peak_bb, pwncat1phase=None, axes=None):
+def plot(ft1, skydir, emin, emax, radius, off_peak_phase, 
+         blocks, pwncat1phase=None, axes=None):
 
-    phases = OptimizePhases.get_phases(ft1, skydir, emin, emax, rad)
+    phases = OptimizePhases.get_phases(ft1, skydir, emin, emax, radius)
 
     nbins=100
     bins = np.linspace(0,1,100)
@@ -177,18 +179,14 @@ def plot(ft1, skydir, emin, emax, rad, off_peak_bb, pwncat1phase=None, axes=None
     axes.grid(True)
 
     binsz = bins[1]-bins[0]
-    P.plot(off_peak_bb.xx,off_peak_bb.yy*binsz)
+    P.plot(np.asarray(blocks['xx']),np.asarray(blocks['yy'])*binsz)
 
-    off_peak_bb.off_peak.axvspan(label='bb', alpha=0.25, color='green')
+    PhaseRange(off_peak_phase).axvspan(label='bb', alpha=0.25, color='green')
     if pwncat1phase is not None:
-        pwncat1phase.axvspan(label='pwncat1', alpha=0.25, color='blue')
-
-    P.title(name)
-
-    P.legend()
+        PhaseRange(pwncat1phase).axvspan(label='pwncat1', alpha=0.25, color='blue')
 
 
-def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
+def find_offpeak(ft1,name,skydir,pwncat1phase, emax=100000):
 
     # First, find energy and radius that maximize H test.
 
@@ -196,25 +194,19 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
 
     print 'optimal energy=%s & radius=%s, h=%s' % (opt.optimal_emin,opt.optimal_radius,opt.optimal_h)
 
+    # Get optimal phases
     phases = OptimizePhases.get_phases(ft1, skydir, opt.optimal_emin, emax, opt.optimal_radius)
 
-    # Next, compute bayesian blocks on the optimized list of phases
-
+    # compute bayesian blocks on the optimized list of phases
     off_peak_bb = OffPeakBB(phases)
 
-    plot(ft1, skydir, opt.optimal_emin, emax, opt.optimal_radius, off_peak_bb, pwncat1phase)
-
-    P.savefig('results_%s.pdf' % name)
 
     global results
     results=tolist(
         dict(
             pwncat1phase = pwncat1phase.tolist() if pwncat1phase is not None else None,
-            off_peak_bb = dict(
-                off_peak = off_peak_bb.off_peak.tolist(),
-                xx = off_peak_bb.xx,
-                yy = off_peak_bb.yy,
-                ),
+            off_peak_phase = off_peak_bb.off_peak.tolist(),
+            blocks = off_peak_bb.blocks,
             optimal_emin = opt.optimal_emin,
             emax = emax,
             optimal_radius = opt.optimal_radius,
@@ -223,7 +215,17 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
 
     yaml.dump(results,open('results_%s.yaml' % name,'w'))
 
-    pickle.dump(results,open('results_%s.pickle' % name,'w'))
+    plot(ft1, 
+         skydir = skydir, 
+         emin = opt.optimal_emin, 
+         emax = emax, 
+         radius = opt.optimal_radius, 
+         off_peak_phase = off_peak_bb.off_peak,
+         blocks = off_peak_bb.blocks, 
+         pwncat1phase = pwncat1phase)
+    P.legend()
+    P.title(name)
+    P.savefig('results_%s.pdf' % name)
 
 
 if __name__ == '__main__':
@@ -238,7 +240,7 @@ if __name__ == '__main__':
     pwndata=expandvars(args.pwndata)
 
     d=yaml.load(open(pwndata))[name]
-    ft1=expandvars(d['ft1'])
+    ft1=d['ft1']
     print ft1
 
     pwncat1 = yaml.load(open(expandvars(args.pwncat1phase)))
