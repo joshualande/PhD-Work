@@ -1,478 +1,647 @@
-# Commeting out PSRs with bad timing - Jan 21, 2012, JL
-# Updating to latest ft1 files + increasing data set - Dec 10 2011, JL
-# Fixed the path to ltcube files - Nov 4, 2011, Rousseau
+# Updates:
+# * Updating to Ozlem's data set + Matthew's 111 pulsars - Feb 25, 2012, JL
+# * Commeting out PSRs with bad timing - Jan 21, 2012, JL
+# * Updating to latest ft1 files + increasing data set - Dec 10 2011, JL
+# * Fixed the path to ltcube files - Nov 4, 2011, Rousseau
 PSRJ0007+7303:
-  cel: [1.7565, 73.0523055556]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0007+7303/J0007+7303_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0007+7303/ltcube_J0007+7303.fits
+  cel: [1.664951792, 73.06913514]
+  ft1: $KERRPSR/J0007+7303/J0007+7303_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [119.63615895324038, 10.484625348033365]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0030+0451:
-  cel: [7.61428592708, 4.86102805278]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0030+0451/J0030+0451_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0030+0451/ltcube_J0030+0451.fits
+  cel: [7.614300796, 4.861028172]
+  ft1: $KERRPSR/J0030+0451/J0030+0451_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [113.1420330031214, -57.61133036261867]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0034-0534:
-  cel: [8.59097627542, -5.57686714167]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0034-0534/J0034-0534_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0034-0534/ltcube_J0034-0534.fits
+  cel: [8.59097486, -5.576867175]
+  ft1: $KERRPSR/J0034-0534/J0034-0534_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [111.4932585229098, -68.06857662495365]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ0101-6422:
+  cel: [15.2963196, -64.37504518]
+  ft1: $KERRPSR/J0101-6422/J0101-6422_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [301.1923772640349, -52.720310085163966]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ0102+4839:
+  cel: [15.7111, 48.6619]
+  ft1: $KERRPSR/J0102+4839/J0102+4839_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [124.87457747581782, -14.166773298759708]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0106+4855:
-  cel: [16.6044620467, 48.9310378611]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0106+4855/J0106+4855_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0106+4855/ltcube_J0106+4855.fits
-#PSRJ0205+6449:
-#  cel: [31.408, 64.8285555556]
-#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0205+6449/J0205+6449_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0205+6449/ltcube_J0205+6449.fits
+  cel: [16.60442863, 48.93104826]
+  ft1: $KERRPSR/J0106+4855/J0106+4855_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [125.46561586632431, -13.866947652430738]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0218+4232:
-  cel: [34.5264888238, 42.5381621028]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0218+4232/J0218+4232_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0218+4232/ltcube_J0218+4232.fits
+  cel: [34.52645735, 42.53817881]
+  ft1: $KERRPSR/J0218+4232/J0218+4232_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [139.50856316948583, -17.526703133105453]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0248+6021:
-  cel: [42.0776132583, 60.3597020167]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0248+6021/J0248+6021_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0248+6021/ltcube_J0248+6021.fits
+  cel: [42.07762065, 60.35969458]
+  ft1: $KERRPSR/J0248+6021/J0248+6021_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [136.9031556047685, 0.6974919141642474]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0340+4130:
-  cel: [55.0970355379, 41.5125820278]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0340+4130/J0340+4130_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0340+4130/ltcube_J0340+4130.fits
+  cel: [55.09703572, 41.51258067]
+  ft1: $KERRPSR/J0340+4130/J0340+4130_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [153.78385145918423, -11.021689706942292]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0357+3205:
-  cel: [59.4674441675, 32.08998355]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0357+3205/J0357+3205_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0357+3205/ltcube_J0357+3205.fits
-PSRJ0437-4715:
-  cel: [69.3162385129, -47.2525325]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0437-4715/J0437-4715_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0437-4715/ltcube_J0437-4715.fits
+  cel: [59.46774116, 32.08968541]
+  ft1: $KERRPSR/J0357+3205/J0357+3205_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [162.7603000092803, -16.006796732314587]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0534+2200:
-  cel: [83.6332179947, 22.0144636229]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0534+2200/J0534+2200_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0534+2200/ltcube_J0534+2200.fits
+  cel: [83.633218, 22.01446363]
+  ft1: $KERRPSR/J0534+2200/J0534+2200_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [184.5580050563942, -5.784030496024168]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0610-2100:
-  cel: [92.5566480767, -21.0077590917]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0610-2100/J0610-2100_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0610-2100/ltcube_J0610-2100.fits
+  cel: [92.55663494, -21.0077841]
+  ft1: $KERRPSR/J0610-2100/J0610-2100_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [227.74695509057386, -18.18337345967937]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0613-0200:
-  cel: [93.4332322904, -2.013118575]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0613-0200/J0613-0200_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0613-0200/ltcube_J0613-0200.fits
+  cel: [93.43322464, -2.013076]
+  ft1: $KERRPSR/J0613-0200/J0613-0200_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [210.41344625765572, -9.304644706939964]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0614-3329:
-  cel: [93.5431160333, -33.4983651889]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0614-3329/J0614-3329_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0614-3329/ltcube_J0614-3329.fits
+  cel: [93.54311531, -33.49836367]
+  ft1: $KERRPSR/J0614-3329/J0614-3329_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [240.5015120631938, -21.827024067386578]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0622+3749:
-  cel: [95.5441335179, 37.8193768056]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0622+3749/J0622+3749_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0622+3749/ltcube_J0622+3749.fits
+  cel: [95.54377587, 37.82045549]
+  ft1: $KERRPSR/J0622+3749/J0622+3749_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [175.87718836903792, 10.957824876785939]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0631+1036:
-  cel: [97.8656733621, 10.616477075]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0631+1036/J0631+1036_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0631+1036/ltcube_J0631+1036.fits
+  cel: [97.86468756, 10.61706954]
+  ft1: $KERRPSR/J0631+1036/J0631+1036_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [201.2198017355583, 0.4501397601139366]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0633+0632:
-  cel: [98.4337570517, 6.54157821111]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0633+0632/J0633+0632_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0633+0632/ltcube_J0633+0632.fits
+  cel: [98.43384042, 6.541722136]
+  ft1: $KERRPSR/J0633+0632/J0633+0632_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [205.09460878366275, -0.93257677124146]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0633+1746:
-  cel: [98.4761719817, 17.7708042444]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0633+1746/J0633+1746_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0633+1746/ltcube_J0633+1746.fits
+  cel: [98.47618228, 17.77090004]
+  ft1: $KERRPSR/J0633+1746/J0633+1746_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [195.13394407046673, 4.26682056260192]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0659+1414:
-  cel: [104.950730279, 14.2392514694]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0659+1414/J0659+1414_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0659+1414/ltcube_J0659+1414.fits
+  cel: [104.950547, 14.23926157]
+  ft1: $KERRPSR/J0659+1414/J0659+1414_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [201.10814444571713, 8.258507730780474]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0729-1448:
-  cel: [112.317301965, -14.8113087333]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0729-1448/J0729-1448_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0729-1448/ltcube_J0729-1448.fits
+  cel: [112.317302, -14.81130873]
+  ft1: $KERRPSR/J0729-1448/J0729-1448_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [230.39263120577408, 1.4223808131963822]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0734-1559:
-  cel: [113.690178624, -15.9879500306]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0734-1559/J0734-1559_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0734-1559/ltcube_J0734-1559.fits
+  cel: [113.6901786, -15.98795003]
+  ft1: $KERRPSR/J0734-1559/J0734-1559_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [232.06193224169442, 2.0158884083978705]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0742-2822:
-  cel: [115.704329994, -28.3789054]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0742-2822/J0742-2822_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0742-2822/ltcube_J0742-2822.fits
+  cel: [115.7044069, -28.37906549]
+  ft1: $KERRPSR/J0742-2822/J0742-2822_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [243.77413139144252, -2.4443472312168044]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0751+1807:
-  cel: [117.788149087, 18.1273649528]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0751+1807/J0751+1807_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0751+1807/ltcube_J0751+1807.fits
+  cel: [117.7881503, 18.12737054]
+  ft1: $KERRPSR/J0751+1807/J0751+1807_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [202.7301067276147, 21.086100000350292]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0835-4510:
-  cel: [128.835839242, -45.1763363889]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0835-4510/J0835-4510_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0835-4510/ltcube_J0835-4510.fits
+  cel: [128.8358471, -45.17633973]
+  ft1: $KERRPSR/J0835-4510/J0835-4510_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [263.5522361015685, -2.7872028333748977]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0908-4913:
-  cel: [137.148041667, -49.2184722222]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0908-4913/J0908-4913_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0908-4913/ltcube_J0908-4913.fits
+  cel: [137.1480417, -49.21847222]
+  ft1: $KERRPSR/J0908-4913/J0908-4913_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [270.265959034204, -1.0187263443316166]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0940-5428:
-  cel: [145.242583333, -54.4779444444]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0940-5428/J0940-5428_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J0940-5428/ltcube_J0940-5428.fits
+  cel: [145.2425833, -54.47794444]
+  ft1: $KERRPSR/J0940-5428/J0940-5428_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [277.51053033988273, -1.2922967670429915]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1016-5857:
-  cel: [154.088166667, -58.9533611111]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1016-5857/J1016-5857_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1016-5857/ltcube_J1016-5857.fits
+  cel: [154.0881667, -58.95336111]
+  ft1: $KERRPSR/J1016-5857/J1016-5857_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [284.07976390671104, -1.879841348890773]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1019-5749:
-  cel: [154.96725, -57.8183055556]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1019-5749/J1019-5749_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1019-5749/ltcube_J1019-5749.fits
+  cel: [154.96725, -57.81830556]
+  ft1: $KERRPSR/J1019-5749/J1019-5749_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [283.83721513165176, -0.6790766878768469]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1023-5746:
-  cel: [155.760877431, -57.7698375889]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1023-5746/J1023-5746_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1023-5746/ltcube_J1023-5746.fits
+  cel: [155.7623465, -57.76830709]
+  ft1: $KERRPSR/J1023-5746/J1023-5746_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [284.1663363312126, -0.40747947412862456]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1024-0719:
-  cel: [156.161147719, -7.32206515833]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1024-0719/J1024-0719_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1024-0719/ltcube_J1024-0719.fits
+  cel: [156.1612548, -7.321919308]
+  ft1: $KERRPSR/J1024-0719/J1024-0719_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [251.7021431584575, 40.515838317528505]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1028-5819:
-  cel: [157.116172702, -58.3183932167]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1028-5819/J1028-5819_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1028-5819/ltcube_J1028-5819.fits
+  cel: [157.1161935, -58.31839784]
+  ft1: $KERRPSR/J1028-5819/J1028-5819_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [285.065361723333, -0.4958606012129701]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1044-5737:
-  cel: [161.137133167, -57.6220887694]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1044-5737/J1044-5737_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1044-5737/ltcube_J1044-5737.fits
+  cel: [161.1372123, -57.62197863]
+  ft1: $KERRPSR/J1044-5737/J1044-5737_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [286.5750604574017, 1.1631018535404112]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1048-5832:
-  cel: [162.050833333, -58.5349444444]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1048-5832/J1048-5832_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1048-5832/ltcube_J1048-5832.fits
+  cel: [162.0508333, -58.53494444]
+  ft1: $KERRPSR/J1048-5832/J1048-5832_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [287.4253445754769, 0.5765698314219628]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1057-5226:
-  cel: [164.495166667, -52.4489722222]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1057-5226/J1057-5226_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1057-5226/ltcube_J1057-5226.fits
+  cel: [164.4951667, -52.44897222]
+  ft1: $KERRPSR/J1057-5226/J1057-5226_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [285.9843549223907, 6.6492085357710815]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1105-6107:
-  cel: [166.359041667, -61.1309444444]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1105-6107/J1105-6107_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1105-6107/ltcube_J1105-6107.fits
+  cel: [166.3590417, -61.13094444]
+  ft1: $KERRPSR/J1105-6107/J1105-6107_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [290.4901211850614, -0.8462559009141329]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1112-6103:
+  cel: [168.061794, -61.05869564]
+  ft1: $KERRPSR/J1112-6103/J1112-6103_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [291.221830427991, -0.4625149322268597]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1119-6127:
-  cel: [169.809583333, -61.46375]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1119-6127/J1119-6127_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1119-6127/ltcube_J1119-6127.fits
+  cel: [169.8095833, -61.46375]
+  ft1: $KERRPSR/J1119-6127/J1119-6127_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [292.15174304539323, -0.5369429990240993]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1124-3653:
+  cel: [171.0047, -36.8886]
+  ft1: $KERRPSR/J1124-3653/J1124-3653_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [284.09506862858393, 22.764811991810326]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1124-5916:
+  cel: [171.1629167, -59.27222222]
+  ft1: $KERRPSR/J1124-5916/J1124-5916_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [292.03878886784634, 1.7515479494100832]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1125-5825:
+  cel: [171.4348567, -58.4213548]
+  ft1: $KERRPSR/J1125-5825/J1125-5825_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [291.8931339512484, 2.6015944932656407]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1135-6055:
-  cel: [173.784122665, -60.9263819139]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1135-6055/J1135-6055_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1135-6055/ltcube_J1135-6055.fits
+  cel: [173.7856773, -60.92682318]
+  ft1: $KERRPSR/J1135-6055/J1135-6055_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [293.79499982699355, 0.5841681603806685]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1231-1411:
-  cel: [187.797138918, -14.1954593333]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1231-1411/J1231-1411_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1231-1411/ltcube_J1231-1411.fits
+  cel: [187.7971365, -14.19545823]
+  ft1: $KERRPSR/J1231-1411/J1231-1411_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [295.531834243797, 48.38507970009375]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1357-6429:
-  cel: [209.260125, -64.4917222222]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1357-6429/J1357-6429_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1357-6429/ltcube_J1357-6429.fits
+  cel: [209.260125, -64.49172222]
+  ft1: $KERRPSR/J1357-6429/J1357-6429_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [309.92314424113846, -2.514158114083534]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1410-6132:
-  cel: [212.592046806, -61.5330506083]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1410-6132/J1410-6132_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1410-6132/ltcube_J1410-6132.fits
+  cel: [212.5920468, -61.53305061]
+  ft1: $KERRPSR/J1410-6132/J1410-6132_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [312.1933805023752, -0.08877164417103442]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1413-6205:
-  cel: [213.375902261, -62.093516975]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1413-6205/J1413-6205_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1413-6205/ltcube_J1413-6205.fits
+  cel: [213.3756876, -62.0934906]
+  ft1: $KERRPSR/J1413-6205/J1413-6205_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [312.37413484367073, -0.735625425358854]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1418-6058:
-  cel: [214.678343803, -60.9666560167]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1418-6058/J1418-6058_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1418-6058/ltcube_J1418-6058.fits
+  cel: [214.6781936, -60.96639384]
+  ft1: $KERRPSR/J1418-6058/J1418-6058_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [313.32431088864007, 0.1320867496218006]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1420-6048:
-  cel: [215.034320833, -60.8045638889]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1420-6048/J1420-6048_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1420-6048/ltcube_J1420-6048.fits
+  cel: [215.0343208, -60.80456389]
+  ft1: $KERRPSR/J1420-6048/J1420-6048_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [313.54162325343907, 0.22689744890214378]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1429-5911:
-  cel: [217.493932357, -59.1934835778]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1429-5911/J1429-5911_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1429-5911/ltcube_J1429-5911.fits
+  cel: [217.4939614, -59.19354187]
+  ft1: $KERRPSR/J1429-5911/J1429-5911_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [315.2616130659442, 1.2988170806005481]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1446-4701:
+  cel: [221.6488097, -47.02410046]
+  ft1: $KERRPSR/J1446-4701/J1446-4701_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [322.50086614730594, 11.425187199885455]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1459-6053:
-  cel: [224.875677859, -60.8887688083]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1459-6053/J1459-6053_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1459-6053/ltcube_J1459-6053.fits
+  cel: [224.875735, -60.88886311]
+  ft1: $KERRPSR/J1459-6053/J1459-6053_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [317.88684353614354, -1.7912888898385395]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1509-5850:
-  cel: [227.363041667, -58.8489166667]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1509-5850/J1509-5850_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1509-5850/ltcube_J1509-5850.fits
+  cel: [227.3630417, -58.84891667]
+  ft1: $KERRPSR/J1509-5850/J1509-5850_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [319.972630420619, -0.6207807678358472]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1513-5908:
-  cel: [228.48175, -59.1358333333]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1513-5908/J1513-5908_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1513-5908/ltcube_J1513-5908.fits
+  cel: [228.48175, -59.13583333]
+  ft1: $KERRPSR/J1513-5908/J1513-5908_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [320.3212238040115, -1.1620268829568785]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1514-4946:
+  cel: [228.5796, -49.771]
+  ft1: $KERRPSR/J1514-4946/J1514-4946_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [325.24984578853355, 6.80730736747315]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1531-5610:
-  cel: [232.866254504, -56.1820457222]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1531-5610/J1531-5610_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1531-5610/ltcube_J1531-5610.fits
+  cel: [232.8662917, -56.18194444]
+  ft1: $KERRPSR/J1531-5610/J1531-5610_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [323.8974529754812, 0.03258453416984934]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1600-3053:
-  cel: [240.216264135, -30.89704885]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1600-3053/J1600-3053_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1600-3053/ltcube_J1600-3053.fits
+  cel: [240.2162664, -30.8970353]
+  ft1: $KERRPSR/J1600-3053/J1600-3053_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [344.09093655124553, 16.4511910695069]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1614-2230:
-  cel: [243.652110211, -22.5086638889]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1614-2230/J1614-2230_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1614-2230/ltcube_J1614-2230.fits
+  cel: [243.6521153, -22.50853168]
+  ft1: $KERRPSR/J1614-2230/J1614-2230_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [352.6363220406337, 20.191985811571715]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1620-4927:
-  cel: [245.173377215, -49.4599989056]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1620-4927/J1620-4927_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1620-4927/ltcube_J1620-4927.fits
-#PSRJ1648-4611:
-#  cel: [252.09175, -46.1877777778]
-#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1648-4611/J1648-4611_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1648-4611/ltcube_J1648-4611.fits
+  cel: [245.1730205, -49.46031334]
+  ft1: $KERRPSR/J1620-4927/J1620-4927_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [333.8885339084492, 0.4074390959772124]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1648-4611:
+  cel: [252.09175, -46.18777778]
+  ft1: $KERRPSR/J1648-4611/J1648-4611_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [339.43873251658675, -0.7939670276851575]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1658-5324:
+  cel: [254.6639338, -53.40194743]
+  ft1: $KERRPSR/J1658-5324/J1658-5324_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [334.86928922175815, -6.625588641157279]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1702-4128:
-  cel: [255.718833333, -41.4800555556]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1702-4128/J1702-4128_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1702-4128/ltcube_J1702-4128.fits
+  cel: [255.7188333, -41.48005556]
+  ft1: $KERRPSR/J1702-4128/J1702-4128_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [344.7448228666335, 0.12230565258348076]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1709-4429:
-  cel: [257.428033333, -44.4856222222]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1709-4429/J1709-4429_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1709-4429/ltcube_J1709-4429.fits
+  cel: [257.4280333, -44.48562222]
+  ft1: $KERRPSR/J1709-4429/J1709-4429_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [343.0983074714948, -2.685971131950287]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1713+0747:
-  cel: [258.456388608, 7.79374849167]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1713+0747/J1713+0747_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1713+0747/ltcube_J1713+0747.fits
+  cel: [258.4563652, 7.793767661]
+  ft1: $KERRPSR/J1713+0747/J1713+0747_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [28.750993388219968, 25.222617995842583]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1718-3825:
-  cel: [259.556520833, -38.4216833333]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1718-3825/J1718-3825_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1718-3825/ltcube_J1718-3825.fits
-#PSRJ1730-3350:
-#  cel: [262.634829917, -33.84090655]
-#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1730-3350/J1730-3350_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1730-3350/ltcube_J1730-3350.fits
+  cel: [259.5565208, -38.42168333]
+  ft1: $KERRPSR/J1718-3825/J1718-3825_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [348.9512648505775, -0.4318846202656096]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1730-3350:
+  cel: [262.6336451, -33.84136051]
+  ft1: $KERRPSR/J1730-3350/J1730-3350_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [354.13508478006213, 0.09287864148627047]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1732-3131:
-  cel: [263.1396789, -31.5228401611]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1732-3131/J1732-3131_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1732-3131/ltcube_J1732-3131.fits
+  cel: [263.1397329, -31.52326781]
+  ft1: $KERRPSR/J1732-3131/J1732-3131_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [356.30769549198175, 1.0067932273908442]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1741+1351:
+  cel: [265.3797866, 13.86226977]
+  ft1: $KERRPSR/J1741+1351/J1741+1351_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [37.88562019609971, 21.640545345844313]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1741-2054:
-  cel: [265.488342879, -20.9036148028]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1741-2054/J1741-2054_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1741-2054/ltcube_J1741-2054.fits
+  cel: [265.4885417, -20.90536111]
+  ft1: $KERRPSR/J1741-2054/J1741-2054_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [6.420661231369933, 4.905326749759322]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1744-1134:
-  cel: [266.122531783, -11.5818587722]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1744-1134/J1744-1134_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1744-1134/ltcube_J1744-1134.fits
+  cel: [266.122465, -11.5818263]
+  ft1: $KERRPSR/J1744-1134/J1744-1134_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [14.794319996560763, 9.179539808914134]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1746-3239:
-  cel: [266.72898698, -32.6603504889]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1746-3239/J1746-3239_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1746-3239/ltcube_J1746-3239.fits
+  cel: [266.7289453, -32.6655082]
+  ft1: $KERRPSR/J1746-3239/J1746-3239_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [356.95771079779894, -2.1754392812689023]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1747-2958:
-  cel: [266.816175007, -29.9669444445]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1747-2958/J1747-2958_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1747-2958/ltcube_J1747-2958.fits
-#PSRJ1801-2451:
-#  cel: [270.249747507, -24.868533]
-#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1801-2451/J1801-2451_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1801-2451/ltcube_J1801-2451.fits
+  cel: [266.816175, -29.96694444]
+  ft1: $KERRPSR/J1747-2958/J1747-2958_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [359.3056663374667, -0.8416577977878192]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1747-4036:
+  cel: [266.9529867, -40.61521476]
+  ft1: $KERRPSR/J1747-4036/J1747-4036_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [350.2081625506498, -6.412216414906531]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1801-2451:
+  cel: [270.2494587, -24.86472273]
+  ft1: $KERRPSR/J1801-2451/J1801-2451_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [5.248350769112226, -0.8851968127649912]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1803-2149:
-  cel: [270.7901551, -21.8204877583]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1803-2149/J1803-2149_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1803-2149/ltcube_J1803-2149.fits
+  cel: [270.7901338, -21.82028274]
+  ft1: $KERRPSR/J1803-2149/J1803-2149_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [8.14065254640918, 0.18723238501723888]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1809-2332:
-  cel: [272.459220595, -23.5343495111]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1809-2332/J1809-2332_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1809-2332/ltcube_J1809-2332.fits
+  cel: [272.4594052, -23.54526094]
+  ft1: $KERRPSR/J1809-2332/J1809-2332_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [7.385446660793868, -1.9984529899504198]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1813-1246:
-  cel: [273.348935235, -12.7669060472]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1813-1246/J1813-1246_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1813-1246/ltcube_J1813-1246.fits
+  cel: [273.3491876, -12.76541247]
+  ft1: $KERRPSR/J1813-1246/J1813-1246_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [17.245764931655376, 2.444692212913888]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1823-3021A:
-  cel: [275.918686304, -30.361108325]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1823-3021A/J1823-3021A_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1823-3021A/ltcube_J1823-3021A.fits
+  cel: [275.9186863, -30.36111025]
+  ft1: $KERRPSR/J1823-3021A/J1823-3021A_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [2.7886390394582223, -7.913654745629857]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1826-1256:
-  cel: [276.535488631, -12.9428108972]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1826-1256/J1826-1256_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1826-1256/ltcube_J1826-1256.fits
-#PSRJ1835-1106:
-#  cel: [278.826874284, -11.1037049444]
-#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1835-1106/J1835-1106_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1835-1106/ltcube_J1835-1106.fits
+  cel: [276.5354886, -12.94250909]
+  ft1: $KERRPSR/J1826-1256/J1826-1256_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [18.556035821681398, -0.3776080169074801]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1835-1106:
+  cel: [278.8261214, -11.10434514]
+  ft1: $KERRPSR/J1835-1106/J1835-1106_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [21.222766789474388, -1.5126649635380651]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1836+5925:
-  cel: [279.057060592, 59.4249078389]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1836+5925/J1836+5925_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1836+5925/ltcube_J1836+5925.fits
+  cel: [279.0569319, 59.42488219]
+  ft1: $KERRPSR/J1836+5925/J1836+5925_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [88.87549138335413, 24.99925208893861]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1838-0537:
+  cel: [279.7336653, -5.616982117]
+  ft1: $KERRPSR/J1838-0537/J1838-0537_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [26.51006742626703, 0.20980220676069858]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1846+0919:
-  cel: [281.607846111, 9.32936123889]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1846+0919/J1846+0919_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1846+0919/ltcube_J1846+0919.fits
+  cel: [281.6067962, 9.327949236]
+  ft1: $KERRPSR/J1846+0919/J1846+0919_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [40.69118632817948, 5.34217064516445]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1902-5105:
+  cel: [285.5118678, -51.09915587]
+  ft1: $KERRPSR/J1902-5105/J1902-5105_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [345.6504829381922, -22.378830038942528]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1907+0602:
-  cel: [286.978059669, 6.03804958333]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1907+0602/J1907+0602_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1907+0602/ltcube_J1907+0602.fits
+  cel: [286.9781213, 6.037888928]
+  ft1: $KERRPSR/J1907+0602/J1907+0602_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [40.18229644037713, -0.8942595074298292]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1939+2134:
-  cel: [294.910672319, 21.5830909111]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1939+2134/J1939+2134_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1939+2134/ltcube_J1939+2134.fits
+  cel: [294.9106716, 21.58309341]
+  ft1: $KERRPSR/J1939+2134/J1939+2134_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [57.50933738177275, -0.28980352085940786]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1952+3252:
-  cel: [298.242152448, 32.8781270889]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1952+3252/J1952+3252_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1952+3252/ltcube_J1952+3252.fits
+  cel: [298.2423744, 32.87801293]
+  ft1: $KERRPSR/J1952+3252/J1952+3252_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [68.76549832644388, 2.823385296074688]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1954+2836:
-  cel: [298.579799103, 28.6014030611]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1954+2836/J1954+2836_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1954+2836/ltcube_J1954+2836.fits
+  cel: [298.5797956, 28.60140376]
+  ft1: $KERRPSR/J1954+2836/J1954+2836_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [65.2443928746235, 0.3765944602042221]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1957+5033:
-  cel: [299.444951421, 50.56184785]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1957+5033/J1957+5033_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1957+5033/ltcube_J1957+5033.fits
+  cel: [299.4105362, 50.55501824]
+  ft1: $KERRPSR/J1957+5033/J1957+5033_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [84.58398966845239, 11.013910393500042]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1958+2846:
-  cel: [299.666740692, 28.7648257583]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1958+2846/J1958+2846_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1958+2846/ltcube_J1958+2846.fits
+  cel: [299.6669361, 28.76494344]
+  ft1: $KERRPSR/J1958+2846/J1958+2846_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [65.87974419180475, -0.35325569418726444]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1959+2048:
-  cel: [299.903175723, 20.8041404333]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1959+2048/J1959+2048_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J1959+2048/ltcube_J1959+2048.fits
+  cel: [299.9031734, 20.80414583]
+  ft1: $KERRPSR/J1959+2048/J1959+2048_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [59.19734494372439, -4.697677567438108]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2017+0603:
-  cel: [304.344603149, 6.05154915556]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2017+0603/J2017+0603_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2017+0603/ltcube_J2017+0603.fits
+  cel: [304.3446038, 6.051546433]
+  ft1: $KERRPSR/J2017+0603/J2017+0603_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [48.62122984844197, -16.026552744586716]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2021+3651:
-  cel: [305.274048319, 36.8509886361]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2021+3651/J2021+3651_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2021+3651/ltcube_J2021+3651.fits
+  cel: [305.27275, 36.85133333]
+  ft1: $KERRPSR/J2021+3651/J2021+3651_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [75.22247628997879, 0.11072673222588425]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2021+4026:
-  cel: [305.373679167, 40.4485019444]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2021+4026/J2021+4026_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2021+4026/ltcube_J2021+4026.fits
+  cel: [305.3743997, 40.4465778]
+  ft1: $KERRPSR/J2021+4026/J2021+4026_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [78.22591846787323, 2.0895237206930344]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2028+3332:
-  cel: [307.082770967, 33.5345225667]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2028+3332/J2028+3332_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2028+3332/ltcube_J2028+3332.fits
+  cel: [307.0827608, 33.53456201]
+  ft1: $KERRPSR/J2028+3332/J2028+3332_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [73.36139130112088, -3.008049304952428]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2030+3641:
-  cel: [307.50108654, 36.6908885222]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2030+3641/J2030+3641_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2030+3641/ltcube_J2030+3641.fits
+  cel: [307.5010209, 36.6907707]
+  ft1: $KERRPSR/J2030+3641/J2030+3641_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [76.12318091665513, -1.4386156678136115]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2030+4415:
-  cel: [307.71410255, 44.2607098111]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2030+4415/J2030+4415_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2030+4415/ltcube_J2030+4415.fits
+  cel: [307.7139437, 44.26057277]
+  ft1: $KERRPSR/J2030+4415/J2030+4415_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [82.34060214428602, 2.8852960392487503]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2032+4127:
-  cel: [308.054603621, 41.4567960222]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2032+4127/J2032+4127_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2032+4127/ltcube_J2032+4127.fits
+  cel: [308.0545632, 41.45680133]
+  ft1: $KERRPSR/J2032+4127/J2032+4127_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [80.22424555120269, 1.0278563822092257]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2043+2740:
-  cel: [310.931270518, 27.6821339639]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2043+2740/J2043+2740_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2043+2740/ltcube_J2043+2740.fits
+  cel: [310.9313449, 27.68212601]
+  ft1: $KERRPSR/J2043+2740/J2043+2740_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [70.61257628377734, -9.151195192457424]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2051-0827:
-  cel: [312.781329519, -8.46048682778]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2051-0827/J2051-0827_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2051-0827/ltcube_J2051-0827.fits
+  cel: [312.7813295, -8.460486828]
+  ft1: $KERRPSR/J2051-0827/J2051-0827_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [39.192279085562525, -30.41120809051312]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2055+2539:
-  cel: [313.953818182, 25.6661357861]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2055+2539/J2055+2539_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2055+2539/ltcube_J2055+2539.fits
+  cel: [313.9538113, 25.66670825]
+  ft1: $KERRPSR/J2055+2539/J2055+2539_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [70.68849298358025, -12.520017060453636]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2124-3358:
-  cel: [321.182699352, -33.9791440444]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2124-3358/J2124-3358_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2124-3358/ltcube_J2124-3358.fits
+  cel: [321.1827611, -33.97896636]
+  ft1: $KERRPSR/J2124-3358/J2124-3358_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [10.925648041715359, -45.43782502277299]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2139+4716:
-  cel: [324.982976562, 47.2702775056]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2139+4716/J2139+4716_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2139+4716/ltcube_J2139+4716.fits
+  cel: [324.9831394, 47.27027173]
+  ft1: $KERRPSR/J2139+4716/J2139+4716_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [92.63327088439566, -4.019957100687067]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2214+3000:
-  cel: [333.661858631, 30.0106117778]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2214+3000/J2214+3000_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2214+3000/ltcube_J2214+3000.fits
-#PSRJ2229+6114:
-#  cel: [337.273888744, 61.2344716944]
-#  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2229+6114/J2229+6114_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-#  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-#  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2229+6114/ltcube_J2229+6114.fits
+  cel: [333.6618622, 30.01061481]
+  ft1: $KERRPSR/J2214+3000/J2214+3000_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [86.85587722845334, -21.66525664285733]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ2229+6114:
+  cel: [337.272, 61.23591667]
+  ft1: $KERRPSR/J2229+6114/J2229+6114_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [106.64792918776152, 2.9486507946214564]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2238+5903:
-  cel: [339.61729357, 59.0624349056]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2238+5903/J2238+5903_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2238+5903/ltcube_J2238+5903.fits
+  cel: [339.617986, 59.0622752]
+  ft1: $KERRPSR/J2238+5903/J2238+5903_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [106.56308442179439, 0.4830356677411895]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2240+5832:
-  cel: [340.178969053, 58.5437876167]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2240+5832/J2240+5832_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2240+5832/ltcube_J2240+5832.fits
+  cel: [340.1789909, 58.54375813]
+  ft1: $KERRPSR/J2240+5832/J2240+5832_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [106.56626354848696, -0.11134371898148014]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ2241-5236:
+  cel: [340.4250771, -52.6100628]
+  ft1: $KERRPSR/J2241-5236/J2241-5236_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [337.45761335666936, -54.92688394146238]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2302+4442:
-  cel: [345.695745983, 44.7061403278]
-  ft1: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2302+4442/J2302+4442_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
-  ft2: /afs/slac/g/glast/groups/pulsar/data/WeeklyData/ft2/FT2.fits
-  ltcube: /afs/slac/g/glast/groups/pulsar/2ndPulsarcatalog/psue/General/J2302+4442/ltcube_J2302+4442.fits
+  cel: [345.6957449, 44.70614053]
+  ft1: $KERRPSR/J2302+4442/J2302+4442_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [103.39575280328128, -14.004614726818435]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
