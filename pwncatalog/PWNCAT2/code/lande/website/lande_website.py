@@ -21,10 +21,16 @@ if False:
     spec_version='v12'
     gtlike=True
 
+#if True:
+if False:
+    var_version='v13/variability/v1/'
+    spec_version='v13'
+    gtlike=False
+
 #if False:
 if True:
     var_version='v13/variability/v1/'
-    spec_version='v13'
+    spec_version='v14'
     gtlike=False
 
 variability_unix=expandvars('$pwndata/spectral/%s' % var_version)
@@ -60,17 +66,17 @@ def get_results(pwn):
        not results['at_pulsar'].has_key('pointlike'):
        return None
 
-    if gtlike and not results['at_pulsar'].has_key('gtlike'):
-        return None
-
+    if gtlike:
+        if not results['at_pulsar'].has_key('gtlike'):
+            return None
+        else:
+            return results
     else:
         # Quick fix, if pointlike copy of pointlike stuff into gtlike stuff
         for k in ['at_pulsar', 'point', 'extended']:
             if results.has_key(k):
                 results[k]['gtlike'] = results[k]['pointlike']
-
-
-    return results
+        return results
 
 def get_variability(pwn):
     f = join(variability_unix, pwn, 'results_%s.yaml' % pwn)
@@ -319,25 +325,25 @@ def build_each_page(pwn):
             
     title('at_pulsar Source TS Maps')
     get_img_table('plots/tsmap_source_%s_%s.png' % ('at_pulsar',pwn),
-                  'plots/band_tsmap_source_%s_%s.png' % ('at_pulsar',pwn),
+                  'plots/band_tsmap_source_%s_%s_5deg.png' % ('at_pulsar',pwn),
                  )
 
     title('Residual TS Maps')
-    get_img_table(*['plots/tsmap_residual_%s_%s.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/tsmap_residual_%s_%s_5deg.png' % (i,pwn) for i in all])
 
     title('at_pulsar Smoothed Counts Diffuse Subtracted (0.1)')
-    get_img_table('plots/sources_0.1_%s_%s.png' % ('at_pulsar',pwn),
-                  'plots/band_sources_0.1_%s_%s.png' % ('at_pulsar',pwn))
+    get_img_table('plots/sources_0.1_%s_%s_5deg.png' % ('at_pulsar',pwn),
+                  'plots/band_sources_0.1_%s_%s_5deg.png' % ('at_pulsar',pwn))
 
     title('Smoothed Counts BG Source Subtracted (0.1)')
-    get_img_table(*['plots/source_0.1_%s_%s.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/source_0.1_%s_%s_5deg.png' % (i,pwn) for i in all])
 
     title('Band Residual TS Maps')
-    get_img_table(*['plots/band_tsmap_residual_%s_%s.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/band_tsmap_residual_%s_%s_5deg.png' % (i,pwn) for i in all])
 
 
     title('Band Smoothed Counts BG Source Subtracted (0.1)')
-    get_img_table('plots/band_source_0.1_%s_%s.png' % (hypothesis,pwn))
+    get_img_table('plots/band_source_0.1_%s_%s_5deg.png' % (hypothesis,pwn))
 
     title('gtlike SED (4bpd')
     get_img_table(*['seds/sed_gtlike_4bpd_%s_%s.png' % (i,pwn) for i in all])
@@ -363,25 +369,25 @@ def build_each_page(pwn):
     get_img_table(*['seds/sed_pointlike_%s_%s.png' % (i,pwn) for i in all])
 
     title('Extra: Smoothed Counts (0.25)')
-    get_img_table(*['plots/source_0.25_%s_%s.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/source_0.25_%s_%s_5deg.png' % (i,pwn) for i in all])
 
     title('Extra: Smoothed Counts (0.25)')
-    get_img_table(*['plots/sources_0.25_%s_%s.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/sources_0.25_%s_%s_5deg.png' % (i,pwn) for i in all])
 
 
     title('Extra: Band Smoothed Counts (0.25)')
-    get_img_table(*['plots/band_source_0.25_%s_%s.png' % (i,pwn) for i in all])
-    get_img_table(*['plots/band_sources_0.25_%s_%s.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/band_source_0.25_%s_%s_5deg.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/band_sources_0.25_%s_%s_5deg.png' % (i,pwn) for i in all])
 
     title('Counts (0.1)')
-    get_img_table('plots/counts_residual_0.1_%s_%s.png' % (hypothesis,pwn),
-        'plots/counts_source_0.1_%s_%s.png' % (hypothesis,pwn))
+    get_img_table('plots/counts_residual_0.1_%s_%s_5deg.png' % (hypothesis,pwn),
+        'plots/counts_source_0.1_%s_%s_5deg.png' % (hypothesis,pwn))
 
 
     title('Extra: Counts (0.25)')
     get_img_table(
-        'plots/counts_source_0.25_%s_%s.png' % (hypothesis,pwn),
-        'plots/counts_residual_0.25_%s_%s.png' % (hypothesis,pwn))
+        'plots/counts_source_0.25_%s_%s_5deg.png' % (hypothesis,pwn),
+        'plots/counts_residual_0.25_%s_%s_5deg.png' % (hypothesis,pwn))
 
 
     var = get_variability(pwn)
