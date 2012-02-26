@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+from os.path import expandvars
 import copy
 import numbers
 import pickle
@@ -10,6 +11,7 @@ import BayesianBlocks
 
 from uw.pulsar import lc_plotting_func
 from uw.pulsar.phase_range import PhaseRange
+from uw.like.roi_image import memoize
 from lande_toolbag import tolist
 
 class OffPeakBB(object):
@@ -117,11 +119,21 @@ class OptimizePhases(object):
         optimize the radius & energy to find the
         best pulsations. """
 
+    @staticmethod
+    @memoize
+    def get_all(ft1, skydir):
+        """ Cache photons = faster """
+        ed = rad_extract(ft1,skydir,radius_function=180,return_cols=['PULSE_PHASE'])
+        return ed
 
-    def __init__(self,
-                 ft1, 
-                 skydir,
-                 emax,
+    @staticmethod
+    def get_phases(ft1, skydir, emin, emax, radius):
+        ed = OptimizePhases.get_all(ft1, skydir)
+        all_phases = ed['PULSE_PHASE']
+        mask = (ed['ENERGY'] >= emin) & (ed['ENERGY'] < emax) & (ed['DIFFERENCES'] < np.radians(radius))
+        return all_phases[mask]
+
+    def __init__(self, ft1, skydir, emax,
                  ens=np.linspace(100,1000,21),
                  rads=np.linspace(0.1,2,20),
                  verbose=False 
@@ -131,57 +143,32 @@ class OptimizePhases(object):
         self.skydir = skydir
         self.emax = emax
 
-        ed = rad_extract(self.ft1,self.skydir,rads[-1],return_cols=['PULSE_PHASE'])
-        all_phases = ed['PULSE_PHASE']
-
         stats = np.empty([len(ens),len(rads)])
-
-        get_mask = lambda e,r: (ed['ENERGY'] >= e) & (ed['ENERGY'] < self.emax) & (ed['DIFFERENCES'] < np.radians(r))
-
 
         for iemin,emin in enumerate(ens):
             for irad,rad in enumerate(rads):
-                mask = get_mask(emin,rad)
-                masked_phases = all_phases[mask]
-                if len(masked_phases) == 0: 
-                    stat = 0
-                else:
-                    stat = hm(masked_phases)
-                if verbose:
-                    print 'emin=%s, rad=%s, stat=%s, len=%s, n0=%s' % (emin,rad,stat,len(masked_phases),np.sum(masked_phases==0))
+                phases = OptimizePhases.get_phases(ft1, skydir, emin, emax, rad)
+                stat = hm(phases) if len(phases) > 0 else 0
+                if verbose: print 'emin=%s, rad=%s, stat=%s, len=%s, n0=%s' % (emin,rad,stat,len(phases),np.sum(phases==0))
                 stats[iemin,irad] = stat
 
         a = np.argmax(stats)
         coord_e, coord_r = np.unravel_index(a, stats.shape)
 
         self.optimal_emin = ens[coord_e]
-        self.optimal_rad = rads[coord_r]
+        self.optimal_radius = rads[coord_r]
+        self.optimal_h = np.max(stats)
 
-        self.optimal_phases = get_phases(self.ft1,self.skydir, self.optimal_emin, self.emax, self.optimal_rad)
-        self.optimal_h = hm(self.optimal_phases)
+def plot(ft1, skydir, emin, emax, rad, off_peak_bb, pwncat1phase=None, axes=None):
 
-
-
-def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
-
-    # First, find energy and radius that maximize H test.
-
-    opt = OptimizePhases(ft1,skydir, emax=emax, verbose=True)
-
-    print 'optimal energy=%s & radius=%s, h=%s' % (opt.optimal_emin,opt.optimal_rad,opt.optimal_h)
-    phases = opt.optimal_phases
-
-    # Next, compute bayesian blocks on the optimized list of phases
-
-    off_peak_bb = OffPeakBB(phases)
-
-    # N.B. The off pulse is defined as off_peak_bb.off_peak
+    phases = OptimizePhases.get_phases(ft1, skydir, emin, emax, rad)
 
     nbins=100
     bins = np.linspace(0,1,100)
 
-    fig = P.figure(None)
-    axes = fig.add_subplot(111)
+    if axes is None:
+        fig = P.figure(None)
+        axes = fig.add_subplot(111)
 
     axes.hist(phases,bins=bins,histtype='step',ec='red',lw=1)
     axes.set_ylabel('Counts')
@@ -196,9 +183,26 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
     if pwncat1phase is not None:
         pwncat1phase.axvspan(label='pwncat1', alpha=0.25, color='blue')
 
+    P.title(name)
+
     P.legend()
 
-    P.title(name)
+
+def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
+
+    # First, find energy and radius that maximize H test.
+
+    opt = OptimizePhases(ft1,skydir, emax=emax, verbose=True)
+
+    print 'optimal energy=%s & radius=%s, h=%s' % (opt.optimal_emin,opt.optimal_radius,opt.optimal_h)
+
+    phases = OptimizePhases.get_phases(ft1, skydir, opt.optimal_emin, emax, opt.optimal_radius)
+
+    # Next, compute bayesian blocks on the optimized list of phases
+
+    off_peak_bb = OffPeakBB(phases)
+
+    plot(ft1, skydir, opt.optimal_emin, emax, opt.optimal_radius, off_peak_bb, pwncat1phase)
 
     P.savefig('results_%s.pdf' % name)
 
@@ -206,14 +210,14 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=300000):
     results=tolist(
         dict(
             pwncat1phase = pwncat1phase.tolist() if pwncat1phase is not None else None,
-            bayesian_blocks = dict(
+            off_peak_bb = dict(
                 off_peak = off_peak_bb.off_peak.tolist(),
                 xx = off_peak_bb.xx,
                 yy = off_peak_bb.yy,
                 ),
-            emin = opt.optimal_emin,
+            optimal_emin = opt.optimal_emin,
             emax = emax,
-            rad = opt.optimal_rad,
+            optimal_radius = opt.optimal_radius,
             )
         )
 
@@ -227,16 +231,17 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("--pwndata", required=True)
     parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
-    parser.add_argument("--pwnphase", required=True)
+    parser.add_argument("--pwncat1phase", required=True)
     args=parser.parse_args()
 
     name=args.name
-    pwndata=args.pwndata
+    pwndata=expandvars(args.pwndata)
 
     d=yaml.load(open(pwndata))[name]
-    ft1=d['ft1']
+    ft1=expandvars(d['ft1'])
+    print ft1
 
-    pwncat1 = yaml.load(open(args.pwnphase))
+    pwncat1 = yaml.load(open(expandvars(args.pwncat1phase)))
     if pwncat1.has_key(name):
         pwncat1phase=PhaseRange(*pwncat1[name]['phase'])
     else:
