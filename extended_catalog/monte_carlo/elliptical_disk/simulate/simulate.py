@@ -27,7 +27,7 @@ def get_diffuse():
     diffuse_sources = get_default_diffuse(diffdir='$FERMI/diffuse',
                                           gfile='ring_2year_P76_v0.fits',
                                           ifile='isotrop_2year_P76_source_v0.txt')
-    diffuse_sources = diffuse_sources[1:]
+    return diffuse_sources
 
 
 def get_spatial(type):
@@ -90,9 +90,9 @@ if __name__ == '__main__':
     ltcube = join(catalog_basedir,"ltcube_24m_pass7.4_source_z100_t90_cl0.fits")
 
 
-    #tempdir=mkdtemp(prefix='/scratch/')
-    tempdir='savedir'
-    ft1 = join(tempdir,'ft1.fits')
+    savedir='savedir'
+
+    ft1 = join(savedir,'ft1.fits')
 
     emin=1e2
     emax=1e5
@@ -100,7 +100,7 @@ if __name__ == '__main__':
     irf='P7SOURCE_V6'
     if not exists(ft1):
         mc=MonteCarlo(
-            savedir=tempdir,
+            savedir=savedir,
             sources=diffuse_sources,
             seed=i,
             irf=irf,
@@ -113,7 +113,7 @@ if __name__ == '__main__':
         mc.simulate()
 
 
-    binfile = join(tempdir,'binned.fits')
+    binfile = join(savedir,'binned.fits')
     ds = DataSpecification(
         ft1files = ft1,
         ft2files = ft2,
@@ -159,7 +159,7 @@ if __name__ == '__main__':
         open('results_%s.yaml' % istr).write(yaml.dump(tolist(results)))
 
     fit('Point')
-    fit('EllipticalRing')
-    fit('EllipticalDisk')
     fit('Disk')
     fit('Gaussian')
+    fit('EllipticalDisk')
+    fit('EllipticalRing')

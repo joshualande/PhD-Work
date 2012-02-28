@@ -2,7 +2,7 @@ from os.path import join, expandvars, exists
 from os import makedirs
 
 # version 1
-num=5
+num=100
 savedir = expandvars('$w44simdata/v1')
 
 
@@ -13,7 +13,7 @@ for i in range(num):
     if not exists(jobdir): makedirs(jobdir)
 
     run = join(jobdir,'run.sh')
-    open(run,'w').write("""python $w44simcode/extul.py %g""" % i)
+    open(run,'w').write("""python $w44simcode/simulate.py %g""" % i)
 
 submit_all = join(savedir,'submit_all.sh')
 open(submit_all,'w').write(
