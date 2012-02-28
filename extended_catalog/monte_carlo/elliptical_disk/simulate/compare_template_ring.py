@@ -1,33 +1,32 @@
-# Simple code just compares 2FGL template of W44 with my analytic shape
-from os.path import expandvars
-from skymaps import SkyDir, SkyImage
+""" Code to compares 2FGL template of W44 with my defiend analytic shape of w44.
 
-from uw.like.roi_catalogs import Catalog2FGL
-from uw.like.SpatialModels import EllipticalRing
+    Author: Joshua Lande <joshualande@gmail.com>
+"""
 
 from shutil import copy
+from os.path import expandvars
+
+from skymaps import  SkyImage
+
+from simulate import get_catalog, get_spatial
 
 # First, load 2FGL w44
-catalog=Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit',
-                    latextdir='$FERMI/extended_archives/gll_psc_v05_templates')
+catalog=get_catalog()
+
 
 w44=catalog.get_source('W44')
 w44_spatial_map = w44.spatial_model
 w44_file=expandvars(w44_spatial_map.file)
 
 # Define a new analytic shape
-w44_ring = EllipticalRing(major_axis=0.30,
-                          minor_axis=0.19,
-                          pos_angle=-33,
-                          fraction=0.75,
-                          center=SkyDir(283.98999,1.355))
+w44_ring = get_spatial('EllipticalRing')
 
-# Create a new spatial map which is filled with new analytic shape
-new_template='temp_template.fits'
+# Create a new spatial map with same binning as 2FGL tempalte, but filled with new analytic shape
+new_template='pointlike_ring_template.fits'
 copy(w44_file,new_template)
 x=SkyImage(new_template)
 x.fill(w44_ring.get_PySkyFunction())
 x.save()
 
-print 'original',file
+print 'original',w44_file
 print 'new',new_template
