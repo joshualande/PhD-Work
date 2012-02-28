@@ -1,4 +1,4 @@
-""" Simple code just compares 2FGL template of W44 with my analytic shape
+""" Code to simulate W44 and fit with different spatial models
 
     Author: Joshua Lande <joshualande@gmail.com>
 """
@@ -37,7 +37,10 @@ def get_spatial(type):
     major=0.3
     minor=0.19
 
-    if type == 'EllipticalRing':
+    if type == 'Point':
+        return skydir
+
+    elif type == 'EllipticalRing':
         return EllipticalRing(major_axis=major,
                               minor_axis=minor,
                               pos_angle=-33,
@@ -155,6 +158,7 @@ if __name__ == '__main__':
 
         open('results_%s.yaml' % istr).write(yaml.dump(tolist(results)))
 
+    fit('Point')
     fit('EllipticalRing')
     fit('EllipticalDisk')
     fit('Disk')
