@@ -162,12 +162,8 @@ def plot(center, major_axes, region_string):
     gal_ax=draw_gal(center, major_axes)
     cel_ax=draw_cel(center, major_axes)
 
-
-
-
     draw_ellipse(cel_ax, center, region_string)
     draw_ellipse(gal_ax, center, region_string)
-
 
     pylab.suptitle('(l,b)=(%.2f,%.2f)\n(ra,dec)=(%.2f,%.2f)' % \
              (center.l(),center.b(),center.ra(),center.dec()))
@@ -208,8 +204,8 @@ def test_around_poles():
     ]:
 
         major_axes= .2
-        minor_axes= 0.05
-        angle_galactic = 0
+        minor_axes= 0.005
+        angle_galactic = 10
 
         plot_galactic(center, major_axes, minor_axes, angle_galactic)
         pylab.show()
