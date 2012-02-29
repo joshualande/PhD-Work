@@ -16,9 +16,10 @@ from uw.pulsar.phase_range import PhaseRange
 from uw.pulsar.stats import hm
 from uw.like.roi_image import memoize
 
-from lande_toolbag import tolist
+from lande.utilities.toolbag import tolist
 
-from lande_pulsar import get_phases,plot_phaseogram
+from lande.fermi.pulsar.data import get_phases
+from lande.fermi.pulsar.plotting import plot_phaseogram
 
 class OffPeakBB(object):
     """ Algorithm to compute the off peak window

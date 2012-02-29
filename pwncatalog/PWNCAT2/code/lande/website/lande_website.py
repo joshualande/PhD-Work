@@ -11,7 +11,7 @@ from collections import defaultdict, OrderedDict
 
 import asciitable
 
-from lande_toolbag import OrderedDefaultdict
+from lande.utilities.toolbag import OrderedDefaultdict
 
 from table_helper import BestHypothesis
 
