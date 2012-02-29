@@ -57,7 +57,6 @@ def plot_phase_vs_time(ft1, filename, title=None, off_pulse=None, **kwargs):
     axes.set_ylabel('MJD')
 
     if title is not None: 
-        title = 'Phase vs Time for %s' % name
         axes.set_title(title)
 
     P.savefig(filename)
