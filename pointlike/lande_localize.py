@@ -11,7 +11,7 @@ from uw.like.roi_state import PointlikeState
 
 from likelihood_tools import fit_prefactor, galstr
 
-class GridLocalize():
+class GridLocalize(object):
     """ Simple class evalulates the TS of a source
         along a grid in position (a TS map) and find the 
         maximum TS.
