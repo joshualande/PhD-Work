@@ -7,7 +7,7 @@ bw = plot_helper.get_bw()
 import pylab as P
 import yaml
 from os.path import join, expandvars
-from lande_plotting import plot_gtlike_cutoff_test
+from lande.fermi.likelihood.cutoff import plot_gtlike_cutoff_test
 
 from matplotlib.offsetbox import AnchoredText
 
@@ -43,7 +43,7 @@ for i in range(nrows*ncols):
     axes.set_xlim(10**2,10**5.5)
     axes.set_ylim(1e-13,1e-8)
 
-from lande_plotting import fix_axesgrid
+from lande.utilities.plotting import fix_axesgrid
 
 for i,pwn in enumerate(cutoff_candidates):
     print i,pwn

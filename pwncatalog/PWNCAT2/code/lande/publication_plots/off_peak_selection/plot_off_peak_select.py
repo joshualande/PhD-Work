@@ -20,7 +20,7 @@ from matplotlib.patheffects import withStroke
 from skymaps import SkyDir
 from uw.pulsar.phase_range import PhaseRange
 
-from lande_pulsar import get_phases
+from lande.fermi.pulsar.data import get_phases
 
 bw = plot_helper.get_bw()
 

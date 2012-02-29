@@ -12,7 +12,7 @@ import numpy as np
 
 from uw.like.roi_plotting import DegreesFormatter
 
-from lande_plotting import label_axesgrid
+from lande.utilities.plotting import label_axesgrid
 
 bw=plot_helper.get_bw()
 
