@@ -1,14 +1,16 @@
 # Not entirely sure why, but pyLikelihood
 # will get a swig::stop_iteraiton error
 # unless it is imported first.
+from lande.fermi.likelihood.roi_gtlike import Gtlike
+
 import traceback
 import sys
 import os
 import pylab as P
 import numpy as np
-from roi_gtlike import Gtlike
+
 import yaml
-from likelihood_tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,\
+from lande.fermi.likelihood.tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,\
         freeze_insignificant_to_catalog,freeze_bad_index_to_catalog,fix_bad_cutoffs,fit_prefactor,get_full_energy_range
 from uw.like.roi_state import PointlikeState
 from uw.pulsar.phase_range import PhaseRange
@@ -16,7 +18,7 @@ from uw.like.SpatialModels import Gaussian
 
 
 from lande_localize import GridLocalize
-from lande_toolbag import tolist
+from lande.utilities.toolbag import tolist
 from lande_pulsar import plot_phaseogram,plot_phase_vs_time
 from lande_plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter,plot_gtlike_cutoff_test
 from lande_sed import LandeSED
