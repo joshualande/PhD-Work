@@ -4,7 +4,7 @@ np.seterr(all='ignore')
 
 from argparse import ArgumentParser
 
-import lande_variability
+import lande.fermi.likelihood.variability import VariabilityTester
 
 from uw.like.roi_save import load
 
@@ -22,7 +22,7 @@ roi.print_summary()
 roi.fit(use_gradient=False)
 roi.print_summary()
 
-v = lande_variability.VariabilityTester(roi,name,
+v = VariabilityTester(roi,name,
                                         nbins=36)
 
 print v.todict()
