@@ -10,19 +10,22 @@ import pylab as P
 import numpy as np
 
 import yaml
-from lande.fermi.likelihood.tools import sourcedict,powerlaw_upper_limit, test_cutoff, plot_all_seds, paranoid_gtlike_fit,\
-        freeze_insignificant_to_catalog,freeze_bad_index_to_catalog,fix_bad_cutoffs,fit_prefactor,get_full_energy_range
+
 from uw.like.roi_state import PointlikeState
 from uw.pulsar.phase_range import PhaseRange
 from uw.like.SpatialModels import Gaussian
 
-
-from lande_localize import GridLocalize
 from lande.utilities.toolbag import tolist
-from lande_pulsar import plot_phaseogram,plot_phase_vs_time
-from lande_plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter,plot_gtlike_cutoff_test
-from lande_sed import LandeSED
-from lande_band_fitter import BandFitter
+from lande.fermi.sed.plotting import plot_all_seds
+from lande.fermi.likelihood.fitting import paranoid_gtlike_fit, fit_prefactor, freeze_insignificant_to_catalog, freeze_bad_index_to_catalog
+from lande.fermi.likelihood.saving import sourcedict, get_full_energy_range
+from lande.fermi.likelihood.limits import powerlaw_upper_limit
+from lande.fermi.likelihood.localize import GridLocalize
+from lande.fermi.likelihood.cutoff import plot_gtlike_cutoff_test, test_cutoff, fix_bad_cutoffs
+from lande.fermi.likelihood.bandfitter import BandFitter
+from lande.fermi.pulsar.plotting import plot_phaseogram,plot_phase_vs_time
+from lande.fermi.sed.supersed import SuperSED
+from lande.fermi.data.plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter
 
 from setup_pwn import get_catalog
 
@@ -289,7 +292,7 @@ def gtlike_analysis(roi, name, hypothesis,
 
     def sed(kind,**kwargs):
         print 'Making %s SED' % kind
-        sed = LandeSED(like, name, always_upper_limit=True, **kwargs)
+        sed = SuperSED(like, name, always_upper_limit=True, **kwargs)
         sed.plot('%s/sed_gtlike_%s_%s.png' % (seddir,kind,name)) 
         sed.save('%s/sed_gtlike_%s_%s.yaml' % (seddir,kind,name))
 

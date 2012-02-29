@@ -4,7 +4,7 @@
 from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results,\
         plot_phaseogram,plot_phase_vs_time,all_energy,import_module
 from uw.pulsar.phase_range import PhaseRange
-from likelihood_tools import force_gradient
+from lande.fermi.likelihood.tools import force_gradient
 from skymaps import SkyDir
 
 from uw.like.SpatialModels import Gaussian
