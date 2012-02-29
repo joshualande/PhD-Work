@@ -1,5 +1,5 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex
-from lande_toolbag import OrderedDefaultdict
+from lande.utilities.toolbag import OrderedDefaultdict
 
 import yaml
 from os.path import join as j,expandvars

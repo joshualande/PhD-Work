@@ -1,5 +1,5 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex, BestHypothesis
-from lande_toolbag import OrderedDefaultdict
+from lande.utilities.toolbag import OrderedDefaultdict
 from numpy import asarray as a
 
 def each_energy_table(pwnlist):
