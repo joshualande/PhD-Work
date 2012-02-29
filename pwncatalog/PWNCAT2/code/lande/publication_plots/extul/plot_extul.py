@@ -47,6 +47,9 @@ for type in ['dim','bright']:
 
         cut = (index_mc == index) & (type_array==type)
 
+        print 'Adding BAD temporary cut'
+        cut = cut & (~np.isnan(extension_ul))
+
         extlist = np.sort(np.unique(extension_mc[cut]))
 
 

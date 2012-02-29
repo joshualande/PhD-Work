@@ -3,6 +3,7 @@ from os import remove
 from glob import glob
 from collections import defaultdict
 
+import numpy as np
 import pylab as P
 import yaml
 
@@ -33,7 +34,9 @@ for i,results in enumerate(all_results):
         index=i['mc']['model']['Index']
         e_ul=i['extension_ul']['extension']
 
-        if e_ul is None: e_ul = 0
+        #if e_ul is None: e_ul = 0
+        if e_ul is None: 
+            e_ul = np.nan
 
         ts=max(i['point']['TS'],0)
         ts_ext=max(i['TS_ext'],0)
