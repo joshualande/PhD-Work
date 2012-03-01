@@ -544,7 +544,7 @@ echo python $pwncode/loop_pwn.py \
         --modify $pwncode/modify/modify_psr_lande.py \
         -o $pwndata/spectral/v14/analysis_no_plots \
         $common_kwargs \
-        --no-plots --no-gtlike
+        --no-plots 
 
 echo python $pwncode/loop_pwn.py \
         -c $pwncode/analyze_psr.py \

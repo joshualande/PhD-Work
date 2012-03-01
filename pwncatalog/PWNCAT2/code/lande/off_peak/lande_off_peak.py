@@ -15,7 +15,8 @@ from uw.pulsar.lc_off_peak import OffPeak
 from uw.pulsar.phase_range import PhaseRange
 from uw.pulsar import lcfitters as lf
 from uw.like.Models import ExpCutoff
-from toolbag import tolist
+
+from lande.utilities.tools import tolist
 
 
 def find_TSdc(name,pwndata):

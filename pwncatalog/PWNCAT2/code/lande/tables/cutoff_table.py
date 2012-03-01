@@ -1,5 +1,5 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex
-from lande.utilities.toolbag import OrderedDefaultdict
+from lande.utilities.tools import OrderedDefaultdict
 
 def cutoff_table(pwnlist):
 

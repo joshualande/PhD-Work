@@ -16,7 +16,7 @@ from uw.pulsar.phase_range import PhaseRange
 from uw.pulsar.stats import hm
 from uw.like.roi_image import memoize
 
-from lande.utilities.toolbag import tolist
+from lande.utilities.tools import tolist
 
 from lande.fermi.pulsar.data import get_phases
 from lande.fermi.pulsar.plotting import plot_phaseogram

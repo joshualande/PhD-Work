@@ -1,5 +1,6 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex,BestHypothesis
-from lande.utilities.toolbag import OrderedDefaultdict
+from lande.utilities.tools import OrderedDefaultdict
+
 
 def all_energy_table(pwnlist):
 
