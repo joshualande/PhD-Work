@@ -308,8 +308,7 @@ def modify_roi(name,roi):
         roi.del_source('2FGL J2043.7+2743')
 
     elif name == 'PSRJ2051-0827':
-        # no 2FGL source to delete
-        pass
+        pass # no 2FGL source to delete
 
     elif name == 'PSRJ2055+2539':
         roi.del_source('2FGL J2055.8+2539')
@@ -334,7 +333,76 @@ def modify_roi(name,roi):
     elif name == 'PSRJ2302+4442':
         roi.del_source('2FGL J2302.7+4443')
 
+    # new
+
+    elif name == 'PSRJ2241-5236':
+        roi.del_source('2FGL J2241.7-5236')
+
+    elif name == 'PSRJ0751+1807':
+        pass # no 2FGL source
+
+    elif name == 'PSRJ1514-4946':
+        roi.del_source('2FGL J1514.1-4946')
+
+    elif name == 'PSRJ1124-3653':
+        roi.del_source('2FGL J1124.2-3654')
+
+    elif name == 'PSRJ1741+1351':
+        roi.del_source('2FGL J1741.0+1347')
+
+    elif name == 'PSRJ0102+4839':
+        roi.del_source('2FGL J0102.9+4838')
+
+    elif name == 'PSRJ1902-5105':
+        roi.del_source('2FGL J1902.0-5109')
+
+    elif name == 'PSRJ0101-6422':
+        roi.del_source('2FGL J0101.2-6425')
+
+    elif name == 'PSRJ1124-5916':
+        roi.del_source('2FGL J1124.6-5913')
+
+    elif name == 'PSRJ1747-4036':
+        roi.del_source('2FGL J1747.5-4036')
+
+    elif name == 'PSRJ1446-4701':
+        roi.del_source('2FGL J1446.8-4701')
+
+    elif name == 'PSRJ1658-5324':
+        roi.del_source('2FGL J1658.4-5322')
+
+    elif name == 'PSRJ1648-4611':
+        roi.del_source('2FGL J1648.4-4612')
+
+    elif name == 'PSRJ1112-6103':
+        roi.del_source('2FGL J1112.5-6105')
+
+    elif name == 'PSRJ1730-3350':
+        roi.del_source('2FGL J1730.5-3350')
+
+    elif name == 'PSRJ2229+6114':
+        roi.del_source('2FGL J2229.0+6114')
+
+    elif name == 'PSRJ1125-5825':
+        roi.del_source('2FGL J1125.0-5821')
+
+    elif name == 'PSRJ1801-2451':
+        # I am not sure if the source 0.3 degrees away is part of it (?)
+        pass
+
+    elif name == 'PSRJ1835-1106':
+        # No nearby sources
+        pass 
+
+    elif name == 'PSRJ1838-0537':
+        roi.del_source('2FGL J1839.0-0539')
+
+#    elif name == '':
+#        roi.del_source('')
+
     else:
         # Note, if no changes are needed, then simply put elif ... pass 
         # (like PSRJ0729-1448). This is just a sanity check.
+        print roi
+        roi.print_summary(galactic=True)
         raise Exception("Unrecognized pulsar %s" % name)
