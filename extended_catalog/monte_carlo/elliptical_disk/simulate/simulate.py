@@ -6,28 +6,31 @@ from os.path import join, exists
 from argparse import ArgumentParser
 from tempfile import mkdtemp
 
+import yaml
+import numpy as np
+
 from skymaps import SkyDir
 
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
 from uw.like.roi_state import PointlikeState
 from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.SpatialModels import EllipticalRing, EllipticalDisk, Disk, Gaussian
-from uw.like.pointspec_helpers import get_default_diffuse
+from uw.like.pointspec_helpers import get_default_diffuse, PointSource
 from uw.like.roi_monte_carlo import MonteCarlo
 
-from likelihood_tools import force_gradient, sourcedict, tolist
+from lande.fermi.likelihood.tools import force_gradient
+from lande.fermi.likelihood.save import sourcedict
+from lande.utilities.tools import tolist
 
 def get_catalog():
-    catalog=Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit',
+    return Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit',
                         latextdir='$FERMI/extended_archives/gll_psc_v05_templates')
 
-    return catalog
 
 def get_diffuse():
-    diffuse_sources = get_default_diffuse(diffdir='$FERMI/diffuse',
+    return get_default_diffuse(diffdir='/afs/slac/g/glast/groups/diffuse/rings/2year',
                                           gfile='ring_2year_P76_v0.fits',
                                           ifile='isotrop_2year_P76_source_v0.txt')
-    return diffuse_sources
 
 
 def get_spatial(type):
@@ -56,11 +59,11 @@ def get_spatial(type):
 
     elif type == 'Disk':
         # Simiarly shaped disk
-        disk = Disk(sigma=np.sqrt(major*minor), center=skydir)
+        return Disk(sigma=np.sqrt(major*minor), center=skydir)
     
     elif type == 'Gaussian':
         # Simiarly shaped gaussian
-        gauss = Gaussian(sigma=np.sqrt(major*minor)*(Disk.x68/Gaussian.x68))
+        return Gaussian(sigma=np.sqrt(major*minor)*(Disk.x68/Gaussian.x68))
 
     else:
         raise Exception("...")
@@ -72,7 +75,7 @@ if __name__ == '__main__':
     parser.add_argument("i", type=int)
     args=parser.parse_args()
     i=args.i
-    istr='%07d' % i
+    istr='%05d' % i
 
     force_gradient(use_gradient=False)
 
@@ -83,7 +86,7 @@ if __name__ == '__main__':
     # Simulate with elliptical ring spatial model predicted by 2FGL
     w44_2FGL.spatial_model = get_spatial('EllipticalRing')
 
-    diffuse_sources = get_diffuse + [w44_2FGL.copy()]
+    diffuse_sources = get_diffuse() + [w44_2FGL.copy()]
 
     catalog_basedir = "/afs/slac/g/glast/groups/catalog/P7_V4_SOURCE"
     ft2 = join(catalog_basedir,"ft2_2years.fits")
@@ -106,10 +109,11 @@ if __name__ == '__main__':
             irf=irf,
             ft1=ft1,
             ft2=ft2,
-            roi_dir=skydir,
+            roi_dir=w44_2FGL.skydir,
             maxROI=15,
             emin=emin,
-            emax=emax)
+            emax=emax,
+            gtifile=ltcube)
         mc.simulate()
 
 
@@ -125,7 +129,7 @@ if __name__ == '__main__':
                           emax=emax,
                           binsperdec=4,
                           event_class=0,
-                          roi_dir = skydir,
+                          roi_dir = w44_2FGL.skydir,
                           minROI=10,
                           maxROI=10,
                           irf=irf)
@@ -135,11 +139,13 @@ if __name__ == '__main__':
         diffuse_sources=diffuse_sources,
     )
 
+    roi.plot_counts_map(filename='roi_pre_fit.pdf')
+
     likelihood_state = PointlikeState(roi)
 
     results = r = dict()
 
-    results['mc'] = sourcedict(roi, name)
+    results['mc'] = sourcedict(roi, name, errors=False)
 
     print roi
 
@@ -151,12 +157,15 @@ if __name__ == '__main__':
         likelihood_state.restore(just_spectra=True)
 
         roi.fit()
-        roi.fit_extension(which=name)
+        if isinstance(roi.get_source(name), PointSource):
+            roi.localize(which=name, update=True)
+        else:
+            roi.fit_extension(which=name)
         roi.fit()
         roi.print_summary(galactic=True)
         results[type] = sourcedict(roi,name)
 
-        open('results_%s.yaml' % istr).write(yaml.dump(tolist(results)))
+        open('results_%s.yaml' % istr,'w').write(yaml.dump(tolist(results)))
 
     fit('Point')
     fit('Disk')
