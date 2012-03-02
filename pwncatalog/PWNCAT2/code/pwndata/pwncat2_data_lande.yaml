@@ -1,8 +1,9 @@
 # Updates:
-# * Updating to Ozlem's data set + Matthew's 111 pulsars - Feb 25, 2012, JL
-# * Commeting out PSRs with bad timing - Jan 21, 2012, JL
-# * Updating to latest ft1 files + increasing data set - Dec 10 2011, JL
-# * Fixed the path to ltcube files - Nov 4, 2011, Rousseau
+# * Add PSRJ0437-4715 - Feb 29, 2012, J.L.
+# * Updating to Ozlem's data set + Matthew's 111 pulsars - Feb 25, 2012, J.L.
+# * Commeting out PSRs with bad timing - Jan 21, 2012, J.L.
+# * Updating to latest ft1 files + increasing data set - Dec 10 2011, J.L.
+# * Fixed the path to ltcube files - Nov 4, 2011, R.R.
 PSRJ0007+7303:
   cel: [1.664951792, 73.06913514]
   ft1: $KERRPSR/J0007+7303/J0007+7303_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
@@ -62,6 +63,12 @@ PSRJ0357+3205:
   ft1: $KERRPSR/J0357+3205/J0357+3205_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
   ft2: $OZLEMPSR/ft2_3years.ft2.fits
   gal: [162.7603000092803, -16.006796732314587]
+  ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ0437-4715:
+  cel: [69.31625256, -47.25253837]
+  ft1: $KERRPSR/J0437-4715/J0437-4715_15.0deg_239557414-334108802_0.1-100GeV_zmax100_rck52RoiN.ft1.fits
+  ft2: $OZLEMPSR/ft2_3years.ft2.fits
+  gal: [253.3947329499648, -41.96322641140427]
   ltcube: $OZLEMPSR/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0534+2200:
   cel: [83.633218, 22.01446363]

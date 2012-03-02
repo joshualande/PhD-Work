@@ -1,6 +1,7 @@
 # Changes
+# * Add PSRJ0437-4715 - March 1, 2012 J.L. 
 # * New defintions from off pulse defintions using
-#   Ozlem's data & pwndata/off_peak/off_peak_bb/pwncat2/v2 - Febuary 25, 2012
+#   Ozlem's data & pwndata/off_peak/off_peak_bb/pwncat2/v2 - Febuary 25, 2012 J.L.
 # * Add phase information as determined by Lande using
 #   bayesian block information - Lande, Jan 23, 2012
 PSRJ0007+7303:
@@ -53,6 +54,11 @@ PSRJ0357+3205:
   optimal_emin: 280.0
   optimal_radius: 0.9999999999999999
   phase: [0.36, 0.86]
+PSRJ0437-4715:
+  emax: 100000
+  optimal_emin: 460.0
+  optimal_radius: 0.7999999999999999
+  phase: [0.59, 0.17]
 PSRJ0534+2200:
   emax: 100000
   optimal_emin: 100.0
