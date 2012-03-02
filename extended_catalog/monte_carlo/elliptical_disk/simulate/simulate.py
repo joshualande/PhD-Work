@@ -110,7 +110,7 @@ if __name__ == '__main__':
             ft1=ft1,
             ft2=ft2,
             roi_dir=w44_2FGL.skydir,
-            maxROI=15,
+            maxROI=10,
             emin=emin,
             emax=emax,
             gtifile=ltcube)
