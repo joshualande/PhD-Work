@@ -29,14 +29,12 @@ args=parser.parse_args()
 i=args.i
 istr='%05d' % i
 
-
-
 emin=1e3
 emax=1e5
 
 irf='P7SOURCE_V6'
 
-roi_dir = choose_roi_randomly()
+skydir = choose_roi_randomly()
 
 diffuse=get_default_diffuse(diffdir='/afs/slac/g/glast/groups/diffuse/rings/2year',
                                       gfile='ring_2year_P76_v0.fits',
@@ -52,8 +50,7 @@ mc_kwargs = dict(
     ft2=ft2,
     maxROI=10,
     emin=emin,
-    emax=emax,
-    gtifile=ltcube)
+    emax=emax)
 
 ft1_diffuse = join(savedir,'ft1_diffuse.fits')
 mc=MonteCarlo(
@@ -62,10 +59,9 @@ mc=MonteCarlo(
     **mc_kwargs)
 mc.simulate()
 
-for index,flux in [[1.5, 1e-8],
-                   [2.0, 3e-8],
-                   [2.5, 1e-7]
-                   [3.0, 3e-7]]:
+results = dict()
+
+for index,flux in [[1.5, 1e-8], [2.0, 3e-8], [2.5, 1e-7] [3.0, 3e-7]]:
 
     model_mc = PowerLaw(index=index)
     model_mc.set_flux(flux, 1e2, 1e5)
@@ -79,11 +75,6 @@ for index,flux in [[1.5, 1e-8],
         **mc_kwargs)
     mc.simulate()
 
-
-    # Simulate with elliptical ring spatial model predicted by 2FGL
-    w44_2FGL.spatial_model = get_spatial('EllipticalRing')
-
-
     binfile = join(savedir,'binned.fits')
     ds = DataSpecification(
         ft1files = [ft1_point, ft1_diffuse],
@@ -96,7 +87,7 @@ for index,flux in [[1.5, 1e-8],
                           emax=emax,
                           binsperdec=4,
                           event_class=0,
-                          roi_dir = w44_2FGL.skydir,
+                          roi_dir = skydir,
                           minROI=10,
                           maxROI=10,
                           irf=irf)
@@ -106,44 +97,24 @@ for index,flux in [[1.5, 1e-8],
         diffuse_sources=diffuse,
     )
 
-    results = r = dict()
+    r = dict()
+    results.append()
 
-    results['mc'] = sourcedict(roi, name, errors=False)
+    r['mc'] = sourcedict(roi, name, errors=False)
 
     roi.fit()
     roi.localize(which=name, update=True)
     roi.fit()
 
-    results['point'] = sourcedict(roi, name, errors=False)
+    r['point'] = sourcedict(roi, name, errors=False)
 
     roi.modify(which=name, spatial_model=Disk(sigma=.1))
 
-
     roi.fit()
-    roi.localize(which=name, update=True)
+    roi.fit_extension(which=name_mc,estimate_errors=False)
     roi.fit()
 
-    print roi
+    r['extended'] = sourcedict(roi, name, errors=False)
 
-    def fit(type):
-        spatial_model = get_spatial(type)
-        print 'Fitting %s with %s spatial model' % (name,type)
+    open('results_%s.yaml' % istr).write(yaml.dump(results))
 
-        roi.modify(which=name, spatial_model=spatial_model)
-        likelihood_state.restore(just_spectra=True)
-
-        roi.fit()
-        if isinstance(roi.get_source(name), PointSource):
-        else:
-            roi.fit_extension(which=name)
-        roi.fit()
-        roi.print_summary(galactic=True)
-        results[type] = sourcedict(roi,name)
-
-        open('results_%s.yaml' % istr,'w').write(yaml.dump(tolist(results)))
-
-    fit('Point')
-    fit('Disk')
-    fit('Gaussian')
-    fit('EllipticalDisk')
-    fit('EllipticalRing')

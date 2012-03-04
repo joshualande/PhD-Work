@@ -19,9 +19,7 @@ for i in range(num):
     open(run,'w').write("""python $w44simcode/simulate.py %g""" % i)
 
 submit_all = join(savedir,'submit_all.sh')
-open(submit_all,'w').write(
-        "submit_all */run.sh $@"
-    )
+open(submit_all,'w').write("submit_all */run.sh $@")
 
 
 
