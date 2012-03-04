@@ -144,19 +144,22 @@ class OptimizePhases(object):
         self.optimal_h = np.max(stats)
 
 
-def plot(ft1, off_peak_phase, blocks, pwncat1phase=None, **kwargs):
+def plot(ft1, blocks, blocks_kwargs=dict(), repeat_phase=False, **kwargs):
 
     # plot bins
-    axes, bins = plot_phaseogram(ft1, **kwargs)
+    axes, bins = plot_phaseogram(ft1, repeat_phase=repeat_phase, **kwargs)
+    binsz = bins[1]-bins[0]
 
     # plot blocks
-    binsz = bins[1]-bins[0]
-    axes.plot(np.asarray(blocks['xx']),np.asarray(blocks['yy'])*binsz)
+    xx=np.asarray(blocks['xx'])
+    yy=np.asarray(blocks['yy'])
+    if repeat_phase:
+        xx, yy = np.append(xx, xx+1), np.append(yy, yy) 
 
-    # plot phase ranges
-    PhaseRange(off_peak_phase).axvspan(label='bb', alpha=0.25, color='green')
-    if pwncat1phase is not None:
-        PhaseRange(pwncat1phase).axvspan(label='pwncat1', alpha=0.25, color='blue')
+    k=dict(color='blue')
+    k.update(blocks_kwargs)
+    axes.plot(np.asarray(xx),np.asarray(yy)*binsz, **k)
+
 
 
 def find_offpeak(ft1,name,skydir,pwncat1phase, emax=100000):
@@ -193,9 +196,15 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=100000):
          emin = opt.optimal_emin, 
          emax = emax, 
          radius = opt.optimal_radius, 
-         off_peak_phase = off_peak_bb.off_peak,
-         blocks = off_peak_bb.blocks, 
-         pwncat1phase = pwncat1phase)
+         off_peak = off_peak_bb.off_peak,
+         blocks_kwargs=dict(color='green'),
+         off_peak_kwargs=dict(color='green', label='blocks'),
+         data_kwargs=dict(color='red'),
+         blocks = off_peak_bb.blocks)
+
+    if pwncat1phase is not None:
+        PhaseRange(pwncat1phase).axvspan(label='pwncat1', alpha=0.25, color='blue')
+
     P.legend()
     P.title(name)
     P.savefig('results_%s.pdf' % name)
