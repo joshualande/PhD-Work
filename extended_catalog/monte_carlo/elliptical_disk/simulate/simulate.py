@@ -5,6 +5,8 @@
 from os.path import join, exists
 from argparse import ArgumentParser
 from tempfile import mkdtemp
+import shutil
+
 
 import yaml
 import numpy as np
@@ -89,7 +91,7 @@ if __name__ == '__main__':
 
     flux = w44_2FGL.model.i_flux(emin, emax)
     w44_2FGL.model = PowerLaw(index = 2.66) # 2.66 taken from my PLaw fit for 1GeV to 100GeV
-    w44_2FGL.model.set_flux(emin, emax)
+    w44_2FGL.model.set_flux(flux, emin, emax)
 
 
     # Simulate with elliptical ring spatial model predicted by 2FGL
@@ -97,19 +99,18 @@ if __name__ == '__main__':
 
     diffuse_sources = get_diffuse() + [w44_2FGL.copy()]
 
+    tempdir=mkdtemp(prefix='/scratch/')
+
     catalog_basedir = "/afs/slac/g/glast/groups/catalog/P7_V4_SOURCE"
     ft2 = join(catalog_basedir,"ft2_2years.fits")
     ltcube = join(catalog_basedir,"ltcube_24m_pass7.4_source_z100_t90_cl0.fits")
 
 
-    savedir='savedir'
-
-    ft1 = join(savedir,'ft1.fits')
+    ft1 = join(tempdir,'ft1.fits')
 
     irf='P7SOURCE_V6'
     if not exists(ft1):
         mc=MonteCarlo(
-            savedir=savedir,
             sources=diffuse_sources,
             seed=i,
             irf=irf,
@@ -123,7 +124,7 @@ if __name__ == '__main__':
         mc.simulate()
 
 
-    binfile = join(savedir,'binned.fits')
+    binfile = join(tempdir,'binned.fits')
     ds = DataSpecification(
         ft1files = ft1,
         ft2files = ft2,
@@ -178,3 +179,5 @@ if __name__ == '__main__':
     fit('Gaussian')
     fit('EllipticalDisk')
     fit('EllipticalRing')
+
+shutil.rmtree(tempdir)

@@ -6,7 +6,7 @@ from os import makedirs
 #savedir = expandvars('$w44simdata/v1')
 
 # version 2
-num=100
+num=1000
 savedir = expandvars('$w44simdata/v2')
 
 for i in range(num):
