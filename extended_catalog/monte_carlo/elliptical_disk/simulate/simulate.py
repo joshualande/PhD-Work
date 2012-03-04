@@ -14,6 +14,7 @@ from skymaps import SkyDir
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
 from uw.like.roi_state import PointlikeState
 from uw.like.roi_catalogs import Catalog2FGL
+from uw.like.Models import PowerLaw
 from uw.like.SpatialModels import EllipticalRing, EllipticalDisk, Disk, Gaussian
 from uw.like.pointspec_helpers import get_default_diffuse, PointSource
 from uw.like.roi_monte_carlo import MonteCarlo
@@ -77,11 +78,19 @@ if __name__ == '__main__':
     i=args.i
     istr='%05d' % i
 
+    emin=1e3
+    emax=1e5
+
     force_gradient(use_gradient=False)
 
     name='W44'
     catalog = get_catalog()
     w44_2FGL=catalog.get_source(name)
+
+    flux = w44_2FGL.model.i_flux(emin, emax)
+    w44_2FGL.model = PowerLaw(index = 2.66) # 2.66 taken from my PLaw fit for 1GeV to 100GeV
+    w44_2FGL.model.set_flux(emin, emax)
+
 
     # Simulate with elliptical ring spatial model predicted by 2FGL
     w44_2FGL.spatial_model = get_spatial('EllipticalRing')
@@ -96,9 +105,6 @@ if __name__ == '__main__':
     savedir='savedir'
 
     ft1 = join(savedir,'ft1.fits')
-
-    emin=1e2
-    emax=1e5
 
     irf='P7SOURCE_V6'
     if not exists(ft1):
