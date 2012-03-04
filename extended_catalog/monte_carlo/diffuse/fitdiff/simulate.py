@@ -23,8 +23,8 @@ from lande.utilities.random import random_on_sphere
 parser = ArgumentParser()
 parser.add_argument("i", type=int)
 parser.add_argument("--difftype", required=True, choices=['galactic', 'isotropic', 'sreekumar'])
-parser.add_argument("--emin", required=True)
-parser.add_argument("--emax", required=True)
+parser.add_argument("--emin", required=True, type=float)
+parser.add_argument("--emax", required=True, type=float)
 parser.add_argument("--location", required=True, choices=['highlat','lowlat'])
 args= parser.parse_args()
 
@@ -35,8 +35,8 @@ np.random.seed(i)
 
 difftype=args.difftype
 location=args.location
-emin=1e4
-emax=1e5
+emin=args.emin
+emax=args.emax
 
 diffdir='/afs/slac/g/glast/groups/diffuse/rings/2year/'
 if difftype == 'galactic':
