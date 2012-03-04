@@ -2,16 +2,19 @@ import plot_helper
 
 import math
 
-bw = plot_helper.get_bw()
 
 import pylab as P
 import yaml
 from os.path import join, expandvars
-from lande.fermi.likelihood.cutoff import plot_gtlike_cutoff_test
-
 from matplotlib.offsetbox import AnchoredText
 
-fitdir=expandvars('$pwndata/spectral/v10/analysis_no_plots/')
+from lande.fermi.likelihood.cutoff import plot_gtlike_cutoff_test
+
+from lande.utilities.plotting import fix_axesgrid, label_axes
+
+bw = plot_helper.get_bw()
+
+fitdir=expandvars('$pwndata/spectral/v14/analysis_no_plots/')
 
 cutoff_candidates = ['PSRJ0034-0534', 
                      'PSRJ0633+1746', 
@@ -33,7 +36,6 @@ nrows = int(math.ceil(float(len(cutoff_candidates))/ncols))
 fig = P.figure(None,(6,6))
 from mpl_toolkits.axes_grid.axes_grid import Grid
 grid = Grid(fig, 111, nrows_ncols = (nrows, ncols), 
-            share_all=True,
             axes_pad=0.0)
 
 for i in range(nrows*ncols):
@@ -43,7 +45,6 @@ for i in range(nrows*ncols):
     axes.set_xlim(10**2,10**5.5)
     axes.set_ylim(1e-13,1e-8)
 
-from lande.utilities.plotting import fix_axesgrid
 
 for i,pwn in enumerate(cutoff_candidates):
     print i,pwn
@@ -71,11 +72,7 @@ for i,pwn in enumerate(cutoff_candidates):
                                 ),
                             title='')
 
-
-    letter = chr(i+97)
-    _text = '(%s) %s' % (letter, pwn.replace('PSR','').replace('-','$-$'))
-    at = AnchoredText(_text, loc=2, frameon=False)
-    axes.add_artist(at)
+label_axes(grid)
 
 fix_axesgrid(grid)
     
