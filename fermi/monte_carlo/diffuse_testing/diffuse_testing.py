@@ -6,16 +6,29 @@ from skymaps import SkyDir
 from uw.like.pointspec_helpers import get_default_diffuse
 from uw.like.roi_monte_carlo import MonteCarlo
 
-from lande.fermi.likelihood.diffuse import get_background
+from lande.fermi.likelihood.diffuse import get_background, get_sreekumar
 
-if difftype == 'gal':
-    return get_background('/afs/slac/g/glast/groups/diffuse/rings/2year/ring_2year_P76_v0.fits
-elif difftype == 'iso':
-    return get_background('/afs/slac/g/glast/groups/diffuse/rings/2year/isotrop_2year_P76_source_v0.txt
-elif difftype == 'plaw'
+from argparse import ArgumentParser
 
+parser = ArgumentParser()
+parser.add_argument("difftype",required=True, choices=['galactic', 'isotropic', 'sreekumar'])
+parser.add_argument("emin",required=True)
+parser.add_argument("emax",required=True)
+parser.add_argument("location",required=True, choices=['on_plane','off_plane'])
+args= parser.parse_args()
 
-#diffuse = diffuse[1:]
+difftype=args.difftype
+emin=1e2
+emax=1e3
+
+def get_diffuse(difftype):
+    if difftype == 'galactic':
+        return get_background('/afs/slac/g/glast/groups/diffuse/rings/2year/ring_2year_P76_v0.fits
+    elif difftype == 'isotropic':
+        return get_background('/afs/slac/g/glast/groups/diffuse/rings/2year/isotrop_2year_P76_source_v0.txt
+    elif difftype == 'sreekumar':
+        return get_sreekumar(diff_factor=1)
+
 
 catalog_basedir = "/afs/slac/g/glast/groups/catalog/P7_V4_SOURCE"
 ft2 = join(catalog_basedir,"ft2_2years.fits")
@@ -25,8 +38,6 @@ savedir='savedir'
 
 ft1 = join(savedir,'ft1.fits')
 
-emin=1e2
-emax=1e3
 
 #skydir=SkyDir(125,75,SkyDir.GALACTIC)
 skydir=SkyDir(55,85,SkyDir.GALACTIC)
@@ -37,7 +48,7 @@ mc=MonteCarlo(
     savedir=savedir,
     sources=diffuse,
     seed=0,
-    irf='none',
+    irf='P7SOURCE_V6',
     ft1=ft1,
     ft2=ft2,
     roi_dir=skydir,
