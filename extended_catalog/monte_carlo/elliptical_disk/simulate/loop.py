@@ -2,9 +2,12 @@ from os.path import join, expandvars, exists
 from os import makedirs
 
 # version 1
-num=100
-savedir = expandvars('$w44simdata/v1')
+#num=100
+#savedir = expandvars('$w44simdata/v1')
 
+# version 2
+num=100
+savedir = expandvars('$w44simdata/v2')
 
 for i in range(num):
     istr='%05d' % i
