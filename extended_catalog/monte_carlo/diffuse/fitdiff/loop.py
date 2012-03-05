@@ -4,7 +4,7 @@ from os import makedirs
 from textwrap import dedent
 
 # version 1
-num=10
+num=1000
 savedir = expandvars('$fitdiffdata/v1')
 
 
@@ -12,13 +12,13 @@ for difftype in ['galactic', 'isotropic', 'sreekumar']:
     print difftype
     for location in ['highlat','lowlat']:
         print location
-        for emin,emax in [[1e2,1e5], [1e4, 1e5]]:
+        for emin,emax in [#[1e2,1e5], [1e4, 1e5], 
+                          [1e2, 1e3]]:
             print emin,emax
 
             subdir = join(savedir, 'diff_%s_loc_%s_emin_%g_emax_%g' % (difftype, location, emin, emax))
 
             for i in range(num):
-                print i
                 istr='%05d' % i
 
                 jobdir = join(subdir,istr)

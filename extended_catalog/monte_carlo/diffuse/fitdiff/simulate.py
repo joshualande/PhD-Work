@@ -10,14 +10,16 @@ import numpy as np
 
 from skymaps import SkyDir
 
-from uw.like.pointspec_helpers import get_default_diffuse
 from uw.like.roi_monte_carlo import SpectralAnalysisMC
 from uw.like.pointspec import DataSpecification
+from uw.like.pointspec_helpers import get_default_diffuse
 
 
 from lande.fermi.likelihood.diffuse import get_background, get_sreekumar
 from lande.fermi.likelihood.save import diffusedict, skydirdict
+from lande.fermi.likelihood.catalogs import get_2fgl
 from lande.utilities.random import random_on_sphere
+from lande.utilities.tools import tolist
 
 
 parser = ArgumentParser()
@@ -40,8 +42,9 @@ emax=args.emax
 
 diffdir='/afs/slac/g/glast/groups/diffuse/rings/2year/'
 if difftype == 'galactic':
-    diffuse_sources = [get_background(join(diffdir,'ring_2year_P76_v0.fits')),
-                       get_background(join(diffdir,'isotrop_2year_P76_source_v0.txt'))]
+    diffuse_sources = get_default_diffuse(diffdir=diffdir,
+                                          gfile='ring_2year_P76_v0.fits',
+                                          ifile='isotrop_2year_P76_source_v0.txt')
 elif difftype == 'isotropic':
     diffuse_sources = [get_background(join(diffdir,'isotrop_2year_P76_source_v0.txt'))]
 elif difftype == 'sreekumar':
@@ -49,11 +52,14 @@ elif difftype == 'sreekumar':
 
 
 tempdir=mkdtemp(prefix='/scratch/')
-catalog_basedir = "/afs/slac/g/glast/groups/catalog/P7_V4_SOURCE"
+
+catdict = get_2fgl()
 
 
 if location == 'highlat':
-    while True:
+ log_basedir = "/afs/slac/g/glast/groups/catalog/P7_V4_SOURCE"
+ log_basedir = "/afs/slac/g/glast/groups/catalog/P7_V4_SOURCE"
+ while True:
         roi_dir=random_on_sphere()
         if roi_dir.l() > 10:
             break
@@ -65,8 +71,8 @@ elif location == 'lowlat':
 
 ds = DataSpecification(
     ft1files = join(tempdir,'ft1.fits'),
-    ft2files = join(catalog_basedir,"ft2_2years.fits"),
-    ltcube = join(catalog_basedir,"ltcube_24m_pass7.4_source_z100_t90_cl0.fits"),
+    ft2files = catdict['ft2'],
+    ltcube = catdict['ft1'],
     binfile = join(tempdir,'binned.fits'))
 
 
@@ -83,17 +89,16 @@ sa = SpectralAnalysisMC(ds,
 roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources)
 
 roi.print_summary()
-
-roi.fit()
-
+roi.fit(use_gradient=False)
 roi.print_summary()
 
 results = dict(
     diffuse=diffusedict(roi),
     difftype=difftype,
     location=location,
+    bin_edges=roi.bin_edges,
     roi_dir=skydirdict(roi_dir))
 
-open('results_%s.yaml' % istr, 'w').write(yaml.dump(results))
+savedict('results_%s.yaml' % istr, results)
 
 shutil.rmtree(tempdir)
