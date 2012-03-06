@@ -20,9 +20,11 @@ from uw.like.roi_monte_carlo import MonteCarlo
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
 from uw.like.pointspec_helpers import PointSource
 
-from lande_toolbag import tolist
-from lande_random import mixed_linear
-from likelihood_tools import force_gradient, sourcedict, spectrum_to_dict, pointlike_model_to_flux
+from lande.utilities.tools import savedict
+from lande.fermi.likelihood.diffuse import get_sreekumar
+from lande.fermi.likelihood.catalogs import get_2fgl
+from lande.fermi.likelihood.tools import force_gradient
+from lande.fermi.likelihood.save import sourcedict, spectrum_to_dict, pointlike_model_to_flux
 
 force_gradient(use_gradient=False)
 
@@ -35,8 +37,6 @@ parser.add_argument("--max-flux",type=float, required=True)
 parser.add_argument("--min-extension",type=float, required=True)
 parser.add_argument("--max-extension",type=float, required=True)
 args=parser.parse_args()
-i=args.i
-
 
 i=args.i
 min_flux_mc = args.min_flux
@@ -45,16 +45,15 @@ max_flux_mc = args.max_flux
 min_extension = args.min_extension
 max_extension = args.max_extension
 
-extensions = mixed_linear(min_extension, max_extension, 2**3+1)
+np.random.seed(i)
+
+extensions = np.linspace(min_extension, max_extension, 2**3+1)
+np.random.shuffle(extensions)
 
 # formula to interpolate from the flux at lowest to highest extension
 flux_mc = lambda extension: np.exp(np.log(min_flux_mc) + 
                                    (np.log(max_flux_mc) - np.log(min_flux_mc))*\
                                    (extension-min(extensions))/(max(extensions)-min(extensions)))
-
-# Linear interpolation
-#flux_mc = lambda extension: min_flux_mc + \
-#        (max_flux_mc - min_flux_mc)*(extension-min(extensions))/(max(extensions)-min(extensions))
 
 index_mc = args.index
 
@@ -64,20 +63,13 @@ irf="P7SOURCE_V6"
 
 skydir_mc = SkyDir()
 
-bg = DiffuseSource(
-    IsotropicPowerLaw(1.5e-5,2.1),
-    PowerLaw(p=[1,1],index_offset=1),
-    'Isotropic Diffuse x1'
-)
+bg = get_sreekumar()
 
-catalog_basedir = "/afs/slac/g/glast/groups/catalog/P7_V4_SOURCE/"
-ft2    = join(catalog_basedir,"ft2_2years.fits")
-ltcube = join(catalog_basedir,"ltcube_24m_pass7.4_source_z100_t90_cl0.fits")
+cat = get_2fgl()
+ft2 = cat['ft2']
+ltcube = cat['ltcube']
 
 results = []
-
-from lande_random import mixed_linear
-#extensions = mixed_linear(0.0, 2.0, 2**6+1)
 
 for extension_mc in extensions:
 
@@ -138,9 +130,10 @@ for extension_mc in extensions:
         ft1=ft1,
         ft2=ft2,
         roi_dir=skydir_mc,
-        maxROI=15,
+        maxROI=10,
         emin=emin,
         emax=emax,
+        gtifile=ltcube,
         )
 
     mc.simulate()
@@ -213,4 +206,4 @@ for extension_mc in extensions:
     rmtree(tempdir)
 
     # Save results to file
-    open('results.yaml','w').write(yaml.dump(tolist(results)))
+    savedict('results.yaml',results)

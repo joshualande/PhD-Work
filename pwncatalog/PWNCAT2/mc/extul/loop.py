@@ -5,7 +5,6 @@ from os import makedirs,getcwd
 
 random.seed(0)
 
-num=500
 
 
 # v4
@@ -64,9 +63,11 @@ num=500
 #      [  3,  2.8e-7,  2.8e-7, 0, 0.5,   'bright'],
 #                                       ]:
 
-# v10 & v11
+# v10 & v11 & v12
 #basedir =  expandvars('$pwndata/monte_carlo/extul/v10/')
-basedir =  expandvars('$pwndata/monte_carlo/extul/v11/')
+#basedir =  expandvars('$pwndata/monte_carlo/extul/v11/')
+basedir =  expandvars('$extuldata/v12/')
+num=1000
 for index_mc,min_flux,max_flux,min_extension, max_extension, type in \
      [[1.5,   1e-9,  1.8e-8, 0, 2.0,  'dim'], 
       [  2,   4e-9,  2.2e-8, 0, 2.0,  'dim'],
@@ -92,7 +93,7 @@ for index_mc,min_flux,max_flux,min_extension, max_extension, type in \
 
         run = open(join(jobdir,'run.sh'),'w')
         run.write(dedent("""\
-            python $pwnmc/extul/extul.py \\
+            python $extulcode/extul.py \\
                 --type=%s \\
                 --index=%g \\
                 --min-flux=%g \\
