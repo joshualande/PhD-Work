@@ -17,9 +17,9 @@ from uw.like.pointspec_helpers import get_default_diffuse
 
 from lande.fermi.likelihood.diffuse import get_background, get_sreekumar
 from lande.fermi.likelihood.save import diffusedict, skydirdict
-from lande.fermi.likelihood.catalogs import get_2fgl
+from lande.fermi.data.catalogs import get_2fgl
 from lande.utilities.random import random_on_sphere
-from lande.utilities.tools import tolist
+from lande.utilities.tools import savedict
 
 
 parser = ArgumentParser()
@@ -72,7 +72,7 @@ elif location == 'lowlat':
 ds = DataSpecification(
     ft1files = join(tempdir,'ft1.fits'),
     ft2files = catdict['ft2'],
-    ltcube = catdict['ft1'],
+    ltcube = catdict['ltcube'],
     binfile = join(tempdir,'binned.fits'))
 
 
@@ -84,9 +84,16 @@ sa = SpectralAnalysisMC(ds,
     minROI=10,
     maxROI=10,
     seed=i,
+    mc_energy=True,
 )
 
 roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources)
+
+# make counts map before fitting!
+if i < 10: 
+    plot_kwargs = dict(size = 10)
+    if emin == 1e4: plot_kwargs['pixelsize']=1
+    roi.plot_counts_map(filename='counts_map_%s.png'  % istr, **plot_kwargs)
 
 roi.print_summary()
 roi.fit(use_gradient=False)
@@ -97,7 +104,9 @@ results = dict(
     difftype=difftype,
     location=location,
     bin_edges=roi.bin_edges,
-    roi_dir=skydirdict(roi_dir))
+    roi_dir=skydirdict(roi_dir),
+    emin=emin,
+    emax=emax)
 
 savedict('results_%s.yaml' % istr, results)
 
