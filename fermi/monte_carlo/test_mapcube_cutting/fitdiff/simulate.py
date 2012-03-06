@@ -10,9 +10,9 @@ import numpy as np
 
 from skymaps import SkyDir
 
+from uw.like.Models import Constant
 from uw.like.roi_monte_carlo import SpectralAnalysisMC
 from uw.like.pointspec import DataSpecification
-from uw.like.pointspec_helpers import get_default_diffuse
 
 
 from lande.fermi.likelihood.diffuse import get_background, get_sreekumar
@@ -41,15 +41,19 @@ emin=args.emin
 emax=args.emax
 
 diffdir='/afs/slac/g/glast/groups/diffuse/rings/2year/'
-if difftype == 'galactic':
-    diffuse_sources = get_default_diffuse(diffdir=diffdir,
-                                          gfile='ring_2year_P76_v0.fits',
-                                          ifile='isotrop_2year_P76_source_v0.txt')
-elif difftype == 'isotropic':
-    diffuse_sources = [get_background(join(diffdir,'isotrop_2year_P76_source_v0.txt'))]
-elif difftype == 'sreekumar':
-    diffuse_sources = [get_sreekumar(diff_factor=1)]
 
+iso = get_background(join(diffdir,'isotrop_2year_P76_source_v0.txt'))
+ring = get_background(join(diffdir,'ring_2year_P76_v0.fits'))
+sreekumar = get_sreekumar(diff_factor=1)
+
+if difftype == 'galactic':
+    for p in iso.smodel.param_names: iso.smodel.freeze(p)
+    ring.smodel = Constant()
+    diffuse_sources = [iso, ring]
+elif difftype == 'isotropic':
+    diffuse_sources = [iso ]
+elif difftype == 'sreekumar':
+    diffuse_sources = [sreekumar]
 
 tempdir=mkdtemp(prefix='/scratch/')
 
@@ -92,7 +96,7 @@ roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources)
 # make counts map before fitting!
 if i < 10: 
     plot_kwargs = dict(size = 10)
-    if emin == 1e4: plot_kwargs['pixelsize']=1
+    if emin == 1e4: plot_kwargs['pixelsize']=2
     roi.plot_counts_map(filename='counts_map_%s.png'  % istr, **plot_kwargs)
 
 roi.print_summary()

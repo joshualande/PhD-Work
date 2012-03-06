@@ -9,9 +9,10 @@ recname = expandvars(join('$fitdiffdata','v1','cached.fits'))
 
 r = fitsrec(recname)
 
-print r
 print r['galnorm']
+print r['galnorm_err']
 print r['isonorm']
+print r['isonorm_err']
 
 print r['difftype']
 print r['location']

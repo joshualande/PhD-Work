@@ -4,12 +4,8 @@ from os import makedirs
 from textwrap import dedent
 
 # version 1
-#num=1000
-#savedir = expandvars('$fitdiffdata/v1')
-
-# version 1
 num=100
-savedir = expandvars('$fitdiffdata/v2')
+savedir = expandvars('$fitdiffdata/v1')
 
 for difftype in ['galactic', 'isotropic', 'sreekumar']:
     print difftype

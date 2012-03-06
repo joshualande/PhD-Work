@@ -8,7 +8,7 @@ import yaml
 
 from uw.utilities.makerec import makefits
 
-savedir = expandvars(join('$fitdiffdata','v2'))
+savedir = expandvars(join('$fitdiffdata','v1'))
 
 
 results = defaultdict(list)
