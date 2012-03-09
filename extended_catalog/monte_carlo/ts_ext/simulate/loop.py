@@ -3,7 +3,7 @@ from os import makedirs
 
 # version 1
 num=100
-savedir = expandvars('$point_plane_data/v1')
+savedir = expandvars('$tsext_plane_data/v1')
 
 
 for i in range(num):
@@ -13,7 +13,7 @@ for i in range(num):
     if not exists(jobdir): makedirs(jobdir)
 
     run = join(jobdir,'run.sh')
-    open(run,'w').write("""python $point_plane_code/simulate.py %g""" % i)
+    open(run,'w').write("""python $tsext_plane_code/simulate.py %g""" % i)
 
 submit_all = join(savedir,'submit_all.sh')
 open(submit_all,'w').write(

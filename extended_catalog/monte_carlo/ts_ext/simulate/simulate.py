@@ -9,8 +9,6 @@ from tempfile import mkdtemp
 import yaml
 import numpy as np
 
-from skymaps import SkyDir
-
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
 from uw.like.roi_state import PointlikeState
 from uw.like.SpatialModels import EllipticalRing, EllipticalDisk, Disk, Gaussian
@@ -21,7 +19,7 @@ from lande.fermi.likelihood.tools import force_gradient
 force_gradient(use_gradient=False)
 
 from lande.fermi.likelihood.save import sourcedict
-from lande.utilities.tools import tolist
+from lande.utilities.tools import savedict
 
 parser = ArgumentParser()
 parser.add_argument("i", type=int)
@@ -34,65 +32,49 @@ emax=1e5
 
 irf='P7SOURCE_V6'
 
-skydir = choose_roi_randomly()
-
-diffuse=get_default_diffuse(diffdir='/afs/slac/g/glast/groups/diffuse/rings/2year',
-                                      gfile='ring_2year_P76_v0.fits',
-                                      ifile='isotrop_2year_P76_source_v0.txt')
-
-
-savedir='savedir'
-
-mc_kwargs = dict(
-    seed=i,
-    irf=irf,
-    roi_dir=skydir,
-    ft2=ft2,
-    maxROI=10,
-    emin=emin,
-    emax=emax)
-
-ft1_diffuse = join(savedir,'ft1_diffuse.fits')
-mc=MonteCarlo(
-    sources=diffuse,
-    ft1=ft1_diffuse,
-    **mc_kwargs)
-mc.simulate()
+while True:
+    roi_dir=random_on_sphere()
+    if abs(roi_dir.b()) < 5:
+        break
 
 results = dict()
 
 for index,flux in [[1.5, 1e-8], [2.0, 3e-8], [2.5, 1e-7] [3.0, 3e-7]]:
 
+    tempdir = mkdtemp(prefix='/scratch/')
+
+
     model_mc = PowerLaw(index=index)
     model_mc.set_flux(flux, 1e2, 1e5)
 
-    point = PointSource(name=name, model=model_mc, skydir=skydir)
 
-    ft1_point = join(savedir,'ft1_point.fits')
-    mc=MonteCarlo(
-        sources=point,
-        ft1=ft1_point,
-        **mc_kwargs)
-    mc.simulate()
-
-    binfile = join(savedir,'binned.fits')
+    ft1 = join(tempdir,'ft1_point.fits')
+    binfile = join(tempdir,'binned.fits')
     ds = DataSpecification(
-        ft1files = [ft1_point, ft1_diffuse],
+        ft1files = [ft1, ft1],
         ft2files = ft2,
         binfile = binfile,
         ltcube = ltcube)
 
-    sa = SpectralAnalysis(ds,
-                          emin=emin,
-                          emax=emax,
-                          binsperdec=4,
-                          event_class=0,
-                          roi_dir = skydir,
-                          minROI=10,
-                          maxROI=10,
-                          irf=irf)
+    sa = SpectralAnalysisMC(ds,
+                            emin=emin,
+                            emax=emax,
+                            binsperdec=8,
+                            event_class=0,
+                            roi_dir = roi_dir,
+                            minROI=10,
+                            maxROI=10,
+                            irf=irf,
+                            seed=i)
+
+    point = PointSource(name=name, model=model_mc, skydir=roi_dir)
+
+    diffuse=get_default_diffuse(diffdir='/afs/slac/g/glast/groups/diffuse/rings/2year',
+                                gfile='ring_2year_P76_v0.fits',
+                                ifile='isotrop_2year_P76_source_v0.txt')
 
     roi = sa.roi(
+        roi_dir = roi_dir,
         point_sources=[point],
         diffuse_sources=diffuse,
     )
@@ -111,10 +93,15 @@ for index,flux in [[1.5, 1e-8], [2.0, 3e-8], [2.5, 1e-7] [3.0, 3e-7]]:
     roi.modify(which=name, spatial_model=Disk(sigma=.1))
 
     roi.fit()
-    roi.fit_extension(which=name_mc,estimate_errors=False)
+    roi.fit_extension(which=name_mc, estimate_errors=False)
     roi.fit()
+
 
     r['extended'] = sourcedict(roi, name, errors=False)
 
-    open('results_%s.yaml' % istr).write(yaml.dump(results))
+    r['extended']['ts_ext']=roi.TS_ext(which=name_mc)
+
+    savedict('results_%s.yaml' % istr,results)
+
+    shutil.rmtree(tempdir)
 
