@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from lande.fermi.likelihood.roi_gtlike import Gtlike
 
 from argparse import ArgumentParser
 import shutil
@@ -13,11 +14,13 @@ from skymaps import SkyDir
 from uw.like.Models import Constant
 from uw.like.roi_monte_carlo import SpectralAnalysisMC
 from uw.like.pointspec import DataSpecification
+from uw.like.roi_state import PointlikeState
 
 
+from lande.fermi.likelihood.fit import logLikelihood
 from lande.fermi.likelihood.diffuse import get_background, get_sreekumar
 from lande.fermi.likelihood.save import diffusedict, skydirdict
-from lande.fermi.data.catalogs import get_2fgl
+from lande.fermi.data.catalogs import dict2fgl
 from lande.utilities.random import random_on_sphere
 from lande.utilities.tools import savedict
 
@@ -57,7 +60,6 @@ elif difftype == 'sreekumar':
 
 tempdir=mkdtemp(prefix='/scratch/')
 
-catdict = get_2fgl()
 
 
 if location == 'highlat':
@@ -75,42 +77,59 @@ elif location == 'lowlat':
 
 ds = DataSpecification(
     ft1files = join(tempdir,'ft1.fits'),
-    ft2files = catdict['ft2'],
-    ltcube = catdict['ltcube'],
+    ft2files = dict2fgl['ft2'],
+    ltcube = dict2fgl['ltcube'],
     binfile = join(tempdir,'binned.fits'))
 
 
 sa = SpectralAnalysisMC(ds,
-    emin = emin,
-    emax = emax,
-    irf='P7SOURCE_V6',
-    roi_dir=roi_dir,
-    minROI=10,
-    maxROI=10,
-    seed=i,
-    mc_energy=True,
-)
+                        binsperdec=8,
+                        emin = emin,
+                        emax = emax,
+                        irf='P7SOURCE_V6',
+                        roi_dir=roi_dir,
+                        minROI=10,
+                        maxROI=10,
+                        seed=i,
+                        mc_energy=True,
+                       )
 
 roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources)
 
-# make counts map before fitting!
-if i < 10: 
-    plot_kwargs = dict(size = 10)
-    if emin == 1e4: plot_kwargs['pixelsize']=2
-    roi.plot_counts_map(filename='counts_map_%s.png'  % istr, **plot_kwargs)
+state = PointlikeState(roi)
+
+results = dict(
+    difftype=difftype,
+    location=location,
+    roi_dir=skydirdict(roi_dir),
+    emin=emin,
+    emax=emax)
+
+mc=diffusedict(roi)
+ll_0 = logLikelihood(roi)
 
 roi.print_summary()
 roi.fit(use_gradient=False)
 roi.print_summary()
+ll_1 = logLikelihood(roi)
 
-results = dict(
-    diffuse=diffusedict(roi),
-    difftype=difftype,
-    location=location,
-    bin_edges=roi.bin_edges,
-    roi_dir=skydirdict(roi_dir),
-    emin=emin,
-    emax=emax)
+fit=diffusedict(roi)
+results['pointlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
+
+state.restore(just_spectra=True)
+
+gtlike = Gtlike(roi, bigger_roi=True)
+like = gtlike.like
+
+mc=diffusedict(like)
+ll_0=logLikelihood(like)
+
+like.fit(covar=True)
+
+fit = diffusedict(like)
+ll_1 = logLikelihood(like)
+
+results['gtlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
 
 savedict('results_%s.yaml' % istr, results)
 
