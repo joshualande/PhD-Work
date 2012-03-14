@@ -6,8 +6,16 @@ from os import makedirs
 #savedir = expandvars('$w44simdata/v1')
 
 # version 2
-num=1000
-savedir = expandvars('$w44simdata/v2')
+#num=2000
+#savedir = expandvars('$w44simdata/v2')
+
+# version 3 - save r68
+#num=2000
+#savedir = expandvars('$w44simdata/v3')
+
+# version 4 - better mapcube cutting
+num=100
+savedir = expandvars('$w44simdata/v4')
 
 for i in range(num):
     istr='%05d' % i
