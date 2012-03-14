@@ -4,15 +4,37 @@ from os import makedirs
 from textwrap import dedent
 
 # version 1
-num=100
-savedir = expandvars('$fitdiffdata/v1')
+#num=1000
+#savedir = expandvars('$fitdiffdata/v1')
+
+# version 2
+# Primary difference: 8bins per decade
+#num=1000
+#savedir = expandvars('$fitdiffdata/v2')
+
+
+# version 3
+# Primary difference: gtlike, new sreekumar code
+#num=1000
+#savedir = expandvars('$fitdiffdata/v3')
+
+# Primary difference: fix l,b cut
+#num=1000
+#savedir = expandvars('$fitdiffdata/v4')
+
+# Primary difference: diffuse_pad=10, energy_pad=2
+#num=1000
+#savedir = expandvars('$fitdiffdata/v5')
+
+# Primary difference: diffuse_pad=10, energy_pad=2
+num=1000
+savedir = expandvars('$fitdiffdata/v6')
 
 for difftype in ['galactic', 'isotropic', 'sreekumar']:
     print difftype
     for location in ['highlat','lowlat']:
         print location
-        for emin,emax in [[1e2,1e5], [1e4, 1e5], 
-                          [1e2, 1e3]]:
+        for emin,emax in [[1e2,1e5], [1e4, 1e5]]:
             print emin,emax
 
             subdir = join(savedir, 'diff_%s_loc_%s_emin_%g_emax_%g' % (difftype, location, emin, emax))
