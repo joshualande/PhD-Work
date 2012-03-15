@@ -6,9 +6,12 @@ from os import makedirs
 #savedir = expandvars('$tsext_plane_data/v1')
 
 # version 2 - better fluxes
-num=1000
-savedir = expandvars('$tsext_plane_data/v2')
+#num=1000
+#savedir = expandvars('$tsext_plane_data/v2')
 
+# version 2 - better fluxes
+num=1000
+savedir = expandvars('$tsext_plane_data/v3')
 
 for i in range(num):
     istr='%05d' % i

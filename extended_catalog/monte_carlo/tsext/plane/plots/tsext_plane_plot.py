@@ -2,20 +2,19 @@ from os.path import join, expandvars
 
 import pylab as P
 import yaml
+import h5py
 import numpy as np
 from scipy.stats import chi2
 
-from uw.utilities.makerec import fitsrec
+from lande.utilities.arrays import isclose
 
-from lande.utilities.arrays import close
+recname = expandvars(join('$tsext_plane_data', 'v3', 'merged.hdf5'))
+r = h5py.File(recname)
 
-recname = join(expandvars('$tsext_plane_data'), 'v1', 'merged.fits')
-r = fitsrec(recname)
-print r
-
-index_list = r['index']
-ts_point_list = r['ts_point']
-ts_ext_list = r['ts_ext']
+flux_list = np.asarray(r['flux'])
+index_list = np.asarray(r['index'])
+ts_point_list = np.asarray(r['TS_point'])
+ts_ext_list = np.asarray(r['TS_ext'])
 
 ts_ext_list = np.where(ts_ext_list > 0, ts_ext_list, 0)
 
@@ -31,7 +30,7 @@ for index,kwargs in [[1.5,dict(color='blue', label='index=1.5')],
                      [3,  dict(color='black', label='index=3')]
                     ]:
 
-    cut = close(index,index_list)
+    cut = isclose(index,index_list)
 
     print 'index = %s' % index
     print '.. num', sum(cut)
@@ -58,4 +57,4 @@ axes.semilogy(bins, y, color='red', linewidth=1, label='$\chi^2_1/2$', zorder=0,
 
 P.legend()
 
-P.savefig('ts_ext_plane.pdf')
+P.savefig('plot_tsext_plane.pdf')

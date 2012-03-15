@@ -52,7 +52,18 @@ while True:
 
 results = []
 
-for index,flux in [[1.5, 3e-9], [2.0, 2e-8], [2.5, 1e-7], [3.0, 5e-7]]:
+
+# v1:
+# indices_and_fluxes = [[1.5, 1e-8], [2.0, 3e-8], [2.5, 1e-7], [3.0, 3e-7]]
+
+# v2: 
+#indices_and_fluxes = [[1.5, 3e-9], [2.0, 2e-8], [2.5, 1e-7], [3.0, 5e-7]]
+
+# v3:
+indices_and_fluxes = [[1.5, 7e-9], [2.0, 3e-8], [2.5, 1e-7], [3.0, 5e-7]]
+
+np.random.shuffle(indices_and_fluxes)
+for index,flux in indices_and_fluxes:
 
     name = 'source_flux_%g_index_%g' % (flux,index)
 

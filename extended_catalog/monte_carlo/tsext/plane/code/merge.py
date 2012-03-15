@@ -1,13 +1,11 @@
 from os.path import join, expandvars
 from glob import glob
 from collections import defaultdict
-
         
+import h5py
 import yaml
-from numpy.core.records import fromarrays
-from uw.utilities.makerec import makefits
 
-savedir = expandvars(join('$tsext_plane_data/','v1'))
+savedir = expandvars(join('$tsext_plane_data/','v3'))
 
 results = defaultdict(list)
 
@@ -21,12 +19,14 @@ for i,r in enumerate(all_results):
 
     for y in x:
         results['TS_point'].append(y['point']['TS'])
-        results['TS_ext'].append(y['extended']['ts_ext'])
+        results['TS_ext'].append(y['extended']['TS_ext'])
         results['flux'].append(y['mc']['flux']['flux'])
         results['index'].append(y['mc']['model']['Index'])
 
-
-rec = fromarrays(results.values(), names=results.keys())
-
-savename = join(savedir,'merged.fits')
-makefits(rec, savename, clobber=True)
+savename = join(savedir,'merged.hdf5')
+f=h5py.File(savename,'w')
+for k,v in results.items():
+    f[k] = v
+print f
+print f['flux']
+f.close()
