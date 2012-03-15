@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 import numpy as np
 from skymaps import SkyDir
 from uw.utilities.xml_parsers import parse_sources
-from uw.like.Models import FileFunction
+from uw.like.Models import FileFunction, ProductModel, Constant
 from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.pointspec_helpers import get_default_diffuse
 from uw.like.roi_monte_carlo import MonteCarlo
@@ -20,11 +20,8 @@ spectrum = args.spectrum
 i = args.i
 istr = '%05d' % i
 
-#emin=60
-#emax=10**5.5
-
-emin=1e2
-emax=1e5
+emin=10
+#emax=1e6
 
 savedir='%s_simulation/%s' % (spectrum,istr)
 
@@ -36,8 +33,6 @@ ps,ds=parse_sources('/u/gl/funk/data/GLAST/ExtendedSources/NewAnalysis/gtlike/W4
 sources = ps + ds
 
 d = {s.name:s for s in sources}
-
-
 
 # Fix diffuse components
 iso = d['iso_p7v6source'] 
@@ -52,19 +47,12 @@ w44 = d['2FGL J1855.9+0121e']
 print 'LogParobla flux for w44',w44.model.i_flux(1e2,1e5)
 
 if spectrum == 'LogParabola':
-    # w44 already log parabola
+    # w44 in xml is already log parabola
     pass
 elif spectrum == 'FileFunction':
 
-    def convert_gtobssim_file_to_gtlike(infile, outfile):
-        energy,flux=np.genfromtxt(infile,unpack=True)
-        flux/=1e4
-        open(outfile,'w').write('\n'.join('%s\t%s' % (i,j) for i,j in zip(energy,flux)))
-
     file = join(savedir, 'W44_pi0_model_gtlike.dat')
-    convert_gtobssim_file_to_gtlike('W44_pi0_model_gtobssim.dat', file)
-
-    w44.model = FileFunction(file=file)
+    w44.model = ProductModel(Constant(1e-4),FileFunction(file=file))
 
 else:
     raise Exception("...")
