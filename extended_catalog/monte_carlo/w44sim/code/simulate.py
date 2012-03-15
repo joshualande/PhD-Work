@@ -135,6 +135,7 @@ if __name__ == '__main__':
     results = r = dict()
 
     results['mc'] = sourcedict(roi, name, errors=False)
+    results['mc']['r68'] = roi.get_source('W44').spatial_model.numeric_r68()
 
     print roi
 
@@ -155,7 +156,7 @@ if __name__ == '__main__':
         results[type] = sourcedict(roi,name)
 
         if type != 'Point':
-            results['r68'] = spatial_model.numeric_r68()
+            results[type]['r68'] = spatial_model.numeric_r68()
 
         savedict('results_%s.yaml' % istr,results)
 
