@@ -30,6 +30,10 @@ from textwrap import dedent
 num=1000
 savedir = expandvars('$fitdiffdata/v6')
 
+# Primary difference: diffuse_pad=10, energy_pad=2
+num=100
+savedir = expandvars('$fitdiffdata/v7')
+
 for difftype in ['galactic', 'isotropic', 'sreekumar']:
     print difftype
     for location in ['highlat','lowlat']:

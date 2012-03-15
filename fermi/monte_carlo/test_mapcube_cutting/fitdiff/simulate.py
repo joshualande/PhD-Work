@@ -99,6 +99,8 @@ roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources)
 state = PointlikeState(roi)
 
 results = dict(
+    i = i,
+    istr = istr,
     difftype=difftype,
     location=location,
     roi_dir=skydirdict(roi_dir),
