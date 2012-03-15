@@ -1,4 +1,4 @@
-
+# These are my bash
 
 function terminal_tweaks {
     [ -z "$PS1" ] && return
@@ -15,6 +15,8 @@ function terminal_tweaks {
 
     # Disable all core dump files. I am not sure this works correctly
     ulimit -c 0 
+
+
 
     #stty sane;stty erase ^H # This stuff makes backspace work
     shopt -s checkwinsize
@@ -37,8 +39,8 @@ function alias_general {
     alias root='root -l'
     alias killeverything='for x in `jobs -p`; do kill -9 $x; done'
     alias rm="rm -iv" # warn before removing & verbose
-    alias mv="mv -bfi"
-    alias cp="cp -abfi"
+    alias mv="mv -fi"
+    alias cp="cp -afi"
     alias less='less -I' # case insensitive search
     alias l="ls --color" # print out size next to each of them
     alias duh='du -h --max-depth=1' # human readable and not recursive
