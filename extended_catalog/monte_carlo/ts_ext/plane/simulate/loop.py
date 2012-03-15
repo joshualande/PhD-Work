@@ -2,7 +2,7 @@ from os.path import join, expandvars, exists
 from os import makedirs
 
 # version 1
-num=100
+num=10000
 savedir = expandvars('$tsext_plane_data/v1')
 
 
