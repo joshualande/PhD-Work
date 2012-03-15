@@ -20,9 +20,17 @@ from uw.like.Models import PowerLaw
 from lande.fermi.likelihood.tools import force_gradient
 force_gradient(use_gradient=False)
 
+from uw.like.roi_analysis import ROIAnalysis
+from lande.utilities.decorators import warn_on_exception
+
+ROIAnalysis.fit = warn_on_exception(ROIAnalysis.fit)
+ROIAnalysis.localize = warn_on_exception(ROIAnalysis.localize)
+ROIAnalysis.fit_extensions = warn_on_exception(ROIAnalysis.fit_extension)
+
 from lande.fermi.likelihood.save import sourcedict
 from lande.utilities.tools import savedict
 from lande.utilities.random import random_on_sphere
+
 
 parser = ArgumentParser()
 parser.add_argument("i", type=int)
@@ -44,7 +52,7 @@ while True:
 
 results = []
 
-for index,flux in [[1.5, 1e-8], [2.0, 3e-8], [2.5, 1e-7], [3.0, 3e-7]]:
+for index,flux in [[1.5, 3e-9], [2.0, 2e-8], [2.5, 1e-7], [3.0, 5e-7]]:
 
     name = 'source_flux_%g_index_%g' % (flux,index)
 
@@ -94,7 +102,8 @@ for index,flux in [[1.5, 1e-8], [2.0, 3e-8], [2.5, 1e-7], [3.0, 3e-7]]:
 
     r = dict()
 
-    r['mc'] = sourcedict(roi, name, errors=False)
+    r['mc'] = sourcedict(roi, name, errors=False, emin=1e2, emax=1e5)
+
 
     roi.fit()
     roi.localize(which=name, update=True)
@@ -111,7 +120,7 @@ for index,flux in [[1.5, 1e-8], [2.0, 3e-8], [2.5, 1e-7], [3.0, 3e-7]]:
 
     r['extended'] = sourcedict(roi, name, errors=False)
 
-    r['extended']['ts_ext']=roi.TS_ext(which=name)
+    r['extended']['TS_ext']=roi.TS_ext(which=name)
 
     results.append(r)
     savedict('results_%s.yaml' % istr,results)

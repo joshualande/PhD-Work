@@ -2,8 +2,12 @@ from os.path import join, expandvars, exists
 from os import makedirs
 
 # version 1
-num=10000
-savedir = expandvars('$tsext_plane_data/v1')
+#num=10000
+#savedir = expandvars('$tsext_plane_data/v1')
+
+# version 2 - better fluxes
+num=1000
+savedir = expandvars('$tsext_plane_data/v2')
 
 
 for i in range(num):
