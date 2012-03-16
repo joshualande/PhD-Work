@@ -52,4 +52,4 @@ ts_inc = np.where(ts_inc > 0, ts_inc, 0)
 axes.hist(ts_inc, **hist_kwargs)
 axes.set_xlabel(r'$\textrm{TS}_\textrm{ellip. ring}-\textrm{TS}_\textrm{ellip. disk}$')
 
-save('w44sim')
+save('ts_comparision_w44sim')
