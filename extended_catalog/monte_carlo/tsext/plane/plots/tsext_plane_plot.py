@@ -8,7 +8,7 @@ from scipy.stats import chi2
 
 from lande.utilities.arrays import isclose
 
-recname = expandvars(join('$tsext_plane_data', 'v3', 'merged.hdf5'))
+recname = expandvars(join('$tsext_plane_data', 'v5', 'merged.hdf5'))
 r = h5py.File(recname)
 
 flux_list = np.asarray(r['flux'])
@@ -30,10 +30,11 @@ for index,kwargs in [[1.5,dict(color='blue', label='index=1.5')],
                      [3,  dict(color='black', label='index=3')]
                     ]:
 
-    cut = isclose(index,index_list)
+    cut = isclose(index,index_list) & (ts_point_list>=25)
 
     print 'index = %s' % index
     print '.. num', sum(cut)
+    print '.. num bad', sum(isclose(index, index_list) & (ts_point_list < 25))
     ts_point = ts_point_list[cut]
     print '.. average ts_point',np.average(ts_point), np.std(ts_point)
     ts_ext = ts_ext_list[cut]

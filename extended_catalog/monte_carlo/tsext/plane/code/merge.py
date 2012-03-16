@@ -5,7 +5,9 @@ from collections import defaultdict
 import h5py
 import yaml
 
-savedir = expandvars(join('$tsext_plane_data/','v3'))
+from lande.utilities.save import savedict
+
+savedir = expandvars(join('$tsext_plane_data/','v5'))
 
 results = defaultdict(list)
 
@@ -17,16 +19,12 @@ for i,r in enumerate(all_results):
 
     x = yaml.load(open(r))
 
-    for y in x:
-        results['TS_point'].append(y['point']['TS'])
-        results['TS_ext'].append(y['extended']['TS_ext'])
-        results['flux'].append(y['mc']['flux']['flux'])
-        results['index'].append(y['mc']['model']['Index'])
+    if x is not None:
+        for y in x:
+            results['TS_point'].append(y['point']['TS'])
+            results['TS_ext'].append(y['extended']['TS_ext'])
+            results['flux'].append(y['mc']['flux']['flux'])
+            results['index'].append(y['mc']['model']['Index'])
 
 savename = join(savedir,'merged.hdf5')
-f=h5py.File(savename,'w')
-for k,v in results.items():
-    f[k] = v
-print f
-print f['flux']
-f.close()
+savedict(results, savename)

@@ -28,7 +28,7 @@ ROIAnalysis.localize = warn_on_exception(ROIAnalysis.localize)
 ROIAnalysis.fit_extensions = warn_on_exception(ROIAnalysis.fit_extension)
 
 from lande.fermi.likelihood.save import sourcedict
-from lande.utilities.tools import savedict
+from lande.utilities.save import savedict
 from lande.utilities.random import random_on_sphere
 
 
@@ -60,7 +60,13 @@ results = []
 #indices_and_fluxes = [[1.5, 3e-9], [2.0, 2e-8], [2.5, 1e-7], [3.0, 5e-7]]
 
 # v3:
-indices_and_fluxes = [[1.5, 7e-9], [2.0, 3e-8], [2.5, 1e-7], [3.0, 5e-7]]
+#indices_and_fluxes = [[1.5, 7e-9], [2.0, 3e-8], [2.5, 1e-7], [3.0, 5e-7]]
+
+# v4:
+#indices_and_fluxes = [[1.5, 5e-9], [2.0, 1.7e-8], [2.5, 1e-7], [3.0, 3.3e-7]]
+
+# v5:
+indices_and_fluxes = [[1.5, 3.5e-9], [2.0, 1.7e-8], [2.5, 1e-7], [3.0, 3.3e-7]]
 
 np.random.shuffle(indices_and_fluxes)
 for index,flux in indices_and_fluxes:
@@ -89,15 +95,14 @@ for index,flux in indices_and_fluxes:
                             emax=emax,
                             binsperdec=8,
                             event_class=0,
-                            roi_dir = roi_dir,
+                            roi_dir=roi_dir,
                             minROI=10,
                             maxROI=10,
                             irf=irf,
                             seed=i,
                             tstart=0,
                             tstop=31556926,
-                            ltfrac=0.8,
-                           )
+                            ltfrac=0.8)
 
     point = PointSource(name=name, model=model_mc, skydir=roi_dir)
 
@@ -113,23 +118,31 @@ for index,flux in indices_and_fluxes:
 
     r = dict()
 
-    r['mc'] = sourcedict(roi, name, errors=False, emin=1e2, emax=1e5)
+    kwargs=dict(roi=roi, name=name, emin=1e2, emax=1e5)
 
+    r['mc'] = sourcedict(errors=False, **kwargs)
+
+    roi.print_summary(galactic=True)
 
     roi.fit()
     roi.localize(which=name, update=True)
     roi.fit()
 
-    r['point'] = sourcedict(roi, name, errors=False)
+    roi.print_summary(galactic=True)
+
+    r['point'] = sourcedict(errors=True, **kwargs)
 
     roi.modify(which=name, spatial_model=Disk(sigma=.1))
+
+    roi.print_summary(galactic=True)
 
     roi.fit()
     roi.fit_extension(which=name, estimate_errors=False)
     roi.fit()
 
+    roi.print_summary(galactic=True)
 
-    r['extended'] = sourcedict(roi, name, errors=False)
+    r['extended'] = sourcedict(errors=True, **kwargs)
 
     r['extended']['TS_ext']=roi.TS_ext(which=name)
 
