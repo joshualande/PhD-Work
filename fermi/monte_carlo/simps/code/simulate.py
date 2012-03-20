@@ -11,15 +11,14 @@ import numpy as np
 
 from skymaps import SkyDir
 
-from uw.like.Models import Constant
 from uw.like.roi_monte_carlo import SpectralAnalysisMC
 from uw.like.pointspec import DataSpecification
+from uw.like.pointspec_helpers import PointSource
+from uw.like.Models import PowerLaw
 from uw.like.roi_state import PointlikeState
 
-
-from lande.fermi.likelihood.fit import logLikelihood
-from lande.fermi.likelihood.diffuse import get_background, get_sreekumar
-from lande.fermi.likelihood.save import diffusedict, skydirdict
+from lande.fermi.likelihood.diffuse import get_sreekumar
+from lande.fermi.likelihood.save import sourcedict
 from lande.fermi.data.catalogs import dict2fgl
 from lande.utilities.random import random_on_sphere
 from lande.utilities.save import savedict
@@ -34,28 +33,25 @@ istr='%05d' % i
 
 np.random.seed(i)
 
-difftype=args.difftype
-
 roi_dir = SkyDir(0,0,SkyDir.GALACTIC)
 name='source'
 
-emin=emin
-emax=emax
+emin=1e2
+emax=1e5
 
-model_mc = PowerLaw(index=index)
-model_mc.set_flux(1e-8, emin=emin, emax=emax)
+model_mc = PowerLaw(index=2)
+model_mc.set_flux(1e-5, emin=emin, emax=emax)
 
 sreekumar = get_sreekumar()
 ps = PointSource(name=name, model=model_mc, skydir=roi_dir)
 
-tempdir=mkdtemp(prefix='/scratch/')
+tempdir='savedir'
 
 ds = DataSpecification(
     ft1files = join(tempdir,'ft1.fits'),
     ft2files = dict2fgl['ft2'],
     ltcube = dict2fgl['ltcube'],
     binfile = join(tempdir,'binned.fits'))
-
 
 sa = SpectralAnalysisMC(ds,
                         binsperdec=8,
@@ -67,43 +63,39 @@ sa = SpectralAnalysisMC(ds,
                         maxROI=10,
                         seed=i,
                         mc_energy=True,
+                        savedir=tempdir,
                        )
 
 roi = sa.roi(roi_dir=roi_dir, 
              point_sources=[ps],
              diffuse_sources=[sreekumar])
+state = PointlikeState(roi)
 
 results = dict(
     i = i,
     istr = istr)
 
-mc=sourcedict(roi)
-
-ll_0 = logLikelihood(roi)
+mc=sourcedict(roi, name)
 
 roi.print_summary()
 roi.fit(use_gradient=False)
 roi.print_summary()
-ll_1 = logLikelihood(roi)
 
-fit=diffusedict(roi)
-results['pointlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
+fit=sourcedict(roi, name)
 
-state.restore(just_spectra=True)
+results['pointlike'] = dict(mc=mc, fit=fit)
+
+state.restore()
 
 gtlike = Gtlike(roi, bigger_roi=True)
 like = gtlike.like
 
-mc=diffusedict(like)
-ll_0=logLikelihood(like)
+mc=sourcedict(like, name)
 
 like.fit(covar=True)
 
-fit = diffusedict(like)
-ll_1 = logLikelihood(like)
+fit = sourcedict(like, name)
 
-results['gtlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
+results['gtlike'] = dict(mc=mc, fit=fit)
 
 savedict('results_%s.yaml' % istr, results)
-
-shutil.rmtree(tempdir)
