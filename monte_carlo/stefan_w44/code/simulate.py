@@ -21,8 +21,8 @@ spectrum = args.spectrum
 i = args.i
 istr = '%05d' % i
 
-emin=10
-emax=1e6
+emin=1e2
+emax=1e5
 
 ft2='/u/gl/bechtol/disk/drafts/radio_quiet/36m_gtlike/trial_v1/ft2-30s_239557414_334152027.fits'
 ltcube = '/u/gl/funk/data/GLAST/ExtendedSources/NewAnalysis/gtlike/W44/ltcube_239557414_334152002.fits'
