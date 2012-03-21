@@ -40,6 +40,7 @@ istr='%05d' % i
 np.random.seed(i)
 
 difftype=args.difftype
+pointing=args.pointing
 location=args.location
 emin=args.emin
 emax=args.emax
