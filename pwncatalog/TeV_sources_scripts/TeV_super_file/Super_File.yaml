@@ -1,0 +1,6111 @@
+# List of TeV sources associated with Galactic sources 
+#J. Lande, R.Rousseau
+#16/03/2012
+#
+#Note : Fermi SEDs are given as following : E in MeV, E2dNdE in erg/cm2/s
+#Two cases : 
+#	points are the points of the SED with TS > 9
+#	ULs are the upperlimit
+#Each bin begin at Emin, ends at Emax and Emean correspond to the mean value in log scale
+#
+# changes:
+#date - who - change
+Boomerang:
+  gal: [106.57,2.91]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [11.06e+06]
+        Emax: [110.67e+06]
+        Emean: [35.0e+06]
+        E2dNdE: [1.39e-12]
+        E2dNdE_Err: [2.11e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: [] 
+    reference: "http://iopscience.iop.org/1538-4357/700/2/L127/pdf/apjl_700_2_127.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=182"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""  
+  association: "G106.6+2.9"
+  hardsource: "P72Y3615"
+  notes: |
+    "Detected by Milagro, extended source but unknown parameters"
+G0.9+0.1:
+  gal: [0.87,0.08]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [1.79e+05,2.96e+05,5.21e+05,9.26e+05,1.63e+06,4.79e+06]
+        Emax: [2.96e+05,4.88e+05,8.61e+05,1.53e+06,2.70e+06,7.92e+06]
+        Emean: [2.30e+05, 3.80e+05, 6.70e+05, 1.19e+06, 2.10e+06,6.16e+06]
+        E2dNdE: [2.05e-12,1.89e-12,1.68e-12,1.58e-12,9.04e-13,5.70e-13]
+        E2dNdE_Err: [1.32e-12,1.55e-12,1.41e-12,1.31e-12,6.04e-13,2.07e-13]
+      ULs:
+        Emin: [3.06e+06]
+        Emax: [5.05e+06]
+        Emean: [3.93e+06]
+        E2dNdE: [3.91e-13]
+    reference: "http://adsabs.harvard.edu/abs/2005A%26A...432L..25A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=112"
+  Radio: 
+    SED: 
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1747-281,SNR G000.9+00.1,AJG 70,AX J1747.3-2809,CXOU J174722.8-280915,1E 1744.1-2808,MGCS 000.9+00.1, PSR J1747-2809, SAX J1747.3-2809, [SKM2002] 34, [SKM2002] G000.9+0.1, [SMF2006] 4"
+  hardsource: "No"
+  notes: |
+    "Heller et al.,A&A, 2012 : cannot explain VHE from the radio -> hadronic ? relic ?"
+G292.2-0.5:
+  gal: [292.10,-0.49]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.05
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=205"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1119-614,PSR J1119-6127"
+  hardsource: "No"
+  notes: | 
+    "Only a conference proceding on this source
+     * http://cxc.harvard.edu/cdo/snr09/pres/DjannatiAtai_Arache_v2.pdf
+     * Diameter is 0.1 degrees
+     * Flux ~ 4% Crab nebula 
+     HESS news article on source: http://www.mpi-hd.mpg.de/hfm/HESS/pages/home/som/2009/11/"
+G54.1+0.3:
+  gal: [54.10,0.26]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [2.54e+05,4.01e+05,6.32e+05,9.97e+05,2.48e+06]
+        Emax: [4.01e+05,6.32e+05,9.97e+05,1.57e+06,3.91e+06]
+        Emean: [3.19e+05,5.03e+05,7.94e+05,1.25e+06,3.11e+06]
+        E2dNdE: [1.82e-12,1.74e-12,1.14e-12,1.64e-12,6.33e-13]
+        E2dNdE_Err: [9.25e-13,6.27e-13,4.64e-13,3.73e-13,3.22e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/2041-8205/719/1/L69/pdf/apjl_719_1_69.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=193"  
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "TeV J1930+188, PSR J1930+1852,SNR G054.1+00.3,2E 4258,2E 1928.3+1846,1RXS J193029.9+185205"
+  hardsource: "No"
+  notes: |
+    "hadronic ? Li et al.,2010"
+Geminga:
+  gal: [195.34,3.78]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 1.3
+    SED:
+      points:
+        Emin: [11.06e+06]
+        Emax: [110.67e+06]
+        Emean: [35.0e+06]
+        E2dNdE: [7.39e-13]
+        E2dNdE_Err: [2.10e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/0904.1018v3.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=177"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "TeV J0632+173,0FGL J0634.0+1745,MGRO C3,MGRO J0632+17,..."
+  hardsource: "P72Y0963 associated with the pulsar"
+  notes: |
+    "FWHM=2.6 from arXiv:0904.1018v3:
+     So the Gaussian radius is R=2.6/2.35=1.1
+     Note: Detected by Milagro"
+HESS_J1026-582:
+  gal: [284.8,-0.52]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.14
+    SED:
+      points:
+        Emin: [3.53e+05,5.73e+05,9.47e+05,1.49e+06,2.36e+06]
+        Emax: [5.46e+05,8.86e+05,1.46e+06,2.30e+06,3.66e+06]
+        Emean: [4.39e+05,7.13e+05,1.18e+06,1.85e+06,2.94e+06]
+        E2dNdE: [5.61e-12,6.81e-12,4.36e-12,3.57e-12,3.17e-12]
+        E2dNdE_Err: [1.51e-12,1.37e-12,1.08e-12,1.31e-12,1.32e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1009.3012v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=220"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "TeV J1026-582,1FGL J1028.4-5810,3EG J1027-5817,PSR J1028-5819"
+  hardsource: "SEED 385 is associated to the pulsar PSRJ1028..."
+  notes: |
+    "Gaussian radius from arXiv:1009.3012v1"
+HESS_J1303-631:
+  gal: [304.24,-0.36]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.16
+    SED:
+      points:
+        Emin: [3.66e+05,5.08e+05,7.06e+05,9.81e+05,1.36e+06,1.89e+06,2.63e+06,3.66e+06,5.08e+06,7.06e+06,9.81e+06]
+        Emax: [5.08e+05,7.06e+05,9.81e+05,1.36e+06,1.89e+06,2.63e+06,3.66e+06,5.08e+06,7.06e+06,9.81e+06,1.36e+07]
+        Emean: [4.31e+05,5.99e+05,8.32e+05,1.16e+06,1.60e+06,2.23e+06,3.10e+06,4.31e+06,5.99e+06,8.32e+06,1.16e+07]
+        E2dNdE: [7.33e-12,7.22e-12,8.06e-12,6.35e-12,7.30e-12,5.23e-12,5.16e-12,3.93e-12,1.52e-12,1.22e-12,1.47e-12]
+        E2dNdE_Err: [6.15e-12,6.38e-12,7.31e-12,5.65e-12,6.55e-12,4.44e-12,4.39e-12,3.17e-12,8.46e-13,5.48e-13,7.94e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2005A%26A...439.1013A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=94"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "TeV J1303-631"     
+  hardsource: "no"
+  notes: 
+    " Gaussian radius from arXiv:astro-ph/0505219v1"
+HESS_J1356-645:
+  gal: [309.81,-2.49]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.2
+    SED:
+      points:
+        Emin: [1.24e+06,1.95e+06,3.23e+06,4.80e+06,7.54e+06,1.25e+07]
+        Emax: [1.95e+06,3.06e+06,5.08e+06,7.54e+06,1.18e+07,1.97e+07]
+        Emean: [1.55e+06,2.44e+06,4.05e+06,6.02e+06,9.43e+06,1.57e+07]
+        E2dNdE: [4.85e-12,2.44e-12,4.04e-12,3.44e-12,2.92e-12,1.95e-12]
+        E2dNdE_Err: [1.33e-12,1.22e-12,1.11e-12,1.13e-12,1.12e-12,1.49e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1108.2855v1.pdf"  
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=170"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "TeV J1356-645"
+  hardsource: "no"
+  notes: |
+    "HESS detection: arXiv:1108.2855v1. 
+     No auxilary information yet (http://www.mpi-hd.mpg.de/hfm/HESS/pages/publications/pubs_jour.shtml)
+     LAT upper limits already: arXiv:1108.2855v1. 
+     
+     Gaussian radius from arXiv:1108.2855v1."
+HESS_J1616-508:
+  gal: [332.39,-0.14]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.136
+    SED:
+      points:
+        Emin: [3.79e+05,6.67e+05,1.21e+06,2.13e+06,3.81e+06,6.65e+06,1.82e+07]
+        Emax: [3.79e+05,6.67e+05,1.21e+06,2.13e+06,3.81e+06,6.65e+06,1.82e+07]
+        Emean: [3.79e+05,6.67e+05,1.21e+06,2.13e+06,3.81e+06,6.65e+06,1.82e+07]
+        E2dNdE: [1.40e-11,1.26e-11,1.03e-11,1.07e-11,6.15e-12,3.70e-12,2.63e-12]
+        E2dNdE_Err: [1.40e-12,1.20e-12,1.18e-12,1.40e-12,1.40e-12,1.33e-12,1.55e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=104"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "TeV J1616-508"
+  hardsource: "P72Y2472"
+  notes: |
+    "Gaussian radius arXiv:astro-ph/0510397v1"
+HESS_J1632-478:
+  gal: [336.38,0.19]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.21,0.06,21.0]
+    SED:
+      points:
+        Emin: [2.42e+05,4.63e+05,1.55e+06,4.56e+06]
+        Emax: [2.42e+05,4.63e+05,1.55e+06,4.56e+06]
+        Emean: [2.42e+05,4.63e+05,1.55e+06,4.56e+06]
+        E2dNdE: [3.53e-11,6.74e-12,1.44e-11,4.57e-12]
+        E2dNdE_Err: [1.48e-11,2.53e-12,3.23e-12,2.64e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=105"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "a lot. In the Spectral document they are merged in HESS_J1632-478"
+  notes: |
+    "Gaussian radius from arXiv:astro-ph/0510397v1, angle counterclockwise wrt the positive Gal. Lat. axis 21 +/- 13 (deg) "
+HESS_J1640-465:
+  gal: [338.32,-0.02]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.045
+    SED:
+      points:
+        Emin: [2.84e+05,4.39e+05,7.13e+05,1.18e+06,1.85e+06,2.93e+06]
+        Emax: [2.84e+05,4.39e+05,7.13e+05,1.18e+06,1.85e+06,2.93e+06]
+        Emean: [2.84e+05,4.39e+05,7.13e+05,1.18e+06,1.85e+06,2.93e+06]
+        E2dNdE: [1.03e-11,5.48e-12,6.72e-12,4.35e-12,3.55e-12,3.19e-12]
+        E2dNdE_Err: [2.16e-12,1.03e-12,1.03e-12,8.81e-13,1.15e-12,1.18e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=107"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y2565"
+  notes: |
+    "Gaussian radius from arXiv:astro-ph/0510397v1"
+HESS_J1708-443:
+  gal: [343.06,-2.38]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.29 
+    SED:
+      points:
+        Emin: [3.82e+05,6.82e+05,1.21e+06,2.13e+06,4.73e+06]
+        Emax: [3.82e+05,6.82e+05,1.21e+06,2.13e+06,4.73e+06]
+        Emean: [3.82e+05,6.82e+05,1.21e+06,2.13e+06,4.73e+06]
+        E2dNdE: [2.46e-12,3.01e-12,2.93e-12,1.44e-12,9.54e-13]
+        E2dNdE_Err: [2.46e-12,3.01e-12,2.93e-12,1.44e-12,9.54e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=191"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "SEED-436 associated with the pulsar" 
+  notes: |
+      "Gaussian radius from arXiv:1102.0773v2"
+HESS_J1718-385:
+  gal: [348.83,-0.49]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.15,0.07,33.0] 
+    SED:
+      points:
+        Emin: [1.22e+06,2.41e+06,4.78e+06,9.14e+06,1.75e+07,3.28e+07]
+        Emax: [1.22e+06,2.41e+06,4.78e+06,9.14e+06,1.75e+07,3.28e+07]
+        Emean: [1.22e+06,2.41e+06,4.78e+06,9.14e+06,1.75e+07,3.28e+07]
+        E2dNdE: [9.42e-13,7.51e-13,1.72e-12,2.09e-12,1.31e-12,6.97e-14]
+        E2dNdE_Err: [4.50e-13,4.29e-13,4.34e-13,5.30e-13,6.29e-13,5.48e-13]
+      ULs:
+        Emin: [6.61e+05]
+        Emax: [6.61e+05]
+        Emean: [6.61e+05]
+        E2dNdE: [7.97923E-13]
+    reference: "http://xxx.lanl.gov/pdf/0705.1605v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=154"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: | 
+    "Gaussian size from arXiv:0705.1605v1
+     angle: ~33 deg
+     the position angle, defined
+     counter-clockwise from North"
+HESS_J1809-193:
+  gal: [11.18,-0.09]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.53,0.25,50.0] 
+    SED:
+      points:
+        Emin: [3.56e+05,7.37e+05,1.58e+06,3.38e+06,7.25e+06,1.55e+07,3.33e+07]
+        Emax: [3.56e+05,7.37e+05,1.58e+06,3.38e+06,7.25e+06,1.55e+07,3.33e+07]
+        Emean: [3.56e+05,7.37e+05,1.58e+06,3.38e+06,7.25e+06,1.55e+07,3.33e+07]
+        E2dNdE: [1.07609E-11,5.56190E-12,8.76345E-12,5.72746E-12,6.44046E-12,1.85147E-12,2.96031E-12]
+        E2dNdE_Err: [3.46e-12,1.68e-12,1.38e-12,1.62e-12,1.95e-12,1.89e-12,1.84e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://xxx.lanl.gov/pdf/0705.1605v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=155"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+    "Gaussian size from arXiv:0705.1605v1
+     angle: ~50 deg
+     the position angle, defined
+     counter-clockwise from North"
+HESS_J1813-178:
+  gal: [12.81,-0.03]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.036 
+    SED:
+      points:
+        Emin: [3.23e+05,4.27e+05,5.74e+05,7.77e+05,1.02e+06,1.37e+06,1.84e+06,2.48e+06,3.16e+06,4.41e+06,5.56e+06,1.08e+07,2.21e+07]
+        Emax: [3.23e+05,4.27e+05,5.74e+05,7.77e+05,1.02e+06,1.37e+06,1.84e+06,2.48e+06,3.16e+06,4.41e+06,5.56e+06,1.08e+07,2.21e+07]
+        Emean: [3.23e+05,4.27e+05,5.74e+05,7.77e+05,1.02e+06,1.37e+06,1.84e+06,2.48e+06,3.16e+06,4.41e+06,5.56e+06,1.08e+07,2.21e+07]
+        E2dNdE: [4.56e-12,4.55e-12,4.29e-12,4.42e-12,4.47e-12,4.58e-12,4.32e-12,3.51e-12,5.31e-12,6.04e-12,2.21e-12,2.45e-12,1.07e-11]
+        E2dNdE_Err:  [9.48e-13,9.82e-13,8.45e-13,9.01e-13,9.37e-13,1.02e-12,1.18e-12,1.11e-12,1.40e-12,1.80e-12,1.05e-12,1.12e-12,4.77e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=114"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+    "Detected in HESS galactic plane survey.
+     Gaussian radius from arXiv:astro-ph/0510397v1"
+HESS_J1831-098:
+  gal: [21.85,-0.11]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.15 
+    SED:
+      points:
+        Emin: [2.29e+05,4.00e+05,7.00e+05,1.25e+06,2.18e+06,3.82e+06,6.94e+06,1.21e+07,2.08e+07]
+        Emax: [4.02e+05,7.03e+05,1.23e+06,2.19e+06,3.84e+06,6.71e+06,1.22e+07,2.13e+07,3.66e+07]
+        Emean: [3.03e+05,5.31e+05,9.28e+05,1.65e+06,2.89e+06,5.06e+06,9.20e+06,1.61e+07,2.76e+07]
+        E2dNdE: [1.01e-12,2.33e-12,1.64e-12,2.09e-12,1.47e-12,2.40e-12,1.38e-12,6.82e-13,6.56e-13]
+        E2dNdE_Err: [1.02e-12,9.76e-13,3.83e-13,8.78e-13,6.18e-13,7.76e-13,5.77e-13,5.99e-13,2.12e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1110.6837v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=231"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+    "Writeup for 2011 Fermi-symposium (arXiv:1110.6837v1)
+     No table of data points. LAT upper limit in paper seems very unconstraining.
+     Gaussian radius from arXiv:1110.6837v1"
+HESS_J1833-105:
+  gal: [21.51,-0.88]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [2.00e+05,3.16e+05,5.01e+05,7.94e+05,1.26e+06,2.00e+06,3.16e+06]
+        Emax: [3.16e+05,5.01e+05,7.94e+05,1.26e+06,2.00e+06,3.16e+06,5.01e+06]
+        Emean: [2.51e+05,3.98e+05,6.31e+05,1.00e+06,1.58e+06,2.51e+06,3.98e+06]
+        E2dNdE: [1.28e-12,3.10e-13,9.17e-13,7.35e-13,1.19e-12,2.46e-13,6.52e-13]
+        E2dNdE_Err: [8.08e-13,4.71e-13,3.54e-13,4.64e-13,5.53e-13,4.08e-13,6.00e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://indico.nucleares.unam.mx/getFile.py/access?contribId=1057&sessionId=105&resId=0&materialId=paper&confId=4"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+    "ICRC presentation: arXiv:0710.2247v1
+     SED plot but no data points.
+     Preliminary TeV SED"
+HESS_J1846-029:
+  gal: [29.70,-0.24]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"  
+    extension: 0.0
+    SED:
+      points:
+        Emin: [2.49e+05,3.98e+05,6.23e+05,9.96e+05,1.58e+06,2.50e+06,3.95e+06]
+        Emax: [3.95e+05,6.31e+05,9.88e+05,1.58e+06,2.50e+06,3.96e+06,6.26e+06]
+        Emean: [3.13e+05,5.01e+05,7.85e+05,1.25e+06,1.99e+06,3.14e+06,4.97e+06]
+        E2dNdE: [1.16e-12,8.93e-13,1.42e-12,1.44e-12,8.75e-13,1.61e-13,5.02e-13]
+        E2dNdE_Err: [4.46e-13,3.44e-13,2.51e-13,2.55e-13,4.06e-13,4.02e-13,5.16e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://indico.nucleares.unam.mx/getFile.py/access?contribId=1057&sessionId=105&resId=0&materialId=paper&confId=4"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=167"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+    "ICRC presentation: arXiv:0710.2247v1
+     SED plot but no data points.
+     Preliminary SED"
+HESS_J1912+101:
+  gal: [44.39,-0.07]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.26
+    SED:
+      points:
+        Emin: [8.72e+05,1.76e+06,3.75e+06,8.03e+06]
+        Emax: [8.72e+05,1.76e+06,3.75e+06,8.03e+06]
+        Emean: [8.72e+05,1.76e+06,3.75e+06,8.03e+06]
+        E2dNdE: [4.65e-12,5.06e-12,1.83e-12,1.91e-12]
+        E2dNdE_Err: [1.47e-12,8.59e-13,7.48e-13,8.54e-13]
+      ULs:
+        Emin: [2.46e+07]
+        Emax: [2.46e+07]
+        Emean: [2.46e+07]
+        E2dNdE: [8.02e-13]
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...484..435A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=157"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+    "HESS detection: arXiv:0802.3841v1
+     Gaussian radius from arXiv:0802.3841v1"
+IGR_J18490-0000:
+  gal: [32.64,0.53]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=188"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1849-000"
+  hardsource: "no"
+  notes: |
+    "Only conference proceding (Terrier et al 2008)
+     No SED in proceding.
+     Unknown morphology so modelled as a pointsource"
+Kookaburra:
+  gal: [313.56,0.27]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.055
+    SED:
+      points:
+        Emin: [3.90e+05,6.10e+05,9.70e+05,1.54e+06,2.45e+06,3.88e+06,6.14e+06,9.73e+06,1.54e+07,2.44e+07]
+        Emax: [3.90e+05,6.10e+05,9.70e+05,1.54e+06,2.45e+06,3.88e+06,6.14e+06,9.73e+06,1.54e+07,2.44e+07]
+        Emean: [3.90e+05,6.10e+05,9.70e+05,1.54e+06,2.45e+06,3.88e+06,6.14e+06,9.73e+06,1.54e+07,2.44e+07]
+        E2dNdE: [6.41e-12,5.44e-12,5.10e-12,5.55e-12,5.68e-12,4.75e-12,4.28e-12,3.85e-12,2.60e-12,1.01e-12]
+        E2dNdE_Err: [1.84e-12,6.62e-13,6.08e-13,6.76e-13,7.84e-13,8.56e-13,9.42e-13,1.10e-12,1.14e-12,7.39e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2006A%26A...456..245A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=124"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1420-607"
+  hardsource: "P72Y2188"
+  notes: 
+    "Gaussian Radius is 3.3' from arXiv:astro-ph/0606311v2"
+Kookaburra_Rabbit:
+  gal: [313.25,0.15]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.08,0.06,46.2]
+    SED:
+      points:
+        Emin: [3.90e+05,6.10e+05,9.70e+05,1.54e+06,2.45e+06,3.88e+06,6.14e+06,9.73e+06,1.54e+07]
+        Emax: [3.90e+05,6.10e+05,9.70e+05,1.54e+06,2.45e+06,3.88e+06,6.14e+06,9.73e+06,1.54e+07]
+        Emean: [3.90e+05,6.10e+05,9.70e+05,1.54e+06,2.45e+06,3.88e+06,6.14e+06,9.73e+06,1.54e+07]
+        E2dNdE: [7.65e-12,4.54e-12,3.66e-12,3.74e-12,4.57e-12,3.04e-12,2.99e-12,3.81e-12,2.43e-12]
+        E2dNdE_Err: [2.19e-12,6.68e-13,5.98e-13,6.35e-13,7.72e-13,8.06e-13,8.76e-13,1.14e-12,1.14e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=125"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1418-609"
+  hardsource: "P72Y2184"
+  notes: |
+    "Gaussian size is 4.9arcmin & 2.7arcmin from arXiv:astro-ph/0606311v2
+    angle: 46.2 +/- 20.4 deg
+    major axis, North to East"
+MGRO_J2019+37:
+  gal: [75.00,0.39]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.55
+    SED:
+      points:
+        Emin: [2.00e+07]
+        Emax: [2.00e+07]
+        Emean: [2.00e+07]
+        E2dNdE: [5.58e-12]
+        E2dNdE_Err: [8.97e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/0705.0707.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=145"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "PSRJ2021+3651 (pulsar), P72Y3270 (within the radius)"
+  notes: |
+    "Detected by Milagro
+     Diameter is 1.1 degrees from arXiv:0705.0707v1"
+G318.2+0.1:
+  gal: [318.36,-0.43]
+  type: "SNR + Molecular Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.31,0.17,67.0]
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://pos.sissa.it/archive/conferences/123/196/Texas%202010_196.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=222"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1457"
+  hardsource: "no"
+  notes: |
+      "size and position from http://pos.sissa.it/archive/conferences/123/196/Texas%202010_196.pdf , angle : 67 +/- 15 deg, from negative longitude to positive latitude axis"
+HESS_J1832-093:
+  gal: [22.48, -0.16]
+  type: "SNR + Molecular Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.06
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1110.6890v2.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=230"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "SNR G22.7-0.2"
+  hardsource: "no"
+  notes: |
+       "position and extension : http://arxiv.org/abs/1110.6890"
+RCW_86:
+  gal: [315.41,-2.30]
+  type: "SNR Shell"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "disk"
+    extension: 0.45
+    SED:
+      points:
+        Emin: [8.94e+05,1.91e+06,4.09e+06,8.74e+06,1.88e+07]
+        Emax: [8.94e+05,1.91e+06,4.09e+06,8.74e+06,1.88e+07]
+        Emean: [8.94e+05,1.91e+06,4.09e+06,8.74e+06,1.88e+07]
+        E2dNdE: [5.93e-12,4.63e-12,3.45e-12,1.79e-12,2.24e-12]
+        E2dNdE_Err: [7.44e-12,6.36e-12,4.53e-12,2.70e-12,3.21e-12]
+      ULs:
+        Emin: [4.03e+07]
+        Emax: [4.03e+07]
+        Emean: [4.03e+07]
+        E2dNdE: [8.08e-13]
+    reference: "http://iopscience.iop.org/0004-637X/692/2/1500/pdf/0004-637X_692_2_1500.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=168"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       "constraining UL by Fermi. position and extension : http://adsabs.harvard.edu/abs/2009ApJ...692.1500A"
+SN_1006_SW:
+  gal: [327.86,15.35]
+  type: "SNR Shell"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.50
+    SED:
+      points:
+        Emin: [2.94e+05,5.62e+05,1.19e+06,2.52e+06,5.55e+06]
+        Emax: [2.94e+05,5.62e+05,1.19e+06,2.52e+06,5.55e+06]
+        Emean: [2.94e+05,5.62e+05,1.19e+06,2.52e+06,5.55e+06]
+        E2dNdE: [1.23e-13,5.06e-13,3.09e-13,4.30e-13,1.08e-13]
+        E2dNdE_Err: [1.65e-13,1.06e-13,9.94e-14,1.32e-13,1.60e-13]
+      ULs:
+        Emin: [1.52e+07,4.96e+07]
+        Emax: [1.52e+07,4.96e+07]
+        Emean: [1.52e+07,4.96e+07]
+        E2dNdE: [1.60e-13,1.56e-13]
+    reference: "http://arxiv.org/pdf/1004.2124v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=171"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       ""
+SN_1006_NE:
+  gal: [327.84,14.56]
+  type: "SNR Shell"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [2.31e+05,3.15e+05,4.63e+05,6.79e+05,9.92e+05,1.45e+06,2.14e+06,3.15e+06,4.69e+06,6.97e+06,1.04e+07,1.57e+07]
+        Emax: [2.31e+05,3.15e+05,4.63e+05,6.79e+05,9.92e+05,1.45e+06,2.14e+06,3.15e+06,4.69e+06,6.97e+06,1.04e+07,1.57e+07]
+        Emean: [2.31e+05,3.15e+05,4.63e+05,6.79e+05,9.92e+05,1.45e+06,2.14e+06,3.15e+06,4.69e+06,6.97e+06,1.04e+07,1.57e+07]
+        E2dNdE: [2.90e-13,7.17e-13,8.59e-13,4.61e-13,4.36e-13,6.57e-13,4.86e-13,2.35e-13,2.46e-13,4.97e-13,4.05e-13,3.17e-13]
+        E2dNdE_Err: [4.07e-13,2.11e-13,1.78e-13,1.56e-13,1.57e-13,1.74e-13,1.92e-13,2.20e-13,2.49e-13,2.98e-13,3.42e-13,3.22e-13]
+      ULs:
+        Emin: [2.27e+07,3.08e+07,4.18e+07,6.24e+07,9.69e+07,1.22e+08]
+        Emax: [2.27e+07,3.08e+07,4.18e+07,6.24e+07,9.69e+07,1.22e+08]
+        Emean: [2.27e+07,3.08e+07,4.18e+07,6.24e+07,9.69e+07,1.22e+08]
+        E2dNdE: [1.46e-14,8.20e-14,1.37e-13,3.35e-13,6.22e-13,1.21e-12]
+    reference: "http://arxiv.org/pdf/1004.2124v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=221"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       ""
+CTB_37B:
+  gal: [348.65,0.38]
+  type: "SNR Shell"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.06
+    SED:
+      points:
+        Emin: [4.20e+05,5.97e+05,8.80e+05,1.27e+06]
+        Emax: [4.20e+05,5.97e+05,8.80e+05,1.27e+06]
+        Emean: [4.20e+05,5.97e+05,8.80e+05,1.27e+06]
+        E2dNdE: [1.92e-12,1.13e-12,1.10e-12,1.30e-12]
+        E2dNdE_Err: [5.30e-13,2.25e-13,3.37e-13,4.31e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=110"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       ""
+HESS_J1731-347:
+  gal: [353.54,-0.67,271.0]
+  type: "SNR Shell"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.18,0.11,271.0]
+    SED:
+      points:
+        Emin: [6.23e+05,1.07e+06,1.87e+06,3.31e+06,5.93e+06,1.05e+07,1.84e+07,3.26e+07]
+        Emax: [6.23e+05,1.07e+06,1.87e+06,3.31e+06,5.93e+06,1.05e+07,1.84e+07,3.26e+07]
+        Emean: [6.23e+05,1.07e+06,1.87e+06,3.31e+06,5.93e+06,1.05e+07,1.84e+07,3.26e+07]
+        E2dNdE: [1.02475E-11,1.07081E-11,7.99982E-12,8.35842E-12,5.27968E-12,3.38635E-12,5.02471E-12,5.75294E-12]
+        E2dNdE_Err: [2.83e-12,1.96e-12,1.61e-12,1.53e-12,1.77e-12,1.65e-12,1.90e-12,2.54e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...477..353A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=141"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       "-angle: -89 +/- 21 deg
+       measured counter-clk relative to RA axis"
+MAGIC_J0223+403:
+  gal: [140.25,-16.75]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [1.12e+05,2.86e+05,7.23e+05,1.84e+06]
+        Emax: [1.12e+05,2.86e+05,7.23e+05,1.84e+06]
+        Emean: [1.12e+05,2.86e+05,7.23e+05,1.84e+06]
+        E2dNdE: [7.80e-12,2.02e-12,1.14e-12,3.57e-13]
+        E2dNdE_Err: [2.41e-12,9.06e-13,5.12e-13,2.76e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/1538-4357/692/1/L29/pdf/apjl_692_1_29.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=138"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y0344 : source associated with MAGIC ? SNR ... Not yet removed from srcmodel."
+  notes: |
+       ""
+Vela_Region:
+  gal: [263.23,-2.92]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource" 
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=126"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "Included in Vela-X template"
+  notes: |
+       ""
+HESS_J1634-472:
+  gal: [337.11,0.22]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.11
+    SED:
+      points:
+        Emin: [3.24e+05,4.35e+05,5.79e+05,7.66e+05,1.02e+06,1.38e+06,2.16e+06]
+        Emax: [3.24e+05,4.35e+05,5.79e+05,7.66e+05,1.02e+06,1.38e+06,2.16e+06]
+        Emean: [3.24e+05,4.35e+05,5.79e+05,7.66e+05,1.02e+06,1.38e+06,2.16e+06]
+        E2dNdE: [4.24e-12,4.48e-12,5.80e-12,2.44e-12,6.21e-12,4.83e-12,1.31e-12]
+        E2dNdE_Err: [1.75e-12,1.80e-12,2.02e-12,1.18e-12,1.96e-12,1.84e-12,1.12e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2006ApJ...636..777A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=106"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "SEED-362"
+  notes: |
+       ""
+HESS_J1702-420:
+  gal: [344.30,-0.18]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.30,0.15,68.0]
+    SED:
+      points:
+        Emin: [4.07e+05,6.12e+05,8.65e+05,1.35e+06,2.29e+06,4.49e+06,1.02e+07,3.57e+07]
+        Emax: [4.07e+05,6.12e+05,8.65e+05,1.35e+06,2.29e+06,4.49e+06,1.02e+07,3.57e+07]
+        Emean: [4.07e+05,6.12e+05,8.65e+05,1.35e+06,2.29e+06,4.49e+06,1.02e+07,3.57e+07]
+        E2dNdE: [4.26e-12,5.57e-12,7.02e-12,2.28e-12,3.91e-12,2.01e-12,1.79e-12,2.00e-11]
+        E2dNdE_Err: [1.26e-12,1.30e-12,1.51e-12,1.07e-12,1.31e-12,1.59e-12,1.68e-12,3.21e-11]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2006ApJ...636..777A"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       "angle: 68 +/- 7 deg
+       measured counter-clk relative to RA axis"
+HESS_J1729-345:
+  gal: [353.44,-0.13]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.14
+    SED:
+      points:
+        Emin: [3.43e+05,7.86e+05,2.06e+06,5.34e+06,1.36e+07,3.47e+07]
+        Emax: [3.43e+05,7.86e+05,2.06e+06,5.34e+06,1.36e+07,3.47e+07]
+        Emean: [3.43e+05,7.86e+05,2.06e+06,5.34e+06,1.36e+07,3.47e+07]
+        E2dNdE: [4.73e-14,5.99e-14,6.12e-14,2.69e-14,2.79e-14,1.79e-14]
+        E2dNdE_Err: [1.95e-14,1.90e-14,1.95e-14,2.67e-14,3.60e-14,3.99e-14]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://tevcat.uchicago.edu/?mode=1&showsrc=224"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       ""
+HESS_J1741-302:
+  gal: [358.40,0.19]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=189"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       ""
+HESS_J1804-216:
+  gal: [8.40,-0.03]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.16,0.27,90.0]
+    SED:
+      points:
+        Emin: [1.90e+05,2.46e+05,3.27e+05,4.30e+05,5.78e+05,7.63e+05,1.03e+06,1.41e+06,1.88e+06,2.44e+06,3.61e+06,6.50e+06,1.08e+07]
+        Emax: [1.90e+05,2.46e+05,3.27e+05,4.30e+05,5.78e+05,7.63e+05,1.03e+06,1.41e+06,1.88e+06,2.44e+06,3.61e+06,6.50e+06,1.08e+07]
+        Emean: [1.90e+05,2.46e+05,3.27e+05,4.30e+05,5.78e+05,7.63e+05,1.03e+06,1.41e+06,1.88e+06,2.44e+06,3.61e+06,6.50e+06,1.08e+07]
+        E2dNdE: [1.84e-11,2.55e-11,1.87e-11,1.81e-11,1.43e-11,1.36e-11,7.97e-12,7.77e-12,8.47e-12,4.91e-12,2.54e-12,1.87e-12,1.39e-12]
+        E2dNdE_Err: [9.76e-12,3.48e-12,2.67e-12,2.27e-12,1.99e-12,1.98e-12,1.73e-12,2.14e-12,2.23e-12,1.87e-12,1.39e-12,8.78e-13,9.79e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2006ApJ...636..777A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=113"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "W30 ?"
+  notes: |
+       "- extent along R.A. axis: 0.160 +/- 0.005 deg
+       - extent along Dec. axis: 0.274 +/- 0.011 deg"
+HESS_J1834-087:
+  gal: [23.24,-0.31]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.09
+    SED:
+      points:
+        Emin: [2.71e+05,4.31e+05,6.95e+05,1.10e+06,1.82e+06,2.95e+06]
+        Emax: [2.71e+05,4.31e+05,6.95e+05,1.10e+06,1.82e+06,2.95e+06]
+        Emean: [2.71e+05,4.31e+05,6.95e+05,1.10e+06,1.82e+06,2.95e+06]
+        E2dNdE: [7.16e-12,7.62e-12,3.67e-12,4.65e-12,3.13e-12,2.86e-12]
+        E2dNdE_Err: [1.71e-12,1.26e-12,9.43e-13,1.07e-12,1.06e-12,1.10e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2006ApJ...636..777A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=113"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       ""
+HESS_J1837-069:
+  gal: [25.18,-0.12]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.12,0.05,149.0]
+    SED:
+      points:
+        Emin: [2.22e+05,2.88e+05,4.22e+05,6.10e+05,8.85e+05,1.29e+06,1.89e+06,2.75e+06,4.19e+06,5.99e+06,8.55e+06,1.64e+07]
+        Emax: [2.22e+05,2.88e+05,4.22e+05,6.10e+05,8.85e+05,1.29e+06,1.89e+06,2.75e+06,4.19e+06,5.99e+06,8.55e+06,1.64e+07]
+        Emean: [2.22e+05,2.88e+05,4.22e+05,6.10e+05,8.85e+05,1.29e+06,1.89e+06,2.75e+06,4.19e+06,5.99e+06,8.55e+06,1.64e+07]
+        E2dNdE: [2.23e-11,5.24e-12,9.16e-12,1.24e-11,8.25e-12,8.82e-12,6.23e-12,5.71e-12,7.92e-12,4.81e-12,3.98e-12,2.35e-12]
+        E2dNdE_Err: [1.22e-11,2.85e-12,1.90e-12,1.81e-12,1.47e-12,1.50e-12,1.47e-12,1.75e-12,2.04e-12,1.85e-12,1.75e-12,1.53e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2006ApJ...636..777A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=117"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y2986 -- associated in the Spectral doc"
+  notes: |
+       "angle: 149 +/- 10
+       measured counter-clk wrt the positive Gal. Lat. axis"
+HESS_J1841-055:
+  gal: [26.80,-0.20]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.41,0.25,39.0]
+    SED:
+      points:
+        Emin: [7.37e+05,1.29e+06,2.27e+06,4.03e+06,7.15e+06,1.25e+07,2.23e+07,3.95e+07]
+        Emax: [7.37e+05,1.29e+06,2.27e+06,4.03e+06,7.15e+06,1.25e+07,2.23e+07,3.95e+07]
+        Emean: [7.37e+05,1.29e+06,2.27e+06,4.03e+06,7.15e+06,1.25e+07,2.23e+07,3.95e+07]
+        E2dNdE: [1.57768E-11,2.20412E-11,1.55389E-11,8.46044E-12,1.31466E-11,4.40113E-12,5.69870E-12,2.96447E-12]
+        E2dNdE_Err: [4.04e-12,3.23e-12,2.55e-12,3.01e-12,2.63e-12,2.54e-12,2.51e-12,2.73e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...477..353A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=142"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       "angle: 39 +/- 6 deg
+       measured counter-clk relative to RA axis"
+HESS_J1843-033:
+  gal: [29.30,0.51]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://indico.nucleares.unam.mx/getFile.py/access?contribId=269&sessionId=94&resId=0&materialId=paper&confId=4"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=190"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: ""
+  notes: |
+       "Extended but unknown parameters of extension so modelled here as a point source"
+HESS_J1858+020:
+  gal: [35.58,-0.58]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.08,0.02,356.0]
+    SED:
+      points:
+        Emin: [8.14e+05,1.43e+06,2.50e+06,4.43e+06,7.86e+06,1.39e+07,2.47e+07,4.33e+07]
+        Emax: [8.14e+05,1.43e+06,2.50e+06,4.43e+06,7.86e+06,1.39e+07,2.47e+07,4.33e+07]
+        Emean: [8.14e+05,1.43e+06,2.50e+06,4.43e+06,7.86e+06,1.39e+07,2.47e+07,4.33e+07]
+        E2dNdE: [1.36606E-12,7.10414E-13,6.20462E-13,1.09287E-12,1.01457E-12,7.84373E-13,1.00301E-12,3.67307E-13]
+        E2dNdE_Err: [4.87e-13,3.30e-13,2.74e-13,3.23e-13,4.26e-13,4.74e-13,6.06e-13,2.04e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       "angle: -4 +/- 17 deg
+       measured counter-clk relative to RA axis"
+HESS_J1503-582:
+  gal: [319.62,0.29]
+  type: "dark"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.26
+    SED:
+      points:
+        Emin: [1.28e+06,2.27e+06,4.03e+06,7.13e+06,1.27e+07,2.24e+07]
+        Emax: [1.28e+06,2.27e+06,4.03e+06,7.13e+06,1.27e+07,2.24e+07]
+        Emean: [1.28e+06,2.27e+06,4.03e+06,7.13e+06,1.27e+07,2.24e+07]
+        E2dNdE: [2.38e-12,1.42e-12,1.55e-12,1.49e-12,3.27e-13,1.23e-12]
+        E2dNdE_Err: [9.00e-13,7.40e-13,7.16e-13,8.23e-13,9.75e-13,9.66e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/abs/0811.1552"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=169"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+      "http://arxiv.org/abs/0811.1552
+       Preliminary Spectrum"
+HESS_J1614-518:
+  gal: [331.52,-0.58]
+  type: "massive star cluster"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.23,0.15,49]
+    SED:
+      points:
+        Emin: [3.10e+05,4.32e+05,7.13e+05,1.13e+06,1.85e+06]
+        Emax: [3.10e+05,4.32e+05,7.13e+05,1.13e+06,1.85e+06]
+        Emean: [3.10e+05,4.32e+05,7.13e+05,1.13e+06,1.85e+06]
+        E2dNdE: [2.21e-11,1.85e-11,1.58e-11,1.06e-11,1.07e-11]
+        E2dNdE_Err: [9.74e-12,3.38e-12,2.88e-12,2.51e-12,2.83e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=103"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "HESS J1614. Unknown name P72Y..."
+  notes: |
+      "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf
+      angle counterclockwise wrt the positive Gal. Lat. axis 49 +/- 10 (deg)"
+PWN_SNR_G15.4+0.1:
+  gal: [15.41,0.17]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.14
+    SED:
+      points:
+        Emin: [8.09e+05,1.80e+06,4.61e+06,1.15e+07]
+        Emax: [8.09e+05,1.80e+06,4.61e+06,1.15e+07]
+        Emean: [8.09e+05,1.80e+06,4.61e+06,1.15e+07]
+        E2dNdE: [7.02e-13,6.89e-13,5.52e-13,5.65e-13]
+        E2dNdE_Err: [3.87e-13,2.11e-13,2.12e-13,3.12e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/abs/1112.2901"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=233"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+      "http://arxiv.org/abs/1112.2901"
+0FGL_J0631.8+1034:
+  gal: [201.30,0.51]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/1538-4357/700/2/L127/pdf/apjl_700_2_127.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=176"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "no"
+  hardsource: ""
+  notes: |
+      " "
+PWN_SNR_G327.1-1.1:
+  gal: [327.16,-1.07]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: [5.13e+05,1.00e+06,2.13e+06,4.51e+06,9.84e+06,2.11e+07]
+        Emax: [5.13e+05,1.00e+06,2.13e+06,4.51e+06,9.84e+06,2.11e+07]
+        Emean: [5.13e+05,1.00e+06,2.13e+06,4.51e+06,9.84e+06,2.11e+07]
+        E2dNdE: [6.00e-13,5.55e-13,5.54e-13,2.55e-13,4.22e-13,5.24e-13]
+        E2dNdE_Err: [2.12e-13,1.24e-13,1.96e-13,2.37e-13,3.13e-13,5.93e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/abs/1201.0481"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=235"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+      "http://arxiv.org/abs/1201.0481"
+0FGL_J1958.1+2848:
+  gal: [65.85,-0.23]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2009arXiv0904.1018A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=180"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y3215"
+  notes: |
+      ""
+0FGL_J2021.5+4026:
+  gal: [78.23, 2.07]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource" 
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2009arXiv0904.1018A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=181"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y3287"
+  notes: |
+      "gamma cygnii"
+0FGL_J1844.1-0335:
+  gal: [28.91,-0.02]
+  type: UNID
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2009arXiv0904.1018A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=136"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+      "Extension not described"
+0FGL_J1900.0+0356:
+  gal: [37.42,-0.11]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2009arXiv0904.1018A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=161"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       ""
+MGRO_J2031+41:
+  gal: [79.53,0.64]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 1.5
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/abs/1202.0846"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=149"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "4 in the region"
+  notes: |
+       ""
+IC_443:
+  gal: [189.07,2.92]
+  type: "SNR-Shell"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.16
+    SED:
+      points:
+        Emin: [3.58e+05,4.63e+05,5.95e+05,8.00e+05,1.35e+06]
+        Emax: [3.58e+05,4.63e+05,5.95e+05,8.00e+05,1.35e+06]
+        Emean: [3.58e+05,4.63e+05,5.95e+05,8.00e+05,1.35e+06]
+        E2dNdE: [3.78e-12,1.83e-12,3.35e-12,1.99e-12,7.54e-13]
+        E2dNdE_Err: [1.63e-12,1.11e-12,1.04e-12,7.37e-13,4.02e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/1538-4357/698/2/L133/pdf/apjl_698_2_133.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=120"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "IC 443"
+  notes: |
+       ""
+SNR_G65.1+0.6:
+  gal: [65.30,0.38]
+  type: "SNR-Shell"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2010ApJ...725.1629A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=179"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+      "Fermi source 0FGL J1954.4+2838 -- Milagro set ULs in 2010"
+G106.3+2.7:
+  gal: [106.35,2.71]
+  type: "SNR-Shell"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.27,0.18,22]
+    SED:
+      points:
+        Emin: [1.01e+06,1.52e+06,2.41e+06,4.96e+06,1.39e+07]
+        Emax: [1.01e+06,1.52e+06,2.41e+06,4.96e+06,1.39e+07]
+        Emean: [1.01e+06,1.52e+06,2.41e+06,4.96e+06,1.39e+07]
+        E2dNdE: [2.67e-12,2.05e-12,1.91e-12,1.06e-12,1.63e-12]
+        E2dNdE_Err: [1.16e-12,8.93e-13,8.32e-13,6.84e-13,8.20e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/1538-4357/703/1/L6/pdf/apjl_703_1_6.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=174"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y3615 ?"
+  notes: |
+      "angle: 22 deg east of north, http://iopscience.iop.org/1538-4357/703/1/L6/pdf/apjl_703_1_6.pdf"
+HESS_J1745-303:
+  gal: [358.71,-0.64]
+  type: "SNR + Molecular Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.21,0.09,54 ]
+    SED:
+      points:
+        Emin: [3.29e+05,4.35e+05,5.75e+05,7.71e+05,1.02e+06]
+        Emax: [3.29e+05,4.35e+05,5.75e+05,7.71e+05,1.02e+06]
+        Emean: [3.29e+05,4.35e+05,5.75e+05,7.71e+05,1.02e+06]
+        E2dNdE: [4.23e-12,2.54e-12,3.20e-12,4.53e-12,4.13e-12]
+        E2dNdE_Err: [7.62e-13,6.40e-13,7.60e-13,1.01e-12,1.04e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=111"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+      "angle: 54 +/- 7 deg, measured counter-clk wrt the positive Gal. Lat. axis"
+HESS_J1427-608:
+  gal: [314.41,-0.14]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.04,0.08,80.0]
+    SED:
+      points:
+        Emin: [1.22e+06,1.96e+06,3.15e+06,5.06e+06,8.13e+06,1.31e+07,2.11e+07,3.39e+07]
+        Emax: [1.22e+06,1.96e+06,3.15e+06,5.06e+06,8.13e+06,1.31e+07,2.11e+07,3.39e+07]
+        Emean: [1.22e+06,1.96e+06,3.15e+06,5.06e+06,8.13e+06,1.31e+07,2.11e+07,3.39e+07]
+        E2dNdE: [1.34e-12,2.24e-12,1.68e-12,1.64e-12,2.70e-12,8.66e-13,9.65e-13,1.25e-12]
+        E2dNdE_Err: [8.37e-13,7.51e-13,6.33e-13,6.49e-13,7.97e-13,6.54e-13,7.28e-13,8.15e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2008A%26A...477..353A&link_type=ARTICLE&db_key=AST&high="
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=139"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+      "angle: 80 +/- 17 deg, measured counter-clk relative to RA axis"
+HESS_J1507-622:
+  gal: [317.95,-3.49]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.15
+    SED:
+      points:
+        Emin: [8.58e+05,1.56e+06,2.77e+06,4.91e+06,1.00e+07,2.73e+07]
+        Emax: [8.58e+05,1.56e+06,2.77e+06,4.91e+06,1.00e+07,2.73e+07]
+        Emean: [8.58e+05,1.56e+06,2.77e+06,4.91e+06,1.00e+07,2.73e+07]
+        E2dNdE: [2.67e-12,2.64e-12,2.04e-12,2.96e-12,1.65e-12,8.96e-13]
+        E2dNdE_Err: [9.54e-13,9.45e-13,9.04e-13,9.77e-13,8.81e-13,8.59e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1010.4907v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=204"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "?"
+  notes: |
+       ""
+HESS_J1626-490:
+  gal: [334.77,0.05]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.07,0.1,3.0]
+    SED:
+      points:
+        Emin: [7.75e+05,1.23e+06,1.99e+06,3.17e+06,5.11e+06,8.34e+06,1.34e+07,2.17e+07,3.49e+07]
+        Emax: [7.75e+05,1.23e+06,1.99e+06,3.17e+06,5.11e+06,8.34e+06,1.34e+07,2.17e+07,3.49e+07]
+        Emean: [7.75e+05,1.23e+06,1.99e+06,3.17e+06,5.11e+06,8.34e+06,1.34e+07,2.17e+07,3.49e+07]
+        E2dNdE: [1.12e-11,8.01e-12,4.76e-12,5.71e-12,6.44e-12,7.38e-12,3.04e-12,7.02e-12,3.53e-12]
+        E2dNdE_Err: [3.32e-12,2.21e-12,1.60e-12,1.80e-12,1.91e-12,2.04e-12,1.76e-12,2.65e-12,2.68e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...477..353A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=137"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+      "angle: 3 +/- 40 deg, measured counter-clk relative to RA axis"
+TeV_J1907+062:
+  gal: [40.39,-0.79]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.34
+    SED:
+      points:
+        Emin: [3.76e+05,5.96e+05,9.47e+05,1.50e+06,2.35e+06,3.73e+06,5.92e+06,9.25e+06,1.47e+07,1.98e+07]
+        Emax: [3.76e+05,5.96e+05,9.47e+05,1.50e+06,2.35e+06,3.73e+06,5.92e+06,9.25e+06,1.47e+07,1.98e+07]
+        Emean: [3.76e+05,5.96e+05,9.47e+05,1.50e+06,2.35e+06,3.73e+06,5.92e+06,9.25e+06,1.47e+07,1.98e+07]
+        E2dNdE: [7.55e-12,6.97e-12,7.71e-12,6.49e-12,7.99e-12,5.35e-12,3.13e-12,4.41e-12,4.88e-12,5.87e-12]
+        E2dNdE_Err: [2.85e-12,1.79e-12,1.13e-12,1.30e-12,2.05e-12,1.69e-12,1.38e-12,2.24e-12,2.16e-12,2.99e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/abs/0904.3409"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=148"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "MGRO J1908+06, HESS J1908+063, HESS J1907+062"
+  hardsource: "P72Y3082"
+  notes: |
+       ""
+TeV_J2016+372:
+  gal: [74.94,1.15]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1110.4656v2.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=228"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "?"
+  notes: |
+      "extended but no information on the extension"
+TeV_J2019+407:
+  gal: [78.33,2.54]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.16
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1111.1034"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=201"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "?"
+  notes: |
+       "SED too small to be taken from the conf proc."
+TeV_J2032+4130:
+  gal: [80.25,1.07]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.1
+    SED:
+      points:
+        Emin: [4.73e+05,1.13e+06,2.72e+06,6.42e+06]
+        Emax: [4.73e+05,1.13e+06,2.72e+06,6.42e+06]
+        Emean: [4.73e+05,1.13e+06,2.72e+06,6.42e+06]
+        E2dNdE: [5.77e-13,6.58e-13,1.45e-12,5.55e-13]
+        E2dNdE_Err: [3.84e-13,5.65e-13,1.15e-12,4.39e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/abs/1201.1973"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=87"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y3317"
+  notes: |
+       ""
+CTA_1:
+  gal: [119.58,10.20]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1110.4656v2.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=227"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "SEED-290"
+  notes: |
+       "Source extended but extension is not described"
+MSH_15_52:
+  gal: [320.33,-1.19]
+  type : "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.11,0.04,41.0]
+    SED:
+      points:
+        Emin: [3.12e+05,4.14e+05,6.01e+05,8.89e+05,1.32e+06,1.91e+06,2.88e+06,4.14e+06,6.07e+06,8.89e+06,1.28e+07,1.91e+07,2.85e+07,4.02e+07]
+        Emax: [3.12e+05,4.14e+05,6.01e+05,8.89e+05,1.32e+06,1.91e+06,2.88e+06,4.14e+06,6.07e+06,8.89e+06,1.28e+07,1.91e+07,2.85e+07,4.02e+07]
+        Emean: [3.12e+05,4.14e+05,6.01e+05,8.89e+05,1.32e+06,1.91e+06,2.88e+06,4.14e+06,6.07e+06,8.89e+06,1.28e+07,1.91e+07,2.85e+07,4.02e+07]
+        E2dNdE: [2.01e-11,1.02e-11,1.09e-11,9.38e-12,9.05e-12,9.66e-12,7.30e-12,6.27e-12,5.60e-12,6.10e-12,3.15e-12,3.67e-12,3.13e-12,2.12e-12]
+        E2dNdE_Err: [2.01e-11,1.02e-11,1.09e-11,9.38e-12,9.05e-12,9.66e-12,7.30e-12,6.27e-12,5.60e-12,6.10e-12,3.15e-12,3.67e-12,3.13e-12,2.12e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2005A%26A...435L..17A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=95"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "MSH 15-52"
+  notes: |
+      "semi-major axis: 6.4' +/- 0.7' (= 0.11 +/- 0.01 deg), semi-minor axis: 2.3' +/- 0.5' (= 0.04 +/- 0.01 deg),fitted direction of major axis is 41 +/- 13 deg wrt the RA axis, "
+HESS_J1825-137:
+  gal: [17.71,-0.70]
+  type: "PWN"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.13,0.12,17.0]
+    SED:
+      points:
+        Emin: [2.78e+05,4.30e+05,6.92e+05,1.11e+06,1.79e+06,2.89e+06,4.65e+06,7.50e+06,1.21e+07,1.95e+07,3.14e+07]
+        Emax: [2.78e+05,4.30e+05,6.92e+05,1.11e+06,1.79e+06,2.89e+06,4.65e+06,7.50e+06,1.21e+07,1.95e+07,3.14e+07]
+        Emean: [2.78e+05,4.30e+05,6.92e+05,1.11e+06,1.79e+06,2.89e+06,4.65e+06,7.50e+06,1.21e+07,1.95e+07,3.14e+07]
+        E2dNdE: [4.24e-11,3.85e-11,3.81e-11,3.20e-11,2.60e-11,2.44e-11,1.75e-11,1.32e-11,1.18e-11,8.12e-12,3.67e-12]
+        E2dNdE_Err: [2.78e-12,1.59e-12,1.29e-12,1.20e-12,1.22e-12,1.32e-12,1.46e-12,1.59e-12,1.68e-12,1.87e-12,1.75e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2006A%26A...460..365A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=115"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "HESS J1825-137"
+  notes: |
+      "angle: 17 +/- 12 deg, http://adsabs.harvard.edu/abs/2006A%26A...460..365A"
+W28B:
+  gal: [6.14,-0.63]
+  type: "SNR+Molecular Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.15
+    SED:
+      points:
+        Emin: [3.03e+05,4.04e+05,5.46e+05,7.39e+05,9.69e+05,1.31e+06,1.74e+06,3.04e+06]
+        Emax: [3.03e+05,4.04e+05,5.46e+05,7.39e+05,9.69e+05,1.31e+06,1.74e+06,3.04e+06]
+        Emean: [3.03e+05,4.04e+05,5.46e+05,7.39e+05,9.69e+05,1.31e+06,1.74e+06,3.04e+06]
+        E2dNdE: [4.02e-12,6.02e-12,4.02e-12,4.24e-12,2.83e-12,2.03e-12,1.89e-12,2.31e-12]
+        E2dNdE_Err: [1.18e-12,9.52e-13,9.90e-13,8.56e-13,7.64e-13,6.95e-13,6.46e-13,6.79e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...481..401A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=162"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1800-240"
+  hardsource: "W28"
+  notes: |
+       "I've associated this source to HESS J1800-240 which corresponds W28 A, B or C cause the extension fit seems to go in that direction. It's not really W28B"
+W28A:
+  gal: [5.90,-0.37]
+  type: "SNR+Molecular Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.15
+    SED:
+      points:
+        Emin: [4.10e+05,5.46e+05,7.28e+05,9.84e+05,1.31e+06,1.74e+06,4.12e+06]
+        Emax: [4.10e+05,5.46e+05,7.28e+05,9.84e+05,1.31e+06,1.74e+06,4.12e+06]
+        Emean: [4.10e+05,5.46e+05,7.28e+05,9.84e+05,1.31e+06,1.74e+06,4.12e+06]
+        E2dNdE: [2.03e-12,2.78e-12,1.01e-12,9.94e-13,8.58e-13,1.03e-12,7.27e-13]
+        E2dNdE_Err: [5.49e-13,5.00e-13,3.97e-13,4.15e-13,3.58e-13,3.78e-13,3.82e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...481..401A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=162"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1801-233"
+  hardsource: "W28"
+  notes: |
+       "I've associated this source to HESS J1801-233 which corresponds to the radio W28 cause the extension fit seems to go in that direction. It's not really W28A"
+W28C:
+  gal: [5.71,-0.06]
+  type: "SNR+Molecular Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.02
+    SED:
+      points:
+        Emin: [3.03e+05,4.04e+05,5.46e+05,7.39e+05,9.69e+05,1.31e+06,1.74e+06,3.04e+06]
+        Emax: [3.03e+05,4.04e+05,5.46e+05,7.39e+05,9.69e+05,1.31e+06,1.74e+06,3.04e+06]
+        Emean: [3.03e+05,4.04e+05,5.46e+05,7.39e+05,9.69e+05,1.31e+06,1.74e+06,3.04e+06]
+        E2dNdE: [4.02e-12,6.02e-12,4.02e-12,4.24e-12,2.83e-12,2.03e-12,1.89e-12,2.31e-12]
+        E2dNdE_Err: [1.18e-12,9.52e-13,9.90e-13,8.56e-13,7.64e-13,6.95e-13,6.46e-13,6.79e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...481..401A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=162"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "HESS J1800-240"
+  hardsource: "W28"
+  notes: |
+       "I've associated this source to HESS J1800-240 by default"
+W49B:
+  gal: [43.26,-0.19]
+  type: "SNR+Molecular Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0 
+    SED:
+      points:
+        Emin: [2.93e+05,9.45e+06]
+        Emax: [2.93e+05,9.45e+06]
+        Emean: [2.93e+05,9.45e+06]
+        E2dNdE: [1.32e-12,3.41e-14]
+        E2dNdE_Err: [4.44e-13,2.13e-14]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2011arXiv1104.5003B"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=218"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "W49B"
+  hardsource: "P72Y3088"
+  notes: |
+      "Points from a butterfly of a proceeding -> consider it carefully"
+HESS_J1923+141:
+  gal: [49.13,-0.40]
+  type: "SNR+Molecular Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.16
+    SED:
+      points:
+        Emin: [9.80e+04,1.69e+05,2.87e+05,4.99e+05,8.49e+05,1.46e+06,2.51e+06]
+        Emax: [9.80e+04,1.69e+05,2.87e+05,4.99e+05,8.49e+05,1.46e+06,2.51e+06]
+        Emean: [9.80e+04,1.69e+05,2.87e+05,4.99e+05,8.49e+05,1.46e+06,2.51e+06]
+        E2dNdE: [4.57e-12,4.98e-12,3.39e-12,2.49e-12,2.16e-12,2.61e-12,7.67e-13]
+        E2dNdE_Err: [1.88e-12,1.14e-12,7.79e-13,7.92e-13,6.87e-13,4.91e-13,5.19e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1111.0066"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=178"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "W51c"
+  hardsource: "W51c"
+  notes: |
+       ""
+Tycho:
+  gal: [120.11,1.45]
+  type: "Shell SNR"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2011ApJ...730L..20A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=209"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "No"
+  notes: |
+       "Cannot take the SED from th paper -> have to find another way"
+RX_J0852.0-4622:
+  gal: [266.28,-1.24]
+  hardsource: "Vela Junior"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 1.0
+    SED:
+      points:
+        Emin: [3.67e+05,4.92e+05,6.67e+05,8.96e+05,1.18e+06,1.59e+06,2.12e+06,2.85e+06,3.79e+06,5.05e+06,6.61e+06,8.89e+06,1.18e+07,1.59e+07]
+        Emax: [3.67e+05,4.92e+05,6.67e+05,8.96e+05,1.18e+06,1.59e+06,2.12e+06,2.85e+06,3.79e+06,5.05e+06,6.61e+06,8.89e+06,1.18e+07,1.59e+07]
+        Emean: [3.67e+05,4.92e+05,6.67e+05,8.96e+05,1.18e+06,1.59e+06,2.12e+06,2.85e+06,3.79e+06,5.05e+06,6.61e+06,8.89e+06,1.18e+07,1.59e+07]
+        E2dNdE: [3.59e-11,3.73e-11,2.77e-11,3.24e-11,3.53e-11,3.02e-11,2.53e-11,2.74e-11,2.80e-11,2.01e-11,1.29e-11,1.24e-11,1.17e-11,1.04e-11]
+        E2dNdE_Err: [4.50e-12,6.37e-12,4.73e-12,5.53e-12,6.02e-12,5.14e-12,3.18e-12,3.44e-12,4.78e-12,3.43e-12,5.49e-12,5.98e-12,5.66e-12,6.29e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/661/1/236/pdf/70247.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=98"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "Vela"
+  notes: |
+       ""
+RX_J1713.7-3946:
+  gal: [347.34,-0.47]
+  type: "Shell SNR"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.25
+    SED:
+      points:
+        Emin: [2.10e+05,2.50e+05,3.10e+05,3.70e+05,4.50e+05,5.50e+05,6.60e+05,8.00e+05,9.70e+05,1.18e+06,1.42e+06,1.72e+06,2.09e+06,2.52e+06,3.06e+06,3.70e+06,4.48e+06,5.42e+06,6.56e+06,7.95e+06,9.62e+06,1.16e+07,1.57e+07,2.30e+07,3.38e+07]
+        Emax: [2.10e+05,2.50e+05,3.10e+05,3.70e+05,4.50e+05,5.50e+05,6.60e+05,8.00e+05,9.70e+05,1.18e+06,1.42e+06,1.72e+06,2.09e+06,2.52e+06,3.06e+06,3.70e+06,4.48e+06,5.42e+06,6.56e+06,7.95e+06,9.62e+06,1.16e+07,1.57e+07,2.30e+07,3.38e+07]
+        Emean: [2.10e+05,2.50e+05,3.10e+05,3.70e+05,4.50e+05,5.50e+05,6.60e+05,8.00e+05,9.70e+05,1.18e+06,1.42e+06,1.72e+06,2.09e+06,2.52e+06,3.06e+06,3.70e+06,4.48e+06,5.42e+06,6.56e+06,7.95e+06,9.62e+06,1.16e+07,1.57e+07,2.30e+07,3.38e+07]
+        E2dNdE: [2.16e-11,2.33e-11,3.11e-11,3.30e-11,2.91e-11,3.55e-11,2.90e-11,3.36e-11,3.34e-11,3.08e-11,2.42e-11,2.71e-11,2.64e-11,2.88e-11,2.30e-11,2.00e-11,2.21e-11,2.65e-11,2.11e-11,1.83e-11,1.63e-11,1.05e-11,5.43e-12,4.55e-12,6.45e-12]
+        E2dNdE_Err: [6.43e-12,4.91e-12,4.40e-12,3.72e-12,3.35e-12,3.16e-12,2.92e-12,2.83e-12,2.74e-12,2.85e-12,2.88e-12,3.06e-12,3.08e-12,3.03e-12,3.13e-12,3.19e-12,3.17e-12,3.18e-12,3.27e-12,3.05e-12,3.28e-12,3.11e-12,2.34e-12,1.99e-12,1.95e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2006A%26A...449..223A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=84"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "RX J1713"
+  notes: |
+       ""
+Cassiopeia_A:
+  gal: [111.71,-2.13]
+  type: "Shell SNR"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [3.72e+05,6.17e+05,1.02e+06,1.68e+06,2.80e+06,4.63e+06]
+        Emax: [3.72e+05,6.17e+05,1.02e+06,1.68e+06,2.80e+06,4.63e+06]
+        Emean: [3.72e+05,6.17e+05,1.02e+06,1.68e+06,2.80e+06,4.63e+06]
+        E2dNdE: [1.68e-12,2.88e-12,1.27e-12,9.34e-13,7.20e-13,1.38e-12]
+        E2dNdE_Err: [6.65e-13,6.17e-13,5.49e-13,5.63e-13,7.62e-13,1.16e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2007A%26A...474..937A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=82"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y3738"
+  notes: |
+       ""
+HESS_J1857+026:
+  gal: [35.96,-0.06]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "2Dgaussian"
+    extension: [0.11,0.08,-3]
+    SED:
+      points:
+        Emin: [8.35e+05,1.44e+06,2.52e+06,4.46e+06,7.90e+06,1.40e+07,2.44e+07,4.32e+07]
+        Emax: [8.35e+05,1.44e+06,2.52e+06,4.46e+06,7.90e+06,1.40e+07,2.44e+07,4.32e+07]
+        Emean: [8.35e+05,1.44e+06,2.52e+06,4.46e+06,7.90e+06,1.40e+07,2.44e+07,4.32e+07]
+        E2dNdE: [8.92e-12,8.91e-12,7.75e-12,3.78e-12,4.89e-12,5.51e-12,2.01e-12,1.98e-12]
+        E2dNdE_Err: [2.29e-12,1.63e-12,1.28e-12,1.27e-12,1.45e-12,1.42e-12,1.02e-12,1.05e-12]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...477..353A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=143"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y3049"
+  notes: |
+      " angle: -3 +/- 49 deg" 
+Westerlund_2:
+  gal: [284.22,-0.40]
+  type: "Massive Star Cluster"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.18
+    SED:
+      points:
+        Emin: [1.09e+06,1.55e+06,2.27e+06,3.32e+06,4.88e+06,7.18e+06,1.06e+07]
+        Emax: [1.09e+06,1.55e+06,2.27e+06,3.32e+06,4.88e+06,7.18e+06,1.06e+07]
+        Emean: [1.09e+06,1.55e+06,2.27e+06,3.32e+06,4.88e+06,7.18e+06,1.06e+07]
+        E2dNdE: [2.96e-12,5.37e-12,5.04e-12,4.20e-12,1.76e-12,1.89e-12,1.92e-12]
+        E2dNdE_Err: [1.30e-12,6.94e-13,1.20e-12,8.40e-13,6.99e-13,8.33e-13,9.28e-13]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1009.3012v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=132"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y1491"
+  notes: |
+       ""
+HESS_J1848-018:
+  gal: [31.00,-0.16]
+  type: "Massive Star Cluster"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.32
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://ads.ari.uni-heidelberg.de/abs/2008AIPC.1085..372C"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=187"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       "TeV:conf proceeding -> no spectra found"
+TeV_J1959+208:
+  gal: [59.20,-4.70]
+  type: "PSR"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://iopscience.iop.org/0004-637X/583/2/853/pdf/56630.web.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=152"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "no"
+  notes: |
+       "Upper limit set by the reference"
+W49A:
+  gal: [43.27,-0.00]
+  type: "Star Forming Region"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [2.93e+05,9.45e+06]
+        Emax: [2.93e+05,9.45e+06]
+        Emean: [2.93e+05,9.45e+06]
+        E2dNdE: [1.32e-12,3.41e-14]
+        E2dNdE_Err: [4.44e-13,2.13e-14]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2011arXiv1104.5003B"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=218"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: "W49B"
+  hardsource: "P72Y3088"
+  notes: |
+      "Points from a butterfly of a proceeding -> consider it carefully"
+CTB_37A:
+  gal: [348.39,0.11]
+  type : "SNR + Molec Cloud"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "gaussian"
+    extension: 0.7
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://adsabs.harvard.edu/abs/2008A%26A...490..685A"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=158"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: ""
+  notes: |
+       "Only a butterfly available"
+HESS_J1018-589:
+  gal: [284.23,-1.72]
+  type: "UNID"
+  Fermi:
+    TS: 0.0
+    flux_above_10GeV: 0.0
+    flux_error_above_10GeV: 0.0
+    Prefactor: 0.0
+    Prefactor_error: 0.0
+    Index: 0.0
+    Index_error: 0.0
+    Cutoff: "No"
+    Extension: "No"
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+  TeV:
+    shape: "pointsource"
+    extension: 0.0
+    SED:
+      points:
+        Emin: [6.34e+05,1.36e+06,2.89e+06,6.21e+06,1.31e+07]
+        Emax: [6.34e+05,1.36e+06,2.89e+06,6.21e+06,1.31e+07]
+        Emean: [6.34e+05,1.36e+06,2.89e+06,6.21e+06,1.31e+07]
+        E2dNdE: [1.57e-12,9.12e-13,5.67e-13,3.16e-13,2.44e-14]
+        E2dNdE_Err: [3.62e-13,2.57e-13,2.91e-13,1.82e-13,1.57e-14]
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: "http://arxiv.org/pdf/1203.3215v1.pdf"
+    tevcat: "http://tevcat.uchicago.edu/?mode=1&showsrc=237"
+  Radio:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  X-Ray:
+    SED:
+      points:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+        E2dNdE_Err: []
+      ULs:
+        Emin: []
+        Emax: []
+        Emean: []
+        E2dNdE: []
+    reference: ""
+  association: ""
+  hardsource: "P72Y1486"
+  notes: |
+       ""

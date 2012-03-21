@@ -1,0 +1,8 @@
+Folder to receive the TeV super file 
+"Pwn Research Organizer FILE -> PROFILE"
+which will contain TeV, Radio and X-Ray informations on the sources
+
++ all the utilities like plot_seds -> plot all the seds
++ update -> update all the Fermi values from a direction (TODO)
++ create fits -> generate a fits file (TODO)
++ create source -> Generate ascii files of the SED : Fermi, TeV, Radio and X (TODO)
