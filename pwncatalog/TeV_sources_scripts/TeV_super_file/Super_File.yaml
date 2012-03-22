@@ -80,7 +80,7 @@ Boomerang:
         Emean: []
         E2dNdE: []
     reference: ""  
-  association: "G106.6+2.9"
+  association: "G106.6+2.9, BOOMERANG PWN G106.6+2.9, SNR G106.6+02.9, SNR G106.3+02.7, VER J2227+608, PSR J2229+6114, PSR J2229+6114"
   hardsource: "P72Y3615"
   notes: |
     "Detected by Milagro, extended source but unknown parameters"
@@ -380,7 +380,7 @@ Geminga:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "TeV J0632+173,0FGL J0634.0+1745,MGRO C3,MGRO J0632+17,..."
+  association: "TeV J0632+173,0FGL J0634.0+1745,MGRO C3,MGRO J0632+17,SN 437, PSR J0633+1746 "
   hardsource: "P72Y0963 associated with the pulsar"
   notes: |
     "FWHM=2.6 from arXiv:0904.1018v3:
@@ -529,7 +529,7 @@ HESS_J1303-631:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "TeV J1303-631"     
+  association: "TeV J1303-631,  PSR J1301-6305"     
   hardsource: "no"
   notes: 
     " Gaussian radius from arXiv:astro-ph/0505219v1"
@@ -603,7 +603,7 @@ HESS_J1356-645:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "TeV J1356-645"
+  association: "TeV J1356-645,  PSR J1357-6429"
   hardsource: "no"
   notes: |
     "HESS detection: arXiv:1108.2855v1. 
@@ -681,7 +681,7 @@ HESS_J1616-508:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "TeV J1616-508"
+  association: "TeV J1616-508, PSR J1617-5055 ?"
   hardsource: "P72Y2472"
   notes: |
     "Gaussian radius arXiv:astro-ph/0510397v1"
@@ -755,7 +755,7 @@ HESS_J1632-478:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "IGR J16320-4751 ?, AX J1631.9-4752, [KRL2007b] 190, INTEGRAL1 25, SWIFT J1632.1-4753,    "
   hardsource: "a lot. In the Spectral document they are merged in HESS_J1632-478"
   notes: |
     "Gaussian radius from arXiv:astro-ph/0510397v1, angle counterclockwise wrt the positive Gal. Lat. axis 21 +/- 13 (deg) "
@@ -829,7 +829,7 @@ HESS_J1640-465:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "1FGL J1640.8-4634c, 3EG J1639-4702,  G338.3-0.0 ?;  3EG J1639-4702 ?"
   hardsource: "P72Y2565"
   notes: |
     "Gaussian radius from arXiv:astro-ph/0510397v1"
@@ -977,7 +977,7 @@ HESS_J1718-385:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR J1718-3825 ?"
   hardsource: "no"
   notes: | 
     "Gaussian size from arXiv:0705.1605v1
@@ -1054,7 +1054,7 @@ HESS_J1809-193:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR J1809-1917 ?,"
   hardsource: "no"
   notes: |
     "Gaussian size from arXiv:0705.1605v1
@@ -1131,7 +1131,7 @@ HESS_J1813-178:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "G12.8-0.02,  AX J1813-178, AGPS 273.4-17.8, SNR 12.82-0.02, AX J1813-178, PSR J1813-1749, "
   hardsource: "no"
   notes: |
     "Detected in HESS galactic plane survey.
@@ -1206,11 +1206,12 @@ HESS_J1831-098:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR J1831-0952,"
   hardsource: "no"
   notes: |
     "Writeup for 2011 Fermi-symposium (arXiv:1110.6837v1)
      No table of data points. LAT upper limit in paper seems very unconstraining.
+     if so and if the true age is close to the characteristic age, HESS J1831-098 would be among the oldest TeV PWNe. 
      Gaussian radius from arXiv:1110.6837v1"
 HESS_J1833-105:
   gal: [21.51,-0.88]
@@ -1281,7 +1282,7 @@ HESS_J1833-105:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR J1833-1036 , SNR 21.5-0.9(SNR/PWN)?, "
   hardsource: "no"
   notes: |
     "ICRC presentation: arXiv:0710.2247v1
@@ -1357,7 +1358,7 @@ HESS_J1846-029:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "kes75, SNR G029.7-00.2, PSR J1846-0258"
   hardsource: "no"
   notes: |
     "ICRC presentation: arXiv:0710.2247v1
@@ -1433,11 +1434,15 @@ HESS_J1912+101:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR J1913+1011, IGR J19140+0951, RXS J191159.6+1008"
   hardsource: "no"
   notes: |
     "HESS detection: arXiv:0802.3841v1
-     Gaussian radius from arXiv:0802.3841v1"
+     Gaussian radius from arXiv:0802.3841v1
+     The lack of spherical symmetry of the nebula is a characteristic of many gamma-ray PWN and X-ray PWN (e.g. SOM 9/2005). A search for other possible counterparts 
+     reveals a faint ROSAT X-ray source (Fig. 1) (Voges et al. 2000) co-located with an infrared source (Fig. 2) as well as indications of molecular clouds, which are 
+     seen as an enhancement in 13CO emission in the velocity range corresponding to the pulsar distance, with the H II region G044.3+00.1 (Paladini et al. 2003) (Fig. 3). 
+     The presence of this target gas and dust allows an alternative interpretation of gamma-ray production in terms of proton acceleration and interactions."
 IGR_J18490-0000:
   gal: [32.64,0.53]
   type: "PWN"
@@ -1508,7 +1513,7 @@ IGR_J18490-0000:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "HESS J1849-000"
+  association: "HESS J1849-000, PSR J1849-0001, XMMU J184901.6-000117 "
   hardsource: "no"
   notes: |
     "Only conference proceding (Terrier et al 2008)
@@ -1584,7 +1589,7 @@ Kookaburra:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "HESS J1420-607"
+  association: "HESS J1420-607, PSR J1420-6048, G313.3+0.6, G313.5+0.2"
   hardsource: "P72Y2188"
   notes: 
     "Gaussian Radius is 3.3' from arXiv:astro-ph/0606311v2"
@@ -1658,7 +1663,7 @@ Kookaburra_Rabbit:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "HESS J1418-609"
+  association: "HESS J1418-609, AX J1418.7-6058,  G313.3+0.1, PSR J1418-6058"
   hardsource: "P72Y2184"
   notes: |
     "Gaussian size is 4.9arcmin & 2.7arcmin from arXiv:astro-ph/0606311v2
@@ -1719,7 +1724,7 @@ MGRO_J2019+37:
         Emax: []
         Emean: []
         E2dNdE: []
-    reference: ""
+    reference: "http://arxiv.org/pdf/0909.0406.pdf"
   X-Ray:
     SED:
       points:
@@ -1809,7 +1814,7 @@ G318.2+0.1:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "HESS J1457"
+  association: "HESS J1457-593, MSC 318.2+0.1, G318.9+00.4 "
   hardsource: "no"
   notes: |
       "size and position from http://pos.sissa.it/archive/conferences/123/196/Texas%202010_196.pdf , angle : 67 +/- 15 deg, from negative longitude to positive latitude axis"
@@ -1883,7 +1888,7 @@ HESS_J1832-093:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "SNR G22.7-0.2"
+  association: "SNR G22.7-0.2, "
   hardsource: "no"
   notes: |
        "position and extension : http://arxiv.org/abs/1110.6890"
@@ -1957,7 +1962,7 @@ RCW_86:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: " HESS J1442-624, ESO 134-11, SNR G315.0-02.3, 1RXS J144254.3-622815, MSH 14-6-03, SN 185"
   hardsource: "no"
   notes: |
        "constraining UL by Fermi. position and extension : http://adsabs.harvard.edu/abs/2009ApJ...692.1500A"
@@ -2031,7 +2036,7 @@ SN_1006_SW:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "HESS J1502-421, NAME LUPUS SN, MSH 14-4-15, SN 1006A, SN 1016, SNR G327.6+14.6"
   hardsource: "no"
   notes: |
        ""
@@ -2105,7 +2110,7 @@ SN_1006_NE:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "HESS J1504-418, NAME LUPUS SN, MSH 14-4-15, SN 1006A, SN 1016, SNR G327.6+14.6"
   hardsource: "no"
   notes: |
        ""
@@ -2179,7 +2184,7 @@ CTB_37B:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "SNR G348.7+00.3, MSC 348.7+0.3, IRAS 17102-3806,  HESS J1713-381"
   hardsource: "no"
   notes: |
        ""
@@ -2252,8 +2257,8 @@ HESS_J1731-347:
         Emax: []
         Emean: []
         E2dNdE: []
-    reference: ""
-  association: ""
+    reference: "http://arxiv.org/abs/0907.1684"
+  association: "SNR G353.6-0.7, XMMS J173203-344518"
   hardsource: "no"
   notes: |
        "-angle: -89 +/- 21 deg
@@ -2476,7 +2481,7 @@ HESS_J1634-472:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "IGR J16358-4726 ?;  G337.2+0.1 ?, "
   hardsource: "SEED-362"
   notes: |
        ""
@@ -2549,7 +2554,7 @@ HESS_J1702-420:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "G344.7-0.1 ?"
   hardsource: "no"
   notes: |
        "angle: 68 +/- 7 deg
@@ -2696,7 +2701,7 @@ HESS_J1741-302:
         Emax: []
         Emean: []
         E2dNdE: []
-    reference: ""
+    reference: "http://arxiv.org/abs/1106.2861"
   association: ""
   hardsource: "no"
   notes: |
@@ -2771,7 +2776,7 @@ HESS_J1804-216:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "G8.7-0.1 /  W30 ?;  PSR J1803-2137 ?, XMMU J183435.3"
   hardsource: "W30 ?"
   notes: |
        "- extent along R.A. axis: 0.160 +/- 0.005 deg
@@ -2845,8 +2850,8 @@ HESS_J1834-087:
         Emax: []
         Emean: []
         E2dNdE: []
-    reference: ""
-  association: ""
+    reference: "http://arxiv.org/pdf/1101.1342v1.pdf"
+  association: " G23.3-0.3 /  W41?, XMMU J183435.3-084443"
   hardsource: "no"
   notes: |
        ""
@@ -2919,8 +2924,8 @@ HESS_J1837-069:
         Emax: []
         Emean: []
         E2dNdE: []
-    reference: ""
-  association: ""
+    reference: "http://arxiv.org/abs/0810.3745"
+  association: "G25.5+0.0 ?;  AX J1838.0-0655 ?  "
   hardsource: "P72Y2986 -- associated in the Spectral doc"
   notes: |
        "angle: 149 +/- 10
@@ -2995,7 +3000,7 @@ HESS_J1841-055:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "AX J1841.0-0536"
   hardsource: "no"
   notes: |
        "angle: 39 +/- 6 deg
@@ -3142,7 +3147,7 @@ HESS_J1858+020:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "G35.6-0.4 ? "
   hardsource: "no"
   notes: |
        "angle: -4 +/- 17 deg
@@ -3291,8 +3296,8 @@ HESS_J1614-518:
         Emax: []
         Emean: []
         E2dNdE: []
-    reference: ""
-  association: ""
+    reference: "http://arxiv.org/pdf/0712.0874v1.pdf"
+  association: "[BGG2006] G15.42+0.18, "
   hardsource: "HESS J1614. Unknown name P72Y..."
   notes: |
       "http://iopscience.iop.org/0004-637X/636/2/777/pdf/62964.web.pdf
@@ -3440,7 +3445,7 @@ PWN_SNR_G15.4+0.1:
         Emax: []
         Emean: []
         E2dNdE: []
-    reference: ""
+    reference: "PSR J0631+10, 1FGL J0631.4+1037"
   association: "no"
   hardsource: ""
   notes: |
@@ -3515,7 +3520,7 @@ PWN_SNR_G327.1-1.1:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "IRAS 15506-5454, MSC 327.1-1.1 "
   hardsource: "no"
   notes: |
       "http://arxiv.org/abs/1201.0481"
@@ -3589,7 +3594,7 @@ PWN_SNR_G327.1-1.1:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR J1958+2846, 1FGL J1958.6+2845"
   hardsource: "P72Y3215"
   notes: |
       ""
@@ -3663,7 +3668,7 @@ PWN_SNR_G327.1-1.1:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "GRO J2019+40,    	  3EG J2020+4017  ,    	  1FGL J2021.5+4026  "
   hardsource: "P72Y3287"
   notes: |
       "gamma cygnii"
@@ -3737,7 +3742,7 @@ PWN_SNR_G327.1-1.1:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "1FGL J1844.2-0342c"
   hardsource: "no"
   notes: |
       "Extension not described"
@@ -3959,7 +3964,7 @@ IC_443:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "SNR G189.0+03.0, SNR G189.1-03.0, 2U 0601+21, 3C 157, 1FGL J0617.2+2233, MAGIC J0616+225, CTB 20"
   hardsource: "IC 443"
   notes: |
        ""
@@ -4033,7 +4038,7 @@ SNR_G65.1+0.6:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "GAL 065.1+00.6, 0FGL J1954.4+2838, PSR J1954+2836, 1FGL J1954.3+2836"
   hardsource: "no"
   notes: |
       "Fermi source 0FGL J1954.4+2838 -- Milagro set ULs in 2010"
@@ -4107,7 +4112,7 @@ G106.3+2.7:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "VER J2227+608"
   hardsource: "P72Y3615 ?"
   notes: |
       "angle: 22 deg east of north, http://iopscience.iop.org/1538-4357/703/1/L6/pdf/apjl_703_1_6.pdf"
@@ -4181,7 +4186,7 @@ HESS_J1745-303:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: " Sgr A* /  Sgr A East ?, IRAS 17442-2942, 3EG J1744-3011"
   hardsource: "no"
   notes: |
       "angle: 54 +/- 7 deg, measured counter-clk wrt the positive Gal. Lat. axis"
@@ -4329,7 +4334,7 @@ HESS_J1507-622:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "1RXS J150841.2-621006"
   hardsource: "?"
   notes: |
        ""
@@ -4403,7 +4408,7 @@ HESS_J1626-490:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "SNR G335.2+00.1"
   hardsource: "no"
   notes: |
       "angle: 3 +/- 40 deg, measured counter-clk relative to RA axis"
@@ -4477,7 +4482,7 @@ TeV_J1907+062:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "MGRO J1908+06, HESS J1908+063, HESS J1907+062"
+  association: "MGRO J1908+06, HESS J1908+063, HESS J1907+062, MGRO J1908+06;  GeV J1907+0557 /  GRO J1908+0556 ?"
   hardsource: "P72Y3082"
   notes: |
        ""
@@ -4551,7 +4556,7 @@ TeV_J2016+372:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "VER J2016+372,CTB 87,SNR G074.9+01.2"
   hardsource: "?"
   notes: |
       "extended but no information on the extension"
@@ -4625,7 +4630,7 @@ TeV_J2019+407:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "TeV J2019+407,SNR G78.2+2.1,NAME GAM CYG SNR, 	VER J2019+407 "
   hardsource: "?"
   notes: |
        "SED too small to be taken from the conf proc."
@@ -4699,7 +4704,7 @@ TeV_J2032+4130:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "MGRO J2031+41, 0FGL J2032.2+4122"
   hardsource: "P72Y3317"
   notes: |
        ""
@@ -4773,7 +4778,7 @@ CTA_1:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "SNR G119.5+10.2,PSR J0007+7303 ,RX J0007.0+7302"
   hardsource: "SEED-290"
   notes: |
        "Source extended but extension is not described"
@@ -4847,7 +4852,7 @@ MSH_15_52:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "SNR G320.3-01.1, HESS J1514-591, Kes 23"
   hardsource: "MSH 15-52"
   notes: |
       "semi-major axis: 6.4' +/- 0.7' (= 0.11 +/- 0.01 deg), semi-minor axis: 2.3' +/- 0.5' (= 0.04 +/- 0.01 deg),fitted direction of major axis is 41 +/- 13 deg wrt the RA axis, "
@@ -4921,7 +4926,7 @@ HESS_J1825-137:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR J1826-1334;  3EG J1826-1302 ?"
   hardsource: "HESS J1825-137"
   notes: |
       "angle: 17 +/- 12 deg, http://adsabs.harvard.edu/abs/2006A%26A...460..365A"
@@ -4995,7 +5000,7 @@ W28B:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "HESS J1800-240"
+  association: "HESS J1800-240, G6.1-0.6"
   hardsource: "W28"
   notes: |
        "I've associated this source to HESS J1800-240 which corresponds W28 A, B or C cause the extension fit seems to go in that direction. It's not really W28B"
@@ -5217,7 +5222,7 @@ W49B:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "W49B"
+  association: "W49B, SNR G043.3-00.2, CTA 84 "
   hardsource: "P72Y3088"
   notes: |
       "Points from a butterfly of a proceeding -> consider it carefully"
@@ -5291,7 +5296,7 @@ HESS_J1923+141:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "W51c"
+  association: "W51c, SNR G49.2-0.7"
   hardsource: "W51c"
   notes: |
        ""
@@ -5365,13 +5370,13 @@ Tycho:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "CTA 2, CTB 4, SNR G120.1+01.4, SN 1572, VER J0025+641"
   hardsource: "No"
   notes: |
        "Cannot take the SED from th paper -> have to find another way"
 RX_J0852.0-4622:
   gal: [266.28,-1.24]
-  hardsource: "Vela Junior"
+  type: "Shell SNR"
   Fermi:
     TS: 0.0
     flux_above_10GeV: 0.0
@@ -5439,7 +5444,7 @@ RX_J0852.0-4622:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "Vela Junior, HESS J0852-463,PSR J0855-4644, SNR G266.2-01.2"
   hardsource: "Vela"
   notes: |
        ""
@@ -5513,7 +5518,7 @@ RX_J1713.7-3946:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "SNR G347.3-00.5, HESS J1713-397"
   hardsource: "RX J1713"
   notes: |
        ""
@@ -5587,7 +5592,7 @@ Cassiopeia_A:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "CTA 105, CXOU J232327.9+584842, 1FGL J2323.4+5849, SNR G111.7-02.1, SN 1671, W 81"
   hardsource: "P72Y3738"
   notes: |
        ""
@@ -5735,7 +5740,7 @@ Westerlund_2:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: " HESS J1023-575,  WR 20a;  Westerlund 2;  RCW 49, PSR J1022-5746 "
   hardsource: "P72Y1491"
   notes: |
        ""
@@ -5809,7 +5814,7 @@ HESS_J1848-018:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "WR121a/W43 ?"
   hardsource: "no"
   notes: |
        "TeV:conf proceeding -> no spectra found"
@@ -5883,7 +5888,7 @@ TeV_J1959+208:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR B1957+20, PSR J1959+2048"
   hardsource: "no"
   notes: |
        "Upper limit set by the reference"
@@ -5957,7 +5962,7 @@ W49A:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: "W49B"
+  association: "W49B, GAL 043.169+00.00, "
   hardsource: "P72Y3088"
   notes: |
       "Points from a butterfly of a proceeding -> consider it carefully"
@@ -6031,7 +6036,7 @@ CTB_37A:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "SNR G348.5+00.1, 1FGL J1714.5-3830,  HESS J1714-385"
   hardsource: ""
   notes: |
        "Only a butterfly available"
@@ -6105,7 +6110,7 @@ HESS_J1018-589:
         Emean: []
         E2dNdE: []
     reference: ""
-  association: ""
+  association: "PSR J1016-5857 ?"
   hardsource: "P72Y1486"
   notes: |
        ""
