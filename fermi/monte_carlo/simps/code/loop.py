@@ -34,9 +34,52 @@ from collections import OrderedDict
 
 
 # v3
+#b = SimBuilder(
+#    savedir='$simpsdata/v3',
+#    code='$simpscode/simulate.py',
+#    num=1000,
+#    params=dict(time='1day', flux=1e-2, position='allsky', emin=1e2, emax=1e5))
+#b.build()
+
+# v4
+#b = SimBuilder(
+#    savedir='$simpsdata/v4',
+#    code='$simpscode/simulate.py',
+#    num=1000,
+#    params=dict(time='1day', flux=1e-2, position='allsky', emin=1e2, emax=1e5, phibins=[0,5,9]))
+#b.build()
+
+# v5
+#b = SimBuilder(
+#    savedir='$simpsdata/v5',
+#    code='$simpscode/simulate.py',
+#    num=100,
+#    params=dict(time='1day', flux=1e-2, position='allsky', emin=1e2, emax=1e5, phibins=[0,9]))
+#b.build()
+
+# v6
+#b = SimBuilder(
+#    savedir='$simpsdata/v6',
+#    code='$simpscode/simulate.py',
+#    num=1000,
+#    #params=dict(time='1day', flux=1e-2, position=['galcenter', 'pole', 'bad'], emin=1e2, emax=1e5, phibins=[0,9]))
+#    params=dict(time='1day', flux=1e-2, position=['allsky'], emin=1e2, emax=1e5, phibins=9))
+#b.build()
+
+# v7 - try unbinned
+#b = SimBuilder(
+#    savedir='$simpsdata/v7',
+#    code='$simpscode/simulate.py',
+#    num=100,
+#    params=dict(time='1day', flux=1e-2, position=['allsky'], emin=1e2, emax=1e5, phibins=9),
+#    extra='--savedata')
+#b.build()
+
+# v7 - in ltcube generation, dcostheta=0.025, binsz=0.25
 b = SimBuilder(
-    savedir='$simpsdata/v3',
+    savedir='$simpsdata/v8',
     code='$simpscode/simulate.py',
     num=100,
-    params=dict(time='1day', flux=1e-2, position='allsky', 1e2, 1e5))
+    params=dict(time='1day', flux=1e-2, position=['allsky'], emin=1e2, emax=1e5, phibins=9),
+    )
 b.build()
