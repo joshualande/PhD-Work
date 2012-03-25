@@ -24,6 +24,8 @@ for i,r in enumerate(all_results):
 
     results['difftype'].append(x['difftype'])
     results['location'].append(x['location'])
+    results['pointing'].append(x['pointing'])
+
     results['l'].append(x['roi_dir']['gal'][0])
     results['b'].append(x['roi_dir']['gal'][1])
 

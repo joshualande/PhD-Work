@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from lande.fermi.likelihood.roi_gtlike import Gtlike
+from lande.fermi.likelihood.roi_gtlike import Gtlike, UnbinnedGtlike
 
 from argparse import ArgumentParser
 import shutil
@@ -17,7 +17,7 @@ from uw.like.pointspec import DataSpecification
 from uw.like.roi_state import PointlikeState
 
 
-from lande.fermi.likelihood.fit import logLikelihood
+from lande.fermi.likelihood.save import logLikelihood
 from lande.fermi.likelihood.diffuse import get_background, get_sreekumar
 from lande.fermi.likelihood.save import diffusedict, skydirdict
 from lande.fermi.data.catalogs import dict2fgl
@@ -30,8 +30,8 @@ parser.add_argument("i", type=int)
 parser.add_argument("--difftype", required=True, choices=['galactic', 'isotropic', 'sreekumar'])
 parser.add_argument("--emin", required=True, type=float)
 parser.add_argument("--emax", required=True, type=float)
-parser.add_argument("--pointing", required=True, choices=['2fgl', 'default'])
-parser.add_argument("--location", required=True, choices=['highlat','lowlat', 'galcenter', 'allsky', ])
+parser.add_argument("--time", required=True, choices=['2fgl', '1day', '2years'])
+parser.add_argument("--position", required=True, choices=['highlat','lowlat', 'galcenter', 'allsky', ])
 args= parser.parse_args()
 
 i=args.i
@@ -40,8 +40,8 @@ istr='%05d' % i
 np.random.seed(i)
 
 difftype=args.difftype
-pointing=args.pointing
-location=args.location
+time=args.time
+position=args.position
 emin=args.emin
 emax=args.emax
 
@@ -61,36 +61,41 @@ elif difftype == 'sreekumar':
     diffuse_sources = [sreekumar]
 
 tempdir=mkdtemp(prefix='/scratch/')
+#tempdir='savedir'
 
-
-
-if location == 'highlat':
+if position == 'highlat':
     while True:
         roi_dir=random_on_sphere()
         if roi_dir.l() > 10:
             break
-elif location == 'lowlat':
+elif position == 'lowlat':
     while True:
         roi_dir=random_on_sphere()
         if roi_dir.l() <= 10:
             break
-elif location == 'galcenter':
+elif position == 'galcenter':
     roi_dir = SkyDir(0,0,SkyDir.GALACTIC)
-elif location == 'allsky':
+elif position == 'allsky':
     roi_dir = random_on_sphere()
 else:
-    raise Exception("Unrecognized location %s" % location)
+    raise Exception("Unrecognized position %s" % position)
 
 
-if pointing == 'default':
+if time == '2years':
     ft2 = join(tempdir,'ft2.fits')
     ltcube = join(tempdir,'ltcube.fits')
     tstart=0
     tstop=63113851.9 # 2 years
     ltfrac=0.9
-elif pointing == '2fgl':
+if time == '1day':
+    ft2 = join(tempdir,'ft2.fits')
+    ltcube = join(tempdir,'ltcube.fits')
+    tstart=0
+    tstop=86400,
+    ltfrac=0.9
+elif time == '2fgl':
     ft2 = dict2fgl['ft2']
-    ltcube = dict2fgl['ltcube'],
+    ltcube = dict2fgl['ltcube']
     tstart=None
     tstop=None
     ltfrac=None
@@ -101,7 +106,6 @@ ds = DataSpecification(
     ft2files = ft2,
     ltcube = ltcube,
     binfile = join(tempdir,'binned.fits'))
-
 
 sa = SpectralAnalysisMC(ds,
                         binsperdec=8,
@@ -114,17 +118,20 @@ sa = SpectralAnalysisMC(ds,
                         seed=i,
                         tstart=tstart,
                         tstop=tstop,
-                        ltfrac=ltfrac)
+                        ltfrac=ltfrac,
+                        use_weighted_livetime=True,
+                        mc_energy=True,
+                        savedir=tempdir)
 
-roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources, use_default_exposure=True)
+roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources)
 
 state = PointlikeState(roi)
 
 results = dict(
-    i = i,
-    istr = istr,
+    i=i,
+    istr=istr,
     difftype=difftype,
-    location=location,
+    position=position,
     roi_dir=skydirdict(roi_dir),
     emin=emin,
     emax=emax)
@@ -142,7 +149,8 @@ results['pointlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
 
 state.restore(just_spectra=True)
 
-gtlike = Gtlike(roi, bigger_roi=False, enable_edsip=True)
+#gtlike = Gtlike(roi, bigger_roi=False, enable_edisp=True)
+gtlike = UnbinnedGtlike(roi)
 like = gtlike.like
 
 mc=diffusedict(like)
