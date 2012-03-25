@@ -2,6 +2,8 @@
 
     Author: Joshua Lande <joshualande@gmail.com>
 """
+from lande.fermi.likelihood.roi_gtlike import Gtlike
+
 from os.path import join, exists
 from argparse import ArgumentParser
 from tempfile import mkdtemp
@@ -23,7 +25,7 @@ from uw.like.roi_monte_carlo import SpectralAnalysisMC
 from lande.fermi.data.catalogs import dict2fgl
 from lande.fermi.likelihood.tools import force_gradient
 from lande.fermi.likelihood.save import sourcedict
-from lande.utilities.tools import savedict
+from lande.utilities.save import savedict
 
 def get_catalog():
     return Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit',
@@ -80,6 +82,8 @@ if __name__ == '__main__':
     i=args.i
     istr='%05d' % i
 
+    np.random.seed(i)
+
     emin=1e3
     emax=1e5
 
@@ -135,7 +139,6 @@ if __name__ == '__main__':
     results = r = dict()
 
     results['mc'] = sourcedict(roi, name, errors=False)
-    results['mc']['r68'] = roi.get_source('W44').spatial_model.numeric_r68()
 
     print roi
 
@@ -153,17 +156,18 @@ if __name__ == '__main__':
             roi.fit_extension(which=name)
         roi.fit()
         roi.print_summary(galactic=True)
-        results[type] = sourcedict(roi,name)
+        results[type] = dict(pointlike=sourcedict(roi,name))
 
-        if type != 'Point':
-            results[type]['r68'] = spatial_model.numeric_r68()
+        gtlike = Gtlike(roi, enable_edisp=True)
+        like = gtlike.like
+        like.fit(covar=True)
+        results[type]['gtlike'] = sourcedict(like,name)
 
         savedict('results_%s.yaml' % istr,results)
 
-    fit('Point')
-    fit('Disk')
-    fit('Gaussian')
-    fit('EllipticalDisk')
-    fit('EllipticalRing')
+    hypothesis=[ 'Point', 'Disk', 'Gaussian', 'EllipticalDisk', 'EllipticalRing']
+    np.random.shuffle(hypothesis)
+    for h in hypothesis: fit(h)
+
 
 shutil.rmtree(tempdir)
