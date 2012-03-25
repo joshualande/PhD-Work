@@ -43,6 +43,6 @@ params['time']=['2fgl']
 
 j = SimBuilder(savedir='$fitdiffdata/v9',
                code='$fitdiffcode/simulate.py',
-               num=10,
+               num=100,
                params=params)
 j.build()

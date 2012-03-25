@@ -60,8 +60,8 @@ elif difftype == 'isotropic':
 elif difftype == 'sreekumar':
     diffuse_sources = [sreekumar]
 
-tempdir=mkdtemp(prefix='/scratch/')
-#tempdir='savedir'
+#tempdir=mkdtemp(prefix='/scratch/')
+tempdir='savedir'
 
 if position == 'highlat':
     while True:
@@ -128,6 +128,7 @@ roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources)
 state = PointlikeState(roi)
 
 results = dict(
+    time=time,
     i=i,
     istr=istr,
     difftype=difftype,
@@ -149,8 +150,8 @@ results['pointlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
 
 state.restore(just_spectra=True)
 
-#gtlike = Gtlike(roi, bigger_roi=False, enable_edisp=True)
-gtlike = UnbinnedGtlike(roi)
+#gtlike = Gtlike(roi, bigger_roi=False, enable_edisp=True, savedir=tempdir)
+gtlike = UnbinnedGtlike(roi, savedir=tempdir)
 like = gtlike.like
 
 mc=diffusedict(like)
@@ -165,4 +166,4 @@ results['gtlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
 
 savedict('results_%s.yaml' % istr, results)
 
-shutil.rmtree(tempdir)
+#shutil.rmtree(tempdir)
