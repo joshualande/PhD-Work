@@ -51,7 +51,10 @@ function alias_general {
     alias untar="tar -xzvf" # tar -xzvf MyArchive.tgz
 
     alias sng="sed 's/:/\n/g'"
-    alias cvstat="cvs status | grep 'cvs status' | grep -v Up-to-date"
+
+    # Command taken from 
+    # http://www.workingwith.me.uk/blog/a_useful_cvs_status_checker
+    alias cvstat='cvs -q status | grep ^[?F] | grep -v "to-date"'
 
 
     # alias public slac machiens
@@ -63,6 +66,11 @@ function alias_general {
 
     alias svnvimdiff='svn diff --diff-cmd ~/bin/svnvimdiff'
     alias svstat='svn stat'
+
+
+    # Don't tab complete for files that begin with a dot.
+    # http://svn.haxx.se/users/archive-2004-12/0809.shtml
+    bind 'set match-hidden-files off' 
 }
 alias_general
 
@@ -77,5 +85,6 @@ function lande_svn_setup {
     # aliases are the same
     export svn=$HOME/svn/lande/trunk
     export presentations=$svn/presentations/
+    export lande=/u/gl/lande/svn/lande/trunk/code/lande
 }
 lande_svn_setup

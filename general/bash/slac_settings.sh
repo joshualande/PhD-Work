@@ -63,6 +63,7 @@ function fix_matplotlib {
     # whereas this says to use as a temp folder random scratch space.
     export MPLCONFIGDIR=/scratch/
 }
+fix_matplotlib
 
 
 function set_bldtype {
@@ -89,8 +90,9 @@ function set_bldtype {
 }
 
 
-function stockscons {
-    export SCTOOLS=09-26-02
+function _stockscons {
+    export SCTOOLS=$1
+
     set_bldtype
     export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
     export BUILDS=/nfs/farm/g/glast/u35/ReleaseManagerBuild
@@ -102,11 +104,13 @@ function stockscons {
 
     # Get custom irfs
     export CUSTOM_IRF_DIR=$FERMI/irfs
-    export CUSTOM_IRF_NAMES=P7SOURCE_V4PSF,P7SOURCE_V6,P7SOURCE_V4
-
-    fix_matplotlib
+    export CUSTOM_IRF_NAMES=P7SOURCE_V4PSF,P7SOURCE_V4
 
     export setup="${setup} stockscons"
+}
+
+function stockscons {
+    _stockscons 09-27-01
 }
 
 function headscons {
@@ -126,9 +130,6 @@ function headscons {
 
 
 
-    export PATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PATH
-    export PYTHONPATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PYTHONPATH
-
     export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
 
     export python=$head/uw/like
@@ -145,6 +146,43 @@ function headscons26 {
 }
 
 
+function extended_catalog {
+    export PATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PATH
+    export PYTHONPATH=~/svn/lande/trunk/extended_catalog/code/:$PYTHONPATH
+
+    export w44simdata=/nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/w44simdata
+    export w44simcode=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/w44sim/code
+    export w44simplots=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/w44sim/plots
+
+    export tsext_plane_data=/nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/tsext/plane/
+    export tsext_plane_code=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/tsext/plane/code
+    export tsext_plane_plots=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/tsext/plane/plots
+
+}
+extended_catalog
+
+function setup_svn {
+    export svn=/u/gl/lande/svn/lande/trunk
+}
+setup_svn
+
+function mc_testing {
+    export fitdiffdata=/nfs/slac/g/ki/ki03/lande/fermi/data/monte_carlo/test_mapcube_cutting/fitdiff
+    export fitdiffcode=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/test_mapcube_cutting/fitdiff/code
+    export fitdiffplots=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/test_mapcube_cutting/fitdiff/plots
+
+    export simpscode=$svn/fermi/monte_carlo/simps/code
+    export simpsplots=$svn/fermi/monte_carlo/simps/plots
+    export simpsdata=/nfs/slac/g/ki/ki03/lande/fermi/data/monte_carlo/simps
+}
+mc_testing
+
+
+function personal_code {
+    export PYTHONPATH=~/svn/lande/trunk/code/:$PYTHONPATH
+}
+personal_code
+
 function devscons {
     # path of scons code
     export PATH=$PATH:/afs/slac/g/glast/applications/SCons/1.3.0/bin
@@ -153,9 +191,6 @@ function devscons {
 
     export INST_DIR=/u/gl/lande/dev/ScienceTools-scons
     source ${INST_DIR}/bin/${BLDTYPE}-Optimized/_setup.sh
-
-    export PATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PATH
-    export PYTHONPATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PYTHONPATH
 
     # point at the most up to the cvs version of all the pointlike code
     export PYTHONPATH=/u/gl/lande/dev/ScienceTools-scons/pointlike/python:$PYTHONPATH
@@ -203,7 +238,7 @@ function slac_alias {
 }
 slac_alias
 
-export PYTHONPATH="$HOME/bin:$HOME/python:$PYTHONPATH"
+export PYTHONPATH=$HOME/bin:$HOME/python:$PYTHONPATH
 
 function mathematica_setup {
     PATH=$PATH:/afs/slac.stanford.edu/g/ki/software/Wolfram/Mathematica/6.0/Executables/
@@ -228,7 +263,7 @@ function lsf_setup {
 
     # Nice function submit jobs to xxl queue
     for queue in long xlong xxl kipac-ibq; do
-        eval "function $queue { bsub -q $queue -oo log.txt python $PWD/$1; }"
+        eval "function $queue { bsub -q $queue -oo log.txt python \$PWD/\$1; }"
     done
     
     #function xxl { bsub -q xxl -oo log.txt python $PWD/$1 }
@@ -316,8 +351,16 @@ function pwncat_setup {
 
     export tevdata=$ki03/pwncatalog/PWNCAT2/analyze_tev/
 
-    export PYTHONPATH=$PYTHONPATH:$pwncode/lande/publication_plots/plot_helper
-    export PYTHONPATH=$PYTHONPATH:$pwncode/lande/tables
+    export OZLEMPSR=/nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/dataset/SpectAn
+    export KERRPSR=/nfs/slac/g/ki/ki03/lande/pulsar
+
+    export PYTHONPATH=$pwncode/lande/publication_plots/plot_helper:$PYTHONPATH
+    export PYTHONPATH=$pwncode/lande/tables:$PYTHONPATH
+    export PYTHONPATH=$pwncode/lande/off_peak:$PYTHONPATH
+
+    export extuldata=$pwndata/monte_carlo/extul
+    export extulcode=$pwnmc/extul/
+    export extulplots=$pwnplots/extul
 
     #export PWNSCRIPTS=~lande/svn/lande/trunk/pwncatalog_1yr/
 }
@@ -331,4 +374,9 @@ function setup_pysed {
 }
 setup_pysed
 
+function setup_stefan_w44 {
+    export stefan_w44_code=/u/gl/lande/svn/lande/trunk/monte_carlo/stefan_w44/code
+    export stefan_w44_data=/nfs/slac/g/ki/ki03/lande/fermi/data/monte_carlo/stefan_w44_data
+}
+setup_stefan_w44
 
