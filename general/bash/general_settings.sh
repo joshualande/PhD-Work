@@ -28,8 +28,8 @@ terminal_tweaks
 
 function get_known_hosts {
     # Not sure which commadn will work
-    wget -O ~/.ssh/known_hosts ftp://ftp.slac.stanford.edu/admin/known_hosts 
-    curl ftp://ftp.slac.stanford.edu/admin/known_hosts  > ~/.ssh/known_hosts
+    echo wget -O ~/.ssh/known_hosts ftp://ftp.slac.stanford.edu/admin/known_hosts 
+    echo curl ftp://ftp.slac.stanford.edu/admin/known_hosts  > ~/.ssh/known_hosts
 }
 
 function alias_general {
