@@ -14,8 +14,20 @@ from os import makedirs
 #savedir = expandvars('$w44simdata/v3')
 
 # version 4 - better mapcube cutting
-num=100
-savedir = expandvars('$w44simdata/v4')
+#num=100
+#savedir = expandvars('$w44simdata/v4')
+
+# version 5 - no edisp, save out r68 for MC
+#num=100
+#savedir = expandvars('$w44simdata/v5')
+
+# version 6 - w/ edisp in simulation, w/ gtlike
+#num=100
+#savedir = expandvars('$w44simdata/v6')
+
+# version 7 - enable energy dispersion fitting in gtlike, fix annoygin warnings
+num=1000
+savedir = expandvars('$w44simdata/v7')
 
 for i in range(num):
     istr='%05d' % i
