@@ -1,5 +1,4 @@
-from os.path import join, expandvars, exists
-from os import makedirs
+from lande.utilities.simtools import SimBuilder
 
 # version 1
 #num=100
@@ -26,20 +25,31 @@ from os import makedirs
 #savedir = expandvars('$w44simdata/v6')
 
 # version 7 - enable energy dispersion fitting in gtlike, fix annoygin warnings
-num=1000
-savedir = expandvars('$w44simdata/v7')
+#num=1000
+#savedir = expandvars('$w44simdata/v7')
+#
+#from os.path import join, expandvars, exists
+#from os import makedirs
+#for i in range(num):
+#    istr='%05d' % i
+#
+#    jobdir = join(savedir,istr)
+#    if not exists(jobdir): makedirs(jobdir)
+#
+#    run = join(jobdir,'run.sh')
+#    open(run,'w').write("""python $w44simcode/simulate.py %g""" % i)
+#
+#submit_all = join(savedir,'submit_all.sh')
+#open(submit_all,'w').write("submit_all */run.sh $@")
 
-for i in range(num):
-    istr='%05d' % i
-
-    jobdir = join(savedir,istr)
-    if not exists(jobdir): makedirs(jobdir)
-
-    run = join(jobdir,'run.sh')
-    open(run,'w').write("""python $w44simcode/simulate.py %g""" % i)
-
-submit_all = join(savedir,'submit_all.sh')
-open(submit_all,'w').write("submit_all */run.sh $@")
 
 
+
+# version 8 - unbinned likelihood
+b = SimBuilder(
+        savedir='$w44simdata/v8',
+        code='$w44simcode/simulate.py',
+        num=100,
+        )
+b.build()
 

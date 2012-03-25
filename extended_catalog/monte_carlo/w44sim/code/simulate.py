@@ -2,7 +2,7 @@
 
     Author: Joshua Lande <joshualande@gmail.com>
 """
-from lande.fermi.likelihood.roi_gtlike import Gtlike
+from lande.fermi.likelihood.roi_gtlike import Gtlike,UnbinnedGtlike
 
 from os.path import join, exists
 from argparse import ArgumentParser
@@ -158,7 +158,8 @@ if __name__ == '__main__':
         roi.print_summary(galactic=True)
         results[type] = dict(pointlike=sourcedict(roi,name))
 
-        gtlike = Gtlike(roi, enable_edisp=True)
+        #gtlike = Gtlike(roi, enable_edisp=True)
+        gtlike = UnbinnedGtlike(roi)
         like = gtlike.like
         like.fit(covar=True)
         results[type]['gtlike'] = sourcedict(like,name)
