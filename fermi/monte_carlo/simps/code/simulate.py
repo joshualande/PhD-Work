@@ -33,6 +33,7 @@ parser.add_argument("--emin", required=True, type=float)
 parser.add_argument("--emax", required=True, type=float)
 parser.add_argument("--phibins", required=True, type=int)
 parser.add_argument("--savedata", default=False, action='store_true')
+parser.add_argument("--spatial", required=True, choices=['point', 'extended'])
 
 args= parser.parse_args()
 
@@ -49,6 +50,7 @@ time=args.time
 emin=args.emin
 emax=args.emax
 phibins=args.phibins
+spatial=args.spatial
 
 if position == 'galcenter':
     roi_dir = SkyDir(0,0,SkyDir.GALACTIC)
@@ -62,7 +64,11 @@ elif position == 'pole':
 model_mc = PowerLaw(index=2)
 model_mc.set_flux(flux, emin=emin, emax=emax)
 
-ps = PointSource(name=name, model=model_mc, skydir=roi_dir)
+if spatial == 'point':
+    ps = PointSource(name=name, model=model_mc, skydir=roi_dir)
+elif spatial == 'extended':
+    spatial_model = Disk(sigma=0.5, center=roi_dir)
+    ps = PointSource(name=name, model=model_mc, spatial_model=spatial_model)
 
 if args.savedata:
     tempdir='savedir'
@@ -156,7 +162,6 @@ results['pointlike'] = dict(mc=mc, fit=fit)
 
 state.restore()
 
-#gtlike = UnbinnedGtlike(roi, savedir=tempdir)
 gtlike = Gtlike(roi, savedir=tempdir)
 like = gtlike.like
 

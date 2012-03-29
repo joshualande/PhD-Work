@@ -75,11 +75,39 @@ from collections import OrderedDict
 #    extra='--savedata')
 #b.build()
 
-# v7 - in ltcube generation, dcostheta=0.025, binsz=0.25
+# v8 - in ltcube generation, dcostheta=0.025, binsz=0.25
+#b = SimBuilder(
+#    savedir='$simpsdata/v8',
+#    code='$simpscode/simulate.py',
+#    num=100,
+#    params=dict(time='1day', flux=1e-2, position=['allsky'], emin=1e2, emax=1e5, phibins=9),
+#    )
+#b.build()
+
+# v9 - binned, regular ltcube, galactic coordsystem
+#b = SimBuilder(
+#    savedir='$simpsdata/v9',
+#    code='$simpscode/simulate.py',
+#    num=100,
+#    params=dict(time='1day', flux=1e-2, position=['allsky'], emin=1e2, emax=1e5, phibins=9),
+#    )
+#b.build()
+
+# v10 - Using HEAD version of science tools
+#b = SimBuilder(
+#    savedir='$simpsdata/v10',
+#    code='$simpscode/simulate.py',
+#    num=100,
+#    params=dict(time='1day', flux=1e-2, position=['allsky'], emin=1e2, emax=1e5, phibins=9),
+#    )
+#b.build()
+
+# v11 - Using HEAD version of science tools, point+extended source, smaller flux
+# note, 2 years/1 day=730
 b = SimBuilder(
-    savedir='$simpsdata/v8',
+    savedir='$simpsdata/v11',
     code='$simpscode/simulate.py',
     num=100,
-    params=dict(time='1day', flux=1e-2, position=['allsky'], emin=1e2, emax=1e5, phibins=9),
+    params=dict(time='2fgl', flux=[1e-6], position=['allsky'], emin=1e2, emax=1e5, phibins=0, spatial=['point','extended']),
     )
 b.build()
