@@ -15,7 +15,9 @@ from uw.like.roi_monte_carlo import MonteCarlo
 from uw.like.pointspec import DataSpecification, SpectralAnalysis
 from uw.like.pointspec_helpers import PointSource
 from uw.like.Models import PowerLaw
+from uw.like.SpatialModels import Disk
 from uw.like.roi_state import PointlikeState
+from uw.like.roi_extended import ExtendedSource
 
 from lande.fermi.likelihood.save import sourcedict
 from lande.fermi.data.catalogs import dict2fgl
@@ -33,7 +35,8 @@ parser.add_argument("--emin", required=True, type=float)
 parser.add_argument("--emax", required=True, type=float)
 parser.add_argument("--phibins", required=True, type=int)
 parser.add_argument("--savedata", default=False, action='store_true')
-parser.add_argument("--spatial", required=True, choices=['point', 'extended'])
+parser.add_argument("--spatial", required=True, choices=['point', 'disk'])
+parser.add_argument("--irf", required=True)
 
 args= parser.parse_args()
 
@@ -51,6 +54,7 @@ emin=args.emin
 emax=args.emax
 phibins=args.phibins
 spatial=args.spatial
+irf=args.irf
 
 if position == 'galcenter':
     roi_dir = SkyDir(0,0,SkyDir.GALACTIC)
@@ -66,9 +70,9 @@ model_mc.set_flux(flux, emin=emin, emax=emax)
 
 if spatial == 'point':
     ps = PointSource(name=name, model=model_mc, skydir=roi_dir)
-elif spatial == 'extended':
+elif spatial == 'disk':
     spatial_model = Disk(sigma=0.5, center=roi_dir)
-    ps = PointSource(name=name, model=model_mc, spatial_model=spatial_model)
+    ps = ExtendedSource(name=name, model=model_mc, spatial_model=spatial_model)
 
 if args.savedata:
     tempdir='savedir'
@@ -76,25 +80,15 @@ else:
     tempdir=mkdtemp(prefix='/scratch/')
 
 if time == '1day':
-    ft2 = join(tempdir,'ft2.fits')
-    ltcube = join(tempdir,'ltcube.fits')
-    mc_kwargs=dict(
-        tstart=0,
-        tstop=86400,
-        ltfrac=0.9)
+    ft2 = '$FERMI/data/monte_carlo/1day/ft2_1day.fits'
+    ltcube = '$FERMI/data/monte_carlo/1day/ltcube_phibins_%d.fits' % phibins
 elif time == '2years':
-    ft2 = join(tempdir,'ft2.fits')
-    ltcube = join(tempdir,'ltcube.fits')
-    mc_kwargs=dict(
-        tstart=0,
-        tstop=63113851.9,
-        ltfrac=0.9)
+    ft2 = '$FERMI/data/monte_carlo/2years/ft2_2years.fits'
+    ltcube = '$FERMI/data/monte_carlo/2years/ltcube_phibins_%d.fits' % phibins
 elif time == '2fgl':
-    ft2 = dict2fgl['ft2']
-    ltcube = dict2fgl['ltcube']
-    mc_kwargs=dict(gtifile=ltcube)
+    ft2 = '$FERMI/data/monte_carlo/2fgl/ft2_2fgl.fits'
+    ltcube = '$FERMI/data/monte_carlo/2fgl/ltcube_phibins_%d.fits' % phibins
 
-irf = 'P7SOURCE_V6'
 roi_size = 10*np.sqrt(2)
 ft1 = join(tempdir,'ft1.fits')
 
@@ -110,12 +104,8 @@ if not exists(ft1):
         savedir=tempdir,
         seed=i,
         mc_energy=True,
-        **mc_kwargs)
+        gtifile=ltcube)
     mc.simulate()
-
-if not exists(ltcube):
-    gtltcube(evfile=ft1, scfile=ft2, outfile=ltcube, dcostheta=0.025, binsz=1, phibins=phibins)
-    #gtltcube(evfile=ft1, scfile=ft2, outfile=ltcube, dcostheta=0.0125, binsz=0.25, phibins=phibins)
 
 ds = DataSpecification(
     ft1files = ft1,
@@ -133,6 +123,7 @@ sa = SpectralAnalysis(ds,
                       minROI=roi_size,
                       maxROI=roi_size,
                       use_weighted_livetime=True,
+                      zenithcut=100,
                      )
 
 roi = sa.roi(roi_dir=roi_dir, 
@@ -148,9 +139,11 @@ results = dict(
     emin = emin,
     emax = emax,
     istr = istr,
-    phibins = phibins)
+    phibins = phibins,
+    irf = irf,
+    spatial = spatial)
 
-mc=sourcedict(roi, name, save_TS=False)
+mc=sourcedict(roi, name, save_TS=False, errors=False)
 
 roi.print_summary()
 roi.fit(use_gradient=False)
