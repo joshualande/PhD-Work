@@ -5,8 +5,8 @@ from collections import defaultdict
 import yaml
 
 from lande.utilities.save import savedict
-
-savedir = expandvars(join('$w44simdata/','v7'))
+ 
+savedir = expandvars(join('$w44simdata/','v16'))
 
 results = defaultdict(list)
 

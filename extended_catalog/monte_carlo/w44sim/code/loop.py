@@ -45,11 +45,79 @@ from lande.utilities.simtools import SimBuilder
 
 
 
-# version 8 - unbinned likelihood
+# version 8 - unbinned likelihood (at mc spatial model)
+# b = SimBuilder(
+#         savedir='$w44simdata/v8',
+#         code='$w44simcode/simulate.py',
+#         num=100,
+#         )
+# b.build()
+
+
+# version 9 - head version of code
+#b = SimBuilder(
+#        savedir='$w44simdata/v9',
+#        code='$w44simcode/simulate.py',
+#        num=100,
+#        )
+#b.build()
+
+
+# version 10 - better ltcube, z100 cut
+#b = SimBuilder(
+#        savedir='$w44simdata/v10',
+#        code='$w44simcode/simulate.py',
+#        num=100,
+#        )
+#b.build()
+
+# version 11 - same as v10 w/ no edisp
+#b = SimBuilder(
+#        savedir='$w44simdata/v11',
+#        code='$w44simcode/simulate.py',
+#        num=100,
+#        )
+#b.build()
+
+
+# version 12 - same as v11 w/ no diffuse sources
+#b = SimBuilder(
+#        savedir='$w44simdata/v12',
+#        code='$w44simcode/simulate.py',
+#        num=100,
+#        )
+#b.build()
+
+
+
+# version 13 - no ac gut in gtlike
+#b = SimBuilder(
+#        savedir='$w44simdata/v13',
+#        code='$w44simcode/simulate.py',
+#        num=100,
+#        )
+#b.build()
+
+# version 14 - resample=no, 0.1deg binning, w/ diffuse bg
+#b = SimBuilder(
+#        savedir='$w44simdata/v14',
+#        code='$w44simcode/simulate.py',
+#        num=100,
+#        )
+#b.build()
+
+# version 15 - back to regular simulations w/ (resample=no, 0.1deg binning, 10 deg ROI, 9 phibins)
+#b = SimBuilder(
+#        savedir='$w44simdata/v15',
+#        code='$w44simcode/simulate.py',
+#        num=1000,
+#        )
+#b.build()
+
+# version 16 - back to regular simulations w/ (resample=no, 0.1deg binning, 10 deg ROI, 9 phibins)
 b = SimBuilder(
-        savedir='$w44simdata/v8',
+        savedir='$w44simdata/v16',
         code='$w44simcode/simulate.py',
-        num=100,
+        num=1000,
         )
 b.build()
-

@@ -2,7 +2,7 @@
 
     Author: Joshua Lande <joshualande@gmail.com>
 """
-from lande.fermi.likelihood.roi_gtlike import Gtlike,UnbinnedGtlike
+from lande.fermi.likelihood.roi_gtlike import Gtlike
 
 from os.path import join, exists
 from argparse import ArgumentParser
@@ -14,7 +14,7 @@ import numpy as np
 
 from skymaps import SkyDir
 
-from uw.like.pointspec import DataSpecification, SpectralAnalysis
+from uw.like.pointspec import DataSpecification
 from uw.like.roi_state import PointlikeState
 from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.Models import PowerLaw
@@ -22,7 +22,6 @@ from uw.like.SpatialModels import EllipticalRing, EllipticalDisk, Disk, Gaussian
 from uw.like.pointspec_helpers import get_default_diffuse, PointSource
 from uw.like.roi_monte_carlo import SpectralAnalysisMC
 
-from lande.fermi.data.catalogs import dict2fgl
 from lande.fermi.likelihood.tools import force_gradient
 from lande.fermi.likelihood.save import sourcedict
 from lande.utilities.save import savedict
@@ -104,9 +103,8 @@ if __name__ == '__main__':
 
     tempdir=mkdtemp(prefix='/scratch/')
 
-    ft2 = dict2fgl['ft2']
-    ltcube = dict2fgl['ltcube']
-
+    ft2 = '$FERMI/data/monte_carlo/2fgl/ft2_2fgl.fits'
+    ltcube = '$FERMI/data/monte_carlo/2fgl/ltcube_phibins_9.fits'
 
     ft1 = join(tempdir,'ft1.fits')
     binfile = join(tempdir,'binned.fits')
@@ -123,10 +121,13 @@ if __name__ == '__main__':
                             emax=emax,
                             binsperdec=8,
                             event_class=0,
-                            roi_dir = w44_2FGL.skydir,
+                            roi_dir=w44_2FGL.skydir,
                             minROI=10,
                             maxROI=10,
-                            irf='P7SOURCE_V6')
+                            irf='P7SOURCE_V6',
+                            zenithcut=100,
+                            #use_weighted_livetime=True
+                           )
 
     roi = sa.roi(
         roi_dir=w44_2FGL.skydir,
@@ -158,8 +159,13 @@ if __name__ == '__main__':
         roi.print_summary(galactic=True)
         results[type] = dict(pointlike=sourcedict(roi,name))
 
-        #gtlike = Gtlike(roi, enable_edisp=True)
-        gtlike = UnbinnedGtlike(roi)
+        gtlike = Gtlike(roi, 
+                        enable_edisp=True,
+                        binsz=0.1,
+                        resample='no',
+                        chatter=4,
+                        minbinsz=0.025,
+                       )
         like = gtlike.like
         like.fit(covar=True)
         results[type]['gtlike'] = sourcedict(like,name)
