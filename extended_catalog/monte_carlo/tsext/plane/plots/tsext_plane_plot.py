@@ -6,17 +6,25 @@ import h5py
 import numpy as np
 from scipy.stats import chi2
 
-from lande.utilities.arrays import isclose
+from lande.utilities.arrays import almost_equal
+from lande.utilities.pubplot import set_latex_defaults, get_bw, save
+from lande.utilities.save import loaddict
 
-recname = expandvars(join('$tsext_plane_data', 'v5', 'merged.hdf5'))
-r = h5py.File(recname)
+set_latex_defaults()
 
-flux_list = np.asarray(r['flux'])
-index_list = np.asarray(r['index'])
+bw = get_bw()
+
+r = loaddict('$tsext_plane_data/v12/merged.hdf5')
+print r.keys()
+
+flux_list = np.asarray(r['flux_mc'])
+index_list = np.asarray(r['index_mc'])
 ts_point_list = np.asarray(r['TS_point'])
 ts_ext_list = np.asarray(r['TS_ext'])
-
 ts_ext_list = np.where(ts_ext_list > 0, ts_ext_list, 0)
+
+l_list = np.asarray(r['glon'])
+b_list = np.asarray(r['glat'])
 
 max_ts_ext = max(ts_ext_list)
 
@@ -24,20 +32,31 @@ fig = P.figure(None, figsize=(6,6))
 axes = fig.add_subplot(111)
 
 
-for index,kwargs in [[1.5,dict(color='blue', label='index=1.5')],
-                     [2,  dict(color='purple', label='index=2')],
-                     [2.5,dict(color='green', label='index=2.5')],
-                     [3,  dict(color='black', label='index=3')]
-                    ]:
+for index,basecut,kwargs in [
+    [1.5,   almost_equal(1.5,index_list),           dict(color='blue', label='index=1.5')],
+    [2.0,   almost_equal(2.0,index_list),           dict(color='purple', label='index=2')],
+    [2.5,   almost_equal(2.5,index_list),           dict(color='green', label='index=2.5')],
+    [3.0,   almost_equal(3.0,index_list),           dict(color='black', label='index=3')],
+    [3.0,   almost_equal(3.0,index_list),           dict(color='black', label='index=3')],
+    ['sum', np.ones_like(index_list).astype(bool),  dict(color='orange', label='all indices')],
+]:
 
-    cut = isclose(index,index_list) & (ts_point_list>=25)
+    cut = basecut & (ts_point_list>=25)
 
     print 'index = %s' % index
-    print '.. num', sum(cut)
-    print '.. num bad', sum(isclose(index, index_list) & (ts_point_list < 25))
+    num_good = sum(cut)
+    num_bad = sum(basecut & (ts_point_list < 25))
+    print '.. num good', num_good
+    print '.. num bad', num_bad
+
+    if num_good < 1: continue
+
+    ts_ext = ts_ext_list[cut]
+
     ts_point = ts_point_list[cut]
     print '.. average ts_point',np.average(ts_point), np.std(ts_point)
-    ts_ext = ts_ext_list[cut]
+    ts_point_nocut = ts_point_list[basecut]
+    print '.. average ts_point (nocut)',np.average(ts_point_nocut), np.std(ts_point_nocut)
     print '.. average ts_ext',np.average(ts_ext), np.std(ts_ext)
 
 
@@ -58,4 +77,4 @@ axes.semilogy(bins, y, color='red', linewidth=1, label='$\chi^2_1/2$', zorder=0,
 
 P.legend()
 
-P.savefig('plot_tsext_plane.pdf')
+save('plot_tsext_plane')
