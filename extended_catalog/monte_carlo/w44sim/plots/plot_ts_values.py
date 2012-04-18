@@ -11,7 +11,7 @@ from lande.utilities.pubplot import set_latex_defaults,get_bw,save
 set_latex_defaults()
 bw=get_bw()
 
-merged = expandvars(join('$w44simdata/','v7', 'merged.hdf5'))
+merged = expandvars(join('$w44simdata/','v33', 'merged.hdf5'))
 results = h5py.File(merged, 'r')
 
 ts_point = np.asarray(results['TS_Point'])
@@ -23,18 +23,18 @@ ll_elliptical_disk = np.asarray(results['ll_EllipticalDisk'])
 ll_elliptical_ring = np.asarray(results['ll_EllipticalRing'])
 
 def histogram(axes, data, **kwargs):
-    #default_kwargs=dict(bins=30, histtype='step')
-    default_kwargs=dict(bins=30)
+    default_kwargs=dict(bins=30) #, histtype='step')
+    #default_kwargs=dict(bins=30)
     default_kwargs.update(kwargs)
 
     axes.set_autoscaley_on(True)
     axes.set_autoscaley_on(True)
 
     bins = np.linspace(data.min(), data.max(), 30)
-    data = np.histogram(data, bins=bins)
+    dhist = np.histogram(data, bins=bins)
 
-    axes.plot(bins, data)
-    #axes.hist(data, **default_kwargs)
+    #axes.plot(bins, dhist)
+    axes.hist(data, **default_kwargs)
 
     axes.xaxis.set_major_locator(MaxNLocator(4))
 

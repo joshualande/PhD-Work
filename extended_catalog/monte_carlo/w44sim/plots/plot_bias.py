@@ -12,7 +12,8 @@ from lande.utilities.pubplot import set_latex_defaults,get_bw,save
 set_latex_defaults()
 bw=get_bw()
 
-savedir = expandvars(join('$w44simdata/','v7', 'merged.hdf5'))
+#savedir = expandvars(join('$w44simdata/','v7', 'merged.hdf5'))
+savedir = expandvars(join('$w44simdata/','v33', 'merged.hdf5'))
 results = h5py.File(savedir, 'r')
 
 def plot(axes, quantity, hist_kwargs):
@@ -39,7 +40,8 @@ def plot(axes, quantity, hist_kwargs):
         axes.axvline(r, label='mc')
 
     # TEMPORARY
-    axes.set_ylim(ymax=axes.get_ylim()[1] + 300)
+    axes.set_ylim(ymax=axes.get_ylim()[1] + 100)
+    #axes.set_ylim(ymax=axes.get_ylim()[1] + 300)
     # TEMPORARY
 
     axes.xaxis.set_major_locator(MaxNLocator(4))
@@ -50,17 +52,22 @@ fig=P.figure(None, figsize=(7,3))
 
 hist_kwargs=dict(histtype='step')
 
-axes=fig.add_subplot(131)
+
+axes=fig.add_subplot(141)
+plot(axes, 'flux', hist_kwargs=hist_kwargs)
+axes.set_xlabel('Flux')
+
+axes=fig.add_subplot(142)
+plot(axes, 'index', hist_kwargs=hist_kwargs)
+axes.set_xlabel('Spectral Index')
+
+axes=fig.add_subplot(143)
 plot(axes,'r68',hist_kwargs=hist_kwargs)
 axes.set_xlabel('r68 (degrees)')
 
-axes=fig.add_subplot(132)
-plot(axes, 'flux', hist_kwargs=hist_kwargs)
-axes.set_xlabel('flux')
-
-axes=fig.add_subplot(133)
-plot(axes, 'index', hist_kwargs=hist_kwargs)
-axes.set_xlabel('Spectral Index')
+axes=fig.add_subplot(144)
+plot(axes,'angle',hist_kwargs=hist_kwargs)
+axes.set_xlabel('angle (degrees)')
 
 fig.subplots_adjust(bottom=0.2)
 
