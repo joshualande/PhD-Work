@@ -77,6 +77,7 @@ if __name__ == '__main__':
 
     parser = ArgumentParser()
     parser.add_argument("i", type=int)
+    parser.add_argument("--edisp", default=False, action='store_true')
     args=parser.parse_args()
     i=args.i
     istr='%05d' % i
@@ -115,6 +116,9 @@ if __name__ == '__main__':
         binfile = binfile,
         ltcube = ltcube)
 
+    size = 40
+    roi_size = (size/2.0)*np.sqrt(2)
+
     sa = SpectralAnalysisMC(ds,
                             seed=i,
                             emin=emin,
@@ -122,11 +126,12 @@ if __name__ == '__main__':
                             binsperdec=8,
                             event_class=0,
                             roi_dir=w44_2FGL.skydir,
-                            minROI=10,
-                            maxROI=10,
+                            minROI=roi_size,
+                            maxROI=roi_size,
                             irf='P7SOURCE_V6',
                             zenithcut=100,
-                            #use_weighted_livetime=True
+                            use_weighted_livetime=True,
+                            mc_energy=(args.edisp==False),
                            )
 
     roi = sa.roi(
@@ -160,11 +165,11 @@ if __name__ == '__main__':
         results[type] = dict(pointlike=sourcedict(roi,name))
 
         gtlike = Gtlike(roi, 
-                        enable_edisp=True,
-                        binsz=0.1,
-                        resample='no',
+                        enable_edisp=(args.edisp==True),
+                        binsz=0.05,
                         chatter=4,
-                        minbinsz=0.025,
+                        minbinsz=0.05,
+                        rfactor=2,
                        )
         like = gtlike.like
         like.fit(covar=True)

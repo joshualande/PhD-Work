@@ -5,8 +5,8 @@ from collections import defaultdict
 import yaml
 
 from lande.utilities.save import savedict
- 
-savedir = expandvars(join('$w44simdata/','v16'))
+
+savedir = expandvars(join('$w44simdata/','v33'))
 
 results = defaultdict(list)
 
@@ -32,13 +32,17 @@ for i,r in enumerate(all_results):
         results['flux_%s' % h].append(x[h]['gtlike']['flux']['flux'])
         results['index_%s' % h].append(x[h]['gtlike']['model']['Index'])
 
-        if h is not 'Point': results['r68_%s' % h].append(x[h]['pointlike']['spatial_model']['r68'])
+        if h is not 'Point': 
+            results['r68_%s' % h].append(x[h]['pointlike']['spatial_model']['r68'])
+        if 'Elliptical' in h:
+            results['angle_%s' % h].append(x[h]['pointlike']['spatial_model']['Pos_Angle'])
 
     results['ll_mc'].append(x['mc']['logLikelihood'])
     results['TS_mc'].append(x['mc']['TS'])
     results['flux_mc'].append(x['mc']['flux']['flux'])
     results['index_mc'].append(-x['mc']['model']['Index'])
     results['r68_mc'].append(x['mc']['spatial_model']['r68'])
+    results['angle_mc'].append(x['mc']['spatial_model']['Pos_Angle'])
 
 savename = join(savedir,'merged.hdf5')
 savedict(results, savename)
