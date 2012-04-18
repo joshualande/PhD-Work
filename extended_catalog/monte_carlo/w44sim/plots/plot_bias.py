@@ -2,6 +2,7 @@
 from os.path import join, expandvars
 import matplotlib.font_manager
 from matplotlib.ticker import MaxNLocator
+from matplotlib.lines import Line2D
 
 import numpy as np
 import h5py
@@ -16,59 +17,82 @@ bw=get_bw()
 savedir = expandvars(join('$w44simdata/','v33', 'merged.hdf5'))
 results = h5py.File(savedir, 'r')
 
-def plot(axes, quantity, hist_kwargs):
+print 'num',len(results['ll_mc'])
 
-    for type in ['Point', 'Disk', 'Gaussian', 'EllipticalDisk', 'EllipticalRing']:
+all_types = ['EllipticalRing', 'EllipticalDisk', 'Disk', 'Gaussian', 'Point']
+all_colors = ['red' if not bw else '0.0',
+              'blue' if not bw else '0.2',
+              'purple' if not bw else '0.4',
+              'orange' if not bw else '0.6',
+              'green' if not bw else '0.8']
 
+def plot(axes, quantity, scale=1):
+
+    #min_val = min([min(np.asarray(results['%s_%s' % (quantity,type)])/scale) for type,kwargs in all_types if '%s_%s' % (quantity,type) in results])
+    #max_val = max([max(np.asarray(results['%s_%s' % (quantity,type)])/scale) for type,kwargs in all_types if '%s_%s' % (quantity,type) in results])
+
+    #bins = np.linspace(min_val, max_val, 50)
+    bins=50
+
+    d,l,c=[],[],[]
+
+    for type,color in zip(all_types,all_colors):
         name = '%s_%s' % (quantity,type)
         if name in results:
-            array = np.asarray(results[name])
+            d.append(np.asarray(results[name])/scale)
+            l.append(type)
+            c.append(color)
 
-            print '%s, %s, average=%s' % (quantity, type, np.average(array))
+            print '%s, %s, average=%s, len=%s' % (quantity, type, np.average(results[name]),len(results[name]))
 
-            # TEMPORARY
-            hist_kwargs['bins']=30
-            # TEMPORARY
-
-            axes.hist(array, label=type, **hist_kwargs)
+    axes.hist(d, label=l,
+              bins=bins, histtype='step',
+              color=c)
 
     mc = '%s_mc' % quantity
     if mc in results:
-        r=results[mc]
-        r=r[0]
+        r=results[mc][0]/scale
         print '%s, mc=%s' % (quantity, r)
-        axes.axvline(r, label='mc')
+        axes.axvline(r, label='mc', dashes=[5,2], color='k')
 
-    # TEMPORARY
-    axes.set_ylim(ymax=axes.get_ylim()[1] + 100)
-    #axes.set_ylim(ymax=axes.get_ylim()[1] + 300)
-    # TEMPORARY
+    axes.xaxis.set_major_locator(MaxNLocator(6))
+    axes.yaxis.set_major_locator(MaxNLocator(6))
 
-    axes.xaxis.set_major_locator(MaxNLocator(4))
-    prop = matplotlib.font_manager.FontProperties(size=10)
-    axes.legend(prop=prop)
+    axes.set_ylabel('Number')
+    axes.set_ylim(ymin=0)
 
-fig=P.figure(None, figsize=(7,3))
-
-hist_kwargs=dict(histtype='step')
+fig=P.figure(None, figsize=(6,6))
 
 
-axes=fig.add_subplot(141)
-plot(axes, 'flux', hist_kwargs=hist_kwargs)
-axes.set_xlabel('Flux')
+axes=fig.add_subplot(321)
+plot(axes, 'flux', scale=1e-8)
+axes.set_xlabel(r'Flux ($10^{-8}$ ph$\;$cm$^{-1}$s$^{-1}$)')
 
-axes=fig.add_subplot(142)
-plot(axes, 'index', hist_kwargs=hist_kwargs)
+axes=fig.add_subplot(322)
+plot(axes, 'index')
 axes.set_xlabel('Spectral Index')
 
-axes=fig.add_subplot(143)
-plot(axes,'r68',hist_kwargs=hist_kwargs)
-axes.set_xlabel('r68 (degrees)')
+axes=fig.add_subplot(323)
+plot(axes,'r68')
+axes.set_xlabel('r68 (deg)')
 
-axes=fig.add_subplot(144)
-plot(axes,'angle',hist_kwargs=hist_kwargs)
-axes.set_xlabel('angle (degrees)')
+axes=fig.add_subplot(324)
+plot(axes,'eccentricity')
+axes.set_xlabel('Eccentricity')
 
-fig.subplots_adjust(bottom=0.2)
+
+axes=fig.add_subplot(325)
+plot(axes,'angle')
+axes.set_xlabel('Ellipse Angle (deg)')
+
+
+axes=fig.add_subplot(326)
+prop = matplotlib.font_manager.FontProperties(size=12)
+plots=[Line2D([0],[0],color=i) for i in all_colors]
+axes.legend(plots,all_types,prop=prop, loc=2, borderaxespad=0.)
+axes.axis('off')
+
+
+fig.tight_layout()
 
 save('bias_w44sim')

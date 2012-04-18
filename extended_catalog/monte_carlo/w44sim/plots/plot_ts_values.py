@@ -22,45 +22,54 @@ ll_disk = np.asarray(results['ll_Disk'])
 ll_elliptical_disk = np.asarray(results['ll_EllipticalDisk'])
 ll_elliptical_ring = np.asarray(results['ll_EllipticalRing'])
 
-def histogram(axes, data, **kwargs):
-    default_kwargs=dict(bins=30) #, histtype='step')
-    #default_kwargs=dict(bins=30)
-    default_kwargs.update(kwargs)
-
-    axes.set_autoscaley_on(True)
-    axes.set_autoscaley_on(True)
-
-    bins = np.linspace(data.min(), data.max(), 30)
-    dhist = np.histogram(data, bins=bins)
-
-    #axes.plot(bins, dhist)
-    axes.hist(data, **default_kwargs)
-
-    axes.xaxis.set_major_locator(MaxNLocator(4))
-
-
 fig=P.figure(None, figsize=(6,6))
+
+def histogram(axes, data,**kwargs):
+
+    if len(data)==2:
+        print data
+        print len(data[0]),min(data[0]),max(data[0])
+        print len(data[1]),min(data[1]),max(data[1])
+
+    bins = 30
+    axes.hist(data, 
+              bins=bins,
+              histtype='step',
+              **kwargs)
+
+    axes.xaxis.set_major_locator(MaxNLocator(6))
+    axes.yaxis.set_major_locator(MaxNLocator(6))
 
 
 axes=fig.add_subplot(221)
-histogram(axes, ts_point)
-axes.set_xlabel(r'$\textrm{TS}_\textrm{point}$')
+histogram(axes, ts_point, color='black')
+axes.set_ylim(0,100)
+axes.set_xlabel(r'$\mathrm{TS}_\mathrm{point}$')
 
 axes=fig.add_subplot(222)
-histogram(axes, 2*(ll_disk-ll_point), label='Disk')
-histogram(axes, 2*(ll_gaussian-ll_point), label='Gaussian')
-axes.set_xlabel(r'$\textrm{TS}_\textrm{ext}$')
+histogram(axes, 
+          data=[2*(ll_disk-ll_point),
+                2*(ll_gaussian-ll_point)],
+          label=['Disk','Gaussian'],
+          color=['black','red'])
+axes.set_xlabel(r'$\mathrm{TS}_\mathrm{ext}$')
 prop = matplotlib.font_manager.FontProperties(size=10)
+axes.set_ylim(0,100)
 axes.legend(prop=prop)
 
 axes=fig.add_subplot(223)
-histogram(axes, 2*(ll_elliptical_disk-ll_disk))
-axes.set_xlabel(r'$\textrm{TS}_\textrm{ellip. disk}-\textrm{TS}_\textrm{disk}$')
+histogram(axes, 
+          2*(ll_elliptical_disk-ll_disk), 
+          color='black')
+axes.set_xlabel(r'$\mathrm{TS}_\mathrm{ellip.\ disk}-\mathrm{TS}_\mathrm{disk}$')
 
 axes=fig.add_subplot(224)
 ts_inc = 2*(ll_elliptical_ring-ll_elliptical_disk)
 ts_inc = np.where(ts_inc > 0, ts_inc, 0)
-histogram(axes, ts_inc)
-axes.set_xlabel(r'$\textrm{TS}_\textrm{ellip. ring}-\textrm{TS}_\textrm{ellip. disk}$')
+histogram(axes, ts_inc,
+         color='black')
+axes.set_xlabel(r'$\mathrm{TS}_\mathrm{ellip.\ ring}-\mathrm{TS}_\mathrm{ellip.\ disk}$')
+
+fig.tight_layout()
 
 save('ts_comparision_w44sim')
