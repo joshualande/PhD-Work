@@ -38,7 +38,7 @@ for index,basecut,kwargs in [
     [2.5,   almost_equal(2.5,index_list),           dict(color='green', label='index=2.5')],
     [3.0,   almost_equal(3.0,index_list),           dict(color='black', label='index=3')],
     [3.0,   almost_equal(3.0,index_list),           dict(color='black', label='index=3')],
-    ['sum', np.ones_like(index_list).astype(bool),  dict(color='orange', label='all indices')],
+#    ['sum', np.ones_like(index_list).astype(bool),  dict(color='orange', label='all indices')],
 ]:
 
     cut = basecut & (ts_point_list>=25)
