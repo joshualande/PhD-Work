@@ -18,8 +18,36 @@ from os import makedirs
 #savedir = expandvars('$tsext_plane_data/v4')
 
 # version 5 - better fluxes
-num=10000
-savedir = expandvars('$tsext_plane_data/v5')
+#num=10000
+#savedir = expandvars('$tsext_plane_data/v5')
+
+# version 6 - change spatial range to be smaller.
+#num=50
+#savedir = expandvars('$tsext_plane_data/v6')
+
+# version 7 - better flux calcuation 
+#num=500
+#savedir = expandvars('$tsext_plane_data/v7')
+
+# version 8 - weighted livetime should be more correct
+#num=1000
+#savedir = expandvars('$tsext_plane_data/v8')
+
+# version 9 - change flux
+#num=10000
+#savedir = expandvars('$tsext_plane_data/v9')
+
+# version 10 - change flux
+#num=1000
+#savedir = expandvars('$tsext_plane_data/v10')
+
+# version 11 - change flux
+#num=1000
+#savedir = expandvars('$tsext_plane_data/v11')
+
+# version 12 - change flux
+num=110000
+savedir = expandvars('$tsext_plane_data/v12')
 
 for i in range(num):
     istr='%05d' % i
