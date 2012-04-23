@@ -66,7 +66,7 @@
 \newcommand{\gtobssim}{\ensuremath{\mathtt{gtobssim}}\xspace}
 \newcommand{\minuit}{\ensuremath{\mathtt{minuit}}\xspace}
 
-\newcommand{\degree}{^\circ\xspace}
+\newcommand{\degree}{\ensuremath{^\circ}\xspace}
 
 %\newcommand{\newtext}[1]{{\textbf #1}}
 \newcommand{\newtext}[1]{{\bfseries \color{red}#1}}
@@ -472,7 +472,7 @@ For sources that are comparable in size to the PSF,
 the differences in the PDF for
 different spatial models are lost in the noise and the LAT is not sensitive
 to the detailed spatial structure of these sources.  
-\newtext{In section XXX, we perform a dedicated monte carlo simulation
+\newtext{In section \ref{bias_wrong_spatial_model}, we perform a dedicated Monte Carlo simulation
 to asses possible bias due to incorrectly modeling the spatial structure
 of an extended source.}
 Therefore, in our
@@ -552,30 +552,55 @@ Considering the distribution in Figures~\ref{ts_ext_mc_1000} and
 (corresponding to a formal $4\sigma$ significance) is reasonable.
 
 \newtext{
-These previous simulations were preformed assuming an isotropic backgorund.
-We performed a second test only 
+These previous simulations spaned the range of detectable fluxes 
+over two different energy ranges, but only assuming an isotropic backgorund.
+We performed a second simulation to assess any effects that could
+be introduces by performing this test in the presence of a highly
+structured background.
+Our simulation setup was the same as above except that the sources
+were simulated on top of and analytized assuming the presence of
+the standard Galactic and isotropic diffuse background model used
+in 2FGL.
 
-The flux of the source was scaled as
+In our simulation, we selected our sources to have a random position on the sky
+such that the absolute value of the galactic latitude of the source is
+less than 5\degree, probing the most structured areas of the galaxy.
+
+To limit the number of tests, we selected only one flux
+level for each of the four spectral indices and we perform
+this test only in the 1 \gev to 100 \gev energy range. 
+The source flux was selected so that $\ts\sim50$. This is around 
+the significane level for which on might
+exepcted to be able to spatially resolve the source. 
+We do not test brigher sources since the structured background
+should produce the most significant effect for very bright sources.
+
+Because the Galactic diffuse emission is highly structure, the point-source
+sensitivity can vary signficantly across the galactic plane.
+To account for this, we scaled the flux (for a given spectral index)
+by the overal background level according to this formula:
 \begin{equation}
-  F(\vec{x}) = F(GC) \times \left(\frac{B(\vec{x})}{B(GC)
+  \label{scale_flux_by_background}
+  F(\vec{x}) = F(\text{GC}) \times \left(
+  \frac{B(\text{GC})}{B(\vec{x})}\right)^{1/2}.
 \end{equation}
+Here, $\vec{x}$ is the position of the source, $F$ is the integral
+flux of the simulated source from 100 \mev to 100 \gev, $F(\text{GC})$
+is the same quantity if the source were at the galactic center, $B$
+is the integral of the Galactic diffuse and isotropic diffuse emission
+model from 1 \gev to 100 \gev and $B(\text{GC})$ is the same quanitty
+if the source were at the galactic center.  Table~\ref{ts_ext_num_sims}
+tabulates $F(\text{GC})$ and the average \ts for the four spectral models.
+For each spectral index, we performed $\sim90,000$ simulations.
 
-.
-The benifitted from probing a large range of fluxes and spectral indices
-and by testing two energy ranges.
-But were unable to assess any possible systematics that may be due to
-structured diffuse emission. 
+Figure~\ref{tsext_plane_plot} shows the cumulative density
+of \tsext compared to the $\chi^2_1/2$ distribution of
+Equation~\ref{ts_ext_distribution}. For small values of \tsext,
+there is reasonable agreement between the Monte Carlo simulation and
+theory.  At the highest obtained values of \tsext, there is possibly
+some discrepancy.  But in this range there are only limited statistics
+because the curve is determined by only a few points.
 
-Assessing possible difficulties due to having
-an incorrect
-
-We performed an additional Monte Carlo test with sources
-
-Figure~\ref{tsext_plane_plot}
-
-We note that this study does not asses issues due to incorrectly modeling the 
-galactic diffuse background which are much more difficult to assess. But
-this test does show the power of our tools when the model is good (or something).
 
 }
 
@@ -593,7 +618,7 @@ that has been reported as having a non-radially symmetric photon-distribution \c
 
 W44 was simulated with a power-law spectral model. The flux and spectral index of this source
 were taken from our re-analysis in this paper which is described in Section~\ref{validate_known}
-and summarized in Table~\label{known_extended_sources}. In particualr W44 was simulated
+and summarized in Table~\ref{known_extended_sources}. In particualr W44 was simulated
 with a flux of $7.12\times10^{-8}$ \phflux in the energy range from 1 \gev to 100 \gev with a spectral
 index of 2.66.
 
@@ -606,8 +631,9 @@ the ellipse has an angle of $147\degree$ measured east of celestial north.
 
 We used a simulation setup similar to that described in
 Section~\ref{monte_carlo_validation}, but the souce was simulated on
-top of the standard galactic and isotropic diffuse background model used
-in 2FGL.  This simulation was in the 1 \gev to 100 \gev energy range and
+top of and analyzed assuming the presence of the standard galactic and
+isotropic diffuse background model used in 2FGL.  This simulation was
+in the 1 \gev to 100 \gev energy range and
 the sources were simulated over the two-year time range included in the
 2FGL catalog. We performed 985 identical simulations with different seeds to
 see the statistical spread in the fit values.
@@ -1958,10 +1984,11 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
 
 \clearpage
 \begin{deluxetable}{rrrrrr}
-\tabletypesize{\normalsize}
+\tabletypesize{\footnotesize}
 \tablecaption{Monte Carlo Spectral Parameters
 \label{ts_ext_num_sims}
 }
+\tablecolumns{6}
 \tablewidth{0pt}
 \tablehead{
 \colhead{Spectral Index}&
@@ -1979,6 +2006,8 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
 }
 
 \startdata
+\multicolumn{6}{c}{Isotropic Background} \\
+\hline
       1.5 &  $3\times 10^{-7}$ &           18938 &  22233    &     18938   &    8084     \\
           &          $10^{-7}$ &           19079 &   5827    &     19079   &    2258     \\
           &  $3\times 10^{-8}$ &           19303 &   1276    &     19303   &     541     \\
@@ -2002,15 +2031,27 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
           &          $10^{-6}$ &           18449 &    966    &   \nodata   & \nodata    \\
           &  $3\times 10^{-7}$ &           18517 &    174    &   \nodata   & \nodata    \\
           &          $10^{-7}$ &           13714 &     41    &   \nodata   & \nodata    \\
+\cutinhead{Galactic and Isotropic Diffuse Background\tablenotemark{(b)}}
+      1.5 &  $3\times 10^{-7}$ &           90741 &     63    &   \nodata   & \nodata     \\
+        2 &          $10^{-6}$ &           92161 &     60    &   \nodata   & \nodata     \\
+      2.5 &  $3\times 10^{-6}$ &           86226 &     47    &   \nodata   & \nodata    \\
+        3 &          $10^{-5}$ &           94412 &     61    &   \nodata   & \nodata    \\
 \enddata
 
 \tablenotetext{(a)}{Integral 100 \mev to 100 \gev flux.}
+\tablenotetext{(b)}{
+\newtext{For the Galactic simulations, the quoted fluxes are
+if it was placed in the galactic center and is scaled by Equation~\ref{scale_flux_by_background}.}
+}
 
 \tablecomments{
     A list of the spectral models of the simulated point-like sources
     which were tested for extension.  For each model, the number of
     statistically independent simulations and the average value of \ts is
     also tabulated.  
+    \newtext{The top rows are the sources simulated on top of an isotropic background and
+    the bottom rows are the simulations on top of the Galactic and isotropic
+    background.}
 }
 \end{deluxetable}
 
