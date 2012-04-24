@@ -53,6 +53,7 @@
 \newcommand{\tsextgtlike}{\ensuremath{\tsext_{,\gtlike}}\xspace}
 
 \newcommand{\ts}{\text{TS}\xspace}
+\newcommand{\aic}{\text{AIC}\xspace}
 \newcommand{\glon}{\text{GLON}\xspace}
 \newcommand{\glat}{\text{GLAT}\xspace}
 \newcommand{\altdiff}{\text{alt,diff}\xspace}
@@ -68,8 +69,12 @@
 
 \newcommand{\degree}{\ensuremath{^\circ}\xspace}
 
-%\newcommand{\newtext}[1]{{\textbf #1}}
+% New text is included inside of the \newtext command
+% and is bold and red
 \newcommand{\newtext}[1]{{\bfseries \color{red}#1}}
+% To unformat the new text, comment out the above line
+% and include hte line below
+% \newcommand{\newtext}[1]{#1}
 
 \usepackage{color}
 
@@ -157,7 +162,7 @@ at \gev energies are positionally coincident with sources that exhibit
 large enough extension at other wavelengths to be spatially
 resolvable by the LAT at \gev energies.
 In particular, there are 59 \gev sources in the second Fermi Source Catalog (2FGL)
-that might be associated with extended SNRs \citep[2FGL][]{second_cat}.
+that might be associated with extended SNRs \citep[2FGL,][]{second_cat}.
 Previous analyses of extended LAT sources were performed as dedicated
 studies of individual sources so we expect that a systematic scan of
 all LAT detected sources could uncover additional spatially extended
@@ -193,7 +198,7 @@ Additional information about the performance of the LAT can be found in
 \cite{atwood_LAT_mission}.
 
 Using 2 years of all-sky survey data, the LAT Collaboration published
-2FGL \citep[2FGL][]{second_cat}.
+2FGL \citep[2FGL,][]{second_cat}.
 The possible counterparts of many of these sources can be spatially resolved
 when observed at other frequencies but detecting the spatial extension
 of these sources at \gev energies is difficult because the size of the
@@ -462,11 +467,16 @@ LAT PSF, their PDFs are similar for a source that has a 0\fdg5 radius
 typical of LAT detected extended sources.  To allow a valid comparison
 between the Gaussian and the uniform disk models,
 we define the source size as the radius containing 68\% of the
-intensity ($\rsixeight$).  $\rsixeight_\text{,Gaussian}=1.51\sigma$
-and $\rsixeight_\text{,disk}=0.82\sigma$ where $\sigma$ is defined
+intensity ($\rsixeight$). \newtext{
+By direct integration, we find
+\begin{align}
+\rsixeight_\text{,Gaussian}=&1.51\sigma, \\
+\rsixeight_\text{,disk}=&0.82\sigma, 
+\end{align}
+where $\sigma$ is defined
 in Equation~\ref{gauss_pdf} and Equation~\ref{disk_pdf} respectively.
-For this example, $\rsixeight=0\fdg5$ so $\sigma_\text{disk}=0.61\degree$
-and $\sigma_\text{Gaussian}=0.33\degree$.
+For the example above, $\rsixeight=0\fdg5$ so $\sigma_\text{disk}=0.61\degree$
+and $\sigma_\text{Gaussian}=0.33\degree$.}
 
 For sources that are comparable in size to the PSF,
 the differences in the PDF for
@@ -491,8 +501,13 @@ by fitting the extensions of point-like sources.  \cite{mattox_egret}
 discuss that the TS distribution for a likelihood ratio test
 on the existence of a source at a given position is
 \begin{equation}\label{ts_ext_distribution}
-  P(\ts)=\onehalf(\chi^2_1(\ts)+\delta(\ts)).
+  P(\ts)=\onehalf(\chi^2_1(\ts)+\delta(\ts)),
 \end{equation}
+\newtext{
+where $P(\ts)$ is the probability of getting a particular value of TS,
+$\chi^2_1$ is the chi-squared distribution with one degree of freedom, and
+$\delta$ is the Dirac delta function.
+}
 The particular form of Equation \ref{ts_ext_distribution} is due to the
 null hypothesis (source flux $\Phi=0$) residing on the edge of parameter
 space and the model hypothesis adding a single degree of freedom.
@@ -816,8 +831,32 @@ test, $\tsext>\tsinc$ indicates that the likelihood for the extended
 source hypothesis is higher than for two point-like sources and we only
 consider a source to be extended if $\tsext>\tsinc$.
 
-\newtext{In this paragraph, we describe how our test is really the same as the AIC test
-because \dots}
+\newtext{
+It might be desirable to formulate a Bayesian test comparing an extended
+source to two point-like sources.
+We considered the Bayesian information criterion \citep[BIC,][]{BIC_statistical_test}. 
+We found it difficult
+to apply to LAT data because it required a term including the number of data points
+and for LAT events, there are many photons included in the ROI that contribute only
+ marginally when considering different models.
+We also considered the Akaike information criterion \citep[\aic,][]{AIC_statistical_test}.
+The \aic is defines as
+\begin{equation}
+  \aic=2k-2\log\likelihood
+\end{equation}
+where $k$ is the number of parameters in the model. 
+The first term in the \aic penaize models with additonal parameters. 
+In this formulation, the best model is consided to be the one that minimzies the \aic.
+Because the two point-like source hypotheses has
+three more parameters compared to the one extended source hypothesis (two spatial
+parameters and two spectral parameters compared to one extnesion parameter),
+we note that the $\tsext>\tsinc$ is mathematically equivalent to the test that
+\begin{equation}
+  \aic_\text{ext} < \aic_\text{2pts} - 6,
+\end{equation}
+which gives our original test an equivalent Bayesian formulation by requring 
+$\aic_\text{ext}$ to be sufficently smaller than $\aic_\text{2pts}$.
+}
 
 We assessed the power of the $\tsext>\tsinc$ test with a Monte Carlo
 study.  We simulated one spatially extended source and fit it as both
@@ -1018,10 +1057,11 @@ publications provide better models of these sources.
 
 % 6 SNRs 
 
+\newtext{
 Six extended SNRs were
-included in the 2FGL catalog: W51C, IC~443, W28, W30, W44, the Cygnus Loop,
+included in the 2FGL catalog: W51C, IC~443, W28, W44, the Cygnus Loop,
 and W30
-\citep{w51c,ic443,w28,w44,cygnus_loop_lat,w30_lat}.
+\citep{w51c,ic443,w28,w44,cygnus_loop_lat,w30_lat}.}
 Using photons
 with energies between
 1 \gev and 100 \gev, our analysis significantly detected
@@ -1298,6 +1338,9 @@ multiwavelength information about possibly extended source counterparts
 to help guide our choice. For each extended source presented in 
 Section~\ref{new_ext_srcs_section}, we describe any modifications from 2FGL
 of the background model that were performed.
+\newtext{In Table~\ref{fake_2fgl_sources}, we will summarize the sources that were 
+included in 2FGL to account for residuals induced by not modeling the extension of
+a nearby source.}
 
 The best fit positions of nearby point-like sources can be influenced by
 the extended source and vice versa.  Similarly,
@@ -1385,6 +1428,9 @@ There is good agreement between \tsext and the fit size using the standard
 analysis, the alternative approach to modeling the diffuse emission, and the alternative PSF.
 This suggests that the sources are robust against mis-modeled features in the diffuse
 emission model and uncertainties in the PSF.
+\newtext{Finally, in Table~\ref{fake_2fgl_sources} we 
+summarize the sources included in 2FGL to account for residuals induced
+by not modeling the extension of a nearby source.}
 
 \subsection{2FGL\,J0823.0$-$4246}
 \label{section_2FGL_J0823.0-4246}
@@ -1560,8 +1606,8 @@ To test for the possibility that
 2FGL\,J1615.2$-$5138 is not spatially extended but instead composed
 of two point-like sources (one of them represented in the 2FGL catalog by
 2FGL\,J1614.9$-$5212), we refit 2FGL\,J1615.2$-$5138 as two point-like
-sources.  Because \tsinc is less than \tsext, we conclude that
-this emission does not originate from two nearby point-like sources.
+sources.  \newtext{Because $\tsinc=35.1$ is less than $\tsext=46.5$, we conclude that
+this emission does not originate from two nearby point-like sources.}
 
 2FGL\,J1615.2$-$5138 is spatially coincident with 
 the extended \tev source HESS\,J1614$-$518.
@@ -1636,13 +1682,15 @@ region of the sky.  It is spatially coincident with the \tev source
 HESS\,J1632$-$478.  Figure~\ref{1FGL_J1632.9-4802c}a shows a counts
 map of this source and overlays \tev contours of HESS\,J1632$-$478
 \citep{hess_plane_survey}.  There are six nearby point-like 2FGL
-sources that appear to  represent physically distinct sources
+sources that appear to represent physically distinct sources
 and were included in our background model: 2FGL\,J1630.2$-$4752, 2FGL\,J1631.7$-$4720c, 2FGL\,J1632.4$-$4820c, 2FGL\,J1635.4$-$4717c,
 2FGL\,J1636.3$-$4740c, and
 2FGL\,J1638.0$-$4703c. On the
 other hand, one point-like 2FGL source 2FGL\,J1634.4$-$4743c  correlates
 with the extended \tev source and at \gev energies does
 not appear physically separate. 
+\newtext{It is very close to the position of 2FGL\,J1632.4$-$4753c
+and does not show in the observed photon distribution separated emission.}
 We therefore removed this source from our model of the
 background.  Figure~\ref{1FGL_J1632.9-4802c}b shows the same region with
 the background sources subtracted.  With this model, 2FGL\,J1632.4$-$4753c
@@ -1727,12 +1775,11 @@ we tested for
 source confusion by fitting 
 2FGL\,J1837.3$-$0700c
 instead as two point-like sources.
-Because \tsinc is less than \tsext, we conclude that this emission
+\newtext{Because $\tsinc=10.8$ is less than $\tsext=18.5$, we conclude that this emission
 does not originate from two nearby point-like sources.
 
 With this model, 2FGL\,J1837.3$-$0700c was found to have an
-extension $\sigma=0\fdg33\pm0\fdg07_\stat\pm0\fdg05_\sys$ with 
-$\tsext=18.5$. 
+extension $\sigma=0\fdg33\pm0\fdg07_\stat\pm0\fdg05_\sys$.}
 While fitting the extension of 2FGL\,J1837.3$-$0700c,
 we iteratively relocalized the two closest
 background sources along with the extension of 2FGL\,J1837.3$-$0700c but
@@ -2639,6 +2686,43 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
 }
 \end{deluxetable}
 
+\clearpage
+\begin{deluxetable}{lr}
+\tablecolumns{2}
+\tablewidth{0pt}
+\tablecaption{Nearby Residual Sources
+\label{fake_2fgl_sources}
+}
+\tablehead{
+\colhead{Extended Source}&
+\colhead{Nearby Residual Sources}
+}
+\startdata
+\hline
+2FGL\,J0823.0$-$4246    & 2FGL\,J0823.4$-$4305, 2FGL\,J0821.0$-$4254 \\
+2FGL\,J1627.0$-$2425c   & \nodata \\
+2FGL\,J0851.7$-$4635    & 2FGL\,J0853.5$-$4711, 2FGL\,J0848.5$-$4535, 2FGL\,J0855.4$-$4625 \\
+2FGL\,J1615.0$-$5051    & \nodata \\
+2FGL\,J1615.2$-$5138    & 2FGL\,J1614.9$-$5212  \\
+2FGL\,J1632.4$-$4753c   & 2FGL\,J1634.4$-$4743c \\
+2FGL\,J1712.4$-$3941    & \nodata \\
+2FGL\,J1837.3$-$0700c   & 2FGL\,J1835.5$-$0649 \\
+2FGL\,J2021.5+4026      & 2FGL\,J2019.1+4040 \\
+\enddata
+
+
+\tablecomments{
+\newtext{
+For each of the new extended sources, we list any catalog
+source that was included in 2FGL to account for residuals induced
+by not modeling the extension of a nearby source.
+These sources were removed from our model of the sky when studying
+the extended source.
+}
+}
+\end{deluxetable}
+
+
 
 \begin{figure}
     \ifcolorfigure
@@ -2660,6 +2744,8 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
   star-shaped markers (colored
   green) represent 2FGL sources that were
   removed from the background model.
+  \newtext{From left to right, these sources are, from left to right,
+  2FGL\,J0823.4$-$4305 and 2FGL\,J0821.0$-$4254.}
   The lower right inset is the model predicted emission from a point-like
   source with the same spectrum as 2FGL\,J0823.4$-$4305 smoothed by the
   same kernel.  This source is spatially coincident with the Puppis A
@@ -2682,7 +2768,9 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
     (2FGL\,J2021.5+4026).
     The lines (colored red in the online version)
     are the best fit power-law spectral models of
-    these sources.
+    these sources. \newtext{Puppis A has a spectral index of
+    $2.21\pm0.09$ and $\gamma$-Cygni has a spectral
+    index of $2.42\pm0.19$.}
     The spectral errors are statistical only.
     The upper limit is at the 95\% confidence level.
     }
@@ -2734,9 +2822,11 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
   represents the 2FGL position of this source.  The plus-shaped marker
   and the circle (colored red) are the best fit position and extension of
   this source assuming a radially-symmetric uniform disk model.
-  The three black crosses represent background 2FGL sources
-  and the three star-shaped markers (colored green) represent other 2FGL sources
-  that were removed from the background model 
+  \newtext{The three black crosses represent background 2FGL sources.
+  The three star-shaped markers (colored green) represent other 2FGL sources
+  that were removed from the background model.
+  They are (from left to right) 2FGL\,J0853.5$-$4711, 2FGL\,J0855.4$-$4625, and 
+  2FGL\,J0848.5$-$4535.}
   The circular and square-shaped
   marker (colored blue) represents the 2FGL and relocalized position of another 2FGL source.  
   This extended source is spatially
@@ -2764,10 +2854,11 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
     circles (colored red) represent the best fit
     positions and extensions of these sources assuming a radially
     symmetric uniform disk model.  
-    The two black crosses represent  background 2FGL sources and
+    \newtext{The two black crosses represent  background 2FGL sources and
     the star-shaped
-    marker (colored green) represents another 2FGL source that was removed from the background
-    model.  The contours (colored light blue) correspond to the \tev
+    marker (colored green) represents 2FGL J1614.9-5212, another 2FGL
+    source that was removed from the background
+    model.} The contours (colored light blue) correspond to the \tev
     image of HESS\,J1616$-$508 (left) and HESS\,J1614$-$518 (right)
     \citep{hess_plane_survey}.   
     }\label{1FGL_J1613.6-5100c}
@@ -2820,8 +2911,8 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
   circular and square-shaped markers (colored blue) represent 
   the 2FGL and relocalized positions respectively of two
   additional background 2FGL sources subtracted in (b).
-  The star-shaped marker (colored green) represents another 2FGL
-  source that was removed from the background model.  
+  \newtext{The star-shaped marker (colored green) represents 
+  2FGL\,J1634.4$-$4743c, another 2FGL source that was removed from the background model.}
   The contours (colored light blue) correspond to the \tev image of
   HESS\,J1632$-$478 \citep{hess_plane_survey}.
   }\label{1FGL_J1632.9-4802c}
@@ -2873,7 +2964,7 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
   The circular and square-shaped markers (colored
   blue) represent the 2FGL and the relocalized positions respectively of
   two background 2FGL sources subtracted in (b).  The star-shaped marker
-  (colored green) represents a 2FGL source that was removed from the
+  (colored green) represents 2FGL\,J1835.5$-$0649, another 2FGL source that was removed from the
   background model.  The contours (colored light blue) correspond to
   the \tev image of HESS\,J1837$-$069
   \citep{hess_plane_survey}.
@@ -2900,8 +2991,9 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
   marker and the circle (colored red) represent the best fit position
   and extension of 2FGL\,J2021.5+4026 assuming a radially-symmetric
   uniform disk model.  
-  The star-shaped marker (colored green)
-  represents a 2FGL source that was removed from the background model.
+  \newtext{The star-shaped marker (colored green)
+  represents 2FGL\,J2019.1+4040,
+  a 2FGL source that was removed from the background model.}
   2FGL\,J2021.5+4026
   is spatially coincident with the $\gamma$-Cygni SNR.  The contours
   (colored light blue) correspond to the 408MHz image of $\gamma$-Cygni
