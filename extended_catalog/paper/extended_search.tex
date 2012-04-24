@@ -73,7 +73,7 @@
 % and is bold and red
 \newcommand{\newtext}[1]{{\bfseries \color{red}#1}}
 % To unformat the new text, comment out the above line
-% and include hte line below
+% and include the line below
 % \newcommand{\newtext}[1]{#1}
 
 \usepackage{color}
@@ -235,7 +235,7 @@ LAT sources.
 In Section~\ref{monte_carlo_validation}, we demonstrate
 that this method can be used to test the statistical significance of the
 extension of a LAT source and in Section~\ref{bias_wrong_spatial_model}
-we asses the bias that is is introduced by using an incorrect spatial model.
+we asses the bias that is introduced by using an incorrect spatial model.
 In Section~\ref{extension_sensitivity}
 we calculate the LAT detection threshold to resolve the extension
 of a source.}
@@ -484,11 +484,10 @@ different spatial models are lost in the noise and the LAT is not sensitive
 to the detailed spatial structure of these sources.  
 \newtext{In section \ref{bias_wrong_spatial_model}, we perform a dedicated Monte Carlo simulation
 to asses possible bias due to incorrectly modeling the spatial structure
-of an extended source.}
-Therefore, in our
-search for extended sources we use only a radially-symmetric uniform
+of an extended source.
+In our search for extended sources we use only a radially-symmetric uniform
 disk spatial model. Unless otherwise noted,
-we quote the radius to the edge ($\sigma$) as the size of the source.
+we quote the radius to the edge ($\sigma$) as the size of the source.}
 
 \section{Validation of the Analysis Method}
 
@@ -567,13 +566,13 @@ Considering the distribution in Figures~\ref{ts_ext_mc_1000} and
 (corresponding to a formal $4\sigma$ significance) is reasonable.
 
 \newtext{
-These previous simulations spaned the range of detectable fluxes 
-over two different energy ranges, but only assuming an isotropic backgorund.
+These simulations spanned the range of detectable fluxes 
+over two different energy ranges, but only assuming an isotropic background.
 We performed a second simulation to assess any effects that could
 be introduces by performing this test in the presence of a highly
 structured background.
 Our simulation setup was the same as above except that the sources
-were simulated on top of and analytized assuming the presence of
+were simulated on top of and analyzed assuming the presence of
 the standard Galactic and isotropic diffuse background model used
 in 2FGL.
 
@@ -585,25 +584,25 @@ To limit the number of tests, we selected only one flux
 level for each of the four spectral indices and we perform
 this test only in the 1 \gev to 100 \gev energy range. 
 The source flux was selected so that $\ts\sim50$. This is around 
-the significane level for which on might
-exepcted to be able to spatially resolve the source. 
-We do not test brigher sources since the structured background
+the significance level for which on might
+expect to be able to spatially resolve the source. 
+We do not test brighter sources since the structured background
 should produce the most significant effect for very bright sources.
 
 Because the Galactic diffuse emission is highly structure, the point-source
-sensitivity can vary signficantly across the galactic plane.
+sensitivity can vary significantly across the galactic plane.
 To account for this, we scaled the flux (for a given spectral index)
-by the overal background level according to this formula:
+so that the source always has approximatly the same signal-to-noise ratio:
 \begin{equation}
   \label{scale_flux_by_background}
   F(\vec{x}) = F(\text{GC}) \times \left(
-  \frac{B(\text{GC})}{B(\vec{x})}\right)^{1/2}.
+  \frac{B(\vec{x})}{B(\text{GC})}\right)^{1/2}.
 \end{equation}
 Here, $\vec{x}$ is the position of the source, $F$ is the integral
 flux of the simulated source from 100 \mev to 100 \gev, $F(\text{GC})$
 is the same quantity if the source were at the galactic center, $B$
 is the integral of the Galactic diffuse and isotropic diffuse emission
-model from 1 \gev to 100 \gev and $B(\text{GC})$ is the same quanitty
+model from 1 \gev to 100 \gev and $B(\text{GC})$ is the same quantity
 if the source were at the galactic center.  Table~\ref{ts_ext_num_sims}
 tabulates $F(\text{GC})$ and the average \ts for the four spectral models.
 For each spectral index, we performed $\sim90,000$ simulations.
@@ -623,19 +622,19 @@ because the curve is determined by only a few points.
 \label{bias_wrong_spatial_model}
 
 \newtext{
-We performed a Monte Carlo study to asses the biases introudced by incorreclty
+We performed a Monte Carlo study to asses the biases introduced by incorrectly
 modeling the spatial structure of an extended source. This is important because any assumed spatial
 model is just an approximation to the true photon distribution of the source.
 
 To assess this systematic, we simulated the spatially extended ring-type SNR W44.
-W44 was slelected because it is the most signfiicant extended source detected by the LAT 
+W44 was selected because it is the most significant extended source detected by the LAT 
 that has been reported as having a non-radially symmetric photon-distribution \cite{w44}. 
 
 W44 was simulated with a power-law spectral model. The flux and spectral index of this source
 were taken from our re-analysis in this paper which is described in Section~\ref{validate_known}
-and summarized in Table~\ref{known_extended_sources}. In particualr W44 was simulated
+and summarized in Table~\ref{known_extended_sources}. In particular W44 was simulated
 with a flux of $7.12\times10^{-8}$ \phflux in the energy range from 1 \gev to 100 \gev with a spectral
-index of 2.66.
+index of 2.66. 
 
 W44 was simulated with an elliptical ring spatial model described in
 \cite{w44}.  Because that publication does not provide the numbers describing
@@ -645,26 +644,29 @@ ellipse predicts emission only for the outer 0.75\% of the ellipse and
 the ellipse has an angle of $147\degree$ measured east of celestial north.
 
 We used a simulation setup similar to that described in
-Section~\ref{monte_carlo_validation}, but the souce was simulated on
+Section~\ref{monte_carlo_validation}, but the source was simulated on
 top of and analyzed assuming the presence of the standard galactic and
 isotropic diffuse background model used in 2FGL.  This simulation was
 in the 1 \gev to 100 \gev energy range and
 the sources were simulated over the two-year time range included in the
 2FGL catalog. We performed 985 identical simulations with different seeds to
 see the statistical spread in the fit values.
+In the simulations of W44, we disabled the inherent energy dispersion of photons
+by the LAT. The bias caused by ignoring energy dispersion 
+will be discussed in an upcoming paper by the LAT collaboration \citep{lat_on_orbit_psf}.
 
-After simulating the ring-like source, we fit the spectral and spatial parametesr of 
-the ring-like extended source with successivly more complicated spatial models.
+After simulating the ring-like source, we fit the spectral and spatial parameters of 
+the ring-like extended source with successively more complicated spatial models.
 We obtained the best fit spatial parameters using \pointlike and, using 
-these best fit spatial paramters, obtained the best fit spectral paramters 
+these best fit spatial parameters, obtained the best fit spectral parameters 
 using \gtlike. In total, we performed the fit using a point-like spatial model,
 using a radially-symmetric uniform Gaussian and disk spatial model, 
 an Elliptical disk spatial model, and finally the Monte Carlo true Elliptical
 ring spatial model.
 
 
-Figure~\ref{ts_comparison_w44sim} shows the the distribution of TS values for 
-each of the simluations when fitting the simulated sources 
+Figure~\ref{ts_comparison_w44sim} shows the distribution of TS values for 
+each of the simulations when fitting the simulated sources 
 with the different spatial models. 
 Figure~\ref{ts_comparison_w44sim}a shows the distribution of \ts values when 
 fitting the simulated Elliptical ring extended source as as a point-like source.
@@ -696,11 +698,11 @@ spatial model, there is a $\sim$10\% bias in the fit flux and
 $\sim5\%$ bias in the fit index. But when fitting the sources with any of
 the extended spatial models, there is no bias in the best fit spectral parameters
 (within the precision of this Monte Carlo study. The reason for this is
-because within the finite angular precision and limited statsitics of the LAT, 
-all of the extended spatial models can be ajusted to look almost the same.
+because within the finite angular precision and limited statistics of the LAT, 
+all of the extended spatial models can be adjusted to look almost the same.
 For brighter or larger sources, this could potentially be a larger effect.
 
-Figure~\ref{bias_w44sim}c plots the best fit 68\% contaiment radius
+Figure~\ref{bias_w44sim}c plots the best fit 68\% containment radius
 (\rsixeight).  For the elliptical ring spatial model, as expected
 there is no significant bias in the best fit size. What is surprising
 is that for none of the tested spatial models was the bias greater
@@ -1517,8 +1519,10 @@ Collaboration in \cite{vela_jr_lat}.  Figure~\ref{Vela_Jr} shows a counts
 map of the source.  Overlaid on Figure~\ref{Vela_Jr} are \tev
 contours of Vela Jr. \citep{vela_jr_hess}.
 There are three
-point-like catalog sources 2FGL\,J0853.5$-$4711, 2FGL\,J0848.5$-$4535,
-and 2FGL\,J0855.4$-$4625 which correlate with the 
+point-like catalog sources 2FGL\,J0848.5$-$4535,
+2FGL\,J0853.5$-$4711, and
+2FGL\,J0855.4$-$4625
+which correlate with the 
 multiwavelength
 emission of
 this SNR but do not appear to be physically distinct sources.
@@ -2079,10 +2083,10 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
           &  $3\times 10^{-7}$ &           18517 &    174    &   \nodata   & \nodata    \\
           &          $10^{-7}$ &           13714 &     41    &   \nodata   & \nodata    \\
 \cutinhead{Galactic and Isotropic Diffuse Background\tablenotemark{(b)}}
-      1.5 &  $3\times 10^{-7}$ &           90741 &     63    &   \nodata   & \nodata     \\
-        2 &          $10^{-6}$ &           92161 &     60    &   \nodata   & \nodata     \\
-      2.5 &  $3\times 10^{-6}$ &           86226 &     47    &   \nodata   & \nodata    \\
-        3 &          $10^{-5}$ &           94412 &     61    &   \nodata   & \nodata    \\
+      1.5 &  $2.3\times 10^{-8}$ &           90741 &     63    &   \nodata   & \nodata     \\
+        2 &  $1.2\times 10^{-7}$ &           92161 &     60    &   \nodata   & \nodata     \\
+      2.5 &  $4.5\times 10^{-7}$ &           86226 &     47    &   \nodata   & \nodata    \\
+        3 &  $2.0\times 10^{-6}$ &           94412 &     61    &   \nodata   & \nodata    \\
 \enddata
 
 \tablenotetext{(a)}{Integral 100 \mev to 100 \gev flux.}
@@ -2699,9 +2703,9 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
 }
 \startdata
 \hline
-2FGL\,J0823.0$-$4246    & 2FGL\,J0823.4$-$4305, 2FGL\,J0821.0$-$4254 \\
+2FGL\,J0823.0$-$4246    & 2FGL\,J0821.0$-$4254, 2FGL\,J0823.4$-$4305 \\
 2FGL\,J1627.0$-$2425c   & \nodata \\
-2FGL\,J0851.7$-$4635    & 2FGL\,J0853.5$-$4711, 2FGL\,J0848.5$-$4535, 2FGL\,J0855.4$-$4625 \\
+2FGL\,J0851.7$-$4635    & 2FGL\,J0848.5$-$4535, 2FGL\,J0853.5$-$4711, 2FGL\,J0855.4$-$4625 \\
 2FGL\,J1615.0$-$5051    & \nodata \\
 2FGL\,J1615.2$-$5138    & 2FGL\,J1614.9$-$5212  \\
 2FGL\,J1632.4$-$4753c   & 2FGL\,J1634.4$-$4743c \\
@@ -2744,8 +2748,7 @@ the extended source.
   star-shaped markers (colored
   green) represent 2FGL sources that were
   removed from the background model.
-  \newtext{From left to right, these sources are, from left to right,
-  2FGL\,J0823.4$-$4305 and 2FGL\,J0821.0$-$4254.}
+  \newtext{From left to right, these sources are 2FGL\,J0823.4$-$4305 and 2FGL\,J0821.0$-$4254.}
   The lower right inset is the model predicted emission from a point-like
   source with the same spectrum as 2FGL\,J0823.4$-$4305 smoothed by the
   same kernel.  This source is spatially coincident with the Puppis A
@@ -2963,9 +2966,9 @@ the extended source.
   of 2FGL\,J1837.3$-$0700c assuming a radially-symmetric uniform disk model. 
   The circular and square-shaped markers (colored
   blue) represent the 2FGL and the relocalized positions respectively of
-  two background 2FGL sources subtracted in (b).  The star-shaped marker
+  two background 2FGL sources subtracted in (b).  \newtext{The star-shaped marker
   (colored green) represents 2FGL\,J1835.5$-$0649, another 2FGL source that was removed from the
-  background model.  The contours (colored light blue) correspond to
+  background model.}  The contours (colored light blue) correspond to
   the \tev image of HESS\,J1837$-$069
   \citep{hess_plane_survey}.
   The diamond-shaped marker (colored orange) represents the position of PSR\,J1838$-$0655
