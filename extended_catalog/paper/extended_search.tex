@@ -566,163 +566,151 @@ Considering the distribution in Figures~\ref{ts_ext_mc_1000} and
 (corresponding to a formal $4\sigma$ significance) is reasonable.
 
 \newtext{
-These simulations spanned the range of detectable fluxes 
-over two different energy ranges, but only assuming an isotropic background.
+These simulations spanned a large range of fluxes 
+for two different energy ranges assuming an isotropic background.
 We performed a second simulation to assess any effects that could
 be introduces by performing this test in the presence of a highly
 structured background.
-Our simulation setup was the same as above except that the sources
-were simulated on top of and analyzed assuming the presence of
-the standard Galactic and isotropic diffuse background model used
-in 2FGL.
 
-In our simulation, we selected our sources to have a random position on the sky
-such that the absolute value of the galactic latitude of the source is
-less than 5\degree, probing the most structured areas of the galaxy.
+Our simulation setup was the same as above except that the sources were
+simulated on top of and analyzed assuming the presence of the standard
+Galactic diffuse and isotropic background models used in 2FGL.  In our
+simulations, we selected our sources to have a random position on the sky
+such that the absolute value of the galactic latitude of the source was
+less than 5\degree. This probes the most structured areas of the galaxy.
 
 To limit the number of tests, we selected only one flux
 level for each of the four spectral indices and we perform
 this test only in the 1 \gev to 100 \gev energy range. 
-The source flux was selected so that $\ts\sim50$. This is around 
+The fluxes were selected so that $\ts\sim50$ which is around 
 the significance level for which on might
 expect to be able to spatially resolve the source. 
-We do not test brighter sources since the structured background
-should produce the most significant effect for very bright sources.
+We only tested these relatively dim sources because they are most likely
+to be affected by the background.
 
 Because the Galactic diffuse emission is highly structure, the point-source
 sensitivity can vary significantly across the galactic plane.
 To account for this, we scaled the flux (for a given spectral index)
-so that the source always has approximatly the same signal-to-noise ratio:
+so that the source always has approximately the same signal-to-noise ratio:
 \begin{equation}
   \label{scale_flux_by_background}
   F(\vec{x}) = F(\text{GC}) \times \left(
   \frac{B(\vec{x})}{B(\text{GC})}\right)^{1/2}.
 \end{equation}
-Here, $\vec{x}$ is the position of the source, $F$ is the integral
-flux of the simulated source from 100 \mev to 100 \gev, $F(\text{GC})$
+Here, $\vec{x}$ is the position of the simulated source, $F$ is the integral
+flux of the source from 100 \mev to 100 \gev, $F(\text{GC})$
 is the same quantity if the source were at the galactic center, $B$
-is the integral of the Galactic diffuse and isotropic diffuse emission
-model from 1 \gev to 100 \gev and $B(\text{GC})$ is the same quantity
+is the integral of the Galactic diffuse and isotropic emission
+from 1 \gev to 100 \gev and $B(\text{GC})$ is the same quantity
 if the source were at the galactic center.  Table~\ref{ts_ext_num_sims}
-tabulates $F(\text{GC})$ and the average \ts for the four spectral models.
-For each spectral index, we performed $\sim90,000$ simulations.
+contains $F(\text{GC})$ and the average value of \ts for the four spectral models.
+For each spectrum, we performed $\sim90,000$ simulations.
 
 Figure~\ref{tsext_plane_plot} shows the cumulative density
 of \tsext compared to the $\chi^2_1/2$ distribution of
 Equation~\ref{ts_ext_distribution}. For small values of \tsext,
-there is reasonable agreement between the Monte Carlo simulation and
-theory.  At the highest obtained values of \tsext, there is possibly
-some discrepancy.  But in this range there are only limited statistics
-because the curve is determined by only a few points.
-
-
+there is good agreement between the simulations and
+theory.  For the highest values of \tsext, there is possibly
+a small discrepancy, but limited statistics makes this hard to quantify.
 }
 
-\subsection{\newtext{Assessing the Bias Due to Incorrect Spatial Models}}
+\subsection{Assessing the Bias Due to Incorrect Spatial Models}
 \label{bias_wrong_spatial_model}
 
 \newtext{
-We performed a Monte Carlo study to asses the biases introduced by incorrectly
-modeling the spatial structure of an extended source. This is important because any assumed spatial
-model is just an approximation to the true photon distribution of the source.
+We performed a Monte Carlo study to asses the bias that is introduced by
+incorrectly modeling the spatial structure of an extended source. This
+is important because any assumed spatial model is just an approximation
+to the true shape of a source.
 
 To assess this systematic, we simulated the spatially extended ring-type SNR W44.
-W44 was selected because it is the most significant extended source detected by the LAT 
-that has been reported as having a non-radially symmetric photon-distribution \cite{w44}. 
+We selected W44 because it is the most significant extended source detected by the LAT 
+that has a non-radially symmetric photon-distribution \citep{w44}. 
 
-W44 was simulated with a power-law spectral model. The flux and spectral index of this source
-were taken from our re-analysis in this paper which is described in Section~\ref{validate_known}
-and summarized in Table~\ref{known_extended_sources}. In particular W44 was simulated
-with a flux of $7.12\times10^{-8}$ \phflux in the energy range from 1 \gev to 100 \gev with a spectral
-index of 2.66. 
+W44 was simulated with a power-law spectral model with an integral flux
+of $7.12\times10^{-8}$ \phflux in the energy range from 1 \gev to 100
+\gev and a spectral index of 2.66.
+The flux and spectral index of this source
+were taken from our analysis of W44 which is described in Section~\ref{validate_known}.
 
-W44 was simulated with an elliptical ring spatial model described in
+W44 was simulated with the elliptical ring spatial model described in
 \cite{w44}.  Because that publication does not provide the numbers describing
-the parameters of the ellipse, we summarize them here for completeness. The elliptical
-spatial model has a major axis of 0\fdg3 and a minor axis of 0\fdg19. The
-ellipse predicts emission only for the outer 0.75\% of the ellipse and
-the ellipse has an angle of $147\degree$ measured east of celestial north.
+the parameters of the ellipse, we summarize them here for completeness. The 
+ellipse has a semi-major axis of 0\fdg3 and a semi-minor axis of 0\fdg19. The
+ellipse predicts emission only for the outer 0.75\% of the shape and
+the has a position angle of $147\degree$ measured east of celestial north.
 
 We used a simulation setup similar to that described in
 Section~\ref{monte_carlo_validation}, but the source was simulated on
-top of and analyzed assuming the presence of the standard galactic and
-isotropic diffuse background model used in 2FGL.  This simulation was
+top of and analyzed assuming the presence of the standard Galactic diffuse and
+isotropic background model used in 2FGL.  This simulation was
 in the 1 \gev to 100 \gev energy range and
-the sources were simulated over the two-year time range included in the
-2FGL catalog. We performed 985 identical simulations with different seeds to
-see the statistical spread in the fit values.
-In the simulations of W44, we disabled the inherent energy dispersion of photons
+W44 was simulated over the two-year time range included in the
+2FGL catalog. 
+In the simulations, we disabled the inherent energy dispersion of photons
 by the LAT. The bias caused by ignoring energy dispersion 
 will be discussed in an upcoming paper by the LAT collaboration \citep{lat_on_orbit_psf}.
+In total, we performed 985 identical simulations.
 
-After simulating the ring-like source, we fit the spectral and spatial parameters of 
-the ring-like extended source with successively more complicated spatial models.
+The simulated sources were fit using a point-like spatial model,
+a radially-symmetric uniform Gaussian and disk spatial model, 
+an Elliptical disk spatial model, and finally with an Elliptical
+ring spatial model.
 We obtained the best fit spatial parameters using \pointlike and, using 
 these best fit spatial parameters, obtained the best fit spectral parameters 
-using \gtlike. In total, we performed the fit using a point-like spatial model,
-using a radially-symmetric uniform Gaussian and disk spatial model, 
-an Elliptical disk spatial model, and finally the Monte Carlo true Elliptical
-ring spatial model.
+using \gtlike. 
 
-
-Figure~\ref{ts_comparison_w44sim} shows the distribution of TS values for 
-each of the simulations when fitting the simulated sources 
-with the different spatial models. 
 Figure~\ref{ts_comparison_w44sim}a shows the distribution of \ts values when 
-fitting the simulated Elliptical ring extended source as as a point-like source.
-the source is very significant as a point source ($\ts\sim3500$).
-Figure~\ref{ts_comparison_w44sim}b shows the distirbution of \tsext values
-when fitting the source as a radially-symmetric uniform disk or Gaussian source.
-The source is very significiantly extended ($\tsext\sim250$). 
+fitting the simulations of W44 as as a point-like source.
+The sources are very significant ($\ts\sim3500$).
+Figure~\ref{ts_comparison_w44sim}b shows the distribution of \tsext values
+when fitting the source as a radially-symmetric uniform disk and Gaussian source.
+The sources are very significantly extended ($\tsext\sim250$). 
 On average \tsext is slightly larger when
-fitting the source with the Disk spatial model compared to the Gaussian spatial model.
-Considering that the simulated source's true spatial model has a sharp edge, it
-makes sense that the Disk would provide a better fit.
+fitting the source with the disk spatial model compared to the Gaussian spatial model,
+consistent with the fact that the simulated source's true spatial model has a sharp edge.
+Figure~\ref{ts_comparison_w44sim}c then shows the change in \ts 
+when fitting the simulated source as
+an elliptical disk compared to fitting the source as a disk. Since the changes
+in \ts are on average $\sim30$, we see that our simulated source is significantly better
+described with an elliptical spatial model. Finally, 
+Figure~\ref{ts_comparison_w44sim}d shows the changes in \ts when fitting
+the sources with an elliptical ring spatial model compared to fitting them
+with elliptical disk spatial models.
+Since the changes are on average $\sim9$, the simulated sources are only somewhat better described
+by the true spatial model.
 
-Figure~\ref{ts_comparison_w44sim}c then shows the change in \ts (or
-twice the improvement in log likelihood) when fitting the simulated source as
-an elliptical disk compared to fitting the source as a disk. Since the change
-in \ts is $\sim30$, we see that our simulated source is significantly better
-described with an ellpitical spatial model. Finally, 
-Figure~\ref{ts_comparison_w44sim}d shows the change in \ts when fitting
-the source as an elliptical ring compared to fitting it as an elliptical disk.
-Since the change is $\sim9$, we see that the source is somewhat better described
-by the true spatial model, but not at a high statistical significance.
 
 
-Figure~\ref{bias_w44sim} shows the distirbution of best fit parameters
-for these simulations. Figure~\ref{bias_w44sim}a and Figure~\ref{bias_w44sim}b
-show the distribututions of best fit flux and spectral indices.
-They show that when fitting this simulated extended source with a point-like
+Figure~\ref{bias_w44sim}a and Figure~\ref{bias_w44sim}b
+show the distributions of best fit flux and spectral indices when fitting
+the simulated sources.
+When fitting the sources with a point-like
 spatial model, there is a $\sim$10\% bias in the fit flux and
-$\sim5\%$ bias in the fit index. But when fitting the sources with any of
-the extended spatial models, there is no bias in the best fit spectral parameters
-(within the precision of this Monte Carlo study. The reason for this is
-because within the finite angular precision and limited statistics of the LAT, 
-all of the extended spatial models can be adjusted to look almost the same.
-For brighter or larger sources, this could potentially be a larger effect.
+a $\sim5\%$ bias in the fit index. When fitting the sources assuming any
+of the extended spatial models, there is no bias in the best fit spectral parameters
+(within the precision of the Monte Carlo study). The reason is that
+within the finite angular precision and limited statistics of the LAT, 
+all of the extended spatial models can be adjusted to look very similar.
 
-Figure~\ref{bias_w44sim}c plots the best fit 68\% containment radius
-(\rsixeight).  For the elliptical ring spatial model, as expected
-there is no significant bias in the best fit size. What is surprising
-is that for none of the tested spatial models was the bias greater
-than $\sim10\%$. This shows that for whatever spatial model is used,
-the best fit \rsixeight is a reasonable measure of the true 68\%
-containment radius.
+Figure~\ref{bias_w44sim}c plots the best fit 68\% containment radius.  
+For the elliptical ring spatial model, there is no significant bias in the best fit size. 
+None of the other spectral models induced a bias greater
+than $\sim10\%$. From this, we see that \rsixeight is a reasonable measure of the true 68\%
+containment radius for a reasonable spatial models.
 
-For completeness, for the elliptical disk and ring spatial models,
-Figure~\ref{bias_w44sim}c plots the distribution of best fit eccentricity
-of the ellipse. It is defined as $\sqrt{1-b^2/a^2}$ where $a$ is the
-length of the semi-major axis and $b$ is the length of the semi-minor
-axis.  Figure~\ref{bias_w44sim}c plots the distribution of best fit
-orientation angle of the ellipse. For the elliptical spatial models,
-there is no systematic bias in the eccentricities or orentiation angles.
-For the true sptial model, there is less spread in the distributions of
-the fit parameters.  Finally, for completeness Figure~\ref{bias_w44sim}d
-shows that the distirubtion of best fit ring fractions is unbiased when
-the source is fit with the for the elliptical ring spatial model.
-
-
+For completeness, Figure~\ref{bias_w44sim}d plots the distribution of best
+fit elliptical eccentricities and Figure~\ref{bias_w444im}e plots the
+distribution of orientation angles
+when the sources were fit with elliptical
+disk and elliptical ring spatial models.  
+The eccentricity is defined as
+$\sqrt{1-b^2/a^2}$, where $a$ is the length of the semi-major axis and
+$b$ is the length of the semi-minor axis.  
+There is no systematic bias in the eccentricities or orientation angles.
+Finally, Figure~\ref{bias_w44sim}f shows that the distribution of best fit
+ring fractions is unbiased when the sources are fit with the elliptical
+ring spatial model.
 }
 
 \section{Extended Source Detection Threshold}
@@ -834,30 +822,31 @@ source hypothesis is higher than for two point-like sources and we only
 consider a source to be extended if $\tsext>\tsinc$.
 
 \newtext{
-It might be desirable to formulate a Bayesian test comparing an extended
-source to two point-like sources.
-We considered the Bayesian information criterion \citep[BIC,][]{BIC_statistical_test}. 
-We found it difficult
+We considered an alternate Bayesian formulation of this test.
+We considered the Bayesian information criterion \citep[BIC,][]{BIC_statistical_test},
+but found it difficult
 to apply to LAT data because it required a term including the number of data points
-and for LAT events, there are many photons included in the ROI that contribute only
- marginally when considering different models.
-We also considered the Akaike information criterion \citep[\aic,][]{AIC_statistical_test}.
-The \aic is defines as
+and for LAT events. Because there are many photons included in an analysis that contribute only
+ marginally to the analysis of a source, it is unclear how this test could be applied.
+We also considered the Akaike information criterion test \citep[\aic,][]{AIC_statistical_test}.
+The \aic is defined as
 \begin{equation}
-  \aic=2k-2\log\likelihood
+  \aic=2k-2\log\likelihood,
 \end{equation}
 where $k$ is the number of parameters in the model. 
-The first term in the \aic penaize models with additonal parameters. 
-In this formulation, the best model is consided to be the one that minimzies the \aic.
+In this formulation, the best model is considered to be the one that minimizes the \aic.
+The first term penalizes models with additional parameters. 
+
 Because the two point-like source hypotheses has
-three more parameters compared to the one extended source hypothesis (two spatial
-parameters and two spectral parameters compared to one extnesion parameter),
-we note that the $\tsext>\tsinc$ is mathematically equivalent to the test that
+three more parameters than the single extended source hypothesis (two spatial
+parameters and two spectral parameters compared to one extension parameter),
+we note that the $\tsext>\tsinc$ is mathematically equivalent to the test:
 \begin{equation}
-  \aic_\text{ext} < \aic_\text{2pts} - 6,
+  \aic_\text{ext} < \aic_\text{2pts} - 6.
 \end{equation}
-which gives our original test an equivalent Bayesian formulation by requring 
-$\aic_\text{ext}$ to be sufficently smaller than $\aic_\text{2pts}$.
+Therefore, our original test has an 
+equivalent Bayesian formulation requiring that $\aic_\text{ext}$ 
+be sufficiently smaller than $\aic_\text{2pts}$.
 }
 
 We assessed the power of the $\tsext>\tsinc$ test with a Monte Carlo
@@ -1342,7 +1331,7 @@ Section~\ref{new_ext_srcs_section}, we describe any modifications from 2FGL
 of the background model that were performed.
 \newtext{In Table~\ref{fake_2fgl_sources}, we will summarize the sources that were 
 included in 2FGL to account for residuals induced by not modeling the extension of
-a nearby source.}
+nearby extended sources.}
 
 The best fit positions of nearby point-like sources can be influenced by
 the extended source and vice versa.  Similarly,
@@ -1432,7 +1421,7 @@ This suggests that the sources are robust against mis-modeled features in the di
 emission model and uncertainties in the PSF.
 \newtext{Finally, in Table~\ref{fake_2fgl_sources} we 
 summarize the sources included in 2FGL to account for residuals induced
-by not modeling the extension of a nearby source.}
+by not modeling the extension of nearby extended sources.}
 
 \subsection{2FGL\,J0823.0$-$4246}
 \label{section_2FGL_J0823.0-4246}
@@ -1780,9 +1769,9 @@ source confusion by fitting
 2FGL\,J1837.3$-$0700c
 instead as two point-like sources.
 \newtext{Because $\tsinc=10.8$ is less than $\tsext=18.5$, we conclude that this emission
-does not originate from two nearby point-like sources.
+does not originate from two nearby point-like sources.}
 
-With this model, 2FGL\,J1837.3$-$0700c was found to have an
+\newtext{With this model, 2FGL\,J1837.3$-$0700c was found to have an
 extension $\sigma=0\fdg33\pm0\fdg07_\stat\pm0\fdg05_\sys$.}
 While fitting the extension of 2FGL\,J1837.3$-$0700c,
 we iteratively relocalized the two closest
@@ -2057,7 +2046,7 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
 }
 
 \startdata
-\multicolumn{6}{c}{Isotropic Background} \\
+\multicolumn{6}{c}{\newtext{Isotropic Background}} \\
 \hline
       1.5 &  $3\times 10^{-7}$ &           18938 &  22233    &     18938   &    8084     \\
           &          $10^{-7}$ &           19079 &   5827    &     19079   &    2258     \\
@@ -2082,7 +2071,7 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
           &          $10^{-6}$ &           18449 &    966    &   \nodata   & \nodata    \\
           &  $3\times 10^{-7}$ &           18517 &    174    &   \nodata   & \nodata    \\
           &          $10^{-7}$ &           13714 &     41    &   \nodata   & \nodata    \\
-\cutinhead{Galactic and Isotropic Diffuse Background\tablenotemark{(b)}}
+\cutinhead{\newtext{Galactic Diffuse and Isotropic Background\tablenotemark{(b)}}}
       1.5 &  $2.3\times 10^{-8}$ &           90741 &     63    &   \nodata   & \nodata     \\
         2 &  $1.2\times 10^{-7}$ &           92161 &     60    &   \nodata   & \nodata     \\
       2.5 &  $4.5\times 10^{-7}$ &           86226 &     47    &   \nodata   & \nodata    \\
@@ -2092,7 +2081,8 @@ use of HEALPix\footnote{\url{http://healpix.jpl.nasa.gov/}} \citep{healpix}.
 \tablenotetext{(a)}{Integral 100 \mev to 100 \gev flux.}
 \tablenotetext{(b)}{
 \newtext{For the Galactic simulations, the quoted fluxes are
-if it was placed in the galactic center and is scaled by Equation~\ref{scale_flux_by_background}.}
+if the sources were placed in the Galactic center and the actual
+flux is scaled by Equation~\ref{scale_flux_by_background}.}
 }
 
 \tablecomments{
@@ -2101,7 +2091,7 @@ if it was placed in the galactic center and is scaled by Equation~\ref{scale_flu
     statistically independent simulations and the average value of \ts is
     also tabulated.  
     \newtext{The top rows are the sources simulated on top of an isotropic background and
-    the bottom rows are the simulations on top of the Galactic and isotropic
+    the bottom rows are the simulations on top of the Galactic diffuse and isotropic
     background.}
 }
 \end{deluxetable}
@@ -2153,8 +2143,7 @@ if it was placed in the galactic center and is scaled by Equation~\ref{scale_flu
     \caption{
     \newtext{
     The same plot as Figure~\ref{ts_ext_mc_1000}, but fitting sources
-    simulated on top of the Galactic diffuse and isotropic diffuse
-    emission.
+    simulated on top of the Galactic diffuse and isotropic background.
     }
     }\label{tsext_plane_plot}
   \end{figure}
@@ -2169,7 +2158,7 @@ if it was placed in the galactic center and is scaled by Equation~\ref{scale_flu
     \fi
     % this plot came from $w44simplots/plot_ts_values.py
     \caption{
-    \newtext{The distirbution of \ts values when fitting statistically
+    \newtext{The distribution of \ts values when fitting statistically
     independent simulations of the
     elliptical ring shaped SNR W44. (a) is the distribution of \ts values
     when fitting W44 as a point-like source and (b) is the
