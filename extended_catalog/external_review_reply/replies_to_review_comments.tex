@@ -1,0 +1,266 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{color}
+
+\newenvironment{referee}
+{\begin{quote}\color{red}}
+  {\end{quote}}
+
+\newenvironment{reply}
+  {}
+  {}
+
+\title{Reply to Referee Report}
+
+\begin{document}
+
+\maketitle
+
+\begin{reply}
+Thank you for your careful review of the text. We discuss below the
+changes we have made incorporating your feedback. To make the changes more visible,
+in the new draft we have bolded and colored red the parts that are new or have changed.
+\end{reply}
+
+\begin{referee}
+Major issues :
+
+The authors use a uniform disk model for fitting the extended sources.
+However many sources show a complex morphology (for example, not radial symmetric)
+They should quantify how the results they are presenting depend on the actual shape of the sources.
+\end{referee}
+
+
+\begin{reply}
+In the new draft, Section 3 (Validation of Analysis Method) has been
+divided into two sections. The original section is now section 3.1
+(now called Statistical Significance Testing).
+
+There is a new section 3.2 called ``Assessing the Bias Due to Incorrect
+Spatial Models''. In this section, we address your question by performing
+a dedicated Monte Carlo study of W44 simulated with a ring-type spatial
+model. By fitting the source with different spatial models, we asses
+this bias and find it to be very small.
+
+This new section requires two new figures (Figure 6 and Figure 7). Also,
+in section 2.4 (Comparing Source Size) we add a line of text referring
+to this new section. Finally, there is a new sentance in the introduction
+of the paper which references the new text.
+\end{reply}
+
+
+\begin{referee}
+Most of the new extended sources found in this work lie on the galactic
+plane at very low latitudes. Why the simulations used to validate the
+analysis (par. 3) do not include the diffuse Galactic background? Can
+the structures of this diffuse background affect the analysis results?
+\end{referee}
+
+\begin{reply}
+In section 3.1 (which was previously just section 3 and is called
+Statistical Significance Testing), we have added new text describing a
+follow up Monte Carlo study performed in the presence of the galactic
+plane. In addition, this new text required updating Table 1 (Monte Carlo
+Spectral Parameters) to include the new simulation parameters. There is also
+a new figure (Figure 5) which shows the distribution of TSext for these
+new simulations.
+\end{reply}
+
+
+\begin{referee}
+An important result of this work is that some 2FGL sources could be fake due to the residuals induced by modeling the extended sources as point-like. It may be worth having a table that lists the sources that are not longer needed in the modeling of the sky (alternatively this information could be included in table 4). They must also be mentioned in the captions of figures 16, 17, 19, 21 and 22.
+\end{referee}
+
+
+\begin{reply}
+We have added a new table (Table 6 in the current draft) which contains
+this information. There are paragraphs in section 9 (Extended Source
+Search Method) and Section 10 (New Extended Sources) which refer to this
+table. We have also updated the specified captions to list names of 2FGL
+sources that were removed.
+\end{reply}
+
+
+\begin{referee}
+Minor issues :
+
+Par. 3, eq 8 : The authors should explain the symbols used
+\end{referee}
+
+
+\begin{reply}
+The symbols are now described after the equation.
+\end{reply}
+
+
+\begin{referee}
+Par. 7, row 386 : W30 is cited 2 times
+\end{referee}
+
+
+\begin{reply}
+Fixed
+\end{reply}
+
+\begin{referee}
+  Par. 10.3, rows 650-651 : The authors should explain the relation between $r_{68}$ and $\sigma$
+\end{referee}
+
+\begin{reply}
+  The relation between $r_{68}$ and $\sigma$ was already included in the text
+in section 2.4 (Comparing Source Sizes). But we restructured the
+text in that section to bring to prominence the relevant equations.
+\end{reply}
+
+\begin{referee}
+Par. 10.4, row 674 : The authors should quantify the statistical
+improvement using one single extended source instead of 2 pointlike
+\end{referee}
+
+\begin{reply}
+The numbers are now included in the text
+\end{reply}
+
+\begin{referee}
+Par. 10.6, row 720 : The authors should explain better how you distinguish
+if a source is ``physically separate'' or not
+\end{referee}
+
+\begin{reply}
+The text has been clarified
+\end{reply}
+
+\begin{referee}
+Par. 10.8, row 768 : The authors should quantify the statistical
+improvement using one single extended source instead of 2 pointlike
+\end{referee}
+
+\begin{reply}
+The numbers are included in the text
+\end{reply}
+
+\begin{referee}
+Fig. 2 : Is the y axis logarithmic ? Please clarify.
+\end{referee}
+
+\begin{reply}
+The legend now says ``log(PDF) [Arbitrary Units]''
+\end{reply}
+
+\begin{referee}
+Fig. 14 : The authors should specify the spectral index of the two plotted power-laws (or else remove them).
+\end{referee}
+
+\begin{reply}
+The spectral indices have been added to the caption.
+\end{reply}
+
+\begin{referee}
+++++++++++++++++
+Report on statistical methodology
+
+Search for Spatially Extended Fermi-LAT Sources Using Two Years of Data
+
+J. Lande et al. (ApJ86244)
+
+a) line 98 states: In the pointlike package, ``The data are binned
+spatially, using a HEALPix pixelization, and spectrally (G ́orski et
+al. 2005) and the likelihood is maximized over all bins in a region.'' Why
+is any binning used? Maximum likelihood estimation (MLE) is best used
+on exact photon positions, and binning is not required (as it is with
+older chi-square-minimiization techniques). Binning is ill-advised as
+it results in a loss of information, and sometimes in a bias. As this
+assumption is built into pointlike, perhaps it cannot be changed by the
+authors for their analysis.
+\end{referee}
+
+
+\begin{reply}
+The Fermi LAT analysis package gtlike has an unbinned likelihood mode
+which is indeed slightly more precise. But running an unbinned analysis
+is very slow because Fermi collects a large number of photons, many of
+which do not contribute very much to the detection of a source. gtlike
+in binned mode is much faster and is therefore the most common tool
+for LAT analysis. Because the LAT collaboration has extensively tested
+binned gtlike for spectral analysis, we do not expect it to introduce
+any large bias in our spectral analysis result.
+
+But even binned gtlike is prohibitively slow for the extended source
+spatial fitting described in this paper. That is why we developed this
+new functionality inside of pointlike. The validations of pointlike
+presented in this paper allow us to be confident in our spatial analysis results.
+\end{reply}
+
+
+\begin{referee}
+b) The likelihood ratio test (LRT, eqns 1 \& 9) is a classic technique of
+MLE that has been largely replaced by statisticians (since the 1980s) by
+closely related measures that take into account the complexity of models
+and size of the dataset. The LRT has serious deficiencies: it tends
+to accept the more complex model as sample size (i.e., source counts)
+increases (or equivalently, it assesses only bias and not variability),
+and it is inapplicable when parameters (e.g. source sizes) are near zero
+(discussed in the ApJ by Protassov et al. 2002). I also am not confident
+that the chi-squared approximation in eqn 8 is correct (please refer to
+a statistics book not an old ApJ article, or consult a statistician).
+
+Model selection today is instead guided by `penalized' measures,
+and the most widely used is the Bayesian Information Criterion
+(BIC,\url{http://en.wikipedia.org/wiki/Bayesian_information_criterion}). It
+is very easy to compute, essentially an offset from the LRT scaled to
+the log of the counts involved. The issues are discussed in detail in
+the volume ``Model Selection and Multi-Model Inference'' (K.P. Burnham
+\& D. Anderson, 2nd ed, 2002); see also lectures (especially \#14) at
+\url{http://myweb.uiowa.edu/cavaaugh/ms_seminar.html}.
+
+
+I guess you could argue that your Monte Carlo experiments (Figs 3-4) take
+the flux and degrees of freedom into account for the LRT statistic. But
+if you want your method to be widely used, it should not rest on a weak
+and obsolete statistical foundation. Altogether, I recommend moving to
+the BIC. Your approach of Monte Carlo testing of the significance of
+LRT values should also work for BIC values.
+\end{referee}
+
+
+\begin{reply}
+Concerning the extension significance test, we extensively validated it
+against Monte Carlo simulations. Furthermore, the high energy astrophysics
+community has a lot of experience with the test statistic (TS) applied to
+nested models. So we are very confident that we can apply it to the actual
+data.
+
+Concerning the test comparing two point-like sources to one extended
+source, we find the desire for a Bayesian test more compelling since the
+models are not nested. We considered the BIC test but found that it would
+not work well for Fermi LAT. We alternately considered the AIC test and
+found that it is equivalent to the test we actually performed. We have
+added a new paragraph to Section 5 (Testing Against Source Confusion)
+that describes the Bayesian interoperation of the test we performed.
+\end{reply}
+
+
+\begin{referee}
+Finally, I can suggest that the lead author discuss the issue with experts
+at his institution, as Stanford's Dept. of Statistics is universally
+recognized as the best in the nation. They might provide a balanced
+judgment whether the BIC is substantially better than the LRT in the
+situation under study.
+\end{referee}
+
+
+\begin{reply}
+Thanks for the suggestion.  In addition to the above changes, we have
+fixed the bibliographical information on the LAT publication of Vela Jr.
+\end{reply}
+
+
+
+
+
+
+
+\end{document}
+
+
