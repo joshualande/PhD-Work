@@ -5,8 +5,10 @@ from matplotlib.ticker import MaxNLocator
 import numpy as np
 import h5py
 import pylab as P
+from matplotlib.lines import Line2D
 
 from lande.utilities.pubplot import set_latex_defaults,get_bw,save
+from lande.utilities.plotting import label_axes
 
 set_latex_defaults()
 bw=get_bw()
@@ -26,11 +28,6 @@ fig=P.figure(None, figsize=(6,6))
 
 def histogram(axes, data,**kwargs):
 
-    if len(data)==2:
-        print data
-        print len(data[0]),min(data[0]),max(data[0])
-        print len(data[1]),min(data[1]),max(data[1])
-
     bins = 30
     axes.hist(data, 
               bins=bins,
@@ -48,28 +45,32 @@ axes.set_xlabel(r'$\mathrm{TS}_\mathrm{point}$')
 
 axes=fig.add_subplot(222)
 histogram(axes, 
-          data=[2*(ll_disk-ll_point),
-                2*(ll_gaussian-ll_point)],
-          label=['Disk','Gaussian'],
-          color=['black','red'])
+          data=[2*(ll_gaussian-ll_point),
+                2*(ll_disk-ll_point)],
+          color=['red' if not bw else '0.5','black'])
 axes.set_xlabel(r'$\mathrm{TS}_\mathrm{ext}$')
 prop = matplotlib.font_manager.FontProperties(size=10)
 axes.set_ylim(0,100)
-axes.legend(prop=prop)
+axes.legend([Line2D([0],[0],color='black'),Line2D([0],[0],color='red')],
+            ['disk','Gaussian'],
+            prop=prop)
+
 
 axes=fig.add_subplot(223)
 histogram(axes, 
           2*(ll_elliptical_disk-ll_disk), 
           color='black')
-axes.set_xlabel(r'$\mathrm{TS}_\mathrm{ellip.\ disk}-\mathrm{TS}_\mathrm{disk}$')
+axes.set_xlabel(r'$\mathrm{TS}_\mathrm{elliptical\ disk}-\mathrm{TS}_\mathrm{disk}$')
 
 axes=fig.add_subplot(224)
 ts_inc = 2*(ll_elliptical_ring-ll_elliptical_disk)
 ts_inc = np.where(ts_inc > 0, ts_inc, 0)
 histogram(axes, ts_inc,
          color='black')
-axes.set_xlabel(r'$\mathrm{TS}_\mathrm{ellip.\ ring}-\mathrm{TS}_\mathrm{ellip.\ disk}$')
+axes.set_xlabel(r'$\mathrm{TS}_\mathrm{elliptical\ ring}-\mathrm{TS}_\mathrm{elliptical\ disk}$')
 
 fig.tight_layout()
 
-save('ts_comparision_w44sim')
+label_axes(fig)
+
+save('ts_comparison_w44sim')

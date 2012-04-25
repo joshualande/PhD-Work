@@ -31,14 +31,13 @@ max_ts_ext = max(ts_ext_list)
 fig = P.figure(None, figsize=(6,6))
 axes = fig.add_subplot(111)
 
+ymin=1e-6
 
 for index,basecut,kwargs in [
-    [1.5,   almost_equal(1.5,index_list),           dict(color='blue', label='index=1.5')],
-    [2.0,   almost_equal(2.0,index_list),           dict(color='purple', label='index=2')],
-    [2.5,   almost_equal(2.5,index_list),           dict(color='green', label='index=2.5')],
-    [3.0,   almost_equal(3.0,index_list),           dict(color='black', label='index=3')],
-    [3.0,   almost_equal(3.0,index_list),           dict(color='black', label='index=3')],
-#    ['sum', np.ones_like(index_list).astype(bool),  dict(color='orange', label='all indices')],
+    [1.5,   almost_equal(1.5,index_list),           dict(color='blue' if not bw else '0.0', label=r'$\Gamma=1.5$')],
+    [2.0,   almost_equal(2.0,index_list),           dict(color='purple' if not bw else '0.2', label=r'$\Gamma=2$')],
+    [2.5,   almost_equal(2.5,index_list),           dict(color='green' if not bw else '0.4', label=r'$\Gamma=2.5$')],
+    [3.0,   almost_equal(3.0,index_list),           dict(color='black' if not bw else '0.6', label=r'$\Gamma=3$')],
 ]:
 
     cut = basecut & (ts_point_list>=25)
@@ -67,13 +66,21 @@ for index,basecut,kwargs in [
     cdf=cdf.astype(float)/cdf[0] # normalize
     cdf = np.append(cdf, 0)
 
+    cdf[cdf<ymin]=ymin
+
     axes.semilogy(bins,cdf,linewidth=1, **kwargs)
 
 
 lower,upper=axes.get_xlim()
 bins=np.linspace(lower,upper,10000)
 y = chi2.sf(bins,1)/2
-axes.semilogy(bins, y, color='red', linewidth=1, label='$\chi^2_1/2$', zorder=0, dashes=(5,3))
+axes.semilogy(bins, y, color='red' if not bw else 'black', linewidth=1, label='$\chi^2_1/2$', zorder=0, dashes=(5,3))
+
+axes.set_ylabel('Cumulative Density')
+axes.set_xlabel(r'$\mathrm{TS}_\mathrm{ext}$')
+
+axes.set_xlim(0,35)
+axes.set_ylim(ymin,1)
 
 P.legend()
 
