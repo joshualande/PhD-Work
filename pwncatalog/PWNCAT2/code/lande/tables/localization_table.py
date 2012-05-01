@@ -1,11 +1,11 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex, BestHypothesis
-from lande.utilities.tools import OrderedDefaultdict
+from lande.utilities.tools import OrderedDefaultDict
 import numpy as np
 from skymaps import SkyDir
 
 def localization_table(pwnlist):
 
-    table = OrderedDefaultdict(list)
+    table = OrderedDefaultDict(list)
 
     psr_name='PSR'
     l_name='GLON'

@@ -8,6 +8,8 @@ import os.path
 import yaml
 import asciitable
 
+from lande.utilities.table import latex_table,confluence_table
+
 base='$pwndata/spectral/v12/'
 
 fitdir=expandvars(j(base,'analysis_no_plots/'))
@@ -15,21 +17,45 @@ savedir=expandvars(j(base,'tables'))
 
 if not os.path.exists(savedir): os.makedirs(savedir)
 
-def table_name(pwn):
-    pwn = pwn.replace('PSR','')
-    pwn = pwn.replace('-','$-$')
-    return pwn
+class TableFormatter(object):
+    def __init__(self, confluence, precision=2):
+        self.confluence = confluence
+        self.precision = precision
+    def name(self, pwn):
+        pwn = pwn.replace('PSR','')
+        if not self.confluence:
+            pwn = pwn.replace('-','$-$')
+        return pwn
+    def ul(self,ul,precision=None):
+        if precision is None: precision=self.precision
+        if self.confluence:
+            return r'<%.*f' % (precision,ul)
+        else:
+            return r'$<%.*f$' % (precision,ul)
+    def error(self,a,b,precision=None):
+        if precision is None: precision=self.precision
+        if self.confluence:
+            return '%.*f +/- %.*f' % (precision,a,precision,b)
+        else:
+            return '$%.*f \pm %.*f$' % (precision,a,precision,b)
+    def value(self,a,precision=None):
+        if precision is None: precision=self.precision
+        ret = '%.*f' % (precision,a)
+        if confluence_table:
+            ret = ret.replace('-',r'\-')
+        return ret
+
+
+def write_confluence(table, filebase, **kwargs):
+
+    t = confluence_table(table, **kwargs)
+    os.chdir(savedir)
+    open('%s.confluence' % filebase,'w').write(t)
+
 
 def write_latex(table, filebase, **kwargs):
 
-    outtable=StringIO.StringIO()
-
-    asciitable.write(table, outtable, 
-                     Writer=asciitable.AASTex,
-                     names=table.keys(),
-                     **kwargs
-                    )
-    t=outtable.getvalue()
+    t = latex_table(table, **kwargs)
 
     lines = t.split('\n')
     if lines[-1] == '': 
@@ -39,7 +65,6 @@ def write_latex(table, filebase, **kwargs):
     footer= lines[-1]
 
     t = '\n'.join(lines[1:-1])
-
 
     os.chdir(savedir)
 

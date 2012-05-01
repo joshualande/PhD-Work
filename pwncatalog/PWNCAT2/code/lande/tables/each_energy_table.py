@@ -1,10 +1,10 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex, BestHypothesis
-from lande.utilities.tools import OrderedDefaultdict
+from lande.utilities.tools import OrderedDefaultDict
 from numpy import asarray as a
 
 def each_energy_table(pwnlist):
 
-    table = OrderedDefaultdict(list)
+    table = OrderedDefaultDict(list)
 
     psr_name='PSR'
     TS1_name = r'$\ts_{0.1-1}$'

@@ -1,5 +1,5 @@
 from table_helper import get_pwnlist,get_results,table_name,write_latex
-from lande.utilities.tools import OrderedDefaultdict
+from lande.utilities.tools import OrderedDefaultDict
 from os.path import join,exists,expandvars
 import yaml
 
@@ -8,7 +8,7 @@ ts_var_folder = '$pwndata/spectral/v10/variability/v3/'
 
 def cutoff_table(pwnlist):
 
-    table = OrderedDefaultdict(list)
+    table = OrderedDefaultDict(list)
     psr_name='PSR'
     #ts_point_name = r'$\ts_\text{point}$'
     ts_var_name = r'$\ts_\text{var}$'
