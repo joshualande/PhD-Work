@@ -14,7 +14,7 @@ python loop_pwn.py -c analyze.py \
 
 """
 import yaml
-from os.path import expandvars as e
+from os.path import expandvars
 from os.path import join
 import os
 from textwrap import dedent
@@ -31,10 +31,10 @@ args,remaining_args = parser.parse_known_args()
 outdir=args.outdir
 
 if args.pwndata is not None:
-    sources=yaml.load(open(args.pwndata))
+    sources=yaml.load(open(expandvars(args.pwndata)))
     flags = '--pwndata %s' % args.pwndata
 else:
-    sources=yaml.load(open(args.tevsources))
+    sources=yaml.load(open(expandvars(args.tevsources)))
     flags = '--tevsources %s' % args.tevsources
 
 if os.path.exists(outdir):
