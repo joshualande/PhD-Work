@@ -11,7 +11,7 @@ from skymaps import SkyDir
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.patheffects import withStroke
 
-from lande.utilities.plotting import label_axesgrid
+from lande.utilities.plotting import label_axes
 
 from off_peak_bb import plot
 
@@ -77,7 +77,7 @@ for i,pwn in enumerate(pwnlist):
         axes.set_xlabel('')
 
 
-    label_axesgrid(fig)
+    label_axes(fig)
 
 # if there are not plots alow all of the bottom, overlay
 # legend on higher up plots

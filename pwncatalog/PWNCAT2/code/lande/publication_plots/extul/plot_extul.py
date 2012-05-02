@@ -12,13 +12,13 @@ import numpy as np
 
 from uw.like.roi_plotting import DegreesFormatter
 
-from lande.utilities.plotting import label_axesgrid
+from lande.utilities.plotting import label_axes
 
 bw=plot_helper.get_bw()
 
 from uw.utilities.makerec import fitsrec
 
-r = fitsrec('/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v11/cached.fits')
+r = fitsrec('/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v13/cached.fits')
 
 for type in ['dim','bright']:
 
@@ -98,7 +98,7 @@ for type in ['dim','bright']:
 
     grid[0].legend(numpoints=1, ncol=2, loc=3, prop=FontProperties(size=10))
 
-    label_axesgrid(grid)
+    label_axes(grid)
 
     for g in grid: 
         g.xaxis.set_major_formatter(DegreesFormatter)

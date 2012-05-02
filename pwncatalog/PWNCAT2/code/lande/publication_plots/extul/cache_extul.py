@@ -9,7 +9,7 @@ import yaml
 
 from uw.utilities.makerec import RecArray,makefits
 
-datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v11'
+datadir = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/monte_carlo/extul/v13'
 
 rec = RecArray('flux_mc index_mc extension_mc extension_ul ts_point ts_ext type'.split())
 
