@@ -6,6 +6,7 @@ from glob import glob
 from os.path import expandvars as e, join as j
 from tempfile import mkdtemp
 import numbers
+import shutil
 
 import numpy as np
 
@@ -159,4 +160,5 @@ class PWNRegion(object):
 
     def __del__(self):
         if not self.savedata:
+            print 'Removing temporary directory',self.savedir
             shutil.rmtree(self.savedir)
