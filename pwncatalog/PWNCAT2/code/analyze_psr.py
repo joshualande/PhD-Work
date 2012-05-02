@@ -13,7 +13,7 @@ import os
 from os.path import join
 from glob import glob
 
-from setup_pwn import setup_pwn
+from setup_pwn import PWNRegion
 from argparse import ArgumentParser
 import yaml
 
@@ -102,11 +102,12 @@ gtlike_kwargs = kwargs.copy()
 save=lambda:save_results(results,name)
 
 print 'Building the ROI'
-roi=setup_pwn(name, args.pwndata, phase=phase, 
-              free_radius=5, max_free=args.max_free, fit_emin=emin, fit_emax=emax, 
-              savedir=savedir,
-              binsperdec=args.binsperdec,
-              extended=False)
+reg=PWNRegion(pwndata=args.pwndata, savedir=savedir)
+roi=reg.get_roi(name=name, phase=phase, 
+                catalog_kwargs=dict(free_radius=5, max_free=args.max_free),
+                fit_emin=emin, fit_emax=emax, 
+                binsperdec=args.binsperdec,
+                extended=False)
 
 modify = import_module(args.modify)
 new_sources = modify.modify_roi(name,roi)
