@@ -13,23 +13,21 @@ import asciitable
 
 from table_helper import BestHypothesis
 
-#if True:
-if False:
-    var_version='v10/variability/v3/'
-    spec_version='v12'
-    gtlike=True
+"""
+var_version='v10/variability/v3/'
+spec_version='v12'
+gtlike=True
+"""
 
-#if True:
-if False:
-    var_version='v13/variability/v1/'
-    spec_version='v13'
-    gtlike=False
+"""
+var_version='v13/variability/v1/'
+spec_version='v13'
+gtlike=False
+"""
 
-#if False:
-if True:
-    var_version='v13/variability/v1/'
-    spec_version='v14'
-    gtlike=False
+var_version='none'
+spec_version='v15'
+gtlike=True
 
 variability_unix=expandvars('$pwndata/spectral/%s' % var_version)
 variability_website=expandvars('../../%s' % var_version)
@@ -197,7 +195,7 @@ class TableFormatter(object):
 
 
 
-            displacement = np.degrees(SkyDir(*pt['equ']).difference(SkyDir(*pt_at_pulsar['equ'])))
+            displacement = np.degrees(SkyDir(*pt['position']['equ']).difference(SkyDir(*pt_at_pulsar['position']['equ'])))
             table['disp'][i] = '%.2f' % displacement
 
             if besttype != 'ul':
