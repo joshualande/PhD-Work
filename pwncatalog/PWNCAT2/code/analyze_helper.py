@@ -30,11 +30,31 @@ from lande.fermi.data.plotting import ROITSMapBandPlotter, ROISourceBandPlotter,
 
 from setup_pwn import get_catalog
 
-all_energy=lambda emin,emax: np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1)
-high_energy=lambda emin,emax: np.allclose([emin,emax],[10**4,10**5.5], rtol=0, atol=1) 
-higher_energy=lambda emin,emax: np.allclose([emin,emax],[10**4.5,10**5.5], rtol=0, atol=1)
+close=lambda x,y: np.allclose(x,y, rtol=0, atol=1)
+all_energy=lambda emin,emax: close([emin,emax],[1e2,10**5.5]) or close([emin,emax],[1e2,1e5])
+high_energy=lambda emin,emax: close([emin,emax],[10**4,10**5.5])
+higher_energy=lambda emin,emax: close([emin,emax],[10**4.5,10**5.5])
 
-three_bins=[1e2,1e3,1e4,10**5.5]
+def one_bin_per_dec(emin,emax):
+    assert close(emin,1e2) and (close(emax,1e5) or close(emax,10**5.5))
+    if close(emax,1e5):
+        return np.logspace(2,5,4)
+    elif close(emax,10*5.5):
+        return [1e2,1e3,1e4,10**5.5]
+
+def two_bin_per_dec(emin,emax):
+    assert close(emin,1e2) and (close(emax,1e5) or close(emax,10**5.5))
+    if close(emax,1e5):
+        return np.logspace(2,5,7)
+    elif close(emax,10*5.5):
+        return np.logspace(2,5.5,8)
+
+def four_bin_per_dec(emin,emax):
+    assert close(emin,1e2) and (close(emax,1e5) or close(emax,10**5.5))
+    if close(emax,1e5):
+        return np.logspace(2,5,13)
+    elif close(emax,10*5.5):
+        return np.logspace(2,5.5,15)
 
 def overlay_on_plot(axes, pulsar_position):
     """ Function to overlay on all plots
@@ -56,7 +76,7 @@ def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, tsmap_pixelsize=0
                    **tsmap_kwargs)
 
     if all_energy(emin,emax):
-        ROITSMapBandPlotter(roi,  bin_edges=three_bins, **tsmap_kwargs).show(filename='%s/band_tsmap_residual_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size))
+        ROITSMapBandPlotter(roi,  bin_edges=one_bin_per_dec(emin,emax), **tsmap_kwargs).show(filename='%s/band_tsmap_residual_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size))
 
     roi.zero_source(which=name)
 
@@ -64,8 +84,8 @@ def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, tsmap_pixelsize=0
                    title='Source TS Map for %s' % name,
                    **tsmap_kwargs)
 
-    if np.allclose([emin,emax],[1e2,10**5.5], rtol=0, atol=1):
-        ROITSMapBandPlotter(roi,bin_edges=three_bins, **tsmap_kwargs).show(filename='%s/band_tsmap_source_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size))
+    if all_energy(emin,emax):
+        ROITSMapBandPlotter(roi,bin_edges=one_bin_per_dec(emin,emax), **tsmap_kwargs).show(filename='%s/band_tsmap_source_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size))
 
     roi.unzero_source(which=name)
 
@@ -118,8 +138,8 @@ def smooth_plots(roi, name, hypothesis, datadir, plotdir, size, **common_kwargs)
         roi.plot_sources(filename='%s/sources_%g_%s_%s_%sdeg.png' % (plotdir, kernel_rad, hypothesis, name, size), kernel_rad=kernel_rad, **smooth_kwargs)
 
         if all_energy(emin,emax):
-            ROISourceBandPlotter(roi, bin_edges=three_bins, kernel_rad=kernel_rad, **smooth_kwargs).show(filename='%s/band_source_%g_%s_%s_%sdeg.png' % (plotdir,kernel_rad,hypothesis,name,size))
-            ROISourcesBandPlotter(roi, bin_edges=three_bins, kernel_rad=kernel_rad, **smooth_kwargs).show(filename='%s/band_sources_%g_%s_%s_%sdeg.png' % (plotdir,kernel_rad,hypothesis,name,size))
+            ROISourceBandPlotter(roi, bin_edges=one_bin_per_dec(emin,emax), kernel_rad=kernel_rad, **smooth_kwargs).show(filename='%s/band_source_%g_%s_%s_%sdeg.png' % (plotdir,kernel_rad,hypothesis,name,size))
+            ROISourcesBandPlotter(roi, bin_edges=one_bin_per_dec(emin,emax), kernel_rad=kernel_rad, **smooth_kwargs).show(filename='%s/band_sources_%g_%s_%s_%sdeg.png' % (plotdir,kernel_rad,hypothesis,name,size))
 
 
 def plots(roi, name, hypothesis, 
@@ -130,7 +150,7 @@ def plots(roi, name, hypothesis,
     extra_overlay = lambda ax: overlay_on_plot(ax, pulsar_position=pulsar_position)
 
     # Override marker for new sources to be red stars
-    override_kwargs = {source:dict(color='red',marker='*') for source in new_sources}
+    override_kwargs = {source.name:dict(color='red',marker='*') for source in new_sources}
 
     common_kwargs = dict(extra_overlay=extra_overlay, 
                          overlay_kwargs=dict(override_kwargs=override_kwargs))
@@ -245,7 +265,7 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
 
     if extension_upper_limit:
         print 'Calculating extension upper limit'
-        p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian())
+        p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian)
 
     if upper_limit:
         p['upper_limit']=powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
@@ -288,7 +308,7 @@ def gtlike_analysis(roi, name, hypothesis,
         r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95, delta_log_like_limits=10)
 
     if all_energy(emin,emax):
-        bf = BandFitter(like, name, bin_edges=three_bins)
+        bf = BandFitter(like, name, bin_edges=one_bin_per_dec(emin,emax))
         r['bands'] = bf.todict()
 
     def sed(kind,**kwargs):
@@ -299,9 +319,9 @@ def gtlike_analysis(roi, name, hypothesis,
 
     if seds:
         if all_energy(emin,emax):
-            sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(2,5.5,15))
-            sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(2,5.5,8))
-            sed('1bpd_%s' % hypothesis,bin_edges=three_bins)
+            sed('1bpd_%s' % hypothesis,bin_edges=one_bin_per_dec(emin,emax))
+            sed('2bpd_%s' % hypothesis,bin_edges=two_bin_per_dec(emin,emax))
+            sed('4bpd_%s' % hypothesis,bin_edges=four_bin_per_dec(emin,emax))
         elif high_energy(emin,emax):
             sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4,5.5,7))
             sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4,5.5,4))
