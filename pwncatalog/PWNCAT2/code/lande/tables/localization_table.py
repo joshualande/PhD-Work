@@ -1,7 +1,13 @@
-from table_helper import get_pwnlist,get_results,table_name,write_latex, BestHypothesis
+from table_helper import get_pwnlist,get_results,write_latex, write_confluence, BestHypothesis
+from table_helper import PWNFormatter
+
 from lande.utilities.tools import OrderedDefaultDict
 import numpy as np
 from skymaps import SkyDir
+
+confluence=True
+
+format=PWNFormatter(confluence=confluence, precision=2)
 
 def localization_table(pwnlist):
 
@@ -10,8 +16,8 @@ def localization_table(pwnlist):
     psr_name='PSR'
     l_name='GLON'
     b_name='GLAT'
-    ts_point_name =r'$\ts_\text{point}$'
-    ts_ext_name =r'\tsext'
+    ts_point_name =r'$\ts_\text{point}$' if not confluence else 'TS_point'
+    ts_ext_name =r'\tsext' if not confluence else 'TS_ext'
     offset_name = 'Offset'
     ext_name = 'Extension'
     poserr_name = 'Pos Err'
@@ -19,6 +25,8 @@ def localization_table(pwnlist):
     for pwn in pwnlist:
 
         results = get_results(pwn)
+
+        print pwn
 
         if results is None or \
            not results.has_key('point') or \
@@ -49,31 +57,28 @@ def localization_table(pwnlist):
         type = b.type
 
 
-        print pwn,type
 
         if type != 'upper_limit':
 
-            print pwn
-
-            l,b=pointlike['gal']
+            l,b=pointlike['position']['gal']
 
             try:
                 poserr='%.2f' % pointlike['spatial_model']['lsigma']
             except:
                 poserr='None'
 
-            o = np.degrees(SkyDir(*pointlike['equ']).difference(SkyDir(*at_pulsar_pointlike['equ'])))
+            o = np.degrees(SkyDir(*pointlike['position']['equ']).difference(SkyDir(*at_pulsar_pointlike['position']['equ'])))
 
             if type == 'extended':
                 extension = extended_pointlike['spatial_model']['Sigma']
                 extension_err = extended_pointlike['spatial_model']['Sigma_err']
-                ext = '$%.2f \pm %.2f$' % (extension, extension_err)
+                ext = format.error(extension, extension_err)
 
             elif type == 'point':
-                extension_ul = point_pointlike['extension_upper_limit']
-                ext = '$<%.2f$' % extension_ul
+                extension_ul = point_pointlike['extension_upper_limit']['extension']
+                ext = format.ul(extension_ul)
 
-            table[psr_name].append(table_name(pwn))
+            table[psr_name].append(format.pwn(pwn))
 
             table[ts_point_name].append('%.1f' % ts_point)
             table[l_name].append('%.2f' % l)
@@ -84,17 +89,29 @@ def localization_table(pwnlist):
             table[ext_name].append(ext)
             
     deg = '(deg)'
-    write_latex(table,
-                filebase='localization',
-                latexdict = dict(#caption=r'All Energy spectral fit for the %s LAT-detected Pulsars'  % len(pwnlist),
-                                 #preamble=r'\tabletypesize{\scriptsize}',
-                                 units={
-                                     l_name:deg,
-                                     b_name:deg,
-                                     offset_name:deg,
-                                     ext_name:deg,
-                                     poserr:deg,
-                                 }))
+
+    filebase='localization'
+    if confluence:
+        write_confluence(table,
+                    filebase=filebase,
+                    units={
+                        l_name:deg,
+                        b_name:deg,
+                        offset_name:deg,
+                        ext_name:deg,
+                        poserr_name:deg,
+                    })
+    else:
+        write_latex(table,
+                    filebase=filebase,
+                    units={
+                        l_name:deg,
+                        b_name:deg,
+                        offset_name:deg,
+                        ext_name:deg,
+                        poserr_name:deg,
+                    })
+
 
 
 pwnlist=get_pwnlist()

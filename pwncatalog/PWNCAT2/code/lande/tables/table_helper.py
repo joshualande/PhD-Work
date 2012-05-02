@@ -8,42 +8,22 @@ import os.path
 import yaml
 import asciitable
 
-from lande.utilities.table import latex_table,confluence_table
+from lande.utilities.table import latex_table,confluence_table,TableFormatter
 
-base='$pwndata/spectral/v12/'
+base='$pwndata/spectral/v15/'
 
 fitdir=expandvars(j(base,'analysis_no_plots/'))
 savedir=expandvars(j(base,'tables'))
 
 if not os.path.exists(savedir): os.makedirs(savedir)
 
-class TableFormatter(object):
-    def __init__(self, confluence, precision=2):
-        self.confluence = confluence
-        self.precision = precision
-    def name(self, pwn):
+
+class PWNFormatter(TableFormatter):
+    def pwn(self, pwn):
         pwn = pwn.replace('PSR','')
         if not self.confluence:
             pwn = pwn.replace('-','$-$')
         return pwn
-    def ul(self,ul,precision=None):
-        if precision is None: precision=self.precision
-        if self.confluence:
-            return r'<%.*f' % (precision,ul)
-        else:
-            return r'$<%.*f$' % (precision,ul)
-    def error(self,a,b,precision=None):
-        if precision is None: precision=self.precision
-        if self.confluence:
-            return '%.*f +/- %.*f' % (precision,a,precision,b)
-        else:
-            return '$%.*f \pm %.*f$' % (precision,a,precision,b)
-    def value(self,a,precision=None):
-        if precision is None: precision=self.precision
-        ret = '%.*f' % (precision,a)
-        if confluence_table:
-            ret = ret.replace('-',r'\-')
-        return ret
 
 
 def write_confluence(table, filebase, **kwargs):

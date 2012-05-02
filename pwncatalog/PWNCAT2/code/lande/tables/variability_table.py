@@ -1,8 +1,12 @@
-from table_helper import get_pwnlist,get_results,table_name,write_latex
+from table_helper import get_pwnlist,get_results,write_latex,write_confluence
+from table_helper import PWNFormatter
 from lande.utilities.tools import OrderedDefaultDict
 from os.path import join,exists,expandvars
 import yaml
 
+confluence=True
+
+format=PWNFormatter(confluence=confluence, precision=2)
 
 ts_var_folder = '$pwndata/spectral/v10/variability/v3/'
 
@@ -11,7 +15,7 @@ def cutoff_table(pwnlist):
     table = OrderedDefaultDict(list)
     psr_name='PSR'
     #ts_point_name = r'$\ts_\text{point}$'
-    ts_var_name = r'$\ts_\text{var}$'
+    ts_var_name = r'$\ts_\text{var}$' if not confluence else 'TS_var'
 
     t='gtlike'
 
@@ -26,7 +30,7 @@ def cutoff_table(pwnlist):
 
         print pwn
 
-        table[psr_name].append(table_name(pwn))
+        table[psr_name].append(format.pwn(pwn))
 
         #table[ts_point_name].append('%.1f' % ts_point)
 
@@ -36,11 +40,15 @@ def cutoff_table(pwnlist):
             v = yaml.load(open(var))
 
             ts_var = v['TS_var'][t]
-            table[ts_var_name].append('%.1f' % ts_var)
+            table[ts_var_name].append(format.value(ts_var, precision=1))
         else:
             table[ts_var_name].append(r'None')
 
-    write_latex(table,filebase='variability')
+    filebase='variability'
+    if confluence:
+        write_confluence(table,filebase=filebase)
+    else:
+        write_latex(table,filebase=filebase)
 
 
 pwnlist=get_pwnlist()

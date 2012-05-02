@@ -1,7 +1,10 @@
-from table_helper import get_pwnlist,get_results,table_name,write_confluence,write_latex
+from table_helper import get_pwnlist,get_results,write_confluence,write_latex
+from table_helper import PWNFormatter
 from lande.utilities.tools import OrderedDefaultDict
 
 confluence=True
+
+format=PWNFormatter(confluence=confluence, precision=2)
 
 def cutoff_table(pwnlist):
 
@@ -27,7 +30,7 @@ def cutoff_table(pwnlist):
         if ts < 25:
             continue
 
-        table[psr_name].append(table_name(pwn,confluence))
+        table[psr_name].append(format.pwn(pwn))
 
         cutoff=results['point']['gtlike']['test_cutoff']
 
@@ -35,14 +38,12 @@ def cutoff_table(pwnlist):
 
             ts_point = results['point']['gtlike']['TS']
 
-            table[ts_point_name].append('%.1f' % ts_point)
+            table[ts_point_name].append(format.value(ts_point,precision=1))
 
             ts_cutoff = max(cutoff['TS_cutoff'],0)
-            table[ts_cutoff_name].append('%.1f' % ts_cutoff)
+            table[ts_cutoff_name].append(format.value(ts_cutoff,precision=1))
 
             nodata = '' if confluence else r'\nodata'
-
-            format_error = lambda x,y: '$%.2f \pm %.2f$' % (x,y) if not confluence else '%.2f +/- %.2f' % (x,y)
 
 
             if ts_cutoff >= 16:
@@ -57,15 +58,15 @@ def cutoff_table(pwnlist):
                 cutoff_energy=cutoff['model_1']['Cutoff']
                 cutoff_energy_err=cutoff['model_1']['Cutoff_err']
 
-                table[flux_name].append(format_error(flux/1e-9,flux_err/1e-9))
-                table[eflux_name].append(format_error(eflux/1e-12,eflux_err/1e-12))
-                table[index_name].append(format_error(index,index_err))
-                table[cutoff_name].append(format_error(cutoff_energy/1000,cutoff_energy_err/1000))
+                table[flux_name].append(format.error(flux/1e-9,flux_err/1e-9))
+                table[eflux_name].append(format.error(eflux/1e-12,eflux_err/1e-12))
+                table[index_name].append(format.error(index,index_err))
+                table[cutoff_name].append(format.error(cutoff_energy/1000,cutoff_energy_err/1000))
             else:
-                table[flux_name].append(nodata)
-                table[eflux_name].append(nodata)
-                table[index_name].append(nodata)
-                table[cutoff_name].append(nodata)
+                table[flux_name].append(format.nodata)
+                table[eflux_name].append(format.nodata)
+                table[index_name].append(format.nodata)
+                table[cutoff_name].append(format.nodata)
         else:
             table[flux_name].append('None')
             table[eflux_name].append('None')

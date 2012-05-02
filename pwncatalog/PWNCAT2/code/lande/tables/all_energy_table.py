@@ -1,10 +1,10 @@
 from table_helper import get_pwnlist,get_results,write_latex,write_confluence,BestHypothesis
-from table_helper import TableFormatter
+from table_helper import PWNFormatter
 from lande.utilities.tools import OrderedDefaultDict
 
 confluence=True
 
-format=TableFormatter(confluence=confluence)
+format=PWNFormatter(confluence=confluence, precision=2)
 
 def all_energy_table(pwnlist):
 
@@ -21,7 +21,7 @@ def all_energy_table(pwnlist):
     nodata = '' if confluence else r'\nodata'
 
     for pwn in pwnlist:
-        table[psr_name].append(format.name(pwn))
+        table[psr_name].append(format.pwn(pwn))
 
         results = get_results(pwn)
 
