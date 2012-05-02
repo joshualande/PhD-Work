@@ -82,7 +82,7 @@ pulsar_position = SkyDir(*pwndata['cel'])
 
 if not os.path.exists('plots'): os.makedirs('plots')
 
-plot_kwargs = dict(ft1=ft1, skydir=pulsar_position, off_pulse=phase, 
+plot_kwargs = dict(ft1=ft1, skydir=pulsar_position, phase_range=phase, 
                    emin=pwnphase['optimal_emin'], emax=pwnphase['emax'], radius=pwnphase['optimal_radius'])
 plot_phaseogram(title='Phaseogram for %s' % name, filename='plots/phaseogram_%s.png' % name, **plot_kwargs)
 plot_phase_vs_time(title='Phase vs Time for %s' % name, filename='plots/phase_vs_time_%s.png' % name, **plot_kwargs)
