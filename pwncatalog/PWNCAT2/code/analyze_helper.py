@@ -28,7 +28,7 @@ from lande.fermi.pulsar.plotting import plot_phaseogram,plot_phase_vs_time
 from lande.fermi.sed.supersed import SuperSED
 from lande.fermi.data.plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter
 
-from setup_pwn import get_catalog
+from setup_pwn import PWNRegion
 
 close=lambda x,y: np.allclose(x,y, rtol=0, atol=1)
 all_energy=lambda emin,emax: close([emin,emax],[1e2,10**5.5]) or close([emin,emax],[1e2,1e5])
@@ -204,9 +204,9 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
 
     while 1:
         fit()
-        any_changed = freeze_bad_index_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=9)
+        any_changed = freeze_bad_index_to_catalog(roi, PWNRegion.get_catalog(), exclude_names=[name], min_ts=9)
         fit()
-        any_changed = any_changed or freeze_insignificant_to_catalog(roi, get_catalog(), exclude_names=[name], min_ts=9)
+        any_changed = any_changed or freeze_insignificant_to_catalog(roi, PWNRegion.get_catalog(), exclude_names=[name], min_ts=9)
         fit() 
         any_changed = any_changed or fix_bad_cutoffs(roi, exclude_names=[name])
         if not any_changed:
