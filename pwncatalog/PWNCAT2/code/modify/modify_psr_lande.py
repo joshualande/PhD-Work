@@ -27,7 +27,7 @@ def modify_roi(name,roi):
 
         # In previous analysis v9:
         # $pwndata/spectral/v9/analysis_no_plots/PSRJ1023-5746/results_PSRJ1023-5746.yaml
-        # I foudn that this source had large residual surrounding it. So always fit it
+        # I found that this source had large residual surrounding it. So always fit it
         roi.modify(which='2FGL J1044.5-5737', free=True)
 
         # v9: Add new source 'seed1' that represents residual found in the TSmap at the top left
