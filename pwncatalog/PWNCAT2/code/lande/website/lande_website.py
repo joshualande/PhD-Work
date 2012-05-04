@@ -26,7 +26,7 @@ gtlike=False
 """
 
 var_version='none'
-spec_version='v15'
+spec_version='v17'
 gtlike=True
 
 variability_unix=expandvars('$pwndata/spectral/%s' % var_version)
@@ -80,17 +80,6 @@ def get_variability(pwn):
     return yaml.load(open(f))
 
 
-def get_sed(pwn,binning,hypothesis):
-    filename=join(analysis_no_plots_unix,pwn,'seds','sed_gtlike_%s_%s_%s.yaml' % (binning, hypothesis, pwn))
-    if os.path.exists(filename) and yaml.load(open(filename)) != {}:
-        return yaml.load(open(filename))
-    elif binning == '1bpd':
-        d=defaultdict(lambda: defaultdict(lambda:[-1,-1,-1]))
-        d['Test_Statistic']=[-1,-1,-1]
-        return d
-    else:
-        raise Exception("...")
-
 
 
 def t2t(lines,name): 
@@ -109,7 +98,7 @@ class TableFormatter(object):
 
     def __init__(self, pwnlist):
 
-        flux_name=r'F(0.1-316)'
+        flux_name=r'F(0.1-100)'
         gamma_name=r'Gamma'
 
         table = OrderedDict()
@@ -118,7 +107,7 @@ class TableFormatter(object):
                   'disp', flux_name, gamma_name,
                   'TS(.1-1)', 'F(.1-1)', 'Index(.1-1)',
                   'TS(1-10)', 'F(1-10)', 'Index(1-10)', 
-                  'TS(10-316)', 'F(10-316)', 'Index(10-316)']:
+                  'TS(10-100)', 'F(10-100)', 'Index(10-100)']:
             table[k] = ['None']*len(pwnlist)
 
         for i,pwn in enumerate(pwnlist):
@@ -220,7 +209,7 @@ class TableFormatter(object):
 
                 bands=gt['bands']
                 if not np.allclose(bands['energy']['lower'], [1e2, 1e3, 1e4]) or \
-                   not np.allclose(bands['energy']['upper'], [1e3, 1e4, 10**5.5]):
+                   not np.allclose(bands['energy']['upper'], [1e3, 1e4, 1e5]):
                     raise Exception("...")
 
                 ts1,ts2,ts3=bands['TS']
@@ -248,13 +237,13 @@ class TableFormatter(object):
                     table['F(1-10)'][i] = '<%.1f' % (ul2/1e-9)
                     table['Index(1-10)'][i] = '-'
 
-                table['TS(10-316)'][i] = '%.1f' % ts3
+                table['TS(10-100)'][i] = '%.1f' % ts3
                 if ts3>25:
-                    table['F(10-316)'][i] = '%.1f +/- %.1f' % (flux3/1e-9,flux_err3/1e-9)
-                    table['Index(10-316)'][i] = '%.1f +/- %.1f' % (index3,index_err3)
+                    table['F(10-100)'][i] = '%.1f +/- %.1f' % (flux3/1e-9,flux_err3/1e-9)
+                    table['Index(10-100)'][i] = '%.1f +/- %.1f' % (index3,index_err3)
                 else:
-                    table['F(10-316)'][i] = '<%.1f' % (ul3/1e-9)
-                    table['Index(10-316)'][i] = '-'
+                    table['F(10-100)'][i] = '<%.1f' % (ul3/1e-9)
+                    table['Index(10-100)'][i] = '-'
 
             var = get_variability(pwn)
             if var is not None:
@@ -309,6 +298,7 @@ def build_each_page(pwn):
     hypothesis=t.hypothesis
 
     get_img_table = lambda *args: index_t2t.append('|| ' + ' | '.join(['[%s/%s/%s]' % (analysis_plots_website,pwn,i) for i in args]) + ' |\n\n')
+    get_sed_table = lambda *args: index_t2t.append('|| ' + ' | '.join(['[%s/%s/%s]' % (analysis_no_plots_website,pwn,i) for i in args]) + ' |\n\n')
 
     title = lambda i: index_t2t.append('== %s ==' % i)
 
@@ -342,13 +332,13 @@ def build_each_page(pwn):
     get_img_table('plots/band_source_0.1_%s_%s_5deg.png' % (hypothesis,pwn))
 
     title('gtlike SED (4bpd')
-    get_img_table(*['seds/sed_gtlike_4bpd_%s_%s.png' % (i,pwn) for i in all])
+    get_sed_table(*['seds/sed_gtlike_4bpd_%s_%s.png' % (i,pwn) for i in all])
 
     title('gtlike SED (2bpd')
-    get_img_table(*['seds/sed_gtlike_2bpd_%s_%s.png' % (i,pwn) for i in all])
+    get_sed_table(*['seds/sed_gtlike_2bpd_%s_%s.png' % (i,pwn) for i in all])
 
     title('gtlike SED (1bpd')
-    get_img_table(*['seds/sed_gtlike_1bpd_%s_%s.png' % (i,pwn) for i in all])
+    get_sed_table(*['seds/sed_gtlike_1bpd_%s_%s.png' % (i,pwn) for i in all])
 
     get_img_table(
         'plots/test_cutoff_%s_%s.png' % (hypothesis,pwn))
@@ -362,7 +352,7 @@ def build_each_page(pwn):
 
 
     title('Pointlike SEDs')
-    get_img_table(*['seds/sed_pointlike_%s_%s.png' % (i,pwn) for i in all])
+    get_sed_table(*['seds/sed_pointlike_%s_%s.png' % (i,pwn) for i in all])
 
     title('Extra: Smoothed Counts (0.25)')
     get_img_table(*['plots/source_0.25_%s_%s_5deg.png' % (i,pwn) for i in all])

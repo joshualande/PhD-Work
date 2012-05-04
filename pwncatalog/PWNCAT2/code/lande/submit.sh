@@ -598,3 +598,32 @@ echo python $pwncode/loop_pwn.py \
         -o $pwndata/spectral/$version/analysis_plots \
         $common_kwargs \
         --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits
+
+
+# ----------------------------------------------------------------------------------------------------
+
+# major changes: ??? rerun
+version=v17
+common_kwargs="\$pwncode/loop_pwn.py \
+        -c \\\$pwncode/analyze_psr.py \
+        --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwncode/modify/modify_psr_lande.py \
+        --max-free 5 --localization-emin=1e2 --no-savedir --emax=1e5"
+
+echo python $common_kwargs \
+    -o $pwndata/spectral/$version/analysis_no_plots \
+    $common_kwargs \
+    --no-plots 
+
+echo python $common_kwargs \
+        -o $pwndata/spectral/$version/analysis_plots \
+        --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits
+
+echo python $common_kwargs \
+        -o $pwndata/spectral/$version/analysis_fast \
+        --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits --no-plots
+
+echo python $common_kwargs \
+        -o $pwndata/spectral/$version/analysis_fast2 \
+        --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits --no-plots

@@ -3,7 +3,7 @@ import yaml
 import numbers
 import os
 from glob import glob
-from os.path import expandvars as e, join as j
+from os.path import expandvars, join
 from tempfile import mkdtemp
 import numbers
 import shutil
@@ -17,11 +17,37 @@ from uw.like.pointspec_helpers import get_default_diffuse, PointSource, FermiCat
 from uw.like.SpatialModels import Gaussian
 from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.roi_extended import ExtendedSource
+from uw.like.roi_save import load
 from uw.like.Models import PowerLaw
 from uw.utilities import phasetools
 from uw.pulsar.phase_range import PhaseRange
 
 isnum = lambda x: isinstance(x, numbers.Real)
+
+
+import cPickle
+def load_pwn(filename, **kwargs):
+    """ By default, pwn roi's are not loadable. """
+
+    savedir=mkdtemp(prefix='/scratch/')
+    print 'new savedir is',savedir
+
+    d=cPickle.load(open(expandvars(filename),'r'))
+    extra=d['extra']
+
+    ft1=extra['unphased_ft1']
+    ltcube=extra['unphased_ltcube']
+    phase=extra['phase']
+
+    phased_ft1=PWNRegion.phase_ft1(ft1,phase,savedir)
+    phased_ltcube=PWNRegion.phase_ltcube(ltcube,phase,savedir)
+    binfile=join(savedir,'binned_phased.fits')
+
+    roi = load(filename, ft1files=phased_ft1, ltcube=phased_ltcube, binfile=binfile, **kwargs)
+
+    roi.__del__ = lambda x: shutil.rmtree(savedir)
+    return roi
+
 
 
 class PWNRegion(object):
@@ -37,7 +63,7 @@ class PWNRegion(object):
             self.savedir=savedir
             self.savedata=True
             if os.path.exists(self.savedir):
-                for file in glob(j(self.savedir,'*')):
+                for file in glob(join(self.savedir,'*')):
                     os.remove(file)
             else:
                 os.makedirs(self.savedir)
@@ -76,6 +102,30 @@ class PWNRegion(object):
                            prune_radius=0,
                            **kwargs)
 
+    @staticmethod
+    def phase_ltcube(ltcube,phase,savedir):
+
+        if np.allclose(phase.phase_fraction,1):
+            phased_ltcube = ltcube
+        else:
+            # create a temporary ltcube scaled by the phase factor
+            phased_ltcube=join(savedir,'phased_ltcube.fits')
+            if not os.path.exists(phased_ltcube):
+                phasetools.phase_ltcube(ltcube,phased_ltcube, phase=phase)
+        return phased_ltcube
+
+    @staticmethod
+    def phase_ft1(ft1,phase,savedir):
+
+        if np.allclose(phase.phase_fraction,1):
+            phased_ft1 = ft1
+        else:
+            # apply phase cut to ft1 file
+            phased_ft1 = join(savedir,'ft1_phased.fits')
+            if not os.path.exists(phased_ft1):
+                phasetools.phase_cut(ft1,phased_ft1,phaseranges=phase.tolist(dense=False))
+        return phased_ft1
+
     def get_roi(self, name, phase, 
                 fit_emin, fit_emax, 
                 binsperdec,
@@ -113,21 +163,10 @@ class PWNRegion(object):
 
         catalog=PWNRegion.get_catalog(**catalog_kwargs)
 
-        binfile=j(self.savedir,'binned_phased.fits')
+        binfile=join(self.savedir,'binned_phased.fits')
 
-        if np.allclose(phase.phase_fraction,1):
-            phased_ltcube = ltcube
-            phased_ft1 = ft1
-        else:
-            # create a temporary ltcube scaled by the phase factor
-            phased_ltcube=j(self.savedir,'phased_ltcube.fits')
-            if not os.path.exists(phased_ltcube):
-                phasetools.phase_ltcube(ltcube,phased_ltcube, phase=phase)
-
-            # apply phase cut to ft1 file
-            phased_ft1 = j(self.savedir,'ft1_phased.fits')
-            if not os.path.exists(phased_ft1):
-                phasetools.phase_cut(ft1,phased_ft1,phaseranges=phase.tolist(dense=False))
+        phased_ltcube=PWNRegion.phase_ltcube(ltcube,phase,self.savedir)
+        phased_ft1=PWNRegion.phase_ft1(ft1,phase,self.savedir)
 
         ds = DataSpecification(
             ft1files = phased_ft1,
@@ -150,9 +189,15 @@ class PWNRegion(object):
                    diffuse_sources=diffuse_sources,
                    catalogs=catalog,
                    phase_factor=1,
+                   fit_emin=fit_emin, fit_emax=fit_emax,
                    **kwargs)
 
         print 'bins ',roi.bin_edges
+
+        roi.extra = dict(
+            unphased_ft1 = ft1,
+            unphased_ltcube = ltcube,
+            phase = phase)
 
         self.roi = roi
 

@@ -10,7 +10,7 @@ import asciitable
 
 from lande.utilities.table import latex_table,confluence_table,TableFormatter
 
-base='$pwndata/spectral/v15/'
+base='$pwndata/spectral/v12/'
 
 fitdir=expandvars(j(base,'analysis_no_plots/'))
 savedir=expandvars(j(base,'tables'))
