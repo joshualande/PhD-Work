@@ -21,7 +21,7 @@ from lande.fermi.sed.plotting import plot_all_seds
 from lande.fermi.likelihood.fit import paranoid_gtlike_fit, fit_prefactor, freeze_insignificant_to_catalog, freeze_bad_index_to_catalog
 from lande.fermi.likelihood.save import sourcedict, get_full_energy_range
 from lande.fermi.likelihood.limits import powerlaw_upper_limit
-from lande.fermi.likelihood.localize import GridLocalize
+from lande.fermi.likelihood.localize import GridLocalize, paranoid_localize
 from lande.fermi.likelihood.cutoff import plot_gtlike_cutoff_test, test_cutoff, fix_bad_cutoffs
 from lande.fermi.likelihood.bandfitter import BandFitter
 from lande.fermi.pulsar.plotting import plot_phaseogram,plot_phase_vs_time
@@ -70,7 +70,6 @@ def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, tsmap_pixelsize=0
 
     tsmap_kwargs = dict(size=size, pixelsize=tsmap_pixelsize, **common_kwargs)
 
-    print 'Making plots for hypothesis %s' % hypothesis
     roi.plot_tsmap(filename='%s/tsmap_residual_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size), 
                    title='Residual TS Map for %s' % name,
                    **tsmap_kwargs)
@@ -146,6 +145,8 @@ def plots(roi, name, hypothesis,
           pulsar_position, new_sources,
           datadir='data', plotdir='plots', 
           tsmap_pixelsize=0.1):
+
+    print 'Making plots for hypothesis %s' % hypothesis
 
     extra_overlay = lambda ax: overlay_on_plot(ax, pulsar_position=pulsar_position)
 
@@ -225,7 +226,8 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
                               update=True,
                               size=0.5, pixelsize=0.1)
             print_summary()
-            roi.localize(name, update=True)
+
+            paranoid_localize(roi, name, update=True)
         except Exception, ex:
             print 'ERROR localizing pointlike: ', ex
             traceback.print_exc(file=sys.stdout)
@@ -242,7 +244,7 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
                 roi.change_binning(localization_emin,emax)
 
             roi.fit_extension(which=name)
-            roi.localize(name, update=True)
+            paranoid_localize(roi, name, update=True)
 
         except Exception, ex:
             print 'ERROR extension fitting pointlike: ', ex
