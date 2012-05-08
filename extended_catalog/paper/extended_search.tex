@@ -3,8 +3,8 @@
 \bibliographystyle{apj}
 
 \newif\ifcolorfigure
-\colorfiguretrue
-%\colorfigurefalse
+%\colorfiguretrue
+\colorfigurefalse
 
 
 
@@ -235,7 +235,8 @@ LAT sources.
 In Section~\ref{monte_carlo_validation}, we demonstrate
 that this method can be used to test the statistical significance of the
 extension of a LAT source and in Section~\ref{bias_wrong_spatial_model}
-we asses the bias that is introduced by assuming an incorrect spatial model.
+we assess the expected level of bias 
+introduced by assuming an incorrect spatial model.
 In Section~\ref{extension_sensitivity},
 we calculate the LAT detection threshold to resolve the extension
 of a source.}
@@ -347,14 +348,20 @@ of the source are
 not directly fit but instead the displacement of the source 
 in a reference frame centered on the source.
 
+\newtext{
 The significance of the extension of a source can be calculated from the
-likelihood ratio test of a hypothesis with a spatially extended source and
-a hypothesis with a point-like source. The test statistic (TS) for this procedure
-is defined as
+likelihood-ratio test. The likelihood ratio defines the
+test statistic (TS) by comparing the likelihood of a simpler hypothesis to
+a more complicated one:
 \begin{equation}
-  \tsext=2\log(\likelihood_\text{ext}/\likelihood_\text{ps}) 
+  \ts=2\log(\likelihood(H_1)/\likelihood(H_0)),
 \end{equation}
-where \likelihood is the Poisson likelihood.
+where $H_1$ is the more complicated hypothesis and $H_0$ the simpler one.
+For the case of the extension test, we compare the likelihood
+when assuming the source has either a point-like or spatially extended spatial model:}
+\begin{equation}
+  \tsext=2\log(\likelihood_\text{ext}/\likelihood_\text{ps}).
+\end{equation}
 \pointlike calculates \tsext by fitting a source first with a spatially
 extended model and then as a point-like source.  The interpretation
 of \tsext in terms of a statistical significance is discussed in
@@ -489,15 +496,21 @@ Therefore, in our search for extended sources we use only a radially-symmetric u
 disk spatial model. Unless otherwise noted,
 we quote the radius to the edge ($\sigma$) as the size of the source.}
 
-\section{Validation of the Analysis Method}
+\newtext{
+\section{Validation of the \ts Distribution}
 
-\subsection{\newtext{Statistical Significance Testing}}
+\subsection{Point-like Source Simulations Over a Uniform Background}
+
+}
 
 \label{monte_carlo_validation}
 
-We evaluated the false detection probability for the measurement of source extent
-by fitting the extensions of point-like sources.  \cite{mattox_egret}
-discuss that the TS distribution for a likelihood ratio test
+\newtext{
+We tested the theoretical distribution for \tsext
+to evaluate the false detection probability for measuring source extension.
+To do so, we tested simulated point-like sources for extension.} 
+\cite{mattox_egret}
+discuss that the \ts distribution for a likelihood-ratio test
 on the existence of a source at a given position is
 \begin{equation}\label{ts_ext_distribution}
   P(\ts)=\onehalf(\chi^2_1(\ts)+\delta(\ts)),
@@ -506,10 +519,9 @@ on the existence of a source at a given position is
 where $P(\ts)$ is the probability density to get a particular value of TS,
 $\chi^2_1$ is the chi-squared distribution with one degree of freedom, and
 $\delta$ is the Dirac delta function.
-}
 The particular form of Equation \ref{ts_ext_distribution} is due to the
 null hypothesis (source flux $\Phi=0$) residing on the edge of parameter
-space and the model hypothesis adding a single degree of freedom.
+space and the model hypothesis adding a single degree of freedom (the source extension).}
 It leads to the often quoted result $\sqrt{TS}=\sigma$, where 
 $\sigma$ here refers to the significance of the detection. It is plausible
 to expect a similar distribution for the TS in the test for
@@ -566,9 +578,12 @@ Considering the distribution in Figures~\ref{ts_ext_mc_1000} and
 (corresponding to a formal $4\sigma$ significance) is reasonable.
 
 \newtext{
-We performed a second simulation to assess any bias that could
-be introduces by performing the extension test in the presence of a highly
-structured background.
+
+\subsection{\newtext{Point-like Source Simulations Over a Structured Background}}
+
+We performed a second simulation to show that the theoretical distribution
+for \tsext is still preserved when the point-like sources are present over
+a highly-structured diffuse background.
 Our simulation setup was the same as above except that the sources were
 simulated on top of and analyzed assuming the presence of the standard
 Galactic diffuse and isotropic background models used in 2FGL.  In our
@@ -578,11 +593,12 @@ less than 5\degree. This probes the most structured areas of the
 Galactic background.
 
 To limit the number of tests, we selected only one flux
-level for each of the four spectral indices and we perform
+level for each of the four spectral indices and we performed
 this test only in the 1 \gev to 100 \gev energy range. 
 The fluxes were selected so that $\ts\sim50$. We do not
 expect to be able to spatially resolve sources much dimmer than this
-and sources much brighter are less likely to be affected by the background.
+and sources much brighter are less likely to be affected by the 
+structured background.
 
 Because the Galactic diffuse emission is highly structure, the point-source
 sensitivity can vary significantly across the galactic plane.
@@ -607,15 +623,16 @@ of \tsext for each spectrum. For small values of \tsext,
 there is good agreement between the simulations and
 theory.  For the highest values of \tsext, there is possibly
 a small discrepancy, but limited statistics makes this hard to quantify.
-}
+Therefore, we are confident we can used \tsext as a robust measure of
+statistical significance when testing LAT-detected sources for extension.
 
-\subsection{Assessing the Bias Due to Incorrect Spatial Models}
+\subsection{Extended Source Simulations Over a Structured Background}
 \label{bias_wrong_spatial_model}
 
-\newtext{
-We performed a Monte Carlo study to quantify the bias that is introduced by
-incorrectly modeling the spatial structure of an extended source. 
-To assess this systematic, we simulated the spatially extended ring-type SNR W44.
+We also performed a Monte Carlo study to show that incorrectly modeling the
+spatial extension of an extended source does not substantially bias
+the spectral fit of the source, although it does alter the value of the \ts.
+To assess this, we simulated the spatially extended ring-type SNR W44.
 We selected W44 because it is the most significant extended source detected by the LAT 
 that has a non-radially symmetric photon-distribution \citep{w44}. 
 
@@ -628,8 +645,8 @@ was taken from our analysis of W44 which will be described in Section~\ref{valid
 W44 was simulated with the elliptical ring spatial model described in
 \cite{w44}. For reference, the ellipse has a semi-major axis of 0\fdg3,
 a semi-minor axis of 0\fdg19, a position angle of $147\degree$
-measured east of celestial north, and predicts emission only for the
-outer 0.75\% of the shape.
+measured east of celestial north, and the ring's inner radius is 0.75 times
+the outer radius.
 
 We used a simulation setup similar to that described in
 Section~\ref{monte_carlo_validation}, but the sources were simulated on
@@ -638,7 +655,8 @@ isotropic background model used in 2FGL.  The simulations were
 in the 1 \gev to 100 \gev energy range and
 W44 was simulated over the two-year time range used in 2FGL. 
 In the simulations, we disabled the inherent energy dispersion of photons
-by the LAT. The bias caused by ignoring energy dispersion 
+by the LAT to isolate the effects due to changing the assumed spatial model. 
+The bias caused by ignoring energy dispersion 
 will be discussed in an upcoming paper by the LAT collaboration \citep{lat_on_orbit_psf}.
 In total, we performed 985 statistically independent simulations.
 
@@ -650,42 +668,33 @@ We obtained the best fit spatial parameters using \pointlike and,
 with these parameters, obtained the best fit spectral parameters 
 using \gtlike. 
 
-Figure~\ref{ts_comparison_w44sim}a shows that the simulations of
-W44 are very significant ($\ts\sim3500$) when fit as point-like sources.
-Figure~\ref{ts_comparison_w44sim}b shows that the simulations 
-are highly extended ($\tsext\sim250$)
-when fit with a radially-symmetric uniform disk or Gaussian spatial
-model.
-On average \tsext is
-slightly larger when fitting the sources with a uniform disk spatial
-model compared to a Gaussian spatial model, consistent with the
-fact that the simulated source's true spatial model has a sharp edge.
-Figure~\ref{ts_comparison_w44sim}c shows that the sources were fit better
-when assuming an elliptical disk spatial model compared to a uniform disk
-spatial model ($\ts_\text{elliptical\ disk}-\ts_\text{disk}\sim30$).
-Finally, Figure~\ref{ts_comparison_w44sim}d shows that the sources
-were fit somewhat better assuming an elliptical ring spatial model
+Figure~\ref{ts_comparison_w44sim}a shows that the simulations of W44
+are very significant ($\ts\sim3500$) when fit as point-like sources.
+Figure~\ref{ts_comparison_w44sim}b shows that the simulations are
+highly extended ($\tsext\sim250$) when fit with any of the extended
+spatial models.  On average \tsext is somewhat larger when fitting
+the sources with more accurate spatial models.  This shows that
+assuming an incorrect spatial model will cause the source's
+significance to be underestimated.  Figure~\ref{ts_comparison_w44sim}c
+shows that the sources were fit better when assuming an elliptical
+disk spatial model compared to a uniform disk spatial model
+($\ts_\text{elliptical\ disk}-\ts_\text{disk}\sim30$).  Finally,
+Figure~\ref{ts_comparison_w44sim}d shows that the sources were
+fit somewhat better assuming an elliptical ring spatial model
 compared to an elliptical disk spatial model ($\ts_\text{elliptical\
-ring}-\ts_\text{elliptical\ disk}\sim9$).
+ring}-\ts_\text{elliptical\ disk}\sim9$). This shows that the LAT has
+some additional power to resolve substructure in bright extended sources.
 
-Figure~\ref{bias_w44sim}a and Figure~\ref{bias_w44sim}b
-show the distributions of best fit fluxes and spectral indices when fitting
-the simulated sources.
-When fitting the sources with a point-like
-spatial model, there is a $\sim$10\% bias in the fit flux and
-a $\sim5\%$ bias in the fit index. When fitting the sources assuming any
-of the extended spatial models, there is no bias in the best fit spectral parameters
-(within the precision of the Monte Carlo study). This is because,
-within the finite angular resolution and limited statistics of the LAT, 
-all of the extended spatial models can be adjusted to look very similar.
 
-Figure~\ref{bias_w44sim}c plots the best fit 68\% containment radius when
-the sources were fit with extended spatial models.  When assuming
-the elliptical ring spatial model, there is no significant bias in 
-\rsixeight.  Because none of the other spatial models induced a
-bias greater than $\sim10\%$, we see that \rsixeight for any of the
-spatial models can be used as a reasonable measure of the true 68\%
-containment radius for the source.
+Figure~\ref{bias_w44sim}a and Figure~\ref{bias_w44sim}b clearly show that
+no significant bias is introduced by modeling the source as extended
+but with an inaccurate spatial model, while a point-like source modeling
+results in a $\sim10\%$ and $\sim5\%$ bias in the fit flux and index,
+respectively.  
+Furthermore, Figure~\ref{bias_w44sim}c shows that the \rsixeight estimate of
+the extension size is very mildly biased ($\sim10\%$) toward higher values
+when inaccurate spatial models are used, and thus represent a reasonable
+measurement of the true 68\% containment radius for the source.
 
 For completeness, Figure~\ref{bias_w44sim}d and Figure~\ref{bias_w44sim}e 
 shows that there are 
@@ -803,7 +812,7 @@ by fitting the spectra of the two point-like sources in \gtlike using the best f
 of the sources found by \pointlike.
 
 \tsinc cannot be quantitatively compared to \tsext using a simple
-likelihood ratio test to evaluate which model is significantly better
+likelihood-ratio test to evaluate which model is significantly better
 because the models are not nested \citep{statistics_with_care}.
 Even though the comparison of \tsext with \tsinc is not a calibrated
 test, $\tsext>\tsinc$ indicates that the likelihood for the extended
@@ -813,10 +822,10 @@ consider a source to be extended if $\tsext>\tsinc$.
 \newtext{
 We considered using 
 the Bayesian information criterion \citep[BIC,][]{BIC_statistical_test} as
-an alternative Bayesian formulation of this test, but it is difficult to apply
+an alternative Bayesian formulation for this test, but it is difficult to apply
 to LAT data because it contains a term including the number of data points. For LAT data,
 this is not a clear concept because there are many photons included in an analysis that contribute only
- marginally to the analysis of a source.
+ marginally to the analysis of a given source.
 
 As an alternative, we considered the Akaike information criterion test \citep[\aic,][]{AIC_statistical_test}.
 The \aic is defined as
@@ -824,7 +833,7 @@ The \aic is defined as
   \aic=2k-2\log\likelihood,
 \end{equation}
 where $k$ is the number of parameters in the model. 
-In this formulation, the best model is considered to be the one that minimizes the \aic.
+In this formulation, the best hypothesis is considered to be the one that minimizes the \aic.
 The first term penalizes models with additional parameters. 
 
 Because the two point-like source hypotheses has
@@ -1319,7 +1328,7 @@ multiwavelength information about possibly extended source counterparts
 to help guide our choice. For each extended source presented in 
 Section~\ref{new_ext_srcs_section}, we describe any modifications from 2FGL
 of the background model that were performed.
-\newtext{In Table~\ref{fake_2fgl_sources}, we will summarize the sources that were 
+\newtext{In Table~\ref{fake_2fgl_sources}, we summarize the sources that were 
 included in 2FGL to account for residuals induced by not modeling the extensions of
 nearby extended sources.}
 
@@ -1409,9 +1418,6 @@ There is good agreement between \tsext and the fit size using the standard
 analysis, the alternative approach to modeling the diffuse emission, and the alternative PSF.
 This suggests that the sources are robust against mis-modeled features in the diffuse
 emission model and uncertainties in the PSF.
-\newtext{Finally, in Table~\ref{fake_2fgl_sources} we 
-summarize the sources included in 2FGL to account for residuals induced
-by not modeling the extensions of nearby extended sources.}
 
 \subsection{2FGL\,J0823.0$-$4246}
 \label{section_2FGL_J0823.0-4246}
@@ -2696,9 +2702,9 @@ approach to modeling the diffuse emission, and the alternative PSF respectively.
 
 \tablecomments{
 \newtext{
-For each new extended sources, we list nearby catalog
+For each new extended source, we list nearby catalog
 sources that were included in 2FGL to account for residuals induced
-by not modeling the extension of the nearby extended source.
+by not modeling the extension of the extended source.
 }
 }
 \end{deluxetable}
