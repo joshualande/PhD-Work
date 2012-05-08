@@ -47,11 +47,11 @@ axes=fig.add_subplot(222)
 histogram(axes, 
           data=[2*(ll_gaussian-ll_point),
                 2*(ll_disk-ll_point)],
-          color=['red' if not bw else '0.5','black'])
+          color=['red' if not bw else '0.6','black'])
 axes.set_xlabel(r'$\mathrm{TS}_\mathrm{ext}$')
 prop = matplotlib.font_manager.FontProperties(size=10)
 axes.set_ylim(0,100)
-axes.legend([Line2D([0],[0],color='black'),Line2D([0],[0],color='red')],
+axes.legend([Line2D([0],[0],color='black'),Line2D([0],[0],color='red' if not bw else '0.6')],
             ['disk','Gaussian'],
             prop=prop)
 
