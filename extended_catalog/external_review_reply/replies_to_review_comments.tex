@@ -19,9 +19,9 @@
 \maketitle
 
 \begin{reply}
-Thank you for your careful review of the text. We discuss below the
+  We thank the referee for the careful review of the text. We discuss below the
 changes we have made incorporating your feedback. To make the changes more visible,
-in the new draft we have bolded and colored red the parts that are new or have changed.
+in the new draft we have made bold and colored red the parts that are new or have changed.
 \end{reply}
 
 \begin{referee}
@@ -34,19 +34,21 @@ They should quantify how the results they are presenting depend on the actual sh
 
 
 \begin{reply}
-In the new draft, Section 3 (Validation of Analysis Method) has been
-divided into two sections. The original section is now section 3.1
-(now called Statistical Significance Testing).
+In the new draft, Section 2 has new text defining TS.
+Section 3 has been renamed (Validation of the TS Distribution) and has been
+divided into three sections. The original section is now section 3.1
+(now called Point-like Source Simulations Over a Uniform Background).
+I will describe section 3.2 in reply to the next question.
 
-There is a new section 3.2 (Assessing the Bias Due to Incorrect
-Spatial Models). In this section, we address your question by performing
+There is also a new section 3.3 (Extended Source Simulations Over a 244 Structured Background). 
+In this section, we address your question by performing
 a dedicated Monte Carlo study of W44 simulated with a ring-type spatial
-model. By fitting the source with different spatial models, we asses
+model. By fitting the source with different spatial models, we assess
 this bias and find it to be very small.
 
 This new section requires two new figures (Figure 6 and Figure 7). Also,
 in section 2.4 (Comparing Source Size) we add a line of text referring
-to this new section. Finally, there is a new sentance in the introduction
+to this new section. Finally, there is a new sentence in the introduction
 of the paper which references the new text.
 \end{reply}
 
@@ -59,12 +61,12 @@ the structures of this diffuse background affect the analysis results?
 \end{referee}
 
 \begin{reply}
-In section 3.1 (which was previously just section 3 and is now called
-Statistical Significance Testing), we have added new text describing a
+In section 3.2 (Point-like Source Simulations Over a Structured Background), we have added new text describing a
 follow up Monte Carlo study performed in the presence of the galactic
 plane. In addition, this new text required updating Table 1 (Monte Carlo
 Spectral Parameters) to include the new simulation parameters. There is also
-a new figure (Figure 5) which shows the distribution of TSext for these
+a new figure (Figure 5) which shows the distribution of $\mathrm{TS}_\mathrm{ext}$
+for these
 new simulations.
 \end{reply}
 
@@ -76,8 +78,8 @@ An important result of this work is that some 2FGL sources could be fake due to 
 
 \begin{reply}
 We have added a new table (Table 6 in the current draft, named Nearby Residual-induced Sources) which contains
-this information. There are paragraphs in section 9 (Extended Source
-Search Method) and Section 10 (New Extended Sources) which refer to this
+this information. There is also new text in section 9 (Extended Source
+Search Method) which refer to this
 table. We have also updated the requested captions to list names of 2FGL
 sources that were removed.
 \end{reply}
@@ -170,7 +172,7 @@ spatially, using a HEALPix pixelization, and spectrally (G ́orski et
 al. 2005) and the likelihood is maximized over all bins in a region.'' Why
 is any binning used? Maximum likelihood estimation (MLE) is best used
 on exact photon positions, and binning is not required (as it is with
-older chi-square-minimiization techniques). Binning is ill-advised as
+older chi-square-minimization techniques). Binning is ill-advised as
 it results in a loss of information, and sometimes in a bias. As this
 assumption is built into pointlike, perhaps it cannot be changed by the
 authors for their analysis.
@@ -189,8 +191,13 @@ any large bias in our spectral analysis result.
 
 But even binned gtlike is prohibitively slow for the extended source
 spatial fitting described in this paper. That is why we developed this
-new functionality inside of pointlike. The validations of pointlike
-presented in this paper allow us to be confident in our spatial analysis results.
+new functionality inside of pointlike. 
+Even though pointlike performs a fully binned analysis, it used the
+healpix hierarchy for spatial bins and scales the spatial bin size with
+energy. This ensures that the spatial binning is always smaller than the
+inherent spatial resolution of the instrument.
+The validations of this method
+presented in this paper allow us to be confident in our results.
 \end{reply}
 
 
@@ -226,19 +233,25 @@ LRT values should also work for BIC values.
 
 
 \begin{reply}
-Concerning the extension significance test, we extensively validated it
+Concerning the extension significance test, it actually relies not exactly
+on Wilk's theorem (which does not hold for the extension test)
+but on Chernoff's theorem (see ``On the Distribution of the Likelihood 
+Ratio'', \url{http://www.jstor.org/stable/10.2307/2236839}).
+we also extensively validated it
 against Monte Carlo simulations. Furthermore, the high energy astrophysics
-community has a lot of experience with the test statistic (TS) applied to
+community has a lot of experience with the likelihood ratio test applied to
 nested models. So we are very confident that we can apply it to the actual
 data.
 
 Concerning the test comparing two point-like sources to one extended
 source, we find the desire for a Bayesian test more compelling since the
 models are not nested. We considered the BIC test but found that it would
-not work well for LAT data. We alternately considered the AIC test and
-found that it is equivalent to the test we actually performed. We have
+not work well for LAT data. The reason for this is described in the text.
+We alternatively considered the AIC test and
+found that it is mathematically equivalent to the test we actually performed,
+putting the test on firmer ground. We have
 added a new paragraph to Section 5 (Testing Against Source Confusion)
-that describes the Bayesian interpretation of the test we actually performed.
+that describes this.
 \end{reply}
 
 
@@ -253,7 +266,7 @@ situation under study.
 
 \begin{reply}
 Thanks for the suggestion.  In addition to the above changes, we have
-fixed the bibliographical information on the LAT publication of Vela Jr.
+fixed a few bibliographical entries.
 \end{reply}
 
 
