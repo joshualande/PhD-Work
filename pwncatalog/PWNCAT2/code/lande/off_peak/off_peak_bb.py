@@ -35,6 +35,7 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=100000):
     global results
     results=tolist(
         dict(
+            name=name,
             pwncat1phase = pwncat1phase.tolist() if pwncat1phase is not None else None,
             off_peak_phase = off_peak_bb.off_peak.tolist(),
             blocks = off_peak_bb.blocks,
@@ -63,6 +64,7 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=100000):
     P.legend()
     P.title(name)
     P.savefig('results_%s.pdf' % name)
+    P.savefig('results_%s.png' % name)
 
 
 if __name__ == '__main__':
