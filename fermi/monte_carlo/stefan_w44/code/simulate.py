@@ -5,7 +5,7 @@ from os.path import expandvars
 from argparse import ArgumentParser
 import numpy as np
 from skymaps import SkyDir
-from uw.utilities.xml_parsers import parse_sources
+from uw.utilities.xml_parsers import parse_sources, write_sources
 from uw.like.Models import SmoothBrokenPowerLaw, SmoothDoubleBrokenPowerLaw
 from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.pointspec_helpers import get_default_diffuse
@@ -78,6 +78,8 @@ w44.model.set_flux(catalog_w44.model.i_flux(emin=100,emax=1e5),emin=100,emax=1e5
 
 print 'After flux used to simulate w44',w44.model.i_flux(1e2,1e5)
 
+write_sources(ps,ds,'gtlike_model.xml')
+
 irf='P7SOURCE_V6'
 mc=MonteCarlo(
     sources=ps+ds,
@@ -95,5 +97,4 @@ mc=MonteCarlo(
 mc.simulate()
 
 
-write_sources(ps,ds,'gtlike_model.xml')
 
