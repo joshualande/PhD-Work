@@ -824,15 +824,11 @@ We considered using
 the Bayesian information criterion \citep[BIC,][]{BIC_statistical_test} as
 an alternative Bayesian formulation for this test, but it is difficult to apply
 to LAT data because it contains a term including the number of data points. For LAT data,
-this is not a clear concept because there are many photons included in an analysis that contribute only
+this is not a clear concept because there are many pixels included in an analysis that contribute only
  marginally to the analysis of a given source.
 
 As an alternative, we considered the Akaike information criterion test \citep[\aic,][]{AIC_statistical_test}.
-The \aic is defined as
-\begin{equation}
-  \aic=2k-2\log\likelihood,
-\end{equation}
-where $k$ is the number of parameters in the model. 
+The \aic is defined as $\aic=2k-2\log\likelihood$, where $k$ is the number of parameters in the model. 
 In this formulation, the best hypothesis is considered to be the one that minimizes the \aic.
 The first term penalizes models with additional parameters. 
 
@@ -840,14 +836,11 @@ Because the two point-like source hypotheses has
 three more parameters than the single extended source hypothesis (two spatial
 parameters and two spectral parameters compared to one extension parameter),
 we note that the $\tsext>\tsinc$ test is mathematically equivalent to testing that
-\begin{equation}
-  \aic_\text{ext} < \aic_\text{2pts} - 6.
-\end{equation}
-This equation requires that the extended source hypothesis be considerably preferred
-over the hypothesis of two point-like sources.
-Therefore, our original test is mathematically equivalent to one with a Bayesian interpretation.
-
-
+$\aic_\text{ext} < \aic_\text{2pts} - 6$.
+Thus our criterion based on the \ts value is equivalent to requesting
+that the \aic-based empirical support for the two-point-like-source model be
+``considerably less'' than for the extended source model, following the
+classification by \cite{aic_stats_book}.
 }
 
 We assessed the power of the $\tsext>\tsinc$ test with a Monte Carlo
