@@ -35,13 +35,41 @@ from lande.utilities.simtools import SimBuilder
 #j.build()
 
 # version 9: unbinned
+#params=OrderedDict()
+#params['difftype']=['galactic', 'isotropic', 'sreekumar']
+#params['position']=['highlat','lowlat', 'galcenter']
+#params[('emin','emax')]=[[1e2,1e5],[1e4,1e5]]
+#params['time']=['2fgl']
+#
+#j = SimBuilder(savedir='$fitdiffdata/v9',
+#               code='$fitdiffcode/simulate.py',
+#               num=100,
+#               params=params)
+#j.build()
+
+
+# v10, head version of science tools, no edisp
+#params=OrderedDict()
+#params['difftype']=['galactic', 'isotropic', 'sreekumar']
+#params['position']=['highlat','lowlat', 'galcenter']
+#params[('emin','emax')]=[[1e2,1e5],[1e4,1e5]]
+#params['time']=['2fgl']
+#
+#j = SimBuilder(savedir='$fitdiffdata/v10',
+#               code='$fitdiffcode/simulate.py',
+#               num=100,
+#               params=params)
+#j.build()
+
+
+# v11, head version of science tools, no edisp
 params=OrderedDict()
 params['difftype']=['galactic', 'isotropic', 'sreekumar']
 params['position']=['highlat','lowlat', 'galcenter']
 params[('emin','emax')]=[[1e2,1e5],[1e4,1e5]]
 params['time']=['2fgl']
 
-j = SimBuilder(savedir='$fitdiffdata/v9',
+j = SimBuilder(savedir='$fitdiffdata/v11',
                code='$fitdiffcode/simulate.py',
                num=100,
                params=params)

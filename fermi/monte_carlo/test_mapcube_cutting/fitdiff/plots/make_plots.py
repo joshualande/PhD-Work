@@ -14,11 +14,11 @@ set_latex_defaults()
 from lande.utilities.save import loaddict
 
 
-name = expandvars(join('$fitdiffdata','v9','merged.hdf5'))
+name = expandvars(join('$fitdiffdata','v11','merged.hdf5'))
 r = loaddict(name)
 
-plot_pull=True
-#plot_pull=False
+#plot_pull=True
+plot_pull=False
 
 #pointlike=True
 pointlike=False

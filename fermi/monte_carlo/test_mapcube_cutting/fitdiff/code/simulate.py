@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from lande.fermi.likelihood.roi_gtlike import Gtlike, UnbinnedGtlike
+from lande.fermi.likelihood.roi_gtlike import Gtlike
 
 from argparse import ArgumentParser
 import shutil
@@ -60,8 +60,7 @@ elif difftype == 'isotropic':
 elif difftype == 'sreekumar':
     diffuse_sources = [sreekumar]
 
-#tempdir=mkdtemp(prefix='/scratch/')
-tempdir='savedir'
+tempdir=mkdtemp(prefix='/scratch/')
 
 if position == 'highlat':
     while True:
@@ -121,6 +120,7 @@ sa = SpectralAnalysisMC(ds,
                         ltfrac=ltfrac,
                         use_weighted_livetime=True,
                         mc_energy=True,
+                        zenithcut=100,
                         savedir=tempdir)
 
 roi = sa.roi(roi_dir=roi_dir, diffuse_sources = diffuse_sources)
@@ -150,8 +150,7 @@ results['pointlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
 
 state.restore(just_spectra=True)
 
-#gtlike = Gtlike(roi, bigger_roi=False, enable_edisp=True, savedir=tempdir)
-gtlike = UnbinnedGtlike(roi, savedir=tempdir)
+gtlike = Gtlike(roi, bigger_roi=False, savedir=tempdir)
 like = gtlike.like
 
 mc=diffusedict(like)
@@ -166,4 +165,4 @@ results['gtlike'] = dict(mc=mc, fit=fit, ll_0=ll_0, ll_1=ll_1)
 
 savedict('results_%s.yaml' % istr, results)
 
-#shutil.rmtree(tempdir)
+shutil.rmtree(tempdir)

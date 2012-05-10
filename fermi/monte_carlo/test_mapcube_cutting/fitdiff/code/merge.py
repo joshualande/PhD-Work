@@ -33,5 +33,5 @@ keys = dict(
                     ['Value','Normalization','Prefactor']],
     )
 
-m = SimMerger(savedir='$fitdiffdata/v9/', keys=keys)
-m.save('$fitdiffdata/v9/merged.hdf5')
+m = SimMerger(savedir='$fitdiffdata/v11/', keys=keys)
+m.save('$fitdiffdata/v11/merged.hdf5')
