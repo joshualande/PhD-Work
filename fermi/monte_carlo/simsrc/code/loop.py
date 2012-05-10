@@ -134,11 +134,120 @@ from collections import OrderedDict
 
 
 # v14 - try out new ltcubes
+#b = SimBuilder(
+#    savedir='$simsrcdata/v14',
+#    code='$simsrccode/simulate.py',
+#    num=100,
+#    params=dict(time=['2years','2fgl'], irf='P7SOURCE_V6', flux=1e-6, position='allsky', 
+#                emin=1e2, emax=1e5, phibins=[0,5,9], spatial='point'),
+#)
+
+
+# v15 - try out new ltcubes
+#b = SimBuilder(
+#    savedir='$simsrcdata/v15',
+#    code='$simsrccode/simulate.py',
+#    num=100,
+#    params=dict(time=['2years','2fgl'], irf='P7SOURCE_V6', flux=3e-5, position='allsky', 
+#                emin=1e2, emax=1e5, phibins=[0,9], spatial=['point','extended']),
+#)
+#b.build()
+#b.build()
+
+
+# v16 - extended sources
+#b = SimBuilder(
+#    savedir='$simsrcdata/v16',
+#    code='$simsrccode/simulate.py',
+#    num=100,
+#    params=dict(time='2fgl', irf='P7SOURCE_V6', flux=3e-5, position='allsky', 
+#                emin=1e2, emax=1e5, phibins=[0,9], spatial=['point','disk']),
+#)
+#b.build()
+
+# v18 - w44
+#b = SimBuilder(
+#    savedir='$simsrcdata/v18',
+#    code='$simsrccode/simulate.py',
+#    num=100,
+#    params=dict(time='2fgl', irf='P7SOURCE_V6', flux=71.2e-9, index=[2.66], position='w44', 
+#                emin=1e3, emax=1e5, phibins=9, spatial='w44'),
+#    extra='--savedata',
+#)
+#b.build()
+
+
+# v19 - extended sources
+#b = SimBuilder(
+#    savedir='$simsrcdata/v19',
+#    code='$simsrccode/simulate.py',
+#    num=100,
+#    params=dict(time='1day', irf='P7SOURCE_V6', flux=1e-2, position='allsky', index=2,
+#                emin=1e2, emax=1e5, phibins=9, spatial=['point','disk','w44']),
+#    extra='--savedata',
+#)
+#b.build()
+
+
+# v20 - w44
+#b = SimBuilder(
+#    savedir='$simsrcdata/v20',
+#    code='$simsrccode/simulate.py',
+#    num=100,
+#    params=dict(time='2fgl', irf='P7SOURCE_V6', flux=71.2e-9, index=2.66, position='w44', 
+#                emin=1e3, emax=1e5, phibins=9, spatial='w44', binsz=[0.1, 0.05, 0.025], rfactor=[2,4,8]),
+#    extra='--savedata',
+#)
+#b.build()
+
+
+
+# v21 - even pixels
+#b = SimBuilder(
+#    savedir='$simsrcdata/v21',
+#    code='$simsrccode/simulate.py',
+#    num=100,
+#    params=dict(time='2fgl', irf='P7SOURCE_V6', flux=71.2e-9, index=2.66, position='w44', 
+#                emin=1e3, emax=1e5, phibins=9, spatial='w44', binsz=0.1, rfactor=2),
+#    extra='--savedata',
+#)
+#b.build()
+
+
+# v22 - resample=no
+#b = SimBuilder(
+#    savedir='$simsrcdata/v22',
+#    code='$simsrccode/simulate.py',
+#    num=100,
+#    params=dict(time='2fgl', irf='P7SOURCE_V6', flux=71.2e-9, index=2.66, position='w44', 
+#                emin=1e3, emax=1e5, phibins=9, spatial='w44', binsz=0.1, rfactor=2),
+#    extra='--savedata',
+#)
+#b.build()
+
+
+
+# v23 - resample=no
+params=dict(time='2fgl', irf='P7SOURCE_V6', flux=1e-5, index=2, position='w44', 
+            emin=1e2, emax=1e5, phibins=0, spatial=['point','disk','w44'], 
+            rfactor=2, size=[10,20,30], savedata=True)
+params['binsz','minbinsz']=[[0.05,0.05],[0.125,0.1]]
+
 b = SimBuilder(
-    savedir='$simsrcdata/v14',
+    savedir='$simsrcdata/v23',
     code='$simsrccode/simulate.py',
-    num=100,
-    params=dict(time=['2years','2fgl'], irf='P7SOURCE_V6', flux=1e-6, position='allsky', 
-                emin=1e2, emax=1e5, phibins=[0,5,9], spatial='point'),
+    num=1,
+    params=params,
 )
 b.build()
+
+params['position']='allsky'
+params['savedata']=False
+b = SimBuilder(
+    savedir='$simsrcdata/v24',
+    code='$simsrccode/simulate.py',
+    num=100,
+    params=params,
+)
+b.build()
+

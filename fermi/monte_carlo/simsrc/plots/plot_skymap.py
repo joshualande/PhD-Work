@@ -10,13 +10,21 @@ from lande.utilities.save import loaddict
 nphi = 0
 
 def overlay(ax):
-    results = loaddict('$simpsdata/v6/merged.hdf5')
+    #results = loaddict('$simsrcdata/v12/merged.hdf5')
 
-    flux = np.asarray(results['flux_gtlike'])
-    flux_err = np.asarray(results['flux_gtlike_err'])
+#    flux = np.asarray(results['flux_gtlike'])
+#    flux_err = np.asarray(results['flux_gtlike_err'])
 
-#    flux = np.asarray(results['flux_pointlike'])
-#    flux_err = np.asarray(results['flux_pointlike_err'])
+    #results = loaddict('$simsrcdata/v11/sim_flux_1e-06_position_allsky_phibins_0_spatial_point_emin_100_emax_100000_time_2years/merged.hdf5')
+
+    #results = loaddict('$simsrcdata/v11/sim_flux_1e-06_position_allsky_phibins_0_spatial_point_emin_100_emax_100000_time_2fgl/merged.hdf5')
+
+    #results = loaddict('$simsrcdata/v11/sim_flux_1e-06_position_allsky_phibins_0_spatial_point_emin_100_emax_100000_time_2years/merged.hdf5')
+    #results = loaddict('$simsrcdata/v15/merged.hdf5')
+    results = loaddict('$simsrcdata/v15/merged.hdf5')
+
+    flux = np.asarray(results['flux_pointlike'])
+    flux_err = np.asarray(results['flux_pointlike_err'])
 
     flux_mc = np.asarray(results['flux_mc'])
     glon = np.asarray(results['glon'])
@@ -24,19 +32,24 @@ def overlay(ax):
     ra = np.asarray(results['ra'])
     dec = np.asarray(results['dec'])
     phibins = np.asarray(results['phibins'])
+    time = np.asarray(results['time'])
 
     pull = (flux-flux_mc)/flux_err
     perr = (flux-flux_mc)/flux_mc
 
-    pull=pull[phibins == nphi]
-    perr=perr[phibins == nphi]
+    cut = (phibins == nphi)&(time=='2fgl')
 
-    maxerr = 0.03
+    pull=pull[cut]
+    perr=perr[cut]
+    glon=glon[cut]
+    glat=glat[cut]
+
+    maxerr = 0.05
     print 'max',maxerr
     color_mapper=lambda perr: (min(perr/maxerr,1),0,0) if perr > 0 else (0,0,min(np.abs(perr)/maxerr,1))
 
     for _glon, _glat, _perr in zip(glon, glat, perr):
-        ax['gal'].plot([_glon],[_glat], marker='o', color=color_mapper(_perr), markersize=5)
+        ax['gal'].plot([_glon],[_glat], marker='o', color=color_mapper(_perr), markersize=10)
 
 fig = P.figure(None, figsize=(8, 5))
 
