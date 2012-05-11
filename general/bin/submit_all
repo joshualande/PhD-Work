@@ -30,7 +30,7 @@ for file in files:
 
     if args.requires is not None:
         if not os.path.exists(args.requires):
-            print 'Skipping jobs %s because file %s does not exist' % (file,args.requires)
+            print 'Skipping job %s because file %s does not exist' % (file,args.requires)
             continue
 
     dir=os.path.dirname(file)
