@@ -51,7 +51,7 @@ for file in files:
     else:
         parser.error("Unknown extension for file %s" % file)
 
-    log = 'log_' + file.replace(ext,'.txt')
+    log = join(os.path.dirname(file), 'log_'+os.path.basename(file).replace(ext,'.txt'))
 
     abspath = join(new,base)
 
