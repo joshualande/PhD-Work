@@ -14,6 +14,7 @@ parser.add_argument("-q","--queue",default='xxl')
 parser.add_argument("-n",action='store_true', default=False)
 parser.add_argument("file",nargs='+')
 parser.add_argument("-l","--limit",type=int, help='maximum allows jobs at one time')
+parser.add_argument("--requires", help='only submits the job if the selected file arealdy exists. Useful for chaining jobs with dependencies.')
 args=parser.parse_args()
 
 p=subprocess.Popen(['bjobs', '-w'],stdout=subprocess.PIPE)
@@ -26,6 +27,11 @@ old_good_format = os.environ['PWD']
 old_bad_format  = os.getcwd()
 
 for file in files:
+
+    if args.requires is not None:
+        if not os.path.exists(args.requires):
+            print 'Skipping jobs %s because file %s does not exist' % (file,args.requires)
+            continue
 
     dir=os.path.dirname(file)
     base=os.path.basename(file)

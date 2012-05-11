@@ -2,7 +2,10 @@
 import numpy as np
 import sys
 
-data = np.asarray(sys.argv[1], dtype=float)
+data = np.asarray(sys.stdin.readlines(), dtype=float)
+#data = np.asarray(sys.argv[1], dtype=float)
+
+print 'data',data
 
 print 'average = ',np.average(data)
 print 'std = ',np.std(data)
