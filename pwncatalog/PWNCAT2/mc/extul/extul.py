@@ -22,7 +22,7 @@ from uw.like.pointspec_helpers import PointSource
 
 from lande.utilities.tools import savedict
 from lande.fermi.likelihood.diffuse import get_sreekumar
-from lande.fermi.likelihood.catalogs import get_2fgl
+from lande.fermi.data.catalogs import dict2fgl
 from lande.fermi.likelihood.tools import force_gradient
 from lande.fermi.likelihood.save import sourcedict, spectrum_to_dict, pointlike_model_to_flux
 
@@ -65,9 +65,8 @@ skydir_mc = SkyDir()
 
 bg = get_sreekumar()
 
-cat = get_2fgl()
-ft2 = cat['ft2']
-ltcube = cat['ltcube']
+ft2 = dict2fgl['ft2']
+ltcube = dict2fgl['ltcube']
 
 results = []
 
@@ -148,6 +147,7 @@ for extension_mc in extensions:
         binfile  = binfile)
 
     sa=SpectralAnalysis(ds,
+        binsperdec  = 8,
         irf         = irf,
         roi_dir     = skydir_mc,
         maxROI      = 10,
@@ -175,6 +175,8 @@ for extension_mc in extensions:
 
     roi.fit()
     roi.print_summary()
+
+    r['bin_edges'] = roi.bin_edges
 
     r['point'] = sourcedict(roi,point)
 

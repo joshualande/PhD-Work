@@ -63,10 +63,12 @@ random.seed(0)
 #      [  3,  2.8e-7,  2.8e-7, 0, 0.5,   'bright'],
 #                                       ]:
 
-# v10 & v11 & v12
+# v10 & v11 & & v12 & v13
 #basedir =  expandvars('$pwndata/monte_carlo/extul/v10/')
 #basedir =  expandvars('$pwndata/monte_carlo/extul/v11/')
-basedir =  expandvars('$extuldata/v12/')
+#basedir =  expandvars('$extuldata/v12/')
+#  - note primiary difference in v12: 8bins per decade instead of 4
+basedir =  expandvars('$extuldata/v13/')
 num=1000
 for index_mc,min_flux,max_flux,min_extension, max_extension, type in \
      [[1.5,   1e-9,  1.8e-8, 0, 2.0,  'dim'], 
