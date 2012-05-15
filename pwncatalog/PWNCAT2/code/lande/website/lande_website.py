@@ -13,6 +13,8 @@ import asciitable
 
 from table_helper import BestHypothesis
 
+from lande.utilities.website import t2t
+
 """
 var_version='v10/variability/v3/'
 spec_version='v12'
@@ -26,7 +28,7 @@ gtlike=False
 """
 
 var_version='none'
-spec_version='v17'
+spec_version='v18'
 gtlike=True
 
 variability_unix=expandvars('$pwndata/spectral/%s' % var_version)
@@ -78,20 +80,6 @@ def get_variability(pwn):
     f = join(variability_unix, pwn, 'results_%s.yaml' % pwn)
     if not os.path.exists(f): return None
     return yaml.load(open(f))
-
-
-
-
-def t2t(lines,name): 
-    """ create the HTML for a given t2t file. """
-    filename = join(website_unix,'%s.t2t' % name)
-    
-    temp=open(filename,'w')
-    temp.write(
-        '\n'.join(lines))
-    temp.close()
-        
-    os.system('txt2tags --target html --style color.css --css-sugar %s' % filename)
 
 
 class TableFormatter(object):
@@ -340,7 +328,7 @@ def build_each_page(pwn):
     title('gtlike SED (1bpd')
     get_sed_table(*['seds/sed_gtlike_1bpd_%s_%s.png' % (i,pwn) for i in all])
 
-    get_img_table(
+    get_sed_table(
         'plots/test_cutoff_%s_%s.png' % (hypothesis,pwn))
 
     # Add variability plot
@@ -382,7 +370,7 @@ def build_each_page(pwn):
 %s
 ```""" % yaml.dump(var))
 
-    t2t(index_t2t, pwn)
+    t2t(index_t2t, join(website_unix,'%s.t2t' % pwn))
 
 def build_all_pages():
     for pwn in pwnlist: build_each_page(pwn)

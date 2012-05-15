@@ -1,10 +1,19 @@
-from table_helper import get_pwnlist,get_results,table_name,write_latex,write_confluence
-from lande.utilities.tools import OrderedDefaultDict
-
 import yaml
 from os.path import join as j,expandvars
+import numbers
 
-confluence=True
+from uw.pulsar.phase_range import PhaseRange
+
+from lande.utilities.tools import OrderedDefaultDict
+from lande.utilities.table import get_confluence
+
+from table_helper import get_pwnlist,get_results,write_latex,write_confluence
+from table_helper import PWNFormatter
+
+
+confluence=get_confluence()
+
+format=PWNFormatter(confluence=confluence, precision=2)
 
 def all_energy_table(pwnlist):
 
@@ -19,13 +28,13 @@ def all_energy_table(pwnlist):
 
     for pwn in pwnlist:
         print pwn
-        table[psr_name].append(table_name(pwn,confluence))
+        table[psr_name].append(format.pwn(pwn))
 
-        phase=data[pwn]['phase']
+        phase=PhaseRange(data[pwn]['phase'])
         optimal_emin=data[pwn]['optimal_emin']
         optimal_radius=data[pwn]['optimal_radius']
 
-        table[phase_name].append('%.2f - %.2f' % tuple(phase))
+        table[phase_name].append(phase.pretty_format())
         table[optimal_emin_name].append('%.2f' % optimal_emin)
         table[optimal_radius_name].append('%.2f' % optimal_radius)
 

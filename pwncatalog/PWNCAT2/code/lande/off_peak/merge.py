@@ -4,10 +4,15 @@ from os.path import join, expandvars, exists
 from os import makedirs
 import yaml
 
+from lande.utilities.lists import recursive_map
+
+
+#version = 'v4'
+version = 'v3'
 
 pwndata=yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml')))
 
-r='$pwndata/off_peak/off_peak_bb/pwncat2/v4'
+r='$pwndata/off_peak/off_peak_bb/pwncat2/%s'  % version
 
 pwnlist = sorted(pwndata.keys())
 
@@ -26,6 +31,7 @@ for i,pwn in enumerate(pwnlist):
     optimal_radius=results['optimal_radius']
 
     f = PhaseRange(off_peak_phase).tolist(dense=True)
+    f = recursive_map(lambda i: '%.2f' % i, f)
     d[pwn] = dict(
         phase = f,
         optimal_emin=optimal_emin,

@@ -627,3 +627,87 @@ echo python $common_kwargs \
 echo python $common_kwargs \
         -o $pwndata/spectral/$version/analysis_fast2 \
         --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits --no-plots
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------------
+
+# major changes: ??? rerun
+version=test_v2
+common_kwargs="\$pwncode/loop_pwn.py \
+        -c \\\$pwncode/analyze_psr.py \
+        --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwncode/modify/modify_psr_lande.py \
+        --max-free 5 --localization-emin=1e4 --no-savedir --emin=1e4 --emax=1e5 --binsperdec=2"
+
+echo python $common_kwargs \
+    -o $pwndata/spectral/$version/analysis_no_plots \
+    $common_kwargs \
+    --no-plots 
+
+echo python $common_kwargs \
+        -o $pwndata/spectral/$version/analysis_plots \
+        --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits
+
+echo python $common_kwargs \
+        -o $pwndata/spectral/$version/analysis_fast \
+        --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits --no-plots
+
+
+
+
+# ----------------------------------------------------------------------------------------------------
+
+# major changes: ??? rerun
+version=v18
+common_kwargs="\$pwncode/loop_pwn.py \
+        -c \\\$pwncode/analyze_psr.py \
+        --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwncode/modify/modify_psr_lande.py \
+        --max-free 5 --localization-emin=1e2 --no-savedir --emax=1e5"
+
+echo python $common_kwargs \
+    -o $pwndata/spectral/$version/analysis_no_plots \
+    --no-plots 
+
+echo python $common_kwargs \
+        -o $pwndata/spectral/$version/analysis_plots \
+        --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits
+
+echo python $common_kwargs \
+        -o $pwndata/spectral/$version/analysis_fast \
+        --no-gtlike --no-cutoff --no-extension-upper-limits --no-upper-limits --no-plots
+
+echo python $pwncode/loop_pwn.py \
+        --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
+        -c \\\$pwncode/lande/variability/test_variability.py \
+        --analysis-dir \\\$pwndata/spectral/v18/analysis_no_plots \
+        -o $pwndata/spectral/v18/variability/v1
+
+# ----------------------------------------------------------------------------------------------------
+
+
+echo python $pwncode/loop_pwn.py  \
+    -c $pwncode/lande/off_peak/off_peak_bb.py \
+    -o $pwndata/off_peak/off_peak_bb/pwncat2/v4/analysis \
+    --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml  \
+    --pwncat1phase $pwncode/pwndata/pwncat1_phase.yaml 
+
+# ----------------------------------------------------------------------------------------------------
+
+
+version=v19
+
+echo python \$pwncode/loop_pwn.py \
+        --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwncode/modify/modify_psr_lande.py \
+        --max-free 5 --localization-emin=1e2 --no-savedir --emax=1e5 \
+        -o $pwndata/spectral/$version/analysis \
+

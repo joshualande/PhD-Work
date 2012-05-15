@@ -1,8 +1,9 @@
 from table_helper import get_pwnlist,get_results,write_latex,write_confluence,BestHypothesis
 from table_helper import PWNFormatter
 from lande.utilities.tools import OrderedDefaultDict
+from lande.utilities.table import get_confluence
 
-confluence=True
+confluence=get_confluence()
 
 format=PWNFormatter(confluence=confluence, precision=2)
 

@@ -4,8 +4,9 @@ from table_helper import PWNFormatter
 from lande.utilities.tools import OrderedDefaultDict
 import numpy as np
 from skymaps import SkyDir
+from lande.utilities.table import get_confluence
 
-confluence=True
+confluence=get_confluence()
 
 format=PWNFormatter(confluence=confluence, precision=2)
 
@@ -63,7 +64,7 @@ def localization_table(pwnlist):
             l,b=pointlike['position']['gal']
 
             try:
-                poserr='%.2f' % pointlike['spatial_model']['lsigma']
+                poserr='%.2f' % pointlike['spatial_model']['ellipse']['lsigma']
             except:
                 poserr='None'
 

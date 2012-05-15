@@ -2,8 +2,9 @@ from table_helper import get_pwnlist,get_results,write_latex, write_confluence, 
 from table_helper import PWNFormatter
 from lande.utilities.tools import OrderedDefaultDict
 from numpy import asarray as a
+from lande.utilities.table import get_confluence
 
-confluence=True
+confluence=get_confluence()
 
 format=PWNFormatter(confluence=confluence, precision=2)
 
@@ -95,6 +96,7 @@ def each_energy_table(pwnlist):
     else:
         write_latex(table,
                     filebase=filebase,
+                    preamble=r'\tabletypesize{\scriptsize}',
                     units={
                         flux1_name:r'($10^{-9}\ \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',
                         flux2_name:r'($10^{-9}\ \text{ph}\,\text{cm}^{-2}\,\text{s}^{-1}$)',

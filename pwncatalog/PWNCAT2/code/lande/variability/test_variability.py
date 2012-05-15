@@ -4,9 +4,11 @@ np.seterr(all='ignore')
 
 from argparse import ArgumentParser
 
-import lande.fermi.likelihood.variability import VariabilityTester
+from lande.fermi.likelihood.variability import VariabilityTester
 
 from uw.like.roi_save import load
+
+from setup_pwn import load_pwn
 
 parser = ArgumentParser()
 parser.add_argument("--pwndata", required=True)
@@ -16,14 +18,13 @@ args=parser.parse_args()
 
 
 name=args.name
-roi = load('%s/%s/roi_point_%s.dat' % (args.analysis_dir,name,name))
+roi = load_pwn('%s/%s/roi_point_%s.dat' % (args.analysis_dir,name,name))
 
 roi.print_summary()
 roi.fit(use_gradient=False)
 roi.print_summary()
 
-v = VariabilityTester(roi,name,
-                                        nbins=36)
+v = VariabilityTester(roi,name, nbins=36)
 
 print v.todict()
 

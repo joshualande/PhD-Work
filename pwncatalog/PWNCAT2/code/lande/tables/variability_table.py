@@ -1,10 +1,13 @@
-from table_helper import get_pwnlist,get_results,write_latex,write_confluence
-from table_helper import PWNFormatter
-from lande.utilities.tools import OrderedDefaultDict
 from os.path import join,exists,expandvars
 import yaml
 
-confluence=True
+from table_helper import get_pwnlist,get_results,write_latex,write_confluence
+from table_helper import PWNFormatter
+
+from lande.utilities.tools import OrderedDefaultDict
+from lande.utilities.table import get_confluence
+
+confluence=get_confluence()
 
 format=PWNFormatter(confluence=confluence, precision=2)
 

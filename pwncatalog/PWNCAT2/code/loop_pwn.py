@@ -14,48 +14,61 @@ python loop_pwn.py -c analyze.py \
 
 """
 import yaml
-from os.path import expandvars
-from os.path import join
+from os.path import expandvars, join, exists
 import os
 from textwrap import dedent
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
-parser.add_argument("-c", "--command", required=True)
-group=parser.add_mutually_exclusive_group(required=True)
-group.add_argument("--pwndata")
-group.add_argument("--tevsources")
+parser.add_argument("--pwndata", required=True)
 parser.add_argument("-o", "--outdir", required=True)
+parser.add_argument("--clobber", default=False, action='store_true')
 args,remaining_args = parser.parse_known_args()
 
 outdir=args.outdir
 
-if args.pwndata is not None:
-    sources=yaml.load(open(expandvars(args.pwndata)))
-    flags = '--pwndata %s' % args.pwndata
-else:
-    sources=yaml.load(open(expandvars(args.tevsources)))
-    flags = '--tevsources %s' % args.tevsources
+sources=yaml.load(open(expandvars(args.pwndata)))
+flags = '--pwndata %s' % args.pwndata
 
-if os.path.exists(outdir):
-    raise Exception("outdir %s already exists" % outdir)
-os.makedirs(outdir)
+if exists(outdir): 
+    if not args.clobber:
+        raise Exception("outdir %s already exists" % outdir)
+    pass
+else:
+    os.makedirs(outdir)
 
 for name in sources.keys():
     print name
 
     folder=join(outdir,name)
-    os.makedirs(folder)
+
+    if not exists(folder): os.makedirs(folder)
 
     file=join(folder,'run_%s.sh' % name)
-
     temp=open(file,'w')
     temp.write(dedent("""\
-        python %s \\
+        python $pwncode/analyze_psr.py \\
             -n %s \\
             %s \\
-            %s""" % (args.command,name, flags,' '.join(remaining_args))))
+            %s""" % (name, flags,' '.join(remaining_args))))
+
+    for hypothesis in ['at_pulsar', 'point', 'extended']:
+        for followup in ['plots','gtlike','variability']:
+            if hypothesis != 'point' and followup == 'variability':
+                continue
+
+            file=join(folder,'followup_%s_%s_%s.sh' % (name,hypothesis,followup))
+            temp=open(file,'w')
+            temp.write(dedent("""\
+                python $pwncode/followup_psr.py \\
+                    -n %s \\
+                    --hypothesis=%s
+                    --followup=%s
+                    %s \\
+                    %s""" % (name, hypothesis, followup, flags,' '.join(remaining_args))))
 
 submit_all=join(outdir,'submit_all.sh')
-temp=open(submit_all,'w')
-temp.write("""submit_all */run_*.sh $@""")
+open(submit_all,'w').write("""submit_all */run_*.sh $@""")
+
+submit_all=join(outdir,'followup_all.sh')
+open(submit_all,'w').write("""for pwn in PSR*; do submit_all $pwn/followup_* $@ --requires=$pwn/results_$pwn.yaml; done""")

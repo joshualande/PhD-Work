@@ -10,7 +10,7 @@ import asciitable
 
 from lande.utilities.table import latex_table,confluence_table,TableFormatter
 
-base='$pwndata/spectral/v12/'
+base='$pwndata/spectral/v18/'
 
 fitdir=expandvars(j(base,'analysis_no_plots/'))
 savedir=expandvars(j(base,'tables'))
@@ -33,7 +33,7 @@ def write_confluence(table, filebase, **kwargs):
     open('%s.confluence' % filebase,'w').write(t)
 
 
-def write_latex(table, filebase, **kwargs):
+def write_latex(table, filebase, preamble='',**kwargs):
 
     t = latex_table(table, **kwargs)
 
@@ -58,9 +58,10 @@ def write_latex(table, filebase, **kwargs):
 
         \begin{document}
         %s
+        %s
         \input{%s}
         %s
-        \end{document}""" % (header,filebase,footer)))
+        \end{document}""" % (header,preamble,filebase,footer)))
 
     os.system('pdflatex temp.tex')
     shutil.move('temp.pdf','%s.pdf' % filebase)
@@ -70,10 +71,12 @@ def write_latex(table, filebase, **kwargs):
 def get_results(pwn):
     f = j(fitdir,pwn,'results_%s.yaml' % pwn)
     if not os.path.exists(f): return None
+    print f
     results = yaml.load(open(f))
 
-    if not results.has_key('at_pulsar') or not results['at_pulsar'].has_key('gtlike'):
-        return None
+    for h in 'at_pulsar', 'point', 'extended':
+        if not results.has_key(h) or not results[h].has_key('gtlike'):
+            return None
     return results
 
 def get_sed(pwn,binning,hypothesis):

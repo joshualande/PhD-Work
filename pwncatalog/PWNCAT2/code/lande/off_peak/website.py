@@ -5,8 +5,10 @@ from os.path import join,expandvars,exists,basename
 
 from lande.utilities.website import t2t
 
-website_path=expandvars('$pwndata/off_peak/off_peak_bb/pwncat2/v4/website')
-analysis_path=expandvars('$pwndata/off_peak/off_peak_bb/pwncat2/v4/analysis')
+#version='v4'
+version='v3'
+website_path=expandvars('$pwndata/off_peak/off_peak_bb/pwncat2/%s/website' % version)
+analysis_path=expandvars('$pwndata/off_peak/off_peak_bb/pwncat2/%s/analysis' % version)
 
 
 if not exists(website_path): os.makedirs(website_path)

@@ -169,14 +169,14 @@ def plots(roi, name, hypothesis,
     roi.toRegion('%s/region_%s_%s.reg'%(datadir,hypothesis, name))
 
 def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
-                       seddir='seds', datadir='data', plotdir='plots',
+                       seddir='seds', datadir='data', 
                        upper_limit=False, localize=False,
                        fit_extension=False, extension_upper_limit=False,
                        cutoff=False, seds=False):
     """ emin + emax used for computing upper limits. """
     print 'Performing Pointlike analysis for %s' % hypothesis
 
-    for dir in [seddir, datadir, plotdir]: 
+    for dir in [seddir, datadir]: 
         if not os.path.exists(dir): os.makedirs(dir)
 
     print_summary = lambda: roi.print_summary(galactic=True)
@@ -346,9 +346,12 @@ def gtlike_analysis(roi, name, hypothesis,
 
     return r
     
-def save_results(results, name): 
-    open('results_%s.yaml' % name,'w').write(
-        yaml.dump(tolist(results)))
+def save_results(results, name, hypothesis=None, followup=None): 
+    if hypothesis is None and followup is None:
+        filename='results_%s.yaml' % name
+    else:
+        filename='results_%s_%s_%s.yaml' % (name,hypothesis,followup)
+    open(filename,'w').write(yaml.dump(tolist(results)))
 
 def import_module(filename):
     """ import a python module from a pathname. """

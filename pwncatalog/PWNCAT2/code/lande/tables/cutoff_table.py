@@ -1,8 +1,9 @@
 from table_helper import get_pwnlist,get_results,write_confluence,write_latex
 from table_helper import PWNFormatter
 from lande.utilities.tools import OrderedDefaultDict
+from lande.utilities.table import get_confluence
 
-confluence=True
+confluence=get_confluence()
 
 format=PWNFormatter(confluence=confluence, precision=2)
 
@@ -86,12 +87,13 @@ def cutoff_table(pwnlist):
           })
     else:
         write_latex(table,
-          filebase=filebase,
-          units={
-              flux_name:r'($10^{-9}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
-              eflux_name:r'($10^{-12}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
-              cutoff_name:r'(GeV)',
-          })
+                    filebase=filebase,
+                    preamble=r'\tabletypesize{\tiny}',
+                    units={
+                        flux_name:r'($10^{-9}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
+                        eflux_name:r'($10^{-12}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
+                        cutoff_name:r'(GeV)',
+                    })
 
 
 pwnlist=get_pwnlist()
