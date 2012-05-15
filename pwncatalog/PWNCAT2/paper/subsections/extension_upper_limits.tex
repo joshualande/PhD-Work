@@ -1,0 +1,76 @@
+\section{Validation of Extension Upper Limits}
+
+For sources that are significantly detected but that do not have a
+significantly-detectable extension, it can often interesting to derive an
+upper limit on any possible extension for the source.  Here, we present
+an algorithm for obtaining an upper limit on the extension
+of a currently unresolved source using a a Bayesian method proposed by Helene \citep{Helene1983}.
+The same algorithm has been used by the \fermi-LAT collaboration to
+obtain upper limits on the flux of point-like sources not significantly
+detected at \gev energies. See for example \cite{first_cat}.
+
+In this method, we assume a particular spatial shape for
+the currently-unresolved source (for example a uniform disk
+spatial distribution) and we profile over the extension of the
+currently-unresolved source. For simplicty, we assume this spatial shape
+is defined by a single extension parameter $\sigma$.
+
+For a given extension, the spectral parameters
+of the source as well as other nearby sources and diffuse backgrounds
+are maximized to obtain the likelihood as a function of extension $\likelihood(\sigma)$.
+The 95\% confidence upper limits $\sigma_{ul}$ on the extension of a source
+is obtained by finding the extension $\sigma$ such that
+\begin{equation}
+  \int_0^{\sigma_{ul}} \likelihood(\sigma) = 0.95
+\end{equation}
+assuming that the likelihood is normalized such that
+\begin{equation}
+  \int_0^{\infty} \likelihood(\sigma) = 1
+\end{equation}
+
+For compulational efficienciy, this upper limit algorithm was implemented in \pointlike 
+which introduces negligible approximations what make this alogirhtm compultationally 
+tractable \citep{extended_source_search}.
+Something about how this is biased by not marginalizing over the position of the extended source,
+but that this is not a huge effect
+
+To validate this method, we performed a monte carlo study of the coverage
+of the extension upper limits.  Because the method is Bayesian, it has
+to overcover for arbitrarily small extensions.  On the other hand, it
+is reasonable to expect the method to correctly cover for larger sources.
+
+For simplicity, In our simulation we used the same time range and background model described in section 
+4 of \cite{extended_source_serach}. In particular, our simulations were performed assuming the 2FGL
+pointing history against an isotropic background consistent with the 
+isotropic background measured by EGRET.
+
+We were interseted in verying the extension upper limits in two distincy energy ranges, first
+for sources just on the edge of detectability (as pointlike) which could potentially be extended.
+We picked for spectral indices varying from 1.5 to 4 and extensions varying from 0\fdg0 to 2\fdg0.
+We selected fluxes so that $\ts_\text{point} \sim 35$ for a given flux and extension.
+\figref{extul_dim} shows this monte carlo study.
+
+The second simulation concerns sources that are very significant, comparable in brightness to, for example,
+the Crab Nebula but that cannot be spatially resolved.
+\figref{extul_bright} shows this monte carlo study.
+
+\begin{figure}
+  \ifdefined\bwfigures
+  \plotone{extul_dim_bw.eps}
+  \else
+  \plotone{extul_dim_color.eps}
+  \fi
+  \caption{Monte carlo study.}
+\label{fig:extul_dim}
+\end{figure}
+
+
+\begin{figure}
+  \ifdefined\bwfigures
+  \plotone{extul_bright_bw.eps}
+  \else
+  \plotone{extul_bright_color.eps}
+  \fi
+  \caption{Extension upper limit stuff.}
+\label{fig:extul_bright}
+\end{figure}
