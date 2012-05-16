@@ -28,7 +28,7 @@ gtlike=False
 """
 
 var_version='none'
-spec_version='v18'
+spec_version='temp'
 gtlike=True
 
 variability_unix=expandvars('$pwndata/spectral/%s' % var_version)
@@ -40,8 +40,6 @@ analysis_no_plots_unix=expandvars('$pwndata/spectral/%s/analysis_no_plots' % spe
 website_unix=expandvars('$pwndata/spectral/%s/website' % spec_version)
 analysis_plots_website=expandvars('../../%s/analysis_plots' % spec_version)
 analysis_no_plots_website=expandvars('../../%s/analysis_no_plots' % spec_version)
-
-
 
 def get_pwnlist():
     pwnlist=sorted(yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml'))).keys())
@@ -266,7 +264,7 @@ def build_main_website():
     index_t2t.append('PWNCatalog+\n\n')
     t=TableFormatter(pwnlist)
     index_t2t.append(str(t))
-    t2t(index_t2t, 'index')
+    t2t(index_t2t, join(website_unix,'index.t2t'))
 
 def build_each_page(pwn):
     results = get_results(pwn)
