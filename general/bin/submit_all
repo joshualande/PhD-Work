@@ -11,10 +11,12 @@ parser = ArgumentParser(prog='submit_all',
                                          of jobs to the queue, and resubmitting
                                          failed jobs. """)
 parser.add_argument("-q","--queue",default='xxl')
+parser.add_argument("-p","--pattern",default=None, help='If specified, only submit jobs which match the pattern')
 parser.add_argument("-n",action='store_true', default=False)
 parser.add_argument("file",nargs='+')
 parser.add_argument("-l","--limit",type=int, help='maximum allows jobs at one time')
 parser.add_argument("--requires", help='only submits the job if the selected file arealdy exists. Useful for chaining jobs with dependencies.')
+parser.add_argument("-v","--verbose",default=False, action='store_true')
 args=parser.parse_args()
 
 p=subprocess.Popen(['bjobs', '-w'],stdout=subprocess.PIPE)
@@ -28,9 +30,15 @@ old_bad_format  = os.getcwd()
 
 for file in files:
 
+    if args.pattern is not None and args.pattern not in file:
+        if args.verbose:
+                print 'Skipping job %s because file %s does not match pattern %s' % (file,args.pattern)
+        continue
+
     if args.requires is not None:
         if not os.path.exists(args.requires):
-            print 'Skipping job %s because file %s does not exist' % (file,args.requires)
+            if args.verbose:
+                print 'Skipping job %s because file %s does not exist' % (file,args.requires)
             continue
 
     dir=os.path.dirname(file)
@@ -51,7 +59,7 @@ for file in files:
     else:
         parser.error("Unknown extension for file %s" % file)
 
-    log = join(os.path.dirname(file), 'log_'+os.path.basename(file).replace(ext,'.txt'))
+    log = 'log_'+os.path.basename(file).replace(ext,'.txt')
 
     abspath = join(new,base)
 
@@ -64,7 +72,7 @@ for file in files:
     if (not is_in_queue) and (not log_exists or job_failed):
 
         command='bsub -q %s -oo %s %s %s' % (args.queue,log,program,abspath)
-        print 'Submitting Job %s' % abspath
+        if args.verbose: print 'Submitting Job %s' % abspath
         if args.n:
             print os.path.expandvars(command)
         else:
