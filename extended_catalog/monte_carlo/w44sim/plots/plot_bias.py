@@ -14,7 +14,6 @@ from lande.utilities.plotting import label_axes
 set_latex_defaults()
 bw=get_bw()
 
-#savedir = expandvars(join('$w44simdata/','v7', 'merged.hdf5'))
 savedir = expandvars(join('$w44simdata/','v33', 'merged.hdf5'))
 results = h5py.File(savedir, 'r')
 
@@ -66,39 +65,43 @@ def plot(axes, quantity, scale=1):
     axes.set_ylabel('Number')
     axes.set_ylim(ymin=0)
 
+#fig=P.figure(None, figsize=(6,6))
 fig=P.figure(None, figsize=(6,6))
 
 
-axes=fig.add_subplot(321)
+#axes=fig.add_subplot(321)
+axes=fig.add_subplot(221)
 plot(axes, 'flux', scale=1e-8)
 axes.set_xlabel(r'Flux ($10^{-8}$ ph$\;$cm$^{-1}$s$^{-1}$)')
 
-axes=fig.add_subplot(322)
+#axes=fig.add_subplot(322)
+axes=fig.add_subplot(222)
 plot(axes, 'index')
 axes.set_xlabel('Spectral Index')
 
-axes=fig.add_subplot(323)
+#axes=fig.add_subplot(323)
+axes=fig.add_subplot(223)
 plot(axes,'r68')
 axes.set_xlabel('r68 (deg)')
 
-axes=fig.add_subplot(324)
-plot(axes,'eccentricity')
-axes.set_xlabel('Eccentricity')
+#axes=fig.add_subplot(324)
+#plot(axes,'eccentricity')
+#axes.set_xlabel('Eccentricity')
 
 
-axes=fig.add_subplot(325)
-plot(axes,'angle')
-axes.set_xlabel('Ellipse Angle (deg)')
+#axes=fig.add_subplot(325)
+#plot(axes,'angle')
+#axes.set_xlabel('Ellipse Angle (deg)')
 
 
-axes=fig.add_subplot(326)
-plot(axes,'fraction')
-axes.set_xlabel('Ring Fraction')
+#axes=fig.add_subplot(326)
+#plot(axes,'fraction')
+#axes.set_xlabel('Ring Fraction')
 
 
-prop = matplotlib.font_manager.FontProperties(size=8)
+prop = matplotlib.font_manager.FontProperties(size=6)
 plots=[Line2D([0],[0],color=i) for i in all_colors]
-axes.legend(reversed(plots),reversed(print_names),prop=prop, loc=3, 
+axes.legend(reversed(plots),reversed(print_names), prop=prop, loc=1,
             borderaxespad=1)
 
 fig.tight_layout()

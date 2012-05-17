@@ -500,10 +500,10 @@ we quote the radius to the edge ($\sigma$) as the size of the source.}
 \section{Validation of the \ts Distribution}
 
 \subsection{Point-like Source Simulations Over a Uniform Background}
+\label{monte_carlo_validation}
 
 }
 
-\label{monte_carlo_validation}
 
 \newtext{
 We tested the theoretical distribution for \tsext
@@ -580,8 +580,9 @@ Considering the distribution in Figures~\ref{ts_ext_mc_1000} and
 \newtext{
 
 \subsection{\newtext{Point-like Source Simulations Over a Structured Background}}
+\label{validation_over_plane}
 
-We performed a second set of simulation to show that the theoretical distribution
+We performed a second set of simulations to show that the theoretical distribution
 for \tsext is still preserved when the point-like sources are present over
 a highly-structured diffuse background.
 Our simulation setup was the same as above except that the sources were
@@ -594,12 +595,12 @@ brightest and most strongly contrasting areas of the Galactic background.
 To limit the number of tests, we selected only one flux
 level for each of the four spectral indices and we performed
 this test only in the 1 \gev to 100 \gev energy range. 
-As described below, The fluxes were selected so that $\ts\sim50$. We do not
+As described below, the fluxes were selected so that $\ts\sim50$. We do not
 expect to be able to spatially resolve sources much dimmer than this
 and the results for sources much brighter are less likely to be affected by the 
 structured background.
 
-Because the Galactic diffuse emission is highly structure with
+Because the Galactic diffuse emission is highly structured with
 strong gradients, the point-source
 sensitivity can vary significantly across the Galactic plane.
 To account for this, we scaled the flux (for a given spectral index)
@@ -647,11 +648,8 @@ measured East of celestial North, and the ring's inner radius is 75\% of
 the outer radius.
 
 We used a simulation setup similar to that described in
-Section~\ref{monte_carlo_validation}, but the sources were simulated on
-top of and analyzed assuming the presence of the standard Galactic diffuse and
-isotropic background model used in 2FGL.  
-We simulated the gamma-ray emission in the 1 \gev to 100 \gev
-energy range for the 2-year interval of the 2FGL catalog.
+Section~\ref{validation_over_plane}, but the simulations
+were over the 2-year interval of the 2FGL catalog.
 In the simulations, 
 we did not include the finite energy resolution of the LAT
 to isolate any effects due to changing the assumed spatial model. 
@@ -670,10 +668,10 @@ using \gtlike.
 
 Figure~\ref{ts_comparison_w44sim}a 
 shows that
-the significance of W44 in the simulations is very great ($\ts\sim3500$) 
+the significance of W44 in the simulations is very large ($\ts\sim3500$) 
 for a model with a point-like source hypothesis.
 Figure~\ref{ts_comparison_w44sim}b shows that 
-the significance of the spatial extension is also very great
+the significance of the spatial extension is also large
 ($\tsext\sim250$).  
 On average \tsext is somewhat larger when fitting
 the sources with more accurate spatial models.  This shows that
@@ -692,11 +690,11 @@ some additional power to resolve substructure in bright extended sources.
 Figure~\ref{bias_w44sim}a and Figure~\ref{bias_w44sim}b clearly show that
 no significant bias is introduced by modeling the source as extended
 but with an inaccurate spatial model, while a point-like source modeling
-results in a $\sim10\%$ and $\sim5\%$ bias in the fit flux and index,
+results in a $\sim10\%$ and $\sim0.125$ bias in the fit flux and index,
 respectively.  
 Furthermore, Figure~\ref{bias_w44sim}c shows that the \rsixeight estimate of
 the extension size is very mildly biased ($\sim10\%$) toward higher values
-when inaccurate spatial models are used, and thus represent a reasonable
+when inaccurate spatial models are used, and thus represents a reasonable
 measurement of the true 68\% containment radius for the source.
 For the elliptical spatial models, \rsixeight is computed by numeric integration.
 
