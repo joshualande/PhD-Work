@@ -629,10 +629,9 @@ statistical significance when testing LAT-detected sources for extension.
 \subsection{Extended Source Simulations Over a Structured Background}
 \label{bias_wrong_spatial_model}
 
-We also performed a Monte Carlo study that (a) shows that we obtain
-an unbiased fit of an extended source with a complicated spatial shape so long as
-the source is correctly modeled and (b) quantifies the biases 
-introduced by incorrectly modeling its spatial structure.
+We also performed a Monte Carlo study to show that incorrectly modeling the
+spatial extension of an extended source does not substantially bias
+the spectral fit of the source, although it does alter the value of the \ts.
 To assess this, we simulated the spatially extended ring-type SNR W44.
 We selected W44 because it is the most significant extended source detected by the LAT 
 that has a non-radially symmetric photon distribution \citep{w44}. 
@@ -690,22 +689,17 @@ ring}-\ts_\text{elliptical\ disk}\sim9$). This shows that the LAT has
 some additional power to resolve substructure in bright extended sources.
 
 
-Figure~\ref{bias_w44sim} shows that there are no systematic biases in the
-distribution of best fit (a) flux (b) spectral index (c) \rsixeight
-(d) elliptical eccentricity (e) elliptical orientation angle and (f) inner
-ring fraction when the simulated extended sources were fit with the
-elliptical ring spatial model. For the elliptical spatial models, \rsixeight
-is computed by numeric integration.
-Figures~\ref{bias_w44sim}a and~\ref{bias_w44sim}b show that
-no significant bias is introduced by modeling the source with the 
-other extended spatial models, while modeling the source as point-like
-results in $\sim10\%$ and $\sim5\%$ biases in the fit flux and index,
+Figure~\ref{bias_w44sim}a and Figure~\ref{bias_w44sim}b clearly show that
+no significant bias is introduced by modeling the source as extended
+but with an inaccurate spatial model, while a point-like source modeling
+results in a $\sim10\%$ and $\sim5\%$ bias in the fit flux and index,
 respectively.  
 Furthermore, Figure~\ref{bias_w44sim}c shows that the \rsixeight estimate of
-the extension is very mildly biased ($\sim10\%$) toward higher values
-when inaccurate spatial models are used, and thus \rsixeight for any of
-these spatial models can be used as a reasonable measurement of the true
-68\% containment radius for the source.
+the extension size is very mildly biased ($\sim10\%$) toward higher values
+when inaccurate spatial models are used, and thus represent a reasonable
+measurement of the true 68\% containment radius for the source.
+For the elliptical spatial models, \rsixeight is computed by numeric integration.
+
 }
 
 \section{Extended Source Detection Threshold}
@@ -833,15 +827,15 @@ The \aic is defined as $\aic=2k-2\log\likelihood$, where $k$ is the number of pa
 In this formulation, the best hypothesis is considered to be the one that minimizes the \aic.
 The first term penalizes models with additional parameters. 
 
-Because the two point-like source hypothesis has
-three more parameters than the single extended source hypothesis (two spatial
-parameters and two spectral parameters compared to one extension parameter),
-we note that the $\tsext>\tsinc$ test is mathematically equivalent to testing that
-$\aic_\text{ext} < \aic_\text{2pts} - 6$.
-Thus our criterion based on the \ts value is equivalent to requesting
-that the \aic-based empirical support for the two-point-like-source model be
-``considerably less'' than for the extended source model, following the
-classification by \cite{aic_stats_book}.
+The two point-like sources hypothesis has three more parameters than
+the single extended source hypothesis (two more spatial parameters and
+two more spectral parameters compared to one extension parameter), so the
+comparison $\aic_\text{ext} < \aic_\text{2pts}$  is formally equivalent to
+$\tsext + 6 > \tsinc$.  Our criterion for accepting extension ($\tsext > \tsinc$) 
+is thus equivalent to requesting that the AIC-based empirical
+support for the two point-like sources model be ``considerably less''
+than for the extended source model, following the classification by
+\cite{aic_stats_book}.
 }
 
 We assessed the power of the $\tsext>\tsinc$ test with a Monte Carlo
@@ -2176,9 +2170,8 @@ in the Galactic center. The actual fluxes are scaled by Equation~\ref{scale_flux
     \newtext{The distribution of fit parameters
     for the Monte Carlo simulations of W44.
     The plots show the distribution of 
-    best fit (a) flux (b) spectral index (c) 68\% containment
-    radius (d) eccentricity (e) elliptical orientation angle
-    and (f) inner ring fraction. The dashed vertical lines represent
+    best fit (a) flux (b) spectral index and (c) 68\% containment
+    radius. The dashed vertical lines represent
     the simulated values of the parameters.
     }
     }\label{bias_w44sim}
