@@ -16,6 +16,7 @@ parser = ArgumentParser()
 parser.add_argument("i", type=int)
 parser.add_argument("--source", required=True, choices=['W44', 'IC443'])
 parser.add_argument("--spectrum", required=True, choices=['PowerLaw', 'SmoothBrokenPowerLaw'])
+parser.add_argument("--debug", default=False, action='store_true')
 args= parser.parse_args()
 
 i = args.i
@@ -27,7 +28,6 @@ emin=10
 emax=1e6
 
 ft2='/u/gl/bechtol/disk/drafts/radio_quiet/36m_gtlike/trial_v1/ft2-30s_239557414_334152027.fits'
-ltcube = '/u/gl/funk/data/GLAST/ExtendedSources/NewAnalysis/gtlike/W44/ltcube_239557414_334152002.fits'
 ft1 = 'simulated_ft1.fits'
 
 catalog = Catalog2FGL('/afs/slac/g/glast/groups/catalog/2FGL/gll_psc_v05.fit',
@@ -35,8 +35,10 @@ catalog = Catalog2FGL('/afs/slac/g/glast/groups/catalog/2FGL/gll_psc_v05.fit',
 
 if source == 'W44':
     skydir = SkyDir(284.005,1.345)
+    gtifile = '/u/gl/funk/data/GLAST/ExtendedSources/NewAnalysis/gtlike/W44/sel_W44_60_100000.fits'
 elif source == 'IC443':
     skydir = SkyDir(94.310,22.580)
+    gtifile = '/u/gl/funk/data/GLAST/ExtendedSources/NewAnalysis/gtlike/IC443/sel_IC443_60_100000.fits'
 
 
 ds = get_default_diffuse(
@@ -108,7 +110,11 @@ elif source == 'IC443':
 
     IC443.model.set_flux(smooth.i_flux(emin=60, emax=2000), emin=60, emax=2000)
 
-write_sources(ps,ds,'gtlike_model.xml')
+if args.debug:
+    ps = []
+    ds = [j for j in ds if j.name == source]
+
+write_sources(ps,ds,'gtlike_model.xml', convert_extended=True, expand_env_vars=True)
 
 irf='P7SOURCE_V6'
 mc=MonteCarlo(
@@ -117,13 +123,13 @@ mc=MonteCarlo(
     irf=irf,
     ft1=ft1,
     ft2=ft2,
+    gtifile=gtifile,
     roi_dir=skydir,
     maxROI=15,
-    emin=emin,
     zmax=100,
+    emin=emin,
     emax=emax,
     energy_pad=1,
-    gtifile=ltcube,
     savedir='gtobssim_output')
 mc.simulate()
 
