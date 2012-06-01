@@ -1,9 +1,0 @@
-# SED from http://www.mpi-hd.mpg.de/hfm/HESS/pages/publications/auxiliary/HESSJ1912_auxinfo.html
-Energy               Flux     Flux Error_low     Flux Error_high
- [TeV]      [/TeV/cm^2/s]
-
- 0.872           3.82e-12           1.18e-12            1.21e-12 
-  1.76           1.02e-12           1.69e-13            1.73e-13 
-  3.75           8.12e-14           3.21e-14            3.32e-14 
-  8.03           1.85e-14           7.89e-15            8.27e-15 
-  24.6          <8.27e-16                              
