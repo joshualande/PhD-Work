@@ -1,26 +1,21 @@
 \subsection{Off-peak Phase Selection}
+\label{subsec:off_peak_defintion}
+
 
 
 To study the off-peak emission of \lat-detected pulsars, we first
 developed a new method for defining the off-peak emission.
 The primary constraint for this method was that it was systematic,
-computationally efficient and model independent, and that it correctly
-removed the pulsed emission for already studied pulsars.
+computationally efficient, and model independent.
 
-The method we developed is
-\begin{itemize}
-  \item First, deconstruct the pulsar phaseogram 
-    using a Bayseian blocks representation of the data.
-    \begin{itemize}
-      \item \figref{off_peak_select} shows the off peak selection for some pulsars\dots
-      \item Set the ncpPrior parameter to 5
-    \end{itemize}
-  \item Before beinning the data, first rotate the maximum phase range to 0
-    so that the off-peak region will not overlap the phase edge.
-  \item 
-\end{itemize}
-  required first representing the 
+The method we developed procedes by deconstructing a pulsar phaseogram
+into a Baysian blocks using the implementation described in \cite{Jackson_Bayesian_Blocks_2003}.
 
+Set the ncpPrior parameter to 5?
+
+\figref{off_peak_select} shows the off peak selection for some pulsars\dots
+
+How to implement Baysian blocks on periodic data.
 
 \begin{figure}
   \ifdefined\bwfigures
@@ -31,17 +26,4 @@ The method we developed is
   \caption{Off peak selection for some pulsars\dots}
   \label{fig:off_peak_select}
 \end{figure}
-
-
-THe off peak phase range is defined in \tabref{phase_range}.
-
-
-\begin{deluxetable}{l*{4}c}
-  \tabletypesize{\scriptsize}
-  \tablecaption{Timing Observatories, definition of the off-peak region, and pulsar distances.
-  \label{tab:phase_range}
-  }
-  \input{tables/phase_range}
-  \tablecomments{\todo[inline]{Put table comments}}
-\end{deluxetable}
 

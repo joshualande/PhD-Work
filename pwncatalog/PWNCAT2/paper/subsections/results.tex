@@ -1,62 +1,31 @@
 \subsection{Results}
 
 First, we tested the sources to see if they
-were spatially extended. The localization results are in \tabref{localization}.
+were spatially extended. The localization results are in \tabref{offpeak}.
 
 \begin{deluxetable}{l*{7}c}
 \tabletypesize{\scriptsize}
-\tablecaption{Localization and extension fitting results
-\label{tab:localization}
+\tablecaption{Off-Peak Spatial and Spectral Results
+\label{tab:offpeak}
 }
-\input{tables/localization.tex}
+\input{tables/off_peak_spatial_spectral.tex}
 \tablecomments{\todo[inline]{Put table comments}}
 \end{deluxetable}
+
 
 
 Next, we performed a spectral analysis over all energy using the best
-fit morphology. \tabref{all_energy} shows the results of the all energy
+fit morphology. XXX shows the results of the all energy
 analysis of the off-peak emission for each pulsar.
 
 Next, we fit a powerlaw independently in each energy
-bin. \tabref{each_energy} shows the results of the analysis in separate
+bin. XXX shows the results of the analysis in separate
 energy bins of each pulsar.
 
 Finally, we tested sources to see which were
-variable. \tabref{cutoff_test} shows the results of the cutoff test for
+variable. XXX shows the results of the cutoff test for
 pulsars with significant low-energy emission.
 
-
-\begin{deluxetable}{l*{5}c}
-\tabletypesize{\scriptsize}
-\tablecaption{All Energy spectral fit for the \todo[inline]{How many pulsars?} \lat-detected Pulsars
-\label{tab:all_energy}
-}
-\input{tables/all_energy.tex}
-\tablecomments{\todo[inline]{Put table comments}}
-\end{deluxetable}
-
-\clearpage
-\begin{deluxetable}{l*{9}c}
-%\tabletypesize{\tiny}
-\setlength{\tabcolsep}{0.04in}
-\tabletypesize{\scriptsize}
-\tablewidth{0pt}
-\rotate
-\tablecaption{Energy bin spectral fit for the \todo[inline]{How many pulsars?} \lat-detected Pulsars
-\label{tab:each_energy}
-}
-\input{tables/each_energy.tex}
-\tablecomments{\todo[inline]{Put table comments}}
-\end{deluxetable}
-
-\begin{deluxetable}{l*{6}c}
-\tabletypesize{\scriptsize}
-\tablecaption{Spectral fitting of pulsar wind nebula candidates with low energy component
-\label{tab:cutoff_test}
-}
-\input{tables/cutoff_test.tex}
-\tablecomments{\todo[inline]{Put table comments}}
-\end{deluxetable}
 
 
 
@@ -74,24 +43,11 @@ pulsars with significant low-energy emission.
 \end{figure}
 
 
-\figref{variability} shows the variability test for each source
-candidate. The distribution of \tsvar is plotted in 
+We tested all sources for variability.
 
-\begin{deluxetable}{l*{2}c}
-\tabletypesize{\scriptsize}
-\tablecaption{Variability test
-\label{tab:variability}
-}
-\input{tables/variability.tex}
-\tablecomments{\todo[inline]{Put table comments}}
-\end{deluxetable}
 
-\begin{figure}
-  \ifdefined\bwfigures
-  \plotone{variability_bw.eps}
-  \else
-  \plotone{variability_color.eps}
-  \fi
-  \caption{Distribution of \tsvar for each source candidate. \todo[inline]{Disclaimer about crab not being included}.}
-  \label{fig:variability}
-\end{figure}
+Special cases:
+\begin{itemize}
+  \item Crab has a funny spectrum, we have (so far) fixed it to
+  \item \velax
+\end{itemize}
