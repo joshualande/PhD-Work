@@ -1,4 +1,4 @@
-\subsection{Analysis of the \fermi-LAT data}
+\subsection{Off-peak Analysis Method}
 \label{subsec:analysis_off_peak}
 
 We develope a procedure for characterizing any emission found
