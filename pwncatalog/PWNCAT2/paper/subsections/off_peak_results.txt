@@ -1,5 +1,13 @@
 \subsection{Results}
 
+Following the procedure described in \subsecref{off_peak},
+we performed an analysis of the off-peak emission for all 107
+pulsars in this catalog. In this paper, we will present
+a condensed summary of the results. We will also
+describe a supplemental \fits-format table which will contain
+the full spectral and spatial results for each region.
+
+Table 
 First, we tested the sources to see if they
 were spatially extended. The localization results are in \tabref{offpeak}.
 
@@ -27,6 +35,7 @@ variable. XXX shows the results of the cutoff test for
 pulsars with significant low-energy emission.
 
 
+\todo[inline]{Finally, a description of the acompanying fits table}
 
 
 
@@ -43,11 +52,25 @@ pulsars with significant low-energy emission.
 \end{figure}
 
 
-We tested all sources for variability.
+\todo[inline]{We tested all sources for variability.}
 
+\todo[inline]{Describe upper limits}
 
 Special cases:
 \begin{itemize}
   \item Crab has a funny spectrum, we have (so far) fixed it to
-  \item \velax
+  \item \velax Spatialmodel
 \end{itemize}
+
+
+Results:
+\begin{itemize}
+  \item List of all XXX detections detected
+  \item For each pulsar, is it a 
+    \begin{itemize}
+      \item Magnetospheric emission
+      \item PWN emission
+      \item Region where the fit shows trouble for some reason.
+    \end{itemize}
+\end{itemize}
+
