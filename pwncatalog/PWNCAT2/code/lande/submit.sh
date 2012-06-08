@@ -276,22 +276,6 @@ echo python loop_pwn.py -c analyze_psr.py \
 
 # ----------------------------------------------------------------------------------------------------
 
-echo python loop_pwn.py  \
--c off_peak/off_peak_bb.py \
--o /nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/off_peak/off_peak_bb/pwncat1/v1 \
---pwndata $PWD/pwndata/pwncat1_data.yaml  \
---pwnphase $PWD/pwndata/pwncat1_phase.yaml 
-
-# ----------------------------------------------------------------------------------------------------
-
-echo python ../loop_pwn.py  \
--c off_peak/off_peak_bb.py \
--o /nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/off_peak/off_peak_bb/pwncat2/v1 \
---pwndata $PWD/../pwndata/pwncat2_data_lande.yaml  \
---pwnphase $PWD/../pwndata/pwncat1_phase.yaml 
-
-# ----------------------------------------------------------------------------------------------------
-
 echo python loop_pwn.py -c analyze_psr.py \
         --pwndata $PWD/pwndata/pwncat2_data.yaml \
         --pwnphase $PWD/pwndata/pwncat2_phase.yaml  \
@@ -538,23 +522,6 @@ echo python $pwncode/loop_pwn.py \
  
 # ----------------------------------------------------------------------------------------------------
 
-echo python $pwncode/loop_pwn.py  \
-    -c $pwncode/lande/off_peak/off_peak_bb.py \
-    -o $pwndata/off_peak/off_peak_bb/pwncat2/v2 \
-    --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml  \
-    --pwncat1phase $pwncode/pwndata/pwncat1_phase.yaml 
-
-# ----------------------------------------------------------------------------------------------------
-
-
-echo python $pwncode/loop_pwn.py  \
-    -c $pwncode/lande/off_peak/off_peak_bb.py \
-    -o $pwndata/off_peak/off_peak_bb/pwncat2/v3 \
-    --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml  \
-    --pwncat1phase $pwncode/pwndata/pwncat1_phase.yaml 
-
-# ----------------------------------------------------------------------------------------------------
-
 
 version=v15
 common_kwargs="--max-free 5 --localization-emin=1e2"
@@ -693,21 +660,44 @@ echo python $pwncode/loop_pwn.py \
 # ----------------------------------------------------------------------------------------------------
 
 
-echo python $pwncode/loop_pwn.py  \
-    -c $pwncode/lande/off_peak/off_peak_bb.py \
-    -o $pwndata/off_peak/off_peak_bb/pwncat2/v4/analysis \
-    --pwndata $pwncode/pwndata/pwncat2_data_lande.yaml  \
-    --pwncat1phase $pwncode/pwndata/pwncat1_phase.yaml 
+echo python \$pwncode/loop_pwn.py \
+        --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwncode/modify/modify_psr_lande.py \
+        --max-free 5  --no-savedir --emax=1e5 \
+        -o $pwndata/spectral/v19/analysis
 
 # ----------------------------------------------------------------------------------------------------
 
-
-version=v19
 
 echo python \$pwncode/loop_pwn.py \
         --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
         --pwnphase \\\$pwncode/pwndata/pwncat2_phase_lande.yaml  \
         --modify \\\$pwncode/modify/modify_psr_lande.py \
-        --max-free 5 --localization-emin=1e2 --no-savedir --emax=1e5 \
-        -o $pwndata/spectral/$version/analysis \
+        --max-free 5  --no-savedir \
+        -o $pwndata/spectral/v20/analysis
+
+# ----------------------------------------------------------------------------------------------------
+
+
+
+echo python \$pwncode/loop_pwn.py \
+        --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwncode/modify/modify_psr_lande.py \
+        --max-free 5  --no-savedir \
+        -o $pwndata/spectral/v21/analysis
+
+# ----------------------------------------------------------------------------------------------------
+
+
+echo python \$pwncode/loop_pwn.py \
+        --pwndata \\\$pwncode/pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwncode/pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwncode/modify/modify_psr_lande.py \
+        --max-free 5  --no-savedir \
+        -o $pwndata/spectral/v22/analysis
+
+# ----------------------------------------------------------------------------------------------------
+
 

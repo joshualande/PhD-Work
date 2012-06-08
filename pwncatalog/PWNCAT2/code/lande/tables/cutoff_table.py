@@ -88,7 +88,7 @@ def cutoff_table(pwnlist):
     else:
         write_latex(table,
                     filebase=filebase,
-                    preamble=r'\tabletypesize{\tiny}',
+                    preamble=r'\tabletypesize{\scriptsize}',
                     units={
                         flux_name:r'($10^{-9}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
                         eflux_name:r'($10^{-12}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
