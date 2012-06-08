@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 import numpy as np
 from skymaps import SkyDir
 from uw.utilities.xml_parsers import parse_sources, write_sources
-from uw.like.Models import PowerLaw, SmoothBrokenPowerLaw
+from uw.like.Models import PowerLaw, SmoothBrokenPowerLaw, FileFunction
 from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.pointspec_helpers import get_default_diffuse
 from uw.like.roi_monte_carlo import MonteCarlo
@@ -17,6 +17,7 @@ parser.add_argument("i", type=int)
 parser.add_argument("--source", required=True, choices=['W44', 'IC443'])
 parser.add_argument("--spectrum", required=True, choices=['PowerLaw', 'SmoothBrokenPowerLaw'])
 parser.add_argument("--debug", default=False, action='store_true')
+parser.add_argument("--normalization", choices=['standard','same_flux','same_prefactor'])
 args= parser.parse_args()
 
 i = args.i
@@ -42,9 +43,11 @@ elif source == 'IC443':
 
 
 ds = get_default_diffuse(
-    diffdir="/afs/slac/g/glast/groups/diffuse/rings/2year/",
-    gfile="ring_2year_P76_v0.fits",
-    ifile="isotrop_2year_P76_source_v0.txt")
+    diffdir="/nfs/slac/g/ki/ki03/lande/fermi/diffuse/",
+    gfile="gal_2yearp7v6_v0.fits",
+    ifile="iso_p7v6source.txt")
+
+ds[1].smodel = FileFunction(file='/nfs/slac/g/ki/ki03/lande/fermi/diffuse/iso_p7v6source_extrapolated.txt')
 
 ps,ds = catalog.merge_lists(skydir, radius=15, user_diffuse_list=ds)
 
@@ -66,7 +69,7 @@ if source == 'W44':
     """
     smooth = SmoothBrokenPowerLaw(
         Norm=14.56863965e-10,
-        Index_1=1.504042874,
+        Index_1=-1.504042874,
         Index_2=1.891184873,
         E_break=204.3216401,
         beta=0.1,
@@ -74,10 +77,19 @@ if source == 'W44':
 
     if spectrum == 'PowerLaw':
         W44.model = PowerLaw(index=1.891184873, e0=200)
+
+        if args.normalization == 'same_flux':
+            W44.model.set_flux(smooth.i_flux(emin=60, emax=2000), emin=60, emax=2000)
+        elif args.normalization == 'same_prefactor':
+            W44.model.set_prefactor(smooth(3e3),3e3)
+        else:
+            raise Exception("...")
+
     else:
+        if args.normalization != 'standard':
+            raise Exception("...")
         W44.model = smooth
 
-    W44.model.set_flux(smooth.i_flux(emin=60, emax=2000), emin=60, emax=2000)
 
 elif source == 'IC443':
     """
@@ -105,10 +117,18 @@ elif source == 'IC443':
 
     if spectrum == 'PowerLaw':
         IC443.model = PowerLaw(index=1.891184873, e0=200)
-    else:
-        IC443.model = smooth
 
-    IC443.model.set_flux(smooth.i_flux(emin=60, emax=2000), emin=60, emax=2000)
+        if args.normalization == 'same_flux':
+            IC443.model.set_flux(smooth.i_flux(emin=60, emax=2000), emin=60, emax=2000)
+        elif args.normalization == 'same_prefactor':
+            IC443.model.set_prefactor(smooth(3e3),3e3)
+        else:
+            raise Exception("...")
+
+    else:
+        if args.normalization != 'standard':
+            raise Exception("...")
+        IC443.model = smooth
 
 if args.debug:
     ps = []
@@ -130,7 +150,7 @@ mc=MonteCarlo(
     emin=emin,
     emax=emax,
     energy_pad=1,
-    savedir='gtobssim_output')
+    savedir='gtobssim_output' if i==0 else None)
 mc.simulate()
 
 

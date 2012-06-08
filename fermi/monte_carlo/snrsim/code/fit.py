@@ -13,6 +13,7 @@ parser = ArgumentParser()
 parser.add_argument("i", type=int)
 parser.add_argument("--source", required=True, choices=['W44', 'IC443'])
 parser.add_argument("--spectrum", required=True, choices=['PowerLaw', 'SmoothBrokenPowerLaw'])
+parser.add_argument("--normalization", choices=['standard','same_flux','same_prefactor'])
 parser.add_argument("--simdir", required=True)
 parser.add_argument("--debug", default=False, action='store_true')
 args= parser.parse_args()
@@ -21,8 +22,9 @@ i = args.i
 istr = '%05d' % i
 source = which = args.source
 spectrum = args.spectrum
+normalization = args.normalization
 
-simdir = join(args.simdir,"job_source_%s_spectrum_%s" % (source,spectrum),istr)
+simdir = join(args.simdir,"job_spectrum_%s_normalization_%s_source_%s" % (spectrum,normalization,source),istr)
 
 if source == 'W44':
     roi_dir = SkyDir(284.005,1.345)
@@ -32,10 +34,6 @@ elif source == 'IC443':
     roi_dir = SkyDir(94.310,22.580)
     name = 'IC443'
     ltcube = "/u/gl/funk/data/GLAST/ExtendedSources/NewAnalysis/gtlike/IC443/ltcube_239557414_334152002.fits"
-
-# TEMPORARY
-ltcube = 'ltcube.fits'
-# TEMPORARY
 
 data_specification = DataSpecification(
     ft1files = join(simdir,"simulated_ft1.fits"),
