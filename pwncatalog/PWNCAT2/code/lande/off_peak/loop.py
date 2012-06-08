@@ -2,7 +2,7 @@ import yaml
 from os.path import expandvars
 from lande.utilities.jobtools import JobBuilder
 
-pwndata="$pwnpersonal/data_prep/v2/pwncat2_data_lande.yaml"
+pwndata='$pwncode/pwndata/pwncat2_data_lande.yaml'
 names=yaml.load(open(expandvars(pwndata))).keys()
 params=dict(pwncat1phase="$pwncode/pwndata/pwncat1_phase.yaml",
             pwndata=pwndata,

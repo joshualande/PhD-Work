@@ -17,7 +17,7 @@ from lande.fermi.pulsar.optimize import OptimizePhases
 from lande.fermi.pulsar.offpeak import OffPeakBB, plot_phaseogram_blocks
 
 
-def find_offpeak(ft1,name,skydir,pwncat1phase, emax=100000):
+def find_offpeak(ft1,name,skydir, pwncat1phase, emax=100000):
 
     # First, find energy and radius that maximize H test.
 
@@ -42,6 +42,7 @@ def find_offpeak(ft1,name,skydir,pwncat1phase, emax=100000):
             optimal_emin = opt.optimal_emin,
             emax = emax,
             optimal_radius = opt.optimal_radius,
+            ncpPrior=off_peak_bb.ncpPrior
             )
         )
 

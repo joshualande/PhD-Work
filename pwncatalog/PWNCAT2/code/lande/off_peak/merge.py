@@ -7,8 +7,7 @@ import yaml
 from lande.utilities.lists import recursive_map
 
 
-#version = 'v4'
-version = 'v3'
+version = 'v5'
 
 pwndata=yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml')))
 
@@ -31,7 +30,7 @@ for i,pwn in enumerate(pwnlist):
     optimal_radius=results['optimal_radius']
 
     f = PhaseRange(off_peak_phase).tolist(dense=True)
-    f = recursive_map(lambda i: '%.2f' % i, f)
+    f = recursive_map(lambda i: '>>>%.2f<<<' % i, f)
     d[pwn] = dict(
         phase = f,
         optimal_emin=optimal_emin,
@@ -39,7 +38,7 @@ for i,pwn in enumerate(pwnlist):
         optimal_radius=optimal_radius,
     )
 
-output=yaml.dump(d).replace("'","")
+output=yaml.dump(d).replace("'>>>","").replace("<<<'","")
 print output
 
 merged=expandvars(join(r,'merged'))

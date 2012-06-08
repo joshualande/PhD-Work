@@ -5,8 +5,7 @@ from os.path import join,expandvars,exists,basename
 
 from lande.utilities.website import t2t
 
-#version='v4'
-version='v3'
+version='v5'
 website_path=expandvars('$pwndata/off_peak/off_peak_bb/pwncat2/%s/website' % version)
 analysis_path=expandvars('$pwndata/off_peak/off_peak_bb/pwncat2/%s/analysis' % version)
 
