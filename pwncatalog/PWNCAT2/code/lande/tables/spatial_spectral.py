@@ -10,8 +10,7 @@ from uw.pulsar.phase_range import PhaseRange
 from lande.utilities.table import get_confluence
 from lande.utilities.tools import OrderedDefaultDict
 
-from table_helper import get_pwnlist,get_results,write_latex, write_confluence, BestHypothesis
-from table_helper import PWNFormatter
+from table_helper import get_pwnlist,get_results,write_latex, write_confluence, BestHypothesis,PWNFormatter
 
 confluence=get_confluence()
 
@@ -81,7 +80,11 @@ def localization_table(pwnlist):
             table[ts_ext_name].append(format.value(ts_ext,precision=1))
             table[ts_cutoff_name].append(format.value(ts_cutoff,precision=1))
 
-            if type == 'cutoff':
+            if pwn == 'PSRJ0534+2200':
+                table[flux_name].append(format.error(gtlike['flux']['flux']/1e-9,gtlike['flux']['flux_err']/1e-9))
+                table[index_name].append(format.nodata)
+                table[cutoff_name].append(format.nodata)
+            elif type == 'cutoff':
                 table[flux_name].append(format.error(cutoff['flux_1']['flux']/1e-9,cutoff['flux_1']['flux_err']/1e-9))
                 table[index_name].append(format.error(cutoff['model_1']['Index1'],cutoff['model_1']['Index1_err']))
                 table[cutoff_name].append(format.error(cutoff['model_1']['Cutoff'],cutoff['model_1']['Cutoff_err']))

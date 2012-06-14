@@ -14,14 +14,11 @@ import asciitable
 
 from table_helper import BestHypothesis
 
+from lande.utilities.tools import merge_dict
 from lande.utilities.website import t2t
 
-var_version='none'
-#spec_version='v19'
 spec_version='v22'
 
-variability_unix=expandvars('$pwndata/spectral/%s' % var_version)
-variability_website=expandvars('../../%s' % var_version)
 
 
 analysis_unix=expandvars('$pwndata/spectral/%s/analysis' % spec_version)
@@ -39,18 +36,15 @@ pwnlist=get_pwnlist()
 if not os.path.exists(website_unix): os.makedirs(website_unix)
 
 
-
 def get_results(pwn):
-    f = join(analysis_unix,pwn,'results_%s_pointlike.yaml' % pwn)
-
-    if not os.path.exists(f): return None
-    results = yaml.load(open(f))
-    return results
-
-def get_variability(pwn):
-    f = join(variability_unix, pwn, 'results_%s.yaml' % pwn)
-    if not os.path.exists(f): return None
-    return yaml.load(open(f))
+    f = [join(analysis_unix,pwn,i) for i in ['results_%s_pointlike.yaml' % pwn, 
+                                   'results_%s_extul_point.yaml' % pwn,
+                                   'results_%s_gtlike_at_pulsar.yaml' % pwn,
+                                   'results_%s_gtlike_point.yaml' % pwn,
+                                   'results_%s_gtlike_extended.yaml' % pwn]]
+    if not os.path.exists(f[0]): return None
+    g = [yaml.load(open(i)) for i in f if os.path.exists(i)]
+    return merge_dict(*g)
 
 
 class TableFormatter(object):
@@ -61,7 +55,10 @@ class TableFormatter(object):
         gamma_name=r'Gamma'
 
         table = OrderedDict()
-        for k in ['PSR', 'TS_at_pulsar_ptlike', 'TS_loc_ptlike', 'TS_ext_ptlike', 'TS_cutoff_ptlike', 'disp']:
+        for k in ['PSR', 
+                  'TS_at_pulsar_ptlike', 'TS_loc_ptlike', 'TS_ext_ptlike', 'TS_cutoff_ptlike', 'disp',
+                  'TS_at_pulsar_gtlike', 'TS_loc_gtlike', 'TS_ext_gtlike', 'TS_cutoff_gtlike', 
+                 ]:
             table[k] = ['None']*len(pwnlist)
 
         for i,pwn in enumerate(pwnlist):
@@ -100,7 +97,37 @@ class TableFormatter(object):
                 ts_cutoff = pt_point['test_cutoff']['TS_cutoff']
                 table['TS_cutoff_ptlike'][i] = bold('%.1f' % ts_cutoff, ts_cutoff > 16)
             except:
-                table['TS_cutoff_ptlike'][i] = 'None'
+                pass
+
+
+            if results['at_pulsar'].has_key('gtlike'):
+                gt_at_pulsar=results['at_pulsar']['gtlike']
+
+                ts_at_pulsar=gt_at_pulsar['TS']
+
+                table['TS_at_pulsar_gtlike'][i] = bold('%.1f' % ts_at_pulsar, ts_at_pulsar>25)
+
+
+                if results['point'].has_key('gtlike'):
+                    gt_point=results['point']['gtlike']
+
+                    ts_point = gt_point['TS']
+                    ts_loc = ts_point - ts_at_pulsar
+
+                    table['TS_loc_gtlike'][i] = bold('%.1f' % (ts_loc), ts_point>25)
+
+                    if results['extended'].has_key('gtlike'):
+                        gt_extended=results['extended']['gtlike']
+
+                        ts_gauss = gt_extended['TS']
+                        ts_ext = ts_gauss - ts_point
+                        table['TS_ext_gtlike'][i] = bold('%.1f' % ts_ext, ts_point > 25 and ts_ext > 16)
+
+            try:
+                ts_cutoff = gt_point['test_cutoff']['TS_cutoff']
+                table['TS_cutoff_gtlike'][i] = bold('%.1f' % ts_cutoff, ts_cutoff > 16)
+            except:
+                pass
 
         self.table = table
 
@@ -177,20 +204,13 @@ def build_each_page(pwn):
     title('Band Smoothed Counts BG Source Subtracted (0.1)')
     get_img_table(*['plots/band_source_%s_%s_5deg_0.1deg.png' % (i,pwn) for i in all])
 
-    title('gtlike SED (4bpd)')
-    get_sed_table(*['seds/sed_gtlike_4bpd_%s_%s.png' % (i,pwn) for i in all])
+    title('gtlike SED')
+    get_sed_table(*['seds/sed_gtlike_%s_%s.png' % (i,pwn) for i in all])
 
-    title('gtlike SED (2bpd)')
-    get_sed_table(*['seds/sed_gtlike_2bpd_%s_%s.png' % (i,pwn) for i in all])
-
-    title('gtlike SED (1bpd)')
-    get_sed_table(*['seds/sed_gtlike_1bpd_%s_%s.png' % (i,pwn) for i in all])
 
     title('gtlike Cutoff test')
     get_sed_table(*['plots/test_cutoff_%s_%s.png' % (i,pwn) for i in all])
 
-    title('Variability')
-    index_t2t.append('| [%s/%s/variability_%s.png] |' % (variability_website,pwn,pwn))
 
     title('Pointlike SEDs')
     get_sed_table(*['seds/sed_pointlike_%s_%s.png' % (i,pwn) for i in all])
@@ -225,12 +245,6 @@ def build_each_page(pwn):
     get_img_table(*['plots/counts_source_%s_%s_5deg_0.25deg.png' % (i,pwn) for i in all])
     get_img_table(*['plots/counts_residual_%s_%s_5deg_0.25deg.png' % (i,pwn) for i in all])
 
-
-    var = get_variability(pwn)
-
-    index_t2t.append("""```
-%s
-```""" % yaml.dump(var))
 
     t2t(index_t2t, join(website_unix,'%s.t2t' % pwn))
 

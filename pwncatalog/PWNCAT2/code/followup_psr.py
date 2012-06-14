@@ -1,42 +1,61 @@
 #!/usr/bin/env python
 
-from analyze_psr import get_args()
+# has to come first
+from analyze_helper import gtlike_analysis,plots,save_results,plot_phaseogram,plot_phase_vs_time
+
+import os
+from argparse import ArgumentParser
+
+import yaml
+
+from skymaps import SkyDir
+
+from uw.like.SpatialModels import Gaussian
+
+from lande.fermi.likelihood.tools import force_gradient
+from lande.utilities.tools import parse_strip_known_args
+from lande.fermi.likelihood.variability import VariabilityTester
+
+from analyze_psr import get_args
 from setup_pwn import load_pwn
 
 
 parser = ArgumentParser()
-parser.add_argument("--hypothesis", required=True, choice=['at_pulsar', 'point', 'extended'])
-parser.add_argument("--followup", required=True, choice=['plots', 'gtlike', 'variability'])
-group=parser.parse_known_args(required=True)
+parser.add_argument("--hypothesis", required=True, choices=['at_pulsar', 'point', 'extended'])
+parser.add_argument("--followup", required=True, choices=['tsmaps','plots', 'gtlike', 'variability','extul'])
+followup_args = parse_strip_known_args(parser)
 
-hypothesis = args.hypothesis
-followup = args.followup
+hypothesis = followup_args.hypothesis
+followup = followup_args.followup
 
 args = get_args()
-do_upper_limits = not args.no_upper_limits
 do_cutoff = not args.no_cutoff
+
+force_gradient(use_gradient=args.use_gradient)
 
 name = args.name
 
-gtlike_kwargs = dict(name=name, seds = do_seds)
+gtlike_kwargs = dict(name=name)
 
 roi = load_pwn('roi_%s_%s.dat' % (hypothesis,name))
 
 
 if followup == 'gtlike':
-    results = dict(hypothesis=dict())
-    ul = (hypothesis == 'at_pulsar') and do_upper_limits
-    r[hypothesis]['gtlike']=gtlike_analysis(roi, hypothesis=hypothesis, upper_limit=ul, cutoff=do_cutoff, **gtlike_kwargs)
+    results = {hypothesis:{}}
+    results[hypothesis]['gtlike']=gtlike_analysis(roi, hypothesis=hypothesis, cutoff=(do_cutoff and hypothesis=='point'), **gtlike_kwargs)
 
-    save_results(results,name, hypothesis=hypothesis, followup=followup)
+    save_results(results,'results_%s_%s_%s.yaml' % (name,followup,hypothesis))
 
-elif followup == 'plots':
+elif followup in ['plots','tsmaps']:
 
-    if not os.path.exists('plots'): os.makedirs('plots')
+    if not os.path.exists('plots'): 
+        os.makedirs('plots')
 
     pwndata=yaml.load(open(args.pwndata))[name]
     ft1 = pwndata['ft1']
     pulsar_position = SkyDir(*pwndata['cel'])
+    phase = roi.extra['phase']
+    pwnphase=roi.extra['pwnphase']
 
     print 'Making phaseogram'
 
@@ -45,10 +64,14 @@ elif followup == 'plots':
     plot_phaseogram(title='Phaseogram for %s' % name, filename='plots/phaseogram_%s.png' % name, **plot_kwargs)
     plot_phase_vs_time(title='Phase vs Time for %s' % name, filename='plots/phase_vs_time_%s.png' % name, **plot_kwargs)
 
-
     new_sources = roi.extra['new_sources']
     overlay_kwargs = dict(pulsar_position=pulsar_position, new_sources=new_sources)
-    if do_plots: plots(roi, name, hypothesis, **overlay_kwargs)
+    
+    if followup == 'plots':
+        plots(roi, name, hypothesis, do_plots=True, do_tsmap=False, **overlay_kwargs)
+    elif followup == 'tsmaps':
+        plots(roi, name, hypothesis, do_plots=False, do_tsmap=True, **overlay_kwargs)
+
 
 elif followup == 'variability':
 
@@ -56,10 +79,21 @@ elif followup == 'variability':
     roi.fit(use_gradient=False)
     roi.print_summary()
 
-    v = VariabilityTester(roi,name, nbins=36)
-    v.plot(filename='variability_%s_hypothesis_%s.pdf' % (name,hypothesis)
+    v = VariabilityTester(roi,name, nbins=36,
+                         
+                          # TEMP
+                          use_pointlike_ltcube=True,
+                          do_gtlike=False,
+                          # TEMP
+                         )
+    v.plot(filename='variability_%s_hypothesis_%s.pdf' % (name,hypothesis))
 
-    results = v.todict()
-    save_results(results,name, hypothesis=hypothesis, followup=followup)
+    results = {hypothesis:{'variability':v.todict()}}
+    save_results(results,'results_%s_%s_%s.yaml' % (name,followup,hypothesis))
 
+elif followup == 'extul':
+    print 'Calculating extension upper limit'
 
+    r=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian)
+    results = {hypothesis:{'pointlike':{'extension_upper_limit':r}}}
+    save_results(results,'results_%s_%s_%s.yaml' % (name,followup,hypothesis))

@@ -13,7 +13,7 @@ import numpy as np
 from skymaps import SkyDir
 
 from uw.like.pointspec import SpectralAnalysis,DataSpecification
-from uw.like.pointspec_helpers import get_default_diffuse, PointSource, FermiCatalog
+from uw.like.pointspec_helpers import get_default_diffuse, PointSource
 from uw.like.SpatialModels import Gaussian
 from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.roi_extended import ExtendedSource
@@ -21,6 +21,7 @@ from uw.like.roi_save import load
 from uw.like.Models import PowerLaw
 from uw.utilities import phasetools
 from uw.pulsar.phase_range import PhaseRange
+from uw.utilities.parmap import LogMapper,LimitMapper
 
 isnum = lambda x: isinstance(x, numbers.Real)
 
@@ -37,7 +38,7 @@ def load_pwn(filename, **kwargs):
 
     ft1=extra['unphased_ft1']
     ltcube=extra['unphased_ltcube']
-    phase=extra['phase']
+    phase=PhaseRange(extra['phase'])
 
     phased_ft1=PWNRegion.phase_ft1(ft1,phase,savedir)
     phased_ltcube=PWNRegion.phase_ltcube(ltcube,phase,savedir)
@@ -79,7 +80,8 @@ class PWNRegion(object):
                    fit_emin, fit_emax, 
                    extended=False, sigma=None):
         """ build a souce. """
-        model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax))
+        model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax),
+                       mappers=[LogMapper,LimitMapper(-5,5)])
         flux=PowerLaw(norm=1e-11, index=2, e0=1e3).i_flux(fit_emin,fit_emax)
         model.set_flux(flux,fit_emin,fit_emax)
 

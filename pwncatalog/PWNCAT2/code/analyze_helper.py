@@ -18,7 +18,7 @@ from uw.like.SpatialModels import Gaussian
 from lande.utilities.tools import tolist
 
 from lande.fermi.sed.plotting import plot_all_seds
-from lande.fermi.likelihood.fit import paranoid_gtlike_fit, fit_prefactor, freeze_insignificant_to_catalog, freeze_bad_index_to_catalog
+from lande.fermi.likelihood.fit import paranoid_gtlike_fit, fit_prefactor, fit_only_source, freeze_insignificant_to_catalog, freeze_bad_index_to_catalog
 from lande.fermi.likelihood.save import sourcedict, get_full_energy_range
 from lande.fermi.likelihood.limits import powerlaw_upper_limit
 from lande.fermi.likelihood.localize import GridLocalize, paranoid_localize
@@ -39,7 +39,7 @@ def one_bin_per_dec(emin,emax):
     assert close(emin,1e2) and (close(emax,1e5) or close(emax,10**5.5))
     if close(emax,1e5):
         return np.logspace(2,5,4)
-    elif close(emax,10*5.5):
+    elif close(emax,10**5.5):
         return [1e2,1e3,1e4,10**5.5]
 
 def two_bin_per_dec(emin,emax):
@@ -68,83 +68,110 @@ def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, tsmap_pixelsize=0
     """ TS maps """
     emin, emax = get_full_energy_range(roi)
 
+    extra='%s_%s_%sdeg' % (hypothesis,name,size)
+
     tsmap_kwargs = dict(size=size, pixelsize=tsmap_pixelsize, **common_kwargs)
 
-    roi.plot_tsmap(filename='%s/tsmap_residual_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size), 
-                   title='Residual TS Map for %s' % name,
+    roi.plot_tsmap(filename='%s/tsmap_residual_%s.png' % (plotdir,extra), 
+                   fitsfile='%s/tsmap_residual_%s.fits' % (datadir,extra),
+                   title='Residual TS Map for %s (%s)' % (name,hypothesis),
                    **tsmap_kwargs)
 
     if all_energy(emin,emax):
-        ROITSMapBandPlotter(roi,  bin_edges=one_bin_per_dec(emin,emax), **tsmap_kwargs).show(filename='%s/band_tsmap_residual_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size))
+        ROITSMapBandPlotter(roi,  
+                            title='Band Residual TS Map for %s (%s)' % (name,hypothesis),
+                            bin_edges=one_bin_per_dec(emin,emax), 
+                            **tsmap_kwargs).show(filename='%s/band_tsmap_residual_%s.png' % (plotdir,extra))
 
     roi.zero_source(which=name)
 
-    roi.plot_tsmap(filename='%s/tsmap_source_%s_%s_%sdeg.png' % (plotdir,hypothesis, name,size), 
-                   title='Source TS Map for %s' % name,
+    roi.plot_tsmap(filename='%s/tsmap_source_%s.png' % (plotdir,extra), 
+                   fitsfile='%s/tsmap_source_%s.fits' % (datadir,extra),
+                   title='Source TS Map for %s (%s)' % (name,hypothesis),
                    **tsmap_kwargs)
 
     if all_energy(emin,emax):
-        ROITSMapBandPlotter(roi,bin_edges=one_bin_per_dec(emin,emax), **tsmap_kwargs).show(filename='%s/band_tsmap_source_%s_%s_%sdeg.png' % (plotdir,hypothesis,name,size))
+        ROITSMapBandPlotter(roi,
+                            title='Band Source TS Map for %s (%s)' % (name,hypothesis),
+                            bin_edges=one_bin_per_dec(emin,emax), 
+                            **tsmap_kwargs).show(filename='%s/band_tsmap_source_%s.png' % (plotdir,extra))
 
     roi.unzero_source(which=name)
 
-def counts_plots(roi, name, hypothesis, datadir, plotdir, size, **common_kwargs):
+def counts_plots(roi, name, hypothesis, datadir, plotdir, size, pixelsize, **common_kwargs):
     """ Counts plots """
     emin, emax = get_full_energy_range(roi)
+    
+    extra='%s_%s_%sdeg_%sdeg' % (hypothesis,name,size,pixelsize)
 
     counts_kwargs = dict(size=size, **common_kwargs)
-    for pixelsize in [0.1,0.25]:
-        roi.plot_counts_map(filename="%s/counts_residual_%g_%s_%s_%sdeg.png"%(plotdir,pixelsize,hypothesis,name,size),
-                            countsfile="%s/counts_residual_%g_%s_%s_%sdeg.fits"%(datadir,pixelsize,hypothesis,name,size),
-                            modelfile="%s/model_residual_%g_%s_%s_%sdeg.fits"%(datadir,pixelsize,hypothesis,name,size),
-                            pixelsize=pixelsize,
-                            **counts_kwargs)
-
-
+    roi.plot_counts_map(filename="%s/counts_residual_%s.png"%(plotdir,extra),
+                        countsfile="%s/counts_residual_%s.fits"%(datadir,extra),
+                        modelfile="%s/model_residual_%s.fits"%(datadir,extra),
+                        pixelsize=pixelsize,
+                        title='Counts Residual for %s (%s)' % (name,hypothesis),
+                        **counts_kwargs)
     roi.zero_source(which=name)
 
-    for pixelsize in [0.1,0.25]:
-        roi.plot_counts_map(filename="%s/counts_source_%g_%s_%s_%sdeg.png"%(plotdir,pixelsize,hypothesis,name,size),
-                            countsfile="%s/counts_source_%g_%s_%s_%sdeg.fits"%(datadir,pixelsize,hypothesis,name,size),
-                            modelfile="%s/model_source_%g_%s_%s_%sdeg.fits"%(datadir,pixelsize,hypothesis,name,size),
-                            pixelsize=pixelsize,
-                            **counts_kwargs)
+    roi.plot_counts_map(filename="%s/counts_source_%s.png"%(plotdir,extra),
+                        countsfile="%s/counts_source_%s.fits"%(datadir,extra),
+                        modelfile="%s/model_source_%s.fits"%(datadir,extra),
+                        pixelsize=pixelsize,
+                        title='Counts Source for %s (%s)' % (name,hypothesis),
+                        **counts_kwargs)
     roi.unzero_source(which=name)
 
-    roi.plot_slice(which=name,filename="%s/slice_%s_%s.png"%(plotdir,hypothesis, name),
-                   datafile='%s/slice_%s_%s.dat'%(datadir,hypothesis, name))
+    roi.plot_slice(which=name,
+                   pixelsize=pixelsize,
+                   filename="%s/counts_slice_%s.png"%(plotdir,extra),
+                   datafile='%s/counts_slice_%s.dat'%(datadir,extra),
+                   title='Slice for %s (%s)' % (name,hypothesis))
 
-    roi.plot_radial_integral(which=name,filename="%s/radial_integral_%s_%s.png"%(plotdir,hypothesis, name),
-                             datafile='%s/radial_integral_%s_%s.dat'%(datadir,hypothesis, name))
+    roi.plot_radial_integral(which=name,
+                             pixelsize=pixelsize,
+                             filename="%s/radial_integral_%s.png"%(plotdir,extra),
+                             datafile='%s/radial_integral_%s.dat'%(datadir,extra),
+                             title='Radial Integral for %s (%s)' % (name,hypothesis))
     try:
-        roi.plot_counts_spectra(filename="%s/spectra_%s_%s.png"%(plotdir,hypothesis, name))
+        roi.plot_counts_spectra(filename="%s/spectra_%s_%s.png"%(plotdir,hypothesis, name),
+                               title='Spectra for %s (%s)' % (name,hypothesis))
     except Exception, ex:
         print 'ERROR with plot_counts_spectra: ', ex
         traceback.print_exc(file=sys.stdout) 
 
-def smooth_plots(roi, name, hypothesis, datadir, plotdir, size, **common_kwargs):
+def smooth_plots(roi, name, hypothesis, datadir, plotdir, size, kernel_rad, **common_kwargs):
     """ smoothed counts maps """
     emin, emax = get_full_energy_range(roi)
+
+    extra='%s_%s_%sdeg_%sdeg' % (hypothesis, name, size,kernel_rad)
 
     smooth_kwargs = dict(which=name, 
                          override_center=roi.roi_dir,
                          size=size,
                          colorbar_radius=1, # most interesting within one degrees
+                         kernel_rad=kernel_rad,
                          **common_kwargs)
 
-    for kernel_rad in [0.1,0.25]:
-        roi.plot_source(filename='%s/source_%g_%s_%s_%sdeg.png' % (plotdir, kernel_rad, hypothesis, name, size), kernel_rad=kernel_rad, **smooth_kwargs)
-        roi.plot_sources(filename='%s/sources_%g_%s_%s_%sdeg.png' % (plotdir, kernel_rad, hypothesis, name, size), kernel_rad=kernel_rad, **smooth_kwargs)
+    roi.plot_source(filename='%s/source_%s.png' % (plotdir, extra), 
+                    title='Source Map for %s (%s)' % (name,hypothesis),
+                    **smooth_kwargs)
+    roi.plot_sources(filename='%s/sources_%s.png' % (plotdir, extra), 
+                     title='Sources Map for %s (%s)' % (name,hypothesis),
+                     **smooth_kwargs)
 
-        if all_energy(emin,emax):
-            ROISourceBandPlotter(roi, bin_edges=one_bin_per_dec(emin,emax), kernel_rad=kernel_rad, **smooth_kwargs).show(filename='%s/band_source_%g_%s_%s_%sdeg.png' % (plotdir,kernel_rad,hypothesis,name,size))
-            ROISourcesBandPlotter(roi, bin_edges=one_bin_per_dec(emin,emax), kernel_rad=kernel_rad, **smooth_kwargs).show(filename='%s/band_sources_%g_%s_%s_%sdeg.png' % (plotdir,kernel_rad,hypothesis,name,size))
+    if all_energy(emin,emax):
+        ROISourceBandPlotter(roi, bin_edges=one_bin_per_dec(emin,emax), 
+                             title='Band Source Map for %s (%s)' % (name,hypothesis),
+                             **smooth_kwargs).show(filename='%s/band_source_%s.png' % (plotdir,extra))
+        ROISourcesBandPlotter(roi, bin_edges=one_bin_per_dec(emin,emax), 
+                             title='Band Sources Map for %s (%s)' % (name,hypothesis),
+                              **smooth_kwargs).show(filename='%s/band_sources_%s.png' % (plotdir,extra))
 
 
 def plots(roi, name, hypothesis, 
           pulsar_position, new_sources,
-          datadir='data', plotdir='plots', 
-          tsmap_pixelsize=0.1):
+          do_plots, do_tsmap,
+          datadir='data', plotdir='plots'):
 
     print 'Making plots for hypothesis %s' % hypothesis
 
@@ -159,20 +186,26 @@ def plots(roi, name, hypothesis,
     for dir in [datadir, plotdir]: 
         if not os.path.exists(dir): os.makedirs(dir)
 
-    #for size in [5,10]:
-    for size in [5]:
-        args = (roi, name, hypothesis, datadir, plotdir, size)
-        counts_plots(*args, **common_kwargs)
-        smooth_plots(*args, **common_kwargs)
-        tsmap_plots(*args, tsmap_pixelsize=0.1, **common_kwargs)
+    args = (roi, name, hypothesis, datadir, plotdir)
+
+    if do_plots:
+        for size in [5]:
+            smooth_plots(*args, kernel_rad=0.1, size=size, **common_kwargs)
+            counts_plots(*args, pixelsize=0.1, size=size, **common_kwargs)
+
+            smooth_plots(*args, kernel_rad=0.25, size=size, **common_kwargs)
+            counts_plots(*args, pixelsize=0.25, size=size, **common_kwargs)
+    if do_tsmap:
+        for size in [5,10]:
+            tsmap_plots(*args, tsmap_pixelsize=0.1, size=size, **common_kwargs)
 
     roi.toRegion('%s/region_%s_%s.reg'%(datadir,hypothesis, name))
 
-def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
+def pointlike_analysis(roi, name, hypothesis, 
                        seddir='seds', datadir='data', 
-                       upper_limit=False, localize=False,
-                       fit_extension=False, extension_upper_limit=False,
-                       cutoff=False, seds=False):
+                       localize=False,
+                       fit_extension=False, 
+                       cutoff=False):
     """ emin + emax used for computing upper limits. """
     print 'Performing Pointlike analysis for %s' % hypothesis
 
@@ -186,11 +219,13 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
 
     print roi
 
-    def fit(just_prefactor=False):
+    def fit(just_prefactor=False, just_source=False):
         """ Convenience function incase fit fails. """
         try:
             if just_prefactor:
                 fit_prefactor(roi, name) 
+            elif just_source:
+                fit_only_source(roi, name)
             else:
                 roi.fit()
                 # For some reason, one final fit seems to help with convergence and not getting negative TS values *shurgs*
@@ -202,8 +237,11 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
 
     # More robust to first fit the prefactor of PWN since the starting value is often very bad
     fit(just_prefactor=True)
+    # Then, fit only the source
+    fit(just_source=True)
 
     while 1:
+        # Then, do a fill spectral fit
         fit()
         any_changed = freeze_bad_index_to_catalog(roi, PWNRegion.get_catalog(), exclude_names=[name], min_ts=9)
         fit()
@@ -218,8 +256,6 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
 
     if localize:
         try:
-            if localization_emin is not None and localization_emin != emin: 
-                roi.change_binning(localization_emin,emax)
 
             print 'About to Grid localize'
             grid=GridLocalize(roi,which=name,
@@ -231,17 +267,12 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
         except Exception, ex:
             print 'ERROR localizing pointlike: ', ex
             traceback.print_exc(file=sys.stdout)
-        finally:
-            if localization_emin is not None and localization_emin != emin: 
-                roi.change_binning(emin,emax)
         fit()
 
     if fit_extension:
         init_flux = roi.get_model(which=name).i_flux(emin,emax)
         try:
-            if localization_emin is not None and localization_emin != emin: 
-                before_state = PointlikeState(roi)
-                roi.change_binning(localization_emin,emax)
+            before_state = PointlikeState(roi)
 
             roi.fit_extension(which=name)
             paranoid_localize(roi, name, update=True)
@@ -249,35 +280,19 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
         except Exception, ex:
             print 'ERROR extension fitting pointlike: ', ex
             traceback.print_exc(file=sys.stdout)
-        finally:
-            if localization_emin is not None and localization_emin != emin: 
 
-                # after switching energy range, the fit may have gone horribly
-                # wrong (due to being a different energy range). 
-                # A good strategy to improve robustness of fit
-                # is to set the ROI back to what it was before extnesion
-                # fit and then modify just the spatial model
-                # to what the fit found.
-                spatial_model = roi.get_source(name).spatial_model
-                before_state.restore() # This restores previous energy
-                roi.modify(which=name, spatial_model=spatial_model, keep_old_center=False)
         fit()
 
     p = sourcedict(roi, name)
 
-    if extension_upper_limit:
-        print 'Calculating extension upper limit'
-        p['extension_upper_limit']=roi.extension_upper_limit(which=name, confidence=0.95, spatial_model=Gaussian)
+    p['powerlaw_upper_limit']=powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
 
-    if upper_limit:
-        p['upper_limit']=powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
     if cutoff:
         p['test_cutoff']=test_cutoff(roi,name)
     print_summary()
 
-    if seds:
-        roi.plot_sed(which=name,filename='%s/sed_pointlike_%s_%s.png' % (seddir,hypothesis,name), use_ergs=True)
-        plot_all_seds(roi, filename='%s/all_seds_pointlike_%s_%s.png' % (seddir,hypothesis,name), use_ergs=True)
+    roi.plot_sed(which=name,filename='%s/sed_pointlike_%s_%s.png' % (seddir,hypothesis,name), use_ergs=True)
+    plot_all_seds(roi, filename='%s/all_seds_pointlike_%s_%s.png' % (seddir,hypothesis,name), use_ergs=True)
 
     roi.toXML(filename="%s/srcmodel_pointlike_%s_%s.xml"%(datadir, hypothesis, name))
  
@@ -288,7 +303,7 @@ def pointlike_analysis(roi, name, hypothesis, localization_emin=None,
 
 def gtlike_analysis(roi, name, hypothesis, 
                     seddir='seds', datadir='data', plotdir='plots',
-                    upper_limit=False, cutoff=False, seds=False):
+                    upper_limit=False, cutoff=False):
     print 'Performing Gtlike crosscheck for %s' % hypothesis
 
     for dir in [seddir, datadir, plotdir]: 
@@ -297,6 +312,8 @@ def gtlike_analysis(roi, name, hypothesis,
     gtlike=Gtlike(roi)
     global like
     like=gtlike.like
+
+    like.tol = 1e-1 # I found that the default tol '1e-3' would get the fitter stuck in infinite loops
 
     emin, emax = get_full_energy_range(like)
 
@@ -309,9 +326,13 @@ def gtlike_analysis(roi, name, hypothesis,
     if upper_limit:
         r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95, delta_log_like_limits=10)
 
+    """
+    # TEMPORARY
     if all_energy(emin,emax):
         bf = BandFitter(like, name, bin_edges=one_bin_per_dec(emin,emax))
         r['bands'] = bf.todict()
+    # TEMPORARY
+    """
 
     def sed(kind,**kwargs):
         print 'Making %s SED' % kind
@@ -319,26 +340,29 @@ def gtlike_analysis(roi, name, hypothesis,
         sed.plot('%s/sed_gtlike_%s_%s.png' % (seddir,kind,name)) 
         sed.save('%s/sed_gtlike_%s_%s.yaml' % (seddir,kind,name))
 
-    if seds:
-        if all_energy(emin,emax):
-            sed('1bpd_%s' % hypothesis,bin_edges=one_bin_per_dec(emin,emax))
-            sed('2bpd_%s' % hypothesis,bin_edges=two_bin_per_dec(emin,emax))
-            sed('4bpd_%s' % hypothesis,bin_edges=four_bin_per_dec(emin,emax))
-        elif high_energy(emin,emax):
-            sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4,5.5,7))
-            sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4,5.5,4))
-        elif higher_energy(emin,emax):
-            sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,5))
-            sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,3))
-        else:
-            # just use regular binning
-            sed(hypothesis)
+    """
+    # TEMPORARY
+    if all_energy(emin,emax):
+        sed('1bpd_%s' % hypothesis,bin_edges=one_bin_per_dec(emin,emax))
+        sed('2bpd_%s' % hypothesis,bin_edges=two_bin_per_dec(emin,emax))
+        sed('4bpd_%s' % hypothesis,bin_edges=four_bin_per_dec(emin,emax))
+    elif high_energy(emin,emax):
+        sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4,5.5,7))
+        sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4,5.5,4))
+    elif higher_energy(emin,emax):
+        sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,5))
+        sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,3))
+    else:
+        # just use regular binning
+    # TEMPORARY
+    """
+    sed(hypothesis)
 
     if cutoff:
         r['test_cutoff']=test_cutoff(like,name)
         try:
             plot_gtlike_cutoff_test(cutoff_results=r['test_cutoff'],
-                                    sed_results='%s/sed_gtlike_2bpd_%s_%s.yaml' % (seddir,hypothesis,name),
+                                    sed_results='%s/sed_gtlike_%s_%s.yaml' % (seddir,hypothesis,name),
                                     filename='%s/test_cutoff_%s_%s.png' % (plotdir,hypothesis,name))
         except Exception, ex:
             print 'ERROR plotting cutoff test:', ex
@@ -346,11 +370,7 @@ def gtlike_analysis(roi, name, hypothesis,
 
     return r
     
-def save_results(results, name, hypothesis=None, followup=None): 
-    if hypothesis is None and followup is None:
-        filename='results_%s.yaml' % name
-    else:
-        filename='results_%s_%s_%s.yaml' % (name,hypothesis,followup)
+def save_results(results, filename): 
     open(filename,'w').write(yaml.dump(tolist(results)))
 
 def import_module(filename):

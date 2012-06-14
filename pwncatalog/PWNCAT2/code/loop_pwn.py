@@ -2,12 +2,7 @@
 A script to loop over the PWN when
 doing analysis. Example:
 
-python loop_pwn.py -c analyze_v1.py \
-        --pwndata /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v4/pwndata_v1.yaml  \
-        --pwnphase /afs/slac/g/glast/users/rousseau/svn/pwncatalog/1FGL_reanalysis/v4/pwnphase_v1.yaml \
-        -o /afs/slac/g/glast/users/rousseau/PWN_cat/1FGL_reanalysis/v4/analyze_v1/
-
-python loop_pwn.py -c analyze.py \
+python loop_pwn.py 
         --pwndata /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v4/pwndata/pwndata_v1.yaml  \
         --pwnphase /u/gl/lande/svn/lande/trunk/pwncatalog/1FGL_reanalysis/v4/pwndata/pwnphase_v1.yaml \
         -o /nfs/slac/g/ki/ki03/lande/pwncatalog/1FGL_reanalysis/v4/analyze_v1
@@ -53,8 +48,8 @@ for name in sources.keys():
             %s""" % (name, flags,' '.join(remaining_args))))
 
     for hypothesis in ['at_pulsar', 'point', 'extended']:
-        for followup in ['plots','gtlike','variability']:
-            if hypothesis != 'point' and followup == 'variability':
+        for followup in ['tsmaps','plots','gtlike','variability','extul']:
+            if hypothesis != 'point' and  followup in ['variability','extul']:
                 continue
 
             file=join(folder,'followup_%s_%s_%s.sh' % (name,hypothesis,followup))
@@ -62,8 +57,8 @@ for name in sources.keys():
             temp.write(dedent("""\
                 python $pwncode/followup_psr.py \\
                     -n %s \\
-                    --hypothesis=%s
-                    --followup=%s
+                    --hypothesis=%s \\
+                    --followup=%s \\
                     %s \\
                     %s""" % (name, hypothesis, followup, flags,' '.join(remaining_args))))
 
@@ -71,4 +66,12 @@ submit_all=join(outdir,'submit_all.sh')
 open(submit_all,'w').write("""submit_all */run_*.sh $@""")
 
 submit_all=join(outdir,'followup_all.sh')
-open(submit_all,'w').write("""for pwn in PSR*; do submit_all $pwn/followup_* $@ --requires=$pwn/results_$pwn.yaml; done""")
+open(submit_all,'w').write("""\
+for pwn in PSR*; do
+    for hypothesis in at_pulsar point extended; do
+        submit_all $pwn/followup_${pwn}_${hypothesis}_*.sh $@ --requires=$pwn/roi_${hypothesis}_${pwn}.dat
+    done
+done""")
+
+merge_all=join(outdir,'merge_all.sh')
+open(merge_all,'w').write("""python $pwncode/merge_psr.py""")

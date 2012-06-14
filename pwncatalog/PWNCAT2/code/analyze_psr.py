@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # This import has to come first
-from analyze_helper import plots,pointlike_analysis,gtlike_analysis,save_results,\
+from analyze_helper import pointlike_analysis,gtlike_analysis,save_results,\
         plot_phaseogram,plot_phase_vs_time,all_energy,import_module
 from uw.pulsar.phase_range import PhaseRange
 from lande.fermi.likelihood.tools import force_gradient
@@ -31,18 +31,13 @@ def get_args():
     parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
     parser.add_argument("--emin", default=1e2, type=float)
     parser.add_argument("--binsperdec", default=4, type=int)
-    parser.add_argument("--localization-emin", default=1e3, type=float)
     parser.add_argument("--emax", default=10**5.5, type=float)
     parser.add_argument("--use-gradient", default=False, action="store_true")
     parser.add_argument("--no-at-pulsar", default=False, action="store_true")
     parser.add_argument("--no-point", default=False, action="store_true")
     parser.add_argument("--no-extended", default=False, action="store_true")
     parser.add_argument("--no-gtlike", default=False, action="store_true")
-    parser.add_argument("--no-plots", default=False, action="store_true")
     parser.add_argument("--no-cutoff", default=False, action="store_true")
-    parser.add_argument("--no-upper-limits", default=False, action="store_true")
-    parser.add_argument("--no-seds", default=False, action="store_true")
-    parser.add_argument("--no-extension-upper-limits", default=False, action="store_true")
     parser.add_argument("--no-savedir", default=False, action="store_true")
     parser.add_argument("--max-free", default=10, type=float)
     parser.add_argument("--modify", required=True)
@@ -58,19 +53,12 @@ if __name__ == '__main__':
     do_extended = not args.no_extended
     do_gtlike = not args.no_gtlike
     do_cutoff = not args.no_cutoff
-    do_upper_limits = not args.no_upper_limits
-    do_extension_upper_limits = not args.no_extension_upper_limits
-    do_seds = not args.no_seds
 
     force_gradient(use_gradient=args.use_gradient)
 
     name=args.name
     emin=args.emin
-    localization_emin=args.localization_emin
     emax=args.emax
-
-    if not all_energy(emin,emax) and do_cutoff:
-        parser.error("Cutoff test can only be performed for analysis over all energy.")
 
     if args.no_phase_cut:
         phase = PhaseRange(0,1)
@@ -89,7 +77,7 @@ if __name__ == '__main__':
     results['name']=name
     results['phase']=phase
 
-    pointlike_kwargs=dict(name=name, seds = do_seds, localization_emin=localization_emin) 
+    pointlike_kwargs=dict(name=name) 
 
     print 'Building the ROI'
     reg=PWNRegion(pwndata=args.pwndata, savedir=savedir)
@@ -102,17 +90,17 @@ if __name__ == '__main__':
     modify = import_module(args.modify)
     roi.extra['phase'] = phase
     roi.extra['new_sources'] = modify.modify_roi(name,roi)
+    roi.extra['pwnphase'] = pwnphase
 
     if do_at_pulsar:
-        r['at_pulsar']['pointlike']=pointlike_analysis(roi, hypothesis='at_pulsar', upper_limit=do_upper_limits, 
-                                                       cutoff=do_cutoff, **pointlike_kwargs)
+        r['at_pulsar']['pointlike']=pointlike_analysis(roi, hypothesis='at_pulsar', 
+                                                       cutoff=False, **pointlike_kwargs)
     if do_point:
-        r['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, cutoff=do_cutoff, 
-                                                   extension_upper_limit=do_extension_upper_limits, **pointlike_kwargs)
+        r['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, cutoff=do_cutoff, **pointlike_kwargs)
     if do_extended:
         roi.modify(which=name, spatial_model=Gaussian(sigma=0.1), keep_old_center=True)
 
-        r['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', cutoff=do_cutoff, 
+        r['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', cutoff=False, 
                                                       fit_extension=True, **pointlike_kwargs)
 
-    save_results(results,name)
+    save_results(results,'results_%s_pointlike.yaml' % name)

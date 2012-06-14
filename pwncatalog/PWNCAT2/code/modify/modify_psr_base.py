@@ -397,6 +397,12 @@ def modify_roi(name,roi):
     elif name == 'PSRJ1838-0537':
         roi.del_source('2FGL J1839.0-0539')
 
+    elif name == 'PSRJ2043+1711':
+        roi.del_source('2FGL J2043.2+1711')
+
+    elif name == 'PSRJ2111+4606':
+        roi.del_source('2FGL J2111.3+4605')
+
 #    elif name == '':
 #        roi.del_source('')
 
