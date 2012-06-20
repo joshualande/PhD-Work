@@ -326,13 +326,9 @@ def gtlike_analysis(roi, name, hypothesis,
     if upper_limit:
         r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95, delta_log_like_limits=10)
 
-    """
-    # TEMPORARY
     if all_energy(emin,emax):
         bf = BandFitter(like, name, bin_edges=one_bin_per_dec(emin,emax))
         r['bands'] = bf.todict()
-    # TEMPORARY
-    """
 
     def sed(kind,**kwargs):
         print 'Making %s SED' % kind
@@ -340,8 +336,6 @@ def gtlike_analysis(roi, name, hypothesis,
         sed.plot('%s/sed_gtlike_%s_%s.png' % (seddir,kind,name)) 
         sed.save('%s/sed_gtlike_%s_%s.yaml' % (seddir,kind,name))
 
-    """
-    # TEMPORARY
     if all_energy(emin,emax):
         sed('1bpd_%s' % hypothesis,bin_edges=one_bin_per_dec(emin,emax))
         sed('2bpd_%s' % hypothesis,bin_edges=two_bin_per_dec(emin,emax))
@@ -353,10 +347,7 @@ def gtlike_analysis(roi, name, hypothesis,
         sed('4bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,5))
         sed('2bpd_%s' % hypothesis,bin_edges=np.logspace(4.5,5.5,3))
     else:
-        # just use regular binning
-    # TEMPORARY
-    """
-    sed(hypothesis)
+        sed(hypothesis)
 
     if cutoff:
         r['test_cutoff']=test_cutoff(like,name)
