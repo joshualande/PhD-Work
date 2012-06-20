@@ -79,13 +79,7 @@ elif followup == 'variability':
     roi.fit(use_gradient=False)
     roi.print_summary()
 
-    v = VariabilityTester(roi,name, nbins=36,
-                         
-                          # TEMP
-                          use_pointlike_ltcube=True,
-                          do_gtlike=False,
-                          # TEMP
-                         )
+    v = VariabilityTester(roi,name, nbins=36)
     v.plot(filename='variability_%s_hypothesis_%s.pdf' % (name,hypothesis))
 
     results = {hypothesis:{'variability':v.todict()}}
