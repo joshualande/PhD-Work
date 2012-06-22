@@ -14,6 +14,8 @@ from lande.utilities.tools import tolist
 from lande.fermi.pulsar.data import get_phases
 from lande.fermi.pulsar.plotting import plot_phaseogram
 from lande.fermi.pulsar.optimize import OptimizePhases
+
+#from lande.fermi.pulsar.offpeak import OffPeakBB, plot_phaseogram_blocks
 from lande.fermi.pulsar.offpeak import OffPeakBB, plot_phaseogram_blocks
 
 
@@ -42,7 +44,8 @@ def find_offpeak(ft1,name,skydir, pwncat1phase, emax=100000):
             optimal_emin = opt.optimal_emin,
             emax = emax,
             optimal_radius = opt.optimal_radius,
-            ncpPrior=off_peak_bb.ncpPrior
+            ncpPrior=off_peak_bb.ncpPrior,
+            actual_ncpPrior=off_peak_bb.actual_ncpPrior,
             )
         )
 
