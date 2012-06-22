@@ -80,8 +80,8 @@ class PWNRegion(object):
                    fit_emin, fit_emax, 
                    extended=False, sigma=None):
         """ build a souce. """
-        model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax),
-                       mappers=[LogMapper,LimitMapper(-5,5)])
+        model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax))
+        model.set_limits('index',-5,5)
         flux=PowerLaw(norm=1e-11, index=2, e0=1e3).i_flux(fit_emin,fit_emax)
         model.set_flux(flux,fit_emin,fit_emax)
 
@@ -102,6 +102,7 @@ class PWNRegion(object):
         return Catalog2FGL('$FERMI/catalogs/gll_psc_v05.fit', 
                            latextdir='$FERMI/extended_archives/gll_psc_v05_templates',
                            prune_radius=0,
+                           limit_parameters=True,
                            **kwargs)
 
     @staticmethod

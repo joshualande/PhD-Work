@@ -52,7 +52,7 @@ for name in sources.keys():
             if hypothesis != 'point' and  followup in ['variability','extul']:
                 continue
 
-            file=join(folder,'followup_%s_%s_%s.sh' % (name,hypothesis,followup))
+            file=join(folder,'followup_%s_%s_%s.sh' % (name,followup,hypothesis))
             temp=open(file,'w')
             temp.write(dedent("""\
                 python $pwncode/followup_psr.py \\

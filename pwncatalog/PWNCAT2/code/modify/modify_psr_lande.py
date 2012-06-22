@@ -16,7 +16,7 @@ from uw.like.roi_extended import ExtendedSource
 def modify_roi(name,roi):
     modify_psr_base.modify_roi(name,roi)
 
-    e0=np.sqrt(1e2*1e5)
+    e0=np.sqrt(1e2*10**5.5)
 
     def fix_gamma_cygni_region(roi):
         # delete source associated with Gamma Cygni SNR
@@ -105,7 +105,9 @@ def modify_roi(name,roi):
         roi.modify(which="2FGL J0218.7+6208c", free=True)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0248+6021/v2/iteration_v3/run.py
-        roi.modify(which='PSRJ0248+6021', model=PowerLaw(norm=7.99365289489e-14, index=2.56703331102, e0=e0), keep_old_flux=False)
+        model=PowerLaw(norm=7.99365289489e-14, index=2.56703331102, e0=np.sqrt(1e2*1e5))
+        model.set_e0(e0)
+        roi.modify(which='PSRJ0248+6021', model=model, keep_old_flux=False)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0248+6021/v2/iteration_v4/run.py
         ps=PointSource(name='seed2', 
@@ -175,14 +177,20 @@ def modify_roi(name,roi):
         roi.modify(which="2FGL J0633.9+1746", free=True)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0631+1036/v2/iteration_v5/run.py
-        roi.modify(which='PSRJ0631+1036', model=PowerLaw(norm=9.55962564961e-14, index=2.333032306, e0=3162), keep_old_flux=False)
+        model=PowerLaw(norm=9.55962564961e-14, index=2.333032306, e0=np.sqrt(10*1e5))
+        model.set_e0(e0)
+        roi.modify(which='PSRJ0631+1036', model=model, keep_old_flux=False)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0631+1036/v2/iteration_v6/run.py
-        ps=PointSource(name='seed2', skydir=SkyDir(205.749565711,-2.73839381012,SkyDir.GALACTIC), model=PowerLaw(norm=1.84059647317e-12, index=2.17956292598, e0=1000.0))
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(205.749565711,-2.73839381012,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=1.84059647317e-12, index=2.17956292598, e0=1000.0))
         roi.add_source(ps)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0631+1036/v2/iteration_v8/run.py
-        ps=PointSource(name='seed3', skydir=SkyDir(206.202996049,1.38579439903,SkyDir.GALACTIC), model=PowerLaw(norm=2.38824869801e-14, index=2.56059537015, e0=5623.4132519))
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(206.202996049,1.38579439903,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.38824869801e-14, index=2.56059537015, e0=e0))
         roi.add_source(ps)
 
 
@@ -710,8 +718,10 @@ def modify_roi(name,roi):
     if name == 'PSRJ1744-1134':
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1744-1134/v1/iteration_v1/run.py
+        model=PowerLaw(norm=1.72388137017e-13, index=2.27483263865, e0=np.sqrt(1e2*1e5))
+        model.set_e0(e0)
         roi.modify(which='PSRJ1744-1134', 
-                   model=PowerLaw(norm=1.72388137017e-13, index=2.27483263865, e0=e0), 
+                   model=model 
                    keep_old_flux=False)
 
     if name == 'PSRJ1746-3239':
@@ -804,8 +814,10 @@ def modify_roi(name,roi):
         roi.modify(which="2FGL J1833.6-2104", free=True)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1809-2332/v2/iteration_v2/run.py
+        model=PowerLaw(norm=2.40015523271e-13, index=2.51029888415, e0=np.sqrt(1e2*1e5))
+        model.set_e0(e0)
         roi.modify(which='PSRJ1809-2332', 
-                   model=PowerLaw(norm=2.40015523271e-13, index=2.51029888415, e0=e0), 
+                   model=model,
                    keep_old_flux=False)
 
 
@@ -843,9 +855,11 @@ def modify_roi(name,roi):
         roi.add_source(ps)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1846+0919/v1/iteration_v3/run.py
+        model=PowerLaw(norm=1.13635564381e-13, index=2.3528111204, e0=np.sqrt(1e2*1e5))
+        model.set_e0(e0)
         ps=PointSource(name='seed2', 
                        skydir=SkyDir(36.1037064322,0.122504899788,SkyDir.GALACTIC), 
-                       model=PowerLaw(norm=1.13635564381e-13, index=2.3528111204, e0=e0))
+                       model=model)
         roi.add_source(ps)
 
 
@@ -902,6 +916,24 @@ def modify_roi(name,roi):
         # Analysis came from $pwnpersonal/individual_sources/PSRJ2021+4026/v1/iteration_v1/run.py
         roi.modify(which="2FGL J2021.0+3651", free=True)
 
+        fix_gamma_cygni_region(roi)
+
+    if name == 'PSRJ2028+3332':
+
+        fix_gamma_cygni_region(roi)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2028+3332/v1/iteration_v3/run.py
+        roi.modify(which="2FGL J1953.0+3253", free=True)
+        roi.modify(which="2FGL J1958.6+2845", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2028+3332/v1/iteration_v4/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(74.6338977671,-7.55426554766,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.01380042617e-14, index=2.34411651063, e0=e0))
+        roi.add_source(ps)
+
+
+
     if name == 'PSRJ2030+4415':
 
         # Analysis came from $pwnpersonal/individual_sources/PSRJ2030+4415/v1/iteration_v1/run.py
@@ -926,12 +958,11 @@ def modify_roi(name,roi):
 
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2032+4127/v2/iteration_v3/run.py
-        roi.modify(which='PSRJ2032+4127', model=PowerLaw(norm=2.31436226763e-13, index=2.34156498732, e0=e0), keep_old_flux=False)
-
-    if name == 'PSRJ2021+4026':
-        # Remove this nearby source which is associated with the
-        # Gamma-Cygni SNR
-        roi.del_source(which='2FGL J2019.1+4040')
+        model=PowerLaw(norm=2.31436226763e-13, index=2.34156498732, e0=np.sqrt(1e2*1e5))
+        model.set_e0(e0)
+        roi.modify(which='PSRJ2032+4127', 
+                   model=model,
+                   keep_old_flux=False)
 
     if name == 'PSRJ2030+3641':
         fix_gamma_cygni_region(roi)
