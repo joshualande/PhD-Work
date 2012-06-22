@@ -1,4 +1,5 @@
 # Changes
+# * June 22, 2012: phase defintions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v6 - JL
 # * May 29, 2012: phase defintions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v5 - JL
 # * May 9, 2012: phase defintions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v4 - JL
 # * May 7, 2012: phase definitions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v3 - JL
@@ -10,8 +11,8 @@
 PSRJ0007+7303:
   emax: 100000
   optimal_emin: 237.13737056616552
-  optimal_radius: 1.2
-  phase: [0.57, 0.93]
+  optimal_radius: 1.4
+  phase: [0.53, 0.89]
 PSRJ0030+0451:
   emax: 100000
   optimal_emin: 421.6965034285823
@@ -26,7 +27,7 @@ PSRJ0101-6422:
   emax: 100000
   optimal_emin: 562.341325190349
   optimal_radius: 1.0999999999999999
-  phase: [0.21, 0.61]
+  phase: [0.22, 0.61]
 PSRJ0102+4839:
   emax: 100000
   optimal_emin: 1778.2794100389228
@@ -37,13 +38,8 @@ PSRJ0106+4855:
   optimal_emin: 562.341325190349
   optimal_radius: 0.3
   phase:
-  - [0.24, 0.54]
-  - [0.66, 0.94]
-PSRJ0205+6449:
-  emax: 100000
-  optimal_emin: 237.13737056616552
-  optimal_radius: 0.8999999999999999
-  phase: [0.64, 0.00]
+  - [0.67, 0.03]
+  - [0.18, 0.54]
 PSRJ0218+4232:
   emax: 100000
   optimal_emin: 316.22776601683796
@@ -73,7 +69,7 @@ PSRJ0534+2200:
   emax: 100000
   optimal_emin: 100.0
   optimal_radius: 2.6
-  phase: [0.58, 0.82]
+  phase: [0.59, 0.87]
 PSRJ0610-2100:
   emax: 100000
   optimal_emin: 562.341325190349
@@ -157,7 +153,7 @@ PSRJ1016-5857:
   emax: 100000
   optimal_emin: 421.6965034285823
   optimal_radius: 0.5
-  phase: [0.62, 0.02]
+  phase: [0.61, 0.01]
 PSRJ1019-5749:
   emax: 100000
   optimal_emin: 1778.2794100389228
@@ -167,7 +163,7 @@ PSRJ1023-5746:
   emax: 100000
   optimal_emin: 100.0
   optimal_radius: 0.7999999999999999
-  phase: [0.67, 0.02]
+  phase: [0.67, 0.03]
 PSRJ1024-0719:
   emax: 100000
   optimal_emin: 562.341325190349
@@ -182,7 +178,7 @@ PSRJ1044-5737:
   emax: 100000
   optimal_emin: 237.13737056616552
   optimal_radius: 0.7
-  phase: [0.57, 0.97]
+  phase: [0.55, 0.97]
 PSRJ1048-5832:
   emax: 100000
   optimal_emin: 421.6965034285823
@@ -197,7 +193,7 @@ PSRJ1105-6107:
   emax: 100000
   optimal_emin: 237.13737056616552
   optimal_radius: 0.3
-  phase: [0.68, 0.04]
+  phase: [0.73, 0.46]
 PSRJ1112-6103:
   emax: 100000
   optimal_emin: 237.13737056616552
@@ -237,7 +233,7 @@ PSRJ1357-6429:
   emax: 100000
   optimal_emin: 237.13737056616552
   optimal_radius: 0.7999999999999999
-  phase: [0.79, 0.02]
+  phase: [0.54, 0.13]
 PSRJ1410-6132:
   emax: 100000
   optimal_emin: 316.22776601683796
@@ -262,9 +258,7 @@ PSRJ1429-5911:
   emax: 100000
   optimal_emin: 316.22776601683796
   optimal_radius: 0.7
-  phase:
-  - [0.30, 0.42]
-  - [0.68, 0.94]
+  phase: [0.30, 0.42]
 PSRJ1446-4701:
   emax: 100000
   optimal_emin: 562.341325190349
@@ -325,11 +319,6 @@ PSRJ1702-4128:
   optimal_emin: 316.22776601683796
   optimal_radius: 0.8999999999999999
   phase: [0.57, 0.17]
-PSRJ1709-4429:
-  emax: 100000
-  optimal_emin: 177.82794100389228
-  optimal_radius: 1.2
-  phase: [0.75, 0.08]
 PSRJ1713+0747:
   emax: 100000
   optimal_emin: 1000.0
@@ -351,7 +340,7 @@ PSRJ1732-3131:
   emax: 100000
   optimal_emin: 562.341325190349
   optimal_radius: 0.5
-  phase: [0.78, 0.96]
+  phase: [0.59, 0.95]
 PSRJ1741+1351:
   emax: 100000
   optimal_emin: 1000.0
@@ -376,7 +365,7 @@ PSRJ1747-2958:
   emax: 100000
   optimal_emin: 177.82794100389228
   optimal_radius: 0.7
-  phase: [0.65, 0.08]
+  phase: [0.66, 0.10]
 PSRJ1747-4036:
   emax: 100000
   optimal_emin: 2371.373705661655
@@ -423,7 +412,7 @@ PSRJ1836+5925:
   emax: 100000
   optimal_emin: 177.82794100389228
   optimal_radius: 2.0999999999999996
-  phase: [0.76, 0.90]
+  phase: [0.76, 0.92]
 PSRJ1846+0919:
   emax: 100000
   optimal_emin: 749.8942093324558
@@ -433,12 +422,12 @@ PSRJ1902-5105:
   emax: 100000
   optimal_emin: 237.13737056616552
   optimal_radius: 0.7
-  phase: [0.73, 0.93]
+  phase: [0.73, 0.96]
 PSRJ1907+0602:
   emax: 100000
   optimal_emin: 237.13737056616552
   optimal_radius: 0.7
-  phase: [0.75, 0.06]
+  phase: [0.69, 0.12]
 PSRJ1939+2134:
   emax: 100000
   optimal_emin: 421.6965034285823
@@ -450,19 +439,17 @@ PSRJ1952+3252:
   emax: 100000
   optimal_emin: 316.22776601683796
   optimal_radius: 0.7
-  phase:
-  - [0.73, 0.06]
-  - [0.23, 0.46]
+  phase: [0.71, 0.06]
 PSRJ1954+2836:
   emax: 100000
   optimal_emin: 421.6965034285823
   optimal_radius: 0.5
-  phase: [0.65, 0.95]
+  phase: [0.65, 0.00]
 PSRJ1957+5033:
   emax: 100000
   optimal_emin: 316.22776601683796
   optimal_radius: 0.7
-  phase: [0.43, 0.63]
+  phase: [0.43, 0.90]
 PSRJ1958+2846:
   emax: 100000
   optimal_emin: 421.6965034285823
@@ -480,14 +467,14 @@ PSRJ2017+0603:
   phase: [0.73, 0.25]
 PSRJ2021+3651:
   emax: 100000
-  optimal_emin: 133.3521432163324
-  optimal_radius: 1.2
-  phase: [0.70, 0.02]
+  optimal_emin: 177.82794100389228
+  optimal_radius: 0.8999999999999999
+  phase: [0.72, 0.98]
 PSRJ2021+4026:
   emax: 100000
   optimal_emin: 316.22776601683796
   optimal_radius: 0.8999999999999999
-  phase: [0.27, 0.36]
+  phase: [0.25, 0.41]
 PSRJ2028+3332:
   emax: 100000
   optimal_emin: 1000.0
@@ -502,19 +489,21 @@ PSRJ2030+4415:
   emax: 100000
   optimal_emin: 749.8942093324558
   optimal_radius: 0.4
-  phase: [0.15, 0.44]
+  phase: [0.15, 0.51]
 PSRJ2032+4127:
   emax: 100000
   optimal_emin: 1333.521432163324
   optimal_radius: 0.5
   phase:
-  - [0.27, 0.55]
+  - [0.21, 0.54]
   - [0.67, 0.99]
 PSRJ2043+1711:
   emax: 100000
   optimal_emin: 421.6965034285823
   optimal_radius: 0.9999999999999999
-  phase: [0.82, 0.97]
+  phase:
+  - [0.79, 0.06]
+  - [0.18, 0.55]
 PSRJ2043+2740:
   emax: 100000
   optimal_emin: 1000.0
@@ -544,7 +533,7 @@ PSRJ2139+4716:
   emax: 100000
   optimal_emin: 421.6965034285823
   optimal_radius: 0.7
-  phase: [0.29, 0.90]
+  phase: [0.25, 0.90]
 PSRJ2214+3000:
   emax: 100000
   optimal_emin: 421.6965034285823
@@ -554,14 +543,14 @@ PSRJ2214+3000:
   - [0.64, 0.74]
 PSRJ2229+6114:
   emax: 100000
-  optimal_emin: 133.3521432163324
-  optimal_radius: 0.8999999999999999
-  phase: [0.68, 0.12]
+  optimal_emin: 177.82794100389228
+  optimal_radius: 0.7999999999999999
+  phase: [0.68, 0.10]
 PSRJ2238+5903:
   emax: 100000
   optimal_emin: 316.22776601683796
   optimal_radius: 0.6
-  phase: [0.86, 0.91]
+  phase: [0.65, 0.99]
 PSRJ2240+5832:
   emax: 100000
   optimal_emin: 421.6965034285823

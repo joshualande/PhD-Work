@@ -7,7 +7,7 @@ import yaml
 from lande.utilities.lists import recursive_map
 
 
-version = 'v5'
+version = 'v6'
 
 pwndata=yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml')))
 
