@@ -73,12 +73,16 @@
         \item Automatically removes bad time intervals + \texttt{zmax} cut
       \end{itemize}
     \item Code is in \pointlike package: \texttt{uw.like.roi\_monte\_carlo.py}.
+    \item \url{http://www-glast.stanford.edu/cgi-bin/viewcvs/pointlike/python/uw/like/roi_monte_carlo.py}
   \end{itemize}
 \end{frame}
 
 
 \begin{frame}[fragile]
   \frametitle{Point Sources}
+  \begin{itemize}
+    \item power law point sources are easy:
+  \end{itemize}
 
   \begin{lstlisting}[language=XML]
 <source name="source" flux="0.03">
@@ -92,12 +96,10 @@
   \end{lstlisting}
 
   \begin{itemize}
-    \item Supported Spectral Models
+    \item \gtobssim supports power law, (dark matter) line, broken powerlaw
   \begin{itemize}
-    \item power law, (dark matter) line, broken powerlaw, and file function
     \item \url{http://fermi.gsfc.nasa.gov/ssc/data/analysis/scitools/other_sources.html}
   \end{itemize}
-\item Problematic for all other spectral models!
   \end{itemize}
 \end{frame}
 
@@ -118,8 +120,8 @@
   \end{lstlisting}
 
   \begin{itemize}
-    \item \roimc will automatically build a \texttt{FileSpectrum} for any otherwise-unsupported
-      model
+    \item Requires generating a 2D data file of spectral model
+    \item \roimc will use \pointlike automatically build the \texttt{FileSpectrum} 
     \item \gtobssim Requires integral of spectral model (done automatically by \roimc)
     \item WARNING! \texttt{FileSpectrum} objects cannot contain 0 pixels (stripped out by \roimc)
   \end{itemize}
@@ -147,7 +149,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Building the XML file (Isotropic DIffuse Sources)}
+  \frametitle{Isotropic Diffuse}
 \begin{itemize}
 \item \FileSpectrumMap for simulation the isotropic diffuse:
 \end{itemize}
@@ -156,17 +158,19 @@
 <source name="isotropic">
    <spectrum escale="GeV" flux="1.">
       <SpectrumClass name="FileSpectrumMap" 
-      params="flux=17,fitsFile=$(FERMI_DIR)/iso_spatial.fits,
-specFile=$(FERMI_DIR)/iso_spectral.dat,emin=100.,emax=1100"/>
+      params="flux=17,
+        fitsFile=$(FERMI_DIR)/iso_spatial.fits,
+        specFile=$(FERMI_DIR)/iso_spectral.dat,
+        emin=100,emax=1e5"/>
       <use_spectrum frame="galaxy"/>
    </spectrum>
 </source>
 \end{lstlisting}
 
 \begin{itemize}
-  \item Must integrate isotropic spectrum
+  \item Must compute flux for isotropic spectrum
   \item Must generate allsky spatial \texttt{fits} file predicting 1 
-  \item Must add energy range from isotropic file
+  \item Must include energy range from isotropic file
   \item All done automatically by \roimc
 \end{itemize}
 \end{frame}
@@ -183,7 +187,7 @@ specFile=$(FERMI_DIR)/iso_spectral.dat,emin=100.,emax=1100"/>
 </source>
 \end{lstlisting}
   \begin{itemize}
-    \item \gtobssim only natively supports an Elliptical Gaussian spatial model with a power law spectral model.
+    \item \gtobssim only natively supports an elliptical Gaussian spatial model with a power law spectral model.
     \item WARNING, the ellipse angle is defined west of celestial north)!
   \end{itemize}
 \end{frame}
@@ -192,7 +196,7 @@ specFile=$(FERMI_DIR)/iso_spectral.dat,emin=100.,emax=1100"/>
 \frametitle{Extended Sources (cont)}
 
   \begin{itemize}
-    \item Any extended source can be represented by a \FileSpectrumMap
+    \item Any extended source can be represented by a \FileSpectrumMap:
   \end{itemize}
 \begin{lstlisting}[language=XML]
 <source name="filespectrummap_test">
@@ -201,49 +205,57 @@ specFile=$(FERMI_DIR)/iso_spectral.dat,emin=100.,emax=1100"/>
         flux=17,
         fitsFile=$(FERMI_DIR)/spatial.fits,
         specFile=$(FERMI_DIR)/spectral.dat,
-        emin=100, emax=1100"/>
+        emin=100, emax=1e5"/>
       <use_spectrum frame="galaxy"/>
    </spectrum>
 </source>
 \end{lstlisting}
   \begin{itemize}
     \item Have to:
-    \begin{itemize}
-    \item Build fits template for spatial model
-    \item Build text file for spectral model
-    \item Integrate spectral model
-    \end{itemize}
-  \item Process automatic by \roimc for any of \pointlike's extended
-    sources (disk, Gauss, NFW, SpatialMap, \dots).
+      \begin{itemize}
+        \item Build fits template for spatial model
+        \item Build text file for spectral model
+        \item Calculate flux of spectral model
+      \end{itemize}
+    \item XML built automatically by \roimc for any of \pointlike's extended
+      sources (disk, Gauss, NFW, SpatialMap, \dots).
   \end{itemize}
 \end{frame}
 
 
-\begin{frame}{Common Gotcha's (Energy Dispersion)}
+\begin{frame}[fragile]
+  \frametitle{Common Gotcha's (Energy Dispersion)}
   \begin{itemize}
         \item Energy dispersion means photons with energies outside simulation range can
-          disperse into energy range
-        \item All spectral models must be simulated for energies well outside of simulation range
+          disperse into simulation
+          \begin{itemize}
+            \item All spectral models must be simulated for energies well outside simulation range!
+          \end{itemize}
         \item Handled automatically by \roimc. 
-        \item Parameter \texttt{roi\_pad} (default=2) will pad a given
-          amount to energy of all spectral models.
-        \item \texttt{acutal\_emin} = \texttt{simulation\_emin}/\texttt{roi\_pad}
-        \item \texttt{acutal\_emax} = \texttt{simulation\_emax}*\texttt{roi\_pad}
+          \begin{itemize}
+            \item Parameter \texttt{roi\_pad} (default=2) will pad a given
+              amount to energy to every spectral models.
+          \end{itemize}
       \end{itemize}
+\begin{lstlisting}[language=Python]
+actual_emin = simulation_emin/roi_pad
+actual_emax = simulation_emax*roi_pad
+\end{lstlisting}
 \end{frame}
 
-\begin{frame}{Common Gotcha's (\ftone cuts)}
+\begin{frame}{More Common Gotcha's}
   \begin{itemize}
+    \item All fluxes be in ph$\;$m$^{-2}$s$^{-1}$
     \item Must remove bad time intervals
       \begin{itemize}
-        \item \gtobssim takes as input an FT2 file (does not store GTIs)
-        \item But \gtlike analysis uses \texttt{ltcube} only over good time intervals
-        \item No ScienceTool for applying \texttt{gtmktime} unless you know exact filter applied to \ftone file
-          which generated ltcube
-        \item \roimc uses a compbiation of \texttt{pyfits} and \texttt{gtmktime} to apply exact GTIs
-          from an \ftone or ltcube file.
+        \item \gtobssim takes as input an FT2 file (no info on GTIs)
+        \item \gtlike analysis uses \texttt{ltcube} sumed over GTIs
+        \item Can only use \gtmktime if you know exact cuts applied to data (problematic)
+        \item No Science Tool for applying GTIs from another file
+        \item \roimc uses a combination of \texttt{pyfits} and \gtmktime to apply exact GTIs
+          from an \ftone or \texttt{ltcube} file.
       \end{itemize}
-    \item zenith angle cut must be consistent with zmax flag in \texttt{gtltcube}
+    \item zenith angle cut must be consistent with \texttt{zmax} used when generating \texttt{ltcube}
       \begin{itemize}
         \item Flag in \roimc to automatically apply \texttt{zmax} after simulation.
       \end{itemize}
@@ -252,11 +264,11 @@ specFile=$(FERMI_DIR)/iso_spectral.dat,emin=100.,emax=1100"/>
 
 \begin{frame}{All sky vs region simulations}
   \begin{itemize}
-    \item \gtobssim will simulate over all sky for allsky \mapcube files.
-    \item \texttt{use\_ac} parameter is applied AFTER the simulation!
-    \item This is very inefficient when simulating only a particular region in the sky
-    \item As far as I can tell, non-allsky mapcubes will cause strange projection effects
-    \item lonMin and lonMax parameters for spatial models does not work correct.
+    \item \gtobssim will simulate over all sky for allsky \mapcube files
+    \item \gtobssim's \texttt{use\_ac} parameter is applied AFTER the simulation!
+    \item This is very inefficient when simulating a particular region in the sky
+    \item As far as I can tell, non-allsky \mapcube fits files will cause strange projection effects
+    \item \texttt{lonMin} and \texttt{lonMax} parameters for spatial models does not work correct.
   \end{itemize}
 \end{frame}
 
@@ -265,7 +277,7 @@ specFile=$(FERMI_DIR)/iso_spectral.dat,emin=100.,emax=1100"/>
   \begin{itemize}
     \item My solution for simulation small regions of the sky is to set to 0 pixels
       far away from ROI
-    \item Done automaticlly by \roimc
+    \item Done automatically by \roimc
     \item Dramatic speedup for simulations of small regions
     \item Also, cut out energy bins in \mapcube far away from simulation energy range.
     \end{itemize}
@@ -274,14 +286,14 @@ specFile=$(FERMI_DIR)/iso_spectral.dat,emin=100.,emax=1100"/>
 \begin{frame}[fragile]
   \frametitle{\roimc Usage}
   \begin{itemize}
-    \item First, build a list of pointlike soruces
-    \item Most easily, you can use \pointlike's XML parser:
+    \item First, build a list of \pointlike sources
+    \item Most easily, use \pointlike's XML parser:
 \begin{lstlisting}[language=Python]
 from uw.utilities.xml_parsers import parse_sources
 ps,ds=parse_sources(xmlfile)
 sources=ps+ds
 \end{lstlisting}
-\item You can also build source programatically with \pointlike:
+\item Also build source programmatically with \pointlike:
 \begin{lstlisting}[language=Python]
   from uw.like.pointspec_helpers import PointSource
   from uw.like.Models import PowerLaw
@@ -316,16 +328,23 @@ mc = MonteCarlo(
 mc.simulate()
 \end{lstlisting}
 
+  \begin{itemize}
+    \item (optional) \texttt{roi\_dir} + \texttt{maxROI} for \mapcube cutting
+  \end{itemize}
+
 
 \end{frame}
 
 \begin{frame}{Conclusion}
   \begin{itemize}
-    \item \roimc part of \pointlike
-    \item Automatically distributed with the ScienceTools
-    \item \roimc documented on Confluence:
+    \item \roimc avoids otherwise time consuming, tedious, or error-prone tasks
+    \item \roimc part of \pointlike and automatically distributed with the Science Tools
+    \item Documented on Confluence:
       \url{https://confluence.slac.stanford.edu/x/MIAcBw}
-    \item The code has been successfully used by several people (see work by Stephan Zimmer)
+    \item Python module can be easily built on top of:
+      \begin{itemize}
+        \item For example, this package is the basis of MakeSkyModelsFromCatalog (see work by Stephan Zimmer)
+      \end{itemize}
   \end{itemize}
 \end{frame}
 
