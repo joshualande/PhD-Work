@@ -30,8 +30,28 @@
 
 \fermititle
 
-
 \begin{frame}{Motivation (Ext. Srs. Search paper)}
+\begin{columns}
+  \column{.5\textwidth} 
+  \includegraphics[scale=0.35]{plots/bias_w44sim_color.pdf}
+
+  \begin{itemize}
+    \item Simulation of W44 + Galactic \& Isotropic Diffuse $\sim 1,000$ times
+  \end{itemize}
+
+  \column{.5\textwidth} 
+  \includegraphics[scale=0.35]{plots/ts_comparison_w44sim_color.pdf}
+
+  \begin{itemize}
+    \item Look at distribution of TS values fitting with different spatial models
+  \end{itemize}
+\end{columns}
+
+\end{frame}
+
+
+
+\begin{frame}{Ext. Srs. Search paper (cont)}
 \begin{columns}
   \column{.4\textwidth} 
   \includegraphics[scale=0.4]{plots/ext_src_table.pdf}
@@ -67,7 +87,7 @@
     \item Built around \pointlike, an alternate maximum
       likelihood package written in \python
       \begin{itemize}
-      \item Uses as input a list of \pointlike objects
+      \item Uses as input a list of \pointlike sources
         \item Builds the XML file for \gtobssim
         \item Converts unsupported models into required templates.
         \item Automatically removes bad time intervals + \texttt{zmax} cut
@@ -100,6 +120,7 @@
   \begin{itemize}
     \item \url{http://fermi.gsfc.nasa.gov/ssc/data/analysis/scitools/other_sources.html}
   \end{itemize}
+\item No LogParabola, ExpCutoff\dots
   \end{itemize}
 \end{frame}
 
@@ -120,9 +141,9 @@
   \end{lstlisting}
 
   \begin{itemize}
-    \item Requires generating a 2D data file of spectral model
-    \item \roimc will use \pointlike automatically build the \texttt{FileSpectrum} 
-    \item \gtobssim Requires integral of spectral model (done automatically by \roimc)
+    \item Requires generating a 1D data file of spectral model
+    \item \roimc uses \pointlike to automatically build the \texttt{FileSpectrum} 
+    \item \gtobssim requires integral of spectral model (done automatically by \roimc)
     \item WARNING! \texttt{FileSpectrum} objects cannot contain 0 pixels (stripped out by \roimc)
   \end{itemize}
 \end{frame}
@@ -231,10 +252,10 @@
           \begin{itemize}
             \item All spectral models must be simulated for energies well outside simulation range!
           \end{itemize}
-        \item Handled automatically by \roimc. 
+        \item Handled automatically by \roimc
           \begin{itemize}
             \item Parameter \texttt{roi\_pad} (default=2) will pad a given
-              amount to energy to every spectral models.
+              amount to energy to every spectral model:
           \end{itemize}
       \end{itemize}
 \begin{lstlisting}[language=Python]
