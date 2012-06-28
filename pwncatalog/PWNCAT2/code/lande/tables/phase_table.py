@@ -17,7 +17,7 @@ format=PWNFormatter(confluence=confluence, precision=2)
 
 def all_energy_table(pwnlist):
 
-    data = yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_phase_lande.yaml')))
+    data = yaml.load(open(expandvars('$pwncode/data/pwncat2_phase_lande.yaml')))
 
     table = OrderedDefaultDict(list)
 

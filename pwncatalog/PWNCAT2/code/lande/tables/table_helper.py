@@ -12,7 +12,7 @@ from lande.utilities.tools import merge_dict
 
 from lande.utilities.table import latex_table,confluence_table,TableFormatter
 
-base='$pwndata/spectral/v22/'
+base='$pwndata/spectral/v24/'
 
 fitdir=expandvars(j(base,'analysis/'))
 savedir=expandvars(j(base,'tables'))
@@ -72,7 +72,7 @@ def write_latex(table, filebase, preamble='',**kwargs):
 
 def get_results(pwn):
     f = [j(fitdir,pwn,i) for i in ['results_%s_pointlike.yaml' % pwn, 
-                                   'results_%s_extul_point.yaml' % pwn,
+#                                   'results_%s_extul_point.yaml' % pwn,
                                    'results_%s_gtlike_at_pulsar.yaml' % pwn,
                                    'results_%s_gtlike_point.yaml' % pwn,
                                    'results_%s_gtlike_extended.yaml' % pwn]]
@@ -88,7 +88,7 @@ def get_sed(pwn,binning,hypothesis):
     return yaml.load(open(filename))
 
 def get_pwnlist():
-    pwnlist=sorted(yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml'))).keys())
+    pwnlist=sorted(yaml.load(open(expandvars('$pwncode/data/pwncat2_data_lande.yaml'))).keys())
     return pwnlist
 
 

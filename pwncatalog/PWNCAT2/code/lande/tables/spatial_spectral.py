@@ -29,7 +29,7 @@ def localization_table(pwnlist):
     index_name = r'$\Gamma$' if not confluence else 'Gamma'
     cutoff_name = r'$E_\text{cutoff}$' if not confluence else 'E_cutoff'
 
-    data = yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_phase_lande.yaml')))
+    data = yaml.load(open(expandvars('$pwncode/data/pwncat2_phase_lande.yaml')))
 
     for pwn in pwnlist:
         print pwn
