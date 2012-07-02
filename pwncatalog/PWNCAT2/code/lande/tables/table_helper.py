@@ -6,7 +6,6 @@ import shutil
 import os.path
 
 import yaml
-import asciitable
 
 from lande.utilities.tools import merge_dict
 

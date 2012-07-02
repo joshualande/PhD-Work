@@ -105,7 +105,7 @@ def localization_table(pwnlist):
                          filebase=filebase,
                          units={
                              flux_name:r'(10^-9 erg cm^-2 s^-1)',
-                             cutoff_name:r'(GeV)',
+                             cutoff_name:r'(MeV)',
                          })
     else:
         write_latex(table,
@@ -113,7 +113,7 @@ def localization_table(pwnlist):
                     filebase=filebase,
                     units={
                         flux_name:r'($10^{-9}$\ erg\,cm$^{-2}$\,s$^{-1}$)',
-                        cutoff_name:r'(GeV)',
+                        cutoff_name:r'(MeV)',
                     },
                    )
 
