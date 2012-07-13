@@ -36,6 +36,9 @@ def modify_roi(name,roi):
     if name == 'PSRJ0007+7303':
         roi.del_source('2FGL J0007.0+7303')
 
+    elif name == 'PSRJ0023+0923':
+        roi.del_source('2FGL J0023.5+0924')
+
     elif name == 'PSRJ0030+0451':
         roi.del_source('2FGL J0030.4+0450')
 
@@ -248,9 +251,16 @@ def modify_roi(name,roi):
 
 
     elif name == 'PSRJ1826-1256':
-        # Note: PSR J1826-1256 is associated with the PWN HESS J1825-137 - Lande Jan 23, 2012 
         roi.del_source('2FGL J1826.1-1256')
-        roi.del_source('HESSJ1825-137')
+
+        # Note: disregard previous note. HESS J1825-137 is acutally associated with 
+        #   PSRJ1826-1334. See http://arxiv.org/pdf/1106.0184v1.pdf for a discussion.
+        #   Now, I readd HESS J1825 as a background source nearby. - Lande, July 8, 2012
+        # Note: PSR J1826-1256 is associated with the PWN HESS J1825-137 - Lande Jan 23, 2012 
+        #roi.del_source('HESSJ1825-137')
+
+    elif name == 'PSRJ1833-1034':
+        roi.del_source('2FGL J1833.6-1032')
 
 
     elif name == 'PSRJ1836+5925':
@@ -390,6 +400,9 @@ def modify_roi(name,roi):
         # I am not sure if the source 0.3 degrees away is part of it (?)
         pass
 
+    elif name == 'PSRJ1810+1744':
+        roi.del_source('2FGL J1810.7+1742')
+
     elif name == 'PSRJ1835-1106':
         # No nearby sources
         pass 
@@ -399,6 +412,9 @@ def modify_roi(name,roi):
 
     elif name == 'PSRJ2043+1711':
         roi.del_source('2FGL J2043.2+1711')
+
+    elif name == 'PSRJ2047+1053':
+        roi.del_source('2FGL J2046.7+1055')
 
     elif name == 'PSRJ2111+4606':
         roi.del_source('2FGL J2111.3+4605')

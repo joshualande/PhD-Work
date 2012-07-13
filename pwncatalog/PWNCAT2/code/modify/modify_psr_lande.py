@@ -46,6 +46,10 @@ def modify_roi(name,roi):
         # $pwndata/spectral/v8/analysis_no_plots/PSRJ0007+7303/results_PSRJ0007+7303.yaml
         modify_psr_base.set_flux_index(roi,name,5.637887384602554e-08,2.869750880323576)
 
+    if name == 'PSRJ0023+0923':
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0023+0923/v1/iteration_v1/run.py
+        roi.modify(which="2FGL J0030.4+0450", free=True)
+
     if name == 'PSRJ0102+4839':
 
         # Analysis came from $pwnpersonal/individual_sources/PSRJ0102+4839/v1/iteration_v1/run.py
@@ -433,6 +437,17 @@ def modify_roi(name,roi):
         ps=PointSource(name="seed3", model=model, skydir=skydir)
         roi.add_source(ps)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1028-5819/v3/iteration_v2/run.py
+        roi.modify(which="2FGL J1057.9-5226", free=True)
+        roi.modify(which="2FGL J1118.8-6128", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1028-5819/v3/iteration_v3/run.py
+        ps=PointSource(name='seed4', 
+                       skydir=SkyDir(290.440317179,-3.96639941416,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.87891183147e-14, index=2.57266986846, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
     if name == 'PSRJ1044-5737':
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1044-5737/v1/iteration_v1/run.py
         roi.modify(which='2FGL J1023.5-5749c', free=True)
@@ -446,6 +461,45 @@ def modify_roi(name,roi):
         skydir=SkyDir(285.230741326,0.0446637805384,SkyDir.GALACTIC)
         ps=PointSource(name="seed1", model=model, skydir=skydir)
         roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1044-5737/v3/iteration_v2/run.py
+        roi.modify(which="2FGL J1057.9-5226", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1044-5737/v3/iteration_v3/run.py
+        roi.modify(which="2FGL J1118.8-6128", free=True)
+        roi.modify(which="2FGL J1112.5-6105", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1044-5737/v3/iteration_v4/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(290.698555174,-4.11634105539,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.14890436526e-14, index=2.69098137906, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1044-5737/v3/iteration_v5/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(289.943343411,-0.887164456861,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=5.58987965645e-14, index=2.37854404779, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1044-5737/v3/iteration_v6/run.py
+        ps=PointSource(name='seed4', 
+                       skydir=SkyDir(287.798317109,-1.37048513642,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.9647349951e-14, index=1.91563329088, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1044-5737/v3/iteration_v7/run.py
+        ps=PointSource(name='seed5', 
+                       skydir=SkyDir(286.625921611,-1.00877418344,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=5.28674022223e-14, index=2.19111237861, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1044-5737/v3/iteration_v8/run.py
+        ps=PointSource(name='seed6', 
+                       skydir=SkyDir(283.869459928,-0.687935488709,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=8.30720630373e-14, index=2.27835472383, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
 
     if name == 'PSRJ1048-5832':
 
@@ -474,6 +528,24 @@ def modify_roi(name,roi):
                        skydir=SkyDir(290.526243375,-4.03942714917,SkyDir.GALACTIC), 
                        model=PowerLaw(norm=2.13167674464e-12, index=2.58383864576, e0=1000.0, set_default_limits=True))
         roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1048-5832/v3/iteration_v1/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(291.492702478,-0.997532362926,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=6.1328576585e-14, index=2.2837287097, e0=e0))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1048-5832/v3/iteration_v2/run.py
+        roi.modify(which="2FGL J1016.5-5858", free=True)
+
+    if name == 'PSRJ1057-5226':
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1057-5226/v1/iteration_v2/run.py
+        roi.modify(which="2FGL J1044.5-5737", free=True)
+        roi.modify(which="2FGL J1048.2-5831", free=True)
+        roi.modify(which="2FGL J1023.5-5749c", free=True)
+        roi.modify(which="2FGL J1022.7-5741", free=True)
+
 
     if name == 'PSRJ1105-6107':
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1105-6107/v1/iteration_v1/run.py
@@ -518,7 +590,7 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1112-6103/v1/iteration_v7/run.py
         ps=PointSource(name='seed1', 
                        skydir=SkyDir(285.225337117,0.514641784821,SkyDir.GALACTIC), 
-                       model=PowerLaw(norm=5.32679272159e-14, index=2.12539171017, e0=5623.4132519, set_default_limits=True))
+                       model=PowerLaw(norm=5.32679272159e-14, index=2.12539171017, e0=e0, set_default_limits=True))
         roi.add_source(ps)
 
 
@@ -563,10 +635,56 @@ def modify_roi(name,roi):
         roi.modify(which="2FGL J1118.8-6128", free=True)
         roi.modify(which="2FGL J1112.5-6105", free=True)
 
+
+    # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1125-5825/v2/iteration_v1/run.py
+    ps=PointSource(name='seed1', 
+                   skydir=SkyDir(290.923761196,-1.43349694811,SkyDir.GALACTIC),
+                   model=PowerLaw(norm=3.65697804225e-14, index=2.22989651495, e0=e0, set_default_limits=True))
+    roi.add_source(ps)
+
+    # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1125-5825/v2/iteration_v3/run.py
+    roi.modify(which="2FGL J1044.5-5737", free=True)
+    roi.modify(which="2FGL J1057.9-5226", free=True)
+
+
+    # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1125-5825/v2/iteration_v4/run.py
+    ps=PointSource(name='seed2', 
+                   skydir=SkyDir(291.59743439,-0.718322470073,SkyDir.GALACTIC),
+                   model=PowerLaw(norm=6.05036445019e-14, index=2.30946919684, e0=e0, set_default_limits=True))
+    roi.add_source(ps)
+
+    # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1125-5825/v2/iteration_v5/run.py
+    ps=PointSource(name='seed3', 
+                   skydir=SkyDir(289.902647311,-0.829581974359,SkyDir.GALACTIC),
+                   model=PowerLaw(norm=4.32579535457e-14, index=2.12698223643, e0=e0, set_default_limits=True))
+    roi.add_source(ps)
+
+
+
+
     if name == 'PSRJ1357-6429':
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1357-6429/v1/iteration_v1/run.py
         roi.modify(which="2FGL J1418.7-6058", free=True)
         roi.modify(which="2FGL J1420.1-6047", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1357-6429/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(311.04136852,-5.02714294892,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.04615127537e-14, index=2.04884500014, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1357-6429/v2/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(306.00940961,-1.47217408331,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.08909893471e-14, index=2.31824295231, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1357-6429/v2/iteration_v3/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(312.442405622,0.352694217469,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=7.00851281392e-14, index=1.64320243565, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
 
     if name == 'PSRJ1410-6132':
         
@@ -632,10 +750,23 @@ def modify_roi(name,roi):
         ps=PointSource(name="seed1", model=model, skydir=skydir)
         roi.add_source(ps)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1446-4701/v2/iteration_v1/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(317.759695414,13.6270498797,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=9.06513561447e-15, index=2.64423254638, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
     if name == 'PSRJ1459-6053':
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1459-6053/v1/iteration_v1/run.py
         roi.modify(which="2FGL J1420.1-6047", free=True)
         roi.modify(which="2FGL J1418.7-6058", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1459-6053/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(315.815555128,-5.48719056996,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.20422925696e-14, index=2.39327282263, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
 
 
     if name == 'PSRJ1509-5850':
@@ -647,10 +778,24 @@ def modify_roi(name,roi):
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1513-5908/v1/iteration_v1/run.py
         roi.modify(which="2FGL J1459.4-6054", free=True)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1513-5908/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(316.720976626,-5.3160438512,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=1.85739913047e-14, index=2.28455581008, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
     if name == 'PSRJ1531-5610':
 
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1531-5610/v1/iteration_v1/run.py
         roi.modify(which="2FGL J1509.6-5850", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1531-5610/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1',
+                       skydir=SkyDir(326.358582371,2.81019207584,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.52269259203e-14, index=1.68424234239, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
 
     if name == 'PSRJ1600-3053':
         # Don't keep seed from analysis $pwnpersonal/individual_sources/PSRJ1600-3053/v1/iteration_v1/run.py
@@ -694,6 +839,19 @@ def modify_roi(name,roi):
         ps=PointSource(name="seed1", model=model, skydir=skydir)
         roi.add_source(ps)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1648-4611/v2/iteration_v1/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(338.39806147,-2.18088902122,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=5.39900594325e-14, index=2.11105486918, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1648-4611/v2/iteration_v2/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(339.163009228,3.07721990434,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.1024867815e-14, index=1.86249007958, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
     if name == 'PSRJ1658-5324':
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1658-5324/v1/iteration_v1/run.py
         model=PowerLaw(norm=7.25394e-13, index=1.9179, e0=1000, set_default_limits=True)
@@ -727,6 +885,22 @@ def modify_roi(name,roi):
         roi.modify(which="2FGL J1714.5-3829", free=True)
         roi.modify(which="2FGL J1712.4-3941", free=True)
 
+    # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1702-4128/v2/iteration_v1/run.py
+    roi.modify(which="2FGL J1714.5-3829", free=True)
+
+    # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1702-4128/v2/iteration_v2/run.py
+    ps=PointSource(name='seed1', 
+                   skydir=SkyDir(347.597126309,-0.687316152386,SkyDir.GALACTIC), 
+                   model=PowerLaw(norm=5.18277842221e-14, index=1.4463378764, e0=e0, set_default_limits=True))
+    roi.add_source(ps)
+
+    # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1702-4128/v2/iteration_v3/run.py
+    ps=PointSource(name='seed2', 
+                   skydir=SkyDir(344.381917096,-3.58283214283,SkyDir.GALACTIC), 
+                   model=PowerLaw(norm=3.63923540414e-14, index=2.34459579322, e0=e0, set_default_limits=True))
+    roi.add_source(ps)
+
+
 
     if name == 'PSRJ1709-4429':
 
@@ -740,6 +914,33 @@ def modify_roi(name,roi):
                        norm=2.6400767608080404e-12,
                        index=2.6814468574367032,
                        e0=1000.0, set_default_limits=True))
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1709-4429/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(344.46706654,-3.5796427066,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.32852254873e-14, index=2.36455250515, e0=5623.4132519))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1709-4429/v2/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(347.508851863,-0.703633261486,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=5.23731553365e-14, index=1.55724241688, e0=5623.4132519))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1709-4429/v2/iteration_v3/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(339.143335139,-4.2457206972,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.6239366048e-14, index=2.38679064814, e0=5623.4132519))
+        roi.add_source(ps)
+
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1709-4429/v2/iteration_v4/run.py
+        ps=PointSource(name='seed4', 
+                       skydir=SkyDir(338.380792845,-2.09588898957,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=5.77450257251e-14, index=2.17762318631, e0=5623.4132519))
+        roi.add_source(ps)
+
+
 
     if name == 'PSRJ1718-3825':
 
@@ -755,6 +956,12 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1718-3825/v2/iteration_v3/run.py
         roi.modify(which="2FGL J1732.5-3131", free=True)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1718-3825/v3/iteration_v1/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(353.535765613,-5.07442572886,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.57463439345e-14, index=2.26689639259, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
 
 
     if name == 'PSRJ1730-3350':
@@ -766,15 +973,48 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1730-3350/v2/iteration_v1/run.py
         roi.modify(which="2FGL J1747.1-3000", free=True)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1730-3350/v3/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(358.746259714,-3.85892797658,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.24541432392e-14, index=2.20499173648, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1730-3350/v3/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(357.812401855,3.60239368251,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.21402572576e-14, index=2.11673746506, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
     if name == 'PSRJ1732-3131':
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1732-3131/v1/iteration_v1/run.py
         roi.modify(which="2FGL J1747.1-3000", free=True)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1732-3131/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(359.896499565,0.67432692491,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=1.13790137991e-13, index=2.01834916389, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1732-3131/v2/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(358.380896917,1.4706570954,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=7.0411134277e-14, index=1.843382924, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
     if name == 'PSRJ1741-2054':
 
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1741-2054/v1/iteration_v1/run.py
         roi.modify(which="2FGL J1758.8-2402c", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1741-2054/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(6.0178920382,0.344470312517,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=8.23927076985e-14, index=2.0172897423, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
 
     if name == 'PSRJ1744-1134':
 
@@ -784,6 +1024,19 @@ def modify_roi(name,roi):
         roi.modify(which='PSRJ1744-1134', 
                    model=model,
                    keep_old_flux=False)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1744-1134/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(13.8858245783,11.2382822948,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.32589811308e-14, index=1.86077083293, e0=e0e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1744-1134/v2/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(17.4344461597,13.3869883672,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.56240866791e-14, index=2.19083839165, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
 
     if name == 'PSRJ1746-3239':
 
@@ -810,6 +1063,21 @@ def modify_roi(name,roi):
                        model=PowerLaw(norm=2.51982240786e-12, index=2.00499887044, e0=1000.0, set_default_limits=True))
         roi.add_source(ps)
 
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1746-3239/v3/iteration_v1/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(358.354717748,-2.63792512008,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.15747134896e-14, index=2.22310569138, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1746-3239/v3/iteration_v2/run.py
+        ps=PointSource(name='seed4', 
+                       skydir=SkyDir(1.28785401869,1.97903454631,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.84289509895e-14, index=1.94338964805, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
+
     if name == 'PSRJ1747-2958':
 
         # In previous analysis 
@@ -834,6 +1102,13 @@ def modify_roi(name,roi):
                                         index=2.20, set_default_limits=True))
         roi.add_source(ps)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1747-2958/v3/iteration_v1/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(3.78813638492,3.02376982301,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.89755082789e-14, index=2.65471474759, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
     if name == 'PSRJ1747-4036':
 
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1747-4036/v1/iteration_v1/run.py
@@ -841,6 +1116,18 @@ def modify_roi(name,roi):
         skydir=SkyDir(350.765455165,-8.48679435559,SkyDir.GALACTIC)
         ps=PointSource(name="seed1", model=model, skydir=skydir)
         roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1747-4036/v2/iteration_v1/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(353.585217898,-5.13100433808,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.67915426712e-14, index=2.28139568381, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1747-4036/v2/iteration_v3/run.py
+        roi.modify(which="2FGL J1709.7-4429", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1747-4036/v2/iteration_v4/run.py
+        roi.modify(which="2FGL J1718.3-3827", free=True)
 
     if name == 'PSRJ1801-2451':
 
@@ -857,7 +1144,13 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1801-2451/v2/iteration_v4/run.py
         ps=PointSource(name='seed1', 
                        skydir=SkyDir(359.850400942,0.799901961948,SkyDir.GALACTIC), 
-                       model=PowerLaw(norm=8.37060551567e-14, index=1.99876650994, e0=5623.4132519, set_default_limits=True))
+                       model=PowerLaw(norm=8.37060551567e-14, index=1.99876650994, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1801-2451/v3/iteration_v1/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(0.447406681723,2.89592340459,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.73437154305e-14, index=1.9527142892, e0=e0, set_default_limits=True))
         roi.add_source(ps)
 
 
@@ -881,6 +1174,13 @@ def modify_roi(name,roi):
                    model=model,
                    keep_old_flux=False)
 
+    if name == 'PSRJ1810+1744':
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1810+1744/v1/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(41.1412374152,13.1430254992,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=1.74396681577e-14, index=2.26238985693, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
 
     if name == 'PSRJ1813-1246':
 
@@ -890,11 +1190,46 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1813-1246/v1/iteration_v2/run.py
         roi.modify(which="2FGL J1833.6-1032", free=True)
 
+    if name == 'PSRJ1823-3021A':
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1823-3021A/v2/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(6.05832844512,-3.72446949444,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=1.44678749683e-14, index=2.90225670983, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
     if name == 'PSRJ1826-1256':
 
         # Analysis came from $pwnpersonal/individual_sources/PSRJ1826-1256/v1/iteration_v3/run.py
         roi.modify(which="2FGL J1833.6-1032", free=True)
         roi.modify(which="2FGL J1813.4-1246", free=True)
+
+    if name == 'PSRJ1833-1034':
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1833-1034/v1/iteration_v1/run.py
+        roi.modify(which="2FGL J1826.1-1256", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1833-1034/v1/iteration_v2/run.py
+        roi.modify(which="2FGL J1813.4-1246", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1833-1034/v1/iteration_v3/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(18.7653292747,1.93018606947,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=6.33563253524e-14, index=1.90201589085, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1833-1034/v1/iteration_v4/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(18.8686531205,-1.02998056239,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=9.56493141083e-14, index=2.18407833596, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1833-1034/v1/iteration_v5/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(16.6985942654,0.102578758263,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=8.10025554682e-14, index=2.42976385092, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
 
     if name == 'PSRJ1835-1106':
 
@@ -906,6 +1241,29 @@ def modify_roi(name,roi):
                        skydir=SkyDir(21.7696608987,-6.05486195427,SkyDir.GALACTIC), 
                        model=PowerLaw(norm=1.81795866627e-12, index=2.33701941988, e0=1000.0, set_default_limits=True))
         roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1835-1106/v2/iteration_v1/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(17.5067871309,-2.10727986139,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=1.75855512547e-14, index=2.76743387939, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1835-1106/v2/iteration_v2/run.py
+        roi.modify(which="2FGL J1837.3-0700c", free=True)
+
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1835-1106/v2/iteration_v3/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(24.8159929656,-0.312339927726,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=1.28025066491e-13, index=1.9692153112, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1835-1106/v2/iteration_v4/run.py
+        ps=PointSource(name='seed4', 
+                       skydir=SkyDir(23.3224479892,-5.4671437957,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.03308486715e-14, index=2.51890044978, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
 
     if name == 'PSRJ1846+0919':
 
@@ -923,6 +1281,13 @@ def modify_roi(name,roi):
                        model=model)
         roi.add_source(ps)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1846+0919/v2/iteration_v1/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(38.9783116077,1.19200846879,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=6.1493696327e-14, index=2.14461517853, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
 
 
 
@@ -939,6 +1304,21 @@ def modify_roi(name,roi):
                        skydir=SkyDir(35.9855282617,0.289102268794,SkyDir.GALACTIC), 
                        model=PowerLaw(norm=5.58261057897e-12, index=2.23253027573, e0=1000.0, set_default_limits=True))
         roi.add_source(ps)
+
+    if name == 'PSRJ1939+2134':
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1939+2134/v1/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(61.1069794973,-0.020626624811,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.84339719761e-14, index=1.7707891594, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1939+2134/v1/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(53.7047801952,2.54533707571,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.84142283976e-14, index=2.36294672893, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
 
 
     if name == 'PSRJ1952+3252':
@@ -973,12 +1353,20 @@ def modify_roi(name,roi):
         ps=PointSource(name="seed1", model=model, skydir=skydir)
         roi.add_source(ps)
 
+    if name == 'PSRJ2021+3651':
+
+        fix_gamma_cygni_region(roi)
+
+
     if name == 'PSRJ2021+4026':
         # Analysis came from $pwnpersonal/individual_sources/PSRJ2021+4026/v1/iteration_v1/run.py
         roi.modify(which="2FGL J2021.0+3651", free=True)
 
         # Note, this source is the (pulsar assocaited with the) Gamma-Cygni SNR, so no need
-        # to correctly model the region.
+        # to correctly model the region by adding Gamma-Cygni as an extended SNR.
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2021+4026/v2/iteration_v1/run.py
+        roi.modify(which="2FGL J2030.0+3640", free=True)
 
 
     if name == 'PSRJ2028+3332':
@@ -997,6 +1385,9 @@ def modify_roi(name,roi):
                        skydir=SkyDir(74.6338977671,-7.55426554766,SkyDir.GALACTIC), 
                        model=PowerLaw(norm=3.01380042617e-14, index=2.34411651063, e0=e0, set_default_limits=True))
         roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2028+3332/v2/iteration_v1/run.py
+        roi.modify(which="2FGL J2021.0+3651", free=True)
 
 
 
@@ -1033,17 +1424,47 @@ def modify_roi(name,roi):
                    model=model,
                    keep_old_flux=False)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2032+4127/v3/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(76.2874030943,4.5808459079,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.41212028323e-14, index=2.23815362813, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
     if name == 'PSRJ2030+3641':
         fix_gamma_cygni_region(roi)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2030+3641/v1/iteration_v2/run.py
         roi.modify(which="2FGL J2032.2+4126", free=True)
 
+    if name == 'PSRJ2043+2740':
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2043+2740/v1/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(73.2360285753,-7.76412215207,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.79509818749e-14, index=1.77812764818, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2043+2740/v1/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(75.0313377746,-7.59146248173,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.48611304736e-14, index=2.31665074171, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
+
     if name == 'PSRJ2055+2539':
         # Analysis came from $pwnpersonal/individual_sources/PSRJ2055+2539/v1/iteration_v1/run.py
         model=PowerLaw(norm=1.47473e-12, index=2.28808, e0=1000, set_default_limits=True)
         skydir=SkyDir(74.6188639662,-7.67739530141,SkyDir.GALACTIC)
         ps=PointSource(name="seed1", model=model, skydir=skydir)
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2055+2539/v2/iteration_v1/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(75.5236881054,-8.5837381889,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.20072761889e-14, index=2.42619077228, e0=e0, set_default_limits=True))
         roi.add_source(ps)
 
 
@@ -1061,7 +1482,47 @@ def modify_roi(name,roi):
         ps=PointSource(name="seed1", model=model, skydir=skydir)
         roi.add_source(ps)
 
+
+    if name == 'PSRJ2229+6114':
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2229+6114/v1/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(105.636365811,2.96446003064,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.85239756878e-14, index=2.43288401889, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2229+6114/v1/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(107.900135179,7.45675163517,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=2.04179263063e-14, index=2.34891447256, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+    if name == 'PSRJ2238+5903':
+        
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2238+5903/v1/iteration_v2/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(105.198974577,3.6272748858,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.06542997682e-14, index=2.39895770087, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2238+5903/v1/iteration_v3/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(110.523146572,3.55971003637,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.23249581438e-14, index=1.99253978427, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2238+5903/v1/iteration_v4/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(109.206878285,-1.08948455424,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.92884766064e-14, index=1.58638784179, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
+
     if name == 'PSRJ2240+5832':
+
         # Analysis came from $pwnpersonal/individual_sources/PSRJ2240+5832/v1/iteration_v2/run.py
         model=PowerLaw(norm=2.91961e-13, index=1.41685, e0=1000, set_default_limits=True)
         skydir=SkyDir(109.146031617,-1.05920960182,SkyDir.GALACTIC)
@@ -1074,6 +1535,20 @@ def modify_roi(name,roi):
         ps=PointSource(name="seed2", model=model, skydir=skydir)
         roi.add_source(ps)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2240+5832/v2/iteration_v1/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(106.625787103,2.77669886738,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=5.1058917963e-14, index=1.86803437427, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2240+5832/v2/iteration_v2/run.py
+        ps=PointSource(name='seed4', 
+                       skydir=SkyDir(105.242233988,3.83994919054,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=1.98311268884e-14, index=2.49685926985, e0=e0, set_default_limits=True))
+        roi.add_source(ps)
+
+
+
 
     
     new_sources = [source for source in roi.get_sources() if
@@ -1081,7 +1556,6 @@ def modify_roi(name,roi):
     return new_sources
 
 
-from lande.fermi.sed.supersed import SuperSED
 def cutoff_model0(name):
     pl=None
     if name == 'PSRJ0101-6422':
@@ -1092,6 +1566,15 @@ def cutoff_model0(name):
             Scale=e0,
             set_default_limits=True)
 
+    elif name == 'PSRJ1112-6103':
+        # parameters taken from 
+        # $pwndata/spectral/v18/analysis_no_plots/PSRJ1112-6103/results_PSRJ1112-6103.yaml
+        pl=PowerLaw.from_gtlike(
+            Index: -2.1985969186123233, 
+            Prefactor: 4.979806606494356e-13,
+            Scale: 3162.2776601683795, 
+            set_default_limits=True)
+
     elif name == 'PSRJ1119-6127':
         # Parameters from XXX
         pl=PowerLaw.from_gtlike(
@@ -1100,6 +1583,15 @@ def cutoff_model0(name):
             Scale=3162.2776601683795,
             set_default_limits=True)
         pl.set_e0(e0)
+
+    elif name == 'PSRJ1410-6132':
+        # Parameters from $pwndata/spectral/v22/analysis/PSRJ1410-6132/results_PSRJ1410-6132_gtlike_point.yaml
+        pl=PowerLaw.from_gtlike(
+            Index=-1.8585297189701677, 
+            Prefactor=1.1913729223359034e-13,
+            Scale=e0,
+            set_default_limits=True)
+
     return pl
 
 def cutoff_spectrum0(name):
@@ -1110,7 +1602,21 @@ def cutoff_spectrum0(name):
 
 def cutoff_model1(name):
     ec=None
-    if name == 'PSRJ1119-6127':
+
+    if name == 'PSRJ0101-6422':
+        # defaults are good, jsut change model0
+        pass 
+
+    elif name == 'PSRJ1112-6103':
+        # parameters taken from 
+        # $pwndata/spectral/v18/analysis_no_plots/PSRJ1112-6103/results_PSRJ1112-6103.yaml
+        ec=PLSuperExpCutoff.from_gtlike(
+            Cutoff: 55005.75302330966, Index1: -2.1146914874544533,
+            Index2: 1.0, Prefactor: 5.63695160040493e-13,
+            Scale: 3162.2776601683795,
+            set_default_limits=True)
+
+    elif name == 'PSRJ1119-6127':
         # Parameters from XXX
         ec=PLSuperExpCutoff.from_gtlike(
             Cutoff= 999.999080269481, 
@@ -1120,6 +1626,18 @@ def cutoff_model1(name):
             Scale= 1000.0, 
             set_default_limits=True)
         ec.set_free('b',False)
+
+    elif name == 'PSRJ1410-6132':
+        # Parameters from $pwndata/spectral/v22/analysis/PSRJ1410-6132/results_PSRJ1410-6132_gtlike_point.yaml
+        ec=PLSuperExpCutoff.from_gtlike(
+            Cutoff=1000.0020944387121,
+            Index1=-0.39389466758817093,
+            Index2=1.0,
+            Prefactor=2.3394118851977505e-11,
+            Scale=1000.0,
+            set_default_limits=True)
+        ec.set_free('b',False)
+
     return ec
 
 def cutoff_spectrum1(name):
