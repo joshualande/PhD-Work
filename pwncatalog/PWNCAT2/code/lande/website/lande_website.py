@@ -17,7 +17,7 @@ from table_helper import BestHypothesis
 from lande.utilities.tools import merge_dict
 from lande.utilities.website import t2t
 
-spec_version='v22'
+spec_version='v25'
 
 
 
@@ -27,7 +27,7 @@ website_unix=expandvars('$pwndata/spectral/%s/website' % spec_version)
 analysis_website=expandvars('../../%s/analysis' % spec_version)
 
 def get_pwnlist():
-    pwnlist=sorted(yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml'))).keys())
+    pwnlist=sorted(yaml.load(open(expandvars('$pwncode/data/pwncat2_data_lande.yaml'))).keys())
     return pwnlist
 
 pwnlist=get_pwnlist()
@@ -183,6 +183,16 @@ def build_each_page(pwn):
     get_img_table('plots/phaseogram_%s.png' % (pwn),'plots/phase_vs_time_%s.png' % (pwn))
 
     all = ['at_pulsar', 'point', 'extended']
+
+    title('Big Residual TS map')
+    get_img_table(*['plots/tsmap_residual_%s_%s_10deg.png' % (i,pwn) for i in all])
+
+    title('SED')
+    get_sed_table(*['seds/sed_gtlike_4bpd_%s_%s.png' % (i,pwn) for i in all])
+
+    title('gtlike Cutoff test')
+    get_sed_table(*['plots/test_cutoff_%s_%s.png' % (i,pwn) for i in ['at_pulsar', 'point']])
+
             
     title('Source TS Maps')
     get_img_table(*['plots/tsmap_source_%s_%s_5deg.png' % (i,pwn) for i in all])
@@ -205,11 +215,9 @@ def build_each_page(pwn):
     get_img_table(*['plots/band_source_%s_%s_5deg_0.1deg.png' % (i,pwn) for i in all])
 
     title('gtlike SED')
-    get_sed_table(*['seds/sed_gtlike_%s_%s.png' % (i,pwn) for i in all])
+    get_sed_table(*['seds/sed_gtlike_1bpd_%s_%s.png' % (i,pwn) for i in all])
+    get_sed_table(*['seds/sed_gtlike_2bpd_%s_%s.png' % (i,pwn) for i in all])
 
-
-    title('gtlike Cutoff test')
-    get_sed_table(*['plots/test_cutoff_%s_%s.png' % (i,pwn) for i in all])
 
 
     title('Pointlike SEDs')
@@ -220,7 +228,6 @@ def build_each_page(pwn):
     get_img_table(*['plots/band_tsmap_source_%s_%s_10deg.png' % (i,pwn) for i in all])
 
     title('Extra: Residual TS Maps')
-    get_img_table(*['plots/tsmap_residual_%s_%s_10deg.png' % (i,pwn) for i in all])
     get_img_table(*['plots/band_tsmap_residual_%s_%s_10deg.png' % (i,pwn) for i in all])
 
 
