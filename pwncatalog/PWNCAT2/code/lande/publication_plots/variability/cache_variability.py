@@ -1,38 +1,47 @@
 import yaml
 from os.path import expandvars, join, exists
+from lande.utilities.save import savedict
 
 # useful discussion of TSvar
 #   https://confluence.slac.stanford.edu/display/SCIGRPS/How+to+-+Variability+test
 
-pwnlist = yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml')))
+pwnlist = yaml.load(open(expandvars('$pwncode/data/pwncat2_data_lande.yaml')))
 
-folder = '/nfs/slac/g/ki/ki03/lande/pwncatalog/PWNCAT2/analyze_psr/spectral/v13/variability/v1'
+base = '$pwndata/spectral/v24/'
+folder = expandvars(join(base, 'analysis'))
+outdir = expandvars(join(base, 'plots'))
 
 def get_ts():
     ts_point = []
     ts_var = []
+    names = []
     for pwn in pwnlist.keys():
 
-        results = join(folder,pwn,'results_%s.yaml' % pwn)
+        var_results = join(folder,pwn, 'results_%s_variability_point.yaml' % pwn)
+        gtlike_results = join(folder,pwn, 'results_%s_gtlike_point.yaml' % pwn)
 
-        assert exists(results)
+        if not exists(var_results) or not exists(gtlike_results): 
+            print "Skipping %s b/c results doesn't exist" % pwn
+            continue
+        else:
+            print pwn
 
-        f=yaml.load(open(results))
+        f=yaml.load(open(var_results))
+        g=yaml.load(open(gtlike_results))
 
-        ts_var.append(f['TS_var']['gtlike'])
-        ts_point.append(f['all_time']['gtlike']['TS'])
+        ts_var.append(f['point']['variability']['TS_var']['gtlike'])
+        ts_point.append(g['point']['gtlike']['TS'])
+        names.append(pwn)
 
-    return ts_point,ts_var
+    return ts_point,ts_var,names
 
 
-ts_point,ts_var = get_ts()
+ts_point,ts_var,names = get_ts()
 
 d = dict(
     ts_point=ts_point,
     ts_var=ts_var,
+    pwn=names,
     )
 
-open('ts_var.yaml','w').write(
-    yaml.dump(d)
-)
-
+savedict(d,join(outdir,'ts_var.yaml'))
