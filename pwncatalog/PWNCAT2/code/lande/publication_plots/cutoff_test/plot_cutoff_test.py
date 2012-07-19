@@ -1,20 +1,23 @@
-import plot_helper 
-
 import math
 
 
 import pylab as P
 import yaml
-from os.path import join, expandvars
+from os.path import join, expandvars,exists
 from matplotlib.offsetbox import AnchoredText
 
 from lande.fermi.likelihood.cutoff import plot_gtlike_cutoff_test
 
 from lande.utilities.plotting import fix_axesgrid, label_axes
 
-bw = plot_helper.get_bw()
+from lande.utilities import pubplot
 
-fitdir=expandvars('$pwndata/spectral/v14/analysis_no_plots/')
+pubplot.set_latex_defaults()
+
+bw = pubplot.get_bw()
+
+base='$pwndata/spectral/v24/'
+fitdir=expandvars(join(base,'analysis'))
 
 cutoff_candidates = ['PSRJ0034-0534', 
                      'PSRJ0633+1746', 
@@ -52,7 +55,11 @@ for i,pwn in enumerate(cutoff_candidates):
     axes=grid[i]
 
 
-    f = join(fitdir,pwn,'results_%s.yaml' % pwn)
+    f = join(fitdir,pwn,'results_%s_gtlike_%s.yaml' % (pwn,hypothesis))
+    if not exists(f): 
+        print '%s does not exist' % f
+        continue
+
     r=yaml.load(open(f))
 
     cutoff_results=r[hypothesis]['gtlike']['test_cutoff']
@@ -82,4 +89,4 @@ for i in range(nrows*ncols):
     axes.set_ylabel('E$^2\,$dN/dE')
 
 
-plot_helper.save('cutoff_test')
+pubplot.save(join(base,'plots','cutoff_test'))
