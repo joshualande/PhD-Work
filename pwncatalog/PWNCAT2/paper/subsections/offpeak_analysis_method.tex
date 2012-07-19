@@ -4,7 +4,7 @@
 We developed a procedure for characterizing emission found
 in off-peak phase region for all pulsars in this catalog.  
 This procedure used both the spectral and spatial characteristics
-of any observed emission to determine the physical origin of the emission.
+of any observed emission to determine its physical origin.
 
 PWNe are often expected to be spatially
 resolvable at GeV energies. For example, \velax and HESS\;J1825-137 are PWN
@@ -12,21 +12,21 @@ that have been spatially resolved by the \lat
 \citep{LAT_collaboration_Vela_X_2010,LAT_collaboration_HESS_J1825_2011}.
 On the other hand, not all PWN are expected to be
 significantly spatially resolved due to the finite
-instrument resolution of the LAT. For example, the Crab nebula appears
-as a point-like source in the LAT but is distinguished from the Crab
+instrument resolution of the LAT. For example, the Crab nebula 
+cannot be resolved by that LAT LAT but is distinguished from the Crab
 pulsar in the off-peak region by its hard spectrum for E$\gtrsim$1 \gev.
 \citep{LAT_collaboration_crab_2010}.
 
 On the other hand, pulsars can have DC emission in the off-peak region
-due to the geometry of the pulsar's magnetosphere.  A previous analysis
+due to the geometry of the pulsar magnetospheres.  A previous analysis
 by the LAT collaboration found five off-peak regions to have significant
-emission which is point-like in nature that is characterized by a
+emission which is point-like in nature and characterized by a
 pulsar-like cutoff spectrum \citep{LAT_collaboration_PWNCAT_2011}.
 We can therefore use either spatial extension or a hard spectrum to
-distinguish a PWN scenario and point-like emission with a cutoff spectrum
-to distinguish the pulsar scenario.
+distinguish PWN emission and point-like emission with a cutoff spectrum
+to distinguish magnetospheric emission.
 
-To perform this test, we used the likelihood fitting package \pointlike
+To perform this analysis, we used the likelihood fitting package \pointlike
 to study the spatial character of emission in the off-peak regions
 and \gtlike in binned model to study the spectral character of
 the emission. These tools provide complementary features and this
@@ -36,23 +36,24 @@ extended sources \citep{LAT_collaboration_extended_search_2012}.
 
 For this analysis, we build a model of the sky consistent with the
 second \lat catalog. We included as background sources all nearby
-sources from the second and used the same background model as the catalog
-\citep{LAT_Collaboration_2FGL_2012}.  Our analysis energy range varied
-from 100 \mev to 316 \gev.  For this analysis, we removed all of the
-on-peak photons before binning the data and scaled the exposure to fit
-the all-phase flux assuming constant emission with phase.
+sources from the second catalog and we also used the same background models 
+\citep{LAT_Collaboration_2FGL_2012}.  For out analysis, we used
+an energy range from 100 \mev to 316 \gev ($10^{5.5}$ \mev).  For this analysis, 
+we removed all photons from the on-peak emission and scaled the exposure so as to fit
+the all-phase flux assuming the emission was constant with phase.
 
-With this model of the sky, we used fit an assumed source in the off-peak
-emission.  First, we assumed the potential emission to have a point-like
+First, we assumed any potential emission in the off-peak region 
+to have a point-like
 spatial model and (unless otherwise noted) a power-law spectral model.
 We used \pointlike to fit the position of the off-peak region following
 the procedure described in \cite{LAT_Collaboration_2FGL_2012}.  We used
-the best fit positions obtained through \pointlike and performed a
+the best fit positions obtained by \pointlike and performed a
 spectral analysis using \gtlike.
 
-After fitting the position of a source, we use \gtlike to perform a
-likelihood-ratio test for the detection of the source. Here, \ts is
-defined as
+With the best-fit position, we used \gtlike to 
+test the significance of the detection of the source.
+We define the 
+likelihood-ratio test for the detection of the source as
 \begin{equation}
   \ts = 2 \log(\likelihood_\text{pt}/\likelihood_\text{bg})
 \end{equation}
@@ -62,88 +63,95 @@ model not including the source.  We set the threshold for detection of
 significant emission at $\ts>25$, corresponding to a significance just
 over $4\sigma$ \citep{LAT_Collaboration_1FGL_2010}.
 
-For the significantly-detected source, after fitting the
-position of the source we test to see if the spectrum of the
-source is significantly cutoff following the description in
-\cite{LAT_collaboration_PWNCAT_2011}. After fitting the source using
-\gtlike with both a power-law and exponentially-cutoff spectral model,
-we define the likelihood ratio test for the cutoff test as From \gtlike,
-we obtained
+For the significantly-detected source, we tested to see if the spectrum of the
+source is significantly cutoff following the prescription in
+\cite{LAT_collaboration_PWNCAT_2011}. 
+We fit the source in \gtlike 
+with both a power-law and exponentially-cutoff spectral model
+and define the likelihood-ratio test for a cutoff spectrum as
 \begin{equation}
   \tscut= 2 \log(\likelihood_\text{cutoff}/\likelihood_\text{pt})
 \end{equation}
-where $\likelihood_\text{cutoff}$ is the poisson likelihood for a model
-including the source with a cutoff spectral model.  We set the threshold
+where $\likelihood_\text{cutoff}$ is the Poisson likelihood for a model
+including the cutoff spectrum.  We set the threshold
 for detecting a significant cutoff at $\tscut>16$, corresponding to a
 $4\sigma$ detection \citep{LAT_collaboration_PWNCAT_2011} .
 
-We used \pointlike to test whether the observed emisssion was
-spatially extended, assuming a radially-symmetric Gaussian spatial
-model.  \pointlike can simulatenously fit the position and the
-extension of the assumed Gaussian source, following the description in
-\citep{LAT_collaboration_extended_search_2012}.  After the extension fit,
+We used \pointlike to simultaneously fit the position and the
+extension of the assumed radially-symmetric Gaussian source, following the description in
+\citep{LAT_collaboration_extended_search_2012}.  
+After the extension fit,
 we refit the spectrum of the spatially extended source using \gtlike
-and performed a likelihood ratio for the significance of the extenstion
-of a source.  Following \cite{LAT_collaboration_extended_search_2012},
-we define
+We tested the significance of the spatial extension
+and computed the likelihood-ratio test for the significance of the extension:
 \begin{equation}
-  \tsext = 2 \log(\likelihood_\text{ext}/\likelihood_\text{pt})
+  \tsext = 2 \log(\likelihood_\text{ext}/\likelihood_\text{pt}).
 \end{equation}
-where $\likelihood_\text{ext}$ is the Poisson likelihood assuming the
+Here, $\likelihood_\text{ext}$ is the Poisson likelihood assuming the
 source is spatially extended. We set the threshold for detecting the
 significance of a spatially extended source at $\tsext>16$, corresponding
 to a $4\sigma$ detection \citep{LAT_collaboration_extended_search_2012}.
 
-For sources that are not significantly deteced over the energy range,
-we compute flux upper limits for the region assuming a fixed spectral
-index of 2.0.  We also computed a pulsed upper limit assuming a canonical
-pulsar spectrum with an index of -1.7 and a cutoff energy of 3 \gev.
+The spectrum of the Crab nebula was uniquely challenging because the
+GeV spectrum contains both a falling synchrotron spectrum and an
+inverse component component \citep{LAT_collaboration_crab_2010}.
+To avoid unnecessary complications in our pipeline, for this
+particular source we used the best fit two-component spectral model from
+\cite{LAT_collaboration_crab_2012} and fit only the overall normalization
+of the source.
+
+For sources that are not significantly detected, we compute flux upper
+limits assuming a point-like spatial model and a fixed spectral index
+of 2.0.  We also compute pulsed upper limit assuming a canonical pulsar
+spectrum with an index of -1.7 and a cutoff energy of 3 \gev.
 
 To better assess the spectral charter of any emission in the off-peak
-region, we performed a spectral analsyis in three smaller energy bins
+region, we performed a spectral analysis in three independent energy bins
 (100 \mev to 1 \gev, 1 \gev to 10 \gev, and 10 \gev to 316 \gev). In each
-energy bin, we fit the flux and the spectral index of the source. For
-sources not singificantly detected, we compute a flux upper limit
-(assuming a fixed spectral index of 2) in the energy bin.
+bin, we independently fit the flux and the spectral index of the source.
+We also computed flux upper limit assuming a fixed spectral index of 2
+when the source was not significantly detected in the energy range.
 
-
-Following the discovery of variable emission from the Crab nebula
+Following the discovery of time-variable emission from the Crab nebula
 by the LAT, it is interesting to search for other variable PWN
-\citep{LAT_Collaboration_Crab_Flare_2011}.  Therefore, we testing all the
-off-peak regions for variable emission.  We divided the 3 year time range
-into 36 month-long intervals and fit the flux of the source indepnedently
-in each time range. We compute this significance of the variability
-using \tsvar following the same procedure as the second LAT catalog
-\citep{LAT_Collaboration_2FGL_2012}.  Since we have 36 months of data,
-the null distribution (assuming no variability) should follow $\chi^2$
-distribution with 35 degrees of freedom, and we set the detection critera
+\citep{LAT_Collaboration_Crab_Flare_2011}.  Therefore, we tested all 
+off-peak regions for variability.  We divided the 3-year time range
+into 36 month-long intervals and fit the flux of the source independently
+in each time range. We computed the significance of variability
+with a likelihood-ratio test by computing \tsvar following the procedure of 2FGL
+\citep{LAT_Collaboration_2FGL_2012}.  Since we divided our time range into 
+36 months-long bins, the null distribution for $\tsvar$ follows a $\chi^2$
+distribution with 35 degrees of freedom. We set the detection criteria
 for significant variability at $\tsvar>91.7$, corresponding to a $4\sigma$
 significance detection threshold.
 
-In many situations, this algorithm would fail due to not modeling the
-position of nearby sources. We expect to be more sensitive to nearby
+In many situations, our pipeline was significantly biased due to systematic
+errors associated with not modeling nearby sources.
+We are more sensitive to nearby
 sources than the second \lat catalog both because of our expanded data
-set (three years of observations instead of two) and also because, for
-very bright pulsars, we are more sensitivite to other sources once the
-pulsar has been removed.
+set (3 years of observations instead of 2) and also because, for
+very bright pulsars, we are more sensitive to nearby sources once
+the strong contribution from the pulsar has been removed.
 
-Unfortuantly, in many situations, this algorithm failed due to
-systematics associated with the modeling nearby sources. The large and
-energy depdended point-spread function of the \lat causes the analysis
+The large and energy dependent point-spread function of the \lat causes the analysis
 of any one source to be sensitively affected by the modeling of nearby
 sources. Therefore, we had to, in many situations, iteratively improve
-the model of a region by including new sources. This procedure involved
+the model of a region by including new background sources. 
+We modeled these sources by
 generating maps of residual test statistic assuming the presence of a
-new source (of a fixed spectral index of 2) and looking for regions with
-$\ts\ge25$.  For these positions, we would include a new source into our
+new source (of a fixed spectral index of 2) and looking for residuals with
+$\ts\ge25$. In these situations, we would include a new source into our
 model, fit the position and spectrum of this source, and iterate until
-there was no remaining $\ts\ge25$ emission.
+there was no remaining significant residual.
 
-Even so, there are still some linering regions which have significant
-emission but which remain particular difficult to model and understand
-the origion of the emission for.  These issues are most likely due to
-systematics associated with the model of the galactic diffuse emission
-in the region and issues associated with modeling nearby sources. We
-will flag these problematic regions in our analysis.
-
-\todo[inline]{Describe special case of Crab spectrum}
+Even so, there are still some lingering regions for where we were unable
+to obtain an unbiased fit.  the emission for.  These issues are most
+likely due to systematics associated with the model of the galactic
+diffuse emission and issues associated with modeling nearby sources.
+The most common symptom of a failed fit is a diverging localization
+or an unphysically large extension which causes the source model
+to incorporate multiple background sources. Systematics associated
+with modeling extended sources are discussed more thoroughly in
+\citep{LAT_collaboration_extended_search_2012}.  For the currently
+analysis, we flagged these problematic regions 
+and do not attempt a complete understanding of the region.
