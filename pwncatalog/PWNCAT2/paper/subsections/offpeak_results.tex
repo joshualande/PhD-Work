@@ -1,15 +1,24 @@
 \subsection{Results}
 
-Following the procedure described in \subsecref{off_peak_analysis},
-we performed an analysis of the off-peak emission for all 107
-pulsars in this catalog. In this paper, we will present
-a condensed summary of the results. We will also
-describe a supplemental \fits-format table which will contain
-the full spectral and spatial results for each region.
+After analyzing the off-peak emission using the pipeline described
+in \subsecref{off_peak_analysis}, we consider any emission in the
+off-peak region to be magnetospheric in nature if the emsision is
+not significantly-extended and has a significantly-cutoff spectrum.
+We consider the emission to originate in the pulsar wind if it is
+spatially extended or had a hard spectral index.
+If the source is point-like and had a soft spectrum, or if it 
+is spatially extended but the extension is biased by modeling
+of the background, we are unable to determine the origin of the emission.
 
-Table 
-First, we tested the sources to see if they
-were spatially extended. The localization results are in \tabref{offpeak}.
+A summay of the reuslts of the pipepline can be found in \tabref{offpeak}.
+It includes off off-peak phase ranges selected using the method described
+in \subsecref{off_peak_defintion}.
+This table includes \ts, \tsext, and \tscut
+for the significantly detected pulsars (with $\ts>25$).
+This table also includes the best fit flux and spectral index for these pulsars assuming
+the best hypothesis (either point-like, spatially-extended, or expontentially cutoff).
+For the sources that are significantly cutoff, the spectral index refers to the index
+from the fit of a cutoff spectral model and the final column includes the cutoff energy derived from the fit.
 
 \begin{deluxetable}{l*{7}c}
 \tabletypesize{\scriptsize}
@@ -19,23 +28,6 @@ were spatially extended. The localization results are in \tabref{offpeak}.
 \input{tables/off_peak_spatial_spectral.tex}
 \tablecomments{\todo[inline]{Put table comments}}
 \end{deluxetable}
-
-
-
-Next, we performed a spectral analysis over all energy using the best
-fit morphology. XXX shows the results of the all energy
-analysis of the off-peak emission for each pulsar.
-
-Next, we fit a powerlaw independently in each energy
-bin. XXX shows the results of the analysis in separate
-energy bins of each pulsar.
-
-Finally, we tested sources to see which were
-variable. XXX shows the results of the cutoff test for
-pulsars with significant low-energy emission.
-
-
-\todo[inline]{Finally, a description of the acompanying fits table}
 
 
 
@@ -52,20 +44,22 @@ pulsars with significant low-energy emission.
 \end{figure}
 
 
-\todo[inline]{We tested all sources for variability.}
+Consistent with \citep{LAT_Collaboration_Crab_Flare_2011}, we found
+the Crab nebula to be highly variable with \tsvar=XXXX.  Besides that,
+we found no significantly variable off-peak emission.  The results of
+the variability test are contained in the auxiliary information.
 
-\todo[inline]{Describe upper limits}
+The results of the spectral analysis in smaller energy bands described
+in section \secref{peak_analysis} are included in the auxiliary
+information. In addition, upper limits computed assuming a powerlaw
+spectral model and a canonical pulsar spectrum are included in the
+auxiliary information.
 
-Special cases:
-\begin{itemize}
-  \item Crab has a funny spectrum, we have (so far) fixed it to
-  \item \velax Spatialmodel
-\end{itemize}
 
 
 Results:
 \begin{itemize}
-  \item List of all XXX detections detected
+  \item List of all XXX detections
   \item For each pulsar, is it a 
     \begin{itemize}
       \item Magnetospheric emission
@@ -73,4 +67,30 @@ Results:
       \item Region where the fit shows trouble for some reason.
     \end{itemize}
 \end{itemize}
+
+In our analysis, we detected the the Vela X PWN (associated with PSRJ0835$-$4510), the Crab Nebula (associated
+with PSRJ0534+2200), and MSH 15$-$52 (associated with PSRJ1513-5908).
+
+What to say about PSRJ1023-5746
+
+Sources we detect as clearly magnetospheric
+
+Special cases/problem cases:
+\begin{itemize}
+  \item PSRJ0101-6422: Very weird spectrum
+  \item PSRJ1112-6103: Very close to MSH 11~62 (arXiv:1202.3371v1). Nearby source is 2FGL J1112.1-6040. Significant extension.
+  \item When fitting PSRJ1119-6127, description of adding nearby point
+  source to represent emission residual from o represent residual from
+  PSRJ1112-6103 looking spatially
+    extended.
+  \item PSRJ1418-6058 and PSRJ1420-6048, very difficult to analyze because both very near eachother.
+  \item Something about the complciated Gamma Cygni PSR: PSRJ2021+4026
+  \item PSRJ1105-6107: something about adding source to background model that is very nearby. \todo{See what OZLEM is doing}.
+  \item PSRJ1648-4611 (what to do about nearby 2FGL soruce and other residual emission. Is this paper relevant: http://arxiv.org/pdf/1111.2043.pdf???)?
+  \item What to do about emission from PSR J1023 at low energy???
+  \item PSRJ0908-4913: waht to say about far localization?
+\end{itemize}
+
+\todo[inline]{Describe how we present the point-like hypothesis for signifciant extended soures if the extension fails for some reason}
+
 

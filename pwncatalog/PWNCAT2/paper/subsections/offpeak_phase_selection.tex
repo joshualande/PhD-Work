@@ -1,35 +1,60 @@
 \subsection{Off-peak Phase Selection}
 \label{subsec:off_peak_defintion}
 
-
-
 To study the off-peak emission of \lat-detected pulsars, we first
-developed a new method for defining the off-peak emission.
-The primary constraint for this method was that it was systematic,
-computationally efficient, and model independent.
+developed a systematic method to define the off-peak region of a pulsar.
+The primary constraint for this method was for it to be systematic,
+model independent, and computationally efficient.
 
-The method we developed procedes by deconstructing a pulsar phaseogram
-into a Baysian blocks using the implementation described in \cite{Jackson_Bayesian_Blocks_2003}.
+The method we developed proceeds by deconstructing the pulsar's
+phaseogram into simple Bayesian Blocks using the 
+algorithm described in \cite{Jackson_Bayesian_Blocks_2003}.
+To produce Bayesian Blocks on a periodic phaseogram, we applied the blocks
+three sets of the data from a phase of -1 to 2 and selected the blocks from a
+phase of 0 to 1.
 
+TO improve the off-peak region definition,
+we first optimized the pulsar phaseogram
+by varying the minimum energy and radius of the included photons to optimize
+the H-test. We then selected the lowest block to be the off-peak
+region, but removed 10\% of the emission from either side of the block
+to avoid potential contamination.
 
-\todo[inline]{This is just a placeholder. Hopefully Andrea can fill this section
-in with the real details.}
+There is one free parameter in the Baysian Block algorithm called
+$\text{ncp}_\text{prior}$ which modifies the probability that the
+algorithm will divide a block into smaller intervals. For our situation,
+we found that setting $\text{ncp}_\text{prior}=8$ protected against
+the Bayesian Block decomposition containing unphysically small blocks.
+For a few very marginally-detected pulsars, the algorithm failed
+decomposed the phaseogram into multiple blocks
+and in these situations we decreased $\text{ncp}_\text{prior}$ until the
+algorithm succeeded.
 
-\todo[inline]{How to implement Baysian blocks on periodic data.}
+In some situations, there can be two well defined off-peak regions between two
+pulsed peaks. The method we used to select a second phase range was
+to take the second lowest Bayesian block
+but only when the emission in this block is consistent with the emission in
+the lowest block (at the 99\% confidence level) and when the
+second block contained at least half as much phase as the first block.
 
-\figref{off_peak_select} shows the off peak selection for some pulsars\dots
-
+Figure \figref{off_peak_select} shows the energy-and-radius optimized
+light curve and the off-peak selection for a representative sample of pulsars.
+The off-peak definition for all pulsars is contained in the auxiliary material.
 
 \begin{figure}
   \ifdefined\bwfigures
+   % plots from $pwndata/off_peak/off_peak_bb/pwncat2/v6/plots/
   \plotone{off_peak_select_bw.eps}
   \else
   \plotone{off_peak_select_color.eps}
   \fi
-  \caption{Off peak selection for some pulsars. 
-  \todo[inline]{This is just a placeholder figure. 
-  Hopefull Andrea or somebody can update the plot
-  once the real algorithm is finished.}}
+  \caption{The phaseogram and off-peak selection for 
+  (a) PSRJ0007+7303, (b) PSRJ0534+2200, (c) PSRJ0633+1746, (d) PSRJ0835-4510,
+  (e) PSRJ1702-4128, (f) PSRJ1747-4036, (g) PSRJ1801-2451, and (h) PSRJ2021+4026.
+  The black histogram represents the energy-and-radius optimized phaseogram.
+  The gray lines (colored red in the electronic version)
+  represent the Bayesian block decomposition of the pulsar light curves.
+  The hatched areas represent the off-peak regions selected by this method.}
   \label{fig:off_peak_select}
 \end{figure}
 
