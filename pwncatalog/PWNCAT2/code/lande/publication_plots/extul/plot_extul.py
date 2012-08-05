@@ -1,4 +1,4 @@
-import plot_helper
+from lande.utilities import pubplot
 from os.path import join, exists
 from glob import glob
 from collections import defaultdict
@@ -14,7 +14,7 @@ from uw.like.roi_plotting import DegreesFormatter
 
 from lande.utilities.plotting import label_axes
 
-bw=plot_helper.get_bw()
+bw=pubplot.get_bw()
 
 from uw.utilities.makerec import fitsrec
 
@@ -116,4 +116,4 @@ for type in ['dim','bright']:
     grid[2].axhline(16, color='black', dashes=[5,2])
     grid[3].axhline(0.95, color='black', dashes=[5,2])
 
-    plot_helper.save('extul_%s' % type)
+    pubplot.save('extul_%s' % type)

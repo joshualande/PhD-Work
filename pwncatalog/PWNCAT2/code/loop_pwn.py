@@ -48,8 +48,8 @@ for name in sources.keys():
             %s""" % (name, flags,' '.join(remaining_args))))
 
     for hypothesis in ['at_pulsar', 'point', 'extended']:
-        for followup in ['tsmaps','plots','gtlike','variability','extul']:
-            if hypothesis != 'point' and  followup in ['variability','extul']:
+        for followup in ['tsmaps','plots','gtlike','variability']:
+            if hypothesis != 'point' and  followup == 'variability':
                 continue
 
             file=join(folder,'followup_%s_%s_%s.sh' % (name,followup,hypothesis))
@@ -69,7 +69,7 @@ submit_all=join(outdir,'followup_all.sh')
 open(submit_all,'w').write("""\
 for pwn in PSR*; do
     for hypothesis in at_pulsar point extended; do
-        submit_all $pwn/followup_${pwn}_${hypothesis}_*.sh $@ --requires=$pwn/roi_${hypothesis}_${pwn}.dat
+        submit_all $pwn/followup_${pwn}_*_${hypothesis}.sh $@ --requires=$pwn/roi_${hypothesis}_${pwn}.dat
     done
 done""")
 

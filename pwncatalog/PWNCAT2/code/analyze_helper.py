@@ -17,16 +17,18 @@ from uw.like.SpatialModels import Gaussian
 
 from lande.utilities.tools import tolist
 
-from lande.fermi.sed.plotting import plot_all_seds
+from lande.fermi.spectra.plotting import plot_all_seds
 from lande.fermi.likelihood.fit import paranoid_gtlike_fit, fit_prefactor, fit_only_source, freeze_insignificant_to_catalog, freeze_bad_index_to_catalog
 from lande.fermi.likelihood.save import sourcedict, get_full_energy_range
-from lande.fermi.likelihood.limits import powerlaw_upper_limit
+from lande.fermi.likelihood.limits import powerlaw_upper_limit, cutoff_upper_limit
 from lande.fermi.likelihood.localize import GridLocalize, paranoid_localize
 from lande.fermi.likelihood.cutoff import plot_gtlike_cutoff_test, test_cutoff, fix_bad_cutoffs
 from lande.fermi.likelihood.bandfitter import BandFitter
+from lande.fermi.likelihood.printing import summary
 from lande.fermi.pulsar.plotting import plot_phaseogram,plot_phase_vs_time
-from lande.fermi.sed.supersed import SuperSED
+from lande.fermi.spectra.sed import GtlikeSED
 from lande.fermi.data.plotting import ROITSMapBandPlotter, ROISourceBandPlotter, ROISourcesBandPlotter
+from lande.fermi.likelihood.free import freeze_far_away, unfreeze_far_away
 
 from setup_pwn import PWNRegion
 
@@ -46,14 +48,14 @@ def two_bin_per_dec(emin,emax):
     assert close(emin,1e2) and (close(emax,1e5) or close(emax,10**5.5))
     if close(emax,1e5):
         return np.logspace(2,5,7)
-    elif close(emax,10*5.5):
+    elif close(emax,10**5.5):
         return np.logspace(2,5.5,8)
 
 def four_bin_per_dec(emin,emax):
     assert close(emin,1e2) and (close(emax,1e5) or close(emax,10**5.5))
     if close(emax,1e5):
         return np.logspace(2,5,13)
-    elif close(emax,10*5.5):
+    elif close(emax,10**5.5):
         return np.logspace(2,5.5,15)
 
 def overlay_on_plot(axes, pulsar_position):
@@ -64,7 +66,7 @@ def overlay_on_plot(axes, pulsar_position):
                      marker='*', color='green',
                      markeredgecolor='white', markersize=12, zorder=1)
 
-def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, tsmap_pixelsize=0.1, **common_kwargs):
+def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, new_sources, tsmap_pixelsize=0.1, **common_kwargs):
     """ TS maps """
     emin, emax = get_full_energy_range(roi)
 
@@ -72,31 +74,32 @@ def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, tsmap_pixelsize=0
 
     tsmap_kwargs = dict(size=size, pixelsize=tsmap_pixelsize, **common_kwargs)
 
-    roi.plot_tsmap(filename='%s/tsmap_residual_%s.png' % (plotdir,extra), 
-                   fitsfile='%s/tsmap_residual_%s.fits' % (datadir,extra),
-                   title='Residual TS Map for %s (%s)' % (name,hypothesis),
-                   **tsmap_kwargs)
+    def _plot(filename,title):
+        roi.plot_tsmap(filename='%s/tsmap_%s_%s.png' % (plotdir,filename,extra), 
+                       fitsfile='%s/tsmap_%s_%s.fits' % (datadir,filename,extra),
+                       title='%s TS Map for %s (%s)' % (title,name,hypothesis),
+                       **tsmap_kwargs)
 
-    if all_energy(emin,emax):
-        ROITSMapBandPlotter(roi,  
-                            title='Band Residual TS Map for %s (%s)' % (name,hypothesis),
-                            bin_edges=one_bin_per_dec(emin,emax), 
-                            **tsmap_kwargs).show(filename='%s/band_tsmap_residual_%s.png' % (plotdir,extra))
+        if all_energy(emin,emax):
+            ROITSMapBandPlotter(roi,  
+                                title='Band %s TS Map for %s (%s)' % (title,name,hypothesis),
+                                bin_edges=one_bin_per_dec(emin,emax),
+                                **tsmap_kwargs).show(filename='%s/band_tsmap_%s_%s.png' % (plotdir,filename,extra))
 
+    # reisidual ts map
+    _plot('residual','Residual')
     roi.zero_source(which=name)
 
-    roi.plot_tsmap(filename='%s/tsmap_source_%s.png' % (plotdir,extra), 
-                   fitsfile='%s/tsmap_source_%s.fits' % (datadir,extra),
-                   title='Source TS Map for %s (%s)' % (name,hypothesis),
-                   **tsmap_kwargs)
-
-    if all_energy(emin,emax):
-        ROITSMapBandPlotter(roi,
-                            title='Band Source TS Map for %s (%s)' % (name,hypothesis),
-                            bin_edges=one_bin_per_dec(emin,emax), 
-                            **tsmap_kwargs).show(filename='%s/band_tsmap_source_%s.png' % (plotdir,extra))
-
+    # source ts map
+    _plot('source','Source')
     roi.unzero_source(which=name)
+
+    # ts map which shouls nearby 2FGL sources
+    for source in new_sources:
+        roi.zero_source(which=source)
+    _plot('newsrc','newsrc')
+    for source in new_sources:
+        roi.unzero_source(which=source)
 
 def counts_plots(roi, name, hypothesis, datadir, plotdir, size, pixelsize, **common_kwargs):
     """ Counts plots """
@@ -197,35 +200,40 @@ def plots(roi, name, hypothesis,
             counts_plots(*args, pixelsize=0.25, size=size, **common_kwargs)
     if do_tsmap:
         for size in [5,10]:
-            tsmap_plots(*args, tsmap_pixelsize=0.1, size=size, **common_kwargs)
+            tsmap_plots(*args, tsmap_pixelsize=0.1, size=size, new_sources=new_sources, **common_kwargs)
 
     roi.toRegion('%s/region_%s_%s.reg'%(datadir,hypothesis, name))
 
-def pointlike_analysis(roi, name, hypothesis, 
+def pointlike_analysis(roi, name, hypothesis, max_free,
                        seddir='seds', datadir='data', 
                        localize=False,
                        fit_extension=False, 
-                       cutoff=False):
+                       cutoff=False,
+                       model0=None,
+                       model1=None,
+                      ):
     """ emin + emax used for computing upper limits. """
     print 'Performing Pointlike analysis for %s' % hypothesis
 
     for dir in [seddir, datadir]: 
         if not os.path.exists(dir): os.makedirs(dir)
 
-    print_summary = lambda: roi.print_summary(galactic=True)
+    print_summary = lambda: roi.print_summary(galactic=True, maxdist=10)
     print_summary()
 
     emin, emax = get_full_energy_range(roi)
 
     print roi
 
-    def fit(just_prefactor=False, just_source=False):
+    def fit(just_prefactor=False, just_source=False, fit_bg_first=False):
         """ Convenience function incase fit fails. """
         try:
             if just_prefactor:
                 fit_prefactor(roi, name) 
             elif just_source:
                 fit_only_source(roi, name)
+            elif fit_bg_first:
+                roi.fit(fit_bg_first=True)
             else:
                 roi.fit()
                 # For some reason, one final fit seems to help with convergence and not getting negative TS values *shurgs*
@@ -235,24 +243,11 @@ def pointlike_analysis(roi, name, hypothesis,
             traceback.print_exc(file=sys.stdout)
         print_summary()
 
-    # More robust to first fit the prefactor of PWN since the starting value is often very bad
     fit(just_prefactor=True)
-    # Then, fit only the source
-    fit(just_source=True)
-
-    while 1:
-        # Then, do a fill spectral fit
-        fit()
-        any_changed = freeze_bad_index_to_catalog(roi, PWNRegion.get_catalog(), exclude_names=[name], min_ts=9)
-        fit()
-        any_changed = any_changed or freeze_insignificant_to_catalog(roi, PWNRegion.get_catalog(), exclude_names=[name], min_ts=9)
-        fit() 
-        any_changed = any_changed or fix_bad_cutoffs(roi, exclude_names=[name])
-        if not any_changed:
-            break
-
-    # second fit necessary after these fixes, which change around sources.
+    fit(fit_bg_first=True)
     fit() 
+
+    frozen  = freeze_far_away(roi, roi.get_source(name).skydir, max_free)
 
     if localize:
         try:
@@ -267,7 +262,6 @@ def pointlike_analysis(roi, name, hypothesis,
         except Exception, ex:
             print 'ERROR localizing pointlike: ', ex
             traceback.print_exc(file=sys.stdout)
-        fit()
 
     if fit_extension:
         init_flux = roi.get_model(which=name).i_flux(emin,emax)
@@ -281,14 +275,21 @@ def pointlike_analysis(roi, name, hypothesis,
             print 'ERROR extension fitting pointlike: ', ex
             traceback.print_exc(file=sys.stdout)
 
-        fit()
+
+    unfreeze_far_away(roi, frozen)
+
+    fit()
 
     p = sourcedict(roi, name)
 
     p['powerlaw_upper_limit']=powerlaw_upper_limit(roi, name, emin=emin, emax=emax, cl=.95)
+    p['cutoff_upper_limit']=cutoff_upper_limit(roi, name, Index=1.7, Cutoff=3e3, b=1, cl=.95)
+
 
     if cutoff:
-        p['test_cutoff']=test_cutoff(roi,name)
+        p['test_cutoff']=test_cutoff(roi,name, 
+                                     model0=model0,
+                                     model1=model1)
     print_summary()
 
     roi.plot_sed(which=name,filename='%s/sed_pointlike_%s_%s.png' % (seddir,hypothesis,name), use_ergs=True)
@@ -301,40 +302,66 @@ def pointlike_analysis(roi, name, hypothesis,
     return p
 
 
-def gtlike_analysis(roi, name, hypothesis, 
+def gtlike_analysis(roi, name, hypothesis, max_free,
                     seddir='seds', datadir='data', plotdir='plots',
-                    upper_limit=False, cutoff=False):
+                    upper_limit=False, cutoff=False, 
+                    model0=None, model1=None):
     print 'Performing Gtlike crosscheck for %s' % hypothesis
 
     for dir in [seddir, datadir, plotdir]: 
         if not os.path.exists(dir): os.makedirs(dir)
 
+    frozen  = freeze_far_away(roi, roi.get_source(name).skydir, max_free)
     gtlike=Gtlike(roi)
+    unfreeze_far_away(roi, frozen)
+
     global like
     like=gtlike.like
 
-    like.tol = 1e-1 # I found that the default tol '1e-3' would get the fitter stuck in infinite loops
+    print '(a) : ll=',like.logLike.value()
+
+    #like.tol = 1e-1 # I found that the default tol '1e-3' would get the fitter stuck in infinite loops
 
     emin, emax = get_full_energy_range(like)
 
-    paranoid_gtlike_fit(like)
+    print 'About to fit gtlike ROI'
+
+    print '(b) : ll=',like.logLike.value()
+
+    print summary(like, maxdist=10)
+
+    print '(c) : ll=',like.logLike.value()
+
+    #paranoid_gtlike_fit(like, niter=3)
+    like.optimizer = 'MINUIT'
+    like.fit(covar=True)
+
+    print '(d) : ll=',like.logLike.value()
+
+    print 'Done fiting gtlike ROI'
+    print summary(like, maxdist=10)
 
     like.writeXml("%s/srcmodel_gtlike_%s_%s.xml"%(datadir, hypothesis, name))
 
     r=sourcedict(like, name)
 
     if upper_limit:
-        r['upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95, delta_log_like_limits=10)
+        r['powerlaw_upper_limit'] = powerlaw_upper_limit(like, name, emin=emin, emax=emax, cl=.95, delta_log_like_limits=10)
+        p['cutoff_upper_limit'] = cutoff_upper_limit(like, name, Index=1.7, Cutoff=3e3, b=1, cl=.95)
 
     if all_energy(emin,emax):
         bf = BandFitter(like, name, bin_edges=one_bin_per_dec(emin,emax))
         r['bands'] = bf.todict()
 
     def sed(kind,**kwargs):
-        print 'Making %s SED' % kind
-        sed = SuperSED(like, name, always_upper_limit=True, **kwargs)
-        sed.plot('%s/sed_gtlike_%s_%s.png' % (seddir,kind,name)) 
-        sed.save('%s/sed_gtlike_%s_%s.yaml' % (seddir,kind,name))
+        try:
+            print 'Making %s SED' % kind
+            sed = GtlikeSED(like, name, always_upper_limit=True, **kwargs)
+            sed.plot('%s/sed_gtlike_%s_%s.png' % (seddir,kind,name)) 
+            sed.save('%s/sed_gtlike_%s_%s.yaml' % (seddir,kind,name))
+        except Exception, ex:
+            print 'ERROR computing SED:', ex
+            traceback.print_exc(file=sys.stdout)
 
     if all_energy(emin,emax):
         sed('1bpd_%s' % hypothesis,bin_edges=one_bin_per_dec(emin,emax))
@@ -350,10 +377,12 @@ def gtlike_analysis(roi, name, hypothesis,
         sed(hypothesis)
 
     if cutoff:
-        r['test_cutoff']=test_cutoff(like,name)
+        r['test_cutoff']=test_cutoff(like,name,
+                                     model0=model0, 
+                                     model1=model1)
         try:
             plot_gtlike_cutoff_test(cutoff_results=r['test_cutoff'],
-                                    sed_results='%s/sed_gtlike_%s_%s.yaml' % (seddir,hypothesis,name),
+                                    sed_results='%s/sed_gtlike_2bpd_%s_%s.yaml' % (seddir,hypothesis,name),
                                     filename='%s/test_cutoff_%s_%s.png' % (plotdir,hypothesis,name))
         except Exception, ex:
             print 'ERROR plotting cutoff test:', ex

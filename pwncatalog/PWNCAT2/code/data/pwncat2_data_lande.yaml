@@ -1,5 +1,6 @@
 # Updates:
-# * Remove PSRJ1709-4429+PSRJ0205+6449 becasue they have bad timing solutions - June 22, 2012 J. L. 
+# * Add PSRJ0023+0923, PSRJ1709-4429: PSRJ1810+1744: PSRJ1833-1034: PSRJ2047+1053 - June 28, 2012 - JL
+# * Remove PSRJ1709-4429 & PSRJ0205+6449 becasue they have bad timing solutions - June 22, 2012 J. L. 
 # * Updated to Matthew's new data set w/ 110 pulsars - May 29, 2012 - J.L.
 # * Add PSRJ0437-4715 - Feb 29, 2012, J.L.
 # * Updating to Ozlem's data set + Matthew's 111 pulsars - Feb 25, 2012, J.L.
@@ -9,6 +10,11 @@
 PSRJ0007+7303:
   cel: [1.7565, 73.05231]
   ft1: $kerr_2pc_data/v1/J0007+7303/J0007+7303_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+  ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
+  ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ0023+0923:
+  cel: [5.820337, 9.389962]
+  ft1: $kerr_2pc_data/v1/J0023+0923/J0023+0923_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
   ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ0030+0451:
@@ -311,6 +317,11 @@ PSRJ1702-4128:
   ft1: $kerr_2pc_data/v1/J1702-4128/J1702-4128_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
   ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1709-4429:
+  cel: [257.42804, -44.485622]
+  ft1: $kerr_2pc_data/v1/J1709-4429/J1709-4429_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+  ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
+  ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1713+0747:
   cel: [258.4564, 7.793748]
   ft1: $kerr_2pc_data/v1/J1713+0747/J1713+0747_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
@@ -376,6 +387,11 @@ PSRJ1809-2332:
   ft1: $kerr_2pc_data/v1/J1809-2332/J1809-2332_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
   ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1810+1744:
+  cel: [272.65536, 17.743717]
+  ft1: $kerr_2pc_data/v1/J1810+1744/J1810+1744_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+  ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
+  ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1813-1246:
   cel: [273.34894, -12.766906]
   ft1: $kerr_2pc_data/v1/J1813-1246/J1813-1246_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
@@ -389,6 +405,11 @@ PSRJ1823-3021A:
 PSRJ1826-1256:
   cel: [276.5355, -12.942811]
   ft1: $kerr_2pc_data/v1/J1826-1256/J1826-1256_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+  ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
+  ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1833-1034:
+  cel: [278.38968, -10.573137]
+  ft1: $kerr_2pc_data/v1/J1833-1034/J1833-1034_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
   ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ1835-1106:
@@ -489,6 +510,11 @@ PSRJ2043+1711:
 PSRJ2043+2740:
   cel: [310.93127, 27.682135]
   ft1: $kerr_2pc_data/v1/J2043+2740/J2043+2740_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
+  ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
+  ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ2047+1053:
+  cel: [311.79276, 10.885547]
+  ft1: $kerr_2pc_data/v1/J2047+1053/J2047+1053_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
   ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
 PSRJ2051-0827:

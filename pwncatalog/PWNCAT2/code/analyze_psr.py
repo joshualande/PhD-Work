@@ -13,6 +13,8 @@ import os
 from os.path import join
 from glob import glob
 
+from lande.fermi.likelihood.parlimits import all_params_limited, expand_prefactor_limits
+
 from setup_pwn import PWNRegion
 from argparse import ArgumentParser
 import yaml
@@ -20,6 +22,7 @@ import yaml
 from collections import defaultdict
 import numpy as np
 np.seterr(all='ignore')
+
 
 def get_args():
 
@@ -39,7 +42,7 @@ def get_args():
     parser.add_argument("--no-gtlike", default=False, action="store_true")
     parser.add_argument("--no-cutoff", default=False, action="store_true")
     parser.add_argument("--no-savedir", default=False, action="store_true")
-    parser.add_argument("--max-free", default=10, type=float)
+    parser.add_argument("--max-free", default=5, type=float)
     parser.add_argument("--modify", required=True)
     args=parser.parse_args()
     return args
@@ -77,7 +80,7 @@ if __name__ == '__main__':
     results['name']=name
     results['phase']=phase
 
-    pointlike_kwargs=dict(name=name) 
+    pointlike_kwargs=dict(name=name, max_free=args.max_free) 
 
     print 'Building the ROI'
     reg=PWNRegion(pwndata=args.pwndata, savedir=savedir)
@@ -92,15 +95,25 @@ if __name__ == '__main__':
     roi.extra['new_sources'] = modify.modify_roi(name,roi)
     roi.extra['pwnphase'] = pwnphase
 
+    assert all_params_limited(roi)
+    expand_prefactor_limits(roi, factor=1e4)
+
+    model0=modify.cutoff_model0(name)
+    model1=modify.cutoff_model1(name)
+
     if do_at_pulsar:
         r['at_pulsar']['pointlike']=pointlike_analysis(roi, hypothesis='at_pulsar', 
-                                                       cutoff=False, **pointlike_kwargs)
+                                                       cutoff=do_cutoff, **pointlike_kwargs)
     if do_point:
-        r['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, cutoff=do_cutoff, **pointlike_kwargs)
+        r['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, 
+                                                   cutoff=do_cutoff, 
+                                                   model0 = model0, model1 = model1,
+                                                   **pointlike_kwargs)
     if do_extended:
         roi.modify(which=name, spatial_model=Gaussian(sigma=0.1), keep_old_center=True)
 
         r['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', cutoff=False, 
-                                                      fit_extension=True, **pointlike_kwargs)
+                                                      fit_extension=True, 
+                                                      **pointlike_kwargs)
 
     save_results(results,'results_%s_pointlike.yaml' % name)

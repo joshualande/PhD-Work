@@ -21,7 +21,7 @@ def localization_table(pwnlist):
     table = OrderedDefaultDict(list)
 
     psr_name='PSR'
-    phase_name='Phase'
+    phase_name='Off Peak'
     ts_point_name=r'$\ts_\text{point}$' if not confluence else 'TS_point'
     ts_ext_name=r'\tsext' if not confluence else 'TS_ext'
     ts_cutoff_name = r'$\ts_\text{cutoff}$' if not confluence else 'TS_cutoff'
@@ -40,6 +40,7 @@ def localization_table(pwnlist):
         results = get_results(pwn)
 
         if results is None:
+            print 'Skipping %s' % pwn
             # job crashed/not finished
             table[psr_name].append(format.pwn(pwn))
             table[phase_name].append(phase.pretty_format())

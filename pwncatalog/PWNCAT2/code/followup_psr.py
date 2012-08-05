@@ -2,6 +2,7 @@
 
 # has to come first
 from analyze_helper import gtlike_analysis,plots,save_results,plot_phaseogram,plot_phase_vs_time
+from analyze_helper import import_module
 
 import os
 from argparse import ArgumentParser
@@ -15,6 +16,7 @@ from uw.like.SpatialModels import Gaussian
 from lande.fermi.likelihood.tools import force_gradient
 from lande.utilities.tools import parse_strip_known_args
 from lande.fermi.likelihood.variability import VariabilityTester
+from lande.fermi.likelihood.models import build_gtlike_model
 
 from analyze_psr import get_args
 from setup_pwn import load_pwn
@@ -22,7 +24,7 @@ from setup_pwn import load_pwn
 
 parser = ArgumentParser()
 parser.add_argument("--hypothesis", required=True, choices=['at_pulsar', 'point', 'extended'])
-parser.add_argument("--followup", required=True, choices=['tsmaps','plots', 'gtlike', 'variability','extul'])
+parser.add_argument("--followup", required=True, choices=['tsmaps','plots', 'gtlike', 'variability','extul', 'temp'])
 followup_args = parse_strip_known_args(parser)
 
 hypothesis = followup_args.hypothesis
@@ -35,18 +37,27 @@ force_gradient(use_gradient=args.use_gradient)
 
 name = args.name
 
-gtlike_kwargs = dict(name=name)
-
 roi = load_pwn('roi_%s_%s.dat' % (hypothesis,name))
 
 
 if followup == 'gtlike':
+
+    modify = import_module(args.modify)
+    model0=modify.cutoff_model0(name)
+    model1=modify.cutoff_model1(name)
+
     results = {hypothesis:{}}
-    results[hypothesis]['gtlike']=gtlike_analysis(roi, hypothesis=hypothesis, cutoff=(do_cutoff and hypothesis=='point'), **gtlike_kwargs)
+    results[hypothesis]['gtlike']=gtlike_analysis(roi, name=name,
+                                                  max_free = args.max_free,
+                                                  hypothesis=hypothesis, 
+                                                  cutoff=(do_cutoff and hypothesis in ['at_pulsar', 'point']),
+                                                  model0=model0,
+                                                  model1=model1,
+                                                 )
 
     save_results(results,'results_%s_%s_%s.yaml' % (name,followup,hypothesis))
 
-elif followup in ['plots','tsmaps']:
+if followup in ['plots','tsmaps']:
 
     if not os.path.exists('plots'): 
         os.makedirs('plots')
@@ -80,7 +91,7 @@ elif followup == 'variability':
     roi.print_summary()
 
     v = VariabilityTester(roi,name, nbins=36)
-    v.plot(filename='variability_%s_hypothesis_%s.pdf' % (name,hypothesis))
+    v.plot(filename='plots/variability_%s_hypothesis_%s.pdf' % (name,hypothesis))
 
     results = {hypothesis:{'variability':v.todict()}}
     save_results(results,'results_%s_%s_%s.yaml' % (name,followup,hypothesis))

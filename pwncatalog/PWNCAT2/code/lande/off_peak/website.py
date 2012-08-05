@@ -15,7 +15,7 @@ if not exists(website_path): os.makedirs(website_path)
 website=expandvars(join(website_path,'index.t2t'))
 
 
-pwnlist=sorted(yaml.load(open(expandvars('$pwncode/pwndata/pwncat2_data_lande.yaml'))).keys())
+pwnlist=sorted(yaml.load(open(expandvars('$pwncode/data/pwncat2_data_lande.yaml'))).keys())
 
 lines = ['Off Peak', '', '']
 

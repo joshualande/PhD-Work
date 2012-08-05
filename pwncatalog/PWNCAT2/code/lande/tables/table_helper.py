@@ -11,7 +11,7 @@ from lande.utilities.tools import merge_dict
 
 from lande.utilities.table import latex_table,confluence_table,TableFormatter
 
-base='$pwndata/spectral/v24/'
+base='$pwndata/spectral/v25/'
 
 fitdir=expandvars(j(base,'analysis/'))
 savedir=expandvars(j(base,'tables'))

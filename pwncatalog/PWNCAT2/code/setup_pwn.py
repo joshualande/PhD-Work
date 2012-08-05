@@ -73,7 +73,8 @@ class PWNRegion(object):
     def get_background():
         return get_default_diffuse(diffdir="/afs/slac/g/glast/groups/diffuse/rings/2year",
                                    gfile="ring_2year_P76_v0.fits",
-                                   ifile="isotrop_2year_P76_source_v0.txt")
+                                   ifile="isotrop_2year_P76_source_v0.txt",
+                                   limit_parameters=True)
 
     @staticmethod
     def get_source(name, position, 
@@ -81,9 +82,9 @@ class PWNRegion(object):
                    extended=False, sigma=None):
         """ build a souce. """
         model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax))
-        model.set_limits('index',-5,5)
+        model.set_default_limits()
         flux=PowerLaw(norm=1e-11, index=2, e0=1e3).i_flux(fit_emin,fit_emax)
-        model.set_flux(flux,fit_emin,fit_emax)
+        model.set_flux(flux,emin=fit_emin,emax=fit_emax)
 
         if extended and sigma != 0:
             if not isnum(sigma): raise Exception("sigma must be set. """)

@@ -52,15 +52,16 @@ def find_offpeak(ft1,name,skydir, pwncat1phase, emax=100000):
     yaml.dump(results,open('results_%s.yaml' % name,'w'))
 
     plot_phaseogram_blocks(ft1, 
-         skydir = skydir, 
-         emin = opt.optimal_emin, 
-         emax = emax, 
-         radius = opt.optimal_radius, 
-         phase_range = off_peak_bb.off_peak,
-         blocks_kwargs=dict(color='green'),
-         phase_range_kwargs=dict(color='green', label='blocks'),
-         data_kwargs=dict(color='red'),
-         blocks = off_peak_bb.blocks)
+                           repeat_phase=False,
+                           skydir = skydir, 
+                           emin = opt.optimal_emin, 
+                           emax = emax, 
+                           radius = opt.optimal_radius, 
+                           phase_range = off_peak_bb.off_peak,
+                           blocks_kwargs=dict(color='green'),
+                           phase_range_kwargs=dict(color='green', label='blocks'),
+                           data_kwargs=dict(color='red'),
+                           blocks = off_peak_bb.blocks)
 
     if pwncat1phase is not None:
         PhaseRange(pwncat1phase).axvspan(label='pwncat1', alpha=0.25, color='blue')

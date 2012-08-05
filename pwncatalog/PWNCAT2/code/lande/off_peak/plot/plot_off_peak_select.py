@@ -17,15 +17,29 @@ from lande.fermi.pulsar.offpeak import plot_phaseogram_blocks
 
 from lande.utilities import pubplot
 
-base='$pwndata/spectral/v24'
+pubplot.set_latex_defaults()
+
+base='$pwndata/off_peak/off_peak_bb/pwncat2/v6'
+
 outdir = join(base,'plots')
 
-r='$pwndata/off_peak/off_peak_bb/pwncat2/v6/analysis'
+r=join(base,'analysis')
 
 bw = pubplot.get_bw()
 
-cutoff_candidates = ['PSRJ0034-0534', 'PSRJ0633+1746', 'PSRJ1813-1246', 'PSRJ1836+5925', 
-                     'PSRJ2021+4026', 'PSRJ2055+2539', 'PSRJ2124-3358']
+#cutoff_candidates = ['PSRJ0034-0534', 'PSRJ0633+1746', 'PSRJ1813-1246', 'PSRJ1836+5925', 
+#                     'PSRJ2021+4026', 'PSRJ2055+2539', 'PSRJ2124-3358']
+cutoff_candidates = [['PSRJ0007+7303', 400, ], # CTA 1
+                     ['PSRJ0534+2200', 800, ], # Crab
+                     ['PSRJ0633+1746', 400, ], # Geminga - strong off peak emission
+                     ['PSRJ0835-4510', 800, ], # Vela
+                     ['PSRJ1702-4128', 200, ], # Very weak guy
+                     ['PSRJ1747-4036', 100, ], # Very weak guy
+                     ['PSRJ1801-2451', 200, ], # two regions
+                     ['PSRJ2021+4026', 200, ], # Gamma-Cygni
+                    ]
+
+
 
 pwnlist = cutoff_candidates
 
@@ -34,15 +48,15 @@ nrows = int(math.ceil(float(len(pwnlist))/ncols))
 
 fig=P.figure(None,figsize=(6,7))
 
-fig.subplots_adjust(hspace=.25,wspace=.25, left=0.15, right=0.9, top=0.9, bottom=0.1)
+fig.subplots_adjust(hspace=.35,wspace=.35, left=0.15, right=0.9, top=0.9, bottom=0.1)
 
 pwndata=yaml.load(open(expandvars('$pwncode/data/pwncat2_data_lande.yaml')))
 
 
-for i,pwn in enumerate(pwnlist):
-    print i,pwn
-
+for i,(pwn,nbins) in enumerate(pwnlist):
     results = expandvars(join(r,pwn,'results_%s.yaml' % pwn))
+
+    print i,pwn,results
 
     if not exists(results):
         print '%s does not exist' % results
@@ -61,14 +75,16 @@ for i,pwn in enumerate(pwnlist):
     blocks = results['blocks']
     off_peak_phase = results['off_peak_phase']
 
-    plot_phaseogram_blocks(ft1, skydir=skydir, emin=emin, emax=emax, radius=radius, 
-         off_peak=off_peak_phase, 
-         off_peak_kwargs=dict(color='blue'),
-         blocks=blocks, 
-         nbins=50,
-         repeat_phase=True,
-         data_kwargs=dict(color='red'),
-         axes=axes)
+    plot_phaseogram_blocks(ft1, skydir=skydir, 
+                           emin=emin, emax=emax, radius=radius, 
+                           phase_range=off_peak_phase, 
+                           phase_range_kwargs=dict(color='black', fill=False, alpha=None, hatch='//'),
+                           blocks=blocks, 
+                           blocks_kwargs=dict(color='grey' if bw else 'red'),
+                           nbins=nbins,
+                           repeat_phase=False,
+                           data_kwargs=dict(color='black', linewidth=0.5),
+                           axes=axes)
 
 
     axes.set_ylim(ymax=axes.get_ylim()[1]*1.5)
@@ -94,4 +110,4 @@ while i < nrows*ncols:
     i+=1
 
 
-pubplot.save(join(outdir,'off_peak_select'))
+pubplot.save(join(outdir,'off_peak_phase'))

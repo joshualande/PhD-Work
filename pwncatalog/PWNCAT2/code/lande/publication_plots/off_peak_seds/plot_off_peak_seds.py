@@ -16,7 +16,7 @@ pubplot.set_latex_defaults()
 
 bw = pubplot.get_bw()
 
-base='$pwndata/spectral/v24/'
+base='$pwndata/spectral/v25/'
 fitdir=expandvars(join(base,'analysis'))
 
 cutoff_candidates = ['PSRJ0034-0534', 
@@ -89,4 +89,4 @@ for i in range(nrows*ncols):
     axes.set_ylabel('E$^2\,$dN/dE')
 
 
-pubplot.save(join(base,'plots','cutoff_test'))
+pubplot.save(join(base,'plots','off_peak_seds'))

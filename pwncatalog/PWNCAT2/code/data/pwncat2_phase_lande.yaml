@@ -1,4 +1,5 @@
 # Changes
+# * Add PSRJ0023+0923, PSRJ1709-4429: PSRJ1810+1744: PSRJ1833-1034: PSRJ2047+1053 - June 28, 2012 - JL
 # * June 22, 2012: phase defintions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v6 - JL
 # * May 29, 2012: phase defintions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v5 - JL
 # * May 9, 2012: phase defintions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v4 - JL
@@ -13,6 +14,11 @@ PSRJ0007+7303:
   optimal_emin: 237.13737056616552
   optimal_radius: 1.4
   phase: [0.53, 0.89]
+PSRJ0023+0923:
+  emax: 100000
+  optimal_emin: 562.341325190349
+  optimal_radius: 0.3
+  phase: [0.64, 0.16]
 PSRJ0030+0451:
   emax: 100000
   optimal_emin: 421.6965034285823
@@ -319,6 +325,11 @@ PSRJ1702-4128:
   optimal_emin: 316.22776601683796
   optimal_radius: 0.8999999999999999
   phase: [0.57, 0.17]
+PSRJ1709-4429:
+  emax: 100000
+  optimal_emin: 177.82794100389228
+  optimal_radius: 1.2
+  phase: [0.67, 0.07]
 PSRJ1713+0747:
   emax: 100000
   optimal_emin: 1000.0
@@ -388,6 +399,11 @@ PSRJ1809-2332:
   optimal_emin: 316.22776601683796
   optimal_radius: 0.7999999999999999
   phase: [0.53, 0.91]
+PSRJ1810+1744:
+  emax: 100000
+  optimal_emin: 316.22776601683796
+  optimal_radius: 0.6
+  phase: [0.28, 0.73]
 PSRJ1813-1246:
   emax: 100000
   optimal_emin: 133.3521432163324
@@ -403,6 +419,11 @@ PSRJ1826-1256:
   optimal_emin: 237.13737056616552
   optimal_radius: 0.7999999999999999
   phase: [0.24, 0.55]
+PSRJ1833-1034:
+  emax: 100000
+  optimal_emin: 100.0
+  optimal_radius: 0.6
+  phase: [0.69, 0.10]
 PSRJ1835-1106:
   emax: 100000
   optimal_emin: 562.341325190349
@@ -509,6 +530,11 @@ PSRJ2043+2740:
   optimal_emin: 1000.0
   optimal_radius: 0.3
   phase: [0.63, 0.05]
+PSRJ2047+1053:
+  emax: 100000
+  optimal_emin: 237.13737056616552
+  optimal_radius: 0.4
+  phase: [0.05, 0.53]
 PSRJ2051-0827:
   emax: 100000
   optimal_emin: 749.8942093324558

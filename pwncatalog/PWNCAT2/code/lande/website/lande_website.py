@@ -17,7 +17,7 @@ from table_helper import BestHypothesis
 from lande.utilities.tools import merge_dict
 from lande.utilities.website import t2t
 
-spec_version='v25'
+spec_version='v27'
 
 
 
@@ -41,6 +41,7 @@ def get_results(pwn):
                                    'results_%s_extul_point.yaml' % pwn,
                                    'results_%s_gtlike_at_pulsar.yaml' % pwn,
                                    'results_%s_gtlike_point.yaml' % pwn,
+                                   'results_%s_variability_point.yaml' % pwn,
                                    'results_%s_gtlike_extended.yaml' % pwn]]
     if not os.path.exists(f[0]): return None
     g = [yaml.load(open(i)) for i in f if os.path.exists(i)]
@@ -56,12 +57,13 @@ class TableFormatter(object):
 
         table = OrderedDict()
         for k in ['PSR', 
-                  'TS_at_pulsar_ptlike', 'TS_loc_ptlike', 'TS_ext_ptlike', 'TS_cutoff_ptlike', 'disp',
-                  'TS_at_pulsar_gtlike', 'TS_loc_gtlike', 'TS_ext_gtlike', 'TS_cutoff_gtlike', 
+                  'TS_at_pulsar_ptlike', 'TS_loc_ptlike', 'TS_ext_ptlike', 'TS_cutoff_ptlike', 'TS_var_ptlike', 'disp',
+                  'TS_at_pulsar_gtlike', 'TS_loc_gtlike', 'TS_ext_gtlike', 'TS_cutoff_gtlike', 'TS_var_gtlike',
                  ]:
             table[k] = ['None']*len(pwnlist)
 
         for i,pwn in enumerate(pwnlist):
+
             print pwn
 
             table['PSR'][i]='[%s %s.html]' % (pwn,pwn)
@@ -90,6 +92,7 @@ class TableFormatter(object):
             table['TS_ext_ptlike'][i] = bold('%.1f' % ts_ext, ts_point > 25 and ts_ext > 16)
 
 
+
             displacement = np.degrees(SkyDir(*pt_point['position']['equ']).difference(SkyDir(*pt_at_pulsar['position']['equ'])))
             table['disp'][i] = '%.2f' % displacement
 
@@ -99,11 +102,16 @@ class TableFormatter(object):
             except:
                 pass
 
+            try:
+                ts_var_ptlike = results['point']['variability']['TS_var']['pointlike']
+                table['TS_var_ptlike'][i] = '%.1f' % max(ts_var_ptlike,0)
+            except:
+                pass
 
             if results['at_pulsar'].has_key('gtlike'):
                 gt_at_pulsar=results['at_pulsar']['gtlike']
 
-                ts_at_pulsar=gt_at_pulsar['TS']
+                ts_at_pulsar=gt_at_pulsar['TS']['reoptimize']
 
                 table['TS_at_pulsar_gtlike'][i] = bold('%.1f' % ts_at_pulsar, ts_at_pulsar>25)
 
@@ -111,7 +119,7 @@ class TableFormatter(object):
                 if results['point'].has_key('gtlike'):
                     gt_point=results['point']['gtlike']
 
-                    ts_point = gt_point['TS']
+                    ts_point = gt_point['TS']['reoptimize']
                     ts_loc = ts_point - ts_at_pulsar
 
                     table['TS_loc_gtlike'][i] = bold('%.1f' % (ts_loc), ts_point>25)
@@ -119,13 +127,19 @@ class TableFormatter(object):
                     if results['extended'].has_key('gtlike'):
                         gt_extended=results['extended']['gtlike']
 
-                        ts_gauss = gt_extended['TS']
+                        ts_gauss = gt_extended['TS']['reoptimize']
                         ts_ext = ts_gauss - ts_point
                         table['TS_ext_gtlike'][i] = bold('%.1f' % ts_ext, ts_point > 25 and ts_ext > 16)
 
             try:
                 ts_cutoff = gt_point['test_cutoff']['TS_cutoff']
                 table['TS_cutoff_gtlike'][i] = bold('%.1f' % ts_cutoff, ts_cutoff > 16)
+            except:
+                pass
+
+            try:
+                ts_var_gtlike = results['point']['variability']['TS_var']['gtlike']
+                table['TS_var_gtlike'][i] = '%.1f' % max(ts_var_gtlike,0)
             except:
                 pass
 
@@ -186,6 +200,8 @@ def build_each_page(pwn):
 
     title('Big Residual TS map')
     get_img_table(*['plots/tsmap_residual_%s_%s_10deg.png' % (i,pwn) for i in all])
+
+    index_t2t.append('[tsmap_residual_%s_%s_10deg.fits %s/%s/data/tsmap_residual_%s_%s_10deg.fits]' % (pwn,'at_pulsar',analysis_website,pwn,'at_pulsar',pwn))
 
     title('SED')
     get_sed_table(*['seds/sed_gtlike_4bpd_%s_%s.png' % (i,pwn) for i in all])
