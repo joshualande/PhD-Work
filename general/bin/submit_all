@@ -19,6 +19,7 @@ parser.add_argument("file",nargs='+')
 parser.add_argument("-l","--limit",type=int, help='maximum allows jobs at one time')
 parser.add_argument("--requires", help='only submits the job if the selected file arealdy exists. Useful for chaining jobs with dependencies.')
 parser.add_argument("--verbose",default=False, action='store_true')
+parser.add_argument("-R")
 args=parser.parse_args()
 
 p=subprocess.Popen(['bjobs', '-w'],stdout=subprocess.PIPE)
@@ -81,7 +82,8 @@ for file in files:
 
     if (not is_in_queue) and (not log_exists or job_failed):
 
-        command='bsub -q %s -oo %s %s %s' % (args.queue,log,program,abspath)
+        req = '-R "%s"' % args.R if args.R else ''
+        command='bsub -q %s %s -oo %s %s %s' % (args.queue,req,log,program,abspath)
         if args.verbose: print 'Submitting Job %s' % abspath
         if args.n:
             print os.path.expandvars(command)
