@@ -88,18 +88,18 @@ def tsmap_plots(roi, name, hypothesis, datadir, plotdir, size, new_sources, tsma
 
     # reisidual ts map
     _plot('residual','Residual')
-    roi.zero_source(which=name)
 
     # source ts map
+    roi.zero_source(which=name)
     _plot('source','Source')
     roi.unzero_source(which=name)
 
     # ts map which shouls nearby 2FGL sources
     for source in new_sources:
-        roi.zero_source(which=source)
+        roi.zero_source(which=source.name)
     _plot('newsrc','newsrc')
     for source in new_sources:
-        roi.unzero_source(which=source)
+        roi.unzero_source(which=source.name)
 
 def counts_plots(roi, name, hypothesis, datadir, plotdir, size, pixelsize, **common_kwargs):
     """ Counts plots """
@@ -320,7 +320,10 @@ def gtlike_analysis(roi, name, hypothesis, max_free,
 
     print '(a) : ll=',like.logLike.value()
 
-    #like.tol = 1e-1 # I found that the default tol '1e-3' would get the fitter stuck in infinite loops
+    like.tol = 1e-1 # I found that the default tol '1e-3' would get the fitter stuck in infinite loops
+
+    import pyLikelihood as pyLike
+    like.setFitTolType(pyLike.ABSOLUTE)
 
     emin, emax = get_full_energy_range(like)
 
@@ -332,9 +335,7 @@ def gtlike_analysis(roi, name, hypothesis, max_free,
 
     print '(c) : ll=',like.logLike.value()
 
-    #paranoid_gtlike_fit(like, niter=3)
-    like.optimizer = 'MINUIT'
-    like.fit(covar=True)
+    paranoid_gtlike_fit(like, niter=3)
 
     print '(d) : ll=',like.logLike.value()
 

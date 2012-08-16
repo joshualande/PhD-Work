@@ -90,8 +90,11 @@ elif followup == 'variability':
     roi.fit(use_gradient=False)
     roi.print_summary()
 
-    v = VariabilityTester(roi,name, nbins=36)
+    frozen  = freeze_far_away(roi, roi.get_source(name).skydir, args.max_free)
+    v = VariabilityTester(roi,name, nbins=36, 
+                          use_pointlike_ltcube=True, refit_background=True, refit_other_sources=True)
     v.plot(filename='plots/variability_%s_hypothesis_%s.pdf' % (name,hypothesis))
+    unfreeze_far_away(roi, frozen)
 
     results = {hypothesis:{'variability':v.todict()}}
     save_results(results,'results_%s_%s_%s.yaml' % (name,followup,hypothesis))

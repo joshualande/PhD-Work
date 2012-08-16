@@ -82,7 +82,8 @@ class PWNRegion(object):
                    extended=False, sigma=None):
         """ build a souce. """
         model=PowerLaw(index=2, e0=np.sqrt(fit_emin*fit_emax))
-        model.set_default_limits()
+        # don't limit prefactor. Use oomp limits in gtlike.
+        model.set_limits('index',-5,5)
         flux=PowerLaw(norm=1e-11, index=2, e0=1e3).i_flux(fit_emin,fit_emax)
         model.set_flux(flux,emin=fit_emin,emax=fit_emax)
 

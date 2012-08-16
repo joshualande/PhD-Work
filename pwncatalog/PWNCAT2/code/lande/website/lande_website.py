@@ -17,7 +17,7 @@ from table_helper import BestHypothesis
 from lande.utilities.tools import merge_dict
 from lande.utilities.website import t2t
 
-spec_version='v27'
+spec_version='v28'
 
 
 
@@ -131,11 +131,11 @@ class TableFormatter(object):
                         ts_ext = ts_gauss - ts_point
                         table['TS_ext_gtlike'][i] = bold('%.1f' % ts_ext, ts_point > 25 and ts_ext > 16)
 
-            try:
-                ts_cutoff = gt_point['test_cutoff']['TS_cutoff']
-                table['TS_cutoff_gtlike'][i] = bold('%.1f' % ts_cutoff, ts_cutoff > 16)
-            except:
-                pass
+                    try:
+                        ts_cutoff = gt_point['test_cutoff']['TS_cutoff']
+                        table['TS_cutoff_gtlike'][i] = bold('%.1f' % ts_cutoff, ts_cutoff > 16)
+                    except:
+                        pass
 
             try:
                 ts_var_gtlike = results['point']['variability']['TS_var']['gtlike']
@@ -218,6 +218,10 @@ def build_each_page(pwn):
     get_img_table(*['plots/tsmap_residual_%s_%s_5deg.png' % (i,pwn) for i in all])
     get_img_table(*['plots/band_tsmap_residual_%s_%s_5deg.png' % (i,pwn) for i in all])
 
+    title('New Source TS Maps')
+    get_img_table(*['plots/tsmap_newsrc_%s_%s_5deg.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/band_tsmap_newsrc_%s_%s_5deg.png' % (i,pwn) for i in all])
+
     title('at_pulsar Smoothed Counts Diffuse Subtracted (0.1)')
     get_img_table(*['plots/sources_%s_%s_5deg_0.1deg.png' % (i,pwn) for i in all])
     get_img_table(*['plots/band_sources_%s_%s_5deg_0.1deg.png' % (i,pwn) for i in all])
@@ -244,7 +248,12 @@ def build_each_page(pwn):
     get_img_table(*['plots/band_tsmap_source_%s_%s_10deg.png' % (i,pwn) for i in all])
 
     title('Extra: Residual TS Maps')
+    get_img_table(*['plots/tsmap_residual_%s_%s_10deg.png' % (i,pwn) for i in all])
     get_img_table(*['plots/band_tsmap_residual_%s_%s_10deg.png' % (i,pwn) for i in all])
+
+    title('Extra: New Source TS Maps (10 deg)')
+    get_img_table(*['plots/tsmap_newsrc_%s_%s_10deg.png' % (i,pwn) for i in all])
+    get_img_table(*['plots/band_tsmap_newsrc_%s_%s_10deg.png' % (i,pwn) for i in all])
 
 
     title('Extra: Smoothed Counts (0.25deg)')

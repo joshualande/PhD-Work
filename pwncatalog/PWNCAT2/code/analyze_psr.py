@@ -13,7 +13,7 @@ import os
 from os.path import join
 from glob import glob
 
-from lande.fermi.likelihood.parlimits import all_params_limited, expand_prefactor_limits
+from lande.fermi.likelihood.parlimits import all_params_limited
 
 from setup_pwn import PWNRegion
 from argparse import ArgumentParser
@@ -28,9 +28,8 @@ def get_args():
 
     parser = ArgumentParser()
     parser.add_argument("--pwndata", required=True)
-    group=parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("-p", "--pwnphase")
-    group.add_argument("--no-phase-cut", default=False, action="store_true")
+    parser.add_argument("-p", "--pwnphase")
+    parser.add_argument("--no-phase-cut", default=False, action="store_true")
     parser.add_argument("-n", "--name", required=True, help="Name of the pulsar")
     parser.add_argument("--emin", default=1e2, type=float)
     parser.add_argument("--binsperdec", default=4, type=int)
@@ -39,7 +38,6 @@ def get_args():
     parser.add_argument("--no-at-pulsar", default=False, action="store_true")
     parser.add_argument("--no-point", default=False, action="store_true")
     parser.add_argument("--no-extended", default=False, action="store_true")
-    parser.add_argument("--no-gtlike", default=False, action="store_true")
     parser.add_argument("--no-cutoff", default=False, action="store_true")
     parser.add_argument("--no-savedir", default=False, action="store_true")
     parser.add_argument("--max-free", default=5, type=float)
@@ -54,7 +52,6 @@ if __name__ == '__main__':
     do_at_pulsar = not args.no_at_pulsar
     do_point = not args.no_point
     do_extended = not args.no_extended
-    do_gtlike = not args.no_gtlike
     do_cutoff = not args.no_cutoff
 
     force_gradient(use_gradient=args.use_gradient)
@@ -63,10 +60,10 @@ if __name__ == '__main__':
     emin=args.emin
     emax=args.emax
 
+    pwnphase=yaml.load(open(args.pwnphase))[name]
     if args.no_phase_cut:
         phase = PhaseRange(0,1)
     else:
-        pwnphase=yaml.load(open(args.pwnphase))[name]
         phase=pwnphase['phase']
 
     print 'phase = ',phase
@@ -95,8 +92,7 @@ if __name__ == '__main__':
     roi.extra['new_sources'] = modify.modify_roi(name,roi)
     roi.extra['pwnphase'] = pwnphase
 
-    assert all_params_limited(roi)
-    expand_prefactor_limits(roi, factor=1e4)
+    assert all_params_limited(roi, except_sources=[name])
 
     model0=modify.cutoff_model0(name)
     model1=modify.cutoff_model1(name)
