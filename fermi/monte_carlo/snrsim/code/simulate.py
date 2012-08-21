@@ -11,14 +11,22 @@ from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.pointspec_helpers import get_default_diffuse
 from uw.like.roi_monte_carlo import MonteCarlo
 
+from lande.fermi.likelihood.diffuse import get_sreekumar
 
 parser = ArgumentParser()
 parser.add_argument("i", type=int)
 parser.add_argument("--source", required=True, choices=['W44', 'IC443'])
-parser.add_argument("--spectrum", required=True, choices=['PowerLaw', 'SmoothBrokenPowerLaw'])
+parser.add_argument("--spectrum", required=True, choices=['PowerLaw', 'SmoothBrokenPowerLaw', 'SmoothBrokenPowerLawHard', 'SmoothBrokenPowerLawSoft'])
 parser.add_argument("--debug", default=False, action='store_true')
-parser.add_argument("--normalization", choices=['standard','same_flux','same_prefactor'])
+parser.add_argument("--mc-energy", default=False, action='store_true')
+parser.add_argument("--diffuse", required=True, 
+                    choices=['galactic', 'sreekumar', 'nobackground'])
 args= parser.parse_args()
+
+if args.source == 'W44':
+    assert args.spectrum in ['PowerLaw', 'SmoothBrokenPowerLawHard','SmoothBrokenPowerLawSoft']
+elif args.source == 'IC443':
+    assert args.spectrum in ['PowerLaw', 'SmoothBrokenPowerLaw']
 
 i = args.i
 istr = '%05d' % i
@@ -42,12 +50,19 @@ elif source == 'IC443':
     gtifile = '/u/gl/funk/data/GLAST/ExtendedSources/NewAnalysis/gtlike/IC443/sel_IC443_60_100000.fits'
 
 
-ds = get_default_diffuse(
-    diffdir="/nfs/slac/g/ki/ki03/lande/fermi/diffuse/",
-    gfile="gal_2yearp7v6_v0.fits",
-    ifile="iso_p7v6source.txt")
+if args.diffuse == 'galactic':
+    ds = get_default_diffuse(
+        diffdir="/nfs/slac/g/ki/ki03/lande/fermi/diffuse/",
+        gfile="gal_2yearp7v6_v0.fits",
+        ifile="iso_p7v6source.txt")
+    ds[1].smodel = FileFunction(file='/nfs/slac/g/ki/ki03/lande/fermi/diffuse/iso_p7v6source_extrapolated.txt')
+elif args.diffuse == 'sreekumar':
+    ds = [ get_sreekumar() ]
+elif args.diffuse == 'nobackground':
+    ds = []
+else: 
+    raise Exception("...")
 
-ds[1].smodel = FileFunction(file='/nfs/slac/g/ki/ki03/lande/fermi/diffuse/iso_p7v6source_extrapolated.txt')
 
 ps,ds = catalog.merge_lists(skydir, radius=15, user_diffuse_list=ds)
 
@@ -67,28 +82,33 @@ if source == 'W44':
           <parameter free="0" max="10" min="0.01" name="Beta" scale="1" value="0.1" />
         </spectrum>
     """
-    smooth = SmoothBrokenPowerLaw(
+
+    e_break=204.3216401
+    smooth_hard = SmoothBrokenPowerLaw(
         Norm=14.56863965e-10,
         Index_1=-1.504042874,
         Index_2=1.891184873,
-        E_break=204.3216401,
+        E_break=e_break,
         beta=0.1,
         e0=200)
 
+    smooth_soft = SmoothBrokenPowerLaw(
+        Index_1=+0.2,
+        Index_2=1.891184873,
+        E_break=e_break,
+        beta=0.1,
+        e0=200)
+    smooth_soft.set_prefactor(smooth_hard(e_break),e_break)
+
+    plaw=PowerLaw(index=1.891184873, e0=200)
+    plaw.set_prefactor(smooth_hard(e_break), e_break)
+
     if spectrum == 'PowerLaw':
-        W44.model = PowerLaw(index=1.891184873, e0=200)
-
-        if args.normalization == 'same_flux':
-            W44.model.set_flux(smooth.i_flux(emin=60, emax=2000), emin=60, emax=2000)
-        elif args.normalization == 'same_prefactor':
-            W44.model.set_prefactor(smooth(3e3),3e3)
-        else:
-            raise Exception("...")
-
-    else:
-        if args.normalization != 'standard':
-            raise Exception("...")
-        W44.model = smooth
+        W44.model = plaw
+    elif spectrum == 'SmoothBrokenPowerLawHard':
+        W44.model = smooth_hard
+    elif spectrum == 'SmoothBrokenPowerLawSoft':
+        W44.model = smooth_soft
 
 
 elif source == 'IC443':
@@ -107,27 +127,21 @@ elif source == 'IC443':
     """
     IC443 = d['IC443']
 
+    e_break=224.1244843
     smooth = SmoothBrokenPowerLaw(
         Norm=12.16848844e-10,
         Index_1=0.225235606,
         Index_2=1.898928336,
-        E_break=224.1244843,
+        E_break=e_break,
         beta=0.1,
         e0=200)
 
+    plaw = PowerLaw(index=1.891184873, e0=200)
+    plaw.set_prefactor(smooth(e_break),e_break)
+
     if spectrum == 'PowerLaw':
-        IC443.model = PowerLaw(index=1.891184873, e0=200)
-
-        if args.normalization == 'same_flux':
-            IC443.model.set_flux(smooth.i_flux(emin=60, emax=2000), emin=60, emax=2000)
-        elif args.normalization == 'same_prefactor':
-            IC443.model.set_prefactor(smooth(3e3),3e3)
-        else:
-            raise Exception("...")
-
-    else:
-        if args.normalization != 'standard':
-            raise Exception("...")
+        IC443.model = plaw
+    elif spectrum == 'SmoothBrokenPowerLaw':
         IC443.model = smooth
 
 if args.debug:
@@ -148,6 +162,7 @@ mc=MonteCarlo(
     maxROI=15,
     zmax=100,
     emin=emin,
+    mc_energy=args.mc_energy,
     emax=emax,
     energy_pad=1,
     savedir='gtobssim_output' if i==0 else None)

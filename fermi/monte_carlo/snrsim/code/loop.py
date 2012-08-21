@@ -84,15 +84,50 @@ from lande.utilities.jobtools import JobBuilder
 #               params=params)
 #j.build()
 
-params=dict(source=['W44','IC443'], 
-            simdir=join("$snrsim_sims","v3"))
-params['spectrum','normalization']=[['PowerLaw','same_prefactor'],
-                                    ['PowerLaw','same_flux'],
-                                    ['SmoothBrokenPowerLaw','standard'],
-                                   ]
+#params=dict(source=['W44','IC443'], 
+#            simdir=join("$snrsim_sims","v3"))
+#params['spectrum','normalization']=[['PowerLaw','same_prefactor'],
+#                                    ['PowerLaw','same_flux'],
+#                                    ['SmoothBrokenPowerLaw','standard'],
+#                                   ]
+#
+#j = JobBuilder(savedir='$snrsim_fits/v4',
+#               code='$snrsim_code/fit.py',
+#               num=5,
+#               params=params)
+#j.build()
 
-j = JobBuilder(savedir='$snrsim_fits/v4',
-               code='$snrsim_code/fit.py',
+
+
+
+"""
+# June 29, 2012
+params=dict()
+params['mc-energy']=[True,False]
+params['source','spectrum']=[['IC443','PowerLaw'],['IC443','SmoothBrokenPowerLaw'],
+                             ['W44','PowerLaw'],['W44','SmoothBrokenPowerLawHard'],['W44','SmoothBrokenPowerLawSoft']
+                            ]
+
+j = JobBuilder(savedir='$snrsim_sims/v4',
+               code='$snrsim_code/simulate.py',
                num=5,
+               params=params)
+j.build()
+"""
+
+# August 15, 2012
+params=dict()
+params['mc-energy']=[True,False]
+params['source','spectrum']=[['IC443','PowerLaw'],
+                             ['IC443','SmoothBrokenPowerLaw'],
+                             ['W44','PowerLaw'],
+                             ['W44','SmoothBrokenPowerLawHard'],
+                             ['W44','SmoothBrokenPowerLawSoft']
+                            ]
+params['diffuse'] = [ 'galactic', 'sreekumar', 'nobackground']
+
+j = JobBuilder(savedir='$snrsim_sims/v5',
+               code='$snrsim_code/simulate.py',
+               num=1,
                params=params)
 j.build()
