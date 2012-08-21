@@ -77,7 +77,7 @@ for file in files:
     is_in_queue = expandvars(abspath) in queue_jobs
     log_exists = exists(log)
 
-    job_finished = log_exists and 'The output (if any) is above this job summary.' in open(log).read()
+    job_finished = log_exists and not is_in_queue
     job_failed = log_exists and job_finished and 'Successfully completed' not in open(log).read()
 
     if (not is_in_queue) and (not log_exists or job_failed):
