@@ -58,6 +58,12 @@ def modify_roi(name,roi):
                        model=PowerLaw(norm=8.26279236249e-15, index=2.58385504461, e0=e0, set_default_oomp_limits=True))
         roi.add_source(ps)
 
+    if name == 'PSRJ0101-6422':
+
+        # Scale is fit unphysically low
+        roi.get_model(which='PSRJ0101-6422').set_limits('Index',-15,15, scale=1)
+
+
     if name == 'PSRJ0102+4839':
 
         # Analysis came from $pwnpersonal/individual_sources/PSRJ0102+4839/v1/iteration_v1/run.py
@@ -1191,6 +1197,12 @@ def modify_roi(name,roi):
                        model=PowerLaw(norm=6.45739424905e-14, index=2.05619573423, e0=e0, set_default_oomp_limits=True))
         roi.add_source(ps)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1730-3350/v5/iteration_v1/run.py
+        ps=PointSource(name='seed5',
+                       skydir=SkyDir(356.945095127,-0.191215515818,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=7.65122300897e-14, index=2.01888080597, e0=e0, set_default_oomp_limits=True))
+        roi.add_source(ps)
+
 
 
     if name == 'PSRJ1732-3131':
@@ -1350,6 +1362,13 @@ def modify_roi(name,roi):
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1747-4036/v2/iteration_v4/run.py
         roi.modify(which="2FGL J1718.3-3827", free=True)
+
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1747-4036/v3/iteration_v2/run.py
+        ps=PointSource(name='seed3', 
+                       skydir=SkyDir(354.634819301,-1.50991888727,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.0839312275e-14, index=2.4699979286, e0=e0, set_default_oomp_limits=True))
+        roi.add_source(ps)
+
 
     if name == 'PSRJ1801-2451':
 
@@ -1519,6 +1538,13 @@ def modify_roi(name,roi):
                        model=PowerLaw(norm=2.03308486715e-14, index=2.51890044978, e0=e0, set_default_oomp_limits=True))
         roi.add_source(ps)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1835-1106/v3/iteration_v1/run.py
+        ps=PointSource(name='seed5', 
+                       skydir=SkyDir(18.1974606968,0.506769151315,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=6.3706044662e-14, index=2.39308798367, e0=e0, set_default_oomp_limits=True))
+        roi.add_source(ps)
+
+
 
     if name == 'PSRJ1846+0919':
 
@@ -1628,6 +1654,13 @@ def modify_roi(name,roi):
 
         fix_gamma_cygni_region(roi)
 
+        # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2021+3651/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(76.8827176381,4.49775554963,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.29108562331e-14, index=2.15844565249, e0=e0, set_default_oomp_limits=True))
+        roi.add_source(ps)
+
+
 
     if name == 'PSRJ2021+4026':
         # Analysis came from $pwnpersonal/individual_sources/PSRJ2021+4026/v1/iteration_v1/run.py
@@ -1714,6 +1747,13 @@ def modify_roi(name,roi):
         ps=PointSource(name='seed1', 
                        skydir=SkyDir(78.6887246488,3.21325198432,SkyDir.GALACTIC), 
                        model=PowerLaw(norm=5.28859248803e-14, index=2.14552826137, e0=e0, set_default_oomp_limits=True))
+        roi.add_source(ps)
+
+
+        # Analysis came from /afs/slac.stanford.edu/u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2030+3641/v3/iteration_v2/run.py
+        ps=PointSource(name='seed2', 
+                       skydir=SkyDir(71.2196186766,1.46626229414,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=4.25506524865e-14, index=2.13003898524, e0=e0, set_default_oomp_limits=True))
         roi.add_source(ps)
 
 
@@ -1834,40 +1874,6 @@ def modify_roi(name,roi):
     print 'new_sources = ',[i.name for i in new_sources]
     return new_sources
 
-
-def cutoff_model0(name):
-
-    e0=np.sqrt(1e2*10**5.5)
-
-    pl=None
-
-    if name == 'PSRJ1112-6103':
-        # parameters taken from 
-        # $pwndata/spectral/v18/analysis_no_plots/PSRJ1112-6103/results_PSRJ1112-6103.yaml
-        pl=PowerLaw.from_gtlike(
-            Index= -2.1985969186123233, 
-            Prefactor= 4.979806606494356e-13,
-            Scale= 3162.2776601683795, 
-            set_default_oomp_limits=True)
-
-    elif name == 'PSRJ1119-6127':
-        # Parameters from XXX
-        model=PowerLaw.from_gtlike(
-            Index=-2.2556178468512353, 
-            Prefactor=3.792956459007707e-13,
-            Scale=3162.2776601683795)
-        model.set_e0(e0)
-        model.set_default_limits(oomp_limits=True)
-
-    elif name == 'PSRJ1410-6132':
-        # Parameters from $pwndata/spectral/v22/analysis/PSRJ1410-6132/results_PSRJ1410-6132_gtlike_point.yaml
-        pl=PowerLaw.from_gtlike(
-            Index=-1.8585297189701677, 
-            Prefactor=1.1913729223359034e-13,
-            Scale=e0,
-            set_default_oomp_limits=True)
-
-    return pl
 
 def cutoff_model1(name):
     ec=None
