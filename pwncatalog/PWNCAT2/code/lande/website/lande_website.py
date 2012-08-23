@@ -12,12 +12,10 @@ from itertools import product
 
 import asciitable
 
-from table_helper import BestHypothesis
-
 from lande.utilities.tools import merge_dict
 from lande.utilities.website import t2t
 
-spec_version='v28'
+spec_version='v29'
 
 
 
