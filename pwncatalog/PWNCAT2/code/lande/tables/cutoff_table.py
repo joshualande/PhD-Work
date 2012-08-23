@@ -1,5 +1,5 @@
-from table_helper import get_pwnlist,get_results,write_confluence,write_latex
-from table_helper import PWNFormatter
+from lande.fermi.pipeline.pwncat2.table import get_pwnlist,get_results,write_confluence,write_latex
+from lande.fermi.pipeline.pwncat2.table import PWNFormatter
 from lande.utilities.tools import OrderedDefaultDict
 from lande.utilities.table import get_confluence
 

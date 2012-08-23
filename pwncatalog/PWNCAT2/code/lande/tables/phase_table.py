@@ -7,8 +7,8 @@ from uw.pulsar.phase_range import PhaseRange
 from lande.utilities.tools import OrderedDefaultDict
 from lande.utilities.table import get_confluence
 
-from table_helper import get_pwnlist,get_results,write_latex,write_confluence
-from table_helper import PWNFormatter
+from lande.fermi.pipeline.pwncat2.table import get_pwnlist,get_results,write_latex,write_confluence
+from lande.fermi.pipeline.pwncat2.table import PWNFormatter
 
 
 confluence=get_confluence()

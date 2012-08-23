@@ -1,8 +1,8 @@
 from os.path import join,exists,expandvars
 import yaml
 
-from table_helper import get_pwnlist,get_results,write_latex,write_confluence
-from table_helper import PWNFormatter
+from lande.fermi.pipeline.pwncat2.table import get_pwnlist,get_results,write_latex,write_confluence
+from lande.fermi.pipeline.pwncat2.table import PWNFormatter
 
 from lande.utilities.tools import OrderedDefaultDict
 from lande.utilities.table import get_confluence
@@ -17,25 +17,15 @@ def cutoff_table(pwnlist):
 
     table = OrderedDefaultDict(list)
     psr_name='PSR'
-    #ts_point_name = r'$\ts_\text{point}$'
     ts_var_name = r'$\ts_\text{var}$' if not confluence else 'TS_var'
 
     t='gtlike'
 
     for pwn in pwnlist:
-        #results = get_results(pwn)
-        #if results is None: continue
-
-        #ts_point = results['point'][t]['TS']
-
-        #if ts_point < 25:
-        #    continue
 
         print pwn
 
         table[psr_name].append(format.pwn(pwn))
-
-        #table[ts_point_name].append('%.1f' % ts_point)
 
         var = expandvars(join(ts_var_folder,pwn,'results_%s.yaml' % pwn))
         if exists(var): 

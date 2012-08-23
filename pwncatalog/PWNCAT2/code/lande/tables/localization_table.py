@@ -1,5 +1,5 @@
-from table_helper import get_pwnlist,get_results,write_latex, write_confluence, BestHypothesis
-from table_helper import PWNFormatter
+from lande.fermi.pipeline.pwncat2.table import get_pwnlist,get_results,write_latex, write_confluence, BestHypothesis
+from lande.fermi.pipeline.pwncat2.table import PWNFormatter
 
 from lande.utilities.tools import OrderedDefaultDict
 import numpy as np
