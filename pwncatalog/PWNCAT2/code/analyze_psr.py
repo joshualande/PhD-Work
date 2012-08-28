@@ -94,7 +94,6 @@ if __name__ == '__main__':
 
     assert all_params_limited(roi, except_sources=[name])
 
-    model0=modify.cutoff_model0(name)
     model1=modify.cutoff_model1(name)
 
     if do_at_pulsar:
@@ -103,7 +102,7 @@ if __name__ == '__main__':
     if do_point:
         r['point']['pointlike']=pointlike_analysis(roi, hypothesis='point', localize=True, 
                                                    cutoff=do_cutoff, 
-                                                   model0 = model0, model1 = model1,
+                                                   model1 = model1,
                                                    **pointlike_kwargs)
     if do_extended:
         roi.modify(which=name, spatial_model=Gaussian(sigma=0.1), keep_old_center=True)

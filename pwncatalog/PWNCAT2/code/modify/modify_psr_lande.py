@@ -58,12 +58,6 @@ def modify_roi(name,roi):
                        model=PowerLaw(norm=8.26279236249e-15, index=2.58385504461, e0=e0, set_default_oomp_limits=True))
         roi.add_source(ps)
 
-    if name == 'PSRJ0101-6422':
-
-        # Scale is fit unphysically low
-        roi.get_model(which='PSRJ0101-6422').set_limits('Index',-15,15, scale=1)
-
-
     if name == 'PSRJ0102+4839':
 
         # Analysis came from $pwnpersonal/individual_sources/PSRJ0102+4839/v1/iteration_v1/run.py

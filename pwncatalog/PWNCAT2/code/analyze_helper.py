@@ -209,7 +209,6 @@ def pointlike_analysis(roi, name, hypothesis, max_free,
                        localize=False,
                        fit_extension=False, 
                        cutoff=False,
-                       model0=None,
                        model1=None,
                       ):
     """ emin + emax used for computing upper limits. """
@@ -287,9 +286,7 @@ def pointlike_analysis(roi, name, hypothesis, max_free,
 
 
     if cutoff:
-        p['test_cutoff']=test_cutoff(roi,name, 
-                                     model0=model0,
-                                     model1=model1)
+        p['test_cutoff']=test_cutoff(roi,name, model1=model1)
     print_summary()
 
     roi.plot_sed(which=name,filename='%s/sed_pointlike_%s_%s.png' % (seddir,hypothesis,name), use_ergs=True)
@@ -305,7 +302,7 @@ def pointlike_analysis(roi, name, hypothesis, max_free,
 def gtlike_analysis(roi, name, hypothesis, max_free,
                     seddir='seds', datadir='data', plotdir='plots',
                     upper_limit=False, cutoff=False, 
-                    model0=None, model1=None):
+                    model1=None):
     print 'Performing Gtlike crosscheck for %s' % hypothesis
 
     for dir in [seddir, datadir, plotdir]: 
@@ -318,8 +315,6 @@ def gtlike_analysis(roi, name, hypothesis, max_free,
     global like
     like=gtlike.like
 
-    print '(a) : ll=',like.logLike.value()
-
     like.tol = 1e-1 # I found that the default tol '1e-3' would get the fitter stuck in infinite loops
 
     import pyLikelihood as pyLike
@@ -329,15 +324,9 @@ def gtlike_analysis(roi, name, hypothesis, max_free,
 
     print 'About to fit gtlike ROI'
 
-    print '(b) : ll=',like.logLike.value()
-
     print summary(like, maxdist=10)
 
-    print '(c) : ll=',like.logLike.value()
-
     paranoid_gtlike_fit(like, niter=3)
-
-    print '(d) : ll=',like.logLike.value()
 
     print 'Done fiting gtlike ROI'
     print summary(like, maxdist=10)
@@ -378,9 +367,7 @@ def gtlike_analysis(roi, name, hypothesis, max_free,
         sed(hypothesis)
 
     if cutoff:
-        r['test_cutoff']=test_cutoff(like,name,
-                                     model0=model0, 
-                                     model1=model1)
+        r['test_cutoff']=test_cutoff(like,name, model1=model1)
         try:
             plot_gtlike_cutoff_test(cutoff_results=r['test_cutoff'],
                                     sed_results='%s/sed_gtlike_2bpd_%s_%s.yaml' % (seddir,hypothesis,name),

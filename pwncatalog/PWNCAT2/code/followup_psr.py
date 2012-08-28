@@ -16,7 +16,10 @@ from uw.like.SpatialModels import Gaussian
 from lande.fermi.likelihood.tools import force_gradient
 from lande.utilities.tools import parse_strip_known_args
 from lande.fermi.likelihood.variability import VariabilityTester
-from lande.fermi.likelihood.models import build_gtlike_model
+from lande.fermi.likelihood.save import pointlike_dict_to_spectrum
+from lande.utilities.save import loaddict
+from lande.fermi.spectra.sed import SED
+from lande.fermi.likelihood.free import freeze_far_away, unfreeze_far_away
 
 from analyze_psr import get_args
 from setup_pwn import load_pwn
@@ -42,16 +45,22 @@ roi = load_pwn('roi_%s_%s.dat' % (hypothesis,name))
 
 if followup == 'gtlike':
 
-    modify = import_module(args.modify)
-    model0=modify.cutoff_model0(name)
-    model1=modify.cutoff_model1(name)
+    cutoff = do_cutoff and hypothesis in ['at_pulsar', 'point']
+    upper_limit = hypothesis==['at_pulsar']
+    if cutoff:
+        pointlike_results = loaddict('results_%s_pointlike.yaml' % name)
+        model1=pointlike_results[hypothesis]['pointlike']['test_cutoff']['model_1']
+        model1=pointlike_dict_to_spectrum(model1)
+        model1.set_default_limits(oomp_limits=True)
+    else:
+        model1=None
 
     results = {hypothesis:{}}
     results[hypothesis]['gtlike']=gtlike_analysis(roi, name=name,
                                                   max_free = args.max_free,
                                                   hypothesis=hypothesis, 
-                                                  cutoff=(do_cutoff and hypothesis in ['at_pulsar', 'point']),
-                                                  model0=model0,
+                                                  upper_limit=upper_limit,
+                                                  cutoff=cutoff,
                                                   model1=model1,
                                                  )
 

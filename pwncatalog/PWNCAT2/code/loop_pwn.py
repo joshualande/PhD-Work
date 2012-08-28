@@ -49,7 +49,7 @@ for name in sources.keys():
 
     for hypothesis in ['at_pulsar', 'point', 'extended']:
         for followup in ['tsmaps','plots','gtlike','variability']:
-            if hypothesis != 'point' and  followup == 'variability':
+            if hypothesis not in ['at_pulsar','point'] and  followup == 'variability':
                 continue
 
             file=join(folder,'followup_%s_%s_%s.sh' % (name,followup,hypothesis))

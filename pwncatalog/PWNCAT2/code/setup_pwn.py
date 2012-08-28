@@ -3,7 +3,7 @@ import yaml
 import numbers
 import os
 from glob import glob
-from os.path import expandvars, join
+from os.path import expandvars, join, exists
 from tempfile import mkdtemp
 import numbers
 import shutil
@@ -27,18 +27,28 @@ isnum = lambda x: isinstance(x, numbers.Real)
 
 
 import cPickle
-def load_pwn(filename, **kwargs):
+def load_pwn(filename, savedir=None, **kwargs):
     """ By default, pwn roi's are not loadable. """
-
-    savedir=mkdtemp(prefix='/scratch/')
-    print 'new savedir is',savedir
-
     d=cPickle.load(open(expandvars(filename),'r'))
+
     extra=d['extra']
 
     ft1=extra['unphased_ft1']
     ltcube=extra['unphased_ltcube']
     phase=PhaseRange(extra['phase'])
+
+    if exists(ft1) and exists(ltcube) and exists(phase):
+        return load(filename, **kwargs)
+
+    if savedir is None:
+        save_data = False
+        savedir=mkdtemp(prefix='/scratch/')
+    else:
+        if not os.path.exists(savedir):
+            os.makedirs(savedir)
+        save_data = True
+
+    print 'new savedir is',savedir
 
     phased_ft1=PWNRegion.phase_ft1(ft1,phase,savedir)
     phased_ltcube=PWNRegion.phase_ltcube(ltcube,phase,savedir)
@@ -46,7 +56,9 @@ def load_pwn(filename, **kwargs):
 
     roi = load(filename, ft1files=phased_ft1, ltcube=phased_ltcube, binfile=binfile, **kwargs)
 
-    roi.__del__ = lambda x: shutil.rmtree(savedir)
+    if not save_data:
+        roi.__del__ = lambda x: shutil.rmtree(savedir)
+
     return roi
 
 
