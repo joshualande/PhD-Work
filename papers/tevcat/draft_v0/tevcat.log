@@ -1,0 +1,1052 @@
+This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=latex 2011.7.11)  29 AUG 2012 21:46
+entering extended mode
+**tevcat.tex
+
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tevcat.tex"
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2009-06-19, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, lat
+vian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerm
+an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese, 
+romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
+sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
+senglishmax, welsh, loaded.
+
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\aastex.cls"
+Document Class: aastex 2005/06/22 5.2/AAS markup document class
+Class aastex Info: Original \LaTeX2.09 style by Chris Biemesderfer (chris@seago
+at.com). Adapted to \LaTeXe by A. Ogawa (ogawa@teleport.com) on input line 83.
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size12.clo"
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\latexsym.sty"
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\dvips.def"
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
+Package: amssymb 2009/06/22 v3.00
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\@emptytoks=\toks15
+\symAMSa=\mathgroup5
+\symAMSb=\mathgroup6
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\natb
+ib\natbib.sty"
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip43
+\bibsep=\skip44
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count87
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\verbatim.sty"
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks16
+\verbatim@line=\toks17
+\verbatim@in@stream=\read1
+)
+\@slugcmmntwidth=\dimen105
+\abstract@box=\box26
+\c@editornote=\count88
+\c@cureqno=\count89
+\tnotemarkskip=\skip45
+\@abovenoteskip=\dimen106
+\pt@box=\box27
+\pt@width=\dimen107
+\pt@line=\count90
+\pt@column=\count91
+\pt@nlines=\count92
+\pt@ncol=\count93
+\pt@page=\count94
+\tabbaseskip=\dimen108
+\pt@tmpcapwidth=\dimen109
+\spew@tblnotesbox=\box28
+\restof@tblnotesbox=\box29
+\noteheight=\dimen110
+\pt@tabnoteminht=\dimen111
+\firsttabskip=\dimen112
+\captionbox=\box30
+\pt@reduceline=\dimen113
+\extra@vspace=\dimen114
+\c@plate=\count95
+\my@footins=\box31
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\line
+no\lineno.sty"
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count96
+\output=\toks18
+\linenoprevgraf=\count97
+\linenumbersep=\dimen115
+\linenumberwidth=\dimen116
+\c@linenumber=\count98
+\c@pagewiselinenumber=\count99
+\c@LN@truepage=\count100
+\c@internallinenumber=\count101
+\c@internallinenumbers=\count102
+\quotelinenumbersep=\dimen117
+\bframerule=\dimen118
+\bframesep=\dimen119
+\bframebox=\box32
+LaTeX Info: Redefining \\ on input line 3056.
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\lscape.sty"
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsmath.sty"
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip46
+
+For additional information on amsmath, use the `?' option.
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amstext.sty"
+Package: amstext 2000/06/29 v2.01
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks19
+\ex@=\dimen120
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen121
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsopn.sty"
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count103
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count104
+\leftroot@=\count105
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count106
+\DOTSCASE@=\count107
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box33
+\strutbox@=\box34
+\big@size=\dimen122
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count108
+\c@MaxMatrixCols=\count109
+\dotsspace@=\muskip10
+\c@parentequation=\count110
+\dspbrk@lvl=\count111
+\tag@help=\toks20
+\row@=\count112
+\column@=\count113
+\maxfields@=\count114
+\andhelp@=\toks21
+\eqnshift@=\dimen123
+\alignsep@=\dimen124
+\tagshift@=\dimen125
+\tagwidth@=\dimen126
+\totwidth@=\dimen127
+\lineht@=\dimen128
+\@envbody=\toks22
+\multlinegap=\skip47
+\multlinetaggap=\skip48
+\mathdisplay@stack=\toks23
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: dvips.def on input line 130.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\dvipsnam.def"
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\url.sty"
+\Urlmuskip=\muskip11
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\subf
+igure\subfigure.sty"
+Package: subfigure 2002/07/30 v2.1.4 subfigure package
+\subfigtopskip=\skip49
+\subfigcapskip=\skip50
+\subfigcaptopadj=\dimen129
+\subfigbottomskip=\skip51
+\subfigcapmargin=\dimen130
+\subfiglabelskip=\skip52
+\c@subfigure=\count115
+\c@lofdepth=\count116
+\c@subtable=\count117
+\c@lotdepth=\count118
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\subf
+igure\subfigure.cfg")
+\subfig@top=\skip53
+\subfig@bottom=\skip54
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\enum
+item\enumitem.sty"
+Package: enumitem 2011/09/28 v3.5.2 Customized lists
+\labelindent=\skip55
+\enit@outerparindent=\dimen131
+\enit@toks=\toks24
+\enit@inbox=\box35
+\enitdp@description=\count119
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2011/04/17 v6.82g Hypertext links for LaTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
+Package: hobsub-hyperref 2011/04/23 v1.4 Bundle oberdiek, subset hyperref (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
+Package: hobsub-generic 2011/04/23 v1.4 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2011/04/23 v1.4 Subsetting bundle oberdiek (HO)
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is not detected.
+Package: etexcmds 2011/02/16 v1.5 Prefix for e-TeX command names (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2011/04/07 v1.13 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Defining keys (HO)
+Package: pdftexcmds 2011/04/22 v0.16 Utilities of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode is ignored in DVI mode.
+Package: pdfescape 2011/04/04 v1.12 Provides string conversions (HO)
+Package: bigintcalc 2011/01/30 v1.2 Expandable big integer calculations (HO)
+Package: bitset 2011/01/30 v1.1 Data type bit set (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provides unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2011/01/30 v1.0 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/04/23 v1.7 Hooks at very end of document (HO)
+Package atveryend Info: \enddocument detected (standard).
+Package: atbegshi 2011/01/30 v1.15 At begin shipout hook (HO)
+Package: refcount 2010/12/01 v3.2 Data extraction from references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options of hyperref/bookmark (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2010/12/23 v3.10 Keyval support for LaTeX options (HO)
+)
+\@linkdim=\dimen132
+\Hy@linkcounter=\count120
+\Hy@pagecounter=\count121
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2011/04/17 v6.82g Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count122
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4026.
+Package hyperref Info: Link nesting OFF on input line 4031.
+Package hyperref Info: Hyper index ON on input line 4034.
+Package hyperref Info: Plain pages OFF on input line 4041.
+Package hyperref Info: Backreferencing OFF on input line 4046.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4264.
+\c@Hy@tempcnt=\count123
+LaTeX Info: Redefining \url on input line 4617.
+\Fld@menulength=\count124
+\Field@Width=\dimen133
+\Fld@charsize=\dimen134
+Package hyperref Info: Hyper figures OFF on input line 5701.
+Package hyperref Info: Link nesting OFF on input line 5706.
+Package hyperref Info: Hyper index ON on input line 5709.
+Package hyperref Info: backreferencing OFF on input line 5716.
+Package hyperref Info: Link coloring OFF on input line 5721.
+Package hyperref Info: Link coloring with OCG OFF on input line 5726.
+Package hyperref Info: PDF/A mode OFF on input line 5731.
+LaTeX Info: Redefining \ref on input line 5771.
+LaTeX Info: Redefining \pageref on input line 5775.
+\Hy@abspage=\count125
+\c@Item=\count126
+\c@Hfootnote=\count127
+)
+
+Package hyperref Message: Driver (default): hdvips.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hdvips.def"
+File: hdvips.def 2011/04/17 v6.82g Hyperref driver for dvips
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pdfmark.def"
+File: pdfmark.def 2011/04/17 v6.82g Hyperref definitions for pdfmark specials
+\pdf@docset=\toks25
+\pdf@box=\box36
+\pdf@toks=\toks26
+\pdf@defaulttoks=\toks27
+\Fld@listcount=\count128
+\c@bookmark@seq@number=\count129
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip56
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\todo
+notes\todonotes.sty"
+Package: todonotes 2011/10/22 .dtx Todonotes source and documentation.
+Package: todonotes 2011/10/22
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\xkeyval\xkeyval.sty"
+Package: xkeyval 2008/08/13 v2.6a package option processing (HA)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\xkeyval\xkeyval.tex"
+\XKV@toks=\toks28
+\XKV@tempa@toks=\toks29
+\XKV@depth=\count130
+File: xkeyval.tex 2008/08/13 v2.6a key=value parser (HA)
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\xcol
+or\xcolor.sty"
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: dvips.def on input line 225.
+LaTeX Info: Redefining \color on input line 702.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+frontendlayer\tikz.sty"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+basiclayer\pgf.sty"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+utilities\pgfrcs.sty"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\utilities\pgfutil-common.tex"
+\pgfutil@everybye=\toks30
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\utilities\pgfutil-latex.def"
+\pgfutil@abb=\box37
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\ms\e
+veryshi.sty"
+Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\utilities\pgfrcs.code.tex"
+Package: pgfrcs 2010/10/25 v2.10 (rcs-revision 1.24)
+))
+Package: pgf 2008/01/15 v2.10 (rcs-revision 1.12)
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+basiclayer\pgfcore.sty"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+systemlayer\pgfsys.sty"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\systemlayer\pgfsys.code.tex"
+Package: pgfsys 2010/06/30 v2.10 (rcs-revision 1.37)
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\utilities\pgfkeys.code.tex"
+\pgfkeys@pathtoks=\toks31
+\pgfkeys@temptoks=\toks32
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\utilities\pgfkeysfiltered.code.tex"
+\pgfkeys@tmptoks=\toks33
+))
+\pgf@x=\dimen135
+\pgf@y=\dimen136
+\pgf@xa=\dimen137
+\pgf@ya=\dimen138
+\pgf@xb=\dimen139
+\pgf@yb=\dimen140
+\pgf@xc=\dimen141
+\pgf@yc=\dimen142
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count131
+\c@pgf@countb=\count132
+\c@pgf@countc=\count133
+\c@pgf@countd=\count134
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\systemlayer\pgf.cfg"
+File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
+)
+Package pgfsys Info: Driver file for pgf: pgfsys-dvips.def on input line 900.
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\systemlayer\pgfsys-dvips.def"
+File: pgfsys-dvips.def 2008/04/03  (rcs-revision 1.20)
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\systemlayer\pgfsys-common-postscript.def"
+File: pgfsys-common-postscript.def 2008/10/01  (rcs-revision 1.22)
+\pgf@objectcount=\count135
+)))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\systemlayer\pgfsyssoftpath.code.tex"
+File: pgfsyssoftpath.code.tex 2008/07/18  (rcs-revision 1.7)
+\pgfsyssoftpath@smallbuffer@items=\count136
+\pgfsyssoftpath@bigbuffer@items=\count137
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\systemlayer\pgfsysprotocol.code.tex"
+File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcore.code.tex"
+Package: pgfcore 2010/04/11 v2.10 (rcs-revision 1.7)
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmath.code.tex"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathcalc.code.tex"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathutil.code.tex")
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathparser.code.tex"
+\pgfmath@dimen=\dimen143
+\pgfmath@count=\count138
+\pgfmath@box=\box38
+\pgfmath@toks=\toks34
+\pgfmath@stack@operand=\toks35
+\pgfmath@stack@operation=\toks36
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfunctions.code.tex"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfunctions.basic.code.tex")
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfunctions.trigonometric.code.tex")
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfunctions.random.code.tex")
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfunctions.comparison.code.tex")
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfunctions.base.code.tex")
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfunctions.round.code.tex")
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfunctions.misc.code.tex")))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\math\pgfmathfloat.code.tex"
+\c@pgfmathroundto@lastzeros=\count139
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorepoints.code.tex"
+File: pgfcorepoints.code.tex 2010/04/09  (rcs-revision 1.20)
+\pgf@picminx=\dimen144
+\pgf@picmaxx=\dimen145
+\pgf@picminy=\dimen146
+\pgf@picmaxy=\dimen147
+\pgf@pathminx=\dimen148
+\pgf@pathmaxx=\dimen149
+\pgf@pathminy=\dimen150
+\pgf@pathmaxy=\dimen151
+\pgf@xx=\dimen152
+\pgf@xy=\dimen153
+\pgf@yx=\dimen154
+\pgf@yy=\dimen155
+\pgf@zx=\dimen156
+\pgf@zy=\dimen157
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorepathconstruct.code.tex"
+File: pgfcorepathconstruct.code.tex 2010/08/03  (rcs-revision 1.24)
+\pgf@path@lastx=\dimen158
+\pgf@path@lasty=\dimen159
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorepathusage.code.tex"
+File: pgfcorepathusage.code.tex 2008/04/22  (rcs-revision 1.12)
+\pgf@shorten@end@additional=\dimen160
+\pgf@shorten@start@additional=\dimen161
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorescopes.code.tex"
+File: pgfcorescopes.code.tex 2010/09/08  (rcs-revision 1.34)
+\pgfpic=\box39
+\pgf@hbox=\box40
+\pgf@layerbox@main=\box41
+\pgf@picture@serial@count=\count140
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcoregraphicstate.code.tex"
+File: pgfcoregraphicstate.code.tex 2008/04/22  (rcs-revision 1.9)
+\pgflinewidth=\dimen162
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcoretransformations.code.tex"
+File: pgfcoretransformations.code.tex 2009/06/10  (rcs-revision 1.11)
+\pgf@pt@x=\dimen163
+\pgf@pt@y=\dimen164
+\pgf@pt@temp=\dimen165
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorequick.code.tex"
+File: pgfcorequick.code.tex 2008/10/09  (rcs-revision 1.3)
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcoreobjects.code.tex"
+File: pgfcoreobjects.code.tex 2006/10/11  (rcs-revision 1.2)
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorepathprocessing.code.tex"
+File: pgfcorepathprocessing.code.tex 2008/10/09  (rcs-revision 1.8)
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorearrows.code.tex"
+File: pgfcorearrows.code.tex 2008/04/23  (rcs-revision 1.11)
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcoreshade.code.tex"
+File: pgfcoreshade.code.tex 2008/11/23  (rcs-revision 1.13)
+\pgf@max=\dimen166
+\pgf@sys@shading@range@num=\count141
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcoreimage.code.tex"
+File: pgfcoreimage.code.tex 2010/03/25  (rcs-revision 1.16)
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcoreexternal.code.tex"
+File: pgfcoreexternal.code.tex 2010/09/01  (rcs-revision 1.17)
+\pgfexternal@startupbox=\box42
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorelayers.code.tex"
+File: pgfcorelayers.code.tex 2010/08/27  (rcs-revision 1.2)
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcoretransparency.code.tex"
+File: pgfcoretransparency.code.tex 2008/01/17  (rcs-revision 1.2)
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\basiclayer\pgfcorepatterns.code.tex"
+File: pgfcorepatterns.code.tex 2009/07/02  (rcs-revision 1.3)
+)))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\modules\pgfmoduleshapes.code.tex"
+File: pgfmoduleshapes.code.tex 2010/09/09  (rcs-revision 1.13)
+\pgfnodeparttextbox=\box43
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\modules\pgfmoduleplot.code.tex"
+File: pgfmoduleplot.code.tex 2010/10/22  (rcs-revision 1.8)
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+compatibility\pgfcomp-version-0-65.sty"
+Package: pgfcomp-version-0-65 2007/07/03 v2.10 (rcs-revision 1.7)
+\pgf@nodesepstart=\dimen167
+\pgf@nodesepend=\dimen168
+)
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+compatibility\pgfcomp-version-1-18.sty"
+Package: pgfcomp-version-1-18 2007/07/23 v2.10 (rcs-revision 1.1)
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+utilities\pgffor.sty"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\latex\pgf\
+utilities\pgfkeys.sty"
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\utilities\pgfkeys.code.tex"))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\utilities\pgffor.code.tex"
+Package: pgffor 2010/03/23 v2.10 (rcs-revision 1.18)
+\pgffor@iter=\dimen169
+\pgffor@skip=\dimen170
+\pgffor@stack=\toks37
+\pgffor@toks=\toks38
+))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\frontendlayer\tikz\tikz.code.tex"
+Package: tikz 2010/10/13 v2.10 (rcs-revision 1.76)
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\libraries\pgflibraryplothandlers.code.tex"
+File: pgflibraryplothandlers.code.tex 2010/05/31 v2.10 (rcs-revision 1.15)
+\pgf@plot@mark@count=\count142
+\pgfplotmarksize=\dimen171
+)
+\tikz@lastx=\dimen172
+\tikz@lasty=\dimen173
+\tikz@lastxsaved=\dimen174
+\tikz@lastysaved=\dimen175
+\tikzleveldistance=\dimen176
+\tikzsiblingdistance=\dimen177
+\tikz@figbox=\box44
+\tikz@tempbox=\box45
+\tikztreelevel=\count143
+\tikznumberofchildren=\count144
+\tikznumberofcurrentchild=\count145
+\tikz@fig@count=\count146
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\modules\pgfmodulematrix.code.tex"
+File: pgfmodulematrix.code.tex 2010/08/24  (rcs-revision 1.4)
+\pgfmatrixcurrentrow=\count147
+\pgfmatrixcurrentcolumn=\count148
+\pgf@matrix@numberofcolumns=\count149
+)
+\tikz@expandcount=\count150
+
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\frontendlayer\tikz\libraries\tikzlibrarytopaths.code.tex"
+File: tikzlibrarytopaths.code.tex 2008/06/17 v2.10 (rcs-revision 1.2)
+)))
+("C:\Documents and Settings\rousseau\Application Data\MiKTeX\2.9\tex\generic\pg
+f\frontendlayer\tikz\libraries\tikzlibrarypositioning.code.tex"
+File: tikzlibrarypositioning.code.tex 2008/10/06 v2.10 (rcs-revision 1.7)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\calc.sty"
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count151
+\calc@Bcount=\count152
+\calc@Adimen=\dimen178
+\calc@Bdimen=\dimen179
+\calc@Askip=\skip57
+\calc@Bskip=\skip58
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count153
+\calc@Cskip=\skip59
+)
+\c@@todonotes@numberoftodonotes=\count154
+)
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\style/style.tex"
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\xspace.sty"
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+))
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tevcat.aux")
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+
+AAS preprint substyle, v5.2 <12 Dec 2003>.
+\AtBeginShipoutBox=\box46
+Package hyperref Info: Link coloring OFF on input line 34.
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
+Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count155
+)
+LaTeX Info: Redefining \ref on input line 34.
+LaTeX Info: Redefining \pageref on input line 34.
+LaTeX Info: Redefining \nameref on input line 34.
+
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tevcat.out")
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tevcat.out")
+\@outlinefile=\write4
+ ABD: EveryShipout initializing macros
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/authors.tex")
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/abstract.tex"
+LaTeX Font Info:    Try loading font information for U+lasy on input line 1.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\ulasy.fd"
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 1.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 1.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+))
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/introduction.tex" [1
+
+]) [2]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/lat_description_and_observations.tex")
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/build_the_candidate_list.tex" [3]
+
+LaTeX Warning: Reference `tab:TeV_sources_nom_exp' on page 4 undefined on input
+ line 10.
+
+)
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/method.tex" [4]
+
+LaTeX Warning: Reference `puls_cont' on page 5 undefined on input line 19.
+
+[5] [6] [7]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 104.
+
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 104.
+ [8]
+[9])
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/results.tex" [10] [11] [12]
+Overfull \hbox (25.98154pt too wide) in paragraph at lines 36--37
+[]\OT1/cmr/m/n/12 The com-plex of com-pact and ex-tended radio/X-ray sources, c
+alled Kook-aburra ([]
+ []
+
+[13] [14]
+Overfull \hbox (28.19972pt too wide) in paragraph at lines 59--60
+[]\OT1/cmr/m/n/12 During the Parkes multi-beam pul-sar sur-vey, [] ([]) dis-cov
+-ered PSR J1119$\OMS/cmsy/m/n/12  $\OT1/cmr/m/n/12 6127,
+ []
+
+[15] [16]
+Overfull \hbox (24.77754pt too wide) in paragraph at lines 77--78
+[]\OT1/cmr/m/n/12 HESS J1841$\OMS/cmsy/m/n/12  $\OT1/cmr/m/n/12 055 was dis-cov
+-ered dur-ing the H.E.S.S. Galac-tic Plane Sur-vey ([]
+ []
+
+[17]
+
+LaTeX Warning: Reference `s' on page 18 undefined on input line 97.
+
+[18]
+Overfull \hbox (42.69398pt too wide) in paragraph at lines 116--117
+[]\OT1/cmr/m/n/12 HESS J1813-178 was dis-cov-ered dur-ing the H.E.S.S. Sur-vey 
+of the In-ner Galaxy ([]
+ []
+
+) [19]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/discussion.tex")
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\sections/acknowledgements.tex"
+
+Package natbib Warning: Citation `healpix' on page 20 undefined on input line 1
+9.
+
+) [20]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tevcat.bbl" [21
+
+] [22] [23] [24])
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables.tex"
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/TeV_sources_nom_exp.tex"
+Underfull \hbox (badness 10000) in alignment at lines 2--49
+[][][][][][]
+ []
+
+Page 1 of table 2 has been set to width 469.75499pt with 49 lines per page 
+[25] [26]
+Underfull \hbox (badness 10000) in alignment at lines 49--61
+[][][][][][]
+ []
+
+)
+Page 2 of table 2 has been set to width 469.75499pt with 49 lines per page 
+[27]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/pulsars.tex"
+Underfull \hbox (badness 10000) in alignment at lines 2--24
+[][][][][]
+ []
+
+)
+Page 1 of table 3 has been set to width 469.75499pt with 49 lines per page 
+[28]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/newsources.tex")
+Page 1 of table 4 has been set to width 358.21501pt with 49 lines per page 
+[29]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/Morphology_results.tex")
+Page 1 of table 5 has been set to width 379.99403pt with 49 lines per page 
+[30]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/GeV_morph_sources.tex")
+Page 1 of table 6 has been set to width 309.44484pt with 49 lines per page 
+[31]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/detected_sources.tex")
+Page 1 of table 7 has been set to width 397.49207pt with 49 lines per page 
+[32]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/each_energy.tex"
+Overfull \hbox (16.65414pt too wide) detected at line 35
+ [] 
+ []
+
+)
+Overfull \hbox (16.65414pt too wide) detected at line 100
+ [] 
+ []
+
+Page 1 of table 8 has been set to width 623.7217pt with 38 lines per page 
+[33]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/un_detected_sources.tex")
+Page 1 of table 9 has been set to width 300.01859pt with 49 lines per page 
+[34]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/undetected_energy_bin.tex")
+Page 1 of table 10 has been set to width 607.47163pt with 38 lines per page 
+[35]
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tables/pulsar_comparison.tex")
+Page 1 of table 11 has been set to width 341.07707pt with 49 lines per page 
+)
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\figures.tex"
+File: figures/Plan_gal.eps Graphic file (type eps)
+ <figures/Plan_gal.eps>
+File: figures/HESSJ1303m631.eps Graphic file (type eps)
+
+<figures/HESSJ1303m631.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/out_errorbar_best_fit.eps Graphic file (type eps)
+<figures/out_errorbar_best_fit.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/index_vs_size.eps Graphic file (type eps)
+<figures/index_vs_size.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1708.eps Graphic file (type eps)
+<figures/HESSJ1708.eps>
+File: figures/MGROJ0632.eps Graphic file (type eps)
+ <figures/MGROJ0632.eps>
+File: figures/MGROJ1908.eps Graphic file (type eps)
+ <figures/MGROJ1908.eps>
+File: figures/MGROJ201937.eps Graphic file (type eps)
+
+<figures/MGROJ201937.eps>
+File: figures/MGROJ2228.eps Graphic file (type eps)
+ <figures/MGROJ2228.eps>
+File: figures/VERJ0006.eps Graphic file (type eps)
+ <figures/VERJ0006.eps>
+
+LaTeX Warning: Float too large for page by 25.44916pt on input line 64.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1018.eps Graphic file (type eps)
+<figures/HESSJ1018.eps>
+File: figures/HESSJ1023.eps Graphic file (type eps)
+ <figures/HESSJ1023.eps>
+File: figures/HESSJ1418.eps Graphic file (type eps)
+ <figures/HESSJ1418.eps>
+File: figures/HESSJ1458.eps Graphic file (type eps)
+
+<figures/HESSJ1458.eps>
+File: figures/HESSJ1718.eps Graphic file (type eps)
+ <figures/HESSJ1718.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1804.eps Graphic file (type eps)
+<figures/HESSJ1804.eps>
+File: figures/HESSJ1833.eps Graphic file (type eps)
+ <figures/HESSJ1833.eps>
+File: figures/MGROJ0631.eps Graphic file (type eps)
+ <figures/MGROJ0631.eps>
+File: figures/MGROJ1958.eps Graphic file (type eps)
+
+<figures/MGROJ1958.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1420.eps Graphic file (type eps)
+<figures/HESSJ1420.eps>
+File: figures/HESSJ1420.eps Graphic file (type eps)
+ <figures/HESSJ1420.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1356.eps Graphic file (type eps)
+<figures/HESSJ1356.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1119.eps Graphic file (type eps)
+<figures/HESSJ1119.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1303631leptdalton.eps Graphic file (type eps)
+<figures/HESSJ1303631leptdalton.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1841055.eps Graphic file (type eps)
+<figures/HESSJ1841055.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1848.eps Graphic file (type eps)
+<figures/HESSJ1848.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1026.eps Graphic file (type eps)
+<figures/HESSJ1026.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1458.eps Graphic file (type eps)
+<figures/HESSJ1458.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1626.eps Graphic file (type eps)
+<figures/HESSJ1626.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: figures/HESSJ1813178SNRhadron.eps Graphic file (type eps)
+<figures/HESSJ1813178SNRhadron.eps>
+File: figures/HESSJ1813178PWNlepton.eps Graphic file (type eps)
+ <figures/HESSJ1813178PWNlepton.eps>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) [36
+
+
+
+
+
+
+
+
+
+
+
+
+
+] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49]
+
+Package natbib Warning: There were undefined citations.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 90.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 90.
+
+("C:\Documents and Settings\rousseau\Bureau\Marianne_retour_20_08\v6_29_08_apre
+s_envoie_Josh_Stefan\tevcat.aux")
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 90.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 90.
+Package rerunfilecheck Info: File `tevcat.out' has not changed.
+(rerunfilecheck)             Checksum: 8A6E231FE79093C3749C9722D45FDDC2;1318.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 90.
+ ) 
+Here is how much of TeX's memory you used:
+ 16312 strings out of 494054
+ 296412 string characters out of 3148563
+ 430976 words of memory out of 3000000
+ 19201 multiletter control sequences out of 15000+200000
+ 13497 words of font info for 58 fonts, out of 3000000 for 9000
+ 715 hyphenation exceptions out of 8191
+ 63i,16n,57p,2390b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on tevcat.dvi (49 pages, 289524 bytes).

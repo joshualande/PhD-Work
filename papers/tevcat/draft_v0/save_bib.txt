@@ -1,0 +1,267 @@
+@ARTICLE{2011A&A...525A..46H,
+   author = {{H.E.S.S.~Collaboration} and {Abramowski}, A. and {Acero}, F. and 
+	{Aharonian}, F. and {Akhperjanian}, A.~G. and {Anton}, G. and 
+	{Barnacka}, A. and {Barres de Almeida}, U. and {Bazer-Bachi}, A.~R. and 
+	{Becherini}, Y. and {Becker}, J. and {Behera}, B. and {Bernl{\"o}hr}, K. and 
+	{Bochow}, A. and {Boisson}, C. and {Bolmont}, J. and {Bordas}, P. and 
+	{Borrel}, V. and {Brucker}, J. and {Brun}, F. and {Brun}, P. and 
+	{Bulik}, T. and {B{\"u}sching}, I. and {Boutelier}, T. and {Casanova}, S. and 
+	{Cerruti}, M. and {Chadwick}, P.~M. and {Charbonnier}, A. and 
+	{Chaves}, R.~C.~G. and {Cheesebrough}, A. and {Conrad}, J. and 
+	{Chounet}, L.-M. and {Clapson}, A.~C. and {Coignet}, G. and 
+	{Dalton}, M. and {Daniel}, M.~K. and {Davids}, I.~D. and {Degrange}, B. and 
+	{Deil}, C. and {Dickinson}, H.~J. and {Djannati-Ata{\"i}}, A. and 
+	{Domainko}, W. and {Drury}, L.~O. and {Dubois}, F. and {Dubus}, G. and 
+	{Dyks}, J. and {Dyrda}, M. and {Egberts}, K. and {Eger}, P. and 
+	{Espigat}, P. and {Fallon}, L. and {Farnier}, C. and {Fegan}, S. and 
+	{Feinstein}, F. and {Fernandes}, M.~V. and {Fiasson}, A. and 
+	{F{\"o}rster}, A. and {Fontaine}, G. and {F{\"u}{\ss}ling}, M. and 
+	{Gabici}, S. and {Gallant}, Y.~A. and {G{\'e}rard}, L. and {Gerbig}, D. and 
+	{Giebels}, B. and {Glicenstein}, J.~F. and {Gl{\"u}ck}, B. and 
+	{Goret}, P. and {G{\"o}ring}, D. and {Hague}, J.~D. and {Hampf}, D. and 
+	{Hauser}, M. and {Heinz}, S. and {Heinzelmann}, G. and {Henri}, G. and 
+	{Hermann}, G. and {Hinton}, J.~A. and {Hoffmann}, A. and {Hofmann}, W. and 
+	{Hofverberg}, P. and {Holleran}, M. and {Hoppe}, S. and {Horns}, D. and 
+	{Jacholkowska}, A. and {de Jager}, O.~C. and {Jahn}, C. and 
+	{Jung}, I. and {Katarzy{\'n}ski}, K. and {Katz}, U. and {Kaufmann}, S. and 
+	{Kerschhaggl}, M. and {Khangulyan}, D. and {Kh{\'e}lifi}, B. and 
+	{Keogh}, D. and {Klochkov}, D. and {Klu{\'z}niak}, W. and {Kneiske}, T. and 
+	{Komin}, N. and {Kosack}, K. and {Kossakowski}, R. and {Lamanna}, G. and 
+	{Lenain}, J.-P. and {Lennarz}, D. and {Lohse}, T. and {Lu}, C.-C. and 
+	{Marandon}, V. and {Marcowith}, A. and {Masbou}, J. and {Maurin}, D. and 
+	{McComb}, T.~J.~L. and {Medina}, M.~C. and {M{\'e}hault}, J. and 
+	{Moderski}, R. and {Moulin}, E. and {Naumann-Godo}, M. and {de Naurois}, M. and 
+	{Nedbal}, D. and {Nekrassov}, D. and {Nguyen}, N. and {Nicholas}, B. and 
+	{Niemiec}, J. and {Nolan}, S.~J. and {Ohm}, S. and {Olive}, J.-F. and 
+	{de O{\~n}a Wilhelmi}, E. and {Opitz}, B. and {Orford}, K.~J. and 
+	{Ostrowski}, M. and {Panter}, M. and {Paz Arribas}, M. and {Pedaletti}, G. and 
+	{Pelletier}, G. and {Petrucci}, P.-O. and {Pita}, S. and {P{\"u}hlhofer}, G. and 
+	{Punch}, M. and {Quirrenbach}, A. and {Raubenheimer}, B.~C. and 
+	{Raue}, M. and {Rayner}, S.~M. and {Reimer}, O. and {Reimer}, A. and 
+	{Renaud}, M. and {de los Reyes}, R. and {Rieger}, F. and {Ripken}, J. and 
+	{Rob}, L. and {Rosier-Lees}, S. and {Rowell}, G. and {Rudak}, B. and 
+	{Rulten}, C.~B. and {Ruppel}, J. and {Ryde}, F. and {Sahakian}, V. and 
+	{Santangelo}, A. and {Schlickeiser}, R. and {Sch{\"o}ck}, F.~M. and 
+	{Sch{\"o}nwald}, A. and {Schwanke}, U. and {Schwarzburg}, S. and 
+	{Schwemmer}, S. and {Shalchi}, A. and {Sushch}, I. and {Sikora}, M. and 
+	{Skilton}, J.~L. and {Sol}, H. and {Spengler}, G. and {Stawarz}, {\L}. and 
+	{Steenkamp}, R. and {Stegmann}, C. and {Stinzing}, F. and {Szostek}, A. and 
+	{Tam}, P.~H. and {Tavernet}, J.-P. and {Terrier}, R. and {Tibolla}, O. and 
+	{Tluczykont}, M. and {Valerius}, K. and {van Eldik}, C. and 
+	{Vasileiadis}, G. and {Venter}, C. and {Vialle}, J.~P. and {Vincent}, P. and 
+	{Vivier}, M. and {V{\"o}lk}, H.~J. and {Volpe}, F. and {Wagner}, S.~J. and 
+	{Ward}, M. and {Zdziarski}, A.~A. and {Zech}, A. and {Zechlin}, H.-S. and 
+	{Fukui}, Y. and {Furukawa}, N. and {Ohama}, A. and {Sano}, H. and 
+	{Dawson}, J. and {Kawamura}, A and {H.E.S.S.~Collaboration}},
+    title = "{Revisiting the Westerlund 2 field with the HESS telescope array}",
+  journal = {\aap},
+archivePrefix = "arXiv",
+   eprint = {1009.3012},
+ primaryClass = "astro-ph.HE",
+ keywords = {gamma rays: stars, HII regions},
+     year = 2011,
+    month = jan,
+   volume = 525,
+      eid = {A46},
+    pages = {A46},
+      doi = {10.1051/0004-6361/201015290},
+   adsurl = {http://adsabs.harvard.edu/abs/2011A%26A...525A..46H},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+@ARTICLE{2005A&A...439.1013A,
+   author = {{Aharonian}, F. and {Akhperjanian}, A.~G. and {Aye}, K.-M. and 
+	{Bazer-Bachi}, A.~R. and {Beilicke}, M. and {Benbow}, W. and 
+	{Berge}, D. and {Berghaus}, P. and {Bernl{\"o}hr}, K. and {Boisson}, C. and 
+	{Bolz}, O. and {Braun}, I. and {Breitling}, F. and {Brown}, A.~M. and 
+	{Bussons Gordo}, J. and {Chadwick}, P.~M. and {Chounet}, L.-M. and 
+	{Cornils}, R. and {Costamante}, L. and {Degrange}, B. and {Djannati-Ata{\"i}}, A. and 
+	{O'C.~Drury}, L. and {Dubus}, G. and {Emmanoulopoulos}, D. and 
+	{Espigat}, P. and {Feinstein}, F. and {Fleury}, P. and {Fontaine}, G. and 
+	{Fuchs}, Y. and {Funk}, S. and {Gallant}, Y.~A. and {Giebels}, B. and 
+	{Gillessen}, S. and {Glicenstein}, J.~F. and {Goret}, P. and 
+	{Hadjichristidis}, C. and {Hauser}, M. and {Heinzelmann}, G. and 
+	{Henri}, G. and {Hermann}, G. and {Hinton}, J.~A. and {Hofmann}, W. and 
+	{Holleran}, M. and {Horns}, D. and {de Jager}, O.~C. and {Kh{\'e}lifi}, B. and 
+	{Komin}, N. and {Konopelko}, A. and {Latham}, I.~J. and {Le Gallou}, R. and 
+	{Lemi{\`e}re}, A. and {Lemoine-Goumard}, M. and {Leroy}, N. and 
+	{Lohse}, T. and {Martineau-Huynh}, O. and {Marcowith}, A. and 
+	{Masterson}, C. and {McComb}, T.~J.~L. and {de Naurois}, M. and 
+	{Nolan}, S.~J. and {Noutsos}, A. and {Orford}, K.~J. and {Osborne}, J.~L. and 
+	{Ouchrif}, M. and {Panter}, M. and {Pelletier}, G. and {Pita}, S. and 
+	{P{\"u}hlhofer}, G. and {Punch}, M. and {Raubenheimer}, B.~C. and 
+	{Raue}, M. and {Raux}, J. and {Rayner}, S.~M. and {Redondo}, I. and 
+	{Reimer}, A. and {Reimer}, O. and {Ripken}, J. and {Rob}, L. and 
+	{Rolland}, L. and {Rowell}, G. and {Sahakian}, V. and {Saug{\'e}}, L. and 
+	{Schlenker}, S. and {Schlickeiser}, R. and {Schuster}, C. and 
+	{Schwanke}, U. and {Siewert}, M. and {Sol}, H. and {Steenkamp}, R. and 
+	{Stegmann}, C. and {Tavernet}, J.-P. and {Terrier}, R. and {Th{\'e}oret}, C.~G. and 
+	{Tluczykont}, M. and {van der Walt}, D.~J. and {Vasileiadis}, G. and 
+	{Venter}, C. and {Vincent}, P. and {V{\"o}lk}, H.~J. and {Wagner}, S.~J.
+	},
+    title = "{Serendipitous discovery of the unidentified extended TeV {$\gamma$}-ray source HESS J1303-631}",
+  journal = {\aap},
+   eprint = {arXiv:astro-ph/0505219},
+ keywords = {gamma rays: observations, Galaxy: disk},
+     year = 2005,
+    month = sep,
+   volume = 439,
+    pages = {1013-1021},
+      doi = {10.1051/0004-6361:20053195},
+   adsurl = {http://adsabs.harvard.edu/abs/2005A%26A...439.1013A},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+@ARTICLE{2011A&A...533A.103H,
+   author = {{H.E.S.S.~Collaboration} and {Abramowski}, A. and {Acero}, F. and 
+	{Aharonian}, F. and {Akhperjanian}, A.~G. and {Anton}, G. and 
+	{Balzer}, A. and {Barnacka}, A. and {Barres de Almeida}, U. and 
+	{Becherini}, Y. and {Becker}, J. and {Behera}, B. and {Bernl{\"o}hr}, K. and 
+	{Bochow}, A. and {Boisson}, C. and {Bolmont}, J. and {Bordas}, P. and 
+	{Brucker}, J. and {Brun}, F. and {Brun}, P. and {Bulik}, T. and 
+	{B{\"u}sching}, I. and {Carrigan}, S. and {Casanova}, S. and 
+	{Cerruti}, M. and {Chadwick}, P.~M. and {Charbonnier}, A. and 
+	{Chaves}, R.~C.~G. and {Cheesebrough}, A. and {Chounet}, L.-M. and 
+	{Clapson}, A.~C. and {Coignet}, G. and {Cologna}, G. and {Conrad}, J. and 
+	{Dalton}, M. and {Daniel}, M.~K. and {Davids}, I.~D. and {Degrange}, B. and 
+	{Deil}, C. and {Dickinson}, H.~J. and {Djannati-Ata{\"i}}, A. and 
+	{Domainko}, W. and {O'C.~Drury}, L. and {Dubois}, F. and {Dubus}, G. and 
+	{Dutson}, K. and {Dyks}, J. and {Dyrda}, M. and {Egberts}, K. and 
+	{Eger}, P. and {Espigat}, P. and {Fallon}, L. and {Farnier}, C. and 
+	{Fegan}, S. and {Feinstein}, F. and {Fernandes}, M.~V. and {Fiasson}, A. and 
+	{Fontaine}, G. and {F{\"o}rster}, A. and {F{\"u}ssling}, M. and 
+	{Gallant}, Y.~A. and {Gast}, H. and {G{\'e}rard}, L. and {Gerbig}, D. and 
+	{Giebels}, B. and {Glicenstein}, J.~F. and {Gl{\"u}ck}, B. and 
+	{Goret}, P. and {G{\"o}ring}, D. and {H{\"a}ffner}, S. and {Hague}, J.~D. and 
+	{Hampf}, D. and {Hauser}, M. and {Heinz}, S. and {Heinzelmann}, G. and 
+	{Henri}, G. and {Hermann}, G. and {Hinton}, J.~A. and {Hoffmann}, A. and 
+	{Hofmann}, W. and {Hofverberg}, P. and {Holler}, M. and {Horns}, D. and 
+	{Jacholkowska}, A. and {de Jager}, O.~C. and {Jahn}, C. and 
+	{Jamrozy}, M. and {Jung}, I. and {Kastendieck}, M.~A. and {Katarzynski}, K. and 
+	{Katz}, U. and {Kaufmann}, S. and {Keogh}, D. and {Khangulyan}, D. and 
+	{Kh{\'e}lifi}, B. and {Klochkov}, D. and {Kluzniak}, W. and 
+	{Kneiske}, T. and {Komin}, N. and {Kosack}, K. and {Kossakowski}, R. and 
+	{Laffon}, H. and {Lamanna}, G. and {Lennarz}, D. and {Lohse}, T. and 
+	{Lopatin}, A. and {Lu}, C.-C. and {Marandon}, V. and {Marcowith}, A. and 
+	{Masbou}, J. and {Maurin}, D. and {Maxted}, N. and {Mayer}, M. and 
+	{McComb}, T.~J.~L. and {Medina}, M.~C. and {M{\'e}hault}, J. and 
+	{Moderski}, R. and {Moulin}, E. and {Naumann}, C.~L. and {Naumann-Godo}, M. and 
+	{de Naurois}, M. and {Nedbal}, D. and {Nekrassov}, D. and {Nguyen}, N. and 
+	{Nicholas}, B. and {Niemiec}, J. and {Nolan}, S.~J. and {Ohm}, S. and 
+	{de Ona Wilhelmi}, E. and {Opitz}, B. and {Ostrowski}, M. and 
+	{Oya}, I. and {Panter}, M. and {Paz Arribas}, M. and {Pedaletti}, G. and 
+	{Pelletier}, G. and {Petrucci}, P.-O. and {Pita}, S. and {P{\"u}hlhofer}, G. and 
+	{Punch}, M. and {Quirrenbach}, A. and {Raue}, M. and {Rayner}, S.~M. and 
+	{Reimer}, A. and {Reimer}, O. and {Renaud}, M. and {de Los Reyes}, R. and 
+	{Rieger}, F. and {Ripken}, J. and {Rob}, L. and {Rosier-Lees}, S. and 
+	{Rowell}, G. and {Rudak}, B. and {Rulten}, C.~B. and {Ruppel}, J. and 
+	{Sahakian}, V. and {Sanchez}, D. and {Santangelo}, A. and {Schlickeiser}, R. and 
+	{Sch{\"o}ck}, F.~M. and {Schulz}, A. and {Schwanke}, U. and 
+	{Schwarzburg}, S. and {Schwemmer}, S. and {Sikora}, M. and {Skilton}, J.~L. and 
+	{Sol}, H. and {Spengler}, G. and {Stawarz}, L. and {Steenkamp}, R. and 
+	{Stegmann}, C. and {Stinzing}, F. and {Stycz}, K. and {Sushch}, I. and 
+	{Szostek}, A. and {Tavernet}, J.-P. and {Terrier}, R. and {Tluczykont}, M. and 
+	{Valerius}, K. and {van Eldik}, C. and {Vasileiadis}, G. and 
+	{Venter}, C. and {Vialle}, J.~P. and {Viana}, A. and {Vincent}, P. and 
+	{V{\"o}lk}, H.~J. and {Volpe}, F. and {Vorobiov}, S. and {Vorster}, M. and 
+	{Wagner}, S.~J. and {Ward}, M. and {White}, R. and {Wierzcholska}, A. and 
+	{Zacharias}, M. and {Zajczyk}, A. and {Zdziarski}, A.~A. and 
+	{Zech}, A. and {Zechlin}, H.-S.},
+    title = "{Discovery of the source HESS J1356-645 associated with the young and energetic PSR J1357-6429}",
+  journal = {\aap},
+archivePrefix = "arXiv",
+   eprint = {1108.2855},
+ primaryClass = "astro-ph.HE",
+     year = 2011,
+    month = sep,
+   volume = 533,
+      eid = {A103},
+    pages = {A103},
+      doi = {10.1051/0004-6361/201117445},
+   adsurl = {http://adsabs.harvard.edu/abs/2011A%26A...533A.103H},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+@ARTICLE{2008A&A...477..353A,
+   author = {{Aharonian}, F. and {Akhperjanian}, A.~G. and {Barres de Almeida}, U. and 
+	{Bazer-Bachi}, A.~R. and {Behera}, B. and {Beilicke}, M. and 
+	{Benbow}, W. and {Bernl{\"o}hr}, K. and {Boisson}, C. and {Bolz}, O. and 
+	{Borrel}, V. and {Braun}, I. and {Brion}, E. and {Brown}, A.~M. and 
+	{B{\"u}hler}, R. and {Bulik}, T. and {B{\"u}sching}, I. and 
+	{Boutelier}, T. and {Carrigan}, S. and {Chadwick}, P.~M. and 
+	{Chounet}, L.-M. and {Clapson}, A.~C. and {Coignet}, G. and 
+	{Cornils}, R. and {Costamante}, L. and {Dalton}, M. and {Degrange}, B. and 
+	{Dickinson}, H.~J. and {Djannati-Ata{\"i}}, A. and {Domainko}, W. and 
+	{Drury}, L.~O. and {Dubois}, F. and {Dubus}, G. and {Dyks}, J. and 
+	{Egberts}, K. and {Emmanoulopoulos}, D. and {Espigat}, P. and 
+	{Farnier}, C. and {Feinstein}, F. and {Fiasson}, A. and {F{\"o}rster}, A. and 
+	{Fontaine}, G. and {Funk}, S. and {F{\"u}{\ss}ling}, M. and 
+	{Gallant}, Y.~A. and {Giebels}, B. and {Glicenstein}, J.~F. and 
+	{Gl{\"u}ck}, B. and {Goret}, P. and {Hadjichristidis}, C. and 
+	{Hauser}, D. and {Hauser}, M. and {Heinzelmann}, G. and {Henri}, G. and 
+	{Hermann}, G. and {Hinton}, J.~A. and {Hoffmann}, A. and {Hofmann}, W. and 
+	{Holleran}, M. and {Hoppe}, S. and {Horns}, D. and {Jacholkowska}, A. and 
+	{de Jager}, O.~C. and {Jung}, I. and {Katarzy{\'n}ski}, K. and 
+	{Kendziorra}, E. and {Kerschhaggl}, M. and {Kh{\'e}lifi}, B. and 
+	{Keogh}, D. and {Komin}, N. and {Kosack}, K. and {Lamanna}, G. and 
+	{Latham}, I.~J. and {Lemi{\`e}re}, A. and {Lemoine-Goumard}, M. and 
+	{Lenain}, J.-P. and {Lohse}, T. and {Martin}, J.~M. and {Martineau-Huynh}, O. and 
+	{Marcowith}, A. and {Masterson}, C. and {Maurin}, D. and {Maurin}, G. and 
+	{McComb}, T.~J.~L. and {Moderski}, R. and {Moulin}, E. and {de Naurois}, M. and 
+	{Nedbal}, D. and {Nolan}, S.~J. and {Ohm}, S. and {Olive}, J.-P. and 
+	{de O{\~n}a Wilhelmi}, E. and {Orford}, K.~J. and {Osborne}, J.~L. and 
+	{Ostrowski}, M. and {Panter}, M. and {Pedaletti}, G. and {Pelletier}, G. and 
+	{Petrucci}, P.-O. and {Pita}, S. and {P{\"u}hlhofer}, G. and 
+	{Punch}, M. and {Ranchon}, S. and {Raubenheimer}, B.~C. and 
+	{Raue}, M. and {Rayner}, S.~M. and {Renaud}, M. and {Ripken}, J. and 
+	{Rob}, L. and {Rolland}, L. and {Rosier-Lees}, S. and {Rowell}, G. and 
+	{Rudak}, B. and {Ruppel}, J. and {Sahakian}, V. and {Santangelo}, A. and 
+	{Schlickeiser}, R. and {Sch{\"o}ck}, F. and {Schr{\"o}der}, R. and 
+	{Schwanke}, U. and {Schwarzburg}, S. and {Schwemmer}, S. and 
+	{Shalchi}, A. and {Sol}, H. and {Spangler}, D. and {Stawarz}, {\L}. and 
+	{Steenkamp}, R. and {Stegmann}, C. and {Superina}, G. and {Tam}, P.~H. and 
+	{Tavernet}, J.-P. and {Terrier}, R. and {van Eldik}, C. and 
+	{Vasileiadis}, G. and {Venter}, C. and {Vialle}, J.~P. and {Vincent}, P. and 
+	{Vivier}, M. and {V{\"o}lk}, H.~J. and {Volpe}, F. and {Wagner}, S.~J. and 
+	{Ward}, M. and {Zdziarski}, A.~A. and {Zech}, A.},
+    title = "{HESS very-high-energy gamma-ray sources without identified counterparts}",
+  journal = {\aap},
+archivePrefix = "arXiv",
+   eprint = {0712.1173},
+ keywords = {gamma rays: observations, Galaxy: general, cosmic rays, surveys},
+     year = 2008,
+    month = jan,
+   volume = 477,
+    pages = {353-363},
+      doi = {10.1051/0004-6361:20078516},
+   adsurl = {http://adsabs.harvard.edu/abs/2008A%26A...477..353A},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+@ARTICLE{2012arXiv1205.0719D,
+   author = {{de los Reyes}, R. and {Zajczyk}, A. and {Chaves}, R.~C.~G. and 
+	{for the H.~E.~S.~S.~collaboration}},
+    title = "{A newly discovered VHE gamma-ray PWN candidate around PSR J1459-60}",
+  journal = {ArXiv e-prints},
+archivePrefix = "arXiv",
+   eprint = {1205.0719},
+ primaryClass = "astro-ph.HE",
+ keywords = {Astrophysics - High Energy Astrophysical Phenomena},
+     year = 2012,
+    month = may,
+   adsurl = {http://adsabs.harvard.edu/abs/2012arXiv1205.0719D},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+@INPROCEEDINGS{2008AIPC.1085..281R,
+   author = {{Renaud}, M. and {Goret}, P. and {Chaves}, R.~C.~G.},
+    title = "{On the nature of HESS J1503-582 revealed by the H.E.S.S. experiment: Coincidence with a FVW?}",
+ keywords = {Astronomical and space-research instrumentation, Pulsars, gamma-ray sources; gamma-ray bursts},
+booktitle = {American Institute of Physics Conference Series},
+     year = 2008,
+   series = {American Institute of Physics Conference Series},
+   volume = 1085,
+archivePrefix = "arXiv",
+   eprint = {0811.1552},
+   editor = {{Aharonian}, F.~A. and {Hofmann}, W. and {Rieger}, F.},
+    month = dec,
+    pages = {281-284},
+      doi = {10.1063/1.3076660},
+   adsurl = {http://adsabs.harvard.edu/abs/2008AIPC.1085..281R},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}

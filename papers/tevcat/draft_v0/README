@@ -1,0 +1,18 @@
+Compiling the latex:
+
+    There is a standard makefile.
+    make         -> builds the PDF (by default in color)
+    make color   -> build the paper (in color)
+    make bw      -> build the paper (in black and white)
+    make clean   -> remove temporary files
+
+Organization:
+
+pwncat2.tex is the top level file.  It inputs all the other files.
+
+pwncat2.bib is the bibtex bibliography file.
+
+There are a few standard style files sitting around:
+
+aastex.cls
+apj.bst

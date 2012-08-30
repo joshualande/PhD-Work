@@ -1,0 +1,43 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: tevcat.aux
+The style file: apj.bst
+Illegal, another \bibstyle command---line 149 of file tevcat.aux
+ : \bibstyle
+ :          {plain}
+I'm skipping whatever remains of this command
+Database file #1: tevcat.bib
+Repeated entry---line 91 of file tevcat.bib
+ : @article{2009ApJ...700L.127A
+ :                             ,
+I'm skipping whatever remains of this entry
+You're missing a field part---line 1346 of file tevcat.bib
+ :     month = 
+ :             ,
+I'm skipping whatever remains of this entry
+You're missing a field part---line 1543 of file tevcat.bib
+ :     month = 
+ :             ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 1985 of file tevcat.bib
+ : @article{2007ApJ...658L..33A
+ :                             ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 2078 of file tevcat.bib
+ : @article{2006AA...456..245A
+ :                            ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 2375 of file tevcat.bib
+ : @article{2010ApJS..187..460A
+ :                             ,
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "healpix"
+Name 7 in "{Rousseau}, R. and {Grondin}, M.-H. and {Van Etten}, A. and {Lemoine-Goumard}, M. and {Bogdanov}, S. and {Hessels}, J.W.T. and {Kaspi}, V.M.," has a comma at the end for entry Rousseau1857
+while executing---line 1562 of file apj.bst
+Name 7 in "{Rousseau}, R. and {Grondin}, M.-H. and {Van Etten}, A. and {Lemoine-Goumard}, M. and {Bogdanov}, S. and {Hessels}, J.W.T. and {Kaspi}, V.M.," has a comma at the end for entry Rousseau1857
+while executing---line 1645 of file apj.bst
+Name 7 in "{Rousseau}, R. and {Grondin}, M.-H. and {Van Etten}, A. and {Lemoine-Goumard}, M. and {Bogdanov}, S. and {Hessels}, J.W.T. and {Kaspi}, V.M.," has a comma at the end for entry Rousseau1857
+while executing---line 1645 of file apj.bst
+Name 7 in "{Rousseau}, R. and {Grondin}, M.-H. and {Van Etten}, A. and {Lemoine-Goumard}, M. and {Bogdanov}, S. and {Hessels}, J.W.T. and {Kaspi}, V.M.," has a comma at the end for entry Rousseau1857
+while executing---line 1645 of file apj.bst
+Name 7 in "{Rousseau}, R. and {Grondin}, M.-H. and {Van Etten}, A. and {Lemoine-Goumard}, M. and {Bogdanov}, S. and {Hessels}, J.W.T. and {Kaspi}, V.M.," has a comma at the end for entry Rousseau1857
+while executing---line 1645 of file apj.bst
+(There were 12 error messages)
