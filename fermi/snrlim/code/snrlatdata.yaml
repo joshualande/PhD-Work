@@ -1,0 +1,15 @@
+data:
+    ft1files: /nfs/slac/g/ki/ki03/lande/fermi/data/1FGL/ft1_merged.fits
+    ft2files: /nfs/slac/g/ki/ki03/lande/fermi/data/1FGL/ft2_11months.fits
+    ltcube: /nfs/slac/g/ki/ki03/lande/fermi/data/1FGL/ltcube_11months_rock43.fits
+    binfile: /nfs/slac/g/ki/ki03/lande/fermi/data/1FGL/binned.fits
+catalog:
+    catalog: $catalogs/gll_psc_v07.fit
+    latextdir: $extended_archives/gll_psc_v07_templates
+    prune_radius: 0
+    limit_parameters: True
+diffuse:
+    ifile: isotrop_2year_P76_source_v0.txt
+    gfile: ring_2year_P76_v0.fits
+    diffdir: $diffuse
+    limit_parameters: True
