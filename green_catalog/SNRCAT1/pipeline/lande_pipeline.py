@@ -89,7 +89,7 @@ if do_plots: plots(roi, hypothesis='point', **plot_kwargs)
 print '\n\nAnalyze SNR as extended source\n\n'
 
 roi.del_source(which=name)
-roi.add_source(get_snr(name, superfile))
+roi.add_source(get_snr(name, superfile, point_like=False))
 
 results['extended'] = {}
 results['extended']['pointlike']=pointlike_analysis(roi, hypothesis='extended', 
