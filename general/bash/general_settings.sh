@@ -1,6 +1,6 @@
 # These are my bash
 
-function terminal_tweaks {
+function setup_terminal_tweaks {
     [ -z "$PS1" ] && return
     export TERM=xterm-color
 
@@ -23,7 +23,6 @@ function terminal_tweaks {
 }
 
 
-terminal_tweaks
 
 
 function get_known_hosts {
@@ -32,7 +31,7 @@ function get_known_hosts {
     echo curl ftp://ftp.slac.stanford.edu/admin/known_hosts  > ~/.ssh/known_hosts
 }
 
-function alias_general {
+function setup_alias_general {
 
     alias clean="rm -f *~;rm -f .*~;rm -f '#'*;rm -rf .*.swp;rm -rf .'#'*"
     alias screen='screen -RD'
@@ -72,19 +71,25 @@ function alias_general {
     # http://svn.haxx.se/users/archive-2004-12/0809.shtml
     bind 'set match-hidden-files off' 
 }
-alias_general
 
-function python_general {
+function setup_python_general {
 export PYTHONUNBUFFERED=True
 }
-python_general
 
 
-function lande_svn_setup {
+function setup_svn_lande {
     # Best to put my SVN in the same place on all machine so
     # aliases are the same
     export svn=$HOME/svn/lande/trunk
     export presentations=$svn/presentations/
     export lande=/u/gl/lande/svn/lande/trunk/code/lande
 }
-lande_svn_setup
+
+
+function setup_default_general {
+    setup_terminal_tweaks
+    setup_alias_general
+    setup_python_general
+    setup_svn_lande
+}
+setup_default_general

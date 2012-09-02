@@ -1,3 +1,6 @@
+syntax sync minlines=200
+
+
 " get the global settings
 "source /etc/vimrc
 set scrolloff=2

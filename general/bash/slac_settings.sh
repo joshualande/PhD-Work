@@ -59,11 +59,10 @@ function kipacsetup {
 
 function fix_matplotlib {
     # This says to use file .matplotlib/matplotlibrc for my configuration
-    export MATPLOTLIBRC=~/.matplotlib/
+    export MATPLOTLIBRC=~/.matplotlib
     # whereas this says to use as a temp folder random scratch space.
-    export MPLCONFIGDIR=/scratch/
+    export MPLCONFIGDIR=/scratch
 }
-fix_matplotlib
 
 
 function set_bldtype {
@@ -92,12 +91,13 @@ function set_bldtype {
 
 function _stockscons {
     export SCTOOLS=$1
+    export optflag=$2
 
     set_bldtype
     export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
     export BUILDS=/nfs/farm/g/glast/u35/ReleaseManagerBuild
-    export INST_DIR=${BUILDS}/${BLDTYPE}/Optimized/ScienceTools/$SCTOOLS
-    source ${INST_DIR}/bin/${BLDTYPE}-Optimized/_setup.sh
+    export INST_DIR=${BUILDS}/${BLDTYPE}/$optflag/ScienceTools/$SCTOOLS
+    source ${INST_DIR}/bin/${BLDTYPE}-$optflag/_setup.sh
 
     #export PATH=$GLAST_EXT/python/2.7.1/gcc41/bin:$PATH
     #export PATH=$GLAST_EXT/python/2.6.5/gcc41/bin:$PATH
@@ -106,18 +106,44 @@ function _stockscons {
     export CUSTOM_IRF_DIR=$FERMI/irfs
     export CUSTOM_IRF_NAMES=P7SOURCE_V4PSF,P7SOURCE_V4
 
+
+    # get my version of ipython        
+    export PATH=~/bin:$PATH
+
     export setup="${setup} stockscons"
 }
 
 function stockscons {
-    _stockscons 09-27-01
+#    _stockscons 09-25-00
+#    _stockscons 09-27-01 Optimized
+#    _stockscons HEAD-1-972 Debug
+#    _stockscons 09-28-00 Optimized
+#    _stockscons HEAD-1-981 Debug
+
+    # This version has my variability bug fixed in skymaps
+    #_stockscons HEAD-1-985 Debug
+    #_stockscons HEAD-1-980 Debug
+    _stockscons 09-29-00 Optimized
+}
+
+function testsconcs {
+    # for testing stuff
+    _stockscons 09-27-01 Optimized
+}
+
+function tempscons {
+    _stockscons 09-28-00 Optimized
+    export head=/u/gl/lande/head
+    export PYTHONPATH=$head:$PYTHONPATH
+    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
+    export setup=`echo $setup | sed 's/stockscons/tempscons/g'`
 }
 
 function headscons {
     # stock version of science tools with head version of pointlike on top of it.
     stockscons 
 
-    export head=/u/gl/lande/head/
+    export head=/u/gl/lande/head
     # point at the most up to teh cvs version of all the pointlike code
 
     # To get the code:
@@ -137,54 +163,51 @@ function headscons {
     export setup=`echo $setup | sed 's/stockscons/headscons/g'`
 }
 
-function headscons26 {
-    # same as headscons but uses python 2.6
-    headscons
-    export PATH=$GLAST_EXT/python/2.6.5/gcc41/bin:$PATH
-    export PYTHONPATH=`echo $PYTHONPATH | sed 's/python2.7/python2.6/g'`
-    export setup=`echo $setup | sed 's/headscons/headscons26/g'`
-}
 
-
-function extended_catalog {
+function setup_extended_catalog {
     export PATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PATH
     export PYTHONPATH=~/svn/lande/trunk/extended_catalog/code/:$PYTHONPATH
 
-    export w44simdata=/nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/w44simdata
+    export w44simdata=$nfs/extended_catalog/monte_carlo/w44simdata
     export w44simcode=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/w44sim/code
     export w44simplots=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/w44sim/plots
 
-    export tsext_plane_data=/nfs/slac/g/ki/ki03/lande/extended_catalog/monte_carlo/tsext/plane/
+    export tsext_plane_data=$nfs/extended_catalog/monte_carlo/tsext/plane
     export tsext_plane_code=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/tsext/plane/code
     export tsext_plane_plots=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/tsext/plane/plots
 
 }
-extended_catalog
+
+function setup_snr_low_energy {
+    export snr_low_energy_code=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/snr_low_energy/code
+    export snr_low_energy_plots=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/snr_low_energy/plots
+    export snr_low_energy_data=$nfs/fermi/snr_low_energy
+}
+
+
 
 function setup_svn {
     export svn=/u/gl/lande/svn/lande/trunk
 }
-setup_svn
 
-function mc_testing {
-    export fitdiffdata=/nfs/slac/g/ki/ki03/lande/fermi/data/monte_carlo/test_mapcube_cutting/fitdiff
+function setup_mc_testing {
+    export fitdiffdata=$FERMI/monte_carlo/test_mapcube_cutting/fitdiff
     export fitdiffcode=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/test_mapcube_cutting/fitdiff/code
     export fitdiffplots=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/test_mapcube_cutting/fitdiff/plots
 
-    export simpscode=$svn/fermi/monte_carlo/simps/code
-    export simpsplots=$svn/fermi/monte_carlo/simps/plots
-    export simpsdata=/nfs/slac/g/ki/ki03/lande/fermi/data/monte_carlo/simps
+    export simsrccode=$svn/fermi/monte_carlo/simsrc/code
+    export simsrcplots=$svn/fermi/monte_carlo/simsrc/plots
+    export simsrcdata=$FERMI/monte_carlo/simsrc
 }
-mc_testing
 
 
-function personal_code {
+function setup_personal_code {
     export PYTHONPATH=~/svn/lande/trunk/code/:$PYTHONPATH
 }
-personal_code
 
 function devscons {
     # path of scons code
+    set_bldtype
     export PATH=$PATH:/afs/slac/g/glast/applications/SCons/1.3.0/bin
 
     export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
@@ -197,32 +220,59 @@ function devscons {
 
     export python=$INST_DIR/pointlike/python/uw/like
 
-    export PFILES=".;$PFILES"
+    export CALDB=${INST_DIR}/irfs/caldb/CALDB
 
-    export CALDB=${INST_DIR}/irfs/caldb/CALDB/
-
+    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
     export setup="${setup} sconsdev"
 }
 
-function buildscons {
-    scons --with-GLAST-EXT=${GLAST_EXT} --compile-opt pointlike 
-    scons --with-GLAST-EXT=${GLAST_EXT} --compile-opt skymaps
-    scons --with-GLAST-EXT=$GLAST_EXT --compile-opt setup
+
+function build {
+    scons --with-GLAST-EXT=${GLAST_EXT} --compile-opt $@
+}
+
+function buildpointlike {
+    build pointlike 
+    build skymaps 
+    build setup
+}
+function buildgtlike {
+    build Likelihood
+    build pyLikelihood
+
+    # This is necessary for the facilities code to pass the irfs to gtlike
+    build caldb
+
+    # To get GtApp
+    build sane facilities
+
+    # evtbin=gtbin dataSubselector=gtbin
+    build evtbin dataSubselector
+
+    build setup
+}
+
+function setup_fermi_code {
+    export FERMI=$nfs/fermi
+    export fermi=$FERMI
+    export FERMILANDE=$FERMI # in case I have to share with others
+    export diffuse=$fermi/diffuse
+    export catalogs=$fermi/catalogs
+    export extended_archives=$fermi/extended_archives
+    export GLOBALCAT=/afs/slac/g/glast/groups/catalog
 }
 
 
-function slac_alias {
+function setup_general_slac_alias {
 
     # places at SLAC
     export u31="/nfs/farm/g/glast/u31/lande" # Josh's u31 home
     export afs=/afs/slac/g/glast/users/lande
-    export markus=/u/gl/markusa/disk/glast_data/gammas/
+    export markus=/u/gl/markusa/disk/glast_data/gammas
     export sass="/afs/slac/www/slac/sass"
 
-    export ki03="/nfs/slac/g/ki/ki03/lande"
-    export FERMI=$ki03/fermi/data
-    export FERMILANDE=$FERMI # in case I have to share with others
-    export CATALOG=$ki03/fermi_data/catalog_mirror/catalog_jan_31_2011/
+    export nfs="/nfs/slac/g/ki/ki03/lande"
+    export ki03=$nfs
 
     export yajie=~yuanyj
 
@@ -236,12 +286,11 @@ function slac_alias {
         fdump $1 STDOUT - - page=no pagewidth=256 | vim -
     }
 }
-slac_alias
 
 export PYTHONPATH=$HOME/bin:$HOME/python:$PYTHONPATH
 
 function mathematica_setup {
-    PATH=$PATH:/afs/slac.stanford.edu/g/ki/software/Wolfram/Mathematica/6.0/Executables/
+    PATH=$PATH:/afs/slac.stanford.edu/g/ki/software/Wolfram/Mathematica/6.0/Executables
 }
 
 export PATH=~/bin:~/svn/lande/trunk/general/bin/:$PATH
@@ -250,7 +299,7 @@ export PATH=~/bin:~/svn/lande/trunk/general/bin/:$PATH
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
 
 
-function lsf_setup {
+function setup_lsf {
     # For the program lsf program.
     export PATH="$PATH:/usr/local/bin" 
     export PATH="$PATH:/usr/afsws/bin"
@@ -272,15 +321,14 @@ function lsf_setup {
     alias bq="bqueues short medium long xlong xxl kipac-ibq"
 
 }
-lsf_setup
 
 
-export CVSROOT=/nfs/slac/g/glast/ground/cvs
+function setup_science_tools_dev {
+    export CVSROOT=/nfs/slac/g/glast/ground/cvs
 
-
-
-# Get hte program STAG
-export PATH="/afs/slac.stanford.edu/g/glast/applications/stag/i386_rhel40/:$PATH"
+    # Get the program STAG
+    export PATH="/afs/slac.stanford.edu/g/glast/applications/stag/i386_rhel40/:$PATH"
+}
 
 function tagCollector {
     # Tag the science tools
@@ -289,7 +337,7 @@ function tagCollector {
 
 
 function snrcat1setup {
-    GREENCAT=/nfs/slac/g/ki/ki03/lande/green_catalog/v1
+    GREENCAT=$nfs/green_catalog/v1
     PYTHONPATH=/u/gl/lande/svn/lande/trunk/green_catalog/v1:$PYTHONPATH
 
     # collect here things specific to green catalog analysis
@@ -319,10 +367,10 @@ function temposetup {
 
 function CandA_paper_draft {
     # Eric told me to add this to modify the C&A paper paper
-    export CVSROOT=/nfs/slac/g/glast/ground/paper_drafts/
+    export CVSROOT=/nfs/slac/g/glast/ground/paper_drafts
     #cvs co ScienceGroups/CandA/Pass7Validation
 
-    #The paper is in this folder: /u/gl/lande/cvs/ScienceGroups/CandA/Pass7Validation/
+    #The paper is in this folder: /u/gl/lande/cvs/ScienceGroups/CandA/Pass7Validation
 
     # Add text here on bad psf vs high level science
     # /u/gl/lande/cvs/ScienceGroups/CandA/Pass7Validation/pointSpreadFunction/psfHighLevel.tex
@@ -338,45 +386,95 @@ function dm_satellite_setup {
 
 
 
-function pwncat_setup {
-    export alice=~allafort/ki05/pwncatalog/
+function setup_pwncat {
+    export alice=~allafort/ki05/pwncatalog
     export marianne=/nfs/farm/g/glast/u54/lemoine/PWNCat
 
-    export pwncode=~/svn/lande/trunk/pwncatalog/PWNCAT2/code
-    export pwnplots=~/svn/lande/trunk/pwncatalog/PWNCAT2/code/lande/publication_plots/
+    export pwncode=$svn/fermi/pwn/pwncat2/analysis/
+    export pwndata=$svn/fermi/pwn/pwncat2/code/data
+    export pwnmodify=$svn/fermi/pwn/pwncat2/code/modify
+    export pwnpipeline=$nfs/fermi/pwn/pwncat2/pipeline
+
+    export pwnplots=~/svn/lande/trunk/pwncatalog/PWNCAT2/code/lande/publication_plots
     export pwnpaper=~/svn/lande/trunk/pwncatalog/PWNCAT2/paper
-    export pwndata=$ki03/pwncatalog/PWNCAT2/analyze_psr/
     export pwnpersonal=/u/gl/lande/work/fermi/pwncatalog/PWNCAT2
     export pwnmc=~/svn/lande/trunk/pwncatalog/PWNCAT2/mc
 
-    export tevdata=$ki03/pwncatalog/PWNCAT2/analyze_tev/
+    export tevdata=$nfs/pwncatalog/PWNCAT2/analyze_tev
 
-    export OZLEMPSR=/nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/dataset/SpectAn
-    export KERRPSR=/nfs/slac/g/ki/ki03/lande/pulsar
+    export ozlem_2pc_data=/nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/dataset/SpectAn
+    export kerr_2pc_data=$ki03/fermi/2pc/data/
+    export pulsar_group=/afs/slac/g/glast/groups/pulsar
+
+    # These are depricated.
+    export KERRPSR=$nfs/pulsar
+    export OZLEMPSR=$ozlem_2pc_data 
 
     export PYTHONPATH=$pwncode/lande/publication_plots/plot_helper:$PYTHONPATH
     export PYTHONPATH=$pwncode/lande/tables:$PYTHONPATH
     export PYTHONPATH=$pwncode/lande/off_peak:$PYTHONPATH
 
     export extuldata=$pwndata/monte_carlo/extul
-    export extulcode=$pwnmc/extul/
+    export extulcode=$pwnmc/extul
     export extulplots=$pwnplots/extul
 
-    #export PWNSCRIPTS=~lande/svn/lande/trunk/pwncatalog_1yr/
+    export PYTHONPATH=$PYTHONPATH:$HOME/svn/lande/trunk/pwncatalog/PWNCAT2/code
+
+    export lat2pc=/u/gl/lande/svn/lat2pc/trunk
+
 }
-pwncat_setup
 
 
 
 function setup_pysed {
     export PYTHONPATH=~/svn/lande/trunk/:$PYTHONPATH
-    export sed=~/svn/lande/trunk/pysed/
+    export sed=~/svn/lande/trunk/pysed
 }
-setup_pysed
 
-function setup_stefan_w44 {
-    export stefan_w44_code=/u/gl/lande/svn/lande/trunk/monte_carlo/stefan_w44/code
-    export stefan_w44_data=/nfs/slac/g/ki/ki03/lande/fermi/data/monte_carlo/stefan_w44_data
+function setup_snrsim {
+    export snrsim_code=$svn/fermi/monte_carlo/snrsim/code
+    export snrsim_sims=$FERMI/monte_carlo/snrsim/sims
+    export snrsim_fits=$FERMI/monte_carlo/snrsim/fits
 }
-setup_stefan_w44
+function epd_setup {
+    export PATH=/u/gl/lande/software/epd/bin:$PATH
+    export setup="${setup} epd"
+}
 
+function setup_snrlim {
+    export snrlimcode=$svn/fermi/snrlim/code
+    export snrlimfits=$fermi/snrlim/fits
+    export snrlimdata=$fermi/snrlim/data/aug_13_2012
+
+    export superfile=$HOME/svn/snrcat1/superfile/
+}
+
+function setup_radiopsrs {
+    export radiopsrsfits=$fermi/radiopsrs/fits
+    export radiopsrsdata=$fermi/radiopsrs/data
+}
+
+function setup_multiwavelength {
+ export multiwavelength=$svn/fermi/multiwavelength/
+ }
+
+
+function setup_defaults_slac {
+    setup_general_slac_alias
+    setup_fermi_code
+    setup_svn
+    setup_mc_testing
+    setup_personal_code
+    setup_lsf
+    fix_matplotlib
+    setup_extended_catalog
+    setup_pwncat
+    setup_pysed
+    setup_snrsim
+    setup_science_tools_dev 
+    setup_snr_low_energy
+    setup_snrlim
+    setup_radiopsrs
+    setup_multiwavelength
+}
+setup_defaults_slac
