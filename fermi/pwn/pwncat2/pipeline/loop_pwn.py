@@ -42,8 +42,8 @@ for name in sources.keys():
     file=join(folder,'run_%s.sh' % name)
     temp=open(file,'w')
     temp.write(dedent("""\
-        python $pwncode/analyze_psr.py \\
-            -n %s \\
+        python $pwncode/main.py \\
+            --name %s \\
             %s \\
             %s""" % (name, flags,' '.join(remaining_args))))
 
@@ -55,8 +55,8 @@ for name in sources.keys():
             file=join(folder,'followup_%s_%s_%s.sh' % (name,followup,hypothesis))
             temp=open(file,'w')
             temp.write(dedent("""\
-                python $pwncode/followup_psr.py \\
-                    -n %s \\
+                python $pwncode/followup.py \\
+                    --name %s \\
                     --hypothesis=%s \\
                     --followup=%s \\
                     %s \\

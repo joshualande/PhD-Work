@@ -763,12 +763,11 @@ echo python \$pwncode/loop_pwn.py \
 
 
 echo python \$pwncode/loop_pwn.py \
-        --pwndata \\\$pwncode/data/pwncat2_data_lande.yaml \
-        --pwnphase \\\$pwncode/data/pwncat2_phase_lande.yaml  \
-        --modify \\\$pwncode/modify/modify_psr_lande.py \
+        --pwndata \\\$pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwnmodify/modify_psr_lande.py \
         --max-free 5  --no-savedir \
-        -o $pwndata/spectral/v29/analysis
+        -o $pwnpipeline/v30/analysis
 
-# ----------------------------------------------------------------------------------------------------
 
 
