@@ -115,6 +115,7 @@ j = JobBuilder(savedir='$snrsim_sims/v4',
 j.build()
 """
 
+"""
 # August 15, 2012
 params=dict()
 params['mc-energy']=[True,False]
@@ -129,5 +130,39 @@ params['diffuse'] = [ 'galactic', 'sreekumar', 'nobackground']
 j = JobBuilder(savedir='$snrsim_sims/v5',
                code='$snrsim_code/simulate.py',
                num=1,
+               params=params)
+j.build()
+"""
+
+# September 7, 2012
+
+
+params=dict()
+params['mc-energy']=[True,False]
+params['source','spectrum']=[['IC443','PowerLaw'],
+                             ['IC443','SmoothBrokenPowerLaw'],
+                            ]
+params['diffuse'] = [ 'extrapolated']
+
+j = JobBuilder(savedir='$snrsim_sims/v6/full',
+               code='$snrsim_code/simulate.py',
+               num=5,
+               params=params)
+j.build()
+
+
+
+params=dict()
+params['mc-energy']=[True,False]
+params['source','spectrum']=[['IC443','PowerLaw'],
+                             ['IC443','SmoothBrokenPowerLaw'],
+                            ]
+params['flux_factor'] = [ 100 ]
+params['diffuse'] = [ 'nobackground']
+params['spatial'] = [ 'point', 'extended' ]
+
+j = JobBuilder(savedir='$snrsim_sims/v6/simple',
+               code='$snrsim_code/simulate.py',
+               num=2,
                params=params)
 j.build()

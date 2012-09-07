@@ -11,16 +11,17 @@ from uw.like.roi_catalogs import Catalog2FGL
 from uw.like.pointspec_helpers import get_default_diffuse
 from uw.like.roi_monte_carlo import MonteCarlo
 
-from lande.fermi.likelihood.diffuse import get_sreekumar
+from lande.fermi.likelihood.diffuse import get_sreekumar,get_background
 
 parser = ArgumentParser()
 parser.add_argument("i", type=int)
 parser.add_argument("--source", required=True, choices=['W44', 'IC443'])
 parser.add_argument("--spectrum", required=True, choices=['PowerLaw', 'SmoothBrokenPowerLaw', 'SmoothBrokenPowerLawHard', 'SmoothBrokenPowerLawSoft'])
-parser.add_argument("--debug", default=False, action='store_true')
 parser.add_argument("--mc-energy", default=False, action='store_true')
+parser.add_argument("--flux-factor", default=1, choices=[1,100])
+parser.add_argument("--spatial", default='extended', choices=['point','extended'])
 parser.add_argument("--diffuse", required=True, 
-                    choices=['galactic', 'sreekumar', 'nobackground'])
+                    choices=['galactic', 'sreekumar', 'nobackground', 'extrapolated'])
 args= parser.parse_args()
 
 if args.source == 'W44':
@@ -55,11 +56,14 @@ if args.diffuse == 'galactic':
         diffdir="/nfs/slac/g/ki/ki03/lande/fermi/diffuse/",
         gfile="gal_2yearp7v6_v0.fits",
         ifile="iso_p7v6source.txt")
-    ds[1].smodel = FileFunction(file='/nfs/slac/g/ki/ki03/lande/fermi/diffuse/iso_p7v6source_extrapolated.txt')
 elif args.diffuse == 'sreekumar':
     ds = [ get_sreekumar() ]
 elif args.diffuse == 'nobackground':
     ds = []
+elif args.diffuse == 'extrapolated':
+    ds = get_background(
+        "/afs/slac/g/glast/groups/scienceTools/bugs/Likelihood/energy_dispersion/Simulations/galdif_extended.fits",
+        '/nfs/slac/g/ki/ki03/lande/fermi/diffuse/iso_p7v6source_extrapolated.txt')
 else: 
     raise Exception("...")
 
@@ -85,7 +89,7 @@ if source == 'W44':
 
     e_break=204.3216401
     smooth_hard = SmoothBrokenPowerLaw(
-        Norm=14.56863965e-10,
+        Norm=14.56863965e-10*args.flux_factor,
         Index_1=-1.504042874,
         Index_2=1.891184873,
         E_break=e_break,
@@ -129,7 +133,7 @@ elif source == 'IC443':
 
     e_break=224.1244843
     smooth = SmoothBrokenPowerLaw(
-        Norm=12.16848844e-10,
+        Norm=12.16848844e-10*args.flux_factor,
         Index_1=0.225235606,
         Index_2=1.898928336,
         E_break=e_break,
@@ -144,9 +148,21 @@ elif source == 'IC443':
     elif spectrum == 'SmoothBrokenPowerLaw':
         IC443.model = smooth
 
-if args.debug:
-    ps = []
-    ds = [j for j in ds if j.name == source]
+if args.spatial == 'extended':
+    pass
+elif args.spatial == 'point':
+    extended=ds.pop(source)
+    ps.append(PointSource(
+        name=extended.name,
+        skydir=extended.skydir,
+        model=extended.model)
+    )
+else:
+    raise Exception("...")
+
+elif args.diffuse == 'nobackground':
+    ps = [i for i in ps if i.name == source]
+    ds = [i for i in ds if i.name == source]
 
 write_sources(ps,ds,'gtlike_model.xml', convert_extended=True, expand_env_vars=True)
 
