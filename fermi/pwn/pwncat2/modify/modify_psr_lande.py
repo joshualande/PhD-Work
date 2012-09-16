@@ -12,7 +12,7 @@ from uw.like.Models import PowerLaw, SmoothBrokenPowerLaw, SumModel, FileFunctio
 from uw.like.SpatialModels import Disk
 from uw.like.roi_extended import ExtendedSource
 
-from setup_pwn import PWNRegion
+from lande.fermi.pipeline.pwncat2.analysis.setup import PWNRegion
 
 def modify_roi(name,roi):
     modify_psr_base.modify_roi(name,roi)
@@ -31,7 +31,6 @@ def modify_roi(name,roi):
         model = PowerLaw(index=2.42)
         model.set_flux(2e-9,emin=1e4,emax=1e5)
         model.set_default_limits(oomp_limits=True)
-
         es=ExtendedSource(name='Gamma Cygni',
                           model=model,
                           spatial_model=Disk(l=78.24,b=2.20,sigma=0.63))
@@ -112,7 +111,7 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0248+6021/v2/iteration_v3/run.py
         model=PowerLaw(norm=7.99365289489e-14, index=2.56703331102, e0=np.sqrt(1e2*1e5))
         model.set_e0(e0)
-        model.set_default_limits(oomp_limits=True)
+        PWNRegion.limit_powerlaw(model)
         roi.modify(which='PSRJ0248+6021', model=model, keep_old_flux=False)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0248+6021/v3/iteration_v1/run.py
@@ -221,7 +220,7 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0631+1036/v2/iteration_v5/run.py
         model=PowerLaw(norm=9.55962564961e-14, index=2.333032306, e0=np.sqrt(10*1e5))
         model.set_e0(e0)
-        model.set_default_limits(oomp_limits=True)
+        PWNRegion.limit_powerlaw(model)
         roi.modify(which='PSRJ0631+1036', model=model, keep_old_flux=False)
 
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ0631+1036/v2/iteration_v6/run.py
@@ -846,7 +845,7 @@ def modify_roi(name,roi):
         # Parameters from $pwnpersonal/individual_sources/PSRJ1410-6132/v1/iteration_v1/ run.py
         model=PowerLaw(norm=4.98e-12, index=2.08, e0=1000)
         model.set_e0(e0)
-        model.set_default_limits(oomp_limits=True)
+        PWNRegion.limit_powerlaw(model)
         roi.modify(which='PSRJ1410-6132',
                    model=model,
                    keep_old_flux=False)
@@ -1248,7 +1247,7 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1744-1134/v1/iteration_v1/run.py
         model=PowerLaw(norm=1.72388137017e-13, index=2.27483263865, e0=np.sqrt(1e2*1e5))
         model.set_e0(e0)
-        model.set_default_limits(oomp_limits=True)
+        PWNRegion.limit_powerlaw(model)
         roi.modify(which='PSRJ1744-1134', 
                    model=model,
                    keep_old_flux=False)
@@ -1410,7 +1409,7 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ1809-2332/v2/iteration_v2/run.py
         model=PowerLaw(norm=2.40015523271e-13, index=2.51029888415, e0=np.sqrt(1e2*1e5))
         model.set_e0(e0)
-        model.set_default_limits(oomp_limits=True)
+        PWNRegion.limit_powerlaw(model)
         roi.modify(which='PSRJ1809-2332', 
                    model=model,
                    keep_old_flux=False)
@@ -1718,8 +1717,7 @@ def modify_roi(name,roi):
         # Analysis came from /u/gl/lande/work/fermi/pwncatalog/PWNCAT2/individual_sources/PSRJ2032+4127/v2/iteration_v3/run.py
         model=PowerLaw(norm=2.31436226763e-13, index=2.34156498732, e0=np.sqrt(1e2*1e5))
         model.set_e0(e0)
-        model.set_default_limits(oomp_limits=True)
-
+        PWNRegion.limit_powerlaw(model)
         roi.modify(which='PSRJ2032+4127', 
                    model=model,
                    keep_old_flux=False)
@@ -1869,7 +1867,7 @@ def modify_roi(name,roi):
     return new_sources
 
 
-def cutoff_model1(name):
+def get_cutoff_model(name):
     ec=None
 
     if name == 'PSRJ1112-6103':
