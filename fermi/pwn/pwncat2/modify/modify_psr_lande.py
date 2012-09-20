@@ -166,7 +166,7 @@ def modify_roi(name,roi):
         filename=expandvars('$PWD/crab_spectrum.txt')
         sum_model.save_profile(filename, emin=10, emax=1e6)
 
-        model = FileFunction(file=filename, set_default_oomp_limits=True)
+        model = FileFunction(file=filename)
         roi.modify(which='PSRJ0534+2200', model=model)
 
         # (b) add nearby source
@@ -322,8 +322,10 @@ def modify_roi(name,roi):
     if name == 'PSRJ0751+1807':
 
         # Parameters came from $pwnpersonal/individual_sources/PSRJ0751+1807/v1/iteration_v1/run.py
+        model = PowerLaw(norm=4.48e-13, index=2.28, e0=1e3)
+        PWNRegion.limit_powerlaw(model)
         roi.modify(which='PSRJ0751+1807',
-                   model=PowerLaw(norm=4.48e-13, index=2.28, e0=1e3, set_default_oomp_limits=True),
+                   model=model,
                    keep_old_flux=True)
 
     if name == 'PSRJ0835-4510':
@@ -1882,7 +1884,7 @@ def get_cutoff_model(name):
             set_default_oomp_limits=True)
 
     elif name == 'PSRJ1119-6127':
-        # Parameters from XXX
+        # Parameters from ???
         ec=PLSuperExpCutoff.from_gtlike(
             Cutoff= 999.999080269481, 
             Index1= -1.1150590055120246,
@@ -1904,3 +1906,14 @@ def get_cutoff_model(name):
         ec.set_free('b',False)
 
     return ec
+
+
+def get_override_localization(name):
+
+    if name == 'PSRJ1648-4611':
+        return dict(
+            init_position=SkyDir(339.37417265790333, -1.2120735396287685,SkyDir.GALACTIC),
+            method='MinuitLocalizer',
+        )
+
+    return None
