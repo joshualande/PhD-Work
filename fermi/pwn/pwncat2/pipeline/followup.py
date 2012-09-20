@@ -22,8 +22,8 @@ if followup == 'gtlike':
     pipeline.gtlike_followup(hypothesis=hypothesis)
 elif followup == 'variability':
     pipeline.variability_followup(hypothesis=hypothesis)
-elif followup == 'tsmap':
-    pipeline.tsmap_followup(hypothesis=hypothesis)
+elif followup == 'tsmaps':
+    pipeline.tsmaps_followup(hypothesis=hypothesis)
 elif followup == 'plots':
     pipeline.plots_followup(hypothesis=hypothesis)
 elif followup == 'extul':

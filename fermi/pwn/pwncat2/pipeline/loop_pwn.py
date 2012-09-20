@@ -66,12 +66,13 @@ submit_all=join(outdir,'submit_all.sh')
 open(submit_all,'w').write("""submit_all */run_*.sh $@""")
 
 submit_all=join(outdir,'followup_all.sh')
-open(submit_all,'w').write("""\
+open(submit_all,'w').write("""#!/usr/bin/env bash
+submit_list=""
 for pwn in PSR*; do
     for hypothesis in at_pulsar point extended; do
-        submit_all $pwn/followup_${pwn}_*_${hypothesis}.sh $@ --requires=$pwn/roi_${hypothesis}_${pwn}.dat
+        if [ -e $pwn/roi_${hypothesis}_${pwn}.dat -a -e $pwn/results_${pwn}_pointlike_${hypothesis}.yaml ]; then
+            submit_list="$pwn/followup_${pwn}_*_${hypothesis}.sh $submit_list"
+        fi
     done
-done""")
-
-merge_all=join(outdir,'merge_all.sh')
-open(merge_all,'w').write("""python $pwncode/merge_psr.py""")
+done
+submit_all $submit_list $@""")
