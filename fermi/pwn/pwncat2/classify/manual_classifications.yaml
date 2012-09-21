@@ -30,20 +30,30 @@ PSRJ0534+2200:
     spectral_model: FileFunction
     notes: > 
         This is the crab PWNe!
-PSRJ0610-2100: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
-PSRJ0613-0200: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
-PSRJ0614-3329: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
-PSRJ0622+3749: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
-PSRJ0631+1036: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0633+0632: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0633+1746: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0659+1414: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0729-1448: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0734-1559: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0742-2822: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0751+1807: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0835-4510: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0908-4913: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ0610-2100: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0613-0200: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0614-3329: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0622+3749: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0631+1036: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0633+0632: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ0633+1746: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff}
+PSRJ0659+1414: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ0729-1448: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ0734-1559: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff}
+PSRJ0742-2822: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ0751+1807: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ0835-4510: 
+    source_class: PWNe
+    spatial_model: Extended
+    spectral_model: PowerLaw
+    notes: >
+        This is Vela X!
+PSRJ0908-4913: 
+    source_class: Pulsar
+    spatial_model: Point
+    spectral_model: PLSuperExpCutoff
+    notes : >
+        The extension of this source is biased by nearby other sources.
 PSRJ0940-5428: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ1016-5857: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ1019-5749: {source_class: null, spatial_model: null, spectral_model: null}
