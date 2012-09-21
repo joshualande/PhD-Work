@@ -22,13 +22,18 @@ PSRJ0106+4855: {source_class: Confused, spatial_model: Point, spectral_model: Po
 PSRJ0218+4232: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0248+6021: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ0340+4130: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff}
-PSRJ0357+3205: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0437-4715: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0534+2200: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0610-2100: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0613-0200: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0614-3329: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0622+3749: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ0357+3205: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0437-4715: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0534+2200: 
+    source_class: PWN, 
+    spatial_model: Point, 
+    spectral_model: FileFunction
+    notes: > 
+        This is the crab PWNe!
+PSRJ0610-2100: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ0613-0200: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ0614-3329: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ0622+3749: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ0631+1036: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ0633+0632: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ0633+1746: {source_class: null, spatial_model: null, spectral_model: null}
