@@ -1,20 +1,27 @@
-PSRJ0007+7303: {source_class: Confused, 
-    spatial_model: Point, 
-    spectral_model: PowerLaw,
-    notes:"This is CTA1. Consistent results to http://arxiv.org/abs/1107.4151"}
+# Notes: Preliminary list - Joshua Lande 9/20/2012
+PSRJ0007+7303: 
+    source_class: Confused
+    spatial_model: Point
+    spectral_model: PowerLaw
+    notes: > 
+        This is CTA1. Consistent 
+        results to http://arxiv.org/abs/1107.4151
 PSRJ0023+0923: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0030+0451: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0034-0534: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw}
-PSRJ0101-6422: {source_class: Confused, 
-    spatial_model: At_Pulsar, 
-    spectral_model: PLSuperExpCutoff, 
-    notes: "This is the source that is unphysically soft. Here, we just present the results at the pulsar position and
-    try not to worry too much about it."}
-PSRJ0101-6422: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff, notes: "Good!"}
+PSRJ0101-6422: 
+    source_class: Confused
+    spatial_model: At_Pulsar
+    spectral_model: PLSuperExpCutoff
+    notes: >
+        This is the source that is unphysically soft. 
+        Here, we just present the results at the pulsar position and
+        try not to worry too much about it.
+PSRJ0102+4839: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff, notes: "Good!"}
 PSRJ0106+4855: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
-PSRJ0218+4232: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ0218+4232: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0248+6021: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ0340+4130: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ0340+4130: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff}
 PSRJ0357+3205: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ0437-4715: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ0534+2200: {source_class: null, spatial_model: null, spectral_model: null}
