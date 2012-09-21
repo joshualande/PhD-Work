@@ -25,8 +25,8 @@ PSRJ0340+4130: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSu
 PSRJ0357+3205: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0437-4715: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0534+2200: 
-    source_class: PWN, 
-    spatial_model: Point, 
+    source_class: PWN
+    spatial_model: Point
     spectral_model: FileFunction
     notes: > 
         This is the crab PWNe!
