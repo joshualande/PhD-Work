@@ -20,7 +20,7 @@ PSRJ0101-6422:
 PSRJ0102+4839: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff, notes: "Good!"}
 PSRJ0106+4855: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0218+4232: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
-PSRJ0248+6021: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ0248+6021: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ0340+4130: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff}
 PSRJ0357+3205: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0437-4715: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
@@ -54,10 +54,19 @@ PSRJ0908-4913:
     spectral_model: PLSuperExpCutoff
     notes : >
         The extension of this source is biased by nearby other sources.
-PSRJ0940-5428: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1016-5857: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ0940-5428: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1016-5857: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ1019-5749: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1023-5746: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ1023-5746: 
+    source_class: Confused
+    spatial_model: Point
+    spectral_model: PowerLaw
+    notes : >  
+        This source was found in PWNCAT1 (arXiv:1011.2076), but in 
+        our analysis the interpretation is much more confused
+        by a low energy component which biases the high-energy
+        analysis. We need to put some disclaimers in the paper
+        and reference Romains TEVCAT work.
 PSRJ1024-0719: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ1028-5819: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ1044-5737: {source_class: null, spatial_model: null, spectral_model: null}
