@@ -29,7 +29,7 @@ PSRJ0534+2200:
     spatial_model: Point
     spectral_model: FileFunction
     notes: > 
-        This is the crab PWNe!
+        This is the crab PWN!
 PSRJ0610-2100: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0613-0200: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0614-3329: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
@@ -43,7 +43,7 @@ PSRJ0734-1559: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSu
 PSRJ0742-2822: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ0751+1807: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ0835-4510: 
-    source_class: PWNe
+    source_class: PWN
     spatial_model: Extended
     spectral_model: PowerLaw
     notes: >
@@ -67,29 +67,67 @@ PSRJ1023-5746:
         by a low energy component which biases the high-energy
         analysis. We need to put some disclaimers in the paper
         and reference Romains TEVCAT work.
-PSRJ1024-0719: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1028-5819: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1044-5737: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1048-5832: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1057-5226: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1105-6107: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1112-6103: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1119-6127: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1124-3653: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1124-5916: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1125-5825: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1135-6055: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1231-1411: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1357-6429: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1410-6132: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1413-6205: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1418-6058: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1420-6048: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1429-5911: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1446-4701: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1459-6053: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1509-5850: {source_class: null, spatial_model: null, spectral_model: null}
-PSRJ1513-5908: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ1024-0719: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1028-5819: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1044-5737: 
+    source_class: Pulsar, 
+    spatial_model: Point, 
+    spectral_model: PLSuperExpCutoff
+    notes : >
+        The extension of this source is biased by nearby other sources.
+PSRJ1048-5832: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1057-5226: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1105-6107: 
+    source_class: Pulsar
+    spatial_model: Point
+    spectral_model: PLSuperExpCutoff
+    notes : >
+        The extension of this source is biased by nearby other sources.
+PSRJ1112-6103: 
+    source_class: Confused
+    spatial_model: Point
+    spectral_model: PowerLaw
+    notes : >
+        The extension of this source is biased by nearby other sources.
+PSRJ1119-6127: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw}
+PSRJ1124-3653: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1124-5916: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff}
+PSRJ1125-5825: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1135-6055: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1231-1411: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1357-6429: 
+    source_class: PWN
+    spatial_model: Point
+    spectral_model: PowerLaw
+    notes : >
+        This source shows a very hard spectrum.
+        I think it is HESS J1356-645, which will be more fully analyzed in 
+        the TeVCatalog that Romain is working on.
+        See, for example http://arxiv.org/abs/1108.2855 and 
+        http://tevcat.uchicago.edu/?mode=1&showsrc=170
+PSRJ1410-6132: 
+    source_class: Confused
+    spatial_model: Point
+    spectral_model: PowerLaw
+    notes : >
+        Somewhat hard spectrum suggests possible PWN scenario, 
+        but not very hard and no compelling TeV candidate in TeVCat.
+        Leave it as a confused source.
+        The extension of this source is biased by nearby other sources.
+PSRJ1413-6205: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1418-6058: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1420-6048: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1429-5911: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1446-4701: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1459-6053: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1509-5850: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
+PSRJ1513-5908: 
+    source_class: PWN
+    spatial_model: Point
+    spectral_model: PowerLaw
+    notes: >
+        This is MSH 15-52, a PWNe. Note in my analysis it is point-like.
+        It is associated with PSRB1509-58=PSRJ1513-5908.
 PSRJ1514-4946: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ1531-5610: {source_class: null, spatial_model: null, spectral_model: null}
 PSRJ1600-3053: {source_class: null, spatial_model: null, spectral_model: null}
