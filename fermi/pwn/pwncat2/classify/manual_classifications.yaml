@@ -12,11 +12,12 @@ PSRJ0034-0534: {source_class: Confused, spatial_model: Point, spectral_model: Po
 PSRJ0101-6422: 
     source_class: Confused
     spatial_model: At_Pulsar
-    spectral_model: PLSuperExpCutoff
+    spectral_model: PowerLaw
     notes: >
         This is the source that is unphysically soft. 
-        Here, we just present the results at the pulsar position and
-        try not to worry too much about it.
+        Here, we just present the results at the pulsar position 
+        with the power-law spectrum and try not to worry too 
+        much about it.
 PSRJ0102+4839: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff, notes: "Good!"}
 PSRJ0106+4855: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0218+4232: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
@@ -30,6 +31,8 @@ PSRJ0534+2200:
     spectral_model: FileFunction
     notes: > 
         This is the crab PWN!
+        Note the special spectral model for this source. We use a FileFunction
+        where the spectrum is taken from arXiv:1112.1979v2.
 PSRJ0610-2100: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0613-0200: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0614-3329: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
@@ -56,7 +59,7 @@ PSRJ0908-4913:
         The extension of this source is biased by nearby other sources.
 PSRJ0940-5428: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ1016-5857: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
-PSRJ1019-5749: {source_class: null, spatial_model: null, spectral_model: null}
+PSRJ1019-5749: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ1023-5746: 
     source_class: Confused
     spatial_model: Point
@@ -70,8 +73,8 @@ PSRJ1023-5746:
 PSRJ1024-0719: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ1028-5819: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ1044-5737: 
-    source_class: Pulsar, 
-    spatial_model: Point, 
+    source_class: Pulsar
+    spatial_model: Point
     spectral_model: PLSuperExpCutoff
     notes : >
         The extension of this source is biased by nearby other sources.
@@ -146,7 +149,7 @@ PSRJ1741-2054: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_mo
 PSRJ1744-1134: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff}
 PSRJ1746-3239: 
     source_class: Pulsar
-    spatial_model: Extended
+    spatial_model: Point
     spectral_model: PLSuperExpCutoff
     notes: > 
         The extension of this source is biased by nearby other sources.
@@ -179,7 +182,7 @@ PSRJ2030+3641: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_mo
 PSRJ2030+4415: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ2032+4127: 
     source_class: Confused
-    spatial_model: Extended
+    spatial_model: Point
     spectral_model: PowerLaw
     notes: >
         The extension of this source is biased by nearby other sources.
