@@ -15,6 +15,8 @@ PSRJ0101-6422:
     spectral_model: PowerLaw
     notes: >
         This is the source that is unphysically soft. 
+        Also, the cutoff test failed due to the cutoff spectrum
+        being allowed to be much softer than index=-5.
         Here, we just present the results at the pulsar position 
         with the power-law spectrum and try not to worry too 
         much about it.
