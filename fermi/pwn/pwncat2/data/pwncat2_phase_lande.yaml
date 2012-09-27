@@ -1,4 +1,5 @@
 # Changes
+# * Add PSRJ0205+6449 - Sept 27, 2012 - JL
 # * Add PSRJ0023+0923, PSRJ1709-4429: PSRJ1810+1744: PSRJ1833-1034: PSRJ2047+1053 - June 28, 2012 - JL
 # * June 22, 2012: phase defintions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v6 - JL
 # * May 29, 2012: phase defintions taken from $pwndata/off_peak/off_peak_bb/pwncat2/v5 - JL
@@ -46,6 +47,11 @@ PSRJ0106+4855:
   phase:
   - [0.67, 0.03]
   - [0.18, 0.54]
+PSRJ0205+6449:
+  emax: 100000
+  optimal_emin: 100.0
+  optimal_radius: 0.8999999999999999
+  phase: [0.64, 0.99]
 PSRJ0218+4232:
   emax: 100000
   optimal_emin: 316.22776601683796

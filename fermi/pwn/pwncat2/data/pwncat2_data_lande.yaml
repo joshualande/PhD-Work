@@ -1,6 +1,7 @@
 # Updates:
-# * Add PSRJ0023+0923, PSRJ1709-4429: PSRJ1810+1744: PSRJ1833-1034: PSRJ2047+1053 - June 28, 2012 - JL
-# * Remove PSRJ1709-4429 & PSRJ0205+6449 becasue they have bad timing solutions - June 22, 2012 J. L. 
+# * Adding J0205+6449 - September 27, 2012 - J.L.
+# * Add PSRJ0023+0923, PSRJ1709-4429: PSRJ1810+1744: PSRJ1833-1034: PSRJ2047+1053 - June 28, 2012 - J.L.
+# * Remove PSRJ1709-4429 & PSRJ0205+6449 becasue they have bad timing solutions - June 22, 2012 J.L.
 # * Updated to Matthew's new data set w/ 110 pulsars - May 29, 2012 - J.L.
 # * Add PSRJ0437-4715 - Feb 29, 2012, J.L.
 # * Updating to Ozlem's data set + Matthew's 111 pulsars - Feb 25, 2012, J.L.
@@ -42,6 +43,11 @@ PSRJ0106+4855:
   ft1: $kerr_2pc_data/v1/J0106+4855/J0106+4855_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
   ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ0205+6449:
+  cel: [31.408, 64.82855]
+  ft1: $kerr_2pc_data/v1/J0205+6449/J0205+6449_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis2.fits
+  ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
+  ltcube: $kerr_2pc_data/v1/J0205+6449/ltcube_J0205+6449.fits
 PSRJ0218+4232:
   cel: [34.52649, 42.538162]
   ft1: $kerr_2pc_data/v1/J0218+4232/J0218+4232_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
