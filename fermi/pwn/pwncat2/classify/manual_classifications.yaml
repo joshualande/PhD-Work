@@ -10,15 +10,15 @@ PSRJ0023+0923: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_mo
 PSRJ0030+0451: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0034-0534: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw}
 PSRJ0101-6422: 
-    source_class: Confused
+    source_class: Upper_Limit
     spatial_model: At_Pulsar
     spectral_model: PowerLaw
     notes: >
         This is the source that is unphysically soft. 
         Also, the cutoff test failed due to the cutoff spectrum
         being allowed to be much softer than index=-5.
-        Here, we just present the results at the pulsar position 
-        with the power-law spectrum and try not to worry too 
+        Here, we just quote an upper limit to avoid confusion.
+        and try not to worry too 
         much about it.
 PSRJ0102+4839: {source_class: Pulsar, spatial_model: Point, spectral_model: PLSuperExpCutoff, notes: "Good!"}
 PSRJ0106+4855: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
@@ -117,7 +117,7 @@ PSRJ1410-6132:
     notes : >
         Somewhat hard spectrum suggests possible PWN scenario, 
         but not very hard and no compelling TeV candidate in TeVCat.
-        Leave it as a confused source.
+        Leave it as a confused source, but hint that it could be a PWN.
         The extension of this source is biased by nearby other sources.
 PSRJ1413-6205: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
 PSRJ1418-6058: {source_class: Upper_Limit, spatial_model: At_Pulsar, spectral_model: PowerLaw}
