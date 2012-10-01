@@ -87,6 +87,14 @@ def modify_roi(name,roi):
         ps=PointSource(name="seed1", model=model, skydir=skydir)
         roi.add_source(ps)
 
+    if name == 'PSRJ0205+6449':
+
+        # Analysis came from $pwnpersonal/individual_sources/PSRJ0205+6449/v2/iteration_v1/run.py
+        ps=PointSource(name='seed1', 
+                       skydir=SkyDir(132.964587372,-0.940630424813,SkyDir.GALACTIC), 
+                       model=PowerLaw(norm=3.32743634755e-14, index=2.20294569667, e0=5623.4132519))
+        roi.add_source(ps)
+
     if name == 'PSRJ0248+6021':
 
         # Values taken from $pwnpersonal/individual_sources/PSRJ0248+6021/v1/iteration_v1/run.py
