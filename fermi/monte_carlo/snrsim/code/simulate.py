@@ -8,7 +8,7 @@ from skymaps import SkyDir
 from uw.utilities.xml_parsers import parse_sources, write_sources
 from uw.like.Models import PowerLaw, SmoothBrokenPowerLaw, FileFunction
 from uw.like.roi_catalogs import Catalog2FGL
-from uw.like.pointspec_helpers import get_default_diffuse
+from uw.like.pointspec_helpers import get_default_diffuse, PointSource
 from uw.like.roi_monte_carlo import MonteCarlo
 
 from lande.fermi.likelihood.diffuse import get_sreekumar,get_background
@@ -18,7 +18,7 @@ parser.add_argument("i", type=int)
 parser.add_argument("--source", required=True, choices=['W44', 'IC443'])
 parser.add_argument("--spectrum", required=True, choices=['PowerLaw', 'SmoothBrokenPowerLaw', 'SmoothBrokenPowerLawHard', 'SmoothBrokenPowerLawSoft'])
 parser.add_argument("--mc-energy", default=False, action='store_true')
-parser.add_argument("--flux-factor", default=1, choices=[1,100])
+parser.add_argument("--fluxfactor", default=1, type=int, choices=[1,5,100])
 parser.add_argument("--spatial", default='extended', choices=['point','extended'])
 parser.add_argument("--diffuse", required=True, 
                     choices=['galactic', 'sreekumar', 'nobackground', 'extrapolated'])
@@ -89,7 +89,7 @@ if source == 'W44':
 
     e_break=204.3216401
     smooth_hard = SmoothBrokenPowerLaw(
-        Norm=14.56863965e-10*args.flux_factor,
+        Norm=14.56863965e-10*args.fluxfactor,
         Index_1=-1.504042874,
         Index_2=1.891184873,
         E_break=e_break,
@@ -133,7 +133,7 @@ elif source == 'IC443':
 
     e_break=224.1244843
     smooth = SmoothBrokenPowerLaw(
-        Norm=12.16848844e-10*args.flux_factor,
+        Norm=12.16848844e-10*args.fluxfactor,
         Index_1=0.225235606,
         Index_2=1.898928336,
         E_break=e_break,
@@ -151,7 +151,8 @@ elif source == 'IC443':
 if args.spatial == 'extended':
     pass
 elif args.spatial == 'point':
-    extended=ds.pop(source)
+    extended = d[source]
+    ds.remove(extended)
     ps.append(PointSource(
         name=extended.name,
         skydir=extended.skydir,
@@ -160,9 +161,9 @@ elif args.spatial == 'point':
 else:
     raise Exception("...")
 
-elif args.diffuse == 'nobackground':
-    ps = [i for i in ps if i.name == source]
-    ds = [i for i in ds if i.name == source]
+if args.diffuse == 'nobackground':
+    ps = [j for j in ps if j.name == source]
+    ds = [j for j in ds if j.name == source]
 
 write_sources(ps,ds,'gtlike_model.xml', convert_extended=True, expand_env_vars=True)
 
