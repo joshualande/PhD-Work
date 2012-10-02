@@ -57,7 +57,8 @@ function setup_alias_general {
 
 
     # alias public slac machiens
-    for input in ki-rh29 `cat ~/.ssh/known_hosts | awk -F',' '{print $1}'  | grep -v '#' | grep -v "^$"`; do
+    #for input in ki-rh29 `cat ~/.ssh/known_hosts | awk -F',' '{print $1}'  | grep -v '#' | grep -v "^$"`; do
+    for input in ki-rh29 ki-ls02; do
         alias $input="ssh lande@$input.slac.stanford.edu"
         input=`echo $input | sed 's/[0-9]//g'`
         alias $input="ssh lande@$input.slac.stanford.edu"

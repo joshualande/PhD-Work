@@ -114,7 +114,6 @@ function _stockscons {
 }
 
 function stockscons {
-#    _stockscons 09-25-00
 #    _stockscons 09-27-01 Optimized
 #    _stockscons HEAD-1-972 Debug
 #    _stockscons 09-28-00 Optimized
@@ -123,6 +122,7 @@ function stockscons {
     # This version has my variability bug fixed in skymaps
     #_stockscons HEAD-1-985 Debug
     #_stockscons HEAD-1-980 Debug
+    
     _stockscons 09-29-00 Optimized
 }
 
@@ -150,17 +150,26 @@ function headscons {
     #   cvs co -d uw ScienceTools-scons/pointlike/python/uw
     export PYTHONPATH=$head:$PYTHONPATH
 
-    # Temporarily, get pyLikelihood 
+    # I got pyLikelihood with the command:
     #   cvs co -d pyLikelihood ScienceTools-scons/pyLikelihood/python
     export PYTHONPATH=/u/gl/lande/head/pyLikelihood/:$PYTHONPATH
-
-
+    #_stockscons HEAD-1-1003 Debug
 
     export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
 
     export python=$head/uw/like
 
     export setup=`echo $setup | sed 's/stockscons/headscons/g'`
+}
+
+
+function tempscons {
+    stockscons 
+    export temp=/u/gl/lande/temp
+    export PYTHONPATH=$temp:$PYTHONPATH
+    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
+    export python=$temp/uw/like
+    export setup=`echo $setup | sed 's/stockscons/tempscons/g'`
 }
 
 
@@ -318,7 +327,7 @@ function setup_lsf {
     #function xxl { bsub -q xxl -oo log.txt python $PWD/$1 }
 
     # Alias to show just the queues I like
-    alias bq="bqueues short medium long xlong xxl kipac-ibq"
+    alias bq="bqueues short medium long xlong xxl kipac-ibq express"
 
 }
 
@@ -387,13 +396,18 @@ function dm_satellite_setup {
 
 
 function setup_pwncat {
+    export help_others=$HOME/work/fermi/help_others
     export alice=~allafort/ki05/pwncatalog
     export marianne=/nfs/farm/g/glast/u54/lemoine/PWNCat
 
-    export pwncode=$svn/fermi/pwn/pwncat2/analysis/
-    export pwndata=$svn/fermi/pwn/pwncat2/code/data
-    export pwnmodify=$svn/fermi/pwn/pwncat2/code/modify
+    export pwncode=$svn/fermi/pwn/pwncat2/pipeline
+    export pwnclassify=$svn/fermi/pwn/pwncat2/classify
+
+    export pwndata=$svn/fermi/pwn/pwncat2/data
+    export pwnmodify=$svn/fermi/pwn/pwncat2/modify
     export pwnpipeline=$nfs/fermi/pwn/pwncat2/pipeline
+    export pwn_off_peak_results=$nfs/fermi/pwn/pwncat2/off_peak/off_peak_bb/pwncat2
+    export pwn_off_peak_code=$svn/fermi/pwn/pwncat2/off_peak/
 
     export pwnplots=~/svn/lande/trunk/pwncatalog/PWNCAT2/code/lande/publication_plots
     export pwnpaper=~/svn/lande/trunk/pwncatalog/PWNCAT2/paper
@@ -432,9 +446,9 @@ function setup_pysed {
 }
 
 function setup_snrsim {
-    export snrsim_code=$svn/fermi/monte_carlo/snrsim/code
-    export snrsim_sims=$FERMI/monte_carlo/snrsim/sims
-    export snrsim_fits=$FERMI/monte_carlo/snrsim/fits
+    export snr_sim_code=$svn/fermi/monte_carlo/snrsim/code
+    export snr_sim_sims=$FERMI/monte_carlo/snrsim/sims
+    export snr_sim_fits=$FERMI/monte_carlo/snrsim/fits
 }
 function epd_setup {
     export PATH=/u/gl/lande/software/epd/bin:$PATH
@@ -455,8 +469,8 @@ function setup_radiopsrs {
 }
 
 function setup_multiwavelength {
- export multiwavelength=$svn/fermi/multiwavelength/
- }
+    export multiwavelength=$svn/fermi/multiwavelength/
+}
 
 
 function setup_defaults_slac {
