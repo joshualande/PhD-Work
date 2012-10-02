@@ -6,8 +6,8 @@ from os.path import join,expandvars,exists,basename
 from lande.utilities.website import t2t
 
 version='v6'
-website_path=expandvars('$pwndata/off_peak/off_peak_bb/pwncat2/%s/website' % version)
-analysis_path=expandvars('$pwndata/off_peak/off_peak_bb/pwncat2/%s/analysis' % version)
+website_path=expandvars('$pwn_off_peak_results/%s/website' % version)
+analysis_path=expandvars('$pwn_off_peak_results/%s/analysis' % version)
 
 
 if not exists(website_path): os.makedirs(website_path)
@@ -15,7 +15,7 @@ if not exists(website_path): os.makedirs(website_path)
 website=expandvars(join(website_path,'index.t2t'))
 
 
-pwnlist=sorted(yaml.load(open(expandvars('$pwncode/data/pwncat2_data_lande.yaml'))).keys())
+pwnlist=sorted(yaml.load(open(expandvars('$pwndata/pwncat2_data_lande.yaml'))).keys())
 
 lines = ['Off Peak', '', '']
 

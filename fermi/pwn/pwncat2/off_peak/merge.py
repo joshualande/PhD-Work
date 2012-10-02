@@ -9,9 +9,9 @@ from lande.utilities.lists import recursive_map
 
 version = 'v6'
 
-pwndata=yaml.load(open(expandvars('$pwncode/data/pwncat2_data_lande.yaml')))
+pwndata=yaml.load(open(expandvars('$pwndata/pwncat2_data_lande.yaml')))
 
-r='$pwndata/off_peak/off_peak_bb/pwncat2/%s'  % version
+r='$pwn_off_peak_results/%s'  % version
 
 pwnlist = sorted(pwndata.keys())
 
