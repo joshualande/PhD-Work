@@ -428,6 +428,11 @@ PSRJ1836+5925:
   ft1: $kerr_2pc_data/v1/J1836+5925/J1836+5925_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
   ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
   ltcube: $ozlem_2pc_data/Allsky_0.1-100GeV_3years_zmax100_rck52RoiN.ltCube.fits
+PSRJ1838-0537:
+  cel: [279.7334, -5.6193]
+  ft1: $kerr_2pc_data/v1/J1838-0537/J1838-0537_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis2.fits
+  ft2: $pulsar_group/data/WeeklyData/ft2/FT2.fits
+  ltcube: $kerr_2pc_data/v1/J1838-0537/ltcube_J1838-0537.fits
 PSRJ1846+0919:
   cel: [281.60785, 9.329361]
   ft1: $kerr_2pc_data/v1/J1846+0919/J1846+0919_15Deg_239557414_334108802MET_20_400000MeV_z100_Source_gtis.fits
