@@ -19,7 +19,7 @@ from lande.utilities import pubplot
 
 pubplot.set_latex_defaults()
 
-base='$pwndata/off_peak/off_peak_bb/pwncat2/v6'
+base='$pwn_off_peak_results/v6'
 
 outdir = join(base,'plots')
 
@@ -29,6 +29,8 @@ bw = pubplot.get_bw()
 
 #cutoff_candidates = ['PSRJ0034-0534', 'PSRJ0633+1746', 'PSRJ1813-1246', 'PSRJ1836+5925', 
 #                     'PSRJ2021+4026', 'PSRJ2055+2539', 'PSRJ2124-3358']
+
+"""
 cutoff_candidates = [['PSRJ0007+7303', 400, ], # CTA 1
                      ['PSRJ0534+2200', 800, ], # Crab
                      ['PSRJ0633+1746', 400, ], # Geminga - strong off peak emission
@@ -38,6 +40,14 @@ cutoff_candidates = [['PSRJ0007+7303', 400, ], # CTA 1
                      ['PSRJ1801-2451', 200, ], # two regions
                      ['PSRJ2021+4026', 200, ], # Gamma-Cygni
                     ]
+"""
+
+cutoff_candidates = [['PSRJ0205+6449',200],
+                     ['PSRJ1357-6429',200],
+                     ['PSRJ1410-6132',200],
+                     ['PSRJ1747-2958',200],
+                     ['PSRJ2021+4026',200],
+                     ['PSRJ2124-3358',200]]
 
 
 
@@ -50,7 +60,7 @@ fig=P.figure(None,figsize=(6,7))
 
 fig.subplots_adjust(hspace=.35,wspace=.35, left=0.15, right=0.9, top=0.9, bottom=0.1)
 
-pwndata=yaml.load(open(expandvars('$pwncode/data/pwncat2_data_lande.yaml')))
+pwndata=yaml.load(open(expandvars('$pwndata/pwncat2_data_lande.yaml')))
 
 
 for i,(pwn,nbins) in enumerate(pwnlist):
@@ -97,7 +107,6 @@ for i,(pwn,nbins) in enumerate(pwnlist):
         axes.set_ylabel('')
     if y != nrows-1:
         axes.set_xlabel('')
-
 
     label_axes(fig)
 
