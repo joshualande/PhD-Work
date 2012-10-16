@@ -290,6 +290,12 @@
   {Bastieri}, \& et~al.}]{2010ApJS..187..460A}
 ---. 2010{\natexlab{f}}, \apjs, 187, 460
 
+\bibitem[{{Abramowski} {et~al.}(in prep.){Abramowski}, {Acero}, {Aharonian},
+  {Akhperjanian}, {Anton}, {Balenderan}, \& {for the HESS
+  Collaboration}}]{dalton1303}
+{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A.~G., {Anton},
+  G., {Balenderan}, S., \& {for the HESS Collaboration}. in prep., \aap
+
 \bibitem[{{Abramowski} {et~al.}(2011{\natexlab{a}}){Abramowski}, {Acero},
   {Aharonian}, {Akhperjanian}, {Anton}, {Balzer}, {Barnacka}, {Barres de
   Almeida}, {Becherini}, {Becker}, {Behera}, {Bernl{\"o}hr}, {Bochow},
@@ -494,9 +500,6 @@
   {Vorster}, {Wagner}, {Ward}, {White}, {Wierzcholska}, {Zacharias}, {Zajczyk},
   {Zdziarski}, {Zech}, \& {Zechlin}}]{2012arXiv1203.3215H}
 ---. 2012{\natexlab{b}}, ArXiv e-prints
-
-\bibitem[{{Abramowski}(in prep.)}]{dalton1303}
-{Abramowski}, A., A.~F.~A. F. A. A. G. A. G. B. S.~f. in prep., \aap
 
 \bibitem[{{Acciari} {et~al.}(2010){Acciari}, {Aliu}, {Arlen}, {Aune},
   {Bautista}, {Beilicke}, {Benbow}, {Boltuch}, {Bradbury}, {Buckley}, {Bugaev},
@@ -1203,10 +1206,10 @@
   Cosmic Ray Conference, 579--582
 
 \bibitem[{{James} \& {Roos}(1975)}]{JamesRoos1975}
-{James}, F., \& {Roos}, M. 1975, Comput. Phys. Commun.
+{James}, F., \& {Roos}, M. 1975, Comput. Phys. Commun., 10, 343
 
 \bibitem[{{Johnston} {et~al.}(1995){Johnston}, {Manchester}, {Lyne}, {Kaspi},
-  \& {D'Amico}}]{1995A&A...293..795J}
+  \& {D'Amico}}]{1995AA...293..795J}
 {Johnston}, S., {Manchester}, R.~N., {Lyne}, A.~G., {Kaspi}, V.~M., \&
   {D'Amico}, N. 1995, \aap, 293, 795
 

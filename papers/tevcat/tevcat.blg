@@ -1,181 +1,47 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: tevcat.aux
+This is BibTeX, Version 0.99c (Web2C 7.5.4)
+The top-level auxiliary file: tevcat.aux
 The style file: apj.bst
-Illegal, another \bibstyle command---line 212 of file tevcat.aux
- : \bibstyle
- :          {plain}
-I'm skipping whatever remains of this command
 Database file #1: tevcat.bib
-Repeated entry---line 91 of file tevcat.bib
- : @article{2009ApJ...700L.127A
- :                             ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 1545 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 1987 of file tevcat.bib
- : @article{2007ApJ...658L..33A
- :                             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 2080 of file tevcat.bib
- : @article{2006AA...456..245A
- :                            ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 2377 of file tevcat.bib
- : @article{2010ApJS..187..460A
- :                             ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 2669 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 2675 of file tevcat.bib
- : @article{2008ApJ...684..532S
- :                             ,
-I'm skipping whatever remains of this entry
-Warning--string name "???" is undefined
---line 2696 of file tevcat.bib
-Warning--string name "???" is undefined
---line 2697 of file tevcat.bib
-Warning--string name "???" is undefined
---line 2744 of file tevcat.bib
-Warning--string name "???" is undefined
---line 2745 of file tevcat.bib
-Repeated entry---line 2812 of file tevcat.bib
- : @article{2010ApJS..188..405A
- :                             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 2845 of file tevcat.bib
- : @article{2000ApJ...541..367C
- :                             ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 2966 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 3092 of file tevcat.bib
- : @article{2008MNRAS.389.1881K
- :                             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 3294 of file tevcat.bib
- : @article{2012ApJ...755L..20P
- :                             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 3315 of file tevcat.bib
- : @inproceedings{2008AIPC.1085..372C
- :                                   ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 3695 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 3714 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 3733 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 3751 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 3769 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-You're missing a field part---line 3787 of file tevcat.bib
- :     month = 
- :             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 4048 of file tevcat.bib
- : @article{2005ApJ...622..759G
- :                             ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 4064 of file tevcat.bib
- : @article{2008ApJ...674.1037A
- :                             ,
-I'm skipping whatever remains of this entry
-Warning--I didn't find a database entry for "2010A&A...520A.111B"
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1562 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-Too many commas in name 1 of "{Abramowski}, A., {Acero}, F., {Aharonian}, F., {Akhperjanian}, A. G., {Anton}, G., {Balenderan}, S., {for the HESS Collaboration}" for entry dalton1303
-while executing---line 1645 of file apj.bst
-(There were 62 error messages)
+Reallocated str_pool (elt_size=1) to 130000 items from 65000.
+Reallocated str_pool (elt_size=1) to 195000 items from 130000.
+You've used 151 entries,
+            2988 wiz_defined-function locations,
+            1525 strings with 141968 characters,
+and the built_in function-call counts, 139513 in all, are:
+= -- 5585
+> -- 21122
+< -- 37
++ -- 7078
+- -- 6902
+* -- 17161
+:= -- 29221
+add.period$ -- 151
+call.type$ -- 151
+change.case$ -- 999
+chr.to.int$ -- 126
+cite$ -- 151
+duplicate$ -- 2839
+empty$ -- 4101
+format.name$ -- 7416
+if$ -- 24349
+int.to.chr$ -- 26
+int.to.str$ -- 1
+missing$ -- 142
+newline$ -- 457
+num.names$ -- 608
+pop$ -- 1066
+preamble$ -- 1
+purify$ -- 999
+quote$ -- 0
+skip$ -- 2322
+stack$ -- 0
+substring$ -- 3072
+swap$ -- 116
+text.length$ -- 9
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 1359
+warning$ -- 0
+while$ -- 457
+width$ -- 0
+write$ -- 1489
