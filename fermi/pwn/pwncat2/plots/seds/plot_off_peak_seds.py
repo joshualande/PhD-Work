@@ -8,7 +8,7 @@ from matplotlib.offsetbox import AnchoredText
 from mpl_toolkits.axes_grid.axes_grid import Grid
 
 from lande.fermi.likelihood.specplot import SpectralAxes,SpectrumPlotter
-from lande.utilities.plotting import fix_axesgrid, label_axes
+from lande.utilities.plotting import fix_yaxesgrid, label_axes
 from lande.utilities import pubplot
 from lande.pysed import units
 
@@ -56,11 +56,6 @@ grid = Grid(fig, 111, nrows_ncols = (nrows, ncols),
             axes_class=(SpectralAxes, dict()),
            )
 
-for i in range(nrows*ncols):
-    axes=grid[i]
-    axes.set_xlim_units(10**2*units.MeV,10**5.5*units.MeV)
-    #axes.set_ylim_units(1e-13,1e-8)
-
 
 for i,pwn in enumerate(cutoff_candidates):
     print i,pwn
@@ -73,15 +68,23 @@ for i,pwn in enumerate(cutoff_candidates):
     sed = r['sed_4bpd']
 
     s = SED(sed)
-    s.plot_points(axes=axes)
+    s.plot_points(axes=axes, zorder=2.1)
 
     sp = SpectrumPlotter(axes=axes)
-    sp.plot(spectrum, autoscale=False, color='red')
+    sp.plot(spectrum, autoscale=False, color='red', zorder=1.9)
 
 label_axes(grid)
-fix_axesgrid(grid)
 
 grid[0].set_ylabel('')
 grid[4].set_ylabel('')
+
+
+for i in range(nrows*ncols):
+    axes=grid[i]
+    #axes.set_xlim_units(10**2*units.MeV,10**5.5*units.MeV)
+    axes.set_xlim(10**2,10**5.5)
+    #axes.set_ylim_units(1e-13*units.erg/units.cm**2/units.s,1e-9*units.erg/units.cm**2/units.s)
+    axes.set_ylim(1e-13,1e-9)
+fix_yaxesgrid(grid)
 
 pubplot.save(join(base,'plots','off_peak_seds'))

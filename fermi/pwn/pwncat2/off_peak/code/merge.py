@@ -11,7 +11,7 @@ version = 'v6'
 
 pwndata=yaml.load(open(expandvars('$pwndata/pwncat2_data_lande.yaml')))
 
-r='$pwn_off_peak_results/%s'  % version
+r='$pwncat2_off_peak_results/%s'  % version
 
 pwnlist = sorted(pwndata.keys())
 

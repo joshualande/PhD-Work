@@ -25,8 +25,8 @@ params=dict(pwncat1phase="$pwndata/pwncat1_phase.yaml",
             name=names)
 
 b = JobBuilder(
-    savedir='$pwn_off_peak_results/v6/analysis',
-    code='$pwn_off_peak_code/off_peak_bb.py',
+    savedir='$pwncat2_off_peak_results/v6/analysis',
+    code='$pwncat2_off_peak_code/off_peak_bb.py',
     params=params,
     short_folder_names=True)
 b.build()

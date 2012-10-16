@@ -42,12 +42,12 @@ cutoff_candidates = [['PSRJ0007+7303', 400, ], # CTA 1
                     ]
 """
 
-cutoff_candidates = [['PSRJ0205+6449',200],
-                     ['PSRJ1357-6429',200],
-                     ['PSRJ1410-6132',200],
-                     ['PSRJ1747-2958',200],
-                     ['PSRJ2021+4026',200],
-                     ['PSRJ2124-3358',200]]
+cutoff_candidates = [['PSRJ0205+6449',100],
+                     ['PSRJ1357-6429',100],
+                     ['PSRJ1410-6132',100],
+                     ['PSRJ1747-2958',100],
+                     ['PSRJ2021+4026',100],
+                     ['PSRJ2124-3358',100]]
 
 
 
@@ -56,7 +56,7 @@ pwnlist = cutoff_candidates
 ncols = 2
 nrows = int(math.ceil(float(len(pwnlist))/ncols))
 
-fig=P.figure(None,figsize=(6,7))
+fig=P.figure(None,figsize=(6,6))
 
 fig.subplots_adjust(hspace=.35,wspace=.35, left=0.15, right=0.9, top=0.9, bottom=0.1)
 
@@ -97,7 +97,7 @@ for i,(pwn,nbins) in enumerate(pwnlist):
                            axes=axes)
 
 
-    axes.set_ylim(ymax=axes.get_ylim()[1]*1.5)
+    axes.set_ylim(ymax=axes.get_ylim()[1]*1.2)
 
     # from http://matplotlib.sourceforge.net/faq/howto_faq.html#align-my-ylabels-across-multiple-subplots
     axes.yaxis.set_label_coords(-0.25,0.5)

@@ -12,6 +12,7 @@ from uw.like.Models import PowerLaw, SmoothBrokenPowerLaw, SumModel, FileFunctio
 from uw.like.SpatialModels import Disk
 from uw.like.roi_extended import ExtendedSource
 
+from lande.utilities.math import overlaps
 from lande.fermi.pipeline.pwncat2.analysis.setup import PWNRegion
 
 def modify_roi(name,roi):
@@ -1950,3 +1951,29 @@ def get_override_localization(name):
         )
 
     return None
+
+
+def get_variability_time_cuts(name):
+    """ Some pulsars have bad time intervals. Here, we cut out
+        time ranges around the bad intervals. """
+
+    if name == 'PSRJ0205+6449':
+
+        def good_interval(tmin, tmax):
+            # from $kerr_2pc_data/v1/J0205+6449/do_gtmktime.py
+
+            if overlaps(tmin, tmax, 256179803, 260474522) or \
+               overlaps(tmin, tmax, 328134373, 330369633):
+                return False
+            return True
+        return good_interval
+
+    if name == 'PSRJ1838-0537':
+        def good_interval(tmin, tmax):
+            # from $kerr_2pc_data/v1/J1838-0537/do_gtmktime.py
+            if overlaps(tmin, tmax, 273456002, 297216002):
+                return False
+            return True
+        return good_interval
+
+    return None        
