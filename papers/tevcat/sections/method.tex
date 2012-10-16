@@ -10,25 +10,27 @@
 
 Two different tools were used to perform the spatial and spectral analysis: \gtlike \citep{1996ApJ...461..396M} and \pointlike \citep{2011arXiv1101.6072K, 2012arXiv1207.0027L}. These tools fit a source model to the data along with models for the instrumental, extragalactic and Galactic components of the background. We used the version 09--28--00 of the \emph{Fermi} Science Tools.
 
-\pointlike and \gtlike using two different shapes for the region of interest, we used all events contained in a disk of 5$\degr$ centered on the location of the TeV source when fitting the region with \pointlike and we used a $7\degr \times 7\degr$ square included in the previous disk when fitting the region using \gtlike. We tried to keep the two methods as close as possible by using the same conventions (same spatial binning : $\sim 0.06\degr/$bin, same energy binning : 8 energy bins per decade between 10~GeV and 316~GeV, same optimizer : MINUIT \citep{JamesRoos1975}).
+\pointlike and \gtlike using two different shapes for the region of interest, we used all events contained in a disk of radius 5$\degr$ centered on the location of the TeV source when fitting the region with \pointlike and we used a $7\degr \times 7\degr$ square included in the previous disk when fitting the region using \gtlike. We tried to keep the two methods as close as possible by using the same conventions (same spatial binning : $\sim 0.06\degr/$bin, same energy binning : 8 energy bins per decade between 10~GeV and 316~GeV, same optimizer : MINUIT \citep{JamesRoos1975}).
 
 In the following analysis, the Galactic diffuse emission was modeled by the standard LAT diffuse emission ring$-$hybrid model \emph{ring\_2yearp7v6\_v0.fits} for all sources. The residual cosmic-ray background and extragalactic radiation are described by a single isotropic component with a spectral shape described by the file \emph{isotrop\_2year\_P76\_clean\_v0.txt}. The models have been released and described by the \emph{Fermi}-LAT Collaboration through the FSSC\footnote{http://fermi.gsfc.nasa.gov/ssc/data/access/lat/BackgroundModels.html}. In the following, we fixed the isotropic diffuse normalization to limit the number of free parameters and reduce the uncertainties on the fitted parameters.
 
-Sources within 10$\degr$ around each source of interest and listed in the hard source list \textbf{(cite the hard source list paper)} were included in our spatial-spectral model. We replaced potential TeV counterparts by a source with the TeV morphology summarized in Table \ref{tab:TeV_sources}. The spectral parameters of sources closer than 2$\degr$ to the source of interest were left free, while the parameters of all other sources were fixed at the hard source list (1FHL) catalog values.
+Sources within 10$\degr$ around each source of interest and listed in the hard source list \citep{1FHL} were included in our spatial-spectral model. We replaced potential TeV counterparts by a source with the TeV morphology summarized in Table \ref{tab:TeV_sources}. The spectral parameters of sources closer than 2$\degr$ to the source of interest were left free, while the parameters of all other sources were fixed at the hard source list (1FHL) catalog values \citep{1FHL}.
 
-Table \ref{tab:pulsars} summarizes the sources of our list located close to a pulsar detected by the \emph{Fermi}-LAT \textbf{cite 2PC}. The proximity of the pulsar can lead either to the non detection of a faint source hidden by the pulsed emission or to a contamination at low energy if the pulsar is not included. We decided to include in our analysis all the pulsars if they were outside of the TeV template or if they were more than 0.27$\degr$ away from the source of interest. Section \ref{puls_cont} will show the results for the sources close to the pulsars in the case were we added the pulsar in the model and fitted the TeV source.
+Table \ref{tab:pulsars} summarizes the sources of our list located close to a pulsar detected by the \emph{Fermi}-LAT \citep{2PC}. The proximity of the pulsar can lead either to the non detection of a faint source hidden by the pulsed emission or to a contamination at low energy if the pulsar is not included. We decided to include in our analysis all pulsars located outside of the TeV template or more than 0.27$\degr$ away from the source of interest, corresponding to the average PSF above 10 GeV. Section \ref{pulsarsect} will show the results for the sources close to the pulsars in the case where we added the pulsar in the model and fitted the TeV source.
 
 Due to the longer integration time of our analysis with respect to the 1FHL catalog (45 vs 36 months in the 1FHL), the appearance of additional sources is expected. To prevent contamination from these sources, we looked over all our regions and added to the model all excesses with a significance above 4.0 $\sigma$ which corresponds to a $\text{TS} >$ 25 with 4 degrees of freedom (2 spatial and 2 spectral, see Section~\ref{signi}). The location and spectral parameters of theses sources are described in Table~\ref{tab:newsources}. We fitted their spectra assuming a pure power--law above 10 GeV.
 
-%Thus, we added the sources summarized in Tab. \ref{tab:newsources} to take these excesses into account. We fitted their spectra assuming a pure power--law above 10~GeV.
+%Therefore, we added the sources summarized in Table \ref{tab:newsources} to take these excesses into account. We fitted their spectra assuming a pure power--law above 10~GeV.
 
 %In the regions of \emph{TeV~J2019+407, $\gamma$--Cygnii, MGRO~J2031+41, TeV~J2032+4130} the Galactic diffuse emission is taken into account using the models derived in \citet{Cygnus_loop} in which has been performed a precise study of interstellar emission dedicated for this region. We used the files adapted for the P7 V6 IRFs.
 
 \subsection{Analysis of the shape}
+\label{spatanalysis}
+
 
 Estimation of the position and extension of each PWNe candidates was performed using \pointlike. \pointlike is an alternate binned likelihood technique, optimized for characterizing the extension of a source (unlike \gtlike), that was extensively tested against \gtlike \citep{2011arXiv1101.6072K, 2012arXiv1207.0027L}. To fit an extended source, \pointlike convolves the extended source shape with the PSF (as a function of energy) and uses the MINUIT library \citep{JamesRoos1975} to maximize the likelihood by simultaneously varying the position, extension, and spectrum of the source. \cite{2012arXiv1207.0027L} present more details on the method used and its validation. 
 
-As previously done in \cite{2012arXiv1207.0027L}, we only used radially-symmetric uniform disk shape (defined in Equation \ref{eq:Disk}) to fit the extension of the GeV emission. In the following, we quote the radius to the edge ($\sigma$) as the size of the source.
+As previously done in \cite{2012arXiv1207.0027L}, we only used a radially-symmetric uniform disk shape (defined in Equation \ref{eq:Disk}) to fit the extension of the GeV emission. In the following, we quote the radius to the edge ($\sigma$) as the size of the source.
 
 \begin{equation}\label{eq:Disk}
 I_\text{disk}(x,y)=
@@ -59,15 +61,16 @@ Using the covariance matrix between the parameters of the fit, we derived the pi
 Once the morphological and spectral fit was determined, we derived the photon flux F(10--316~GeV) in photons cm$^{-2}$ s$^{-1}$ and the energy flux G(10--316~GeV) in erg cm$^{-2}$ s$^{-1}$ defined as:
 
 \begin{eqnarray}
-F(10-316 \, \rm GeV) = \int_{10 GeV}^{316 GeV} \frac{dN}{dE} dE\\
-G(10-316 \, \rm GeV) = \int_{10 GeV}^{316 GeV} E \frac{dN}{dE} dE
+F(10-316\text{ GeV}) = \int_{\text{10 GeV}}^{\text{316 GeV}} \frac{dN}{dE} dE\\
+G(10-316\text{ GeV}) = \int_{\text{10 GeV}}^{\text{316 GeV}} E \frac{dN}{dE} dE
+\label{energy_flux}
 \end{eqnarray}
 
 
 \subsection{Source significance and extension}
 \label{signi}
 
-We measured the source significance using a test statistic (\text{TS}) defined as Equation \ref{eq:TS} , where $\mathcal{L}_1$ corresponds to the likelihood obtained by fitting a model of the source of interest and the background model and $\mathcal{L}_0$ corresponds to the likelihood obtained by fitting the background model only. 
+We measured the source significance using a test statistic (\text{TS}) defined as Equation \ref{eq:TS}, where $\mathcal{L}_1$ corresponds to the likelihood obtained by fitting a model of the source of interest and the background model and $\mathcal{L}_0$ corresponds to the likelihood obtained by fitting the background model only. 
 
 \begin{equation}
 \label{eq:TS}
@@ -76,7 +79,9 @@ We measured the source significance using a test statistic (\text{TS}) defined a
 
 In the following, all \text{TS} values were calculated using \gtlike and the corresponding significance was evaluated from the $\chi^2$ distribution with the corresponding number of degrees of freedom (d.o.f.).
 
-We applied two criteria to decide if a source was significantly detected or not. We selected sources with a $\text{TS}$ above 16 (3.6 $\sigma$ with 2 d.o.f) when assuming the TeV morphology. Then, we applied a second filter on this list of sources by requiring $\text{TS}>16$ at the best GeV shape as well.
+To decide if a source was significantly detected or not, we selected sources with a $\text{TS}$ above 16 (3.6 $\sigma$ with 2 d.o.f) when assuming the TeV morphology.
+
+%We applied two criteria to decide if a source was significantly detected or not. We selected sources with a $\text{TS}$ above 16 (3.6 $\sigma$ with 2 d.o.f) when assuming the TeV morphology. Then, we applied a second filter on this list of sources by requiring $\text{TS}>16$ at the best GeV shape as well.
 
 To test the extension of each source, following \cite{2012arXiv1207.0027L}, we defined $\text{TS}_{ext}$ as  Equation \ref{eq:Tsext} where $\mathcal{L}_{ext}$ represents the likelihood under an extended source hypothesis (5 d.o.f.) and $\mathcal{L}_{ps}$ represents the likelihood assuming a point source (4 d.o.f.). The condition for a source to be extended is $\text{TS}_{ext} > 16$.
 
@@ -96,7 +101,7 @@ The correspondence between $\text{TS}_{GeV/TeV}$ and the significance is evaluat
 
 \subsection{Procedure followed}
 
-The 56 regions summarized in Table~\ref{tab:TeV_sources} were all analyzed using the same procedure with both \gtlike and \pointlike:
+The 58 regions summarized in Table~\ref{tab:TeV_sources} were all analyzed using the same procedure with both \gtlike and \pointlike:
 
 \begin{enumerate}
 \item{We fitted each source assuming its TeV shape summarized in Table~\ref{tab:TeV_sources}. Here, we fixed the position and morphology and fit the spectrum assuming a pure power-law leading the $\text{TS}$ to follow a $\chi^2$ distribution with only 2 d.o.f. 
@@ -108,26 +113,32 @@ The 56 regions summarized in Table~\ref{tab:TeV_sources} were all analyzed using
 \item{We fitted the source assuming a disk shape derived using \pointlike and compared this hypothesis to the point source hypothesis.}
 \end{enumerate}
 
-To take into account the modifications lead by our analysis and have a consistent analysis between all the regions studied, we performed a third iteration where we fixed the shape of the sources further than 2$\degr$ of the source of interest but included in our region to the best morphology found in this analysis (see section \ref{morph_res}). 
+
+To have a self consistent analysis between all regions studied, we performed a third iteration where we used the best shape found in our pipeline for all sources located in the region of interest.
+
+%To take into account the modifications lead by our analysis and have a consistent analysis between all the regions studied, we performed a third iteration where we fixed the shape of the sources further than 2$\degr$ of the source of interest but included in our region to the best morphology found in this analysis (see section \ref{morph_res}). 
+
+
+
 %Je n'arrive pas à être clair ici. Peut-etre ai-je fait une erreur. Pour que l'analyse soit cohérente et ne pas avoir une source modélisée d'une sorte dans une région et d'une autre sorte dans une autre région, j'ai retourné l'analyse en fixant les sources voisines non pas aux morphologies du 1FHL mais aux morphologies que j'ai trouvé. Par exemple la région de 1632 1634 a été tournée une première fois en ayant 1640 et 1616 aux morphologies inclues dans le 1FHL. Puis j'ai fait retourner la région avec 1640 et 1616 modélisé par les templates TeV). 
 
-For the significant sources ($\text{TS}_{TeV}>$16 and $\text{TS}_{GeV}>$16) we derived both the photon and energy fluxes inferred by the fit with the 1 sigma statistical errors, assuming the best morphology. When the source was not significant ($\text{TS}_{TeV}<$16 or $\text{TS}_{GeV}<$16), we derived a 99 \% Confidence Level (C.L.) Bayesian upper limit on the flux using a pure power-law model with an index fixed at 2, assuming the TeV shape. 
+For the significant sources ($\text{TS}_{TeV}>$16) we derived both the photon and energy fluxes inferred by the fit with the 1 sigma statistical errors, assuming the best morphology. When the source was not significant ($\text{TS}_{TeV}<$16), we derived a 99 \% Confidence Level (C.L.) Bayesian upper limit on the flux using a pure power-law model with an index fixed at 2, assuming the TeV shape. 
 
-\emph{Fermi}-LAT spectral points were obtained by splitting the 10--316 GeV range into 3 logarithmically spaced energy bins. A 99 \% C.L. upper limit is computed when $\text{TS}<$10 using the approach used by \cite{2012ApJS..199...31N}. The errors on the spectral points represent the statistical errors.
+\emph{Fermi}-LAT spectral points were obtained by splitting the 10--316 GeV range into 3 logarithmically spaced energy bins. A 99 \% C.L. upper limit is computed when $\text{TS}<$10 using the approach used by \cite{2012ApJS..199...31N}. The errors on the spectral points represent the statistic and systematic uncertainties as discussed below.
 
 
-%This algorithm was used two times. During the first iteration we used the data selected in a $8\degr\times 8\degr$ square around the TeV position of the source of interest aligned with galactic coordinates. These region are extended enough to allow a reliable fit of the galactic diffuse template normalization \emph{ring\_2yearp7v6\_v0.fits}. In a second iteration we reduced the square to $4\degr\times4\degr$ and we fixed the galactic diffuse normalization to the value derived during the first iteration.\textbf{Develop}
+%This algorithm was used two times. During the first iteration we used the data selected in a $8\degr\times 8\degr$ square around the TeV position of the source of interest aligned with Galactic coordinates. These region are extended enough to allow a reliable fit of the Galactic diffuse template normalization \emph{ring\_2yearp7v6\_v0.fits}. In a second iteration we reduced the square to $4\degr\times4\degr$ and we fixed the Galactic diffuse normalization to the value derived during the first iteration.\textbf{Develop}
 
-%We launched a second iteration of this analysis with a smaller roi (4$\degr\times$4$\degr$) fixing the spectrum of the galactic background
+%We launched a second iteration of this analysis with a smaller roi (4$\degr\times$4$\degr$) fixing the spectrum of the Galactic background
 
 \subsection{Systematics on the extension}
 \label{systext}
 
-Two main systematic uncertainties can affect the extension fit of the sources: uncertainties in our model of the galactic diffuse emission and uncertainties on our knowledge of the LAT PSF.
+Two main systematic uncertainties can affect the extension fit of the sources: uncertainties in our model of the Galactic diffuse emission and uncertainties on our knowledge of the LAT PSF.
 
 To estimate the systematics due to the uncertainty in our knowledge of the PSF, we used the pre-flight Monte Carlo representation of the PSF. Indeed, before launch, the LAT PSF was determined by detector simulations which we verified in accelerator beam tests \citep{2009ApJ...697.1071A}. However, in-flight data revealed a discrepancy above 3 GeV in the PSF compared to the angular distribution of photons. To account for this uncertainty, we refit our extended source candidates using the pre-flight  PSF and consider the difference in extension found using the two PSFs as a systematic error on the extension of a source. This procedure was already used by \cite{2012arXiv1207.0027L}.
 
-To estimate the uncertainties on the galactic diffuse emission, we used a GALPROP-based model and considered the various components of the diffuse emission model separately. We then individually fit the normalizations of each of them in our likelihood analysis. These various components are gamma-rays produced by IC emission, gamma-rays produced by interactions of CRs with atomic and ionized interstellar gas, and gamma-rays produced in the interactions of CRs with molecular gas. The model component describing the gamma-ray intensity from interactions with molecular gas is further subdivided into seven ranges of Galactocentric distance. It is not expected that this diffuse model is superior to the standard LAT model obtained through an all-sky fit. However, adding degrees of freedom to the background model can remove likely spurious sources that correlate with features in the Galactic diffuse emission. Therefore, this tests systematics that may be due to imperfect modeling of the diffuse emission in the region. This procedure was also used by \cite{2012arXiv1207.0027L}.
+To estimate the uncertainties on the Galactic diffuse emission, we used a GALPROP-based model and considered the various components of the diffuse emission model separately. We then individually fit the normalizations of each of them in our likelihood analysis. These various components are $\gamma$-rays produced by IC emission, $\gamma$-rays produced by interactions of CRs with atomic and ionized interstellar gas, and $\gamma$-rays produced in the interactions of CRs with molecular gas. The model component describing the $\gamma$-ray intensity from interactions with molecular gas is further subdivided into seven ranges of Galactocentric distance. It is not expected that this diffuse model is superior to the standard LAT model obtained through an all-sky fit. However, adding degrees of freedom to the background model can remove likely spurious sources that correlate with features in the Galactic diffuse emission. Therefore, this tests systematics that may be due to imperfect modeling of the diffuse emission in the region. This procedure was also used by \cite{2012arXiv1207.0027L}.
 
 The total systematic error on the extension of a source was obtained by adding the two errors in quadrature.
 

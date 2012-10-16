@@ -4,7 +4,7 @@
 \label{tab:TeV_sources}}
 \input{tables/TeV_sources_nom_exp.tex}
 
-\tablecomments{ The first two columns are TeV source names and types as defined in the TeV catalog provided by the university of Chicago: PWN for Pulsar Wind Nebula, PSR for Pulsars, UNID for Unidentified sources, Massive Star Cluster and Star Forming Regions. The 3$^{rd}$ column reports the Galactic coordinates for each source. The 4$^{th}$ column presents the shape that best describes the source at TeV energies, together with a reference in the  5$^{th}$ column.}
+\tablecomments{The first two columns list the TeV source names and types as defined in the TeV catalog provided by the university of Chicago: PWN for Pulsar Wind Nebula, PSR for Pulsars, UNID for Unidentified sources, Massive Star Cluster and Star Forming Regions. The 3$^{rd}$ column reports the Galactic coordinates for each source. The 4$^{th}$ column presents the shape that best describes the source at TeV energies, together with a reference in the  5$^{th}$ column.}
 
 \end{deluxetable}
 
@@ -18,9 +18,9 @@
 \begin{flushleft}
 a- The distance between the pulsar and the source is lower than 0.27$\degr$.\\
 b- The pulsar is located inside the edge of the TeV shape.\\
-c- The pulsar shown no significant excess.\\
+c- No significant excess above 10 GeV at the position of the pulsar.\\
 \end{flushleft}
-\tablecomments{ $_{ }$List of sources having a known $\gamma$-ray pulsar within 0.5$\degr$. The two first column shows the TeV source and the pulsar name. The third column show the distance between the TeV source and the GeV pulsar. The pulsar position comes from \textbf{Citer 2PC}. In the fourth colum Y means that we added the pulsar to the model and N that we didn't added it.}
+\tablecomments{ $_{ }$List of sources having a known $\gamma$-ray pulsar within 0.5$\degr$. The two first columns list the TeV source and the pulsar name. The third column gives the distance between the TeV source and the GeV pulsar. The pulsar position comes from \cite{2PC}. In the fourth colum Y means that we added the pulsar to the model and N that we didn't added it.}
 
 \end{deluxetable}
 
@@ -76,8 +76,7 @@ The significance of the extension is measured using the $\text{TS}_{ext}$ criter
 \input{tables/detected_sources.tex}
 
 \tablecomments{Results of the maximum likelihood spectral fits  
-for LAT-detected TeV sources. The test statistic (TS) for the source significance is provided in column 2. 
-Columns 3 and 4 list the photon flux F(10--316 GeV) and the 
+for LAT-detected TeV sources. The test statistic (TS) for the source significance is provided in column 2. Columns 3 and 4 list the photon flux F(10--316 GeV) and the 
 energy flux G(10--316~GeV). The fits used the best morphology reported in Table~\ref{tab:GeVmorph} and a power-law spectral model (see Equation~\ref{PL}) with photon index $\Gamma$ given in column 5. 
 The uncertainties on F(10--316 GeV), G(10--316~GeV), and $\Gamma$ correspond respectively to the statistical and systematics uncertainties (see Section~\ref{syst}).}
 
@@ -94,8 +93,7 @@ The uncertainties on F(10--316 GeV), G(10--316~GeV), and $\Gamma$ correspond res
 \tablewidth{0pt}
 \input{tables/each_energy.tex}
 
-\tablecomments{Results of the maximum likelihood spectral fits  
-for LAT-detected TeV sources in three different energy bands: 10--31 GeV, 31--100 GeV, 100--316 GeV using the same convention as in Table~\ref{tab:det_sources}. A 99\% c.l. upper limit is computed when the TS in the band is lower than 10. }
+\tablecomments{Results of the maximum likelihood spectral fits for LAT-detected TeV sources in three different energy bands: 10--31 GeV, 31--100 GeV, 100--316 GeV using the same convention as in Table~\ref{tab:det_sources}. A 99\% c.l. upper limit is computed when the TS in the band is lower than 10. }
 
 \end{deluxetable}
 \normalsize
@@ -112,8 +110,7 @@ for LAT-detected TeV sources in three different energy bands: 10--31 GeV, 31--10
 \input{tables/un_detected_sources.tex}
 
 \tablecomments{ Results of the maximum likelihood spectral fits  
-for non-detected TeV sources. The test statistic (TS) for the source significance is provided in column 2. 
-Columns 3 and 4 list the 99\% c.l. upper limits on the photon flux F(10--316 GeV) and on the 
+for non-detected TeV sources. The test statistic (TS) for the source significance is provided in column 2. Columns 3 and 4 list the 99\% c.l. upper limits on the photon flux F(10--316 GeV) and on the 
 energy flux G(10--316~GeV). The fits used the TeV template defined in Table~\ref{tab:TeV_sources} and a power-law spectral model (see Equation~\ref{PL}) with photon index fixed at 2. }
 
 \end{deluxetable}
@@ -124,7 +121,7 @@ energy flux G(10--316~GeV). The fits used the TeV template defined in Table~\ref
 \begin{landscape}
 \begin{deluxetable}{lcccccc}
 \tabletypesize{\scriptsize}
-\tablecaption{Upper limits for non-detected TeV sources in three energy bands logarithmically-spaced between 10 and 316 GeV
+\tablecaption{Upper limits for non-detected sources in 3 logarithmically-spaced energy bands
 \tabletypesize{\scriptsize}
 \label{tab:nondet_sources2}}
 \tablewidth{0pt}
@@ -161,10 +158,56 @@ for non-detected TeV sources in three different energy bands: 10--31 GeV, 31--10
 \tablewidth{0pt}
 \input{tables/pulsar_comparison.tex}
 
-\tablecomments{Results of the maximum likelihood spectral fits  
-for sources with a known $\gamma$-ray pulsar within 0.5 $\degr$. The pulsar is included in the model with the spectral parameters derived in the 2FGL catalog \cite{2012ApJS..199...31N}. A 99\% c.l. upper limit is computed when the TS is lower than 16. As PSR~J1028-5819 is already included and fitted in our model of the region of HESS J1026-5819 we did not report it in this table. PSR J1513-5908 and PSR J1702-4128 were detected after the 2FGL catalog analysis \citep{2012ApJS..199...31N}. Thus no spectral parameters were available.}
+\tablecomments{Results of the maximum likelihood spectral fits for sources with a known $\gamma$-ray pulsar within 0.5$\degr$. The pulsar is included in the model with the spectral parameters derived in the 2FGL catalog \cite{2012ApJS..199...31N}. A 99\% c.l. upper limit is computed when the TS is lower than 16. As PSR~J1028-5819 is already included and fitted in our model of the region of HESS J1026-5819 we did not report it in this table. PSR J1513-5908 and PSR J1702-4128 were detected after the 2FGL catalog analysis \citep{2012ApJS..199...31N}. Therefore no spectral parameters were available for these 2 pulsars.}
+ 
+\end{deluxetable}
+\normalsize
+\noindent
+\clearpage
+
+\begin{deluxetable}{llcccc}
+\tabletypesize{\scriptsize}
+\tablecaption{Pulsars characteristics.
+\tabletypesize{\scriptsize}
+\label{tab:table_luminosity}}
+\tablewidth{0pt}
+\input{tables/table_luminosity.tex}\\
+
+\tablecomments{This table summarizes the pulsars properties taken into account in this analysis to perform the populations studies in Figures \ref{fig:dotelpwn} \& \ref{fig:rapportX}. Column 3 shows the pulsar spin-down power as found in the litterature, column 4 and 5 present the characteristic age of the pulsar and its distance.\\References: (1) \cite{1973PASP...85..579T}, (2) \cite{2008MNRAS.389.1881K}, (3) \cite{2004MNRAS.352.1405C}, (4) \cite{dalton1303}, (5) \cite{2005yCat.7245....0M}, (6) \cite{2006MNRAS.372..777L}, (7) \cite{1997ApJ...476..347Y}, (8) \cite{2012ApJ...750..162K}, (9) \cite{2009ApJ...694...12M}, (10) \cite{1996ApJ...471..887S}, (11) \cite{1999ApJ...511..274S}, (12) \cite{2007ApJ...662..517F}, (13) \cite{2003MNRAS.342.1299K}, (14) \cite{1995A&A...293..795J},  (15) \cite{2001MNRAS.328...17M}, (16) \cite{2011ICRC....7..247H}, (17) \cite{2006ApJ...637..456C}, (18) \cite{2012ApJ...755L..20P}, (19) \cite{2008AIPC.1085..372C}, (20) \cite{2011ApJ...729L..16G}, (21) \cite{2010ApJ...708.1426W}, (22) \cite{2012ApJ...755...39V}, (23) \cite{1997ApJ...476..347Y}, (24) \cite{2004ApJ...612..389H}, (25) \cite{2009ApJ...706.1331A}, (26) \cite{2001ApJ...560..236K}, (27) \cite{1993AJ....105.1060P}, (28) \cite{2008AJ....136.1477L}, (29) \cite{2003ApJ...596.1137D}, (30) \cite{2010ApJ...725..571S}, (31) \cite{2009ApJ...691..895T}, (32) \cite{2010A&A...520A.111B}.}
 
 \end{deluxetable}
 \normalsize
 \noindent
 
+
+\normalsize
+\noindent
+\clearpage
+
+\begin{deluxetable}{llccccc}
+\tabletypesize{\scriptsize}
+\tablecaption{PWNe properties.
+\tabletypesize{\scriptsize}
+\label{tab:table_luminosity2}}
+\tablewidth{0pt}
+\input{tables/table_luminosity_2.tex}\\
+
+
+\tablecomments{This table summarizes the PWNe properties and the fluxes taken into account in this analysis to perform the populations studies in Figures \ref{fig:dotelpwn} \& \ref{fig:rapportX}. Column 2,3 and 4 summarize the fluxes found in the GeV (10-316 GeV) , TeV (1-30 TeV) and X-ray (2-10 keV) energy ranges. Column 5 shows the luminosity found using the energy flux in column 2 and the distance in Table \ref{tab:table_luminosity}. \\References : (1) \cite{2009ApJ...694...12M} and references therein, (2) \cite{2011AA...525A..46H}, (3) \cite{Mayerdiploma}, (4) \cite{2011AA...533A.103H}, (5) \cite{2012arXiv1205.0719D}, (6) \cite{2010A&A...520A.111B}, (7) \cite{2006ApJ...636..777A}, (8) \cite{2011arXiv1112.2901H}, (9) \cite{2008AA...477..353A}, (10) \cite{2008AIPC.1085..372C}, (11) \cite{2008AIPC.1085..312T}, (12) \cite{dalton1303}, (13) \cite{2012ApJ...750..162K}, (14) \cite{2009ApJ...691..895T}.}
+
+\end{deluxetable}
+\normalsize
+\noindent
+\clearpage
+
+\begin{deluxetable}{lcccc}
+\tabletypesize{\scriptsize}
+\tablecaption{Results of the fit of the IC peak.
+\tabletypesize{\scriptsize}
+\label{tab:Epeak}}
+\tablewidth{0pt}
+\input{tables/Epeak.tex}\\
+\tablecomments{}
+\end{deluxetable}
+\normalsize
+\noindent
