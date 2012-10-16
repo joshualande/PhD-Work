@@ -1,4 +1,4 @@
-manuscript = pwncat2
+manuscript = tevcat
 
 # These commands make sure no compression is applied
 # when running ps2pdf
