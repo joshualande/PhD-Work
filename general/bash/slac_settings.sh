@@ -123,7 +123,8 @@ function stockscons {
     #_stockscons HEAD-1-985 Debug
     #_stockscons HEAD-1-980 Debug
     
-    _stockscons 09-29-00 Optimized
+    #_stockscons 09-29-00 Optimized
+    _stockscons 09-30-01 Optimized
 }
 
 function testsconcs {
@@ -268,7 +269,7 @@ function setup_fermi_code {
     export diffuse=$fermi/diffuse
     export catalogs=$fermi/catalogs
     export extended_archives=$fermi/extended_archives
-    export GLOBALCAT=/afs/slac/g/glast/groups/catalog
+    export globalcat=/afs/slac/g/glast/groups/catalog
 }
 
 
@@ -394,6 +395,11 @@ function dm_satellite_setup {
 }
 
 
+function setup_tevcat {
+    export tevcat_paper=test
+}
+
+
 
 function setup_pwncat {
     export help_others=$HOME/work/fermi/help_others
@@ -406,10 +412,15 @@ function setup_pwncat {
     export pwndata=$svn/fermi/pwn/pwncat2/data
     export pwnmodify=$svn/fermi/pwn/pwncat2/modify
     export pwnpipeline=$nfs/fermi/pwn/pwncat2/pipeline
-    export pwn_off_peak_results=$nfs/fermi/pwn/pwncat2/off_peak/off_peak_bb/pwncat2
-    export pwn_off_peak_code=$svn/fermi/pwn/pwncat2/off_peak/
 
-    export pwnplots=~/svn/lande/trunk/pwncatalog/PWNCAT2/code/lande/publication_plots
+    export pwncat2_off_peak_results=$nfs/fermi/pwn/pwncat2/off_peak/off_peak_bb/pwncat2
+    export pwncat2_off_peak_code=$svn/fermi/pwn/pwncat2/off_peak/code
+    export pwncat2_off_peak_plots=$svn/fermi/pwn/pwncat2/off_peak/plots
+
+    export pwncat2_spectral_plots=$svn/fermi/pwn/pwncat2/plots
+    export pwncat2_spectral_website=$svn/fermi/pwn/pwncat2/website
+    export pwncat2_spectral_tables=$svn/fermi/pwn/pwncat2/tables
+
     export pwnpaper=~/svn/lande/trunk/pwncatalog/PWNCAT2/paper
     export pwnpersonal=/u/gl/lande/work/fermi/pwncatalog/PWNCAT2
     export pwnmc=~/svn/lande/trunk/pwncatalog/PWNCAT2/mc
@@ -483,6 +494,7 @@ function setup_defaults_slac {
     fix_matplotlib
     setup_extended_catalog
     setup_pwncat
+    setup_tevcat
     setup_pysed
     setup_snrsim
     setup_science_tools_dev 

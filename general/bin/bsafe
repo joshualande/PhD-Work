@@ -16,5 +16,3 @@ while True:
 
     print '%d currently running jobs. Waiting until < %d jobs to submit' % (num,args.limit)
     time.sleep(10)
-
-#time.sleep(4)
