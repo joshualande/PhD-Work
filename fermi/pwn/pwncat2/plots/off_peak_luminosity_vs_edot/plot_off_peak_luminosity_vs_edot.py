@@ -25,7 +25,7 @@ axes.set_yscale("log")
 
 
 classification=np.empty_like(psrlist,dtype=object)
-edot=np.empty_like(psrlist,dtype=float)
+Edot=np.empty_like(psrlist,dtype=float)
 luminosity=np.empty_like(psrlist,dtype=float)
 luminosity_lower_error=np.empty_like(psrlist,dtype=float)
 luminosity_upper_error=np.empty_like(psrlist,dtype=float)
@@ -37,7 +37,7 @@ for i,psr in enumerate(psrlist):
     classification[i]=cat.get_off_peak_classification(psr)
 
 
-    edot[i]=cat.get_edot(psr)
+    Edot[i]=cat.get_edot(psr)
 
     y, y_lower_err, y_upper_err, y_ul, significant  = cat.get_luminosity(psr)
     luminosity[i]=y
@@ -49,7 +49,7 @@ for i,psr in enumerate(psrlist):
 def plot(cut, **kwargs):
     # plot PWN
     print 'kwargs',kwargs
-    plot_points(edot[cut], luminosity[cut],
+    plot_points(Edot[cut], luminosity[cut],
                 xlo=None, xhi=None,
                 y_lower_err=luminosity_lower_error[cut],
                 y_upper_err=luminosity_upper_error[cut],
@@ -65,8 +65,20 @@ axes.plot([1e33,1e39],[0.01*1e33,0.01*1e39], dashes=[2,2], color=blue)
 
 plot((classification!='Pulsar')&(classification!='PWN'), color='black', marker='o', markerfacecolor='none', markersize=5)
 plot(classification=='Pulsar', color=blue, marker='s', markersize=5, markeredgecolor=blue, markerfacecolor='none')
-plot(classification=='PWN', color=red, marker='*', markersize=10, markerfacecolor=red)
-#plot(np.ones_like(edot,dtype=bool))
+plot(classification=='PWN', color=red, marker='*', markersize=10, markerfacecolor=red, markeredgecolor='red')
+
+for psr_name,print_name,kwargs in [
+    ['J0534+2200', 'Crab Nebula', dict(horizontalalignment='right', verticalalignment='bottom', xytext=(5,15), textcoords='offset points')],
+    ['J0835-4510', 'Vela X', dict(horizontalalignment='middle', verticalalignment='top', xytext=(-10,-8), textcoords='offset points')],
+    ['J1513-5908', 'MSH 15-52', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(10,0), textcoords='offset points')],
+    ['J0205+6449', 'J0205', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(7,-10), textcoords='offset points')],
+    ['J1357-6429', 'HESS J1356', dict(horizontalalignment='left', verticalalignment='middle', xytext=(10,0), textcoords='offset points')],
+]:
+    cut=np.where(psrlist==psr_name)[0][0]
+    axes.annotate(print_name,
+                  xy=[Edot[cut], luminosity[cut]], xycoords='data',
+                  color=red, **kwargs)
+
 
 
 axes.set_xlim(1e33,1e39)
