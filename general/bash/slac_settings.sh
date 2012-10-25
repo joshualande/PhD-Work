@@ -65,53 +65,11 @@ function fix_matplotlib {
 }
 
 
-function set_bldtype {
-    # Pick the $BILDTYPE based upon which version of red hat current computer is
-    if [[ `cat /etc/redhat-release` =~ "release 5" ]]; then
-        if [[ `uname -m` == i686 ]]; then
-            export BLDTYPE=redhat5-i686-32bit-gcc41
-        elif [[ `uname -m` == 'x86_64' ]]; then
-            export BLDTYPE=redhat5-x86_64-64bit-gcc41
-        else
-            echo 'ERROR: UNABLE TO DETERMINE COMPUTER TYPE'
-        fi
+# get functions for science tools
+SOURCE="${BASH_SOURCE[0]}"
+BASH_DIR="$( dirname "$SOURCE" )"
+source $BASH_DIR/science_tools.sh
 
-    elif [[ `cat /etc/redhat-release` =~ "release 6" ]]; then
-        if [[ `uname -m` == 'x86_64' ]]; then
-            export BLDTYPE=redhat6-x86_64-64bit-gcc44
-        else
-            echo 'ERROR: UNABLE TO DETERMINE COMPUTER TYPE'
-        fi
-
-    else
-        echo 'ERROR: UNABLE TO DETERMINE COMPUTER TYPE'
-    fi
-}
-
-
-function _stockscons {
-    export SCTOOLS=$1
-    export optflag=$2
-
-    set_bldtype
-    export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
-    export BUILDS=/nfs/farm/g/glast/u35/ReleaseManagerBuild
-    export INST_DIR=${BUILDS}/${BLDTYPE}/$optflag/ScienceTools/$SCTOOLS
-    source ${INST_DIR}/bin/${BLDTYPE}-$optflag/_setup.sh
-
-    #export PATH=$GLAST_EXT/python/2.7.1/gcc41/bin:$PATH
-    #export PATH=$GLAST_EXT/python/2.6.5/gcc41/bin:$PATH
-
-    # Get custom irfs
-    export CUSTOM_IRF_DIR=$FERMI/irfs
-    export CUSTOM_IRF_NAMES=P7SOURCE_V4PSF,P7SOURCE_V4
-
-
-    # get my version of ipython        
-    export PATH=~/bin:$PATH
-
-    export setup="${setup} stockscons"
-}
 
 function stockscons {
 #    _stockscons 09-27-01 Optimized
@@ -125,6 +83,15 @@ function stockscons {
     
     #_stockscons 09-29-00 Optimized
     _stockscons 09-30-01 Optimized
+
+
+    # Get custom irfs
+    #export CUSTOM_IRF_DIR=$FERMI/irfs
+    #export CUSTOM_IRF_NAMES=P7SOURCE_V4PSF,P7SOURCE_V4
+
+
+    # get my version of ipython        
+    #export PATH=~/bin:$PATH
 }
 
 function testsconcs {
@@ -300,7 +267,7 @@ function setup_general_slac_alias {
 export PYTHONPATH=$HOME/bin:$HOME/python:$PYTHONPATH
 
 function mathematica_setup {
-    PATH=$PATH:/afs/slac.stanford.edu/g/ki/software/Wolfram/Mathematica/6.0/Executables
+    PATH=$PATH:/afs/slac.stanford.edu/g/ki/software/Wolfram/Mathematica/8.0/Executables
 }
 
 export PATH=~/bin:~/svn/lande/trunk/general/bin/:$PATH
@@ -396,7 +363,7 @@ function dm_satellite_setup {
 
 
 function setup_tevcat {
-    export tevcat_paper=test
+    export tevcat_paper=$svn/fermi/tevcat/paper
 }
 
 
