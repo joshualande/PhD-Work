@@ -1,3 +1,12 @@
+function source_common_setups {
+    # Source common default programs.
+    SOURCE="${BASH_SOURCE[0]}"
+    BASH_DIR="$( dirname "$SOURCE" )"
+    source $BASH_DIR/science_tools.sh
+    source $BASH_DIR/kipac_setup.sh
+    source $BASH_DIR/analysis_setups.sh
+}
+source_common_setups
 
 
 function fixscreen {
@@ -8,55 +17,6 @@ function fixscreen {
     /usr/bin/aklog
 }
 
-
-function _kipac_base {
-    export KIPACSOFT=/afs/slac/g/ki/software
-}
-
-function pythonkipac {
-    _kipac_base 
-    #export PATH=$KIPACSOFT/python/2.6.2/amd64_linux26/bin:$PATH
-    export PATH=/afs/slac/g/ki/software/python/2.5.5/amd64_rhel50/bin/:$PATH
-    export PYTHONPATH=/afs/slac/g/ki/software/python/2.5.5/amd64_rhel50/lib/python2.5/:$PYTHONPATH
-}
-
-function ds9kipac {
-    _kipac_base
-
-    export PATH=$KIPACSOFT/ds9/6.1/amd64_linux26:$PATH
-
-    export setup="${setup} ds9"
-}
-
-function fvkipac {
-    _kipac_base
-
-    export HEADAS=`echo $KIPACSOFT/heasoft/6.9/$(sys)/heasoft/*-linux-gnu-libc2.3.4`
-    source $HEADAS/headas-init.sh
-    export PATH=$HEADAS/bin/:$PATH
-    export setup="${setup} fv"
-}
-
-function texlivekipac {
-    _kipac_base
-
-    # setup local tex build
-    #export PATH=/u/gl/lande/texlive/2010/bin/x86_64-linux:$PATH
-    export PATH=$KIPACSOFT/texlive/amd64_rhel60/amd64_rhel60/bin/x86_64-linux/:$PATH
-    export KIPACSOFT=/afs/slac/g/ki/software
-    export setup="${setup} texlive"
-}
-
-function kipacsetup {
-    # setup all the kipac software
-    fvkipac
-    ds9kipac
-    texlivekipac
-
-    export setup="${setup} kipac"
-}
-
-
 function fix_matplotlib {
     # This says to use file .matplotlib/matplotlibrc for my configuration
     export MATPLOTLIBRC=~/.matplotlib
@@ -65,33 +25,9 @@ function fix_matplotlib {
 }
 
 
-# get functions for science tools
-SOURCE="${BASH_SOURCE[0]}"
-BASH_DIR="$( dirname "$SOURCE" )"
-source $BASH_DIR/science_tools.sh
-
-
 function stockscons {
-#    _stockscons 09-27-01 Optimized
-#    _stockscons HEAD-1-972 Debug
-#    _stockscons 09-28-00 Optimized
-#    _stockscons HEAD-1-981 Debug
-
-    # This version has my variability bug fixed in skymaps
-    #_stockscons HEAD-1-985 Debug
-    #_stockscons HEAD-1-980 Debug
-    
-    #_stockscons 09-29-00 Optimized
     _stockscons 09-30-01 Optimized
-
-
-    # Get custom irfs
-    #export CUSTOM_IRF_DIR=$FERMI/irfs
-    #export CUSTOM_IRF_NAMES=P7SOURCE_V4PSF,P7SOURCE_V4
-
-
-    # get my version of ipython        
-    #export PATH=~/bin:$PATH
+    export PATH=~/bin:$PATH
 }
 
 function testsconcs {
@@ -130,58 +66,6 @@ function headscons {
     export setup=`echo $setup | sed 's/stockscons/headscons/g'`
 }
 
-
-function tempscons {
-    stockscons 
-    export temp=/u/gl/lande/temp
-    export PYTHONPATH=$temp:$PYTHONPATH
-    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
-    export python=$temp/uw/like
-    export setup=`echo $setup | sed 's/stockscons/tempscons/g'`
-}
-
-
-function setup_extended_catalog {
-    export PATH=~/svn/lande/trunk/extended_catalog/code/:~/svn/lande/trunk/pointlike/:$PATH
-    export PYTHONPATH=~/svn/lande/trunk/extended_catalog/code/:$PYTHONPATH
-
-    export w44simdata=$nfs/extended_catalog/monte_carlo/w44simdata
-    export w44simcode=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/w44sim/code
-    export w44simplots=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/w44sim/plots
-
-    export tsext_plane_data=$nfs/extended_catalog/monte_carlo/tsext/plane
-    export tsext_plane_code=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/tsext/plane/code
-    export tsext_plane_plots=/u/gl/lande/svn/lande/trunk/extended_catalog/monte_carlo/tsext/plane/plots
-
-}
-
-function setup_snr_low_energy {
-    export snr_low_energy_code=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/snr_low_energy/code
-    export snr_low_energy_plots=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/snr_low_energy/plots
-    export snr_low_energy_data=$nfs/fermi/snr_low_energy
-}
-
-
-
-function setup_svn {
-    export svn=/u/gl/lande/svn/lande/trunk
-}
-
-function setup_mc_testing {
-    export fitdiffdata=$FERMI/monte_carlo/test_mapcube_cutting/fitdiff
-    export fitdiffcode=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/test_mapcube_cutting/fitdiff/code
-    export fitdiffplots=/u/gl/lande/svn/lande/trunk/fermi/monte_carlo/test_mapcube_cutting/fitdiff/plots
-
-    export simsrccode=$svn/fermi/monte_carlo/simsrc/code
-    export simsrcplots=$svn/fermi/monte_carlo/simsrc/plots
-    export simsrcdata=$FERMI/monte_carlo/simsrc
-}
-
-
-function setup_personal_code {
-    export PYTHONPATH=~/svn/lande/trunk/code/:$PYTHONPATH
-}
-
 function devscons {
     # path of scons code
     set_bldtype
@@ -202,6 +86,18 @@ function devscons {
     export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
     export setup="${setup} sconsdev"
 }
+
+
+
+function setup_svn {
+    export svn=/u/gl/lande/svn/lande/trunk
+}
+
+
+function setup_personal_code {
+    export PYTHONPATH=~/svn/lande/trunk/code/:$PYTHONPATH
+}
+
 
 
 function build {
@@ -266,9 +162,6 @@ function setup_general_slac_alias {
 
 export PYTHONPATH=$HOME/bin:$HOME/python:$PYTHONPATH
 
-function mathematica_setup {
-    PATH=$PATH:/afs/slac.stanford.edu/g/ki/software/Wolfram/Mathematica/8.0/Executables
-}
 
 export PATH=~/bin:~/svn/lande/trunk/general/bin/:$PATH
 
