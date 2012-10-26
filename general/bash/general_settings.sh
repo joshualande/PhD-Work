@@ -7,9 +7,6 @@ function setup_terminal_tweaks {
     # http://blog.pclewis.com/2010/03/tip-make-bash-tab-completion-ignore-svn-directories/
     export FIGNORE=.svn 
 
-    set -o vi # vi like navigation of command line.
-    export EDITOR=vim
-
     # I like this simple prompt
     export PS1="\h:\W $ " 
 
@@ -64,7 +61,6 @@ function setup_alias_general {
         alias $input="ssh lande@$input.slac.stanford.edu"
     done
 
-    alias svnvimdiff='svn diff --diff-cmd ~/bin/svnvimdiff'
     alias svstat='svn stat'
 
 
@@ -87,10 +83,26 @@ function setup_svn_lande {
 }
 
 
+function setup_vim {
+    function vimdump {
+        if [[ ! $string =~ kipac ]]; 
+        then
+            kipacsetup 
+        fi
+        fdump $1 STDOUT - - page=no pagewidth=256 | vim -
+    }
+    alias svnvimdiff='svn diff --diff-cmd ~/bin/svnvimdiff'
+
+
+    set -o vi # vi like navigation of command line.
+    export EDITOR=vim
+}
+
 function setup_default_general {
     setup_terminal_tweaks
     setup_alias_general
     setup_python_general
     setup_svn_lande
+    setup_vim
 }
 setup_default_general

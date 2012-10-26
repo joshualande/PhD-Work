@@ -125,16 +125,6 @@ function buildgtlike {
     build setup
 }
 
-function setup_fermi_code {
-    export FERMI=$nfs/fermi
-    export fermi=$FERMI
-    export FERMILANDE=$FERMI # in case I have to share with others
-    export diffuse=$fermi/diffuse
-    export catalogs=$fermi/catalogs
-    export extended_archives=$fermi/extended_archives
-    export globalcat=/afs/slac/g/glast/groups/catalog
-}
-
 
 function setup_general_slac_alias {
 
@@ -149,16 +139,16 @@ function setup_general_slac_alias {
 
     export yajie=~yuanyj
 
-    alias f2f=fixed2fixed
-
-    function vimdump {
-        if [[ ! $string =~ kipac ]]; 
-        then
-            kipacsetup 
-        fi
-        fdump $1 STDOUT - - page=no pagewidth=256 | vim -
-    }
+    export FERMI=$nfs/fermi
+    export fermi=$FERMI
+    export FERMILANDE=$FERMI # in case I have to share with others
+    export diffuse=$fermi/diffuse
+    export catalogs=$fermi/catalogs
+    export extended_archives=$fermi/extended_archives
+    export globalcat=/afs/slac/g/glast/groups/catalog
 }
+
+
 
 export PYTHONPATH=$HOME/bin:$HOME/python:$PYTHONPATH
 
@@ -193,7 +183,7 @@ function setup_lsf {
 }
 
 
-function setup_science_tools_dev {
+function setup_science_tools_development {
     export CVSROOT=/nfs/slac/g/glast/ground/cvs
 
     # Get the program STAG
@@ -206,147 +196,10 @@ function tagCollector {
 }
 
 
-function snrcat1setup {
-    GREENCAT=$nfs/green_catalog/v1
-    PYTHONPATH=/u/gl/lande/svn/lande/trunk/green_catalog/v1:$PYTHONPATH
-
-    # collect here things specific to green catalog analysis
-    export SNRTEMPLATES=/afs/slac/g/glast/users/jhewitt/snrcat1_fits
-
-    export fits=/afs/slac/g/glast/groups/pulsar/snrcat1/fits
-    export superfile=~/svn/snrcat1/superfile
-    export PYTHONPATH=~/svn/snrcat1/code:$PYTHONPATH
-}
-
-
-function temposetup {
-    # Taken from Romain, who got it from Marie-Helene.
-    # For some reason, tempo2 can only be run in
-    # the cshell on rhel5-32 machines.
-    export TEMPO2=/afs/slac/g/glast/users/guillemot/tempo2/tempo2-1.11/T2runtime
-    export PATH=/afs/slac/g/glast/users/guillemot/tempo2/tempo2-1.11:${PATH}
-    export ephem='/afs/slac/g/glast/groups/pulsar/ephemeris'
-
-    # exmaple usage: 
-    #   http://fermi.gsfc.nasa.gov/ssc/data/analysis/user/Fermi_plug_doc.pdf
-    #   tempo2 -gr fermi -ft1 FT1.fits -ft2 FT2.fits -f pulsar.par -grdev toto.ps/cps -phase -col PULSE_PHASE
-
-    export setup="${setup} tempo2"
-}
-
-
-function CandA_paper_draft {
-    # Eric told me to add this to modify the C&A paper paper
-    export CVSROOT=/nfs/slac/g/glast/ground/paper_drafts
-    #cvs co ScienceGroups/CandA/Pass7Validation
-
-    #The paper is in this folder: /u/gl/lande/cvs/ScienceGroups/CandA/Pass7Validation
-
-    # Add text here on bad psf vs high level science
-    # /u/gl/lande/cvs/ScienceGroups/CandA/Pass7Validation/pointSpreadFunction/psfHighLevel.tex
-
-    # Add text here on
-    # 10 year vs 2 year sensitivity: to ~/cvs/ScienceGroups/CandA/Pass7Validation/sciencePerformance/perf_spatialExtent.tex
-
-}
-
-function dm_satellite_setup {
-    export SHERIDAN=~szalewsk
-}
-
-
-function setup_tevcat {
-    export tevcat_paper=$svn/fermi/tevcat/paper
-}
-
-
-
-function setup_pwncat {
-    export help_others=$HOME/work/fermi/help_others
-    export alice=~allafort/ki05/pwncatalog
-    export marianne=/nfs/farm/g/glast/u54/lemoine/PWNCat
-
-    export pwncode=$svn/fermi/pwn/pwncat2/pipeline
-    export pwnclassify=$svn/fermi/pwn/pwncat2/classify
-
-    export pwndata=$svn/fermi/pwn/pwncat2/data
-    export pwnmodify=$svn/fermi/pwn/pwncat2/modify
-    export pwnpipeline=$nfs/fermi/pwn/pwncat2/pipeline
-
-    export pwncat2_off_peak_results=$nfs/fermi/pwn/pwncat2/off_peak/off_peak_bb/pwncat2
-    export pwncat2_off_peak_code=$svn/fermi/pwn/pwncat2/off_peak/code
-    export pwncat2_off_peak_plots=$svn/fermi/pwn/pwncat2/off_peak/plots
-
-    export pwncat2_spectral_plots=$svn/fermi/pwn/pwncat2/plots
-    export pwncat2_spectral_website=$svn/fermi/pwn/pwncat2/website
-    export pwncat2_spectral_tables=$svn/fermi/pwn/pwncat2/tables
-
-    export pwnpaper=~/svn/lande/trunk/pwncatalog/PWNCAT2/paper
-    export pwnpersonal=/u/gl/lande/work/fermi/pwncatalog/PWNCAT2
-    export pwnmc=~/svn/lande/trunk/pwncatalog/PWNCAT2/mc
-
-    export tevdata=$nfs/pwncatalog/PWNCAT2/analyze_tev
-
-    export ozlem_2pc_data=/nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/dataset/SpectAn
-    export kerr_2pc_data=$ki03/fermi/2pc/data/
-    export pulsar_group=/afs/slac/g/glast/groups/pulsar
-
-    # These are depricated.
-    export KERRPSR=$nfs/pulsar
-    export OZLEMPSR=$ozlem_2pc_data 
-
-    export PYTHONPATH=$pwncode/lande/publication_plots/plot_helper:$PYTHONPATH
-    export PYTHONPATH=$pwncode/lande/tables:$PYTHONPATH
-    export PYTHONPATH=$pwncode/lande/off_peak:$PYTHONPATH
-
-    export extuldata=$pwndata/monte_carlo/extul
-    export extulcode=$pwnmc/extul
-    export extulplots=$pwnplots/extul
-
-    export PYTHONPATH=$PYTHONPATH:$HOME/svn/lande/trunk/pwncatalog/PWNCAT2/code
-
-    export lat2pc=/u/gl/lande/svn/lat2pc/trunk
-
-}
-
-
-
-function setup_pysed {
-    export PYTHONPATH=~/svn/lande/trunk/:$PYTHONPATH
-    export sed=~/svn/lande/trunk/pysed
-}
-
-function setup_snrsim {
-    export snr_sim_code=$svn/fermi/monte_carlo/snrsim/code
-    export snr_sim_sims=$FERMI/monte_carlo/snrsim/sims
-    export snr_sim_fits=$FERMI/monte_carlo/snrsim/fits
-}
-function epd_setup {
-    export PATH=/u/gl/lande/software/epd/bin:$PATH
-    export setup="${setup} epd"
-}
-
-function setup_snrlim {
-    export snrlimcode=$svn/fermi/snrlim/code
-    export snrlimfits=$fermi/snrlim/fits
-    export snrlimdata=$fermi/snrlim/data/aug_13_2012
-
-    export superfile=$HOME/svn/snrcat1/superfile/
-}
-
-function setup_radiopsrs {
-    export radiopsrsfits=$fermi/radiopsrs/fits
-    export radiopsrsdata=$fermi/radiopsrs/data
-}
-
-function setup_multiwavelength {
-    export multiwavelength=$svn/fermi/multiwavelength/
-}
 
 
 function setup_defaults_slac {
     setup_general_slac_alias
-    setup_fermi_code
     setup_svn
     setup_mc_testing
     setup_personal_code
@@ -357,7 +210,7 @@ function setup_defaults_slac {
     setup_tevcat
     setup_pysed
     setup_snrsim
-    setup_science_tools_dev 
+    setup_science_tools_development 
     setup_snr_low_energy
     setup_snrlim
     setup_radiopsrs
