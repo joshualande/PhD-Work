@@ -19,7 +19,7 @@ from lande.utilities import pubplot
 
 pubplot.set_latex_defaults()
 
-base='$pwn_off_peak_results/v6'
+base='$pwncat2_off_peak_results/v6'
 
 outdir = join(base,'plots')
 

@@ -17,7 +17,7 @@ cat=PulsarCatalogLoader(
 psrlist = cat.get_off_peak_psrlist()
 
 
-fig = P.figure(None,(6,6))
+fig = P.figure(None,(4,4))
 axes = fig.add_subplot(111)
 
 axes.set_xscale("log")
@@ -86,5 +86,7 @@ axes.set_ylim(1e31,1e37)
 
 axes.set_xlabel('$\dot E$ [erg s$^{-1}$]')
 axes.set_ylabel(r'$L_\mathrm{off\,peak}$ [erg s$^{-1}$]')
+
+fig.tight_layout()
 
 pubplot.save('off_peak_luminosity_vs_edot')
