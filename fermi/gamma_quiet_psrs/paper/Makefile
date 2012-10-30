@@ -1,4 +1,4 @@
-manuscript = gamma_quiet_pwn
+manuscript = gamma_quiet_psrs
 
 # These commands make sure no compression is applied
 # when running ps2pdf
