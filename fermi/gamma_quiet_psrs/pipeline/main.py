@@ -2,7 +2,7 @@
 
 from argparse import ArgumentParser
 
-from lande.fermi.pipeline.radiopsrs.analysis.pipeline import Pipeline
+from lande.fermi.pipeline.gamma_quiet_psrs.analysis.pipeline import Pipeline
 
 kwargs = Pipeline.get_kwargs()
 
