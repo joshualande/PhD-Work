@@ -1,0 +1,41 @@
+\documentclass[12pt,preprint]{aastex}
+
+\bibliographystyle{apj}
+
+%#For adding line numbers:
+\usepackage{lineno}
+\linenumbers
+
+
+%\usepackage{rotating}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+
+% Note, hyperref has to come after other packages!
+\usepackage{hyperref}
+
+\usepackage{color}
+
+% LaTeX stylings
+\input{style/style.tex}
+
+\graphicspath{{./figures/}}
+
+\begin{document}
+
+\title{\fermi-LAT Search for Pulsar Wind Nebulae Associated With High-$\dot E$ $\gamma$-Quiet Pulsars}
+\shorttitle{LAT PWNe Search in $\gamma$-Quiet PSRs}
+
+\input{sections/introduction.tex}
+\input{sections/method.tex}
+\input{sections/results.tex}
+\input{sections/discussion.tex}
+
+
+\bibliography{gamma_quiet_pwn}
+
+\appendix
+\input{sections/notes.tex}
+
+\end{document}
