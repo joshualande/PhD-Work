@@ -13,6 +13,7 @@ bigfile='$lat2pc/BigFile/Pulsars_BigFile_v20121002103223.fits'
 
 params=dict(name=names, 
             fast=True,
+            savedata=True
             bigfile=bigfile)
 params['radiopsr-data']=radiopsr_data
 b = PipelineBuilder(
