@@ -199,10 +199,6 @@ for extension_mc in extensions:
 
     r['TS_ext'] = 2*(r['extended']['logLikelihood'] - r['point']['logLikelihood'])
 
-    # Extension upper limit
-
-    # Then, compute TS_point & TS_ext
-
     results.append(r)
 
     rmtree(tempdir)
