@@ -1,5 +1,3 @@
-# These are my bash
-
 function setup_terminal_tweaks {
     [ -z "$PS1" ] && return
     export TERM=xterm-color

@@ -38,10 +38,6 @@ function setup_snrlim {
     export superfile=$HOME/svn/snrcat1/superfile/
 }
 
-function setup_radiopsrs {
-    export radiopsrsfits=$fermi/radiopsrs/fits
-    export radiopsrsdata=$fermi/radiopsrs/data
-}
 
 function setup_multiwavelength {
     export multiwavelength=$svn/fermi/multiwavelength/
@@ -63,12 +59,9 @@ function dm_satellite_setup {
     export SHERIDAN=~szalewsk
 }
 
-
 function setup_tevcat {
     export tevcat_paper=$svn/fermi/tevcat/paper
 }
-
-
 
 function setup_pwncat {
     export help_others=$HOME/work/fermi/help_others
@@ -108,10 +101,6 @@ function setup_pwncat {
     export PYTHONPATH=$pwncode/lande/tables:$PYTHONPATH
     export PYTHONPATH=$pwncode/lande/off_peak:$PYTHONPATH
 
-    export extuldata=$pwndata/monte_carlo/extul
-    export extulcode=$pwnmc/extul
-    export extulplots=$pwnplots/extul
-
     export PYTHONPATH=$PYTHONPATH:$HOME/svn/lande/trunk/pwncatalog/PWNCAT2/code
 
     export lat2pc=/u/gl/lande/svn/lat2pc/trunk
@@ -145,3 +134,38 @@ function snrcat1setup {
     export PYTHONPATH=~/svn/snrcat1/code:$PYTHONPATH
 }
 
+
+function gamma_quiet_psrs_setup {
+    export gamma_quiet_psrs_data=$svn/fermi/gamma_quiet_psrs/data
+    export gamma_quiet_psrs_pipeline=$svn/fermi/gamma_quiet_psrs/pipeline
+    export gamma_quiet_psrs_lat_data=$nfs/fermi/gamma_quiet_psrs/lat_data
+    export gamma_quiet_psrs_analysis=$nfs/fermi/gamma_quiet_psrs/analysis
+    export gamma_quiet_psrs_personal=$HOME/work/fermi/gamma_quiet_psrs
+    export gamma_quiet_psrs_paper=$svn/fermi/gamma_quiet_psrs/paper/
+    export gamma_quiet_psrs_code=$lande/fermi/pipeline/gamma_quiet_psrs
+    export gamma_quiet_psrs_website=$svn/fermi/gamma_quiet_psrs/website/
+
+
+}
+
+function extul_setup {
+    export extulresults=$nfs/fermi/extul
+    export extulcode=$svn/fermi/extul/code
+    export extulplots=$pwnplots/extul
+}
+
+function setup_defaults {
+    setup_extended_catalog
+    setup_snr_low_energy
+    setup_mc_testing
+    setup_snrlim
+    setup_multiwavelength
+    setup_pysed
+    setup_snrsim
+    dm_satellite_setup
+    setup_tevcat
+    setup_pwncat
+    gamma_quiet_psrs_setup
+    extul_setup
+}
+setup_defaults

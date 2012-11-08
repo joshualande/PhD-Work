@@ -195,25 +195,12 @@ function tagCollector {
     echo python tagCollector.py ScienceTools --new=HEAD -r True
 }
 
-
-
-
 function setup_defaults_slac {
     setup_general_slac_alias
     setup_svn
-    setup_mc_testing
     setup_personal_code
     setup_lsf
     fix_matplotlib
-    setup_extended_catalog
-    setup_pwncat
-    setup_tevcat
-    setup_pysed
-    setup_snrsim
     setup_science_tools_development 
-    setup_snr_low_energy
-    setup_snrlim
-    setup_radiopsrs
-    setup_multiwavelength
 }
 setup_defaults_slac
