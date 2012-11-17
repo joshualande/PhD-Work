@@ -1,0 +1,129 @@
+WARNING: PHASE SHIFT IS NONE
+/u/gl/lande/svn/lande/trunk/fermi/pwn/pwncat2/data/pwncat2_data_lande.yaml
+/nfs/slac/g/ki/ki03/lande/fermi/pwn/pwncat2/pipeline/v35/analysis
+Getting results for PSRJ0007+7303
+Getting results for PSRJ0023+0923
+Getting results for PSRJ0030+0451
+Getting results for PSRJ0034-0534
+Getting results for PSRJ0101-6422
+Getting results for PSRJ0102+4839
+Getting results for PSRJ0106+4855
+Getting results for PSRJ0205+6449
+Getting results for PSRJ0218+4232
+Getting results for PSRJ0248+6021
+Getting results for PSRJ0340+4130
+Getting results for PSRJ0357+3205
+Getting results for PSRJ0437-4715
+Getting results for PSRJ0534+2200
+Getting results for PSRJ0610-2100
+Getting results for PSRJ0613-0200
+Getting results for PSRJ0614-3329
+Getting results for PSRJ0622+3749
+Getting results for PSRJ0631+1036
+Getting results for PSRJ0633+0632
+Getting results for PSRJ0633+1746
+Getting results for PSRJ0659+1414
+Getting results for PSRJ0729-1448
+Getting results for PSRJ0734-1559
+Getting results for PSRJ0742-2822
+Getting results for PSRJ0751+1807
+Getting results for PSRJ0835-4510
+Getting results for PSRJ0908-4913
+Getting results for PSRJ0940-5428
+Getting results for PSRJ1016-5857
+Getting results for PSRJ1019-5749
+Getting results for PSRJ1023-5746
+Getting results for PSRJ1024-0719
+Getting results for PSRJ1028-5819
+Getting results for PSRJ1044-5737
+Getting results for PSRJ1048-5832
+Getting results for PSRJ1057-5226
+Getting results for PSRJ1105-6107
+Getting results for PSRJ1112-6103
+Getting results for PSRJ1119-6127
+Getting results for PSRJ1124-3653
+Getting results for PSRJ1124-5916
+Getting results for PSRJ1125-5825
+Getting results for PSRJ1135-6055
+Getting results for PSRJ1231-1411
+Getting results for PSRJ1357-6429
+Getting results for PSRJ1410-6132
+Getting results for PSRJ1413-6205
+Getting results for PSRJ1418-6058
+Getting results for PSRJ1420-6048
+Getting results for PSRJ1429-5911
+Getting results for PSRJ1446-4701
+Getting results for PSRJ1459-6053
+Getting results for PSRJ1509-5850
+Getting results for PSRJ1513-5908
+Getting results for PSRJ1514-4946
+Getting results for PSRJ1531-5610
+Getting results for PSRJ1600-3053
+Getting results for PSRJ1614-2230
+Getting results for PSRJ1620-4927
+Getting results for PSRJ1648-4611
+Getting results for PSRJ1658-5324
+Getting results for PSRJ1702-4128
+Getting results for PSRJ1709-4429
+Getting results for PSRJ1713+0747
+Getting results for PSRJ1718-3825
+Getting results for PSRJ1730-3350
+Getting results for PSRJ1732-3131
+Getting results for PSRJ1741+1351
+Getting results for PSRJ1741-2054
+Getting results for PSRJ1744-1134
+Getting results for PSRJ1746-3239
+Getting results for PSRJ1747-2958
+Getting results for PSRJ1747-4036
+Getting results for PSRJ1801-2451
+Getting results for PSRJ1803-2149
+Getting results for PSRJ1809-2332
+Getting results for PSRJ1810+1744
+Getting results for PSRJ1813-1246
+Getting results for PSRJ1823-3021A
+Getting results for PSRJ1826-1256
+Getting results for PSRJ1833-1034
+Getting results for PSRJ1835-1106
+Getting results for PSRJ1836+5925
+Getting results for PSRJ1838-0537
+Getting results for PSRJ1846+0919
+Getting results for PSRJ1858-2216
+Getting results for PSRJ1902-5105
+Getting results for PSRJ1907+0602
+Getting results for PSRJ1939+2134
+Getting results for PSRJ1952+3252
+Getting results for PSRJ1954+2836
+Getting results for PSRJ1957+5033
+Getting results for PSRJ1958+2846
+Getting results for PSRJ1959+2048
+Getting results for PSRJ2017+0603
+Getting results for PSRJ2021+3651
+Getting results for PSRJ2021+4026
+Getting results for PSRJ2028+3332
+Getting results for PSRJ2030+3641
+Getting results for PSRJ2030+4415
+Getting results for PSRJ2032+4127
+Getting results for PSRJ2043+1711
+Getting results for PSRJ2043+2740
+Getting results for PSRJ2047+1053
+Getting results for PSRJ2051-0827
+Getting results for PSRJ2055+2539
+Getting results for PSRJ2111+4606
+Getting results for PSRJ2124-3358
+Getting results for PSRJ2139+4716
+Getting results for PSRJ2214+3000
+Getting results for PSRJ2229+6114
+Getting results for PSRJ2238+5903
+Getting results for PSRJ2240+5832
+Getting results for PSRJ2241-5236
+Getting results for PSRJ2302+4442
+Number of pulsars = 24
+Pulsars ['PSRJ0034-0534', 'PSRJ0102+4839', 'PSRJ0218+4232', 'PSRJ0340+4130', 'PSRJ0631+1036', 'PSRJ0633+1746', 'PSRJ0734-1559', 'PSRJ0908-4913', 'PSRJ1044-5737', 'PSRJ1105-6107', 'PSRJ1124-5916', 'PSRJ1620-4927', 'PSRJ1744-1134', 'PSRJ1746-3239', 'PSRJ1747-2958', 'PSRJ1809-2332', 'PSRJ1813-1246', 'PSRJ1836+5925', 'PSRJ1838-0537', 'PSRJ2021+4026', 'PSRJ2043+1711', 'PSRJ2055+2539', 'PSRJ2124-3358', 'PSRJ2302+4442']
+Number of PWNe = 5
+PWNe ['PSRJ0205+6449', 'PSRJ0534+2200', 'PSRJ0835-4510', 'PSRJ1357-6429', 'PSRJ1513-5908']
+Number of UNIDs = 8
+UNID ['PSRJ0007+7303', 'PSRJ0106+4855', 'PSRJ1023-5746', 'PSRJ1112-6103', 'PSRJ1119-6127', 'PSRJ1410-6132', 'PSRJ1658-5324', 'PSRJ2032+4127']
+Number of Detected = 37
+Number of Actually Extended = 1
+Number of Should Be Extended = 10
+Should Be Extended =  ['PSRJ0835-4510', 'PSRJ0908-4913', 'PSRJ1023-5746', 'PSRJ1044-5737', 'PSRJ1105-6107', 'PSRJ1112-6103', 'PSRJ1410-6132', 'PSRJ1746-3239', 'PSRJ1838-0537', 'PSRJ2032+4127']

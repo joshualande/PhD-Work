@@ -1,0 +1,157 @@
+WARNING: PHASE SHIFT IS NONE
+PSRJ0007+7303 - classifications agree
+PSRJ0023+0923 - classifications agree
+PSRJ0030+0451 - classifications agree
+PSRJ0034-0534 - classifications agree
+PSRJ0101-6422 - classifications do not agree
+                               automatic               manual
+  - spectral model:             PowerLaw                  nan
+  - spatial model:                 Point                  nan
+  - source class:               Confused          Upper_Limit
+PSRJ0102+4839 - classifications agree
+PSRJ0106+4855 - classifications agree
+PSRJ0205+6449 - classifications do not agree
+                               automatic               manual
+  - spectral model:             PowerLaw             PowerLaw
+  - spatial model:                 Point                Point
+  - source class:               Confused                  PWN
+PSRJ0218+4232 - classifications agree
+PSRJ0248+6021 - classifications agree
+PSRJ0340+4130 - classifications agree
+PSRJ0357+3205 - classifications agree
+PSRJ0437-4715 - classifications agree
+PSRJ0534+2200 - classifications do not agree
+                               automatic               manual
+  - spectral model:         FileFunction         FileFunction
+  - spatial model:                 Point                Point
+  - source class:               Confused                  PWN
+PSRJ0610-2100 - classifications agree
+PSRJ0613-0200 - classifications agree
+PSRJ0614-3329 - classifications agree
+PSRJ0622+3749 - classifications agree
+PSRJ0631+1036 - classifications agree
+PSRJ0633+0632 - classifications agree
+PSRJ0633+1746 - classifications agree
+PSRJ0659+1414 - classifications agree
+PSRJ0729-1448 - classifications agree
+PSRJ0734-1559 - classifications agree
+PSRJ0742-2822 - classifications agree
+PSRJ0751+1807 - classifications agree
+PSRJ0835-4510 - classifications do not agree
+                               automatic               manual
+  - spectral model:     PLSuperExpCutoff             PowerLaw
+  - spatial model:             At_Pulsar             Extended
+  - source class:                 Pulsar                  PWN
+PSRJ0908-4913 - classifications agree
+PSRJ0940-5428 - classifications agree
+PSRJ1016-5857 - classifications agree
+PSRJ1019-5749 - classifications agree
+PSRJ1023-5746 - classifications do not agree
+                               automatic               manual
+  - spectral model:             PowerLaw             PowerLaw
+  - spatial model:              Extended                Point
+  - source class:               Confused             Confused
+PSRJ1024-0719 - classifications agree
+PSRJ1028-5819 - classifications agree
+PSRJ1044-5737 - classifications agree
+PSRJ1048-5832 - classifications agree
+PSRJ1057-5226 - classifications agree
+PSRJ1105-6107 - classifications agree
+PSRJ1112-6103 - classifications do not agree
+                               automatic               manual
+  - spectral model:             PowerLaw             PowerLaw
+  - spatial model:              Extended                Point
+  - source class:               Confused             Confused
+PSRJ1119-6127 - classifications agree
+PSRJ1124-3653 - classifications agree
+PSRJ1124-5916 - classifications agree
+PSRJ1125-5825 - classifications agree
+PSRJ1135-6055 - classifications agree
+PSRJ1231-1411 - classifications agree
+PSRJ1357-6429 - classifications do not agree
+                               automatic               manual
+  - spectral model:             PowerLaw             PowerLaw
+  - spatial model:                 Point                Point
+  - source class:               Confused                  PWN
+PSRJ1410-6132 - classifications do not agree
+                               automatic               manual
+  - spectral model:             PowerLaw             PowerLaw
+  - spatial model:              Extended                Point
+  - source class:               Confused             Confused
+PSRJ1413-6205 - classifications agree
+PSRJ1418-6058 - classifications agree
+PSRJ1420-6048 - classifications agree
+PSRJ1429-5911 - classifications agree
+PSRJ1446-4701 - classifications agree
+PSRJ1459-6053 - classifications agree
+PSRJ1509-5850 - classifications agree
+PSRJ1513-5908 - classifications do not agree
+                               automatic               manual
+  - spectral model:             PowerLaw             PowerLaw
+  - spatial model:                 Point                Point
+  - source class:               Confused                  PWN
+PSRJ1514-4946 - classifications agree
+PSRJ1531-5610 - classifications agree
+PSRJ1600-3053 - classifications agree
+PSRJ1614-2230 - classifications agree
+PSRJ1620-4927 - classifications agree
+PSRJ1648-4611 - classifications agree
+PSRJ1658-5324 - classifications agree
+PSRJ1702-4128 - classifications agree
+PSRJ1709-4429 - classifications agree
+PSRJ1713+0747 - classifications agree
+PSRJ1718-3825 - classifications agree
+PSRJ1730-3350 - classifications agree
+PSRJ1732-3131 - classifications agree
+PSRJ1741+1351 - classifications agree
+PSRJ1741-2054 - classifications agree
+PSRJ1744-1134 - classifications agree
+PSRJ1746-3239 - classifications agree
+PSRJ1747-2958 - classifications agree
+PSRJ1747-4036 - classifications agree
+PSRJ1801-2451 - classifications agree
+PSRJ1803-2149 - classifications agree
+PSRJ1809-2332 - classifications agree
+PSRJ1810+1744 - classifications agree
+PSRJ1813-1246 - classifications agree
+PSRJ1823-3021A - classifications agree
+PSRJ1826-1256 - classifications agree
+PSRJ1833-1034 - classifications agree
+PSRJ1835-1106 - classifications agree
+PSRJ1836+5925 - classifications agree
+PSRJ1838-0537 - classifications agree
+PSRJ1846+0919 - classifications agree
+PSRJ1858-2216 - classifications agree
+PSRJ1902-5105 - classifications agree
+PSRJ1907+0602 - classifications agree
+PSRJ1939+2134 - classifications agree
+PSRJ1952+3252 - classifications agree
+PSRJ1954+2836 - classifications agree
+PSRJ1957+5033 - classifications agree
+PSRJ1958+2846 - classifications agree
+PSRJ1959+2048 - classifications agree
+PSRJ2017+0603 - classifications agree
+PSRJ2021+3651 - classifications agree
+PSRJ2021+4026 - classifications agree
+PSRJ2028+3332 - classifications agree
+PSRJ2030+3641 - classifications agree
+PSRJ2030+4415 - classifications agree
+PSRJ2032+4127 - classifications do not agree
+                               automatic               manual
+  - spectral model:             PowerLaw             PowerLaw
+  - spatial model:              Extended                Point
+  - source class:               Confused             Confused
+PSRJ2043+1711 - classifications agree
+PSRJ2043+2740 - classifications agree
+PSRJ2047+1053 - classifications agree
+PSRJ2051-0827 - classifications agree
+PSRJ2055+2539 - classifications agree
+PSRJ2111+4606 - classifications agree
+PSRJ2124-3358 - classifications agree
+PSRJ2139+4716 - classifications agree
+PSRJ2214+3000 - classifications agree
+PSRJ2229+6114 - classifications agree
+PSRJ2238+5903 - classifications agree
+PSRJ2240+5832 - classifications agree
+PSRJ2241-5236 - classifications agree
+PSRJ2302+4442 - classifications agree
