@@ -1,3 +1,4 @@
+# Notes, fixing PSRJ0631+1036 - Joshua 11/17/2012
 # Notes: Preliminary list clasifying all 113 pulsars - Joshua Lande 9/23/2012
 PSRJ0007+7303: 
     source_class: Confused
@@ -48,7 +49,7 @@ PSRJ0610-2100: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ0613-0200: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
 PSRJ0614-3329: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
 PSRJ0622+3749: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
-PSRJ0631+1036: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0631+1036: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
 PSRJ0633+0632: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ0633+1746: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
 PSRJ0659+1414: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
