@@ -821,3 +821,12 @@ echo python \$pwncode/loop_pwn.py \
         -o $pwnpipeline/v35/analysis
 
 # ----------------------------------------------------------------------------------------------------
+
+echo python \$pwncode/loop_pwn.py \
+        --pwndata \\\$pwndata/pwncat2_data_lande.yaml \
+        --pwnphase \\\$pwndata/pwncat2_phase_lande.yaml  \
+        --modify \\\$pwnmodify/modify_psr_lande.py \
+        --max-free 5  --no-savedir \
+        -o $pwnpipeline/v36/analysis
+
+# ----------------------------------------------------------------------------------------------------
