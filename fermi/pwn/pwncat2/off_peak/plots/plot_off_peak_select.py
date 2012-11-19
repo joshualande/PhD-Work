@@ -27,21 +27,6 @@ r=join(base,'analysis')
 
 bw = pubplot.get_bw()
 
-#cutoff_candidates = ['PSRJ0034-0534', 'PSRJ0633+1746', 'PSRJ1813-1246', 'PSRJ1836+5925', 
-#                     'PSRJ2021+4026', 'PSRJ2055+2539', 'PSRJ2124-3358']
-
-"""
-cutoff_candidates = [['PSRJ0007+7303', 400, ], # CTA 1
-                     ['PSRJ0534+2200', 800, ], # Crab
-                     ['PSRJ0633+1746', 400, ], # Geminga - strong off peak emission
-                     ['PSRJ0835-4510', 800, ], # Vela
-                     ['PSRJ1702-4128', 200, ], # Very weak guy
-                     ['PSRJ1747-4036', 100, ], # Very weak guy
-                     ['PSRJ1801-2451', 200, ], # two regions
-                     ['PSRJ2021+4026', 200, ], # Gamma-Cygni
-                    ]
-"""
-
 cutoff_candidates = [['PSRJ0205+6449',100],
                      ['PSRJ1357-6429',100],
                      ['PSRJ1410-6132',100],
@@ -85,6 +70,12 @@ for i,(pwn,nbins) in enumerate(pwnlist):
     blocks = results['blocks']
     off_peak_phase = results['off_peak_phase']
 
+    import pickle
+    jd = pickle.load(open('/nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/General/josh_dicts.pickle'))
+    offset = float(jd[pwn.replace('PSRJ','J')]['shift'])
+
+    print pwn,offset
+
     plot_phaseogram_blocks(ft1, skydir=skydir, 
                            emin=emin, emax=emax, radius=radius, 
                            phase_range=off_peak_phase, 
@@ -94,6 +85,7 @@ for i,(pwn,nbins) in enumerate(pwnlist):
                            nbins=nbins,
                            repeat_phase=False,
                            data_kwargs=dict(color='black', linewidth=0.5),
+                           offset=offset,
                            axes=axes)
 
 
