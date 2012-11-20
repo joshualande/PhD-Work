@@ -112,15 +112,15 @@ PSRJ1125-5825: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ1135-6055: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1231-1411: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1357-6429: 
-    source_class: PWN
+    source_class: Upper_Limit
     spatial_model: Point
     spectral_model: PowerLaw
     notes : >
-        This source shows a very hard spectrum.
         I think it is HESS J1356-645, which will be more fully analyzed in 
         the TeVCatalog that Romain is working on.
         See, for example http://arxiv.org/abs/1108.2855 and 
         http://tevcat.uchicago.edu/?mode=1&showsrc=170
+        For now, we dont quite detect it in our analysis
 PSRJ1410-6132: 
     source_class: Confused
     spatial_model: Point
