@@ -11,7 +11,7 @@ pubplot.set_latex_defaults()
 bw = pubplot.get_bw()
 
 cat=PulsarCatalogLoader(
-    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20121002103223.fits',
+    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20121108102909.fits',
     off_peak_auxiliary_filename='$lat2pc/OffPeak/tables/off_peak_auxiliary_table.fits')
 
 psrlist = cat.get_off_peak_psrlist()
@@ -68,11 +68,10 @@ plot(classification=='Pulsar', color=blue, marker='s', markersize=5, markeredgec
 plot(classification=='PWN', color=red, marker='*', markersize=10, markerfacecolor=red, markeredgecolor='red')
 
 for psr_name,print_name,kwargs in [
-    ['J0534+2200', 'Crab Nebula', dict(horizontalalignment='right', verticalalignment='bottom', xytext=(5,15), textcoords='offset points')],
-    ['J0835-4510', 'Vela X', dict(horizontalalignment='middle', verticalalignment='top', xytext=(-10,-8), textcoords='offset points')],
-    ['J1513-5908', 'MSH 15-52', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(10,0), textcoords='offset points')],
-    ['J0205+6449', 'J0205', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(7,-10), textcoords='offset points')],
-    ['J1357-6429', 'HESS J1356', dict(horizontalalignment='left', verticalalignment='middle', xytext=(10,0), textcoords='offset points')],
+    ['J0534+2200', 'Crab Nebula', dict(horizontalalignment='right', verticalalignment='bottom', xytext=(10,10), textcoords='offset points')],
+    ['J0835-4510', 'Vela X', dict(horizontalalignment='middle', verticalalignment='top', xytext=(-20,-15), textcoords='offset points')],
+    ['J1513-5908', 'MSH 15-52', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(-2,-20), textcoords='offset points')],
+    ['J0205+6449', 'J0205', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(3,-10), textcoords='offset points')],
 ]:
     cut=np.where(psrlist==psr_name)[0][0]
     axes.annotate(print_name,
