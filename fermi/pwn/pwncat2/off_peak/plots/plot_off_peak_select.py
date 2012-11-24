@@ -27,8 +27,8 @@ r=join(base,'analysis')
 
 bw = pubplot.get_bw()
 
-cutoff_candidates = [['PSRJ0205+6449',100],
-                     ['PSRJ1357-6429',100],
+cutoff_candidates = [['PSRJ0007+7303',100],
+                     ['PSRJ0205+6449',100],
                      ['PSRJ1410-6132',100],
                      ['PSRJ1747-2958',100],
                      ['PSRJ2021+4026',100],
