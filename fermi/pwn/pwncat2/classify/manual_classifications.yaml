@@ -1,5 +1,7 @@
-# Notes, fixing PSRJ0631+1036 - Joshua 11/17/2012
-# Notes: Preliminary list clasifying all 113 pulsars - Joshua Lande 9/23/2012
+# Notes:
+#  * Updating from v35 to v36 - JL 11/24/2012
+#  * fixing PSRJ0631+1036 - Joshua 11/17/2012
+#  * Preliminary list clasifying all 113 pulsars - Joshua Lande 9/23/2012
 PSRJ0007+7303: 
     source_class: Confused
     spatial_model: Point
@@ -15,14 +17,15 @@ PSRJ0101-6422:
     spatial_model: .nan 
     spectral_model: .nan
     notes: >
-        This is the source that is unphysically soft. 
+        This is the source that during the v35 analysis was
+        unphysically soft. 
         Also, the cutoff test failed due to the cutoff spectrum
         being allowed to be much softer than index=-5.
-        Here, we just quote an upper limit to avoid confusion.
-        and try not to worry too 
-        much about it.
+        In the v36 analysis (with the smaller phase range),
+        it was found to be just a flux upper limit so all is
+        well with the new analysis.
 PSRJ0102+4839: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff, notes: "Good!"}
-PSRJ0106+4855: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
+PSRJ0106+4855: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ0205+6449:
     source_class: PWN
     spatial_model: Point
@@ -113,14 +116,16 @@ PSRJ1135-6055: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ1231-1411: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1357-6429: 
     source_class: Upper_Limit
-    spatial_model: Point
-    spectral_model: PowerLaw
+    spatial_model: .nan
+    spectral_model: .nan
     notes : >
         I think it is HESS J1356-645, which will be more fully analyzed in 
         the TeVCatalog that Romain is working on.
         See, for example http://arxiv.org/abs/1108.2855 and 
         http://tevcat.uchicago.edu/?mode=1&showsrc=170
-        For now, we dont quite detect it in our analysis
+        In v35, it was detected (with TS just barely above 25).
+        With v36 (and a smaller phase range,
+        we dont quite detect it.
 PSRJ1410-6132: 
     source_class: Confused
     spatial_model: Point
@@ -159,7 +164,7 @@ PSRJ1730-3350: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ1732-3131: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1741+1351: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1741-2054: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
-PSRJ1744-1134: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
+PSRJ1744-1134: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1746-3239: 
     source_class: Pulsar
     spatial_model: At_Pulsar
