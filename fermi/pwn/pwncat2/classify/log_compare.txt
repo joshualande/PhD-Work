@@ -3,11 +3,7 @@ PSRJ0007+7303 - classifications agree
 PSRJ0023+0923 - classifications agree
 PSRJ0030+0451 - classifications agree
 PSRJ0034-0534 - classifications agree
-PSRJ0101-6422 - classifications do not agree
-                               automatic               manual
-  - spectral model:             PowerLaw                  nan
-  - spatial model:                 Point                  nan
-  - source class:               Confused          Upper_Limit
+PSRJ0101-6422 - classifications agree
 PSRJ0102+4839 - classifications agree
 PSRJ0106+4855 - classifications agree
 PSRJ0205+6449 - classifications do not agree
@@ -46,11 +42,7 @@ PSRJ0908-4913 - classifications agree
 PSRJ0940-5428 - classifications agree
 PSRJ1016-5857 - classifications agree
 PSRJ1019-5749 - classifications agree
-PSRJ1023-5746 - classifications do not agree
-                               automatic               manual
-  - spectral model:             PowerLaw             PowerLaw
-  - spatial model:              Extended                Point
-  - source class:               Confused             Confused
+PSRJ1023-5746 - classifications agree
 PSRJ1024-0719 - classifications agree
 PSRJ1028-5819 - classifications agree
 PSRJ1044-5737 - classifications agree
@@ -68,11 +60,7 @@ PSRJ1124-5916 - classifications agree
 PSRJ1125-5825 - classifications agree
 PSRJ1135-6055 - classifications agree
 PSRJ1231-1411 - classifications agree
-PSRJ1357-6429 - classifications do not agree
-                               automatic               manual
-  - spectral model:             PowerLaw             PowerLaw
-  - spatial model:                 Point                Point
-  - source class:               Confused                  PWN
+PSRJ1357-6429 - classifications agree
 PSRJ1410-6132 - classifications do not agree
                                automatic               manual
   - spectral model:             PowerLaw             PowerLaw
