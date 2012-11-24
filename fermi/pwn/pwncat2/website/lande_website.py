@@ -6,9 +6,16 @@ from lande.fermi.pipeline.pwncat2.website.builder import WebsiteBuilder
 #                     webdir='$pwndata/spectral/v29/website')
 #builder.build()
 
+#builder=WebsiteBuilder(
+#                     pwndata='$pwndata/pwncat2_data_lande.yaml',
+#                     fitdir='$pwnpipeline/v36/analysis',
+#                     webdir='$pwnpipeline/v36/website')
+#builder.build()
+
+
 builder=WebsiteBuilder(
                      pwndata='$pwndata/pwncat2_data_lande.yaml',
-                     fitdir='$pwnpipeline/v35/analysis',
-                     webdir='$pwnpipeline/v35/website')
+                     fitdir='$pwnpipeline/v36/analysis',
+                     webdir='$pwnpipeline/v36/website')
 builder.build()
 
