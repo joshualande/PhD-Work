@@ -36,8 +36,8 @@ classifier = PWNManualClassifier(loader=loader,
 
 
 
-cutoff_candidates = ['PSRJ0205+6449', 
-                     'PSRJ1357-6429', 
+cutoff_candidates = ['PSRJ0007+7303',
+                     'PSRJ0205+6449', 
                      'PSRJ1410-6132',
                      'PSRJ1747-2958',
                      'PSRJ2021+4026', 
