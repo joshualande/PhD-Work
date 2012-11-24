@@ -27,8 +27,16 @@ nconfused = 0
 confused = []
 
 n_actually_extended = 0
-n_should_be_extended = 0
-should_be_extended = []
+
+n_formally_extended = 0
+formally_extended = []
+
+n_formally_extended_pulsars = 0
+formally_extended_pulsars = []
+
+
+n_formally_extended_confused = 0
+formally_extended_confused = []
 
 for pwn in pwnlist:
     try:
@@ -40,8 +48,16 @@ for pwn in pwnlist:
             n_actually_extended +=1
 
         if 'ts_ext' in res and res['ts_ext'] >= 16:
-            n_should_be_extended +=1
-            should_be_extended.append(pwn)
+            n_formally_extended +=1
+            formally_extended.append(pwn)
+
+            if c['source_class'] == 'Pulsar':
+                n_formally_extended_pulsars +=1
+                formally_extended_pulsars.append(pwn)
+
+            if c['source_class'] == 'Confused':
+                n_formally_extended_confused +=1
+                formally_extended_confused.append(pwn)
 
         if c['source_class'] == 'Pulsar':
             npsr += 1
@@ -74,8 +90,16 @@ print 'UNID', confused
 
 print 'Number of Detected = %s' % ndetect
 print 'Number of Actually Extended = %s' % n_actually_extended
-print 'Number of Should Be Extended = %s' % n_should_be_extended
-print 'Should Be Extended = ', should_be_extended
+
+print 'Number of Formally Extended = %s' % n_formally_extended
+print 'Formally Extended = ', formally_extended
+
+print 'Number of Formally Extended Pulsars = %s' % n_formally_extended_pulsars
+print 'Formally Extended Pulsars = ', formally_extended_pulsars
+
+print 'Number of Formally Extended Confused = %s' % n_formally_extended_confused
+print 'Formally Extended Confused = ', formally_extended_confused
+
 
 
 

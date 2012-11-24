@@ -76,9 +76,9 @@ PSRJ0940-5428: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ1016-5857: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1019-5749: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1023-5746: 
-    source_class: Confused
-    spatial_model: Point
-    spectral_model: PowerLaw
+    source_class: Pulsar
+    spatial_model: At_Pulsar
+    spectral_model: PLSuperExpCutoff
     notes : >  
         This source was found in PWNCAT1 (arXiv:1011.2076), but in 
         our analysis the interpretation is much more confused
