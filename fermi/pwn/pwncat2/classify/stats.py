@@ -5,7 +5,7 @@ from lande.fermi.pipeline.pwncat2.interp.loader import PWNResultsLoader
 
 loader = PWNResultsLoader(
     pwndata="$pwndata/pwncat2_data_lande.yaml",
-    fitdir="$pwnpipeline/v35/analysis"
+    fitdir="$pwnpipeline/v36/analysis"
 )
 print loader.pwndata
 print loader.fitdir
