@@ -22,12 +22,12 @@ pubplot.set_latex_defaults()
 
 bw = pubplot.get_bw()
 
-base='$pwnpipeline/v35/'
+base='$pwnpipeline/v36/'
 fitdir=expandvars(join(base,'analysis'))
 
 loader = PWNResultsLoader(
     pwndata='$pwndata/pwncat2_data_lande.yaml',
-    fitdir='$pwnpipeline/v35/analysis',
+    fitdir='$pwnpipeline/v36/analysis',
     #phase_shift='/u/gl/kerrm/pulsar/share/python/checklist.py'
     )
 
@@ -53,7 +53,7 @@ ncols,nrows = 2,3
 fig = P.figure(None,(6,6))
 grid = Grid(fig, 111, nrows_ncols = (nrows, ncols), 
             axes_pad=0.0,
-            axes_class=(SpectralAxes, dict()),
+            axes_class=(SpectralAxes, dict(energy_units='GeV')),
            )
 
 
@@ -82,7 +82,7 @@ grid[4].set_ylabel('')
 for i in range(nrows*ncols):
     axes=grid[i]
     #axes.set_xlim_units(10**2*units.MeV,10**5.5*units.MeV)
-    axes.set_xlim(10**2,10**5.5)
+    axes.set_xlim(0.1,10**2.5)
     #axes.set_ylim_units(1e-13*units.erg/units.cm**2/units.s,1e-9*units.erg/units.cm**2/units.s)
     axes.set_ylim(1e-13,1e-9)
 fix_yaxesgrid(grid)
