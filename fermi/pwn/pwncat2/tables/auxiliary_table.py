@@ -12,7 +12,7 @@ auxiliary_table(
 auxiliary_table(
     pwndata='$pwndata/pwncat2_data_lande.yaml',
     phase_shift='/nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/General/josh_dicts.pickle',
-    fitdir='$pwnpipeline/v35/analysis',
-    filename='$pwnpipeline/v35/tables/off_peak_auxiliary_table.fits',
+    fitdir='$pwnpipeline/v36/analysis',
+    filename='$pwnpipeline/v36/tables/off_peak_auxiliary_table.fits',
     pwn_classification='$pwnclassify/manual_classifications.yaml'
 )

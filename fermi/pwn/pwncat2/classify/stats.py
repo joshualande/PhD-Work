@@ -1,3 +1,5 @@
+import numpy as np
+
 from lande.fermi.pipeline.pwncat2.interp.classify import PWNManualClassifier,PWNClassifierException
 from lande.fermi.pipeline.pwncat2.interp.loader import PWNResultsLoader
 
@@ -38,11 +40,15 @@ formally_extended_pulsars = []
 n_formally_extended_confused = 0
 formally_extended_confused = []
 
+all_tsvar = []
+
 for pwn in pwnlist:
     try:
         c = classifier.get_classification(pwn)
 
         res = classifier.get_results(pwn)
+
+        all_tsvar.append(res['ts_var'])
 
         if c['spatial_model'] == 'Extended':
             n_actually_extended +=1
@@ -101,5 +107,4 @@ print 'Number of Formally Extended Confused = %s' % n_formally_extended_confused
 print 'Formally Extended Confused = ', formally_extended_confused
 
 
-
-
+print 'ALL TS_Var',np.sort(all_tsvar).tolist()
