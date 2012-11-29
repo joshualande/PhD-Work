@@ -37,7 +37,7 @@ PSRJ0835-4510 - classifications do not agree
                                automatic               manual
   - spectral model:     PLSuperExpCutoff             PowerLaw
   - spatial model:             At_Pulsar             Extended
-  - source class:                 Pulsar                  PWN
+  - source class:        Pulsar_Confused                  PWN
 PSRJ0908-4913 - classifications agree
 PSRJ0940-5428 - classifications agree
 PSRJ1016-5857 - classifications agree

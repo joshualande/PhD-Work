@@ -67,7 +67,7 @@ PSRJ0835-4510:
     notes: >
         This is Vela X!
 PSRJ0908-4913: 
-    source_class: Pulsar
+    source_class: Pulsar_Confused
     spatial_model: At_Pulsar
     spectral_model: PLSuperExpCutoff
     notes : >
@@ -76,7 +76,7 @@ PSRJ0940-5428: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ1016-5857: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1019-5749: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1023-5746: 
-    source_class: Pulsar
+    source_class: Pulsar_Confused
     spatial_model: At_Pulsar
     spectral_model: PLSuperExpCutoff
     notes : >  
@@ -89,7 +89,7 @@ PSRJ1023-5746:
 PSRJ1024-0719: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan} 
 PSRJ1028-5819: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan} 
 PSRJ1044-5737: 
-    source_class: Pulsar
+    source_class: Pulsar_Confused
     spatial_model: At_Pulsar
     spectral_model: PLSuperExpCutoff
     notes : >
@@ -97,7 +97,7 @@ PSRJ1044-5737:
 PSRJ1048-5832: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1057-5226: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1105-6107: 
-    source_class: Pulsar
+    source_class: Pulsar_Confused
     spatial_model: At_Pulsar
     spectral_model: PLSuperExpCutoff
     notes : >
@@ -166,7 +166,7 @@ PSRJ1741+1351: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ1741-2054: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1744-1134: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1746-3239: 
-    source_class: Pulsar
+    source_class: Pulsar_Confused
     spatial_model: At_Pulsar
     spectral_model: PLSuperExpCutoff
     notes: > 
@@ -183,7 +183,12 @@ PSRJ1826-1256: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ1833-1034: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1835-1106: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1836+5925: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
-PSRJ1838-0537: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
+PSRJ1838-0537: 
+    source_class: Pulsar_Confused
+    spatial_model: At_Pulsar
+    spectral_model: PLSuperExpCutoff
+    notes: >
+        Formally extended
 PSRJ1846+0919: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1858-2216: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ1902-5105: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
