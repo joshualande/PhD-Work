@@ -82,20 +82,20 @@ axes.plot([1e33,1e39],[0.01*1e33,0.01*1e39], dashes=[2,2], color=black, zorder=1
 
 capsize=3
 
-plot_stat((classification!='Confused')&(classification!='Pulsar')&(classification!='PWN'),
+plot_stat((classification!='U')&(classification!='M')&(classification!='M*')&(classification!='W'),
           marker='None', markersize=5, color='gray', zorder=1.5, elinewidth=0.5)
 
-assert np.all(luminosity_significant[classification=='Confused']==True)
-plot_sys(classification=='Confused', color=black, marker='None', zorder=5-0.1, elinewidth=0.25, capsize=capsize)
-plot_stat(classification=='Confused', color=green, marker='o', markeredgecolor=green, markerfacecolor=green, markersize=5, zorder=5, elinewidth=1.5, capsize=capsize)
+assert np.all(luminosity_significant[classification=='U']==True)
+plot_sys(classification=='U', color=black, marker='None', zorder=5-0.1, elinewidth=0.25, capsize=capsize)
+plot_stat(classification=='U', color=green, marker='o', markeredgecolor=green, markerfacecolor=green, markersize=5, zorder=5, elinewidth=1.5, capsize=capsize)
 
-plot_sys( (classification=='Pulsar')&(luminosity_significant==True), color=black, marker='None', zorder=6-0.1, elinewidth=0.25, capsize=capsize)
-plot_stat((classification=='Pulsar')&(luminosity_significant==True), color=blue, marker='s', markerfacecolor=blue, markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=capsize)
-plot_stat((classification=='Pulsar')&(luminosity_significant==False), color=blue, marker='s', markerfacecolor=blue, markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=0)
+plot_sys( ((classification=='M')|(classification=='M*'))&(luminosity_significant==True), color=black, marker='None', zorder=6-0.1, elinewidth=0.25, capsize=capsize)
+plot_stat(((classification=='M')|(classification=='M*'))&(luminosity_significant==True), color=blue, marker='s', markerfacecolor=blue, markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=capsize)
+plot_stat(((classification=='M')|(classification=='M*'))&(luminosity_significant==False), color=blue, marker='s', markerfacecolor=blue, markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=0)
 
-assert np.all(luminosity_significant[classification=='Confused']==True)
-plot_sys(classification=='PWN', color=black, marker='None', zorder=7-0.1, capsize=capsize, elinewidth=0.25)
-plot_stat(classification=='PWN', color=red, marker='*', markersize=8, 
+assert np.all(luminosity_significant[classification=='U']==True)
+plot_sys(classification=='W', color=black, marker='None', zorder=7-0.1, capsize=capsize, elinewidth=0.25)
+plot_stat(classification=='W', color=red, marker='*', markersize=8, 
           markerfacecolor=red, markeredgecolor=red, zorder=7, capsize=capsize, elinewidth=1.5)
 
 for psr_name,print_name,kwargs in [
