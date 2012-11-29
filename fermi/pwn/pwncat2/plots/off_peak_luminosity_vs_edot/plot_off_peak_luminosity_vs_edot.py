@@ -11,13 +11,13 @@ pubplot.set_latex_defaults()
 bw = pubplot.get_bw()
 
 cat=PulsarCatalogLoader(
-    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20121108102909.fits',
+    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20121127171828.fits',
     off_peak_auxiliary_filename='$lat2pc/OffPeak/tables/off_peak_auxiliary_table.fits')
 
 psrlist = cat.get_off_peak_psrlist()
 
 
-fig = P.figure(None,(4,4))
+fig = P.figure(None,(6,6))
 axes = fig.add_subplot(111)
 
 axes.set_xscale("log")
@@ -27,8 +27,9 @@ axes.set_yscale("log")
 classification=np.empty_like(psrlist,dtype=object)
 Edot=np.empty_like(psrlist,dtype=float)
 luminosity=np.empty_like(psrlist,dtype=float)
-luminosity_lower_error=np.empty_like(psrlist,dtype=float)
-luminosity_upper_error=np.empty_like(psrlist,dtype=float)
+luminosity_error_statistical=np.empty_like(psrlist,dtype=float)
+luminosity_lower_error_systematic=np.empty_like(psrlist,dtype=float)
+luminosity_upper_error_systematic=np.empty_like(psrlist,dtype=float)
 luminosity_ul=np.empty_like(psrlist,dtype=float)
 luminosity_significant=np.empty_like(psrlist,dtype=bool)
 
@@ -39,41 +40,69 @@ for i,psr in enumerate(psrlist):
 
     Edot[i]=cat.get_edot(psr)
 
-    y, y_lower_err, y_upper_err, y_ul, significant  = cat.get_luminosity(psr)
+    y, y_err_stat, y_lower_err_sys, y_upper_err_sys, y_ul, significant  = cat.get_luminosity(psr)
     luminosity[i]=y
-    luminosity_lower_error[i]=y_lower_err
-    luminosity_upper_error[i]=y_upper_err
+    #luminosity_lower_error[i]=y_lower_err
+    #luminosity_upper_error[i]=y_upper_err
+    luminosity_error_statistical[i]=y_err_stat
+    luminosity_lower_error_systematic[i]=y_lower_err_sys
+    luminosity_upper_error_systematic[i]=y_upper_err_sys
     luminosity_ul[i]=y_ul
     luminosity_significant[i]=significant
 
-def plot(cut, **kwargs):
+def plot_stat(cut, **kwargs):
     # plot PWN
     print 'kwargs',kwargs
     plot_points(Edot[cut], luminosity[cut],
                 xlo=None, xhi=None,
-                y_lower_err=luminosity_lower_error[cut],
-                y_upper_err=luminosity_upper_error[cut],
+                y_lower_err=luminosity_error_statistical[cut],
+                y_upper_err=luminosity_error_statistical[cut],
                 y_ul=luminosity_ul[cut], significant=luminosity_significant[cut],
                 axes=axes, **kwargs)
 
+def plot_sys(cut, **kwargs):
+    # plot PWN
+    print 'sys: kwargs',kwargs
+    print luminosity[cut],luminosity_lower_error_systematic[cut],luminosity_upper_error_systematic[cut],
+    plot_points(Edot[cut], luminosity[cut],
+                xlo=None, xhi=None,
+                y_lower_err=luminosity_lower_error_systematic[cut],
+                y_upper_err=luminosity_upper_error_systematic[cut],
+                y_ul=luminosity_ul[cut], significant=luminosity_significant[cut],
+                axes=axes, **kwargs)
+
+black = 'black'
 blue = 'blue' if not bw else 'black'
 red = 'red' if not bw else 'black'
+green = 'green' if not bw else 'black'
 
-axes.plot([1e33,1e39],[1e33,1e39], color=blue, zorder=1)
-axes.plot([1e33,1e39],[0.1*1e33,0.1*1e39], dashes=[5,3], color=blue, zorder=1)
-axes.plot([1e33,1e39],[0.01*1e33,0.01*1e39], dashes=[2,2], color=blue, zorder=1)
+axes.plot([1e33,1e39],[1e33,1e39], color=black, zorder=1)
+axes.plot([1e33,1e39],[0.1*1e33,0.1*1e39], dashes=[5,3], color=black, zorder=1)
+axes.plot([1e33,1e39],[0.01*1e33,0.01*1e39], dashes=[2,2], color=black, zorder=1)
 
-plot((classification!='Confused')&(classification!='Pulsar')&(classification!='PWN'),
-     marker='None', markersize=5, color='gray', zorder=1.5)
-plot(classification=='Confused', color='black', marker='o', markerfacecolor='none', markersize=5, zorder=5)
-plot(classification=='Pulsar', color=blue, marker='s', markersize=5, markeredgecolor=blue, markerfacecolor='none', zorder=6)
-plot(classification=='PWN', color=red, marker='*', markersize=10, markerfacecolor=red, markeredgecolor=red, zorder=7)
+capsize=3
+
+plot_stat((classification!='Confused')&(classification!='Pulsar')&(classification!='PWN'),
+          marker='None', markersize=5, color='gray', zorder=1.5, elinewidth=0.5)
+
+assert np.all(luminosity_significant[classification=='Confused']==True)
+plot_sys(classification=='Confused', color=black, marker='None', zorder=5-0.1, elinewidth=0.25, capsize=capsize)
+plot_stat(classification=='Confused', color=green, marker='o', markeredgecolor=green, markerfacecolor=green, markersize=5, zorder=5, elinewidth=1.5, capsize=capsize)
+
+plot_sys( (classification=='Pulsar')&(luminosity_significant==True), color=black, marker='None', zorder=6-0.1, elinewidth=0.25, capsize=capsize)
+plot_stat((classification=='Pulsar')&(luminosity_significant==True), color=blue, marker='s', markerfacecolor=blue, markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=capsize)
+plot_stat((classification=='Pulsar')&(luminosity_significant==False), color=blue, marker='s', markerfacecolor=blue, markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=0)
+
+assert np.all(luminosity_significant[classification=='Confused']==True)
+plot_sys(classification=='PWN', color=black, marker='None', zorder=7-0.1, capsize=capsize, elinewidth=0.25)
+plot_stat(classification=='PWN', color=red, marker='*', markersize=8, 
+          markerfacecolor=red, markeredgecolor=red, zorder=7, capsize=capsize, elinewidth=1.5)
 
 for psr_name,print_name,kwargs in [
-    ['J0534+2200', 'Crab Nebula', dict(horizontalalignment='right', verticalalignment='bottom', xytext=(10,10), textcoords='offset points')],
-    ['J0835-4510', 'Vela X', dict(horizontalalignment='middle', verticalalignment='top', xytext=(-20,-15), textcoords='offset points')],
-    ['J1513-5908', 'MSH 15-52', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(-2,-20), textcoords='offset points')],
-    ['J0205+6449', 'J0205', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(3,-10), textcoords='offset points')],
+    ['J0534+2200', 'Crab Nebula', dict(horizontalalignment='right', verticalalignment='bottom', xytext=(10,20), textcoords='offset points')],
+    ['J0835-4510', 'Vela X', dict(horizontalalignment='middle', verticalalignment='top', xytext=(-25,-10), textcoords='offset points')],
+    ['J1513-5908', 'MSH 15-52', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(10,0), textcoords='offset points')],
+    ['J0205+6449', 'J0205', dict(horizontalalignment='left', verticalalignment='bottom', xytext=(8,-5), textcoords='offset points')],
 ]:
     cut=np.where(psrlist==psr_name)[0][0]
     axes.annotate(print_name,
@@ -81,7 +110,6 @@ for psr_name,print_name,kwargs in [
                   color=red, 
                   zorder=8,
                   **kwargs)
-
 
 
 axes.set_xlim(1e33,1e39)
