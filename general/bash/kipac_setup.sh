@@ -33,7 +33,6 @@ function texlivekipac {
     # setup local tex build
     #export PATH=/u/gl/lande/texlive/2010/bin/x86_64-linux:$PATH
     export PATH=$KIPACSOFT/texlive/amd64_rhel60/amd64_rhel60/bin/x86_64-linux/:$PATH
-    export KIPACSOFT=/afs/slac/g/ki/software
     export setup="${setup} texlive"
 }
 
