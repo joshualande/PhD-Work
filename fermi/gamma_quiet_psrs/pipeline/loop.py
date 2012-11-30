@@ -15,7 +15,7 @@ params=dict(name=names,
             bigfile=bigfile)
 params['radiopsr-data']=radiopsr_data
 b = PipelineBuilder(
-    savedir='$gamma_quiet_psrs_analysis/v1',
+    savedir='$gamma_quiet_psrs_analysis/v1/fits',
     code='$gamma_quiet_psrs_pipeline/main.py',
     params=params,
     short_folder_names=True,
