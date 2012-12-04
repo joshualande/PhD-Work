@@ -1,23 +1,20 @@
-# Adding actual data - JL Oct 31, 2012
-# Build Preliminary list - JL Oct 29, 2012
-#
-# Below are PSRs from Table 3 of 2PC, E_dot > 10^37 erg/s
-J0537-6910:
+# Notes
+#  * Removing LMC Pulsars J0537-6910 and J0540-6919. 
+#    Removing already published (J1617-5055, J1838-0655, 
+#    J1826-1334, J1301-6305). Reorganizing. - JL Dec 3, 2012
+# * Adding actual data - JL Oct 31, 2012
+# * Build Preliminary list - JL Oct 29, 2012
+###################################################################################
+# Below are the PSRs from Table 10 of 2PC, E_dot > 10^36 erg/s
+# J0537-6910: ... # Don't include Remove LMC Pulsars
+# J0540-6919: ... # Don't include Remove LMC Pulsars
+J2022+3842:
     ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J0540-6919:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+#J1813-1749: ... # don't include HESS J1813-178
 J1400-6325:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1617-5055:
     ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
@@ -27,28 +24,54 @@ J1747-2809:
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1813-1749:
+# J1617-5055: ... # Don't include HESS J1616-508
+# J1930+1852: ... # Don't include VERJ1930+188
+# J1849-0001: ... # Don't include HESS J1849-000
+# J1846-0258: ... # Dont' include HESS J1846-029
+J1811-1925:
     ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1930+1852:
+    notes: >
+        Note, PSR J1811-1925 is 0.26deg away from HESS J1809-193 which
+        was included in Romain's anlaysis. But that HESS source
+        is associated to PSR J1809-1917, so PSR J1811-1925 hasn't
+        yet been tested for PWNe.
+        Note, in Romain's analysis, HESS J1809-193 was found to 
+        be an upper limit (TS=15 for E>10GeV).
+# J1838-0655: ... # Don't include HESS J1837-069
+# J1856+0245: ... # Don't include HESS J1857+026
+J1936+2025:
     ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J2022+3842:
+J1524-5625:
     ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-# Below are PSRs from Table 4 of 2PC, E_dot > 10^37 erg/s
-J0855-4644:
+    notes: >
+        I think the nearby LAT-detected pulsar is PSRJ1531-5610 (dist=0.95deg).
+# J1913+1011: ... # Don't include HESS J1912+101
+# J1826-1334: ... # Don't include HESS J1825-137
+# J1803-2137: ... # Don't include HESS J1804-216
+# J1824-2452A: ... # Don't include gamma-ray pulsar
+J1837-0604:
     ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1301-6305:
+# J1809-1917: ... # Don't include, HESS J1809-193
+# J1301-6305: ... # Don't include, HESS J1303-631.
+# J1614-5048: ... # Don't include, spatially coincident (but not associated with) with HESS J1616-508
+J1828-1101:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1928+1746:
     ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
@@ -63,84 +86,10 @@ J1437-5959:
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1524-5625:
+# J1055-6028: ... # Skip - Gamma-pulsations detected
+J0855-4644:
     ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
     ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-    notes: >
-        I think the nearby LAT-detected pulsar is PSRJ1531-5610 (dist=0.95deg).
-J1614-5048:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1803-2137:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-    notes: > 
-        I think the nearby LAT-detected pulsar is J1803-2149 (dist=0.26).
-J1809-1917 :
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1811-1925:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1826-1334:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1828-1101:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1831-0952:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-    notes: >
-        I think the nearby LAT-detected pulsar is PSRJ1833-1034 (dist=0.85)
-J1837-0604:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1838-0655:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1846-0258:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1856+0245:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1913+1011:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1928+1746:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
-J1936+2025:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+# J1831-0952: ... # Skip - HESS J1831-098
