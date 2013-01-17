@@ -11,8 +11,8 @@ pubplot.set_latex_defaults()
 bw = pubplot.get_bw()
 
 cat=PulsarCatalogLoader(
-    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20121127171828.fits',
-    off_peak_auxiliary_filename='$lat2pc/OffPeak/tables/off_peak_auxiliary_table.fits')
+    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20130104112737.fits',
+    off_peak_auxiliary_filename='$lat2pc/OffPeak/auxiliary/off_peak_auxiliary_table.fits')
 
 psrlist = cat.get_off_peak_psrlist()
 
@@ -91,7 +91,7 @@ plot_stat(classification=='U', color=green, marker='o', markeredgecolor=green, m
 
 plot_sys( ((classification=='M')|(classification=='M*'))&(luminosity_significant==True), color=black, marker='None', zorder=6-0.1, elinewidth=0.25, capsize=capsize)
 plot_stat(((classification=='M')|(classification=='M*'))&(luminosity_significant==True), color=blue, marker='s', markerfacecolor=blue, markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=capsize)
-plot_stat(((classification=='M')|(classification=='M*'))&(luminosity_significant==False), color=blue, marker='s', markerfacecolor=blue, markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=0)
+plot_stat(((classification=='M')|(classification=='M*'))&(luminosity_significant==False), color=blue, marker='s', markerfacecolor='none', markersize=5, markeredgecolor=blue, zorder=6, elinewidth=1.5, capsize=0)
 
 assert np.all(luminosity_significant[classification=='U']==True)
 plot_sys(classification=='W', color=black, marker='None', zorder=7-0.1, capsize=capsize, elinewidth=0.25)
