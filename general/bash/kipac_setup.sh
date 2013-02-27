@@ -3,11 +3,13 @@ function _kipac_base {
     export KIPACSOFT=/afs/slac/g/ki/software
 }
 
-function pythonkipac {
+function _pythonkipac {
     _kipac_base 
+    export python_version=$1
+
     #export PATH=$KIPACSOFT/python/2.6.2/amd64_linux26/bin:$PATH
-    export PATH=/afs/slac/g/ki/software/python/2.5.5/amd64_rhel50/bin/:$PATH
-    export PYTHONPATH=/afs/slac/g/ki/software/python/2.5.5/amd64_rhel50/lib/python2.5/:$PYTHONPATH
+    export PATH=/afs/slac/g/ki/software/python/$python_version/amd64_rhel50/bin/:$PATH
+    export PYTHONPATH=/afs/slac/g/ki/software/python/$python_version/amd64_rhel50/lib/python2.5/:$PYTHONPATH
 }
 
 function ds9kipac {

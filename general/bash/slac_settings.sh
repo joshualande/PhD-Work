@@ -25,22 +25,44 @@ function fix_matplotlib {
 }
 
 
-function stockscons {
+
+function tempsetup1 {
+    _stockscons 09-31-01 Optimized
+    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
+    export PATH=~/bin:$PATH
+    export setup=`echo $setup | sed 's/stockscons/tempsetup1/g'`
+}
+
+function tempsetup2 {
+    _stockscons 09-30-00 Optimized
+    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
+    export PATH=~/bin:$PATH
+    export setup=`echo $setup | sed 's/stockscons/tempsetup2/g'`
+}
+
+function tempsetup3 {
     _stockscons 09-30-01 Optimized
+    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
+    export PATH=~/bin:$PATH
+    export setup=`echo $setup | sed 's/stockscons/tempsetup3/g'`
+}
+
+function tempsetup4 {
+    _stockscons 09-31-00 Optimized
+    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
+    export PATH=~/bin:$PATH
+    export setup=`echo $setup | sed 's/stockscons/tempsetup4/g'`
+}
+
+function stockscons {
+    #_stockscons 09-30-01 Optimized
+    _stockscons 09-31-01 Optimized
     export PATH=~/bin:$PATH
 }
 
 function testsconcs {
     # for testing stuff
     _stockscons 09-27-01 Optimized
-}
-
-function tempscons {
-    _stockscons 09-28-00 Optimized
-    export head=/u/gl/lande/head
-    export PYTHONPATH=$head:$PYTHONPATH
-    export PYTHONPATH=/u/gl/lande/lib/python2.7/site-packages:$PYTHONPATH
-    export setup=`echo $setup | sed 's/stockscons/tempscons/g'`
 }
 
 function headscons {
@@ -66,10 +88,16 @@ function headscons {
     export setup=`echo $setup | sed 's/stockscons/headscons/g'`
 }
 
+function pythonkipac {
+    #_pythonkipac 2.5.5
+    _pythonkipac 2.7.3 # Note, Checking for Chris - JL Dec 6, 2012
+}
+
 function devscons {
     # path of scons code
     set_bldtype
-    export PATH=$PATH:/afs/slac/g/glast/applications/SCons/1.3.0/bin
+    #export PATH=$PATH:/afs/slac/g/glast/applications/SCons/1.3.0/bin
+    export PATH=$PATH:/afs/slac/g/glast/applications/SCons/2.1.0/bin
 
     export GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/${BLDTYPE}
 
@@ -104,9 +132,21 @@ function build {
     scons --with-GLAST-EXT=${GLAST_EXT} --compile-opt $@
 }
 
-function buildpointlike {
-    build pointlike 
+function buildskymaps {
+    build astro
     build skymaps 
+    build setup
+}
+
+function buildpointlike {
+    # for some reason, building pointlike will not build
+    # the skymaps swig interface so you have to explicitly build it first.
+    
+    # For some reason, I get an error building skymaps first, so
+    # first I have to build astro.
+    build astro 
+    build skymaps 
+    build pointlike 
     build setup
 }
 function buildgtlike {

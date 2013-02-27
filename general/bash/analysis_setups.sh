@@ -144,6 +144,7 @@ function gamma_quiet_psrs_setup {
     export gamma_quiet_psrs_paper=$svn/fermi/gamma_quiet_psrs/paper/
     export gamma_quiet_psrs_code=$lande/fermi/pipeline/gamma_quiet_psrs
     export gamma_quiet_psrs_website=$svn/fermi/gamma_quiet_psrs/website/
+    export gamma_quiet_psrs_modify=$svn/fermi/gamma_quiet_psrs/modify
 
 
 }
@@ -152,6 +153,10 @@ function extul_setup {
     export extulresults=$nfs/fermi/extul
     export extulcode=$svn/fermi/extul/code
     export extulplots=$pwnplots/extul
+}
+
+function setup_thesis {
+    export thesis=$svn/thesis
 }
 
 function setup_defaults {
@@ -167,5 +172,6 @@ function setup_defaults {
     setup_pwncat
     gamma_quiet_psrs_setup
     extul_setup
+    setup_thesis
 }
 setup_defaults
