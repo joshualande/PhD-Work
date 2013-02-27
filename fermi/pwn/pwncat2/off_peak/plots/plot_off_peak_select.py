@@ -47,6 +47,8 @@ fig.subplots_adjust(hspace=.35,wspace=.35, left=0.15, right=0.9, top=0.9, bottom
 
 pwndata=yaml.load(open(expandvars('$pwndata/pwncat2_data_lande.yaml')))
 
+off_peak_results = yaml.load(open(expandvars('$pwndata/pwncat2_phase_lande.yaml')))
+
 
 for i,(pwn,nbins) in enumerate(pwnlist):
     results = expandvars(join(r,pwn,'results_%s.yaml' % pwn))
@@ -68,7 +70,8 @@ for i,(pwn,nbins) in enumerate(pwnlist):
     emax = results['emax']
     radius = results['optimal_radius']
     blocks = results['blocks']
-    off_peak_phase = results['off_peak_phase']
+
+    off_peak_phase = off_peak_results[pwn]['phase']
 
     import pickle
     jd = pickle.load(open('/nfs/farm/g/glast/u55/pulsar/2ndPulsarcatalog/psue/General/josh_dicts.pickle'))
