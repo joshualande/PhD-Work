@@ -1,0 +1,124 @@
+J0537-6910:
+    notes: >
+        XXX
+J0540-6919:
+    notes: >
+        XXX
+J1400-6325:
+    notes: >
+        XXX
+J1617-5055:
+    notes: >
+        XXX
+J1747-2809:
+    notes: >
+        XXX
+J1813-1749:
+    notes: >
+        XXX
+J1930+1852:
+    notes: >
+        XXX
+J2022+3842:
+    notes: >
+        XXX
+# Below are PSRs from Table 4 of 2PC, E_dot > 10^37 erg/s
+J0855-4644:
+    notes: >
+        XXX
+J1301-6305:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1341-6220:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1437-5959:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1524-5625:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+    notes: >
+        I think the nearby LAT-detected pulsar is PSRJ1531-5610 (dist=0.95deg).
+J1614-5048:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1803-2137:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+    notes: > 
+        I think the nearby LAT-detected pulsar is J1803-2149 (dist=0.26).
+J1809-1917 :
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1811-1925:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1826-1334:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1828-1101:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1831-0952:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+    notes: >
+        I think the nearby LAT-detected pulsar is PSRJ1833-1034 (dist=0.85)
+J1837-0604:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1838-0655:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1846-0258:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1856+0245:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1913+1011:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1928+1746:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+J1936+2025:
+    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
+    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
+    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
+    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
