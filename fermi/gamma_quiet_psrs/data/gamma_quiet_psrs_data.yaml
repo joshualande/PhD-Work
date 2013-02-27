@@ -1,4 +1,5 @@
 # Notes
+#  * Removing J0855-4644 - JL Dec 6, 2012
 #  * Removing LMC Pulsars J0537-6910 and J0540-6919. 
 #    Removing already published (J1617-5055, J1838-0655, 
 #    J1826-1334, J1301-6305). Reorganizing. - JL Dec 3, 2012
@@ -87,9 +88,5 @@ J1437-5959:
     ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
     binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
 # J1055-6028: ... # Skip - Gamma-pulsations detected
-J0855-4644:
-    ft1: $gamma_quiet_psrs_lat_data/oct_30_2012/ft1_gamma_quiet_psrs.fits
-    ft2: $gamma_quiet_psrs_lat_data/oct_30_2012/ft2_gamma_quiet_psrs.fits
-    ltcube: $gamma_quiet_psrs_lat_data/oct_30_2012/ltcube_gamma_quiet_psrs.fits
-    binfiledir: $gamma_quiet_psrs_lat_data/oct_30_2012/
+#J0855-4644: ... # Skip - part of Vela Jr
 # J1831-0952: ... # Skip - HESS J1831-098

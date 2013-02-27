@@ -62,10 +62,11 @@ radiopsr_data='$gamma_quiet_psrs_data/gamma_quiet_psrs_data.yaml'
 radiopsr_data='$gamma_quiet_psrs_data/gamma_quiet_psrs_data.yaml'
 names=loaddict(radiopsr_data).keys()
 bigfile='$lat2pc/BigFile/Pulsars_BigFile_v20121127171828.fits'
-modify='$gamma_quiet_psrs_modify/gamma_quiet_psrs_data.yaml'
+modify='$gamma_quiet_psrs_modify/gamma_quiet_psrs_data.py'
 
 params=dict(name=names, 
-            bigfile=bigfile)
+            bigfile=bigfile,
+            modify=modify)
 params['radiopsr-data']=radiopsr_data
 b = PipelineBuilder(
     savedir='$gamma_quiet_psrs_analysis/v4/fits',
@@ -83,6 +84,7 @@ for size in [5,10]:
     b.build_followup(
         code = '$gamma_quiet_psrs_pipeline/followup.py',
         hypotheses=['at_pulsar','point','extended'],
-        followups=['plots_%s' % size,'tsmap_%s' % size],
+        followups=['plots','tsmaps'],
+        followup_filenames=['plots_%s' % size,'tsmaps_%s' % size],
         extra='--size=%s' % size
     )
