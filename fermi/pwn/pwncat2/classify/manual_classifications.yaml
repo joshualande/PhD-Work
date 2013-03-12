@@ -11,7 +11,7 @@ PSRJ0007+7303:
         results to http://arxiv.org/abs/1107.4151
 PSRJ0023+0923: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
 PSRJ0030+0451: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
-PSRJ0034-0534: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
+PSRJ0034-0534: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw}
 PSRJ0101-6422:
     source_class: Upper_Limit
     spatial_model: .nan 
@@ -24,7 +24,7 @@ PSRJ0101-6422:
         In the v36 analysis (with the smaller phase range),
         it was found to be just a flux upper limit so all is
         well with the new analysis.
-PSRJ0102+4839: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff, notes: "Good!"}
+PSRJ0102+4839: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0106+4855: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ0205+6449:
     source_class: PWN
@@ -35,7 +35,7 @@ PSRJ0205+6449:
         There is a nearby SNR: 3C58
         http://www.mrao.cam.ac.uk/surveys/snrs/snrs.G130.7+3.1.html
         Optical PWN http://adsabs.harvard.edu/abs/2008A%26A...486..273S
-PSRJ0218+4232: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff, notes: "Good!"}
+PSRJ0218+4232: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw, notes: "Good!"}
 PSRJ0248+6021: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ0340+4130: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
 PSRJ0357+3205: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
@@ -52,7 +52,7 @@ PSRJ0610-2100: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: 
 PSRJ0613-0200: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
 PSRJ0614-3329: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
 PSRJ0622+3749: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan, notes: "Good!"}
-PSRJ0631+1036: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
+PSRJ0631+1036: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw}
 PSRJ0633+0632: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ0633+1746: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
 PSRJ0659+1414: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
@@ -218,7 +218,7 @@ PSRJ2032+4127:
     spectral_model: PowerLaw
     notes: >
         The extension of this source is biased by nearby other sources.
-PSRJ2043+1711: {source_class: Pulsar, spatial_model: At_Pulsar, spectral_model: PLSuperExpCutoff}
+PSRJ2043+1711: {source_class: Confused, spatial_model: Point, spectral_model: PowerLaw}
 PSRJ2043+2740: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ2047+1053: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
 PSRJ2051-0827: {source_class: Upper_Limit, spatial_model: .nan, spectral_model: .nan}
