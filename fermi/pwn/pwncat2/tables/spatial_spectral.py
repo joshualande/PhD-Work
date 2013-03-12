@@ -11,4 +11,4 @@ spatial_spectral_table(
     filebase='off_peak_spatial_spectral',
     table_type=table_type,
     pwn_classification='$pwnclassify/manual_classifications.yaml',
-    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20130117130325.fits')
+    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20130214170325.fits')
