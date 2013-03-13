@@ -11,7 +11,7 @@ pubplot.set_latex_defaults()
 bw = pubplot.get_bw()
 
 cat=PulsarCatalogLoader(
-    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20130104112737.fits',
+    bigfile_filename='$lat2pc/BigFile/Pulsars_BigFile_v20130214170325.fits',
     off_peak_auxiliary_filename='$lat2pc/OffPeak/auxiliary/off_peak_auxiliary_table.fits')
 
 psrlist = cat.get_off_peak_psrlist()
