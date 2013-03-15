@@ -20,6 +20,9 @@ classifier=PWNManualClassifier(
 npsr = 0
 psrs = []
 
+npsr_confused = 0
+psrs_confused = []
+
 npwn = 0
 pwne = []
 
@@ -69,6 +72,10 @@ for pwn in pwnlist:
             npsr += 1
             ndetect += 1
             psrs.append(pwn)
+        elif c['source_class'] == 'Pulsar_Confused':
+            npsr_confused += 1
+            ndetect += 1
+            psrs_confused.append(pwn)
         elif c['source_class'] == 'PWN':
             npwn += 1
             ndetect += 1
@@ -80,13 +87,16 @@ for pwn in pwnlist:
         elif c['source_class'] == 'Upper_Limit':
             pass
         else:
-            raise Exception()
+            raise Exception('unrecongized source class = %s' % c['source_class'])
 
     except PWNClassifierException:
         print 'Skipping %s' % pwn
 
 print 'Number of pulsars = %s' % npsr
 print 'Pulsars', psrs
+
+print 'Number of pulsars confused = %s' % npsr_confused
+print 'Pulsars confused ', psrs_confused
 
 print 'Number of PWNe = %s' % npwn
 print 'PWNe', pwne

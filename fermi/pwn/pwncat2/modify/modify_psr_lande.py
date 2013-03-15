@@ -1941,6 +1941,21 @@ def get_cutoff_model(name):
 
     return ec
 
+def get_gtlike_cutoff_model(name):
+    ec = None
+    if name == 'PSRJ0908-4913':
+        # from $pwnpipeline/v34/analysis/PSRJ0908-4913/results_PSRJ0908-4913_gtlike_at_pulsar.yaml
+        ec=PLSuperExpCutoff.from_gtlike(
+                Cutoff= 272.8455226212762,
+                Index1= -0.0019587564421516546,
+                Index2= 1.0,
+                Prefactor= 1.9920568832440028e-10,
+                Scale= 1000.0,
+                set_default_oomp_limits=True)
+        ec.set_free('b',False)
+    return ec
+
+
 
 def get_override_localization(name):
 
