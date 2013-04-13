@@ -17,7 +17,7 @@ function ipyssh {
 
         ipython qtconsole --ssh $host --existing $tempfile
 
-        rm $tempfile
+        rm -f $tempfile
 }
 
 set -o vi
