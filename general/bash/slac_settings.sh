@@ -186,6 +186,8 @@ function setup_general_slac_alias {
     export catalogs=$fermi/catalogs
     export extended_archives=$fermi/extended_archives
     export globalcat=/afs/slac/g/glast/groups/catalog
+
+    export ipython=$svn/ipython
 }
 
 
@@ -233,6 +235,32 @@ function setup_science_tools_development {
 function tagCollector {
     # Tag the science tools
     echo python tagCollector.py ScienceTools --new=HEAD -r True
+}
+
+function epd_setup {
+    export PATH=/u/gl/lande/epd/bin:$PATH
+
+    setup_personal_code
+
+    export setup="${setup} epd_setup"
+}
+
+function __launch_ipython_notebook {
+
+    ip=`echo $SSH_CONNECTION | awk '{print $3}'`
+    port=$(( $RANDOM%1000+9000 ))
+    echo "https://$ip:$port"
+    ipython notebook --profile=nbserver --port=$port --ip=$ip
+}
+
+function _launch_ipython_notebook {
+    cd $ipython
+    __launch_ipython_notebook
+}
+
+function launch_ipython_notebook {
+    epd_setup
+    _launch_ipython_notebook
 }
 
 function setup_defaults_slac {

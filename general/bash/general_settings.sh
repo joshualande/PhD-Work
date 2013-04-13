@@ -41,8 +41,8 @@ function setup_alias_general {
     alias ack='ack -i'
     alias grep='grep -i'
 
-    alias tarup="tar -czvf" # tar -czvf MyArchive.tgz Source_folder
-    alias untar="tar -xzvf" # tar -xzvf MyArchive.tgz
+    alias tarup="echo tar -czvf MyArchive.tgz Source_folder"
+    alias untar="echo tar -xzvf MyArchive.tgz"
 
     alias sng="sed 's/:/\n/g'"
 
@@ -64,7 +64,7 @@ function setup_alias_general {
 
     # Don't tab complete for files that begin with a dot.
     # http://svn.haxx.se/users/archive-2004-12/0809.shtml
-    bind 'set match-hidden-files off' 
+    #bind 'set match-hidden-files off' 
 }
 
 function setup_python_general {
