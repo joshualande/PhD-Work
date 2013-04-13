@@ -18,3 +18,8 @@ def ipyssh {
 set -o vi
 
 
+function launch_ipython_notebook {
+        ipython notebook --pylab inline
+}
+
+
