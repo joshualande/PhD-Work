@@ -9,10 +9,11 @@ function ipyssh {
 
         host=$1
         kernel=$2
+	profile=nbserver
 
         tempfile=`mktemp /tmp/XXXXXXXXXX`
 
-        ssh $host "cat ~/.config/ipython/profile_nbserver/security/$kernel" > $tempfile
+        ssh $host "cat ~/.config/ipython/profile_$profile/security/$kernel" > $tempfile
 
         ipython qtconsole --ssh $host --existing $tempfile
 
