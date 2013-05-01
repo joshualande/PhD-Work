@@ -9,10 +9,16 @@ from lande.fermi.pipeline.pwncat2.analysis.pipeline import Pipeline
 
 parser = ArgumentParser()
 parser.add_argument("--hypothesis", required=True, choices=['at_pulsar', 'point', 'extended'])
-parser.add_argument("--followup", required=True, choices=['tsmaps','plots', 'gtlike', 'variability','extul'])
+parser.add_argument("--followup", required=True, choices=['tsmaps','plots', 'gtlike', 'variability','extul','altdiff'])
+parser.add_argument("--dist", default=None, type=str, choices=['Lorimer','SNR'])
+parser.add_argument("--halo", default=None, type=int, choices=[4, 10])
+parser.add_argument("--TS", default=None, type=int, choices=[150, 100000])
 followup_args = parse_strip_known_args(parser)
 hypothesis = followup_args.hypothesis
 followup =followup_args.followup
+dist = followup_args.dist
+halo = followup_args.halo
+TS = followup_args.TS
 
 kwargs = Pipeline.get_kwargs()
 
@@ -28,3 +34,5 @@ elif followup == 'plots':
     pipeline.plots_followup(hypothesis=hypothesis)
 elif followup == 'extul':
     pipeline.extul_followup(hypothesis=hypothesis)
+elif followup == 'altdiff':
+    pipeline.altdiff_followup(hypothesis=hypothesis, dist=dist, halo=halo, TS=TS)

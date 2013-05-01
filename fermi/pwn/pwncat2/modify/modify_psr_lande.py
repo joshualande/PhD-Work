@@ -167,7 +167,7 @@ def modify_roi(name,roi):
 
         sync = PowerLaw(index=3.59)
         sync.set_flux(6.1e-7, emin=100, emax=np.inf) 
-        ic = SmoothBrokenPowerLaw(index_1=1.48, index_2=2.19, e_break=13.9e3)
+        ic = SmoothBrokenPowerLaw(index_1=1.48, index_2=2.19, e_break=13.9e3, beta=0.2)
         ic.set_flux(1.1e-7, emin=100, emax=np.inf)
 
         sum_model = SumModel(sync, ic)
@@ -343,6 +343,17 @@ def modify_roi(name,roi):
         skydir=SkyDir(262.832249309,0.643797379224,SkyDir.GALACTIC)
         ps=PointSource(name="seed1", model=model, skydir=skydir)
         roi.add_source(ps)
+
+        # Modify Vela X spectrum to be same as published results from 
+        #  -> "THE VELA-X PULSAR WIND NEBULA REVISITED WITH 4 YEARS OF FERMI LARGE AREA TELESCOPE OBSERVATIONS" - Grondin et al 2013
+        model = SmoothBrokenPowerLaw(index_1=1.83, index_2=2.87, e_break=2.1e3, beta=0.2)
+        model.set_flux(1.83e-7, emin=200, emax=np.inf)
+
+        filename=expandvars('$PWD/vela_x_spectrum.txt')
+        model.save_profile(filename, emin=10, emax=1e6)
+
+        model = FileFunction(file=filename)
+        roi.modify(which='PSRJ0835-4510', model=model)
 
     if name == 'PSRJ0908-4913':
 

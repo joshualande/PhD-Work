@@ -22,12 +22,12 @@ pubplot.set_latex_defaults()
 
 bw = pubplot.get_bw()
 
-base='$pwnpipeline/v36/'
+base='$pwnpipeline/v37/'
 fitdir=expandvars(join(base,'analysis'))
 
 loader = PWNResultsLoader(
     pwndata='$pwndata/pwncat2_data_lande.yaml',
-    fitdir='$pwnpipeline/v36/analysis',
+    fitdir='$pwnpipeline/v37/analysis',
     #phase_shift='/u/gl/kerrm/pulsar/share/python/checklist.py'
     )
 
@@ -71,7 +71,7 @@ for i,pwn in enumerate(cutoff_candidates):
     s.plot_points(axes=axes, zorder=2.1)
 
     sp = SpectrumPlotter(axes=axes)
-    sp.plot(spectrum, autoscale=False, color='red', zorder=1.9)
+    sp.plot(spectrum, autoscale=False, color='red' if not bw else 'grey', zorder=1.9)
 
 label_axes(grid)
 
@@ -84,7 +84,12 @@ for i in range(nrows*ncols):
     #axes.set_xlim_units(10**2*units.MeV,10**5.5*units.MeV)
     axes.set_xlim(0.1,10**2.5)
     #axes.set_ylim_units(1e-13*units.erg/units.cm**2/units.s,1e-9*units.erg/units.cm**2/units.s)
-    axes.set_ylim(1e-13,1e-9)
+    if i in [0,1,2,3]:
+        axes.set_ylim(1e-13,1e-9)
+    elif i in [4,5]:
+        axes.set_ylim(1e-13,1e-8)
+    else:
+        raise Exception("...")
 fix_yaxesgrid(grid)
 
 pubplot.save(join(base,'plots','off_peak_seds'))
