@@ -20,11 +20,24 @@ function ipyssh {
         rm -f $tempfile
 }
 
-set -o vi
-
 
 function launch_ipython_notebook {
         ipython notebook --pylab inline
 }
 
+
+function setup_paths {
+    export ipython=/Users/joshualande/Google\ Drive/Career/ipython
+    export PATH=/usr/local/mysql/bin:$PATH
+}
+
+
+function setup_preferences {
+	set -o vi
+}
+
+function setup_defaults {
+	setup_paths
+	setup_preferences
+}
 
