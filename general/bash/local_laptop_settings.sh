@@ -29,8 +29,14 @@ function launch_ipython_notebook {
 function setup_paths {
     export ipython=/Users/joshualande/Google\ Drive/Career/ipython
     export PATH=/usr/local/mysql/bin:$PATH
+
 }
 
+function setup_coursera_ml {
+    export coursera_ml=/Users/joshualande/Google\ Drive/Career/resources/courses/Stanford\ Machine\ Learning/My\ Work/homework
+    alias octave="exec '/Applications/Octave.app/Contents/Resources/bin/octave'"
+
+}
 
 function setup_preferences {
 	set -o vi
@@ -39,5 +45,7 @@ function setup_preferences {
 function setup_defaults {
 	setup_paths
 	setup_preferences
+	setup_coursera_ml
 }
+setup_defaults
 
