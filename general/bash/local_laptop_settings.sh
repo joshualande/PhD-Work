@@ -29,11 +29,16 @@ function launch_ipython_notebook {
 function setup_paths {
     export ipython=/Users/joshualande/Google\ Drive/Career/ipython
     export PATH=/usr/local/mysql/bin:$PATH
+    export svn="$HOME/Documents/work_svn/trunk/"
+    export MY_BIN=$svn/general/bin
 
 }
 
 function setup_coursera_ml {
-    export coursera_ml=/Users/joshualande/Google\ Drive/Career/resources/courses/Stanford\ Machine\ Learning/My\ Work/homework
+    #export coursera_ml=/Users/joshualande/Google\ Drive/Career/resources/courses/Stanford\ Machine\ Learning/My\ Work/homework
+    export coursera_ml=/Users/joshualande/Documents/work_svn/trunk/courses/coursera_ml/homework/
+    export ps1=$coursera_ml/ps1/ex1
+    export ps2=$coursera_ml/ps2/ex2
     alias octave="exec '/Applications/Octave.app/Contents/Resources/bin/octave'"
 
 }

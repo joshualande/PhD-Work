@@ -89,7 +89,7 @@ function setup_vim {
         fi
         fdump $1 STDOUT - - page=no pagewidth=256 | vim -
     }
-    alias svnvimdiff='svn diff --diff-cmd ~/bin/svnvimdiff'
+    alias svnvimdiff='svn diff --diff-cmd $MY_BIN/svnvimdiff'
 
 
     set -o vi # vi like navigation of command line.

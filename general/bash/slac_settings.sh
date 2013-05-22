@@ -192,10 +192,12 @@ function setup_general_slac_alias {
 
 
 
-export PYTHONPATH=$HOME/bin:$HOME/python:$PYTHONPATH
+export MY_BIN=$HOME/bin
+
+export PYTHONPATH=$MY_BIN:$HOME/python:$PYTHONPATH
 
 
-export PATH=~/bin:~/svn/lande/trunk/general/bin/:$PATH
+export PATH=$MY_BIN:~/svn/lande/trunk/general/bin/:$PATH
 
 # local stuff
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
